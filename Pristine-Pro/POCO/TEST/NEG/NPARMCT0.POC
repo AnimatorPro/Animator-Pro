@@ -1,0 +1,13 @@
+/* Test that parameters are counted correctly */
+#pragma poco echo "expect>not enough parameters in call to function 'square'"
+
+int square(int i)
+{
+return i*i;
+}
+
+main()
+{
+square();
+puts("I shouldn't have compiled!");
+}

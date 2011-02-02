@@ -1,0 +1,8 @@
+#define mainpull_100 "Script Load..."
+#define mainpull_101 "Gif Load..."
+#define mainpull_102 "Fli Load..."
+#define mainpull_103 "FILE"
+#define mainpull_104 "QUIT"
+#define mainpull_105 "------"
+#define mainpull_106 "ABOUT"
+#define mainpull_107 "PLAYER"

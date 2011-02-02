@@ -1,0 +1,13 @@
+/* generated with makemenu */
+#include "jimk.h"
+#include "flicmenu.h"
+
+
+/*** Display Functions ***/
+extern ccorner_text(), ncorner_text();
+
+
+/*** Select Functions ***/
+extern toggle_group(), change_mode();
+
+

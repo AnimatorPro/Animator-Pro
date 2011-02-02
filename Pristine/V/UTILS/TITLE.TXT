@@ -1,0 +1,27 @@
+menu 0 137 319 62
+titling 4 139 50 8
+movement 90 140 46 6
+scrolling 177 140 54 6
+justify 256 140 42 6
+
+do_titling 1 151 81 6
+new_text	1 159 81 6
+edit_text 1 167 81 6
+load_text 1 175 81 6
+place_window 1 183 81 6
+load_font 1 191 81 6
+
+upscroll 84 151 88 6
+across_scroll 84 159 88 6
+type_on 84 167 88 6
+
+bypixel 174 151 77 6
+bycharacter 174 159 77 6
+
+left 253 151 65 6
+right 253 159 65 6
+center 253 167 65 6
+fill_line 253 175 65 6
+
+
+

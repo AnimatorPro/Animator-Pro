@@ -1,0 +1,80 @@
+/* generated with makemenu */
+#include "jimk.h"
+#include "flicmenu.h"
+
+
+/*** Display Functions ***/
+extern ccorner_text(), ncorner_text();
+
+
+/*** Select Functions ***/
+extern toggle_group(), change_mode();
+
+
+/*** Button Data ***/
+struct flicmenu qnu_can_sel = {
+	NONEXT,
+	NOCHILD,
+	190, 112, 42, 12,
+	"cancel",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu qnu_ok_sel = {
+	&qnu_can_sel,
+	NOCHILD,
+	143, 112, 34, 12,
+	"ok",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu qnu_str_sel = {
+	&qnu_ok_sel,
+	NOCHILD,
+	87, 112, 42, 12,
+	"string",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu qnu_sli_sel = {
+	&qnu_str_sel,
+	NOCHILD,
+	87, 96, 145, 10,
+	"slider",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu qnu_hai_sel = {
+	&qnu_sli_sel,
+	NOCHILD,
+	84, 73, 153, 19,
+	"hail",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu qnu_men_sel = {
+	&qnu_hai_sel,
+	NOCHILD,
+	80, 70, 160, 60,
+	"menu",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};

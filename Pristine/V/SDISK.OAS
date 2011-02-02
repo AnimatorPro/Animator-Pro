@@ -1,0 +1,117 @@
+;sdisk.asm - generate a filled circle.  Input: center radius and lineout
+;routine (which may be in C).  Output: a lot of horizontal lines via
+;lineout parameter.
+
+	;:ts=10
+_TEXT	SEGMENT  BYTE PUBLIC 'CODE'
+_TEXT	ENDS
+_DATA	SEGMENT  WORD PUBLIC 'DATA'
+_DATA	ENDS
+CONST	SEGMENT  WORD PUBLIC 'CONST'
+CONST	ENDS
+_BSS	SEGMENT  WORD PUBLIC 'BSS'
+_BSS	ENDS
+DGROUP	GROUP	CONST,	_BSS,	_DATA
+	ASSUME  CS: _TEXT, DS: DGROUP, SS: DGROUP, ES: DGROUP
+_TEXT      SEGMENT
+
+
+
+	public _sdisk
+_sdisk proc far
+xcen	equ	[bp+4+2]
+ycen	equ	[bp+6+2]
+rad	equ	[bp+8+2]
+hlineout	equ	dword ptr[bp+10+2]
+	push bp
+	mov bp,sp
+	push bx
+	push si
+	push di
+	push es
+	push ds
+
+	;grab radius and if it's zero do a single dot and a quick ret.
+	mov di,rad
+smanydots:
+	;di = x offset = rad to start
+	;si = y offset = 0 to start
+	xor si,si
+	;bx = error term = -rad/2 to start
+	mov bx,di
+	neg bx
+	sar bx,1
+	call loline	;once for line in middle
+cloop:	
+	; now do stuff to figure out where next 4 plots will be
+	test bx,bx	;check sign of error term
+	jge stepx ;and decide to step x-wise or y-wise
+	inc si	;bump y offset
+	call loline
+	call hiline
+	add bx,si
+	jmp cloop
+stepx:
+	dec di
+	sub bx,di
+	or di,di
+	jns cloop
+
+
+endscirc:
+	pop ds
+	pop es
+	pop di
+	pop si
+	pop bx
+	pop bp
+	ret
+_sdisk endp
+
+
+;draw bottom reflection of bottom line for circle
+loline proc near
+	;save registers C considers scratch...
+	push bx
+	push di
+	;push parameters to hline...
+	mov ax,xcen
+	add ax,di
+	push ax	;hi  x
+	sub ax,di
+	sub ax,di
+	push ax	;lo x
+	mov ax,ycen
+	add ax,si ;y
+	push ax
+	call hlineout
+	add sp,6
+	pop di
+	pop bx
+	ret
+loline	endp
+
+
+;draw the top reflection of horizontal line for circle
+hiline	proc near
+	push bx
+	push di
+	;push parameters to hline...
+	mov ax,xcen
+	add ax,di
+	push ax	;hi  x
+	sub ax,di
+	sub ax,di
+	push ax	;lo x
+	mov ax,ycen
+	sub ax,si ;y
+	push ax
+	call hlineout
+	add sp,6
+	pop di
+	pop bx
+	ret
+hiline	endp
+
+_TEXT	ENDS
+END

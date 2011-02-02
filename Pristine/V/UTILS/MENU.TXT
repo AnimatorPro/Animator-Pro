@@ -1,0 +1,25 @@
+menu 0 150 319 49
+
+files 4 153 54 10
+exit 63 153 54 10
+
+load 5 171 54 10
+save 5 184 54 10
+info 63 171 54 10
+kill 63 184 54 10
+
+video 142 153 52 8
+frame 142 164 52 8
+cel 142 176 52 8
+palette 142 188 52 8
+
+text 199 153 52 8
+font 199 164 52 8
+polygon 199 176 52 8
+path 199 188 52 8
+
+optic 256 153 52 8
+defaults 256 164 52 8
+stencils 256 176 52 8
+macro 256 188 52 8
+

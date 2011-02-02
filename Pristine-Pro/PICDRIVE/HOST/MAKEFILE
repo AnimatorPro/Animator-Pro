@@ -1,0 +1,6 @@
+!include "\paa\inc\make.inc"
+
+all: picdrive.obj
+	@echo >nul
+
+

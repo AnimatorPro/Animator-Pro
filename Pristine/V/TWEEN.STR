@@ -1,0 +1,8 @@
+#define tween_100 "Set start position"
+#define tween_101 "Adjust start"
+#define tween_102 "Set end position"
+#define tween_103 "Adjust end"
+#define tween_104 "End to start"
+#define tween_105 "Do Tween"
+#define tween_106 "Exit menu"
+#define tween_107 "Tweening options"

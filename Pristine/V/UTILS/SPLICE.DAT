@@ -1,0 +1,234 @@
+/* generated with makemenu */
+#include "jimk.h"
+#include "flicmenu.h"
+
+
+/*** Display Functions ***/
+extern ccorner_text(), ncorner_text();
+
+
+/*** Select Functions ***/
+extern toggle_group(), change_mode();
+
+
+/*** Button Data ***/
+struct flicmenu spl_can_sel = {
+	NONEXT,
+	NOCHILD,
+	214, 126, 24, 10,
+	"cancel",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu spl_ok_sel = {
+	&spl_can_sel,
+	NOCHILD,
+	185, 126, 24, 10,
+	"ok",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu spl_end_sel = {
+	&spl_ok_sel,
+	NOCHILD,
+	191, 113, 63, 8,
+	"end",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu spl_sta_sel = {
+	&spl_end_sel,
+	NOCHILD,
+	191, 105, 63, 8,
+	"start",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu spl_ex4_sel = {
+	&spl_sta_sel,
+	NOCHILD,
+	124, 133, 56, 8,
+	"ex4",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu spl_ex3_sel = {
+	&spl_ex4_sel,
+	NOCHILD,
+	68, 133, 56, 8,
+	"ex3",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu spl_ex2_sel = {
+	&spl_ex3_sel,
+	NOCHILD,
+	124, 125, 56, 8,
+	"ex2",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu spl_ex1_sel = {
+	&spl_ex2_sel,
+	NOCHILD,
+	68, 125, 56, 8,
+	"ex1",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu spl_cir_sel = {
+	&spl_ex1_sel,
+	NOCHILD,
+	124, 117, 56, 8,
+	"circle_wipe",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu spl_wip_sel = {
+	&spl_cir_sel,
+	NOCHILD,
+	68, 117, 56, 8,
+	"wipe",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu spl_dis_sel = {
+	&spl_wip_sel,
+	NOCHILD,
+	124, 109, 56, 8,
+	"dissolve",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu spl_fad_sel = {
+	&spl_dis_sel,
+	NOCHILD,
+	0, 68, 109, 56,
+	"fade",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu spl_ven_sel = {
+	&spl_fad_sel,
+	NOCHILD,
+	124, 101, 56, 8,
+	"venetian",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu spl_cut_sel = {
+	&spl_ven_sel,
+	NOCHILD,
+	68, 101, 56, 8,
+	"cut",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu spl_ove_sel = {
+	&spl_cut_sel,
+	NOCHILD,
+	158, 89, 102, 8,
+	"overlap_ends",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu spl_sti_sel = {
+	&spl_ove_sel,
+	NOCHILD,
+	68, 89, 90, 8,
+	"still_ends",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu spl_tsl_sel = {
+	&spl_sti_sel,
+	NOCHILD,
+	137, 74, 123, 10,
+	"tsli",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu spl_tta_sel = {
+	&spl_tsl_sel,
+	NOCHILD,
+	137, 64, 123, 8,
+	"ttag",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu spl_mov_sel = {
+	&spl_tta_sel,
+	NOCHILD,
+	74, 65, 50, 19,
+	"move",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu spl_men_sel = {
+	&spl_mov_sel,
+	NOCHILD,
+	64, 60, 200, 84,
+	"menu",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};

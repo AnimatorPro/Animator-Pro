@@ -1,0 +1,100 @@
+Module: A2BLIT.ASM
+GROUP: 'DGROUP' CONST,_BSS,_DATA
+
+Segment: _TEXT PARA USE16 0000009F bytes
+0000                          _a2blit:
+0000    55                        push        bp 
+0001    89 E5                     mov         bp,sp 
+0003    06                        push        es 
+0004    1E                        push        ds 
+0005    56                        push        si 
+0006    57                        push        di 
+0007    53                        push        bx 
+0008    51                        push        cx 
+0009    9A 00 00 00 00            call        clipblit 
+000E    72 3F                     jb          L$1 
+0010    8B 46 10                  mov         ax,word ptr 0x10[bp] 
+0013    8E D8                     mov         ds,ax 
+0015    8B 46 0C                  mov         ax,word ptr 0xc[bp] 
+0018    8B 5E 12                  mov         bx,word ptr 0x12[bp] 
+001B    F7 E3                     mul         bx 
+001D    8B 5E 0A                  mov         bx,word ptr 0xa[bp] 
+0020    B1 03                     mov         cl,0x03 
+0022    D3 EB                     shr         bx,cl 
+0024    01 D8                     add         ax,bx 
+0026    01 46 0E                  add         word ptr 0xe[bp],ax 
+0029    C4 7E 18                  les         di,dword ptr 0x18[bp] 
+002C    8B 46 16                  mov         ax,word ptr 0x16[bp] 
+002F    8B 5E 1C                  mov         bx,word ptr 0x1c[bp] 
+0032    F7 E3                     mul         bx 
+0034    01 C7                     add         di,ax 
+0036    03 7E 14                  add         di,word ptr 0x14[bp] 
+0039    89 7E 18                  mov         word ptr 0x18[bp],di 
+003C    8A 4E 0A                  mov         cl,byte ptr 0xa[bp] 
+003F    80 E1 07                  and         cl,0x07 
+0042    B2 80                     mov         dl,0x80 
+0044    D2 EA                     shr         dl,cl 
+0046    8A 46 1E                  mov         al,byte ptr 0x1e[bp] 
+0049    8A 5E 20                  mov         bl,byte ptr 0x20[bp] 
+004C    E9 34 00                  jmp         L$6 
+004F                          L$1:
+004F    E9 43 00                  jmp         L$8 
+0052                          L$2:
+0052    8B 4E 06                  mov         cx,word ptr 0x6[bp] 
+0055    88 D6                     mov         dh,dl 
+0057    8B 76 0E                  mov         si,word ptr 0xe[bp] 
+005A    8B 7E 18                  mov         di,word ptr 0x18[bp] 
+005D    8A 24                     mov         ah,byte ptr [si] 
+005F    46                        inc         si 
+0060                          L$3:
+0060    84 F4                     test        ah,dh 
+0062    75 0C                     jne         L$4 
+0064    88 1D                     mov         byte ptr [di],bl 
+0066    47                        inc         di 
+0067    D0 EE                     shr         dh,0x01 
+0069    74 20                     je          L$7 
+006B    E2 F3                     loop        L$3 
+006D    E9 07 00                  jmp         L$5 
+0070                          L$4:
+0070    AA                        stosb       
+0071    D0 EE                     shr         dh,0x01 
+0073    74 16                     je          L$7 
+0075    E2 E9                     loop        L$3 
+0077                          L$5:
+0077    8B 4E 12                  mov         cx,word ptr 0x12[bp] 
+007A    01 4E 0E                  add         word ptr 0xe[bp],cx 
+007D    8B 4E 1C                  mov         cx,word ptr 0x1c[bp] 
+0080    01 4E 18                  add         word ptr 0x18[bp],cx 
+0083                          L$6:
+0083    FF 4E 08                  dec         word ptr 0x8[bp] 
+0086    78 0D                     js          L$8 
+0088    E9 C7 FF                  jmp         L$2 
+008B                          L$7:
+008B    8A 24                     mov         ah,byte ptr [si] 
+008D    46                        inc         si 
+008E    B6 80                     mov         dh,0x80 
+0090    E2 CE                     loop        L$3 
+0092    E9 E2 FF                  jmp         L$5 
+0095                          L$8:
+0095    59                        pop         cx 
+0096    5B                        pop         bx 
+0097    5F                        pop         di 
+0098    5E                        pop         si 
+0099    1F                        pop         ds 
+009A    07                        pop         es 
+009B    89 EC                     mov         sp,bp 
+009D    5D                        pop         bp 
+009E    CB                        retf        
+
+Routine Size: 159 bytes,    Routine Base: _TEXT + 0000
+
+No disassembly errors
+
+Segment: _DATA PARA USE16 00000000 bytes
+
+Segment: CONST PARA USE16 00000000 bytes
+
+Segment: _BSS PARA USE16 00000000 bytes
+
+BSS Size: 0 bytes
+

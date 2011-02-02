@@ -1,0 +1,267 @@
+/* generated with makemenu */
+#include "jimk.h"
+#include "flicmenu.h"
+
+
+/*** Display Functions ***/
+extern ccorner_text(), ncorner_text();
+
+
+/*** Select Functions ***/
+extern toggle_group(), change_mode();
+
+
+/*** Button Data ***/
+struct flicmenu mum_toa_sel = {
+	NONEXT,
+	NOCHILD,
+	244, 185, 66, 10,
+	"toall",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu mum_tos_sel = {
+	&mum_toa_sel,
+	NOCHILD,
+	244, 172, 66, 10,
+	"tosegment",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu mum_tof_sel = {
+	&mum_tos_sel,
+	NOCHILD,
+	244, 159, 66, 10,
+	"toframe",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu mum_com_sel = {
+	&mum_tof_sel,
+	NOCHILD,
+	160, 185, 53, 10,
+	"complete",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu mum_out_sel = {
+	&mum_com_sel,
+	NOCHILD,
+	160, 172, 53, 10,
+	"outslow",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu mum_ins_sel = {
+	&mum_out_sel,
+	NOCHILD,
+	160, 159, 53, 10,
+	"inslow",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu mum_rev_sel = {
+	&mum_ins_sel,
+	NOCHILD,
+	88, 185, 59, 10,
+	"reverse",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu mum_pin_sel = {
+	&mum_rev_sel,
+	NOCHILD,
+	88, 172, 59, 10,
+	"ping-pong",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu mum_sti_sel = {
+	&mum_pin_sel,
+	NOCHILD,
+	88, 159, 59, 10,
+	"still",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu mum_ok_sel = {
+	&mum_sti_sel,
+	NOCHILD,
+	9, 185, 48, 10,
+	"ok",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu mum_pre_sel = {
+	&mum_ok_sel,
+	NOCHILD,
+	9, 172, 48, 10,
+	"preview",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu mum_can_sel = {
+	&mum_pre_sel,
+	NOCHILD,
+	9, 159, 48, 10,
+	"cancel",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu mum_tse_sel = {
+	&mum_can_sel,
+	NOCHILD,
+	4, 144, 311, 10,
+	"tsegment",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu mum_cco_sel = {
+	&mum_tse_sel,
+	NOCHILD,
+	305, 133, 10, 8,
+	"ccolor",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu mum_bru_sel = {
+	&mum_cco_sel,
+	NOCHILD,
+	288, 133, 10, 8,
+	"brush",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu mum_kmo_sel = {
+	&mum_bru_sel,
+	NOCHILD,
+	272, 133, 10, 8,
+	"kmode",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu mum_smo_sel = {
+	&mum_kmo_sel,
+	NOCHILD,
+	257, 133, 10, 8,
+	"smode",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu mum_fmo_sel = {
+	&mum_smo_sel,
+	NOCHILD,
+	242, 133, 10, 8,
+	"fmode",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu mum_mmo_sel = {
+	&mum_fmo_sel,
+	NOCHILD,
+	227, 133, 10, 8,
+	"mmode",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu mum_ink_sel = {
+	&mum_mmo_sel,
+	NOCHILD,
+	184, 133, 38, 8,
+	"ink",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu mum_min_sel = {
+	&mum_ink_sel,
+	NOCHILD,
+	98, 133, 83, 8,
+	"minitime",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu mum_tit_sel = {
+	&mum_min_sel,
+	NOCHILD,
+	4, 133, 91, 8,
+	"title",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu mum_men_sel = {
+	&mum_tit_sel,
+	NOCHILD,
+	130, 319, 69, 0,
+	"menu",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};

@@ -1,0 +1,18 @@
+Cropper
+	About
+	dotdotdot
+	Quit
+FLICS
+	lam Load AMIGA 
+	lst Load ST 
+	lfl Load FLIC  
+	sfl Save FLIC
+	vfl View
+PICS
+	lta Load TARGA
+	lam Load AMIGA
+	lst Load ST
+	lma Load Macintosh
+	lpc Load PC
+	lgi Load GIF
+	sgi Save Gif

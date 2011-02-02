@@ -1,0 +1,52 @@
+
+CFLAGS= -Z -O -w-par -wstv -c -ml -I$(INCLUDE) -d
+
+.c.obj:
+	tcc $(CFLAGS) $*.c
+.asm.obj:
+	masm /Ml $*.asm;
+
+#.c.obj:
+#	wcc386 $*.c /c
+
+O= a1blit.obj a2blit.obj a3d.obj a3ddat.obj a3dpull.obj alt.obj arctan.obj \
+auto.obj autoseg.obj backward.obj \
+bfile.obj blit8.obj blue.obj browse.obj brush.obj \
+cblock.obj circle.obj cel.obj cfont.obj choices.obj \
+cleanup.obj cline.obj clipit.obj \
+closestc.obj cluster.obj colorave.obj commonst.obj comp.obj comprs.obj \
+config.obj cpack.obj csort.obj cthread.obj cursorda.obj \
+decoder.obj diag.obj diskerr.obj dissolve.obj dosstuff.obj \
+drawmode.obj ellipse.obj emmchek.obj \
+fccomp.obj feelmenu.obj filemenu.obj filedata.obj files.obj \
+findfree.obj fli.obj flood.obj freem.obj \
+gel.obj geometry.obj gfx.obj gif.obj globals.obj grid.obj \
+hlstorgb.obj init.obj initcmap.obj input.obj int.obj \
+jfile.obj lccomp.obj \
+onepal.obj options.obj palet2.obj palpull.obj peekpoke.obj pentools.obj \
+polytool.obj pstamp.obj pull.obj qnumber.obj quickdat.obj \
+macro.obj main.obj MAINPULL.OBJ marqi.obj mask.obj memory.obj \
+morfdata.obj morfface.obj morfmenu.obj morfobj.obj morfpull.obj \
+multimen.obj names.obj overlay.obj random.obj render.obj \
+rfont.obj rotate.obj savefli.obj savepic.obj \
+scanedge.obj screen.obj scroller.obj \
+seeme.obj seemenu.obj selbrush.obj sep.obj \
+shrink5.obj sintab.obj sixhi.obj \
+skip.obj slider.obj spiral.obj splice.obj spline.obj \
+sqrroot.obj status.obj stretch.obj stringq.obj summa.obj \
+tablet.obj \
+tblit8.obj tempflx.obj textbox.obj textedit.obj textwind.obj \
+thikline.obj time.obj timemenu.obj title.obj \
+tmove8.obj truecolor.obj tseg.obj \
+tween.obj ublit8.obj unbrun.obj un5brun.obj \
+vip.obj vpaint.obj vpsubs.obj \
+wacom.obj window.obj wordwrap.obj writefli.obj \
+zoom.obj zoomblit.obj zoom4bli.obj
+
+fast: $(O)
+	tlink $(LIB)c0l @linkit, v, v, $(LIB)cl
+
+compile: $(O)
+	@echo All compiled!
+
+

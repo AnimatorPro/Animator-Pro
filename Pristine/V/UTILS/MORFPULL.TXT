@@ -1,0 +1,36 @@
+AaMorfMenu
+	AaMorfSel1
+	BbMorfSel1
+	CcMorfSel1
+	DdMorfSel1
+	EeMorfSel1
+	FfMorfSel1
+	GgMorfSel1
+	HhMorfSel1
+BbMorfMenu
+	AaMorfSel2
+	BbMorfSel2
+	CcMorfSel2
+	DdMorfSel2
+	EeMorfSel2
+	FfMorfSel2
+	GgMorfSel2
+	HhMorfSel2
+CcMorfMenu
+	AaMorfSel3
+	BbMorfSel3
+	CcMorfSel3
+	DdMorfSel3
+	EeMorfSel3
+	FfMorfSel3
+	GgMorfSel3
+	HhMorfSel3
+DdMorfMenu
+	AaMorfSel4
+	BbMorfSel4
+	CcMorfSel4
+	DdMorfSel4
+	EeMorfSel4
+	FfMorfSel4
+	GgMorfSel4
+	HhMorfSel4

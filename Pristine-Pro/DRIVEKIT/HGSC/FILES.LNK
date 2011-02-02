@@ -1,0 +1,9 @@
+device.obj,
+raster.obj,
+hgsmodep.obj,
+hgsdots.obj,
+hgssegs.obj,
+hgslines.obj,
+hgsrects.obj,
+hgsdcomp.obj,
+maskblit.obj

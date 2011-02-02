@@ -1,0 +1,25 @@
+menu 0 130 319 69
+title 4 133 91 8
+minitime 98 133 83 8
+ink 184 133 38 8
+mmode 227 133 10 8
+fmode 242 133 10 8
+smode 257 133 10 8
+kmode 272 133 10 8
+brush 288 133 10 8
+ccolor 305 133 10 8
+tsegment 4 144 311 10
+cancel 9 159 48 10
+preview 9 172 48 10
+ok 9 185 48 10
+still 88 159 59 10
+ping-pong 88 172 59 10
+reverse 88 185 59 10
+inslow 160 159 53 10
+outslow 160 172 53 10
+complete 160 185 53 10
+toframe 244 159 66 10
+tosegment 244 172 66 10
+toall 244 185 66 10
+
+

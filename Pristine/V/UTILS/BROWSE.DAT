@@ -1,0 +1,311 @@
+/* generated with makemenu */
+#include "jimk.h"
+#include "flicmenu.h"
+
+
+/*** Display Functions ***/
+extern ccorner_text(), ncorner_text();
+
+
+/*** Select Functions ***/
+extern toggle_group(), change_mode();
+
+
+/*** Button Data ***/
+struct flicmenu bro_pat_sel = {
+	NONEXT,
+	NOCHILD,
+	213, 183, 102, 10,
+	"path",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu bro_tpa_sel = {
+	&bro_pat_sel,
+	NOCHILD,
+	181, 185, 29, 6,
+	"tpath",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu bro_jdv_sel = {
+	&bro_tpa_sel,
+	NOCHILD,
+	303, 171, 12, 8,
+	"jdv",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu bro_kdv_sel = {
+	&bro_jdv_sel,
+	NOCHILD,
+	288, 171, 12, 8,
+	"kdv",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu bro_jdv_sel = {
+	&bro_kdv_sel,
+	NOCHILD,
+	273, 171, 12, 8,
+	"jdv",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu bro_idv_sel = {
+	&bro_jdv_sel,
+	NOCHILD,
+	258, 171, 12, 8,
+	"idv",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu bro_hdv_sel = {
+	&bro_idv_sel,
+	NOCHILD,
+	243, 171, 12, 8,
+	"hdv",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu bro_gdv_sel = {
+	&bro_hdv_sel,
+	NOCHILD,
+	228, 171, 12, 8,
+	"gdv",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu bro_fdv_sel = {
+	&bro_gdv_sel,
+	NOCHILD,
+	213, 171, 12, 8,
+	"fdv",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu bro_edv_sel = {
+	&bro_fdv_sel,
+	NOCHILD,
+	303, 160, 12, 8,
+	"edv",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu bro_ddv_sel = {
+	&bro_edv_sel,
+	NOCHILD,
+	288, 160, 12, 8,
+	"ddv",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu bro_cdv_sel = {
+	&bro_ddv_sel,
+	NOCHILD,
+	273, 160, 12, 8,
+	"cdv",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu bro_bdv_sel = {
+	&bro_cdv_sel,
+	NOCHILD,
+	258, 160, 12, 8,
+	"bdv",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu bro_adv_sel = {
+	&bro_bdv_sel,
+	NOCHILD,
+	243, 160, 12, 8,
+	"adv",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu bro_roo_sel = {
+	&bro_adv_sel,
+	NOCHILD,
+	228, 160, 12, 8,
+	"rootd",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu bro_upd_sel = {
+	&bro_roo_sel,
+	NOCHILD,
+	213, 160, 12, 8,
+	"upd",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu bro_tdr_sel = {
+	&bro_upd_sel,
+	NOCHILD,
+	175, 161, 35, 6,
+	"tdrive",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu bro_cpi_sel = {
+	&bro_tdr_sel,
+	NOCHILD,
+	103, 156, 65, 41,
+	"cpic",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu bro_can_sel = {
+	&bro_cpi_sel,
+	NOCHILD,
+	53, 189, 44, 8,
+	"cancel",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu bro_tna_sel = {
+	&bro_can_sel,
+	NOCHILD,
+	51, 176, 48, 6,
+	"tname",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu bro_del_sel = {
+	&bro_tna_sel,
+	NOCHILD,
+	4, 189, 44, 8,
+	"delete",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu bro_inf_sel = {
+	&bro_del_sel,
+	NOCHILD,
+	4, 181, 44, 8,
+	"info",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu bro_vie_sel = {
+	&bro_inf_sel,
+	NOCHILD,
+	4, 173, 44, 8,
+	"view",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu bro_loa_sel = {
+	&bro_vie_sel,
+	NOCHILD,
+	4, 165, 44, 8,
+	"load",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu bro_tit_sel = {
+	&bro_loa_sel,
+	NOCHILD,
+	16, 156, 66, 6,
+	"title",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu bro_tst_sel = {
+	&bro_tit_sel,
+	NOCHILD,
+	0, 150, 319, 3,
+	"tstrip",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu bro_menu = {
+	NONEXT,
+	&bro_tst_sel,
+	0, 150, 319, 49,
+	NOTEXT,
+	gary_menu_back,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};

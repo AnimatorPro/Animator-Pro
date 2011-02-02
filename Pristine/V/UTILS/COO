@@ -1,0 +1,485 @@
+/* generated with makepull */
+#include "jimk.h"
+#include "flicmenu.h"
+
+
+			struct pull oth_sta_pull = {
+				NONEXT,
+				1, 33, 75, 9,
+				NOCHILD,
+				"STATUS",
+				pull_text,
+				0,
+				};
+			struct pull oth_con_pull = {
+				&oth_sta_pull,
+				1, 25, 75, 9,
+				NOCHILD,
+				"CONFIGURE...",
+				pull_text,
+				0,
+				};
+			struct pull oth_mac_pull = {
+				&oth_con_pull,
+				1, 17, 75, 9,
+				NOCHILD,
+				"MACROS...",
+				pull_text,
+				0,
+				};
+			struct pull oth_gri_pull = {
+				&oth_mac_pull,
+				1, 9, 75, 9,
+				NOCHILD,
+				"GRID...",
+				pull_text,
+				0,
+				};
+			struct pull oth_ste_pull = {
+				&oth_gri_pull,
+				1, 1, 75, 9,
+				NOCHILD,
+				"STENCIL...",
+				pull_text,
+				0,
+				};
+		struct pull roth_pull = {
+			NONEXT,
+			-1, 8, 77, 43,
+			&oth_ste_pull,
+			NODATA,
+			pull_oblock,
+			0,
+			};
+	struct pull oth_pull = {
+		NONEXT,
+		270, -1, 48, 8,
+		&roth_pull,
+		"OTHER",
+		pull_text,
+		0,
+		};
+			struct pull blu_fli_pull = {
+				NONEXT,
+				1, 65, 75, 9,
+				NOCHILD,
+				"FLIP 5",
+				pull_text,
+				0,
+				};
+			struct pull blu_fli_pull = {
+				&blu_fli_pull,
+				1, 57, 75, 9,
+				NOCHILD,
+				"FLIP RANGE",
+				pull_text,
+				0,
+				};
+			struct pull blu_nex_pull = {
+				&blu_fli_pull,
+				1, 49, 75, 9,
+				NOCHILD,
+				"NEXT CHANGES",
+				pull_text,
+				0,
+				};
+			struct pull blu_get_pull = {
+				&blu_nex_pull,
+				1, 41, 75, 9,
+				NOCHILD,
+				"GET CHANGES",
+				pull_text,
+				0,
+				};
+			struct pull blu_unh_pull = {
+				&blu_get_pull,
+				1, 33, 75, 9,
+				NOCHILD,
+				"UNHISTORY",
+				pull_text,
+				0,
+				};
+			struct pull blu_his_pull = {
+				&blu_unh_pull,
+				1, 25, 75, 9,
+				NOCHILD,
+				"HISTORY",
+				pull_text,
+				0,
+				};
+			struct pull blu_nex_pull = {
+				&blu_his_pull,
+				1, 17, 75, 9,
+				NOCHILD,
+				"NEXT BLUE",
+				pull_text,
+				0,
+				};
+			struct pull blu_unb_pull = {
+				&blu_nex_pull,
+				1, 9, 75, 9,
+				NOCHILD,
+				"UNBLUE FRAME",
+				pull_text,
+				0,
+				};
+			struct pull blu_blu_pull = {
+				&blu_unb_pull,
+				1, 1, 75, 9,
+				NOCHILD,
+				"BLUE FRAME",
+				pull_text,
+				0,
+				};
+		struct pull rblu_pull = {
+			NONEXT,
+			-1, 8, 77, 75,
+			&blu_blu_pull,
+			NODATA,
+			pull_oblock,
+			0,
+			};
+	struct pull blu_pull = {
+		&oth_pull,
+		228, -1, 42, 8,
+		&rblu_pull,
+		"BLUE",
+		pull_text,
+		0,
+		};
+			struct pull cel_fil_pull = {
+				NONEXT,
+				1, 81, 63, 9,
+				NOCHILD,
+				"FILES...",
+				pull_text,
+				0,
+				};
+			struct pull cel_fre_pull = {
+				&cel_fil_pull,
+				1, 73, 63, 9,
+				NOCHILD,
+				"FREE CEL",
+				pull_text,
+				0,
+				};
+			struct pull cel_opt_pull = {
+				&cel_fre_pull,
+				1, 65, 63, 9,
+				NOCHILD,
+				"OPTIONS...",
+				pull_text,
+				0,
+				};
+			struct pull cel_mas_pull = {
+				&cel_opt_pull,
+				1, 57, 63, 9,
+				NOCHILD,
+				"MASK",
+				pull_text,
+				0,
+				};
+			struct pull cel_rot_pull = {
+				&cel_mas_pull,
+				1, 49, 63, 9,
+				NOCHILD,
+				"ROTATE",
+				pull_text,
+				0,
+				};
+			struct pull cel_str_pull = {
+				&cel_rot_pull,
+				1, 41, 63, 9,
+				NOCHILD,
+				"STRETCH",
+				pull_text,
+				0,
+				};
+			struct pull cel_tra_pull = {
+				&cel_str_pull,
+				1, 33, 63, 9,
+				NOCHILD,
+				"TRANSLATE",
+				pull_text,
+				0,
+				};
+			struct pull cel_bel_pull = {
+				&cel_tra_pull,
+				1, 25, 63, 9,
+				NOCHILD,
+				"BELOW",
+				pull_text,
+				0,
+				};
+			struct pull cel_pas_pull = {
+				&cel_bel_pull,
+				1, 17, 63, 9,
+				NOCHILD,
+				"PASTE",
+				pull_text,
+				0,
+				};
+			struct pull cel_get_pull = {
+				&cel_pas_pull,
+				1, 9, 63, 9,
+				NOCHILD,
+				"GET",
+				pull_text,
+				0,
+				};
+			struct pull cel_cli_pull = {
+				&cel_get_pull,
+				1, 1, 63, 9,
+				NOCHILD,
+				"CLIP",
+				pull_text,
+				0,
+				};
+		struct pull rcel_pull = {
+			NONEXT,
+			-1, 8, 65, 91,
+			&cel_cli_pull,
+			NODATA,
+			pull_oblock,
+			0,
+			};
+	struct pull cel_pull = {
+		&blu_pull,
+		192, -1, 36, 8,
+		&rcel_pull,
+		"CEL",
+		pull_text,
+		0,
+		};
+			struct pull alt_fre_pull = {
+				NONEXT,
+				1, 33, 33, 9,
+				NOCHILD,
+				"FREE",
+				pull_text,
+				0,
+				};
+			struct pull alt_vie_pull = {
+				&alt_fre_pull,
+				1, 25, 33, 9,
+				NOCHILD,
+				"VIEW",
+				pull_text,
+				0,
+				};
+			struct pull alt_pas_pull = {
+				&alt_vie_pull,
+				1, 17, 33, 9,
+				NOCHILD,
+				"PASTE",
+				pull_text,
+				0,
+				};
+			struct pull alt_swa_pull = {
+				&alt_pas_pull,
+				1, 9, 33, 9,
+				NOCHILD,
+				"SWAP",
+				pull_text,
+				0,
+				};
+			struct pull alt_cli_pull = {
+				&alt_swa_pull,
+				1, 1, 33, 9,
+				NOCHILD,
+				"CLIP",
+				pull_text,
+				0,
+				};
+		struct pull ralt_pull = {
+			NONEXT,
+			-1, 8, 35, 43,
+			&alt_cli_pull,
+			NODATA,
+			pull_oblock,
+			0,
+			};
+	struct pull alt_pull = {
+		&cel_pull,
+		156, -1, 36, 8,
+		&ralt_pull,
+		"ALT",
+		pull_text,
+		0,
+		};
+			struct pull fra_fil_pull = {
+				NONEXT,
+				1, 33, 51, 9,
+				NOCHILD,
+				"FILES...",
+				pull_text,
+				0,
+				};
+			struct pull fra_sep_pull = {
+				&fra_fil_pull,
+				1, 25, 51, 9,
+				NOCHILD,
+				"SEPARATE",
+				pull_text,
+				0,
+				};
+			struct pull fra_set_pull = {
+				&fra_sep_pull,
+				1, 17, 51, 9,
+				NOCHILD,
+				"SET",
+				pull_text,
+				0,
+				};
+			struct pull fra_res_pull = {
+				&fra_set_pull,
+				1, 9, 51, 9,
+				NOCHILD,
+				"RESTORE",
+				pull_text,
+				0,
+				};
+			struct pull fra_cle_pull = {
+				&fra_res_pull,
+				1, 1, 51, 9,
+				NOCHILD,
+				"CLEAR",
+				pull_text,
+				0,
+				};
+		struct pull rfra_pull = {
+			NONEXT,
+			-1, 8, 53, 43,
+			&fra_cle_pull,
+			NODATA,
+			pull_oblock,
+			0,
+			};
+	struct pull fra_pull = {
+		&alt_pull,
+		108, -1, 48, 8,
+		&rfra_pull,
+		"FRAME",
+		pull_text,
+		0,
+		};
+			struct pull vid_fil_pull = {
+				NONEXT,
+				1, 49, 75, 9,
+				NOCHILD,
+				"FILES...",
+				pull_text,
+				0,
+				};
+			struct pull vid_eff_pull = {
+				&vid_fil_pull,
+				1, 41, 75, 9,
+				NOCHILD,
+				"EFFECTS...",
+				pull_text,
+				0,
+				};
+			struct pull vid_opt_pull = {
+				&vid_eff_pull,
+				1, 33, 75, 9,
+				NOCHILD,
+				"OPTICS...",
+				pull_text,
+				0,
+				};
+			struct pull vid_spl_pull = {
+				&vid_opt_pull,
+				1, 25, 75, 9,
+				NOCHILD,
+				"SPLICE...",
+				pull_text,
+				0,
+				};
+			struct pull vid_com_pull = {
+				&vid_spl_pull,
+				1, 17, 75, 9,
+				NOCHILD,
+				"COMPOSITE...",
+				pull_text,
+				0,
+				};
+			struct pull vid_bro_pull = {
+				&vid_com_pull,
+				1, 9, 75, 9,
+				NOCHILD,
+				"BROWSE...",
+				pull_text,
+				0,
+				};
+			struct pull vid_new_pull = {
+				&vid_bro_pull,
+				1, 1, 75, 9,
+				NOCHILD,
+				"NEW",
+				pull_text,
+				0,
+				};
+		struct pull rvid_pull = {
+			NONEXT,
+			-1, 8, 77, 59,
+			&vid_new_pull,
+			NODATA,
+			pull_oblock,
+			0,
+			};
+	struct pull vid_pull = {
+		&fra_pull,
+		60, -1, 48, 8,
+		&rvid_pull,
+		"VIDEO",
+		pull_text,
+		0,
+		};
+			struct pull sys_qui_pull = {
+				NONEXT,
+				1, 17, 75, 9,
+				NOCHILD,
+				"QUIT",
+				pull_text,
+				0,
+				};
+			struct pull sys_---_pull = {
+				&sys_qui_pull,
+				1, 9, 75, 9,
+				NOCHILD,
+				"------------",
+				pull_text,
+				0,
+				};
+			struct pull sys_abo_pull = {
+				&sys_---_pull,
+				1, 1, 75, 9,
+				NOCHILD,
+				"ABOUT VPAINT",
+				pull_text,
+				0,
+				};
+		struct pull rsys_pull = {
+			NONEXT,
+			-1, 8, 77, 27,
+			&sys_abo_pull,
+			NODATA,
+			pull_oblock,
+			0,
+			};
+	struct pull sys_pull = {
+		&vid_pull,
+		6, -1, 54, 8,
+		&rsys_pull,
+		"SYSTEM",
+		pull_text,
+		0,
+		};
+struct pull root_pull = {
+	NONEXT,
+	0, 0, 320, 8,
+	&sys_pull,
+	NODATA,
+	pull_block,
+	0,
+	};

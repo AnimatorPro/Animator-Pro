@@ -1,0 +1,13 @@
+compbrun.obj,
+complcc.obj,
+compskip.obj,
+fccomp.obj,
+flicomp.obj,
+flilo.obj,
+jfwritos.obj,
+membcomp.obj,
+membcont.obj,
+membcopy.obj,
+membsame.obj,
+memwcomp.obj,
+ptrenorm.obj

@@ -1,0 +1,20 @@
+menu 64 60 200 84
+move 74 65 50 19
+ttag 137 64 123 8
+tsli 137 74 123 10
+still_ends 68 89 90 8
+overlap_ends 158 89 102 8
+cut 68 101 56 8
+venetian 124 101 56 8
+fade out 68 109 56 8
+dissolve 124 109 56 8
+wipe 68 117 56 8
+circle_wipe 124 117 56 8
+ex1 68 125 56 8
+ex2 124 125 56 8
+ex3 68 133 56 8
+ex4 124 133 56 8
+start 191 105 63 8
+end 191 113 63 8
+ok 185 126 24 10
+cancel 214 126 24 10

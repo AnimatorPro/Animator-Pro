@@ -1,0 +1,14 @@
+
+CFLAGS= -Z -O -w-par -wstv -c -ml -Ic:\tc\include -d
+
+.c.obj:
+	tcc $(CFLAGS) $*.c
+.asm.obj:
+	masm /Ml $*.asm;
+
+O= comp.obj quickfli.obj int.obj peekpoke.obj unbrun.obj jfile.obj fli.obj
+
+
+fast: $(O)
+	tlink c:\tc\c0l @linkit, quickfli, quickfli, c:\tc\cl
+

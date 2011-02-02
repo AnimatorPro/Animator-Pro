@@ -1,0 +1,24 @@
+
+Hello -
+	this contains the minimal source code needed to play back a FLI file.
+We'll soon be setting up a way to get this and some support through
+Autodesk, but in the meantime I hope you can figure it out. 
+
+	Right now this compiles with Turbo C and assembles with Microsoft Masm.
+I've included .OBJ files in case it's a problem to get Masm.  The only
+file you should need to customize is Quickfli.c.  The source code will
+look better if you convince your text editor that a tab is the same as
+four spaces.  
+
+
+	Anyways good luck.  
+
+
+
+	Jim Kent
+	Dancing Flame
+	3312 16th St.
+	San Francisco, CA 94114
+	(415) 861-6119
+
+

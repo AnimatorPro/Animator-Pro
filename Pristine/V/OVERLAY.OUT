@@ -1,0 +1,758 @@
+Helpful overlay info I hope...
+a3d.c depends on:
+	jfile.c because of jexists
+	a3ddat.c because of a3d_disables
+	a3dpull.c because of a3d_pull_disables
+	feelmenu.c because of sub_menu_loop
+	zoom.c because of rezoom
+	names.c because of list_el
+	seemenu.c because of draw_sel
+	input.c because of wait_click
+	window.c because of unundo
+	polytool.c because of poly_nopoints
+	filemenu.c because of get_filename
+	auto.c because of doauto
+	freem.c because of pop_inks
+	pull.c because of draw_mp
+	options.c because of zero_sl
+	slider.c because of feel_qslider
+	gfx.c because of rscale_by
+	scanedge.c because of find_pminmax
+	textbox.c because of continu_line
+a3ddat.c depends on:
+	jfile.c because of jexists
+a3dpull.c depends on:
+	jfile.c because of jexists
+	pull.c because of pull_text
+alt.c depends on:
+	gfx.c because of see_cmap
+	window.c because of zoom_it
+	savefli.c because of dirties
+	screen.c because of free_screen
+	jfile.c because of jdelete
+arctan.c - independent!
+auto.c depends on:
+	multimen.c because of multimenu
+	vpaint.c because of check_dfree
+	input.c because of wait_click
+	gfx.c because of see_cmap
+	autoseg.c because of dseg
+	savefli.c because of cleans
+	qnumber.c because of qreq_number
+	window.c because of save_undo
+	marqi.c because of swap_box
+	choices.c because of qchoice
+	fli.c because of fli_abs_tseek
+	screen.c because of free_screen
+	zoom.c because of rezoom
+	pull.c because of draw_mp
+	freem.c because of pop_most
+autoseg.c depends on:
+	savefli.c because of scrub_cur_frame
+	auto.c because of find_seg_range
+backward.c depends on:
+	filemenu.c because of get_filename
+	savefli.c because of scrub_cur_frame
+	jfile.c because of jdelete
+	memory.c because of freemem
+	fli.c because of fli_abs_tseek
+	freem.c because of pop_most
+	gfx.c because of see_cmap
+	zoom.c because of rezoom
+bfile.c depends on:
+	jfile.c because of gentle_close
+	memory.c because of gentle_freemem
+blue.c depends on:
+	freem.c because of pop_screen
+	cel.c because of show_cel_a_sec
+	fli.c because of unfli
+	gfx.c because of see_cmap
+	time.c because of insert_frames
+	savefli.c because of dirties
+	zoom.c because of rezoom
+	auto.c because of uzauto
+browse.c depends on:
+	fli.c because of load_fli
+	filemenu.c because of hook_devices
+	dosstuff.c because of make_current_drawer
+	feelmenu.c because of nod_do_menu
+	window.c because of unundo
+	gfx.c because of see_cmap
+	freem.c because of pop_most
+	zoom.c because of rezoom
+brush.c - independent!
+cel.c depends on:
+	pull.c because of draw_mp
+	savefli.c because of dirties
+	truecolo.c because of fitting_cmap
+	marqi.c because of cut_out
+	window.c because of save_undo
+	input.c because of wait_a_jiffy
+	memory.c because of freemem
+cfont.c depends on:
+	filemenu.c because of make_path_name
+	jfile.c because of jexists
+	memory.c because of freemem
+choices.c depends on:
+	feelmenu.c because of do_menu
+circle.c - independent!
+cleanup.c depends on:
+	tempflx.c because of close_tflx
+	dosstuff.c because of change_dir
+	summa.c because of cleanup_summa
+cline.c - independent!
+cluster.c depends on:
+	feelmenu.c because of change_mode
+	textbox.c because of continu_line
+	marqi.c because of rub_line
+	names.c because of reverse_bytes
+	seemenu.c because of draw_sel
+	gfx.c because of exchange_bytes
+	palet2.c because of refit_vf
+	qnumber.c because of qreq_number
+	pull.c because of draw_mp
+	input.c because of wait_input
+	window.c because of restore_top_bar
+	quickdat.c because of predraw
+	jfile.c because of write_gulp
+	auto.c because of pmhmpauto
+	memory.c because of begmem
+comprs.c depends on:
+	memory.c because of gentle_freemem
+config.c depends on:
+	choices.c because of qchoice
+	vpaint.c because of config_scratch
+	jfile.c because of jclose
+	dosstuff.c because of make_dir
+cpack.c - independent!
+csort.c depends on:
+	auto.c because of hmpauto
+	memory.c because of freemem
+	freem.c because of pop_most
+	pull.c because of draw_mp
+cthread.c depends on:
+	truecolo.c because of color_dif
+cursorda.c - independent!
+debug.c depends on:
+	jfile.c because of cant_create
+decoder.c depends on:
+	memory.c because of gentle_freemem
+diskerr.c - independent!
+dissolve.c depends on:
+	sqrroot.c because of calc_distance
+dosstuff.c depends on:
+	memory.c because of ptr_seg
+drawmode.c depends on:
+	seeme.c because of dcorner_text
+	options.c because of new_percent
+	seemenu.c because of draw_sel
+	names.c because of list_el
+ellipse.c depends on:
+	window.c because of save_undo
+	arctan.c because of arctan
+	sqrroot.c because of calc_distance
+	input.c because of wait_input
+	marqi.c because of copydot
+	polytool.c because of maybe_finish_polyt
+fccomp.c - independent!
+feelmenu.c depends on:
+	seemenu.c because of draw_sel
+	palet2.c because of a_break_key
+	window.c because of in_control_space
+	input.c because of vsync_input
+	seeme.c because of runder_menu
+	zoom.c because of rezoom
+	pull.c because of draw_mp
+filedata.c depends on:
+	feelmenu.c because of bottom_menu
+	scroller.c because of print_list
+	stringq.c because of see_string_req
+	seeme.c because of ccorner_text
+	filemenu.c because of new_dev
+filemenu.c depends on:
+	zoom.c because of rezoom
+	names.c because of suffix_in
+	input.c because of get80hz
+	scroller.c because of sel_name
+	feelmenu.c because of close_menu
+	stringq.c because of feel_string_req
+	dosstuff.c because of make_current_drawer
+	seemenu.c because of hi_group
+files.c depends on:
+	feelmenu.c because of do_menu
+findfree.c depends on:
+	names.c because of sort_array
+	tempflx.c because of frame1_foff
+	memory.c because of freemem
+fli.c depends on:
+	pull.c because of draw_mp
+	tempflx.c because of make_tempflx
+	vpaint.c because of check_dfree
+	vpsubs.c because of kill_seq
+	window.c because of zoom_it
+	memory.c because of gentle_freemem
+	freem.c because of pop_pics
+	jfile.c because of jseek
+	savefli.c because of noroom
+	gfx.c because of clear_form
+	textbox.c because of continu_box
+flood.c - independent!
+freem.c depends on:
+	memory.c because of freemem
+	fli.c because of fli_abs_tseek
+	gfx.c because of see_cmap
+	jfile.c because of jdelete
+	cel.c because of load_cel
+	savepic.c because of save_pic
+gel.c depends on:
+	marqi.c because of pti_input
+	window.c because of save_undo
+	render.c because of render_hline
+	input.c because of check_input
+	memory.c because of gentle_freemem
+	truecolo.c because of free_bhash
+geometry.c depends on:
+	arctan.c because of arctan
+gfx.c depends on:
+	input.c because of wait_sync
+gif.c depends on:
+	comprs.c because of gif_compress_data
+	textbox.c because of continu_box
+	decoder.c because of gif_decoder
+	jfile.c because of truncated
+	memory.c because of pt_to_long
+	bfile.c because of bgetbyte
+globals.c - independent!
+grid.c depends on:
+	choices.c because of qmenu
+hlstorgb.c depends on:
+	gfx.c because of uscale_by
+init.c depends on:
+	vpsubs.c because of init_seq
+	cleanup.c because of config_ints
+	diskerr.c because of init_de
+	dosstuff.c because of get_devices
+	textbox.c because of continu_box
+	summa.c because of init_summa
+	input.c because of init_hr
+initcmap.c depends on:
+	truecolo.c because of color_dif
+input.c depends on:
+	summa.c because of summa_get_input
+	macro.c because of put_macro
+jfile.c depends on:
+	input.c because of check_input
+	gfx.c because of see_cmap
+	textbox.c because of continu_box
+	memory.c because of ptr_seg
+lccomp.c depends on:
+	memory.c because of pt_to_long
+macro.c depends on:
+	filemenu.c because of get_filename
+	jfile.c because of jcopyfile
+	textbox.c because of yes_no_line
+	input.c because of get80hz
+	bfile.c because of bwrite
+	qnumber.c because of qreq_number
+main.c depends on:
+	init.c because of init_sys
+	cleanup.c because of uninit_sys
+	vpsubs.c because of default_settings
+	textbox.c because of continu_box
+	config.c because of rewrite_config
+	freem.c because of check_loaded_screen
+	zoom.c because of init_zoom
+	vpaint.c because of check_dfree
+	pull.c because of draw_mp
+mainpull.c depends on:
+	pull.c because of pull_block
+marqi.c depends on:
+	savefli.c because of dirties
+	circle.c because of ccircle
+	cline.c because of cline
+	names.c because of intabs
+	arctan.c because of arctan
+	sqrroot.c because of calc_distance
+	input.c because of wait_input
+	window.c because of on_menus
+mask.c depends on:
+	pull.c because of draw_mp
+	choices.c because of qmenu
+	jfile.c because of write_gulp
+memory.c depends on:
+	cleanup.c because of unconfig_ints
+	textbox.c because of continu_line
+multimen.c depends on:
+	pull.c because of draw_mp
+	auto.c because of clip_tseg
+	feelmenu.c because of do_menu
+names.c depends on:
+	memory.c because of freemem
+onepal.c depends on:
+	savefli.c because of scrub_cur_frame
+	initcmap.c because of find_colors
+	cpack.c because of pack_cmap
+	memory.c because of freemem
+	auto.c because of dauto
+	freem.c because of pop_most
+	fli.c because of fli_abs_tseek
+	gfx.c because of see_cmap
+	window.c because of save_undo
+options.c depends on:
+	filemenu.c because of get_filename
+	jfile.c because of jcopyfile
+	zoom.c because of rezoom
+	pull.c because of draw_mp
+	feelmenu.c because of change_mode
+	seemenu.c because of draw_sel
+	gel.c because of gel_tool
+	cel.c because of move_tool
+	ellipse.c because of ovalf_tool
+	sep.c because of sep_tool
+	spiral.c because of spiral_tool
+	polytool.c because of starf_tool
+	pentools.c because of streak_tool
+	textedit.c because of text_tool
+overlay.c depends on:
+	truecolo.c because of compromise_cmap
+	cel.c because of move_cel
+	textbox.c because of yes_no_line
+	savepic.c because of load_some_pic
+	gfx.c because of copy_form
+	savefli.c because of sub_cur_frame
+	fli.c because of unfli
+	memory.c because of gentle_freemem
+	screen.c because of free_screen
+	jfile.c because of jclose
+	render.c because of cfit_rblit_cel
+	filemenu.c because of get_filename
+	drawmode.c because of ink_word
+	choices.c because of qchoice
+	freem.c because of pop_inks
+	zoom.c because of rezoom
+palet2.c depends on:
+	palpull.c because of pal_disables
+	input.c because of wait_sync
+	initcmap.c because of visible_cmap
+	hlstorgb.c because of rgb_to_hls
+	zoom.c because of rezoom
+	truecolo.c because of nz_fitting_cmap
+	filemenu.c because of get_filename
+	gfx.c because of see_cmap
+	auto.c because of uzauto
+	memory.c because of freemem
+	textbox.c because of continu_line
+	jfile.c because of write_gulp
+	vpsubs.c because of undo_pic
+	window.c because of save_undo
+	savefli.c because of dirties
+	pull.c because of draw_mp
+	multimen.c because of go_multi
+	feelmenu.c because of change_mode
+	seeme.c because of ccorner_text
+	slider.c because of see_qslider
+	seemenu.c because of grey_block
+	cluster.c because of right_click_pp
+palpull.c depends on:
+	files.c because of go_files
+	csort.c because of cpack
+	palet2.c because of cdefault
+	cluster.c because of cl_blend
+	textbox.c because of yes_no_box
+	onepal.c because of one_palette
+	jfile.c because of jexists
+	pull.c because of pull_text
+pentools.c depends on:
+	sintab.c because of polar
+	random.c because of random
+	thikline.c because of render_line
+	names.c because of intabs
+	sep.c because of edge1
+	input.c because of wait_click
+	flood.c because of fill
+	window.c because of save_undo
+	marqi.c because of swap_box
+	truecolo.c because of cycle_ccolor
+	render.c because of render_frame
+polytool.c depends on:
+	jfile.c because of jdelete
+	bfile.c because of bread
+	sqrroot.c because of calc_distance
+	arctan.c because of arctan
+	names.c because of intabs
+	sintab.c because of itmult
+	input.c because of wait_input
+	marqi.c because of pti_input
+	window.c because of save_undo
+	savefli.c because of dirties
+	spline.c because of hollow_spline
+	scanedge.c because of find_pminmax
+	render.c because of render_xy
+	truecolo.c because of free_render_cashes
+	cline.c because of cline
+	memory.c because of freemem
+pstamp.c depends on:
+	screen.c because of free_screen
+	jfile.c because of truncated
+	fli.c because of not_fli_frame
+	memory.c because of freemem
+pull.c depends on:
+	names.c because of list_el
+	feelmenu.c because of upc_char
+	memory.c because of askmem
+	gfx.c because of draw_frame
+	input.c because of wait_penup
+	initcmap.c because of uncheck_cmap
+	seeme.c because of sdraw_menu
+	window.c because of make_wi_list
+qnumber.c depends on:
+	seemenu.c because of draw_sel
+	names.c because of to_upper
+	wordwrap.c because of wwtext
+	stringq.c because of see_string_req
+	slider.c because of see_qslider
+	seeme.c because of dcorner_text
+	feelmenu.c because of close_menu_bad
+quickdat.c depends on:
+	cluster.c because of get_a_end
+	window.c because of top_text
+	zoom.c because of set_zoom_level
+	vpsubs.c because of mundo_pic
+	fli.c because of mlast_frame
+	timemenu.c because of go_time_menu
+	options.c because of go_dmmenu
+	selbrush.c because of set_pbrush
+	seemenu.c because of ccolor_box
+	palet2.c because of ppalette
+	multimen.c because of go_multi
+	mask.c because of mgo_stencil
+	seeme.c because of ccorner_text
+	feelmenu.c because of toggle_group
+random.c - independent!
+render.c depends on:
+	circle.c because of ccircle
+	thikline.c because of render_line
+	random.c because of random
+	sqrroot.c because of calc_distance
+	window.c because of upd_zoom_dot
+	memory.c because of outta_memory
+	cel.c because of free_cel
+	truecolo.c because of free_bhash
+rfont.c depends on:
+	names.c because of to_upper
+rotate.c depends on:
+	marqi.c because of marqi_poly
+	arctan.c because of arctan
+	gfx.c because of sscale_by
+	input.c because of wait_input
+	stretch.c because of finish_stretch_rot
+	sintab.c because of rotate_points
+	window.c because of zoom_it
+	a3d.c because of otoobig
+	cel.c because of set_zero_clear
+	render.c because of render_blit
+	memory.c because of freemem
+savefli.c depends on:
+	vpsubs.c because of flush_tempflx
+	tempflx.c because of make_tempflx
+	gfx.c because of copy_form
+	window.c because of zoom_it
+	fli.c because of gb_fli_tseek
+	memory.c because of gentle_freemem
+	freem.c because of pop_pics
+	zoom.c because of rezoom
+	writefli.c because of fli_comp_frame
+	findfree.c because of find_free_tflx
+	jfile.c because of jseek
+	textbox.c because of continu_line
+savepic.c depends on:
+	textbox.c because of continu_line
+	names.c because of suffix_in
+	gif.c because of load_gif
+	jfile.c because of jdelete
+scanedge.c depends on:
+	gfx.c because of zero_lots
+	render.c because of render_bitmap_blit
+	memory.c because of freemem
+screen.c depends on:
+	gfx.c because of copy_form
+	memory.c because of freemem
+scroller.c depends on:
+	seeme.c because of a_frame
+	feelmenu.c because of repeat_on_pdn
+	input.c because of wait_input
+	seemenu.c because of draw_sel
+	names.c because of els_in_list
+seeme.c depends on:
+	gfx.c because of draw_frame
+	seemenu.c because of draw_menus
+	initcmap.c because of find_colors
+	memory.c because of askmem
+seemenu.c depends on:
+	quickdat.c because of predraw
+	seeme.c because of mb_ccorner
+selbrush.c depends on:
+	seeme.c because of blacktext
+	slider.c because of feel_qslider
+	feelmenu.c because of do_menu
+	pull.c because of draw_mp
+sep.c depends on:
+	auto.c because of doauto
+	zoom.c because of rezoom
+	marqi.c because of rub_in_place
+	window.c because of dwgetdot
+	input.c because of wait_input
+	vpsubs.c because of in_ctable
+	memory.c because of freemem
+	render.c because of render_dot
+	sqrroot.c because of sqr_root
+	truecolo.c because of color_dif
+sintab.c - independent!
+sixhi.c - independent!
+slider.c depends on:
+	feelmenu.c because of repeat_on_pdn
+	input.c because of wait_input
+	seeme.c because of a_frame
+	seemenu.c because of menu_cursor
+	gfx.c because of uscale_by
+spiral.c depends on:
+	arctan.c because of arctan
+	sqrroot.c because of calc_distance
+	input.c because of wait_input
+	window.c because of restore_top_bar
+	marqi.c because of pti_input
+	names.c because of intabs
+	memory.c because of begmem
+	sintab.c because of polar
+	polytool.c because of poly_last_point
+splice.c depends on:
+	textbox.c because of continu_line
+	screen.c because of free_screen
+	truecolo.c because of true_blends
+	dissolve.c because of diskd_tween
+	memory.c because of freemem
+	writefli.c because of fli_comp_frame
+	choices.c because of qchoice
+	filemenu.c because of get_filename
+	window.c because of save_undo
+	jfile.c because of jclose
+	gfx.c because of copy_form
+	qnumber.c because of qreq_number
+	savefli.c because of sv_fli
+	tempflx.c because of make_tempflx
+	fli.c because of fli_abs_tseek
+	freem.c because of pop_pics
+	zoom.c because of rezoom
+spline.c depends on:
+	render.c because of render_opoly
+	scanedge.c because of fill_concave
+	polytool.c because of linkup_poly
+	memory.c because of gentle_freemem
+sqrroot.c - independent!
+status.c depends on:
+	memory.c because of largest_frag
+	findfree.c because of add_up_frames
+	dosstuff.c because of dfree
+	textbox.c because of continu_box
+stretch.c depends on:
+	marqi.c because of quad9
+	gfx.c because of sscale_by
+	input.c because of wait_input
+	cel.c because of free_cel
+	savefli.c because of dirties
+	rotate.c because of raster_transform
+	window.c because of zoom_it
+stringq.c depends on:
+	seemenu.c because of draw_sel
+	seeme.c because of a_frame
+	feelmenu.c because of in_menu
+	input.c because of reuse_input
+summa.c depends on:
+	gfx.c because of sscale_by
+tempflx.c depends on:
+	writefli.c because of fli_comp_frame
+	freem.c because of maybe_pop_most
+	vpsubs.c because of rethink_settings
+	fli.c because of notafli
+	savefli.c because of cleans
+	memory.c because of gentle_freemem
+	jfile.c because of jclose
+textbox.c depends on:
+	input.c because of wait_penup
+	seeme.c because of box_diag_corner
+	gfx.c because of draw_frame
+	initcmap.c because of find_colors
+	memory.c because of askmem
+textedit.c depends on:
+	dosstuff.c because of change_dir
+	filemenu.c because of remove_suffix
+	config.c because of rewrite_config
+	memory.c because of gentle_freemem
+	marqi.c because of swap_box
+	cfont.c because of free_cfont
+	gfx.c because of color_form
+	window.c because of save_undo
+	jfile.c because of jexists
+	wordwrap.c because of load_text
+	textwind.c because of free_text
+	freem.c because of pop_screen
+	zoom.c because of rezoom
+	pull.c because of draw_mp
+textwind.c depends on:
+	memory.c because of gentle_freemem
+	marqi.c because of some_frame
+	wordwrap.c because of wwtext
+	window.c because of zoom_it
+thikline.c depends on:
+	cline.c because of cline
+	arctan.c because of arctan
+	scanedge.c because of fill_concave
+	render.c because of render_brush
+time.c depends on:
+	stringq.c because of back_copy_bytes
+	tempflx.c because of frame1_foff
+	jfile.c because of copy_in_file
+	findfree.c because of flx_file_hi
+	textbox.c because of yes_no_line
+	writefli.c because of fli_comp_frame
+	memory.c because of gentle_freemem
+	fli.c because of fli_abs_tseek
+	gfx.c because of see_cmap
+	window.c because of save_undo
+	qnumber.c because of qreq_number
+	savefli.c because of scrub_cur_frame
+timemenu.c depends on:
+	auto.c because of clip_tseg
+	names.c because of el_ix
+	textbox.c because of yes_no_line
+	time.c because of insert_frames
+	zoom.c because of rezoom
+	qnumber.c because of qreq_number
+	savefli.c because of scrub_cur_frame
+	gfx.c because of see_cmap
+	window.c because of zoom_it
+	pull.c because of draw_mp
+	seemenu.c because of bcursor
+	fli.c because of mplayit
+	slider.c because of feel_qslider
+	multimen.c because of go_multi
+	feelmenu.c because of hang_child
+	seeme.c because of ccorner_text
+title.c depends on:
+	textbox.c because of continu_box
+	auto.c because of doauto
+	textwind.c because of free_text
+	freem.c because of pop_inks
+	names.c because of tr_string
+	gfx.c because of rscale_by
+	rfont.c because of gftext
+	wordwrap.c because of wwtext
+	render.c because of render_bitmap_blit
+	truecolo.c because of free_render_cashes
+	window.c because of save_undo
+	marqi.c because of cut_cursor
+	pull.c because of draw_mp
+	cfont.c because of free_cfont
+	zoom.c because of rezoom
+	jfile.c because of jexists
+	textedit.c because of qedit_text
+	options.c because of mload_text
+	seeme.c because of left_text
+	feelmenu.c because of change_mode
+truecolo.c depends on:
+	cpack.c because of pack_cmap
+	palet2.c because of in_cmap
+	vpsubs.c because of cluster_count
+	memory.c because of begmem
+tseg.c depends on:
+	names.c because of intabs
+	input.c because of wait_input
+	gfx.c because of rscale_by
+	feelmenu.c because of repeat_on_pdn
+	seemenu.c because of draw_sel
+	timemenu.c because of redraw_range_buttons
+	auto.c because of find_range
+	seeme.c because of ccorner_text
+tween.c depends on:
+	choices.c because of qmenu
+	auto.c because of doauto
+	freem.c because of pop_inks
+	jfile.c because of jcopyfile
+	pull.c because of draw_mp
+	sintab.c because of itmult
+	polytool.c because of render_poly
+	memory.c because of freemem
+vpaint.c depends on:
+	browse.c because of go_browse
+	timemenu.c because of do_time_menu
+	options.c because of qinks
+	title.c because of do_title_menu
+	overlay.c because of qload_overlay
+	splice.c because of qload_splice
+	backward.c because of qsave_backwards
+	sep.c because of separate
+	alt.c because of free_alt
+	stretch.c because of vstretch_cel
+	rotate.c because of vrotate_cel
+	blue.c because of qnext_changes
+	grid.c because of qgrid
+	dosstuff.c because of dfree
+	config.c because of rewrite_config
+	memory.c because of freemem
+	mainpull.c because of disables
+	pull.c because of draw_mp
+	feelmenu.c because of tog_pen
+	palet2.c because of palette
+	auto.c because of clear_pic
+	status.c because of status
+	a3d.c because of go_ado
+	macro.c because of realtime_macro
+	files.c because of go_files
+	choices.c because of qchoice
+	names.c because of suffix_in
+	gif.c because of save_gif
+	savefli.c because of dirties
+	savepic.c because of save_pic
+	cel.c because of show_cel_a_sec
+	mask.c because of load_mask
+	filemenu.c because of get_filename
+	textbox.c because of yes_no_line
+	zoom.c because of unset_zoom
+	jfile.c because of jcopyfile
+	tempflx.c because of open_tempflx
+	fli.c because of fli_abs_tseek
+	gfx.c because of see_cmap
+	vpsubs.c because of kill_seq
+	window.c because of zoom_it
+	input.c because of check_input
+vpsubs.c depends on:
+	freem.c because of pop_pics
+	tempflx.c because of empty_tempflx
+	savefli.c because of dirties
+	pull.c because of draw_mp
+	fli.c because of fli_abs_tseek
+	gfx.c because of see_cmap
+	window.c because of zoom_it
+	zoom.c because of unset_zoom
+	feelmenu.c because of clip_rmove_menu
+	dosstuff.c because of change_dir
+	vpaint.c because of check_cel_options
+window.c depends on:
+	pull.c because of see_pull
+wordwrap.c depends on:
+	textwind.c because of free_text
+	memory.c because of lbegmem
+	jfile.c because of jclose
+	rfont.c because of font_cel_height
+writefli.c depends on:
+	jfile.c because of truncated
+	fccomp.c because of fccomp
+	memory.c because of pt_to_long
+	lccomp.c because of brun
+zoom.c depends on:
+	seemenu.c because of draw_sel
+	gfx.c because of copy_form
+	screen.c because of free_screen
+	window.c because of make_dw
+	choices.c because of qchoice
+	pull.c because of draw_mp

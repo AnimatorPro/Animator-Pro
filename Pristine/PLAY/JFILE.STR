@@ -1,0 +1,3 @@
+#define jfile_100 "Sorry AAPlay can't find:"
+#define jfile_102 "File truncated!"
+#define jfile_103 "File mangled:"

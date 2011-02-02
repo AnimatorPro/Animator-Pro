@@ -1,0 +1,8 @@
+!include ..\inc\make.inc
+
+EXE = vscreen.poe
+OBJ = vscreen.obj
+
+$(EXE): $(OBJ)
+	wlink @poe.lnk FILE $(OBJ) NAME $(EXE)
+

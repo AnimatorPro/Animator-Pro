@@ -1,0 +1,148 @@
+
+(FIXED)         BUG Report from VPAINT Database             BUG #   25709
+browse path too long.
+------------------------------------------------------------------------
+(FIXED)         BUG Report from VPAINT Database             BUG #   25714
+spline too big in do tween.
+------------------------------------------------------------------------
+(Partial Fix)         BUG Report from VPAINT Database             BUG #   25711
+Inaccurate or ambiguous error messages appear in the following instances:
+1.  Attempt to save a file name containing illegal characters.
+Message:  Sorry, AA can't create (file name) Disk write protected?
+
+2.  Save to a directory containing the maximum number of files (112).  
+Message:  Sorry, AA can't create (file name) Disk write protected?
+
+3.  Save to a full disk.  Message:  (file name) File truncated!
+------------------------------------------------------------------------
+(NAB)         BUG Report from VPAINT Database             BUG #   25715
+When using the Cross-Fade Composite function, adjusting the incoming 
+frame's position will cause only a portion of the resident frame to fade.  
+This can be demonstrated by the following example:
+------------------------------------------------------------------------
+(FIXED)         BUG Report from VPAINT Database             BUG #   25716
+In Browse flics the system will hang while repeatedly attempting to go into 
+the last directory in a path longer than 63 characters.  This happens after 
+the following steps:
+------------------------------------------------------------------------
+(FIXED)         BUG Report from VPAINT Database             BUG #   25718
+With the temp drive full (47k or less available), Previewed images remain on
+the screen after leaving Optics.
+
+To recreate:
+
+1) Select full temp drive.
+2) Load an image.
+3) Create a ten frame flic.
+4) Enter Optics.
+5) Select Flic Element.
+6) Select Spin Small from the Preset Menu.
+
+The previewed image remains on the screen after leaving Preview and Optics.
+------------------------------------------------------------------------
+(FIXED)         BUG Report from VPAINT Database             BUG #   25719
+After rendering 3999 frames for Cycle Draw, Optics or Tweening, additional 
+frames can be inserted.  When over the 4000 frame limit, the system appears 
+to hang when clicking on any of the Multiple Frames buttons on the Frames 
+panel. 
+
+To recreate:
+
+1.  Select Cycle Draw from the Palette menu.
+2.  Draw text in the drawing screen.
+3.  Set the total number of frames to 3999 on the Frames panel.
+4.  Select Cycle from the Arrange menu and render the 3999 frames.
+5.  Save the file.
+6.  Go to the Frames panel and insert additional frames.
+7.  Click on the Multiple Frames button (*2).
+------------------------------------------------------------------------
+(FIXED)         BUG Report from VPAINT Database             BUG #   25720
+Program freezes when rendering a Poly Tween with full VDISK assigned as drive
+for temp files.
+
+To recreate:
+
+Assign VDISK as drive for temp files.
+Leave AA and fill VDISK with files, leaving 26K open.
+Execute AA, and "Scratch Drive" message appears.  Select Cancel.
+Create 50 frames.
+Load a gif.
+Draw a poly, set Tween Start.
+Draw a poly, set Tween End.
+"Scratch Drive" comes up, select Cancel.
+The program freezes while displaying the "Select Drive For Temp Files"
+menu.
+------------------------------------------------------------------------
+(FIXED)         BUG Report from VPAINT Database             BUG #   25721
+When attempting to save a picture file with an extension other than the 
+default (.GIF), no save occurs.
+
+In the Files Panel select Picture, and then Save.
+In the File Selector click on the file box.  Alter the extension 
+to something other than .GIF .
+Click on Wildcard to change .GIF to *.* .
+Select OK to save.
+The Files Panel reappears, as if a save has occurred.  No save 
+happened.
+
+When conducting this test with Flic, Cel, Palette, or Text selected 
+on the Files Panel, the save is successful.
+------------------------------------------------------------------------
+(FIXED)         BUG Report from VPAINT Database             BUG #   25722
+
+When using the program with a full VDISK assigned as the drive for temporary
+files, the cel buffer is cleared when using Optics.
+
+Assign VDISK with 18K bytes open as drive for temporary files.
+Create 50 frames.
+Load a .GIF and clip a cel.
+Enter Optics and select Cel Element.
+Select Pull Back from the Presets Menu.
+Select Render.  "Not Enough Room on Temp Drive" message appears,   followed 
+by "Sorry AA Can't Find AAT\AATEMP.CEL", follwed by   "Scratch Drive (X): 
+Only Has (X) Bytes Free".
+Cancel and return to the Home Panel.
+
+At this point the cel buffer is empty, and any image on the current frame is
+lost.
+------------------------------------------------------------------------
+(FIXED)         BUG Report from VPAINT Database             BUG #   25723
+Joining two flics with a Venetian Blind Transition lasting 175 frames or 
+more will cause the program to pause for long periods of time while the join
+is being rendered.  The length of the pause is longer when the number of 
+frames in transition is higher.  This happens after the following steps:
+
+1.  Load a flic, then select Join.
+2.  Select Join to Start or End.
+3.  Select Transition, then Venetian Blind.
+4.  Set the number of Frames in Transition to 175.
+
+The program will perform the transition, then appear to pause immediately 
+after the transition for at least 1 minute before continuing through the 
+joined flic.  The resulting flic plays normally.  
+
+A pause will not occur when using a transition of 150 frames or less.
+
+A transition of 200 frames will cause a 4.5 minute pause.  225 frames will 
+cause a 6 minute pause.
+------------------------------------------------------------------------
+(FIXED?)         BUG Report from VPAINT Database             BUG #   25724
+When switching temp drives in response to the "Scratch Drive" 
+error message while work is in progress, certain data and temp files are 
+no longer available.
+
+To recreate this bug, start with a drive for temporary files that is almost 
+full (200-400k available), but not so full that the "Scratch Drive" message 
+appears when entering the program.  Load a flic, draw polys and set tween 
+start and end positions, clip a cel, and create an optics path.  Select 
+use and render.  The "Scratch Drive (X): Only (X) Bytes Available" message 
+appears, followed by the "Choose Drive for Temporary Files" menu.  Select 
+a drive that has more than 1 meg available.  At this point all the poly, 
+tween start and end, cel, and optics path buffers are empty.
+
+I tried this test with both a hard drive and VDISK as the temp drive with 
+the same results.  I also experienced garbled characters being displayed in 
+the "Choose Drive For Temp Files" menu.
+------------------------------------------------------------------------
+
+

@@ -1,0 +1,18 @@
+
+CFLAGS= -O -w-par -wstv -c -ml -Ic:\tc -d
+
+.c.obj:
+	tcc $(CFLAGS) $*.c
+.asm.obj:
+	masm /Ml $*.asm;
+
+O=pullcoms.obj 
+
+pullcoms: $(O)
+	tlink c:\tc\c0l @linkit, pullcoms, pullcoms, c:\tc\emu c:\tc\mathl \
+	c:\tc\cl
+
+compile: $(O)
+	@echo All compiled!
+
+

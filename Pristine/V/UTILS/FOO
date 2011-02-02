@@ -1,0 +1,58 @@
+/* generated with makemenu */
+#include "jimk.h"
+#include "flicmenu.h"
+
+
+/*** Display Functions ***/
+extern ccorner_text(), ncorner_text();
+
+
+/*** Select Functions ***/
+extern toggle_group(), change_mode();
+
+
+/*** Button Data ***/
+struct flicmenu ts_wid_sel = {
+	NONEXT,
+	NOCHILD,
+	289, 144, 26, 10,
+	"width",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu ts_a_sel = {
+	&ts_wid_sel,
+	NOCHILD,
+	274, 145, 10, 8,
+	"a",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu ts_s_sel = {
+	&ts_a_sel,
+	NOCHILD,
+	264, 145, 10, 8,
+	"s",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};
+struct flicmenu ts_f_sel = {
+	&ts_s_sel,
+	NOCHILD,
+	254, 145, 10, 8,
+	"f",
+	NOSEE,
+	NOFEEL,
+	NOGROUP,0,
+	NOKEY,
+	NOOPT,
+	};

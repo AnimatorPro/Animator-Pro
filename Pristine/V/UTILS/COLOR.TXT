@@ -1,0 +1,32 @@
+dummy
+	nothing
+palette
+	*restore
+	*cycle_draw
+	*menu colors
+	*files...
+cluster
+	get_cluster
+	unused_colors
+	box_cluster
+	find_ramp
+	near_colors
+	invert
+	ping-pong
+	reverse
+matrix
+	luma_sort
+	spectrum
+	thread
+	cycle
+	trade_clusters
+value
+	squeeze
+	ramp
+	tint
+	negative
+	use cel
+	default
+	cut
+	paste
+	blend

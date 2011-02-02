@@ -1,0 +1,8 @@
+!include ..\inc\make.inc
+
+EXE = pstamp.poe
+OBJ = pstamp.obj
+
+$(EXE): $(OBJ)
+	wlink @poe.lnk FILE $(OBJ) NAME $(EXE)
+

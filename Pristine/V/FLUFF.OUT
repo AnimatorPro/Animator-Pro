@@ -1,0 +1,17 @@
+Unused files:
+	debug.c
+unused globals:
+poke_bg	8:gfx.c
+restore_bg	14:gfx.c
+flash_bg	19:gfx.c
+flash_green	30:gfx.c
+flash_red	38:gfx.c
+flash_blue	45:gfx.c
+pure_red	87:initcmap.c
+pure_green	88:initcmap.c
+pure_blue	91:initcmap.c
+jreadwrite	111:jfile.c
+secret_code	15:main.c
+systext	147:rfont.c
+
+unused statics:

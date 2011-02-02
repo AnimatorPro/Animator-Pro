@@ -1,0 +1,277 @@
+/* generated with makepull */
+#include "jimk.h"
+#include "flicmenu.h"
+
+
+			struct pull ran_pas_pull = {
+				NONEXT,
+				1, 25, 39, 9,
+				NOCHILD,
+				"PASTE",
+				pull_text,
+				0,
+				};
+			struct pull ran_cut_pull = {
+				&ran_pas_pull,
+				1, 17, 39, 9,
+				NOCHILD,
+				"CUT",
+				pull_text,
+				0,
+				};
+			struct pull ran_ram_pull = {
+				&ran_cut_pull,
+				1, 9, 39, 9,
+				NOCHILD,
+				"RAMP",
+				pull_text,
+				0,
+				};
+			struct pull ran_sel_pull = {
+				&ran_ram_pull,
+				1, 1, 39, 9,
+				NOCHILD,
+				"SELECT",
+				pull_text,
+				0,
+				};
+		struct pull rran_pull = {
+			NONEXT,
+			-1, 8, 41, 35,
+			&ran_sel_pull,
+			NODATA,
+			pull_oblock,
+			0,
+			};
+	struct pull ran_pull = {
+		NONEXT,
+		210, -1, 48, 8,
+		&rran_pull,
+		"RANGE",
+		pull_text,
+		0,
+		};
+			struct pull clu_pas_pull = {
+				NONEXT,
+				1, 49, 81, 9,
+				NOCHILD,
+				"PASTE",
+				pull_text,
+				0,
+				};
+			struct pull clu_cut_pull = {
+				&clu_pas_pull,
+				1, 41, 81, 9,
+				NOCHILD,
+				"CUT",
+				pull_text,
+				0,
+				};
+			struct pull clu_pin_pull = {
+				&clu_cut_pull,
+				1, 33, 81, 9,
+				NOCHILD,
+				"PING PONG",
+				pull_text,
+				0,
+				};
+			struct pull clu_for_pull = {
+				&clu_pin_pull,
+				1, 25, 81, 9,
+				NOCHILD,
+				"FORCE RAMP",
+				pull_text,
+				0,
+				};
+			struct pull clu_fin_pull = {
+				&clu_for_pull,
+				1, 17, 81, 9,
+				NOCHILD,
+				"FIND RAMP",
+				pull_text,
+				0,
+				};
+			struct pull clu_unu_pull = {
+				&clu_fin_pull,
+				1, 9, 81, 9,
+				NOCHILD,
+				"UNUSED COLORS",
+				pull_text,
+				0,
+				};
+			struct pull clu_clo_pull = {
+				&clu_unu_pull,
+				1, 1, 81, 9,
+				NOCHILD,
+				"CLOSE COLORS",
+				pull_text,
+				0,
+				};
+		struct pull rclu_pull = {
+			NONEXT,
+			-1, 8, 83, 59,
+			&clu_clo_pull,
+			NODATA,
+			pull_oblock,
+			0,
+			};
+	struct pull clu_pull = {
+		&ran_pull,
+		150, -1, 60, 8,
+		&rclu_pull,
+		"CLUSTER",
+		pull_text,
+		0,
+		};
+			struct pull rem_all_pull = {
+				NONEXT,
+				1, 81, 57, 9,
+				NOCHILD,
+				"ALL",
+				pull_text,
+				0,
+				};
+			struct pull rem_clu_pull = {
+				&rem_all_pull,
+				1, 73, 57, 9,
+				NOCHILD,
+				"CLUSTER",
+				pull_text,
+				0,
+				};
+			struct pull rem_ran_pull = {
+				&rem_clu_pull,
+				1, 65, 57, 9,
+				NOCHILD,
+				"RANGE",
+				pull_text,
+				0,
+				};
+			struct pull rem_dot_pull = {
+				&rem_ran_pull,
+				1, 57, 57, 9,
+				NOCHILD,
+				"dot_dot",
+				pull_text,
+				0,
+				};
+			struct pull rem_use_pull = {
+				&rem_dot_pull,
+				1, 49, 57, 9,
+				NOCHILD,
+				"USE_CEL",
+				pull_text,
+				0,
+				};
+			struct pull rem_def_pull = {
+				&rem_use_pull,
+				1, 41, 57, 9,
+				NOCHILD,
+				"DEFAULT",
+				pull_text,
+				0,
+				};
+			struct pull rem_sor_pull = {
+				&rem_def_pull,
+				1, 33, 57, 9,
+				NOCHILD,
+				"SORT",
+				pull_text,
+				0,
+				};
+			struct pull rem_spe_pull = {
+				&rem_sor_pull,
+				1, 25, 57, 9,
+				NOCHILD,
+				"SPECTRUMS",
+				pull_text,
+				0,
+				};
+			struct pull rem_thr_pull = {
+				&rem_spe_pull,
+				1, 17, 57, 9,
+				NOCHILD,
+				"THREADS",
+				pull_text,
+				0,
+				};
+			struct pull rem_pac_pull = {
+				&rem_thr_pull,
+				1, 9, 57, 9,
+				NOCHILD,
+				"PACK",
+				pull_text,
+				0,
+				};
+			struct pull rem_tin_pull = {
+				&rem_pac_pull,
+				1, 1, 57, 9,
+				NOCHILD,
+				"TINT",
+				pull_text,
+				0,
+				};
+		struct pull rrem_pull = {
+			NONEXT,
+			-1, 8, 59, 91,
+			&rem_tin_pull,
+			NODATA,
+			pull_oblock,
+			0,
+			};
+	struct pull rem_pull = {
+		&clu_pull,
+		102, -1, 48, 8,
+		&rrem_pull,
+		"REMAP",
+		pull_text,
+		0,
+		};
+			struct pull col_fil_pull = {
+				NONEXT,
+				1, 17, 33, 9,
+				NOCHILD,
+				"FILES",
+				pull_text,
+				0,
+				};
+			struct pull col_swa_pull = {
+				&col_fil_pull,
+				1, 9, 33, 9,
+				NOCHILD,
+				"SWAP",
+				pull_text,
+				0,
+				};
+			struct pull col_cop_pull = {
+				&col_swa_pull,
+				1, 1, 33, 9,
+				NOCHILD,
+				"COPY",
+				pull_text,
+				0,
+				};
+		struct pull rcol_pull = {
+			NONEXT,
+			-1, 8, 35, 27,
+			&col_cop_pull,
+			NODATA,
+			pull_oblock,
+			0,
+			};
+	struct pull col_pull = {
+		&rem_pull,
+		54, -1, 48, 8,
+		&rcol_pull,
+		"COLOR",
+		pull_text,
+		0,
+		};
+struct pull root_pull = {
+	NONEXT,
+	0, 0, 320, 8,
+	&col_pull,
+	NODATA,
+	pull_oblock,
+	0,
+	};
