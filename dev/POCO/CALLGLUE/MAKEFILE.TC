@@ -1,0 +1,8 @@
+!include "make.inc"
+
+O = test.obj pocalltc.obj
+
+test: $(O)
+	@echo objlib made
+
+

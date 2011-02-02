@@ -1,0 +1,2 @@
+@echo off 
+F:\PAA\ANIPLAY -AUTO -CFG F:\PAA\AA.CFG F:\PAA\BUNK0000.scr 

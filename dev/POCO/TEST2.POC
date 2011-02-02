@@ -1,0 +1,5 @@
+main()
+{
+String s = "Hello world";
+puts(s);
+}

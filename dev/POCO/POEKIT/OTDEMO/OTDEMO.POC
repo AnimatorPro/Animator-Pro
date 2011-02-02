@@ -1,0 +1,11 @@
+/*****************************************************************************
+ * OTDEMO.POC - Call the rendering routine in OTDEMO.POE.
+ ****************************************************************************/
+
+#pragma poco library "otdemo.poe"
+
+void main(void)
+{
+	MakeCircleFlic();
+}
+

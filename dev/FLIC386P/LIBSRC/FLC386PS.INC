@@ -1,0 +1,10 @@
+libsrc\makefile.
+libsrc\makelib.bat
+libsrc\makeobj.bat
+libsrc\setenv.bat
+libsrc\*.i*
+libsrc\*.h
+libsrc\*.c
+libsrc\*.asm
+libsrc\*.obs
+

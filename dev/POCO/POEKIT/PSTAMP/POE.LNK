@@ -1,0 +1,14 @@
+FORMAT PHARLAP REX
+OPTION
+	MAP,
+	CASEEXACT,
+	NODEFAULTLIBS,
+	DOSSEG
+LIBRARY
+	..\lib\aasyslib.lib,
+	..\lib\gfxlib.lib,
+	..\lib\mathhost.lib,
+	..\lib\rexhost.lib,
+	..\lib\stdiolib.lib
+FILE
+	..\lib\rexentry.obj

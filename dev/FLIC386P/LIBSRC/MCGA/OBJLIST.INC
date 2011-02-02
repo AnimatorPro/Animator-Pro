@@ -1,0 +1,9 @@
+OBJ = \
+mcgadot.obj  \
+mcgahseg.obj \
+mcgacset.obj \
+mccset64.obj \
+mcgarast.obj \
+mcgadev.obj  \
+#endoflist
+

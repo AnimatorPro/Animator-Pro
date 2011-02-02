@@ -9,6 +9,20 @@ of which are still better than those of modern graphics packages.
 In its current form, it is rather untidy. I am engaged in an effort to make the source more comprehensible, and provide compilation
 instructions.
 
+In the Pristine folders rests the source exactly as it was given to me.
+dev contains a work in progress version of the Animator Pro source as I work to improve it.
+
+the text folder contains the assorted text files and documentation found within the original source files.
+
+The pocoscripts folder contains source code and documentation for scripts written in the built in POCO scripting scripting language, which is essentially the C programming language with some built in libraries.
+
+the files folder contains files that can be natively read into the Animator Pro software.
+
+This project is not endorsed by Autodesk, Inc., 
+Autodesk is a trademark of Autodesk, Inc.,
+
+However, interestingly, Autodesk, Inc's tradmarks on "Autodesk Animator" and "Animator Pro" are expired. 
+
 All source code  (unless otherwise marked, or if better information becomes available) is ©1989-1992 Jim Kent and is available here under the BSD license, reproduced below:
 
 Copyright (c) 1989, Jim Kent All rights reserved.

@@ -1,0 +1,10 @@
+!include ..\inc\make.inc
+
+EXE  = pdrdemo.poe
+OBJ  = pdrdemo.obj strfuncs.obj
+LOBJ = pdrdemo.obj,strfuncs.obj
+
+$(EXE): $(OBJ)
+	wlink @poe.lnk FILE $(LOBJ) NAME $(EXE)
+
+

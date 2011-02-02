@@ -1,0 +1,4 @@
++dpmiutil.obj
++memtrdlo.obj
++memtrd.obj
++memgetrd.obj

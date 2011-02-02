@@ -1,0 +1,10 @@
+FORMAT PHARLAP REX
+OPTION
+	CASEEXACT,
+	DOSSEG
+LIBRARY
+	\paa\rexlib\aasyslib.lib,
+	\paa\rexlib\stdiolib.lib,
+	\paa\rexlib\gfxlib.lib
+FILE
+	\paa\rexlib\rexentry.obj
