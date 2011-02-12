@@ -19,9 +19,12 @@ More info at [the Animator Pro project homepage][1]
 
 [1]: http://animatorpro.org "Animator Pro project homepage"
 
-bin
+binaries
 ---
-Compiled binaries (Currently only for Animator A.K.A., not Pro)
+To get binaries, click the huge "DOWNLOADS" button on the github project.
+or go to [the downloads page][2]
+
+[2]: https://github.com/AnimatorPro/Animator-Pro/downloads "Downloads Page"
 
 Pristine
 --------
