@@ -52,7 +52,8 @@ files
 -----
 Example files that can be natively read into the Animator Pro software.
 
-
+License
+-------
 This project is not endorsed by Autodesk, Inc., 
 Autodesk is a trademark of Autodesk, Inc.,
 
