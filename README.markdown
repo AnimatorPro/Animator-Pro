@@ -1,36 +1,74 @@
-Autodesk Animator, and its later revision Animator Pro was a popular paint and 
-animation package originally released in 1989, and created by Jim Kent, Gary 
-Yost, and Peter Kennard
-Here is the original source code, with the hope that further 
-improvements and maintenance can be incorporated in the future, and also
-for today's developers to learn from its techniques and design,  some aspects 
-of which are still better than those of modern graphics packages.
+Animator Pro A.K.A.
+===================
 
-In its current form, it is rather untidy. I am engaged in an effort to make the source more comprehensible, and provide compilation
-instructions.
+Animator Pro, (A.K.A. Autodesk Animator Pro, Ani Pro, PJ Paint, or simply PJ) 
+is a 256 color paint and animation package for MSDOS. It was popular 
+in the early to mid 1990's for game art, online animation, 
+business presentations and occasional TV productions.
 
-In the Pristine folders rests the source exactly as it was given to me.
-dev contains a work in progress version of the Animator Pro source as I work to improve it.
+Originally released in 1989 by Autodesk, and licensed from Yost Group, Ani Pro 
+was created by Peter Kennard, Gary Yost and Jim Kent. Jim Kent kept copyrights 
+to the source code, thus allowing him to grant me permission to make it 
+available to you here. For my part, I wish to do my best to preserve and 
+document this tiny bit of significant computer history, promote the usefulness 
+of this program and hopefully improve and modify it for future and current 
+users, many of whom still find it very useful and fun.
 
-the text folder contains the assorted text files and documentation found within the original source files.
+More info at [the Animator Pro project homepage][1]
 
-The pocoscripts folder contains source code and documentation for scripts written in the built in POCO scripting scripting language, which is essentially the C programming language with some built in libraries.
 
-the files folder contains files that can be natively read into the Animator Pro software.
+[1]: http://animatorpro.org "Animator Pro project homepage"
+
+bin
+---
+Compiled binaries (Currently only for Animator A.K.A., not Pro)
+
+Pristine
+--------
+The original Autodesk Animator (A.K.A. Video Paint, VPaint, or simply V)
+exactly as it was sent to me by Jim Kent, preserved for historical purposes.
+
+Pristine-Pro
+------------
+The original Animator Pro (A.K.A. Autodesk Animator Pro, PJPaint or simply PJ)
+exactly as it was sent to me by Jim Kent, preserved for historical purposes.
+
+dev
+---
+A work in progress version of the Animator Pro source as I work to improve it.
+
+text
+----
+The assorted text files and documentation found within the original source files.
+
+pocoscripts
+-----------
+Source code and documentation for scripts written in Animator Pro's built in 
+POCO scripting language; essentially an interpreted version of the 
+C programming language with some built in libraries for manipulating
+the program.
+
+files
+-----
+Example files that can be natively read into the Animator Pro software.
+
 
 This project is not endorsed by Autodesk, Inc., 
 Autodesk is a trademark of Autodesk, Inc.,
 
-However, interestingly, Autodesk, Inc's tradmarks on "Autodesk Animator" and "Animator Pro" are expired. 
+However, interestingly, Autodesk, Inc's tradmarks on "Autodesk Animator" 
+and "Animator Pro" are expired. 
 
-All source code  (unless otherwise marked, or if better information becomes available) is ©1989-1992 Jim Kent and is available here under the BSD license, reproduced below:
+All source code  (unless otherwise marked, or if better information 
+becomes available) is ©1989-1994 Jim Kent and is available here under 
+the BSD license, reproduced below:
 
-Copyright (c) 1989, Jim Kent All rights reserved.
+Copyright (c) 1989-1994, Jim Kent All rights reserved.
  
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
 
-    * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
-    * Neither the name Animator Pro nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission. 
+ * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+ * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+ * Neither the name Animator Pro nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission. 
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
