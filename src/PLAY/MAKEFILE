@@ -3,7 +3,7 @@ CFLAGS= -c -ml -If:\ -I$(INCLUDE)
 .c.obj:
 	tcc $(CFLAGS) $*.c
 .asm.obj:
-	masm /Ml $*.asm;
+	tasm /Ml $*.asm;
 
 
 O= a1blit.obj a2blit.obj blit8.obj brush.obj \
