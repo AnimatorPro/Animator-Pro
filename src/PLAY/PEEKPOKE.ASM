@@ -40,7 +40,7 @@ _sysint PROC far
 
 	;grab interrupt number and use it to modify intit code  (no ROM for me!)
 	mov ax,[bp+4+2]
-	mov cs:intit+1,al
+	mov byte ptr cs:intit+1,al
 
 	;point ds:di to input parameters
 	lds di,[bp+6+2]
