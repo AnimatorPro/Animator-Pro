@@ -1,0 +1,6 @@
+*.EXE
+*.MAP
+*.OBJ
+*.o
+*.swp
+tags
