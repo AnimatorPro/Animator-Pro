@@ -1,3 +1,5 @@
+#ifndef JIMK_H
+#define JIMK_H
 
 typedef int WORD;
 typedef unsigned UWORD;
@@ -64,3 +66,5 @@ struct video_form
 	};
 typedef struct video_form Video_form;
 extern struct video_form vf;	/* structure for VGA screen */
+
+#endif
