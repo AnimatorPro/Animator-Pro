@@ -1,0 +1,5 @@
+#define filedata_100 "Cancel"
+#define filedata_101 "OK"
+#define filedata_119 "Wildcard:"
+#define filedata_121 "Dir:"
+#define filedata_123 "File:"
