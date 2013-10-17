@@ -7,6 +7,7 @@
 
 
 #include "jimk.h"
+#include "comp1.h"
 #include "fli.h"
 
 
@@ -34,7 +35,7 @@ for (j=0;j<frame->chunks;j++)
 				{
 				cset_colors(chunk+1);
 				}
-			fcuncomp(chunk+1,f->cmap);
+			fcuncomp((const UBYTE *)(chunk+1), f->cmap);
 			break;
 		case FLI_LC:
 			unlccomp(chunk+1, f->p);

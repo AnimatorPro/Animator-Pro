@@ -6,8 +6,8 @@ CFLAGS= -Z -O -w-par -wstv -c -ml -Ic:\tc\include -d
 .asm.obj:
 	tasm /Ml $*.asm;
 
-O= comp.obj quickfli.obj int.obj peekpoke.obj unbrun.obj jfile.obj fli.obj
-
+O= quickfli.obj \
+	comp.obj comp1.obj fli.obj int.obj jfile.obj peekpoke.obj unbrun.obj
 
 fast: $(O)
 	tlink $(LIB)c0l @linkit, quickfli, quickfli, $(LIB)cl
