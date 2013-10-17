@@ -9,6 +9,7 @@
 #include "jimk.h"
 #include "comp1.h"
 #include "fli.h"
+#include "unbrun1.h"
 
 
 /* Go through all the chunks in a frame switching on chunk type to
@@ -44,7 +45,7 @@ for (j=0;j<frame->chunks;j++)
 			clear_form(f);
 			break;
 		case FLI_BRUN:
-			unbrun(chunk+1, f->p, f->h);
+			unbrun((const UBYTE *)(chunk+1), f->p, f->h);
 			break;
 		case FLI_COPY:
 			copy_words(chunk+1,f->p,32000);
