@@ -1,7 +1,9 @@
 comp.obj+
+comp1.obj+
 fli.obj+
 int.obj+
 jfile.obj+
 quickfli.obj+
 peekpoke.obj+
-unbrun.obj
+peekpok1.obj+
+unbrun1.obj

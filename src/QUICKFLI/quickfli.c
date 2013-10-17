@@ -31,6 +31,7 @@
 #include <stdio.h>
 #include "jimk.h"
 #include "fli.h"
+#include "peekpok1.h"
 
 /* These are the scancodes for the escape key and spacebar. */
 #define ESC 283
@@ -190,7 +191,7 @@ if (int_in)
 clear_form(f)
 Video_form *f;
 {
-stuff_words(0, f->p, (f->h>>1)*f->bpr);
+stuff_words(0, (UWORD *)f->p, (f->h>>1)*f->bpr);
 }
 
 

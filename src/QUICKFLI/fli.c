@@ -7,7 +7,10 @@
 
 
 #include "jimk.h"
+#include "comp1.h"
 #include "fli.h"
+#include "peekpok1.h"
+#include "unbrun1.h"
 
 
 /* Go through all the chunks in a frame switching on chunk type to
@@ -34,19 +37,19 @@ for (j=0;j<frame->chunks;j++)
 				{
 				cset_colors(chunk+1);
 				}
-			fcuncomp(chunk+1,f->cmap);
+			fcuncomp((const UBYTE *)(chunk+1), f->cmap);
 			break;
 		case FLI_LC:
-			unlccomp(chunk+1, f->p);
+			unlccomp((const UBYTE *)(chunk+1), f->p);
 			break;
 		case FLI_BLACK:
 			clear_form(f);
 			break;
 		case FLI_BRUN:
-			unbrun(chunk+1, f->p, f->h);
+			unbrun((const UBYTE *)(chunk+1), f->p, f->h);
 			break;
 		case FLI_COPY:
-			copy_words(chunk+1,f->p,32000);
+			copy_words((const UWORD *)(chunk+1), (UWORD *)f->p, 32000);
 			break;
 		}
 	c = norm_pointer(c + chunk->size);
