@@ -38,7 +38,7 @@ for (j=0;j<frame->chunks;j++)
 			fcuncomp((const UBYTE *)(chunk+1), f->cmap);
 			break;
 		case FLI_LC:
-			unlccomp(chunk+1, f->p);
+			unlccomp((const UBYTE *)(chunk+1), f->p);
 			break;
 		case FLI_BLACK:
 			clear_form(f);
