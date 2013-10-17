@@ -5,4 +5,5 @@ int.obj+
 jfile.obj+
 quickfli.obj+
 peekpoke.obj+
+peekpok1.obj+
 unbrun1.obj

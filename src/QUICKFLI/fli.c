@@ -9,6 +9,7 @@
 #include "jimk.h"
 #include "comp1.h"
 #include "fli.h"
+#include "peekpok1.h"
 #include "unbrun1.h"
 
 
@@ -48,7 +49,7 @@ for (j=0;j<frame->chunks;j++)
 			unbrun((const UBYTE *)(chunk+1), f->p, f->h);
 			break;
 		case FLI_COPY:
-			copy_words(chunk+1,f->p,32000);
+			copy_words((const UWORD *)(chunk+1), (UWORD *)f->p, 32000);
 			break;
 		}
 	c = norm_pointer(c + chunk->size);

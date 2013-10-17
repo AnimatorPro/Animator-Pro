@@ -153,41 +153,5 @@ _stuff_words	PROC far
 	ret	
 _stuff_words	ENDP
 
-
-;copy_words(soffset, ssegment, doffset, dsegment, words)
-	PUBLIC	_copy_words
-_copy_words	PROC far
-	push	bp
-	mov	bp,sp
-	push es
-	push di
-	push ds
-	push si
-	push cx
-
-	mov	ax,[bp+6+2]	;s seg
-	mov ds,ax
-	mov	si,[bp+4+2]	;s offset
-	mov ax,[bp+10+2]  ;d seg
-	mov es,ax
-	mov di,[bp+8+2]  ;d offset
-	mov cx,[bp+12+2]  ;count
-
-	cld
-	rep movsw
-
-	pop cx
-	pop si
-	pop ds
-	pop di
-	pop es
-	pop	bp
-	ret	
-_copy_words	ENDP
-
-
-
-
-
 _TEXT	ENDS
 END
