@@ -1,10 +1,16 @@
 #ifndef JIMK_H
 #define JIMK_H
 
+#include "debug.h"
+
 typedef int WORD;
 typedef unsigned UWORD;
 typedef char BYTE;
 typedef unsigned char UBYTE;
+STATIC_ASSERT(jimk, sizeof( BYTE) == 1);
+STATIC_ASSERT(jimk, sizeof(UBYTE) == 1);
+STATIC_ASSERT(jimk, sizeof( WORD) == 2);
+STATIC_ASSERT(jimk, sizeof(UWORD) == 2);
 
 struct byte_regs 
 	{
