@@ -30,6 +30,7 @@
 
 #include <stdio.h>
 #include "jimk.h"
+#include "jfile.h"
 #include "fli.h"
 #include "peekpok1.h"
 
@@ -52,7 +53,7 @@ struct video_form vf =
 /* Points to a big buffer to hold 1 frame of a flic. */
 char *cbuf;
 
-int flifile; /* Current FLI file */
+static FILE *flifile; /* Current FLI file */
 long frame1off;		/* Byte offset to frame 1 (not frame 0) in file */
 
 /* Get memory.  Complain if it's not there. */
@@ -79,10 +80,11 @@ exit(-1);
 }
 
 /* Open a file to read.  Complain if it's not there. */
+FILE *
 want_jopen(name)
 char *name;
 {
-int f;
+FILE *f;
 
 if ((f = jopen(name, 0)) == 0)
 	printf("Couldn't find %s\n", name);
@@ -103,7 +105,7 @@ bailout(buf);
    all there. */
 need_read(name, file,buf,size)
 char *name;
-int file;
+FILE *file;
 void *buf;
 unsigned size;
 {
@@ -202,9 +204,9 @@ struct fli_head *fli;
 struct video_form *screen;
 void *cbuf;
 {
-int file;
+FILE *file;
 
-if ((file = want_jopen(name)) == 0)
+if ((file = want_jopen(name)) == NULL)
 	return(0);
 if (!need_read(name, file, fli, (unsigned)sizeof(*fli)))
 	{
@@ -230,7 +232,7 @@ close_fli(fli)
 struct fli_head *fli;
 {
 gentle_close(flifile);
-flifile = 0;
+flifile = NULL;
 }
 
 

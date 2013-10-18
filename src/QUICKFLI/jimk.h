@@ -42,10 +42,6 @@ extern long pt_to_long(), make_long();
 extern void *long_to_pt();
 extern void *norm_pointer();
 
-extern unsigned jread(int f, void *buf, unsigned size);
-extern jopen(char *title, int mode);
-extern long jseek(int f, long offset, int mode);
-
 #define XMAX 320
 #define BPR 320
 #define YMAX 200
