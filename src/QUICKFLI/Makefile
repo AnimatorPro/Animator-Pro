@@ -1,15 +1,21 @@
+CC := gcc
+CFLAGS := -W
+LDFLAGS :=
+LDLIBS := -lSDL
 
-CFLAGS= -Z -O -w-par -wstv -c -ml -Ic:\tc\include -d
+all: quickfli
 
-.c.obj:
-	tcc $(CFLAGS) $*.c
-.asm.obj:
-	tasm /Ml $*.asm;
+OBJS := quickfli.o \
+	comp1.o    \
+	fli.o      \
+	io_sdl.o   \
+	jfile.o    \
+	peekpok1.o \
+	unbrun1.o
 
-O= quickfli.obj \
-	comp.obj comp1.obj fli.obj int.obj jfile.obj \
-	peekpoke.obj peekpok1.obj unbrun1.obj
+quickfli: $(OBJS)
+	$(CC) $(LDFLAGS) -o $@ $^ $(LDLIBS)
 
-fast: $(O)
-	tlink $(LIB)c0l @linkit, quickfli, quickfli, $(LIB)cl
-
+.PHONY: clean
+clean:
+	$(RM) quickfli $(OBJS)
