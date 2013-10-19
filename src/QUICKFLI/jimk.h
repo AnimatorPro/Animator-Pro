@@ -1,20 +1,44 @@
 #ifndef JIMK_H
 #define JIMK_H
 
-typedef int WORD;
-typedef unsigned UWORD;
+#include "debug.h"
+
+#define GCC_PACKED
+
+#if defined(__GNUC__)
+#undef GCC_PACKED
+#define GCC_PACKED  __attribute__((packed))
+#endif
+
 typedef char BYTE;
 typedef unsigned char UBYTE;
+typedef short WORD;
+typedef unsigned short UWORD;
+
+#if defined(__TURBOC__)
+typedef long LONG;
+typedef unsigned long ULONG;
+#else
+typedef int LONG;
+typedef unsigned int ULONG;
+#endif
+
+STATIC_ASSERT(jimk, sizeof( BYTE) == 1);
+STATIC_ASSERT(jimk, sizeof(UBYTE) == 1);
+STATIC_ASSERT(jimk, sizeof( WORD) == 2);
+STATIC_ASSERT(jimk, sizeof(UWORD) == 2);
+STATIC_ASSERT(jimk, sizeof( LONG) == 4);
+STATIC_ASSERT(jimk, sizeof(ULONG) == 4);
 
 struct byte_regs 
 	{
 	unsigned char al, ah, bl, bh, cl, ch, dl, dh;
-	unsigned int si, di, ds, es;
+	UWORD si, di, ds, es;
 	};
 struct word_regs
 	{
-	unsigned ax,bx,cx,dx;
-	unsigned int si, di, ds, es;
+	UWORD ax, bx, cx, dx;
+	UWORD si, di, ds, es;
 	};
 union regs
 	{
@@ -41,10 +65,6 @@ extern long get80hz();
 extern long pt_to_long(), make_long();
 extern void *long_to_pt();
 extern void *norm_pointer();
-
-extern unsigned jread(int f, void *buf, unsigned size);
-extern jopen(char *title, int mode);
-extern long jseek(int f, long offset, int mode);
 
 #define XMAX 320
 #define BPR 320

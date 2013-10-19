@@ -9,6 +9,7 @@
 #include "jimk.h"
 #include "comp1.h"
 #include "fli.h"
+#include "jfile.h"
 #include "peekpok1.h"
 #include "unbrun1.h"
 
@@ -76,7 +77,7 @@ bailout(buf);
    should be at least CBUF_SIZE.  After read does decompression. */
 gb_read_next_frame(fname,fd,fscreen,fliff,colors)
 char *fname;				/* name of flic (for error handling) */
-int fd;						/* flic file handle */
+FILE *fd;					/* flic file handle */
 Video_form *fscreen;		/* screen to decompress onto */
 struct fli_frame *fliff;	/* fliff buffer at least CBUF_SIZE */
 int colors;					/* Update hw color palette? */
@@ -95,7 +96,7 @@ if (fliff->type != FLIF_MAGIC)
 	not_fli_frame(fname);
 	goto BADOUT;
 	}
-if (fliff->size >= CBUF_SIZE)
+if ((ULONG) fliff->size >= CBUF_SIZE)
 	{
 	mangled(fname);
 	goto BADOUT;

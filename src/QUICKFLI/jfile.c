@@ -9,7 +9,9 @@
    Also a few routines to help work with buffers larger than 64K on the 8086
    without resorting to HUGE model. */
 
+#include <assert.h>
 #include "jimk.h"
+#include "jfile.h"
 
 /* return the offset half of a pointer.  Pass in a pointer.  (Ignore
    parameters.  Lint will scream!) */
@@ -37,88 +39,49 @@ long l;
 return(l);
 }
 
-
-/* Open a file to read/write/read-write depending on mode.  Returns
-   0 on failure, otherwise file handle. */
-jopen(title, mode)
-char *title;
-int mode;
+FILE *
+jopen(const char *title, int mode)
 {
-union regs reg;
+	const char *str;
+	assert(0 <= mode && mode <= 2);
 
-reg.b.ah = 0x3d;	/* open file */
-reg.b.al = mode;		/* read/write etc... */
-reg.w.dx = ptr_offset(title);
-reg.w.ds = ptr_seg(title);
-if (sysint(0x21,&reg,&reg)&1)	/* check carry */
-	return(0);
-else
-	return(reg.w.ax);
+	str = (mode == 0) ? "rb"
+	    : (mode == 1) ? "wb" : "rb+";
+
+	return fopen(title, str);
 }
 
-/* close file */
-jclose(f)
-int f;
+void
+jclose(FILE *f)
 {
-union regs reg;
-
-reg.b.ah = 0x3e;
-reg.w.bx = f;
-sysint(0x21,&reg, &reg);
+	fclose(f);
 }
 
-/* Close a non-zero file handle */
-gentle_close(f)
-int f;
+void
+gentle_close(FILE *f)
 {
-if (f)
-	jclose(f);
+	if (f)
+		jclose(f);
 }
 
-
-/* Read file to a buffer.   Returns bytes of data successfully transfered. */
-unsigned
-jread(f,buf,size)
-int f;
-void *buf;
-unsigned size;
+unsigned int
+jread(FILE *f, void *buf, unsigned int size)
 {
-union regs reg;
-long written;
-
-reg.b.ah = 0x3f;
-reg.w.bx = f;
-reg.w.cx = size;
-reg.w.dx = ptr_offset(buf);
-reg.w.ds = ptr_seg(buf);
-if ((sysint(0x21,&reg,&reg))&1)	/* check carry */
-	{
-	written = 0;
-	}
-else
-	{
-	written = (unsigned)reg.w.ax;
-	}
-return(written);
+	return fread(buf, 1, size, f);
 }
 
-
-/* Seek to a long offset.  Return file position on success, -1 on failure. */
 long
-jseek(f, offset, mode)
-int f, mode;
-long offset;
+jseek(FILE *f, long offset, int mode)
 {
-union regs reg;
+	assert(0 <= mode && mode <= 2);
 
-reg.b.ah = 0x42;
-reg.b.al = mode;
-reg.w.bx = f;
-reg.w.cx = ptr_seg(offset);
-reg.w.dx = ptr_offset(offset);
-if (sysint(0x21,&reg,&reg)&1) 
-	return(-1);
-else
-	return(make_long(reg.w.ax, reg.w.dx));
+	mode = (mode == 0) ? SEEK_SET
+	     : (mode == 1) ? SEEK_CUR : SEEK_END;
+
+	if (fseek(f, offset, mode) != 0) {
+		return -1;
+	}
+	else {
+		return ftell(f);
+	}
 }
-
