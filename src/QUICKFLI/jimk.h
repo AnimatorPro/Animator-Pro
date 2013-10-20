@@ -64,7 +64,6 @@ extern long get80hz();
    a single screen fits inside 64K these may not be necessary. */
 extern long pt_to_long(), make_long();
 extern void *long_to_pt();
-extern void *norm_pointer();
 
 #define XMAX 320
 #define BPR 320

@@ -9,6 +9,7 @@
 #include "jimk.h"
 #include "comp1.h"
 #include "fli.h"
+#include "io.h"
 #include "jfile.h"
 #include "peekpok1.h"
 #include "unbrun1.h"
@@ -36,7 +37,7 @@ for (j=0;j<frame->chunks;j++)
 		case FLI_COLOR:
 			if (colors)
 				{
-				cset_colors(chunk+1);
+				cset_colors((const UBYTE *)(chunk+1));
 				}
 			fcuncomp((const UBYTE *)(chunk+1), f->cmap);
 			break;

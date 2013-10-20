@@ -29,14 +29,12 @@
 
 
 #include <stdio.h>
+#include <stdlib.h>
 #include "jimk.h"
+#include "io.h"
 #include "jfile.h"
 #include "fli.h"
 #include "peekpok1.h"
-
-/* These are the scancodes for the escape key and spacebar. */
-#define ESC 283
-#define SPACE 14624
 
 /* sys_cmap - a software copy of the hardware color map.  It is formatted
    as R G B  R G B ... with each color component ranging from 0 to 63. */
@@ -117,77 +115,16 @@ if (jread(file,buf,size) < size)
 return(1);
 }
 
-
-static char int_in;	/* keep track if interrupt is installed */
-int ivmode;	/* keep track of startup video mode */
-
-/* Tell the VGA what resolution to be in */
-set_vmode(mode)
-int mode;
-{
-union regs r;
-
-r.b.ah = 0;
-r.b.al = mode;
-sysint(0x10,&r,&r);
-}
-
-/* get current video mode */
-get_vmode()
-{
-union regs r;
-
-r.b.ah = 0xf;
-sysint(0x10, &r, &r);
-return(r.b.al);
-}
-
-/* return 0 if no key, key scan code if there is a key */
-strobe_keys()
-{
-union regs r;
-#define ZEROFLAG	64
-
-r.b.ah = 0x1;
-if (!(sysint(0x16,&r,&r)&ZEROFLAG))
-	{
-	r.b.ah = 0;
-	sysint(0x16,&r,&r);
-	return(r.w.ax);
-	}
-else
-	return(0);
-}
-
 /* Switch into 256 color 320x200 mode, co-opt the  18.2 hz timer to force it
    to something close to video rate, and get buffer big enough to hold a frame.
    */
 init()
 {
-ivmode = get_vmode();
-set_vmode(0x13);
-if (get_vmode() != 0x13)
-	{
-	puts("Couldn't get a 320x200 256 color VGA screen");
+if (!init_system())
 	return(0);
-	}
 cbuf = begmem((unsigned)CBUF_SIZE);
-setint();
-fastint();
-int_in = 1;
 return(1);
 }
-
-/* Go back to old video mode and take out our clock interrupt handler. */
-cleanup()
-{
-set_vmode(ivmode);
-if (int_in)
-	{
-	Restoreint();
-	}
-}
-
 
 /* Clear a screen */
 clear_form(f)
@@ -273,6 +210,7 @@ do
 		count -= 1;		/* last loop dont cycle back to 1st frame */
 	for (i=1; i<=count; i++)
 		{
+		flip_video();
 		dtime = wait_til(dtime) + fli->speed;
 		if (!gb_read_next_frame(name,flifile,&vf,cbuf,1))
 			return(0);
