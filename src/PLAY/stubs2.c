@@ -167,4 +167,3 @@ v->p = norm_pointer(v->p);
 v->p = make_ptr(0, ptr_seg(v->p)+1);
 return(v);
 }
-

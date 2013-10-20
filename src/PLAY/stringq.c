@@ -289,5 +289,3 @@ if (stringq->undo != NULL)
 strcpy(stringq->string, name);
 init_stq_string(stringq);
 }
-
-

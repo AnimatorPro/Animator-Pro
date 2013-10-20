@@ -252,4 +252,3 @@ unhi_group(cur_menu, m->group);
 *(m->group) = m->identity;
 hi_group(cur_menu, m->group);
 }
-
