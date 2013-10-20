@@ -1,3 +1,5 @@
+#ifndef JIMK_H
+#define JIMK_H
 
 #define askmem malloc
 #define freemem free
@@ -457,3 +459,4 @@ extern int mc_colors[];
 #define sbright (mc_colors[MC_BRIGHT])
 #define sred (mc_colors[MC_RED])
 
+#endif
