@@ -1,0 +1,62 @@
+How to build PJ (Animator Pro) in DOSBox
+========================================
+
+ 1. Install in a fresh DOS environment:
+
+    * Watcom C in \WATCOM
+    * Phar Lap in \PHAR386
+    * Turbo C (in \TC) or Borland C (in \BORLANDC)
+
+    Tested with Watcom C 8.5 / Phar Lap 5 / Turbo C 2.0 / Borland C 3.1.
+
+    The 'make' program from Turbo C or Borland C is necessary, but
+    likely nothing else.  You may have better luck with Turbo C make.
+
+ 2. Put their respective BIN directories in your PATH.
+    Set the environment variables for Watcom C.
+    You might put in AUTOEXEC.BAT:
+
+        call C:\WATCOM\AUTOC386.BAT
+        set LIB=C:\WATCOM\LIB386\DOS;C:\WATCOM\LIB386;C:\PHAR386\LIB
+        set PATH=%PATH%;C:\PHAR386\BIN;C:\TC\BIN;C:\BUILD\BIN
+
+ 3. You may need to replace the Phar Lap run386.exe program by another
+    (more recent?) version if any .EXP programs crash immediately.
+    Check by building a simple protected mode program with Watcom C:
+
+        wcl386 /l=pharlap hello.c
+        run386 hello.exp
+
+ 4. Make a directory \BUILD\BIN expected by the build system.
+    It must be on your PATH.
+
+        mkdir \build
+        mkdir \build\bin
+
+ 5. Copy Borland MAKE.EXE to TCMAKE.EXE on your PATH, e.g. \BUILD\BIN
+
+ 6. The command SETWC386 must exist on your PATH.  If you followed the
+    instructions above then it can just be an empty file:
+
+        echo. >\build\bin\setwc386.bat
+
+    Otherwise it should set up the environment for the Watcom C
+    compiler.  You can look at src/PJ/ASL/BIN/SETWC386.BAT
+
+ 7. Make the src/PJ directory visible in DOS as \PAA.
+    You could symlink PJ on the host to PAA in the guest directory.
+    Be sure to restart DOSBox afterwards.
+
+ 8. The build system likes to beep.
+    Copy BEEP.BAT into \BUILD\BIN or whatever.
+
+ 9. You can now build inside DOSBox:
+
+        cd \PAA
+        make all  (enter Y to the first prompt)
+
+10. If successful, you can start it with:
+
+        run386 pj.exp
+
+vim:tw=70 et:
