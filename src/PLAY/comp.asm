@@ -13,34 +13,6 @@ DGROUP	GROUP	CONST,	_BSS,	_DATA
 	ASSUME  CS: _TEXT, DS: DGROUP, SS: DGROUP, ES: DGROUP
 _TEXT      SEGMENT
 
-	PUBLIC _fcompare
-	;fcompare(s1, s2, count)
-_fcompare PROC far
-	push bp
-	mov bp,sp
-	push ds
-	push si
-	push di
-	cld
-
-	lds si,[bp+4+2]
-	les di,[bp+8+2]
-	mov cx,[bp+12+2]
-	inc cx
-	repe cmpsw
-
-	mov ax,[bp+12+2]
-	sub ax,cx
-
-	pop di
-	pop si
-	pop ds
-	pop	bp
-	ret	
-
-_fcompare ENDP
-
-
 	PUBLIC _unrun
 	;unrun(cbuf, screen)
 _unrun PROC far
