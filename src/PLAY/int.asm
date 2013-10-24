@@ -158,34 +158,5 @@ wnvb:
 	ret
 _wait_novblank endp
 
-
-
-	;set a single color
-	public _cpoke
-_cpoke proc far
-	push bp
-	mov bp,sp
-	mov dx,3c8h
-	xor al,al
-	out dx,al
-	inc dx
-	mov al,[bp+4+2]
-	jmp j1
-j1:
-	out dx,al
-	jmp j2
-j2:
-	out dx,al
-	jmp j3
-j3:
-	out dx,al
-
-	pop bp
-	ret
-_cpoke endp
-
-
-
-
 _TEXT	ENDS
 END
