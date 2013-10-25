@@ -124,30 +124,6 @@ _norm_pointer	PROC far
 	ret	
 _norm_pointer	ENDP
 
-	PUBLIC	_enorm_pointer
-	;norm_pointer(offset, seg)
-	;Add as much as possible of the offset of a pointer to the segment
-	;and make it evenly alligned...
-_enorm_pointer	PROC far
-	push bp
-	mov bp,sp
-	push cx
-
-	mov	ax,[bp+4+2]	;offset
-	mov dx,[bp+6+2]   ;segment
-	inc ax
-	and ax,0FFFEh	;force even allignment
-	mov [bp+4+2],ax ;and save...
-	mov cl,4
-	shr ax,cl
-	add dx,ax
-	mov	ax,[bp+4+2]	;offset
-	and ax,15
-
-	pop cx
-	pop	bp
-	ret	
-_enorm_pointer	ENDP
 
 ;stuff_words(data, offset, seg, words);
 	PUBLIC	_stuff_words

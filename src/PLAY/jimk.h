@@ -24,7 +24,7 @@ extern long jseek(int f, long offset, int mode);
 #endif /* SLUFF */
 
 extern void *make_ptr();
-extern void *norm_pointer(), *enorm_pointer();
+extern void *norm_pointer();
 extern void *lbegmem(), *begmem();
 extern void *paskmem();
 extern char *clone_string();
