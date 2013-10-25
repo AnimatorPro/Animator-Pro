@@ -267,42 +267,6 @@ _copy_words	PROC far
 _copy_words	ENDP
 
 
-	PUBLIC _xlat
-	;xlat(table, buf, count)
-	;table -> 256 byte translation table
-	;buf -> area of count bytes to translate
-_xlat proc far
-	push bp
-	mov bp,sp
-	push bx
-	push cx
-	push di
-	push ds
-	push es
-
-	lds bx,[2+4+bp]	;load ds:bx with table
-	les di,[2+8+bp]	;load es:di with buffer
-	mov cx,[2+12+bp]
-
-xllp:
-	mov al,es:[di]	;fetch a byte
-	xlat [2+4+bp]
-	stosb			;and store result
-	loop	xllp
-
-	pop es
-	pop ds
-	pop di
-	pop cx
-	pop bx
-	pop bp
-	ret
-_xlat endp
-
-
-
-
-
 	public _back_scan
 _back_scan	proc	far
 	push	bp
