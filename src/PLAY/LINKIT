@@ -5,6 +5,7 @@ bfile.obj+
 brush.obj+
 cblock.obj+
 clipit.obj+
+clipit_.obj+
 closestc.obj+
 comp.obj+
 comp_.obj+

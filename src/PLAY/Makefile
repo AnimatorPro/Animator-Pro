@@ -16,6 +16,7 @@ mainpull.obj stubs.obj names.obj peekpoke.obj pull.obj rfont.obj \
 prj1.obj scroller.obj seeme.obj seemenu.obj sixhi.obj stringq.obj \
 textbox.obj view.obj vbat.obj mainmenu.obj slider.obj gif.obj \
 stubs2.obj decoder.obj shrinkin.obj bfile.obj int.obj \
+	..\COMMON\clipit_.obj  \
 	..\COMMON\comp_.obj    \
 	..\COMMON\peekpok_.obj \
 	..\COMMON\unbrun_.obj
