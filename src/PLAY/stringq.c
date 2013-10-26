@@ -6,6 +6,7 @@
    little cursor.  */
 
 #include "jimk.h"
+#include "a2blit_.h"
 #include "flicmenu.h"
 
 

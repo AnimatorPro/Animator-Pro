@@ -4,10 +4,9 @@
 
 #include "jimk.h"
 #include "a1blit_.h"
+#include "a2blit_.h"
 #include "gemfont.h"
 #include "rfont.h"
-
-extern a2blit();
 
 extern UBYTE sixhi_data[];
 extern WORD sixhi_ch_ofst[];
