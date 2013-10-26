@@ -4,6 +4,7 @@
 
 #include "jimk.h"
 #include "a1blit_.h"
+#include "blit8_.h"
 
 /* These variable contain the global input state */
 WORD uzx,uzy;	/* unzoomed xy */

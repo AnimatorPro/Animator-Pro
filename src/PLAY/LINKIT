@@ -1,10 +1,9 @@
 a1blit_.obj+
 a2blit_.obj+
-blit8.obj+
+blit8_.obj+
 bfile.obj+
 brush.obj+
 cblock.obj+
-clipit.obj+
 clipit_.obj+
 closestc.obj+
 comp.obj+

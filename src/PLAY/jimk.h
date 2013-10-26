@@ -200,7 +200,6 @@ struct blitblock
 	WORD color;
 	};
 /* graphics macros */
-extern blit8(),tblit8();	/* lo level PC gfx funx */
 #ifndef SLUFF
 #define colblock(color, x, y, x2, y2)  \
 	cblock(vf.p,x,y,(x2)-(x)+1, (y2)-(y)+1, color)

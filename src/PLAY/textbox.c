@@ -3,6 +3,7 @@
 
 #include "jimk.h"
 #include "a1blit_.h"
+#include "blit8_.h"
 #include "flicmenu.h"
 #include "textbox.str"
 
