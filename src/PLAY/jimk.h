@@ -40,8 +40,6 @@ extern void *remove_el();
 
 #define free_string(pt) freemem(pt)
 #define string_width(s) (strlen(s)*CH_WIDTH)
-#define zero_structure(s, size) stuff_words(0, s, ((unsigned)(size))>>1)
-#define zero_words(s,size) stuff_words(0, s, (unsigned)(size))
 
 typedef int (*Vector)();	/* AKA pointer to a function */
 
