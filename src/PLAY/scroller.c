@@ -3,6 +3,7 @@
 	Seeme and feelme routines to handle scrolling list of names. */
 
 #include "jimk.h"
+#include "a1blit_.h"
 #include "flicmenu.h"
 
 #define CHEIGHT (CH_HEIGHT)

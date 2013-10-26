@@ -2,6 +2,7 @@
 /* seemenu.c - more seeme routines to display menu buttons */
 
 #include "jimk.h"
+#include "a1blit_.h"
 #include "flicmenu.h"
 
 

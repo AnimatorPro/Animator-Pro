@@ -1,5 +1,6 @@
 /* :ts=3 */
 #include "jimk.h"
+#include "a1blit_.h"
 #include "flicmenu.h"
 
 char menu_ix, sel_ix;

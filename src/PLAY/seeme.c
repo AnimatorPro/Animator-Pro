@@ -3,6 +3,7 @@
    used just for file requestor.  */
 
 #include "jimk.h"
+#include "a1blit_.h"
 #include "flicmenu.h"
 #include "gemfont.h"
 
