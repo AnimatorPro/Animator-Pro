@@ -1,10 +1,10 @@
 comp.obj+
-comp1.obj+
+comp_.obj+
 fli.obj+
 int.obj+
 io_dos.obj+
 jfile.obj+
 quickfli.obj+
 peekpoke.obj+
-peekpok1.obj+
-unbrun1.obj
+peekpok_.obj+
+unbrun_.obj

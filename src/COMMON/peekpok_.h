@@ -1,5 +1,5 @@
-#ifndef PEEKPOK1_H
-#define PEEKPOK1_H
+#ifndef PEEKPOK_H
+#define PEEKPOK_H
 
 #include "jimk.h"
 

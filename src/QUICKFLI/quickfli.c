@@ -34,7 +34,7 @@
 #include "io.h"
 #include "jfile.h"
 #include "fli.h"
-#include "peekpok1.h"
+#include "peekpok_.h"
 
 /* sys_cmap - a software copy of the hardware color map.  It is formatted
    as R G B  R G B ... with each color component ranging from 0 to 63. */

@@ -1,7 +1,7 @@
-/* peekpok1.c */
+/* peekpok_.c */
 
 #include <string.h>
-#include "peekpok1.h"
+#include "peekpok_.h"
 
 void
 stuff_words(UWORD val, UWORD *dst, unsigned int n)

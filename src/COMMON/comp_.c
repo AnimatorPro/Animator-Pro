@@ -1,7 +1,7 @@
-/* comp1.c */
+/* comp_.c */
 
 #include <string.h>
-#include "comp1.h"
+#include "comp_.h"
 
 void
 unlccomp(const UBYTE *src, UBYTE *dst)

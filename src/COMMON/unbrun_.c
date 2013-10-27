@@ -1,7 +1,7 @@
-/* unbrun1.c */
+/* unbrun_.c */
 
 #include <string.h>
-#include "unbrun1.h"
+#include "unbrun_.h"
 
 void
 unbrun(const UBYTE *src, UBYTE *dst, unsigned int linect)
