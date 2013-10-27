@@ -1,34 +1,7 @@
 #ifndef JIMK_H
 #define JIMK_H
 
-#include "debug.h"
-
-#define GCC_PACKED
-
-#if defined(__GNUC__)
-#undef GCC_PACKED
-#define GCC_PACKED  __attribute__((packed))
-#endif
-
-typedef char BYTE;
-typedef unsigned char UBYTE;
-typedef short WORD;
-typedef unsigned short UWORD;
-
-#if defined(__TURBOC__)
-typedef long LONG;
-typedef unsigned long ULONG;
-#else
-typedef int LONG;
-typedef unsigned int ULONG;
-#endif
-
-STATIC_ASSERT(jimk, sizeof( BYTE) == 1);
-STATIC_ASSERT(jimk, sizeof(UBYTE) == 1);
-STATIC_ASSERT(jimk, sizeof( WORD) == 2);
-STATIC_ASSERT(jimk, sizeof(UWORD) == 2);
-STATIC_ASSERT(jimk, sizeof( LONG) == 4);
-STATIC_ASSERT(jimk, sizeof(ULONG) == 4);
+#include "jimk0.h"
 
 struct byte_regs 
 	{
