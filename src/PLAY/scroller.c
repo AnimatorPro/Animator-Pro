@@ -341,4 +341,3 @@ hilight(m);
 repeat_on_pdn(fincd);
 draw_sel(m);
 }
-

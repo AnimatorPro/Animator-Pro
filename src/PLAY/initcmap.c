@@ -183,7 +183,3 @@ uncheck_cmap()
 if (sys5)
 	jset_colors(COLORS-5, 5, vf.cmap+3*(COLORS-5));
 }
-
-
-
-

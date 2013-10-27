@@ -191,5 +191,3 @@ else					/* in the middle somewhere */
 		}
 	}
 }
-
-

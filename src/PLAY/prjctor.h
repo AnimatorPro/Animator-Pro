@@ -44,4 +44,3 @@ extern char notice_keys;
 advance_frame(Video_form *screen,int hdware_update);
 load_frame1(char *name,Video_form *screen,int hdware_update,int close_f);
 goto_frame(int old_val,int new_val);
-

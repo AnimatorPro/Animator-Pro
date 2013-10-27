@@ -24,6 +24,3 @@ while (cycle-- > 0)
 	}
 copy_cmap(alt_cmap,vf.cmap);
 }
-
-
-

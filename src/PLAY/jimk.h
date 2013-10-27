@@ -1,3 +1,5 @@
+#ifndef JIMK_H
+#define JIMK_H
 
 #define askmem malloc
 #define freemem free
@@ -22,7 +24,7 @@ extern long jseek(int f, long offset, int mode);
 #endif /* SLUFF */
 
 extern void *make_ptr();
-extern void *norm_pointer(), *enorm_pointer();
+extern void *norm_pointer();
 extern void *lbegmem(), *begmem();
 extern void *paskmem();
 extern char *clone_string();
@@ -219,7 +221,6 @@ extern a1blit(),a2blit(),blit8(),tblit8();	/* lo level PC gfx funx */
 #define color_hslice(y, height, color) \
 	cblock(vf.p,0,y,vf.w,height,color)
 #define putdot(x, y, color) cdot(vf.p, x, y, color)
-#define getdot(x,y)	getd(vf.p,x,y)
 #define gtext(s, x, y, color) systext(s,x,y,color,a1blit)
 #define stext(s, x, y, color,color1) systext(s,x,y,color,a2blit,color1)
 #define marqi_frame(x0,y0,x1,y1) \
@@ -457,3 +458,4 @@ extern int mc_colors[];
 #define sbright (mc_colors[MC_BRIGHT])
 #define sred (mc_colors[MC_RED])
 
+#endif

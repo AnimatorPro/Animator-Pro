@@ -124,30 +124,6 @@ _norm_pointer	PROC far
 	ret	
 _norm_pointer	ENDP
 
-	PUBLIC	_enorm_pointer
-	;norm_pointer(offset, seg)
-	;Add as much as possible of the offset of a pointer to the segment
-	;and make it evenly alligned...
-_enorm_pointer	PROC far
-	push bp
-	mov bp,sp
-	push cx
-
-	mov	ax,[bp+4+2]	;offset
-	mov dx,[bp+6+2]   ;segment
-	inc ax
-	and ax,0FFFEh	;force even allignment
-	mov [bp+4+2],ax ;and save...
-	mov cl,4
-	shr ax,cl
-	add dx,ax
-	mov	ax,[bp+4+2]	;offset
-	and ax,15
-
-	pop cx
-	pop	bp
-	ret	
-_enorm_pointer	ENDP
 
 ;stuff_words(data, offset, seg, words);
 	PUBLIC	_stuff_words
@@ -171,41 +147,6 @@ _stuff_words	PROC far
 	ret	
 _stuff_words	ENDP
 
-;xor_words(data, offset, seg, words/8);
-	PUBLIC	_xor_words
-_xor_words	PROC far
-	push	bp
-	mov	bp,sp
-	push ds
-	push es
-	push bx
-	push cx
-
-	mov	ax,[bp+8+2]	;seg
-	mov	bx,[bp+6+2]	;offset
-	mov ds,ax
-	mov es,ax
-	mov ax,[bp+4+2]   ;value to xor
-	mov cx,[bp+10+2]  ;count
-ook:
-	xor [bx],ax
-	xor [bx+2],ax
-	xor [bx+4],ax
-	xor [bx+6],ax
-	xor [bx+8],ax
-	xor [bx+10],ax
-	xor [bx+12],ax
-	xor [bx+14],ax
-	add bx,16
-	loop ook
-
-	pop cx
-	pop bx
-	pop es
-	pop ds
-	pop	bp
-	ret	
-_xor_words	ENDP
 
 ;copy_bytes(s,d,bytes)
 	public _copy_bytes
@@ -326,67 +267,6 @@ _copy_words	PROC far
 _copy_words	ENDP
 
 
-	PUBLIC _xlat
-	;xlat(table, buf, count)
-	;table -> 256 byte translation table
-	;buf -> area of count bytes to translate
-_xlat proc far
-	push bp
-	mov bp,sp
-	push bx
-	push cx
-	push di
-	push ds
-	push es
-
-	lds bx,[2+4+bp]	;load ds:bx with table
-	les di,[2+8+bp]	;load es:di with buffer
-	mov cx,[2+12+bp]
-
-xllp:
-	mov al,es:[di]	;fetch a byte
-	xlat [2+4+bp]
-	stosb			;and store result
-	loop	xllp
-
-	pop es
-	pop ds
-	pop di
-	pop cx
-	pop bx
-	pop bp
-	ret
-_xlat endp
-
-
-
-
-
-	public _back_scan
-_back_scan	proc	far
-	push	bp
-	mov		bp,sp
-	push	di
-	push	es
-
-	les	di,[bp+6+2]
-	dec di
-	mov cx,[bp+10+2]
-	mov al,[bp+4+2]
-	std
-	rep scasb
-	cld
-	inc cx
-	mov ax,[bp+10+2]
-	sub ax,cx
-
-	pop	es
-	pop	di
-	pop	bp
-	ret
-_back_scan endp
-
-
 	;set the old color map
 	public _jset_colors
 _jset_colors proc far
@@ -435,4 +315,3 @@ _jset_colors endp
 
 _TEXT	ENDS
 END
-
