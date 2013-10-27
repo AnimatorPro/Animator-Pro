@@ -3,6 +3,18 @@
 
 #include "jimk.h"
 
+/* Function: xorblock
+ *
+ *  Exclusive or a rectangle with colour.  Clipped to fit 320x200 screen.
+ *  Used for text cursor.
+ *
+ *  dst - byte plane to draw on.
+ *  x,y - upper left corner of rectangle.
+ *  width, height - dimensions of rectangle in pixels.
+ *  col - colour to xor with block.
+ */
+extern void xorblock(UBYTE *dst, int x, int y, int width, int height, int col);
+
 /* Function: cblock
  *
  *  Draw a rectangle in a solid colour.  Not clipped.
@@ -50,6 +62,9 @@ extern void cvli(UBYTE *dst, int x, int y, int height, int col);
 extern void cdot(UBYTE *dst, int x, int y, int col);
 
 #ifndef SLUFF
+
+#define xorrop(col, x, y, width, height) \
+	xorblock(vf.p, x, y, width, height, col)
 
 #define colblock(col, x, y, x2, y2)  \
 	cblock(vf.p, x, y, (x2)-(x)+1, (y2)-(y)+1, col)
