@@ -160,33 +160,6 @@ zzcb:
 	ret
 _cblock	ENDP
 
-	PUBLIC	_chli
-;chli(screen, x, y, width, color);
-_chli	PROC far
-	push bp
-	mov bp,sp
-	push cx
-	push es
-	push di
-
-	mov	ax,[bp+10+2]	;y start
-	mov di,320
-	mul di
-	les	di,[bp+4+2]	;get screen address
-	add	di,ax
-	add di,[bp+8+2]   ;fold in x start
-	mov al,[bp+14+2]	;get color
-	mov	cx,[bp+12+2]	;width into count register
-
-	rep stosb
-
-	pop di
-	pop es
-	pop cx
-	pop bp
-	ret
-_chli	ENDP
-
 	PUBLIC	_cvli
 ;cvli(screen, x, y, height, color);
 _cvli	PROC far
