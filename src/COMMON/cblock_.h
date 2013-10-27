@@ -3,6 +3,18 @@
 
 #include "jimk.h"
 
+/* Function: cblock
+ *
+ *  Draw a rectangle in a solid colour.  Not clipped.
+ *  Used heavily by menu drawing routines.
+ *
+ *  dst - byte plane to draw on.
+ *  x, y - upper left corner of rectangle.
+ *  width, height - dimensions of rectangle in pixels.
+ *  col - colour to set block.
+ */
+extern void cblock(UBYTE *dst, int x, int y, int width, int height, int col);
+
 /* Function: chli
  *
  *  Draw a horizontal line in a solid colour.  Not clipped.  Used by
@@ -38,6 +50,15 @@ extern void cvli(UBYTE *dst, int x, int y, int height, int col);
 extern void cdot(UBYTE *dst, int x, int y, int col);
 
 #ifndef SLUFF
+
+#define colblock(col, x, y, x2, y2)  \
+	cblock(vf.p, x, y, (x2)-(x)+1, (y2)-(y)+1, col)
+
+#define colrop(col, x, y, width, height) \
+	cblock(vf.p, x, y, (width+1), (height+1), col)
+
+#define color_hslice(y, height, col) \
+	cblock(vf.p, 0, y, vf.w, height, col)
 
 #define hline(y, x0, x1, col) \
 	chli(vf.p, x0, y, (x1)-(x0)+1, col)

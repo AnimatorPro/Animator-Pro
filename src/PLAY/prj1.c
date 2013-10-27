@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include "jimk.h"
+#include "cblock_.h"
 #include "flicmenu.h"
 #include "fli.h"
 #include "prjctor.h"

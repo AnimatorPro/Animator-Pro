@@ -4,6 +4,17 @@
 #include "cblock_.h"
 
 void
+cblock(UBYTE *dst, int x, int y, int width, int height, int col)
+{
+	dst += WIDTH * y + x;
+
+	for (; height > 0; height--) {
+		memset(dst, col, width);
+		dst += WIDTH;
+	}
+}
+
+void
 chli(UBYTE *dst, int x, int y, int width, int col)
 {
 	dst += WIDTH * y + x;

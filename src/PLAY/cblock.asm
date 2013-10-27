@@ -118,47 +118,5 @@ zzxb:
 	ret
 _xorblock	ENDP
 
-
-	PUBLIC	_cblock
-;cblock(screen, x, y, width, height, color);
-_cblock	PROC far
-	push bp
-	mov bp,sp
-	push cx
-	push es
-	push di
-	push si
-	push bx
-
-	les	bx,screen	;get screen address
-	mov	ax,y	;y start
-	mov si,320
-	mul si
-	add	bx,ax
-	add bx,x   ;fold in x start
-
-	mov al,color	;get color
-	mov si,height	;get hieght
-	jmp	zcb
-
-cb:	mov	cx,wid	;width into count register
-	mov	di,bx		;start of line into dest index
-	rep stosb
-	add bx,320
-
-zcb: dec si
-	js zzcb
-	jmp cb
-
-zzcb:
-	pop bx
-	pop si
-	pop di
-	pop es
-	pop cx
-	pop bp
-	ret
-_cblock	ENDP
-
 _TEXT	ENDS
 END
