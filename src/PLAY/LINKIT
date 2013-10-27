@@ -4,6 +4,7 @@ blit8_.obj+
 bfile.obj+
 brush.obj+
 cblock.obj+
+cblock_.obj+
 clipit_.obj+
 closestc.obj+
 comp.obj+

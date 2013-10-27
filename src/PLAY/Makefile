@@ -19,6 +19,7 @@ stubs2.obj decoder.obj shrinkin.obj bfile.obj int.obj \
 	..\COMMON\a1blit_.obj  \
 	..\COMMON\a2blit_.obj  \
 	..\COMMON\blit8_.obj   \
+	..\COMMON\cblock_.obj  \
 	..\COMMON\clipit_.obj  \
 	..\COMMON\comp_.obj    \
 	..\COMMON\peekpok_.obj \

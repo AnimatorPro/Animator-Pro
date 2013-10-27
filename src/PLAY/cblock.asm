@@ -216,41 +216,6 @@ vlp:
 	pop bp
 	ret
 _cvli	ENDP
-	PUBLIC	_cdot
-
-
-;cdot(screen, x, y, color);
-_cdot	PROC far
-	push bp
-	mov bp,sp
-	push di
-	push ds
-
-	mov	ax,[bp+10+2]	;y start
-	or ax,ax
-	js	cdotz
-	cmp	ax,200
-	jge	cdotz
-
-
-	mov di,320
-	mul di
-	lds	di,[bp+4+2]	;get screen address
-	add	di,ax
-	mov	dx,[bp+8+2]
-	or	dx,dx
-	js  cdotz
-	cmp dx,320
-	jge cdotz
-	add di,[bp+8+2]   ;fold in x start
-	mov al,[bp+12+2]	;get color
-	mov	[di],al
-cdotz:
-	pop ds
-	pop di
-	pop bp
-	ret
-_cdot	ENDP
 
 _TEXT	ENDS
 END

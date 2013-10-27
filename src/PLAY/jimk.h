@@ -213,7 +213,6 @@ struct blitblock
 	cvli(vf.p, x, y0, (y1)-(y0)+1, color)
 #define color_hslice(y, height, color) \
 	cblock(vf.p,0,y,vf.w,height,color)
-#define putdot(x, y, color) cdot(vf.p, x, y, color)
 #define gtext(s, x, y, color) systext(s,x,y,color,a1blit)
 #define stext(s, x, y, color,color1) systext(s,x,y,color,a2blit,color1)
 #define marqi_frame(x0,y0,x1,y1) \
