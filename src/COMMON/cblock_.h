@@ -15,6 +15,18 @@
  */
 extern void chli(UBYTE *dst, int x, int y, int width, int col);
 
+/* Function: cvli
+ *
+ *  Draw a vertical line in a solid colour.  Not clipped.  Used by
+ *  menu routines.
+ *
+ *  dst - byte plane to draw on.
+ *  x, y - left end of line.
+ *  height - height of line.
+ *  col - colour of line.
+ */
+extern void cvli(UBYTE *dst, int x, int y, int height, int col);
+
 /* Function: cdot
  *
  *  Draw a single pixel dot.  Clipped to 320x200.
@@ -29,6 +41,9 @@ extern void cdot(UBYTE *dst, int x, int y, int col);
 
 #define hline(y, x0, x1, col) \
 	chli(vf.p, x0, y, (x1)-(x0)+1, col)
+
+#define vline(x, y0, y1, col) \
+	cvli(vf.p, x, y0, (y1)-(y0)+1, col)
 
 #endif /* SLUFF */
 

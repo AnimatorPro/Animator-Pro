@@ -207,8 +207,6 @@ struct blitblock
 	cblock(vf.p,x,y,(width+1),(height+1),color)
 #define xorrop(color, x, y, width, height) \
 	xorblock(vf.p,x,y,(width),(height),color)
-#define vline(x, y0, y1, color) \
-	cvli(vf.p, x, y0, (y1)-(y0)+1, color)
 #define color_hslice(y, height, color) \
 	cblock(vf.p,0,y,vf.w,height,color)
 #define gtext(s, x, y, color) systext(s,x,y,color,a1blit)
