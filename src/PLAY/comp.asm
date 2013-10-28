@@ -13,55 +13,6 @@ DGROUP	GROUP	CONST,	_BSS,	_DATA
 	ASSUME  CS: _TEXT, DS: DGROUP, SS: DGROUP, ES: DGROUP
 _TEXT      SEGMENT
 
-	PUBLIC _unrun
-	;unrun(cbuf, screen)
-_unrun PROC far
-	push bp
-	mov bp,sp
-	push ds
-	push si
-	push di
-	push cx
-	push bx
-	cld
-
-	lds si,[bp+4+2]
-	les di,[bp+8+2]
-	lodsw
-	mov bx, ax   ;get the count
-	test bx,bx
-	jmp endunloop
-unloop:
-	lodsw
-	test ax,ax	;check sign
-	js copy
-	mov cx,ax
-	lodsw
-	rep stosw
-	dec bx
-	jnz	unloop
-	jmp endunrun
-
-copy:
-	neg ax
-	mov cx,ax
-	rep movsw
-	dec bx
-endunloop:
-	jnz unloop
-
-endunrun:
-	pop bx
-	pop cx
-	pop di
-	pop si
-	pop ds
-	pop	bp
-	ret	
-
-_unrun ENDP
-
-
 	PUBLIC _unsbsrsccomp
 	;unsbrsccomp_(cbuf, screen)
 _unsbsrsccomp PROC far

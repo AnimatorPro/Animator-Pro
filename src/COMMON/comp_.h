@@ -3,6 +3,9 @@
 
 #include "jimk.h"
 
+/* Function: unrun */
+extern void unrun(const UWORD *src, UWORD *dst);
+
 /* Function: unlccomp
  * 
  *  Used to decompress all but the first frame.  It's a 'delta' scheme

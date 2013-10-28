@@ -4,6 +4,28 @@
 #include "comp_.h"
 
 void
+unrun(const UWORD *src, UWORD *dst)
+{
+	unsigned int count = *src++;
+
+	for (; count > 0; count--) {
+		int length = (BYTE) *src++;
+
+		if (length >= 0) {
+			stuff_words(*src, dst, length);
+			src++;
+			dst += length;
+		}
+		else {
+			length = -length;
+			memcpy(dst, src, 2 * length);
+			src += length;
+			dst += length;
+		}
+	}
+}
+
+void
 unlccomp(const UBYTE *src, UBYTE *dst)
 {
 	UBYTE *lineptr;
