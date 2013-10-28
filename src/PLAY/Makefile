@@ -8,7 +8,7 @@ CFLAGS= -c -ml -If:\ -I$(INCLUDE) -I. -I..\COMMON
 
 O= main.obj \
 brush.obj \
-closestc.obj comp.obj cursorda.obj \
+comp.obj cursorda.obj \
 diskerr.obj dosstuff.obj feelmenu.obj \
 filedata.obj filemenu.obj fli.obj gfx.obj \
 init.obj initcmap.obj input.obj jfile.obj \
@@ -21,6 +21,7 @@ stubs2.obj decoder.obj shrinkin.obj bfile.obj int.obj \
 	..\COMMON\blit8_.obj   \
 	..\COMMON\cblock_.obj  \
 	..\COMMON\clipit_.obj  \
+	..\COMMON\closest_.obj \
 	..\COMMON\comp_.obj    \
 	..\COMMON\peekpok_.obj \
 	..\COMMON\unbrun_.obj

@@ -1,6 +1,7 @@
 
 
 #include "jimk.h"
+#include "closest_.h"
 
 /* initcmap.c - File contains the default color map 
    and a function to find out what colors to draw the
