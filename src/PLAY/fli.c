@@ -39,10 +39,10 @@ for (j=0;j<frame->chunks;j++)
 	switch (chunk->type)
 		{
 		case FLI_WRUN:
-			unrun((const UBYTE *)(chunk+1), f->p);
+			unrun((const WORD *)(chunk+1), f->p);
 			break;
 		case FLI_SBSRSC: 
-			unsbsrsccomp(chunk+1, f->p);
+			unsbsrsccomp((const UBYTE *)(chunk+1), f->p);
 			break;
 		case FLI_COLOR:
 			if (colors)

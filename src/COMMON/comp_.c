@@ -26,6 +26,37 @@ unrun(const UWORD *src, UWORD *dst)
 }
 
 void
+unsbsrsccomp(const UBYTE *src, UBYTE *dst)
+{
+	unsigned int opcount;
+
+	dst += ((const UWORD *)src)[0];
+	src += 2;
+
+	opcount = ((const UWORD *)src)[0];
+	src += 2;
+
+	for (; opcount > 0; opcount--) {
+		int nskip = *src++;
+		int length = (BYTE) *src++;
+
+		dst += nskip;
+
+		if (length >= 0) {
+			memcpy(dst, src, length);
+			src += length;
+			dst += length;
+		}
+		else {
+			length = -length;
+			memset(dst, *src, length);
+			src++;
+			dst += length;
+		}
+	}
+}
+
+void
 unlccomp(const UBYTE *src, UBYTE *dst)
 {
 	UBYTE *lineptr;

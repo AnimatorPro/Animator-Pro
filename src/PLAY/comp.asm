@@ -13,60 +13,6 @@ DGROUP	GROUP	CONST,	_BSS,	_DATA
 	ASSUME  CS: _TEXT, DS: DGROUP, SS: DGROUP, ES: DGROUP
 _TEXT      SEGMENT
 
-	PUBLIC _unsbsrsccomp
-	;unsbrsccomp_(cbuf, screen)
-_unsbsrsccomp PROC far
-	push bp
-	mov bp,sp
-	push es
-	push ds
-	push si
-	push di
-	push bx
-	push cx
-	cld
-
-	lds si,[bp+4+2]
-	les di,[bp+8+2]
-	lodsw	;get the first skip (WORD)
-	add di,ax
-	lodsw		;get op count
-	mov bx, ax  
-	xor ah,ah
-	test bx,bx
-	jmp endusbsrscloop
-usbsrscloop:
-	lodsb	;load in the byte skip
-	add di,ax
-	lodsb	; load op/count
-	test al,al
-	js usbsrscrun
-	mov cx,ax
-	rep movsb
-	dec bx
-	jnz usbsrscloop
-	jmp usbsrscout
-usbsrscrun:
-	neg al
-	mov cx,ax ;get signed count
-	lodsb	  ;value to repeat in al
-	rep stosb
-	dec bx
-endusbsrscloop:
-	jnz usbsrscloop
-usbsrscout:
-	pop cx
-	pop bx
-	pop di
-	pop si
-	pop ds
-	pop es
-	pop	bp
-	ret	
-
-_unsbsrsccomp ENDP
-
-
 	;cset_colors(csource)
 	;set the color palette hardware from a compressed source 
 	;of format:
