@@ -25,6 +25,18 @@ copy_structure(const void *src, void *dst, unsigned int n)
 }
 
 void
+exchange_words(UWORD *xs, UWORD *ys, unsigned int n)
+{
+	for (; n > 0; n--) {
+		UWORD x = *xs;
+		UWORD y = *ys;
+
+		*xs++ = y;
+		*ys++ = x;
+	}
+}
+
+void
 copy_words(const UWORD *src, UWORD *dst, unsigned int n)
 {
 	memcpy(dst, src, 2 * n);

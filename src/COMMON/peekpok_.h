@@ -12,6 +12,9 @@ extern void copy_bytes(const UBYTE *src, UBYTE *dst, unsigned int n);
 /* Function: copy_structure */
 extern void copy_structure(const void *src, void *dst, unsigned int n);
 
+/* Function: exchange_words */
+extern void exchange_words(UWORD *xs, UWORD *ys, unsigned int n);
+
 /* Function: copy_words */
 extern void copy_words(const UWORD *src, UWORD *dst, unsigned int n);
 

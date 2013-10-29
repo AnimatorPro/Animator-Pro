@@ -125,38 +125,6 @@ _norm_pointer	PROC far
 _norm_pointer	ENDP
 
 
-;exchange_words(s, d, words)
-	public _exchange_words
-_exchange_words proc far
-	push bp
-	mov bp,sp
-	push es
-	push ds
-	push si
-	push di
-	push cx
-
-	les	di,[bp+8+2]
-	lds si,[bp+4+2]
-	mov	cx,[bp+12+2]
-exglp:
-	mov	ax,[si]
-	mov dx,es:[di]
-	mov [si],dx
-	inc si
-	inc si
-	stosw
-	loop exglp
-	pop cx
-	pop di
-	pop si
-	pop ds
-	pop es
-	pop bp
-	ret
-_exchange_words endp
-
-
 	;set the old color map
 	public _jset_colors
 _jset_colors proc far
