@@ -125,39 +125,6 @@ _norm_pointer	PROC far
 _norm_pointer	ENDP
 
 
-;copy_structure(soffset, ssegment, doffset, dsegment, bytes)
-    PUBLIC _copy_structure
-_copy_structure PROC far
-	push	bp
-	mov	bp,sp
-	push di
-	push ds
-	push es
-	push si
-	push cx
-
-	mov	ax,[bp+6+2]	;s seg
-	mov ds,ax
-	mov	si,[bp+4+2]	;s offset
-	mov ax,[bp+10+2]  ;d seg
-	mov es,ax
-	mov di,[bp+8+2]  ;d offset
-	mov cx,[bp+12+2]  ;count
-	shr cx,1
-
-	cld
-	rep movsw
-
-	pop cx
-	pop si
-	pop es
-	pop ds
-	pop di
-	pop	bp
-	ret	
-_copy_structure ENDP
-
-
 ;exchange_words(s, d, words)
 	public _exchange_words
 _exchange_words proc far

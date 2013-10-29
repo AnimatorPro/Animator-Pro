@@ -6,6 +6,7 @@
 #include "jimk.h"
 #include "fli.h"
 #include "flicmenu.h"
+#include "peekpok_.h"
 #include "prjctor.h"
 
 extern char cbrk_hit;

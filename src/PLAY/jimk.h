@@ -277,7 +277,6 @@ extern char dirty_file;	/* need to resave file? */
 extern char dirty_frame;	/* need to recompress frame? */
 
 extern UBYTE pure_white[], pure_black[], pure_red[], pure_green[], pure_blue[];
-#define copy_cmap(s,d) copy_structure(s,d,COLORS*3)
 
 /* Some variable to maintain start and stop of time range we're
    currently concerned with. */

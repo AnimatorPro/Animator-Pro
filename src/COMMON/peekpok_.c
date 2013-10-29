@@ -19,6 +19,12 @@ copy_bytes(const UBYTE *src, UBYTE *dst, unsigned int n)
 }
 
 void
+copy_structure(const void *src, void *dst, unsigned int n)
+{
+	copy_words(src, dst, n / 2);
+}
+
+void
 copy_words(const UWORD *src, UWORD *dst, unsigned int n)
 {
 	memcpy(dst, src, 2 * n);
