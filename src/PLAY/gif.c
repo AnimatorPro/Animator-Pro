@@ -2,6 +2,7 @@
 #include "jimk.h"
 #include "gif.h"
 #include "gif.str"
+#include "peekpok_.h"
 
 extern Video_form alt_vf;
 extern int sys5;

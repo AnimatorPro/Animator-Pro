@@ -125,29 +125,6 @@ _norm_pointer	PROC far
 _norm_pointer	ENDP
 
 
-;copy_bytes(s,d,bytes)
-	public _copy_bytes
-_copy_bytes proc far
-	push bp
-	mov bp,sp
-	push ds
-	push si
-	push di
-
-	cld
-	lds	si,[4+bp+2]
-	les	di,[8+bp+2]
-	mov cx,[12+bp+2]
-	rep movsb
-
-	pop di
-	pop si
-	pop ds
-	pop bp
-	ret
-_copy_bytes endp
-
-
 ;copy_structure(soffset, ssegment, doffset, dsegment, bytes)
     PUBLIC _copy_structure
 _copy_structure PROC far

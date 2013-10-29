@@ -9,6 +9,7 @@
 #include "a2blit_.h"
 #include "cblock_.h"
 #include "flicmenu.h"
+#include "peekpok_.h"
 
 
 #define SDETAIL	sblack

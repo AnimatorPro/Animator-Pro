@@ -13,6 +13,12 @@ stuff_words(UWORD val, UWORD *dst, unsigned int n)
 }
 
 void
+copy_bytes(const UBYTE *src, UBYTE *dst, unsigned int n)
+{
+	memcpy(dst, src, n);
+}
+
+void
 copy_words(const UWORD *src, UWORD *dst, unsigned int n)
 {
 	memcpy(dst, src, 2 * n);
