@@ -144,16 +144,6 @@ switch (menu)
 }
 
 
-
-beep()
-{
-sound(70);
-delay(300);
-nosound();
-}
-
-
-
 dokeys()
 {
 unsigned char c = key_in;
