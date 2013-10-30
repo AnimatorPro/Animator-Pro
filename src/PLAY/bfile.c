@@ -29,7 +29,7 @@ if (bf->left >= count)
 	return(count);
 	}
 else
-#endif LATER
+#endif /* LATER */
 	{
 	for (i=0; i<count; i++)
 		{
@@ -178,4 +178,4 @@ else
 }
 
 
-#endif REALLY
+#endif /* REALLY */

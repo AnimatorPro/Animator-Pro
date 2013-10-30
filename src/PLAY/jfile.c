@@ -16,7 +16,7 @@ if ((f = jopen(title, 0))!=0)
 	}
 return(0);
 }
-#endif SLUFFED
+#endif /* SLUFFED */
 
 #ifdef SLUFFED
 jdelete(title)
@@ -31,7 +31,7 @@ if (sysint(0x21,&reg,&reg)&1)
 	return(0);
 return(1);
 }
-#endif SLUFFED
+#endif /* SLUFFED */
 
 #ifdef SLUFFED
 jrename(oldname, newname)
@@ -48,7 +48,7 @@ if (sysint(0x21,&reg,&reg)&1)
 	return(0);
 return(1);
 }
-#endif SLUFFED
+#endif /* SLUFFED */
 
 #ifdef SLUFFED
 jcreate(title)
@@ -65,7 +65,7 @@ if (sysint(0x21,&reg,&reg)&1)	/* check carry */
 else
 	return(reg.w.ax);
 }
-#endif SLUFFED
+#endif /* SLUFFED */
 
 jopen(title, mode)
 char *title;
@@ -254,7 +254,7 @@ if (jread(f, buf, size) < size)
 jclose(f);
 return(1);
 }
-#endif SLUFFED
+#endif /* SLUFFED */
 
 #ifdef SLUFFED
 write_gulp(name, buf, size)
@@ -279,7 +279,7 @@ if (jwrite(f, buf, size) < size)
 jclose(f);
 return(1);
 }
-#endif SLUFFED
+#endif /* SLUFFED */
 
 #ifdef SLUFFED
 cant_create(name)
@@ -292,7 +292,7 @@ bufs[1] = name;
 bufs[2] = NULL;
 continu_box(bufs);
 }
-#endif SLUFFED
+#endif /* SLUFFED */
 
 cant_find(name)
 char *name;
@@ -336,7 +336,7 @@ else
 bufs[2] = NULL;
 return(yes_no_box(bufs));
 }
-#endif SLUFFED
+#endif /* SLUFFED */
 
 mangled(name)
 char *name;
@@ -367,4 +367,4 @@ if (key_hit || RJSTDN)
 else
 	return(0);
 }
-#endif SLUFFED
+#endif /* SLUFFED */

@@ -117,7 +117,7 @@ r.b.ah = 0x02;
 sysint(0x16, &r, &r);
 ctrl_hit = (r.b.al & 0x04) ? 1: 0;
 }
-#endif EVER
+#endif /* EVER */
 
 
 
@@ -428,7 +428,7 @@ copy_form(&vf, &alt_vf);
 #ifdef OLDWAY
 copy_cmap(vf.cmap,alt_vf.cmap);
 copy_structure(vf.p, alt_vf.p, SCREEN_SIZE);
-#endif OLDWAY
+#endif /* OLDWAY */
 
 if (new_val > cur_frame_num)
 	{
@@ -453,7 +453,7 @@ else   /* (new_val < cur_frame_num) so go backwards */
 	see_cmap();
 #ifdef OLDWAY
 	copy_structure(alt_vf.p,vf.p, SCREEN_SIZE);
-#endif OLDWAY
+#endif /* OLDWAY */
 	fh.speed=val;
 	}
 }

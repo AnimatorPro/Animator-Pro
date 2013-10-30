@@ -32,7 +32,7 @@ union regs
 	struct byte_regs b;
 	struct word_regs w;
 	};
-#endif EVER
+#endif /* EVER */
 
 /* some pointer manipulation routines for the 8086 */
 unsigned
@@ -162,7 +162,7 @@ for (i=2; i<26; i++)
 		}
 	}
 change_dev(od);
-#endif OLD
+#endif /* OLD */
 for (i=3; i<=26; i++)
 	{
 	r.b.ah = 0x1c;
@@ -219,7 +219,7 @@ if (!mcurrent_drawer())
 	}
 return(1);
 }
-#endif OLD
+#endif /* OLD */
 /*** end new */
 
 
@@ -319,7 +319,7 @@ for (i=2; i<26; i++)
 		}
 	}
 change_dev(od);
-#endif OLD
+#endif /* OLD */
 for (i=3; i<=26; i++)
 	{
 	r.b.ah = 0x1c;

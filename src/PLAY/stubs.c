@@ -85,7 +85,7 @@ if ((pt = _lalloc(psize)) != NULL)
 		unconfig_ints();
 		exit(0);	/* okok... */
 		}
-#endif CHECKIT
+#endif /* CHECKIT */
 	blocks_out++;
 	*pt++ = psize;
 	*pt++ = START_COOKIE;

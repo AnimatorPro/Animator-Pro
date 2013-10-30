@@ -62,7 +62,7 @@ struct flicmenu fplus_sel =
 	'\r',
 	NOOPT,
 	};
-#endif LATER
+#endif /* LATER */
 WORD device;
 struct flicmenu fdev16_sel =
 	{

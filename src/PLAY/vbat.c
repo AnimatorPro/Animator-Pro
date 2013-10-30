@@ -59,7 +59,7 @@ char *resv_words[]=
 #ifdef OLD_FEATURE
 	"KEYSON",     /* keysOn */
 	"KEYSOFF", /* keysOff */
-#endif OLD_FEATURE
+#endif /* OLD_FEATURE */
 	};
 #define MAX_RESV_WORD 3  /* was 5 */
 
@@ -540,7 +540,7 @@ while (sym!=EOF_SYM && !stop_bat)
 				getsym();
 				notice_keys=0;
 				break;
-#endif OLD_FEATURE
+#endif /* OLD_FEATURE */
 			case R_NOEXIT:
 				getsym();
 				exit_word=0;

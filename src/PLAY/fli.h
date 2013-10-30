@@ -115,7 +115,7 @@ struct vtrack
 	};
 typedef struct vtrack Vtrack;
 extern Vtrack vtracks[3];
-#endif SLUFFED
+#endif /* SLUFFED */
 
 #define VGA_MAGIC 0x0100
 struct vga_header

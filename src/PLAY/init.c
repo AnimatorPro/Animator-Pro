@@ -111,7 +111,7 @@ cbrk_acknowledge()
 {
 cbrk_hit = 0;
 }
-#endif EVER
+#endif /* EVER */
 
 
 

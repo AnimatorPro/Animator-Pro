@@ -103,7 +103,7 @@ if (--hmpstack == 0)
 		}
 	}
 }
-#endif LATER
+#endif /* LATER */
 
 
 bright(m)

@@ -163,7 +163,7 @@ for (;;)
 				inc_fileq_list();
 				goto ACCEPTED_STRING;
 				break;
-#endif IT_WAS_SO
+#endif /* IT_WAS_SO */
 			case 0x1b:	/* escape */
 				string[0] = 0;
 				init_stq_string(sq);
