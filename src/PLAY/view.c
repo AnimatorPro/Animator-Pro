@@ -1,7 +1,4 @@
 #include <time.h>  /* for time functions */
-#ifndef SLUFF
-#include <dos.h>  /* for sound test */
-#endif SLUFF
 
 #include "jimk.h"
 #include "fli.h"
