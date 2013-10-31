@@ -40,8 +40,6 @@ extern void *remove_el();
 
 #define free_string(pt) freemem(pt)
 #define string_width(s) (strlen(s)*CH_WIDTH)
-#define zero_structure(s, size) stuff_words(0, s, ((unsigned)(size))>>1)
-#define zero_words(s,size) stuff_words(0, s, (unsigned)(size))
 
 typedef int (*Vector)();	/* AKA pointer to a function */
 
@@ -202,25 +200,7 @@ struct blitblock
 	WORD color;
 	};
 /* graphics macros */
-extern a1blit(),a2blit(),blit8(),tblit8();	/* lo level PC gfx funx */
 #ifndef SLUFF
-#define colblock(color, x, y, x2, y2)  \
-	cblock(vf.p,x,y,(x2)-(x)+1, (y2)-(y)+1, color)
-#define colrop(color, x, y, width, height) \
-	cblock(vf.p,x,y,(width+1),(height+1),color)
-#define xorrop(color, x, y, width, height) \
-	xorblock(vf.p,x,y,(width),(height),color)
-#define cdraw_brush(brush, x, y, color) \
-	a1blit(16, 16, 0, 0, brush, 2, (x)-8, (y)-8, vf.p, vf.bpr, color)
-#define draw_brush(brush, x, y, color) \
-	a1blit(16, 16, 0, 0, brush, 2, x, y, vf.p, vf.bpr, color)
-#define hline(y, x0, x1, color) \
-	chli(vf.p, x0, y, (x1)-(x0)+1, color)
-#define vline(x, y0, y1, color) \
-	cvli(vf.p, x, y0, (y1)-(y0)+1, color)
-#define color_hslice(y, height, color) \
-	cblock(vf.p,0,y,vf.w,height,color)
-#define putdot(x, y, color) cdot(vf.p, x, y, color)
 #define gtext(s, x, y, color) systext(s,x,y,color,a1blit)
 #define stext(s, x, y, color,color1) systext(s,x,y,color,a2blit,color1)
 #define marqi_frame(x0,y0,x1,y1) \
@@ -297,7 +277,6 @@ extern char dirty_file;	/* need to resave file? */
 extern char dirty_frame;	/* need to recompress frame? */
 
 extern UBYTE pure_white[], pure_black[], pure_red[], pure_green[], pure_blue[];
-#define copy_cmap(s,d) copy_structure(s,d,COLORS*3)
 
 /* Some variable to maintain start and stop of time range we're
    currently concerned with. */

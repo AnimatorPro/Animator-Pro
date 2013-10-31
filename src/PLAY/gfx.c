@@ -2,6 +2,8 @@
 /* Some VGA specific 320x200x256 graphics routines. */
 
 #include "jimk.h"
+#include "cblock_.h"
+#include "peekpok_.h"
 
 
 /* Poke the background color with an rgb value.  Handy for debugging

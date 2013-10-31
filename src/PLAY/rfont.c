@@ -3,10 +3,10 @@
    format and displays it, or tells you how big a character or string is. */
 
 #include "jimk.h"
-#include "rfont.h"
+#include "a1blit_.h"
+#include "a2blit_.h"
 #include "gemfont.h"
-
-extern a1blit(), a2blit();
+#include "rfont.h"
 
 extern UBYTE sixhi_data[];
 extern WORD sixhi_ch_ofst[];

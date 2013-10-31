@@ -1,7 +1,60 @@
-/* comp1.c */
+/* comp_.c */
 
 #include <string.h>
-#include "comp1.h"
+#include "comp_.h"
+
+void
+unrun(const UWORD *src, UWORD *dst)
+{
+	unsigned int count = *src++;
+
+	for (; count > 0; count--) {
+		int length = (BYTE) *src++;
+
+		if (length >= 0) {
+			stuff_words(*src, dst, length);
+			src++;
+			dst += length;
+		}
+		else {
+			length = -length;
+			memcpy(dst, src, 2 * length);
+			src += length;
+			dst += length;
+		}
+	}
+}
+
+void
+unsbsrsccomp(const UBYTE *src, UBYTE *dst)
+{
+	unsigned int opcount;
+
+	dst += ((const UWORD *)src)[0];
+	src += 2;
+
+	opcount = ((const UWORD *)src)[0];
+	src += 2;
+
+	for (; opcount > 0; opcount--) {
+		int nskip = *src++;
+		int length = (BYTE) *src++;
+
+		dst += nskip;
+
+		if (length >= 0) {
+			memcpy(dst, src, length);
+			src += length;
+			dst += length;
+		}
+		else {
+			length = -length;
+			memset(dst, *src, length);
+			src++;
+			dst += length;
+		}
+	}
+}
 
 void
 unlccomp(const UBYTE *src, UBYTE *dst)

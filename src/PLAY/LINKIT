@@ -1,12 +1,13 @@
-a1blit.obj+
-a2blit.obj+
-blit8.obj+
+a1blit_.obj+
+a2blit_.obj+
+blit8_.obj+
 bfile.obj+
 brush.obj+
-cblock.obj+
-clipit.obj+
-closestc.obj+
+cblock_.obj+
+clipit_.obj+
+closest_.obj+
 comp.obj+
+comp_.obj+
 cursorda.obj+
 decoder.obj+
 diskerr.obj+
@@ -29,6 +30,7 @@ stubs.obj+
 stubs2.obj+
 names.obj+
 peekpoke.obj+
+peekpok_.obj+
 prj1.obj+
 pull.obj+
 rfont.obj+
@@ -40,6 +42,6 @@ shrinkin.obj+
 slider.obj+
 stringq.obj+
 textbox.obj+
-unbrun.obj+
+unbrun_.obj+
 vbat.obj+
 view.obj

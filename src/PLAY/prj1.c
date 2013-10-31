@@ -2,8 +2,10 @@
 
 #include <stdio.h>
 #include "jimk.h"
+#include "cblock_.h"
 #include "flicmenu.h"
 #include "fli.h"
+#include "peekpok_.h"
 #include "prjctor.h"
 #include "prj1.str"
 

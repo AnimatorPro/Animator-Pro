@@ -1,4 +1,5 @@
 #include "jimk.h"
+#include "peekpok_.h"
 
 extern unsigned char alt_cmap[];
 

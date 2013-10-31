@@ -1,4 +1,6 @@
 #include "jimk.h"
+#include "closest_.h"
+#include "peekpok_.h"
 
 
 struct bhash

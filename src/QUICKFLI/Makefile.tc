@@ -1,5 +1,5 @@
 
-CFLAGS= -Z -O -w-par -wstv -c -ml -Ic:\tc\include -d
+CFLAGS= -Z -O -w-par -wstv -c -ml -Ic:\tc\include -I. -I..\COMMON -d
 
 .c.obj:
 	tcc $(CFLAGS) $*.c
@@ -7,8 +7,11 @@ CFLAGS= -Z -O -w-par -wstv -c -ml -Ic:\tc\include -d
 	tasm /Ml $*.asm;
 
 O= quickfli.obj \
-	comp.obj comp1.obj fli.obj int.obj io_dos.obj jfile.obj \
-	peekpoke.obj peekpok1.obj unbrun1.obj
+	comp.obj fli.obj int.obj io_dos.obj jfile.obj \
+	peekpoke.obj \
+	..\COMMON\comp_.obj    \
+	..\COMMON\peekpok_.obj \
+	..\COMMON\unbrun_.obj
 
 fast: $(O)
 	tlink $(LIB)c0l @linkit, quickfli, quickfli, $(LIB)cl

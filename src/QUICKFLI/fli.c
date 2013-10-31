@@ -7,12 +7,12 @@
 
 
 #include "jimk.h"
-#include "comp1.h"
+#include "comp_.h"
 #include "fli.h"
 #include "io.h"
 #include "jfile.h"
-#include "peekpok1.h"
-#include "unbrun1.h"
+#include "peekpok_.h"
+#include "unbrun_.h"
 
 
 /* Go through all the chunks in a frame switching on chunk type to

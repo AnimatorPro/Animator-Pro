@@ -1,8 +1,11 @@
 
 
 #include "jimk.h"
+#include "comp_.h"
 #include "fli.h"
 #include "fli.str"
+#include "peekpok_.h"
+#include "unbrun_.h"
 
 notafli(name)
 char *name;
@@ -36,30 +39,30 @@ for (j=0;j<frame->chunks;j++)
 	switch (chunk->type)
 		{
 		case FLI_WRUN:
-			unrun(chunk+1, f->p);
+			unrun((const WORD *)(chunk+1), f->p);
 			break;
 		case FLI_SBSRSC: 
-			unsbsrsccomp(chunk+1, f->p);
+			unsbsrsccomp((const UBYTE *)(chunk+1), f->p);
 			break;
 		case FLI_COLOR:
 			if (colors)
 				{
 				cset_colors(chunk+1);
 				}
-			fcuncomp(chunk+1,f->cmap);
+			fcuncomp((const UBYTE *)(chunk+1), f->cmap);
 			fli_has_colors = 1;
 			break;
 		case FLI_LC:
-			unlccomp(chunk+1, f->p);
+			unlccomp((const UBYTE *)(chunk+1), f->p);
 			break;
 		case FLI_BLACK:
 			clear_form(f);
 			break;
 		case FLI_BRUN:
-			unbrun(chunk+1, f->p, f->h);
+			unbrun((const UBYTE *)(chunk+1), f->p, f->h);
 			break;
 		case FLI_COPY:
-			copy_words(chunk+1,f->p,32000);
+			copy_words((const UBYTE *)(chunk+1), f->p, 32000);
 			break;
 		default:
 			printf(fli_101 /* "unknown chunk type %d\n" */, chunk->type);
