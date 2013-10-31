@@ -1,6 +1,8 @@
 /* textbox.c - generate a 'continue' alert or a 'yes/no' dialog from
    a couple of C strings. */
 
+#include <stdlib.h>
+#include <string.h>
 #include "jimk.h"
 #include "a1blit_.h"
 #include "blit8_.h"

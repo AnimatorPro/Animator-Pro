@@ -1,4 +1,4 @@
-
+#include <stdio.h>
 #include "jimk.h"
 #include "gif.h"
 #include "gif.str"

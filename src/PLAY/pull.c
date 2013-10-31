@@ -1,4 +1,5 @@
 /* :ts=3 */
+#include <stdlib.h>
 #include "jimk.h"
 #include "a1blit_.h"
 #include "blit8_.h"

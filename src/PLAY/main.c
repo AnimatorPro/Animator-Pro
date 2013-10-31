@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "jimk.h"
 #include "flicmenu.h"  /*just for cur menu etc */
 #include"prjctor.h"

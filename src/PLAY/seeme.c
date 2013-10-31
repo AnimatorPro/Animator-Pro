@@ -2,6 +2,9 @@
 /* Seeme.c - routines to display menus.  A lot of these aren't actually
    used just for file requestor.  */
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "jimk.h"
 #include "a1blit_.h"
 #include "blit8_.h"

@@ -1,7 +1,8 @@
 /* vbat.c  -- batch file processing for stand alone player */
 
-#include <stdio.h>
 #include <ctype.h> 
+#include <stdio.h>
+#include <string.h>
 #include "jimk.h"
 #include "prjctor.h"
 #include "vbat.str"

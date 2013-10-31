@@ -1,6 +1,7 @@
 /* analog to vpaint.c  in v */
 
 #include <stdio.h>
+#include <string.h>
 #include "jimk.h"
 #include "cblock_.h"
 #include "flicmenu.h"

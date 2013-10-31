@@ -1,8 +1,10 @@
 
 /* Names.c - general purpose string handling. A shell sort. */
 
-#include "jimk.h"
 #include <ctype.h>
+#include <stdlib.h>
+#include <string.h>
+#include "jimk.h"
 
 
 /* Force a string to upper case */

@@ -2,6 +2,7 @@
 /*  scroller.c 
 	Seeme and feelme routines to handle scrolling list of names. */
 
+#include <string.h>
 #include "jimk.h"
 #include "a1blit_.h"
 #include "cblock_.h"

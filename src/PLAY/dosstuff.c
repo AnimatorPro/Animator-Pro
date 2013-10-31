@@ -1,9 +1,10 @@
 /* Dosstuff.c - MS-DOS routines (also see jfile.c) to figure out
    about directories, how much disk space is left, etc. */
 
+#include <ctype.h>
+#include <stdio.h>
 #include "jimk.h"
 #include "dosstuff.h"
-#include <ctype.h>
 
 extern WORD device;
 extern char devices[26];
