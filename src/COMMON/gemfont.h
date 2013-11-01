@@ -1,3 +1,7 @@
+#ifndef GEMFONT_H
+#define GEMFONT_H
+
+#include "jimk.h"
 
 /* This file supports GEM style fonts.  They live on disk in three parts.
    1st there's the header structure below, then a list of 'x' offsets into
@@ -45,3 +49,5 @@ extern struct font_hdr *usr_font;
 #define STPROP 0
 #define MFIXED 1
 #define MPROP 2
+
+#endif
