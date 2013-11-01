@@ -32,8 +32,8 @@ int	lghtng_m;	/* Lightening mask.  Just use 0x55aa. */
 int	skewng_m;	/* Skewing mask for italics. If 1 bit rotate this line. 0xaaaa*/
 int	flags;		/* Just set to zero.  Half-assed intel swap if otherwise. */
 char *hz_ofst;  /* On disk byte offset from beginning of file to hor. offsets */
-int	*ch_ofst;	/* On disk byte offset to beginning of ?? kerning ?? data. */
-int	*fnt_dta;	/* On disk byte offset to beginning of bitmap. */
+WORD *ch_ofst;	/* On disk byte offset to beginning of ?? kerning ?? data. */
+WORD *fnt_dta;	/* On disk byte offset to beginning of bitmap. */
 int	frm_wdt;	/* Byte width of bitmap. */
 int	frm_hgt;	/* Pixel height of bitmap. */
 struct font_hdr	*nxt_fnt; /* Set to 0 */

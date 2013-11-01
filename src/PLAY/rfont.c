@@ -9,7 +9,6 @@
 #include "rfont.h"
 
 extern UBYTE sixhi_data[];
-extern WORD sixhi_ch_ofst[];
 extern struct font_hdr sixhi_font;
 struct font_hdr *usr_font = &sixhi_font; 
 
