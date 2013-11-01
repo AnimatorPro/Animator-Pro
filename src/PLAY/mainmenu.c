@@ -48,7 +48,7 @@ int speed_val;
 int global_frame_count;  /* ldg */
 
 struct qslider frame_sl = {0, 0, &frame_val, 1, NULL};
-struct qslider speed_sl = { 0, 120, &fh.speed, 0, };
+struct qslider speed_sl = {0, 120, &fh.speed, 0, NULL};
 
 struct flicmenu tmu_spdsl_sel = {
 	NONEXT,
@@ -60,6 +60,7 @@ struct flicmenu tmu_spdsl_sel = {
 	NOGROUP, 0,
 	NOKEY,
 	NOOPT,
+	0, 0
 	};
 struct flicmenu tmu_spdtag_sel = {
 	&tmu_spdsl_sel,
@@ -71,6 +72,7 @@ struct flicmenu tmu_spdtag_sel = {
 	NOGROUP, 0,
 	NOKEY,
 	NOOPT,
+	0, 0
 	};
 
 struct flicmenu tmu_frame_sl_sel = {
@@ -83,6 +85,7 @@ struct flicmenu tmu_frame_sl_sel = {
 	NOGROUP, 0,
 	NOKEY,
 	NOOPT,
+	0, 0
 	};
 struct flicmenu tmu_play_sel = {
 	&tmu_frame_sl_sel,
@@ -94,6 +97,7 @@ struct flicmenu tmu_play_sel = {
 	NOGROUP, 0,
 	NOKEY,
 	NOOPT,
+	0, 0
 	};
 struct flicmenu tmu_down_sel = {
 	&tmu_play_sel,
@@ -105,6 +109,7 @@ struct flicmenu tmu_down_sel = {
 	NOGROUP, 0,
 	DARROW,
 	NOOPT,
+	0, 0
 	};
 struct flicmenu tmu_up_sel = {
 	&tmu_down_sel,
@@ -116,6 +121,7 @@ struct flicmenu tmu_up_sel = {
 	NOGROUP, 0,
 	UARROW,
 	NOOPT,
+	0, 0
 	};
 
 struct flicmenu main_menu = 
@@ -129,6 +135,7 @@ struct flicmenu main_menu =
 	NOGROUP, 0,
 	NOKEY,
 	NOOPT,
+	0, 0
 	};
 
 

@@ -21,7 +21,7 @@ int int_in; /* signals interrupts set */
 
 /* The color map and a handle on the VGA screen */
 extern UBYTE sys_cmap[COLORS*3];
-Video_form vf = { 0,0,XMAX,YMAX,Raster_line(XMAX),VGA_SCREEN,sys_cmap, };
+Video_form vf = { 0,0,XMAX,YMAX,Raster_line(XMAX),VGA_SCREEN,sys_cmap,0 };
 
 
 

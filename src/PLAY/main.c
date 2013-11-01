@@ -13,7 +13,7 @@ char notice_keys=DEFAULT_KBD_NOTICE;
 
 unsigned char alt_cmap[COLORS*3];
 char *alt_screen;
-Video_form alt_vf = { 0,0,XMAX,YMAX,Raster_line(XMAX),(void *)(NULL),alt_cmap, };
+Video_form alt_vf = { 0,0,XMAX,YMAX,Raster_line(XMAX),(void *)(NULL),alt_cmap,0 };
 
 extern WORD mouse_connected;
 char *mouse_mess[] = {
