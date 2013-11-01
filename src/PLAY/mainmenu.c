@@ -231,7 +231,7 @@ see_qslider(m);
 }
 
 
-set_frame_val(val)
+set_frame_val(int val)
 {
 frame_val= (val > 0) ? val-1: 0;
 cur_frame_num=val;
