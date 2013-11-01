@@ -355,13 +355,8 @@ return(1);
 }
 
 
-
-
-load_frame1(name,screen,hdware_update,close_f)
-Video_form *screen;
-char *name;
-int hdware_update;
-int close_f;  /* if 1 then close the file after loading */
+int
+load_frame1(char *name, Video_form *screen, int hdware_update, int close_f)
 {
 if (file_is_loaded) close_file();
 if ((loaded_file_fd = read_fli_head(name, &fh)) == 0)
@@ -384,10 +379,8 @@ return(0);
 }
 
 
-
-advance_frame(screen,hdware_update) 
-Video_form *screen;
-int hdware_update;
+int
+advance_frame(Video_form *screen, int hdware_update)
 {
 /*notice_keys=0; */
 if (cur_frame_num < fh.frame_count)
@@ -407,9 +400,8 @@ return(1);
 }
 
 
-goto_frame(old_val,new_val)
-int old_val;
-int new_val;
+void
+goto_frame(int old_val, int new_val)
 {
 int i;
 int val;
