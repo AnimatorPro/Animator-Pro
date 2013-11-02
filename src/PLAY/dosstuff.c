@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include "jimk.h"
 #include "dosstuff.h"
+#include "ptr.h"
 
 extern WORD device;
 extern char devices[26];
@@ -34,39 +35,6 @@ union regs
 	struct word_regs w;
 	};
 #endif /* EVER */
-
-/* some pointer manipulation routines for the 8086 */
-unsigned
-ptr_offset(offset, seg)
-int offset, seg;
-{
-return(offset);
-}
-
-unsigned
-ptr_seg(offset, seg)
-int offset, seg;
-{
-return(seg);
-}
-
-/* fool C into thinking a pointer is a long */
-long
-make_long(l)
-long l;
-{
-return(l);
-}
-
-
-/* fool C into thinking a long is a pointer */
-void *
-make_ptr(pt)
-void *pt;
-{
-return(pt);
-}
-
 
 #ifdef OLD
 change_dev(newdev)

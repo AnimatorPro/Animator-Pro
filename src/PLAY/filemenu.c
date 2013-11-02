@@ -3,9 +3,10 @@
 /* Basically a function for each type of button unique to the file */
 /* selector, and the entry point - get_filename() */
 
+#include <ctype.h>
 #include "jimk.h"
 #include "flicmenu.h"
-#include <ctype.h>
+#include "ptr.h"
 
 extern wait_click();
 

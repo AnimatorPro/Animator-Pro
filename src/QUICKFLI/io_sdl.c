@@ -30,12 +30,6 @@ cleanup(void)
 	SDL_Quit();
 }
 
-void *
-norm_pointer(void *p)
-{
-	return p;
-}
-
 unsigned int
 strobe_keys(void)
 {

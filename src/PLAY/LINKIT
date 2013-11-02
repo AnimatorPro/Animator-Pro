@@ -33,6 +33,7 @@ names.obj+
 peekpoke.obj+
 peekpok_.obj+
 prj1.obj+
+ptr.obj+
 pull.obj+
 rfont.obj+
 scroller.obj+

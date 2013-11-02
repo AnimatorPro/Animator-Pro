@@ -4,6 +4,7 @@
 #include "gif.h"
 #include "gif.str"
 #include "peekpok_.h"
+#include "ptr.h"
 
 extern Video_form alt_vf;
 extern int sys5;

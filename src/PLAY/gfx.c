@@ -4,7 +4,7 @@
 #include "jimk.h"
 #include "cblock_.h"
 #include "peekpok_.h"
-
+#include "ptr.h"
 
 /* Poke the background color with an rgb value.  Handy for debugging
    sometimes. */

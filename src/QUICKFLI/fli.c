@@ -12,6 +12,7 @@
 #include "io.h"
 #include "jfile.h"
 #include "peekpok_.h"
+#include "ptr.h"
 #include "unbrun_.h"
 
 

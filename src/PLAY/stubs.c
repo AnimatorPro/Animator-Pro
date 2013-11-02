@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include "jimk.h"
+#include "ptr.h"
 #include "stubs.str"
 
 int blocks_out;

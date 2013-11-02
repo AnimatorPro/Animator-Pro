@@ -25,6 +25,7 @@ stubs2.obj decoder.obj shrinkin.obj bfile.obj int.obj \
 	..\COMMON\comp_.obj    \
 	..\COMMON\jfile.obj    \
 	..\COMMON\peekpok_.obj \
+	..\COMMON\ptr.obj      \
 	..\COMMON\rfont.obj    \
 	..\COMMON\sixhi.obj    \
 	..\COMMON\unbrun_.obj
