@@ -7,9 +7,10 @@ CFLAGS= -Z -O -w-par -wstv -c -ml -Ic:\tc\include -I. -I..\COMMON -d
 	tasm /Ml $*.asm;
 
 O= quickfli.obj \
-	comp.obj fli.obj int.obj io_dos.obj jfile.obj \
+	comp.obj fli.obj int.obj io_dos.obj \
 	peekpoke.obj \
 	..\COMMON\comp_.obj    \
+	..\COMMON\jfile.obj    \
 	..\COMMON\peekpok_.obj \
 	..\COMMON\unbrun_.obj
 

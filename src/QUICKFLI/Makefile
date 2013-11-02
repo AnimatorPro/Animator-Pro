@@ -8,9 +8,9 @@ all: quickfli
 OBJS := quickfli.o \
 	fli.o      \
 	io_sdl.o   \
-	jfile.o    \
 	$(addprefix ../COMMON/, \
 	comp_.o    \
+	jfile.o    \
 	peekpok_.o \
 	unbrun_.o  \
 	)

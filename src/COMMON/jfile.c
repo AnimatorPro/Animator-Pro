@@ -13,32 +13,6 @@
 #include "jimk.h"
 #include "jfile.h"
 
-/* return the offset half of a pointer.  Pass in a pointer.  (Ignore
-   parameters.  Lint will scream!) */
-unsigned
-ptr_offset(offset, seg)
-int offset, seg;
-{
-return(offset);
-}
-
-/* return the segment half of a pointer.  Pass in a pointer.  (Ignore
-   parameters.) */
-unsigned
-ptr_seg(offset, seg)
-int offset, seg;
-{
-return(seg);
-}
-
-/* Fool C compiler into thinking 2 shorts are a long. */
-long
-make_long(l)
-long l;
-{
-return(l);
-}
-
 FILE *
 jopen(const char *title, int mode)
 {
