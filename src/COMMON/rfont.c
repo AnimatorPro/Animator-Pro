@@ -33,7 +33,7 @@ while ((c = *s++) != 0)
 
 typedef union
 	{
-	  int  theInt;
+	  WORD theInt;
 	  char bytes[2];
 	} myInt;
 
