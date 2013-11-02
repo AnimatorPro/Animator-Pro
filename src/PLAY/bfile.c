@@ -1,5 +1,7 @@
 
 #include "jimk.h"
+#include "bfile.h"
+#include "jfile.h"
 #include "peekpok_.h"
 
 bclose(bf)

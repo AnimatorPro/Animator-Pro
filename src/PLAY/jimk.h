@@ -14,14 +14,6 @@
 #define UBYTE unsigned char
 
 extern void *list_el();
-#ifndef SLUFF
-extern long jreadwrite(int f, void *buf, long size, int ah);
-#define jread(f,b,size) jreadwrite(f,b,(long)(size),0x3f)
-#define jwrite(f,b,size) jreadwrite(f,b,(long)(size),0x40)
-
-extern jcreate(char *title), jopen(char *title, int mode);
-extern long jseek(int f, long offset, int mode);
-#endif /* SLUFF */
 
 extern void *make_ptr();
 extern void *norm_pointer();
@@ -31,7 +23,7 @@ extern char *clone_string();
 extern char *get_filename();
 extern long get80hz();
 extern void *askmem(), *laskmem();
-extern long pt_to_long(), make_long();
+extern long pt_to_long();
 extern void *long_to_pt();
 extern unsigned mem_free, largest_frag();
 
@@ -293,18 +285,6 @@ extern int render_xmin, render_ymin, render_xmax, render_ymax;
 extern UBYTE *dot_pens[];
 
 extern char menus_up;
-
-/* stuff for my buffered io */
-#define BSIZE 2048
-struct bfile
-	{
-	int fd;
-	int left;
-	UBYTE *buf;
-	UBYTE *filept;
-	int writable;
-	};
-typedef struct bfile Bfile;
 
 #define TWOPI 1024
 

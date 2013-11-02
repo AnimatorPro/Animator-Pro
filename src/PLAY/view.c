@@ -3,6 +3,7 @@
 #include "jimk.h"
 #include "fli.h"
 #include "flicmenu.h"
+#include "jfile.h"
 #include "peekpok_.h"
 #include "prjctor.h"
 
@@ -22,7 +23,7 @@ extern int frame_val;
 extern char file_is_loaded;
 extern Video_form alt_vf;
 extern unsigned char alt_cmap[COLORS*3];
-extern int loaded_file_fd;
+extern FILE *loaded_file_fd;
 extern char global_file_name[];
 extern struct qslider speed_sl;
 extern long get80hz();
@@ -41,7 +42,7 @@ char *name;
 Video_form *screen;
 int num_loops;
 {
-int fd;
+FILE *fd;
 int i, k, last_loop=0;
 
 /* screen->p  = VGA_SCREEN; */ /* test */

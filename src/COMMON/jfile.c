@@ -44,6 +44,12 @@ jread(FILE *f, void *buf, unsigned int size)
 	return fread(buf, 1, size, f);
 }
 
+unsigned int
+jwrite(FILE *f, void *buf, unsigned int size)
+{
+	return fwrite(buf, 1, size, f);
+}
+
 long
 jseek(FILE *f, long offset, int mode)
 {

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "jimk.h"
+#include "bfile.h"
 #include "gif.h"
 #include "gif.str"
 #include "peekpok_.h"

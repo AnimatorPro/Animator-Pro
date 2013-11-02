@@ -12,7 +12,7 @@
 
 char gif_loaded;
 char file_is_loaded;
-int loaded_file_fd;
+FILE *loaded_file_fd;
 char global_file_name[100];
 
 extern char path_buf[];

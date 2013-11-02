@@ -1,4 +1,7 @@
+#ifndef FLI_H
+#define FLI_H
 
+#include <stdio.h>
 
 #define MAXFRAMES (4*1000)	/* Max number of frames... */
 
@@ -138,3 +141,9 @@ struct pic_header
 
 #define PIC_UNC  0
 #define PIC_BRUN 1
+
+extern FILE *read_fli_head(char *title, struct fli_head *flih);
+extern int
+read_next_frame(char *fname, FILE *fd, Video_form *fscreen, int colors);
+
+#endif

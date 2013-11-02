@@ -23,6 +23,7 @@ init.obj+
 initcmap.obj+
 input.obj+
 jfile.obj+
+jfileerr.obj+
 main.obj+
 mainpull.obj+
 mainmenu.obj+

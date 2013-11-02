@@ -41,7 +41,7 @@ extern struct cursor cdown, cleft, cright, csleft,
 extern struct fli_head fh;
 extern char global_file_name[];
 extern char file_is_loaded;
-extern int loaded_file_fd;
+extern FILE *loaded_file_fd;
 
 int frame_val=0;  /* ldg */
 int speed_val;

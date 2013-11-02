@@ -30,6 +30,12 @@ extern void gentle_close(FILE *f);
  */
 extern unsigned int jread(FILE *f, void *buf, unsigned int size);
 
+/* Function: jwrite
+ *
+ *  Returns bytes of data successfully transfered.
+ */
+extern unsigned int jwrite(FILE *f, void *buf, unsigned int size);
+
 /* Function: jseek
  *
  *  Seek to a long offset.  Return file position on success, -1 on failure.

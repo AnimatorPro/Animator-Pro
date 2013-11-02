@@ -11,7 +11,7 @@ brush.obj \
 comp.obj cursorda.obj \
 diskerr.obj dosstuff.obj feelmenu.obj \
 filedata.obj filemenu.obj fli.obj gfx.obj \
-init.obj initcmap.obj input.obj jfile.obj \
+init.obj initcmap.obj input.obj jfileerr.obj \
 mainpull.obj stubs.obj names.obj peekpoke.obj pull.obj \
 prj1.obj scroller.obj seeme.obj seemenu.obj stringq.obj \
 textbox.obj view.obj vbat.obj mainmenu.obj slider.obj gif.obj \
@@ -23,6 +23,7 @@ stubs2.obj decoder.obj shrinkin.obj bfile.obj int.obj \
 	..\COMMON\clipit_.obj  \
 	..\COMMON\closest_.obj \
 	..\COMMON\comp_.obj    \
+	..\COMMON\jfile.obj    \
 	..\COMMON\peekpok_.obj \
 	..\COMMON\rfont.obj    \
 	..\COMMON\sixhi.obj    \

@@ -3,6 +3,7 @@
 #include "comp_.h"
 #include "fli.h"
 #include "fli.str"
+#include "jfile.h"
 #include "peekpok_.h"
 #include "unbrun_.h"
 
@@ -78,12 +79,12 @@ not_fli_frame()
 continu_line(fli_102 /* "Bad magic! Not a FLI frame." */);
 }
 
-
+FILE *
 read_fli_head(title, flih)
 char *title;
 struct fli_head *flih;
 {
-int fd;
+FILE *fd;
 
 if ((fd = jopen(title, 0)) == 0)
 	{
@@ -109,7 +110,7 @@ return(fd);
 /* got buffer read next frame */
 gb_read_next_frame(fname,fd,fscreen,fliff,colors)
 char *fname;
-int fd;
+FILE *fd;
 Video_form *fscreen;
 struct fli_frame *fliff;
 int colors;
@@ -148,7 +149,7 @@ return(ret);
 
 read_next_frame(fname,fd,fscreen,colors)
 char *fname;
-int fd;
+FILE *fd;
 Video_form *fscreen;
 int colors;		/* update hw color map??? */
 {
