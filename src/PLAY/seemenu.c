@@ -7,9 +7,7 @@
 #include "a1blit_.h"
 #include "cblock_.h"
 #include "flicmenu.h"
-
-
-
+#include "rfont.h"
 
 color_block1(color,m)
 WORD color;

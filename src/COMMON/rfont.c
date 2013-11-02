@@ -9,11 +9,9 @@
 #include "rfont.h"
 
 extern UBYTE sixhi_data[];
-extern struct font_hdr sixhi_font;
 struct font_hdr *usr_font = &sixhi_font; 
 
-
-/* Hardcoded text routine for the system font. */
+void
 systext(s, x, y, color,tblit,bcolor)
 register char *s;
 int x, y, color;
@@ -39,18 +37,11 @@ typedef union
 	  char bytes[2];
 	} myInt;
 
-/* gftext -
-	graphics text in any font, no special effects yet at least.
-	*/
-gftext(screen, f, s, x, y, color, tblit, bcolor)
-Video_form *screen;
-register struct font_hdr *f;
-register unsigned char *s;
-int x, y, color;
-Vector tblit;	/* blit vector */
-int bcolor;
+void
+gftext(Video_form *screen, struct font_hdr *f, const unsigned char *s,
+		int x, int y, int color, Vector tblit, int bcolor)
 {
-unsigned char *ss;
+const unsigned char *ss;
 unsigned char c, lo, hi;
 int sx, imageWid;
 WORD *off, wd, ht, *data;
@@ -121,12 +112,8 @@ while ((c = *s++)!=0)
 	}
 }
 
-
-
-/* find width of the first character in string */
-fchar_width(f,s)
-register struct font_hdr *f;
-char *s;
+int
+fchar_width(struct font_hdr *f, const char *s)
 {
 char c;
 char *offsets;
@@ -166,10 +153,8 @@ switch (f->id)
 	}
 }
 
-/* find width of whole string */
-long fstring_width(f, s)
-struct font_hdr *f;
-register char *s;
+long
+fstring_width(struct font_hdr *f, const char *s)
 {
 long acc = 0;
 
@@ -181,13 +166,11 @@ while (*s != 0)
 return(acc);
 }
 
-/* how far to next line of the font */
-font_cel_height(f)
-struct font_hdr *f;
+int
+font_cel_height(struct font_hdr *f)
 {
 int dy;
 
 dy = f->frm_hgt;
 return(dy + ((dy+3)>>2) );
 }
-

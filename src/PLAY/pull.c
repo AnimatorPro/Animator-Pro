@@ -5,6 +5,7 @@
 #include "blit8_.h"
 #include "cblock_.h"
 #include "flicmenu.h"
+#include "rfont.h"
 
 char menu_ix, sel_ix;
 
