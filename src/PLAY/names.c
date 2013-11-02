@@ -7,20 +7,6 @@
 #include "jimk.h"
 
 
-/* Force a string to upper case */
-to_upper(s)
-register UBYTE *s;
-{
-register UBYTE c;
-
-while ((c = *s++) != 0)
-	{
-	if (islower(c))
-		*(s-1) = _toupper(c);
-	}
-}
-
-
 /* compare two strings ignoring case */
 ustrcmp(as, bs)
 register char *as, *bs;

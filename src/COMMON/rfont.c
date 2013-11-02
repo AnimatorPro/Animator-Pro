@@ -2,6 +2,7 @@
 /* rfont.c - raster font drawer.  Takes a font in our hybrid GEM/Macintosh
    format and displays it, or tells you how big a character or string is. */
 
+#include <ctype.h>
 #include "jimk.h"
 #include "a1blit_.h"
 #include "a2blit_.h"
@@ -13,17 +14,18 @@ struct font_hdr *usr_font = &sixhi_font;
 
 void
 systext(s, x, y, color,tblit,bcolor)
-register char *s;
+register const char *s;
 int x, y, color;
 Vector tblit;	/* blit vector */
 int bcolor;
 {
 register char c;
 
-to_upper(s);
 y+=1;
 while ((c = *s++) != 0)
 	{
+	c = toupper(c);
+
 	(*tblit)(6, 6, 6*c, 0, sixhi_data, 
 		192, x, y, VGA_SCREEN, 320, color,bcolor);
 	x+=6;
