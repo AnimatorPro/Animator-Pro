@@ -43,7 +43,7 @@ extern char global_file_name[];
 extern char file_is_loaded;
 extern FILE *loaded_file_fd;
 
-int frame_val=0;  /* ldg */
+WORD frame_val=0;  /* ldg */
 int speed_val;
 int global_frame_count;  /* ldg */
 
