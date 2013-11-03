@@ -30,6 +30,7 @@ struct fli_head
 	long frames_in_table;
 	char pad[102];
 	};
+STATIC_ASSERT(fli, sizeof(struct fli_head) == 128);
 
 #define FLI_FINISHED 1
 #define FLI_LOOPED	2
@@ -41,7 +42,7 @@ struct fli_frame
 	WORD chunks;
 	char pad[8];
 	};
-
+STATIC_ASSERT(fli, sizeof(struct fli_frame) == 16);
 
 #define FLI_COL 0
 #define FLI_WRUN 1
@@ -67,7 +68,7 @@ struct fli_chunk
 	long size;
 	WORD type;
 	};
-
+STATIC_ASSERT(fli, sizeof(struct fli_chunk) == 6);
 
 #define EMPTY_DCOMP 8  /* sizeof of a FLI_SKIP chunk with no change */
 
@@ -78,6 +79,7 @@ struct flx
 	long foff;
 	long fsize;
 	};
+STATIC_ASSERT(fli, sizeof(struct flx) == 8);
 typedef struct flx Flx;
 
 extern Flx *cur_flx;
