@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "jimk.h"
+#include "jfile.h"
 #include "prjctor.h"
 #include "vbat.str"
 
@@ -509,7 +510,7 @@ if (!bat_closed)
 	{
 	bat_closed=1;
 	was_eof=0;
-	fclose(bat_file);
+	gentle_close(bat_file);
 	}
 }
 
