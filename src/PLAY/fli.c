@@ -130,7 +130,7 @@ if (fliff->type != FLIF_MAGIC)
 	not_fli_frame(fname);
 	goto BADOUT;
 	}
-if (fliff->size >= CBUF_SIZE)
+if ((ULONG) fliff->size >= CBUF_SIZE)
 	{
 	mangled(fname);
 	goto BADOUT;

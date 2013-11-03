@@ -2,6 +2,7 @@
 #define FLI_H
 
 #include <stdio.h>
+#include "jimk.h"
 
 #define MAXFRAMES (4*1000)	/* Max number of frames... */
 
@@ -16,9 +17,9 @@
 /* Frame Magic */
 #define FLIF_MAGIC 0xf1fa
 
-struct fli_head
+struct GCC_PACKED fli_head
 	{
-	long size;
+	LONG size;
 	UWORD type;  /* = FLIH_MAGIC or FLIX_MAGIC */
 	UWORD frame_count;
 	UWORD width;
@@ -26,8 +27,8 @@ struct fli_head
 	UWORD bits_a_pixel;
 	WORD flags;
 	WORD speed;
-	long next_head;
-	long frames_in_table;
+	LONG next_head;
+	LONG frames_in_table;
 	char pad[102];
 	};
 STATIC_ASSERT(fli, sizeof(struct fli_head) == 128);
@@ -37,7 +38,7 @@ STATIC_ASSERT(fli, sizeof(struct fli_head) == 128);
 
 struct fli_frame
 	{
-	long size;
+	LONG size;
 	UWORD type;		/* = 0xf1fa FLIF_MAGIC */
 	WORD chunks;
 	char pad[8];
@@ -63,9 +64,9 @@ STATIC_ASSERT(fli, sizeof(struct fli_frame) == 16);
 #define FLI_COPY 16
 
 
-struct fli_chunk
+struct GCC_PACKED fli_chunk
 	{
-	long size;
+	LONG size;
 	WORD type;
 	};
 STATIC_ASSERT(fli, sizeof(struct fli_chunk) == 6);
@@ -76,8 +77,8 @@ STATIC_ASSERT(fli, sizeof(struct fli_chunk) == 6);
    for the 'add frames to sequence' routines to work. */
 struct flx
 	{
-	long foff;
-	long fsize;
+	LONG foff;
+	LONG fsize;
 	};
 STATIC_ASSERT(fli, sizeof(struct flx) == 8);
 typedef struct flx Flx;

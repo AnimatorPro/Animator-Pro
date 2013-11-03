@@ -3,10 +3,10 @@
 
 #include "jimk.h"
 
-struct gif_header
+struct GCC_PACKED gif_header
 	{
 	char giftype[6];
-	int w,h;
+	WORD w, h;
 	unsigned char colpix;	/* flags */
 	unsigned char bgcolor;
 	unsigned char reserved;
@@ -19,9 +19,9 @@ STATIC_ASSERT(gif, sizeof(struct gif_header) == 13);
 #define PIXMASK 7
 #define COLPIXVGA13 (COLTAB | (5<<COLSHIFT) | 7)
 
-struct gif_image
+struct GCC_PACKED gif_image
 	{
-	int x,y,w,h;
+	WORD x, y, w, h;
 	unsigned char flags;
 	};
 STATIC_ASSERT(gif, sizeof(struct gif_image) == 9);
