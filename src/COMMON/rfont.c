@@ -27,7 +27,7 @@ while ((c = *s++) != 0)
 	c = toupper(c);
 
 	(*tblit)(6, 6, 6*c, 0, sixhi_data, 
-		192, x, y, VGA_SCREEN, 320, color,bcolor);
+		192, x, y, vf.p, 320, color, bcolor);
 	x+=6;
 	}
 }

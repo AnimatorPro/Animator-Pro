@@ -267,7 +267,7 @@ status()
 clear_screen()
 /* put color 0 everywhere */
 {
-cblock(VGA_SCREEN, 0, 0, 320, 200, 0);
+cblock(vf.p, 0, 0, 320, 200, 0);
 }
 
 
