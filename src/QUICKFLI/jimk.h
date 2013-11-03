@@ -3,22 +3,6 @@
 
 #include "jimk0.h"
 
-struct byte_regs 
-	{
-	unsigned char al, ah, bl, bh, cl, ch, dl, dh;
-	UWORD si, di, ds, es;
-	};
-struct word_regs
-	{
-	UWORD ax, bx, cx, dx;
-	UWORD si, di, ds, es;
-	};
-union regs
-	{
-	struct byte_regs b;
-	struct word_regs w;
-	};
-
 #ifndef NULL
 #define NULL ((void *)0)
 #endif /* NULL */
