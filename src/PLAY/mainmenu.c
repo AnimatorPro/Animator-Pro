@@ -1,9 +1,10 @@
 /* #include <conio.h>  for kbdhit */
 #include "jimk.h"
-#include "flicmenu.h"
 #include "fli.h"
-#include "prjctor.h"
+#include "flicmenu.h"
+#include "io_.h"
 #include "mainmenu.str"
+#include "prjctor.h"
 
 extern long clock1;
 extern char sl_overfl, sl_underfl;

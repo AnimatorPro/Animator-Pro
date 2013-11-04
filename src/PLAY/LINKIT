@@ -24,6 +24,7 @@ int.obj+
 init.obj+
 initcmap.obj+
 input.obj+
+io_dos.obj+
 jfile.obj+
 jfileerr.obj+
 main.obj+
@@ -45,6 +46,7 @@ sixhi.obj+
 shrinkin.obj+
 slider.obj+
 stringq.obj+
+sys_dos.obj+
 textbox.obj+
 unbrun_.obj+
 vbat.obj+

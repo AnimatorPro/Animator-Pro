@@ -108,21 +108,6 @@ extern PLANEPTR brushcursor;
 
 extern WORD firstx, firsty;
 
-/* Arrow key definitions */
-#define PAGEUP  0x4900
-#define PAGEDN  0x5100
-#define ENDKEY  0x4f00
-#define HOMEKEY 0x4700
-#define DELKEY  0x5300
-#define LARROW	0x4b00
-#define RARROW	0x4d00
-#define UARROW	0x4800
-#define DARROW	0x5000
-#define CTRL_D  4  
-#define CTRL_F  6
-#define CTRL_W  23
-#define BACKSPACE 3592
-
 extern int brush_ix, *brushes[];
 
 #define absval(x) ((x) >= 0 ? (x) : -(x) )

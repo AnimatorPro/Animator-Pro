@@ -157,6 +157,7 @@ x = p->xoff;
 y = p->yoff;
 for (;;)
 	{
+	flip_video();
 	wait_input();
 	if (key_hit)
 		{

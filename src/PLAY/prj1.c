@@ -6,6 +6,7 @@
 #include "cblock_.h"
 #include "flicmenu.h"
 #include "fli.h"
+#include "io_.h"
 #include "peekpok_.h"
 #include "prjctor.h"
 #include "prj1.str"

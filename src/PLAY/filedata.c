@@ -3,9 +3,10 @@
    VGA file selector. */
 
 #include "jimk.h"
-#include "flicmenu.h"
-#include "prjctor.h"
 #include "filedata.str"
+#include "flicmenu.h"
+#include "io_.h"
+#include "prjctor.h"
 
 extern bwtext(), text_boxp1(), print_list(),
 	undo_drawer(), undo_file(), fsel_name(), fq_ok(), new_dev(),

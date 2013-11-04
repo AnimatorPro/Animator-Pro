@@ -244,6 +244,7 @@ unsigned char c;
 
 for (;;)
 	{
+	flip_video();
 	wait_click();
 	if (PJSTDN)
 		{

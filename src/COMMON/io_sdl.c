@@ -55,6 +55,25 @@ cset_colors(const UBYTE *src)
 }
 
 void
+jset_colors(int start, int length, UBYTE *cmap)
+{
+	SDL_Colour col[256];
+	int c;
+
+	for (c = 0; c < length; c++) {
+		unsigned int r = cmap[3 * c + 0];
+		unsigned int g = cmap[3 * c + 1];
+		unsigned int b = cmap[3 * c + 2];
+
+		col[c].r = (r << 2) | (r >> 4);
+		col[c].g = (g << 2) | (g >> 4);
+		col[c].b = (b << 2) | (b >> 4);
+	}
+
+	SDL_SetPalette(s_surface, SDL_LOGPAL | SDL_PHYSPAL, col, start, length);
+}
+
+void
 flip_video(void)
 {
 	SDL_Flip(s_surface);
@@ -65,16 +84,19 @@ wait_vblank(void)
 {
 }
 
+void
+wait_novblank(void)
+{
+}
+
 long
 get80hz(void)
 {
-	static unsigned int l_timer;
-	unsigned int ticks = SDL_GetTicks();
+	unsigned int t = SDL_GetTicks() * 2;
+	unsigned int ts = t - (t % 25);
+	unsigned int te = ts + 25;
 
-	l_timer++;
+	SDL_Delay((te - t + 1) / 2);
 
-	if (ticks < l_timer * 1000 / 80)
-		SDL_Delay(l_timer * 1000 / 80 - ticks);
-
-	return l_timer;
+	return te / 25;
 }
