@@ -7,4 +7,5 @@ jfile.obj+
 quickfli.obj+
 peekpoke.obj+
 peekpok_.obj+
+sys_dos.obj+
 unbrun_.obj

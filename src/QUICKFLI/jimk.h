@@ -14,7 +14,6 @@ extern void *malloc();
 #define freemem(p) free(p)
 
 extern void *begmem(unsigned size);
-extern long get80hz();
 
 #define XMAX 320
 #define BPR 320

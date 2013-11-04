@@ -31,10 +31,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "jimk.h"
-#include "io.h"
-#include "jfile.h"
 #include "fli.h"
+#include "io_.h"
+#include "jfile.h"
 #include "peekpok_.h"
+#include "sys.h"
 
 /* sys_cmap - a software copy of the hardware color map.  It is formatted
    as R G B  R G B ... with each color component ranging from 0 to 63. */

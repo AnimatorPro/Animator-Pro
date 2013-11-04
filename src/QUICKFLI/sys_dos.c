@@ -1,31 +1,11 @@
-/* io_dos.c */
+/* sys_dos.c */
 
-#include "io.h"
+#include "io_.h"
+#include "io_dos.h"
+#include "sys.h"
 
 static int ivmode;  /* keep track of startup video mode */
 static char int_in; /* keep track if interrupt is installed */
-
-/* Tell the VGA what resolution to be in */
-static void
-set_vmode(int mode)
-{
-	union regs r;
-
-	r.b.ah = 0;
-	r.b.al = mode;
-	sysint(0x10, &r, &r);
-}
-
-/* get current video mode */
-static int
-get_vmode(void)
-{
-	union regs r;
-
-	r.b.ah = 0xf;
-	sysint(0x10, &r, &r);
-	return r.b.al;
-}
 
 int
 init_system(void)
@@ -70,9 +50,4 @@ strobe_keys(void)
 	}
 
 #undef ZEROFLAG
-}
-
-void
-flip_video(void)
-{
 }

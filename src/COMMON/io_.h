@@ -9,27 +9,6 @@ enum {
 	SPACE = 14624
 };
 
-/* Function: init_system */
-extern int init_system(void);
-
-/* Function: cleanup
- *
- *  Go back to old video mode and take out our clock interrupt handler.
- */
-extern void cleanup(void);
-
-/* Function: norm_pointer
- *
- * Add as much as possible of the offset of a pointer to the segment.
- */
-extern void *norm_pointer(void *p);
-
-/* Function: strobe_keys
- *
- *  Return 0 if no key, key scan code if there is a key.
- */
-extern unsigned int strobe_keys(void);
-
 /* Function: cset_colors
  *
  *  Set the color palette hardware from a compressed source of format
@@ -41,6 +20,9 @@ extern void cset_colors(const UBYTE *src);
 
 /* Function: flip_video */
 extern void flip_video(void);
+
+/* Function: wait_vblank */
+extern void wait_vblank(void);
 
 /* Function: get80hz */
 extern long get80hz(void);
