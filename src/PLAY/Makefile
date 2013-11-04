@@ -23,6 +23,8 @@ stubs2.obj decoder.obj shrinkin.obj bfile.obj int.obj \
 	..\COMMON\clipit_.obj  \
 	..\COMMON\closest_.obj \
 	..\COMMON\comp_.obj    \
+	..\COMMON\fs.obj       \
+	..\COMMON\fs_dos.obj   \
 	..\COMMON\jfile.obj    \
 	..\COMMON\peekpok_.obj \
 	..\COMMON\ptr.obj      \

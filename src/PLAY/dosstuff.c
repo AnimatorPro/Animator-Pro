@@ -4,8 +4,8 @@
 #include <ctype.h>
 #include <stdio.h>
 #include "jimk.h"
-#include "dosstuff.h"
 #include "ptr.h"
+#include "fs.h"
 
 extern WORD device;
 extern char devices[26];
@@ -174,8 +174,8 @@ return(1);
 
 /* Tell dos it's time to go to another drive mon.  1 = A:, 2 = B: ...
    you get the idea */
-change_dev(newdev)
-int newdev;
+int
+change_dev(int newdev)
 {
 union regs r;
 
@@ -188,8 +188,8 @@ return(!(sysint(0x21,&r,&r)&1) );
 /* Hey dos - I want to go to this directory.  Actually this changes
    both device and directory at once.  eg name could be
    		C:\VPAINT\FISHIES  B:B:B: */
-change_dir(name)
-char *name;
+int
+change_dir(const char *name)
 {
 union regs r;
 int d;
@@ -241,7 +241,8 @@ return(reg.b.al);
    floppies, we consult the BIOS equipment list for a count of # of
    floppies to fill in the potential A: and B: buttons. 
    B:B:B: */
-get_devices()
+void
+get_devices(void)
 {
 int i, floppies;
 int od;
@@ -320,7 +321,8 @@ extern char init_drawer[];
 /* Do a little error handling if current directory looks bad.  Change
    back to start-up directory.  Otherwise just set device and vs.drawer
    variables to reflect where MS-DOS thinks we are in the filing system */
-make_current_drawer()
+int
+make_current_drawer(void)
 {
 if (!mcurrent_drawer())
 	{
@@ -362,4 +364,3 @@ else
 	return((long)r.w.cx*(long)r.w.ax*(long)r.w.bx);
 	}
 }
-

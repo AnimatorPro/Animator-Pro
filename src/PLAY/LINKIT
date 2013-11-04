@@ -16,6 +16,8 @@ feelmenu.obj+
 filedata.obj+
 filemenu.obj+
 fli.obj+
+fs.obj+
+fs_dos.obj+
 gif.obj+
 gfx.obj+
 int.obj+

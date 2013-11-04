@@ -6,29 +6,6 @@
 #include <string.h>
 #include "jimk.h"
 
-
-/* compare two strings ignoring case */
-ustrcmp(as, bs)
-register char *as, *bs;
-{
-register char a, b;
-
-for (;;)
-	{
-	a = *as++;
-	b = *bs++;
-	if (isupper(a))
-		a = _tolower(a);
-	if (isupper(b))
-		b = _tolower(b);
-	if (a != b)
-		return(a-b);
-	if (a == 0)
-		return(0);
-	}
-}
-
-
 /* Convert all occurences of in character to out character in string */
 tr_string(string, in, out)
 register char *string;
@@ -43,16 +20,6 @@ while ((c = *string)!=0)
 	string++;
 	}
 }
-
-
-/* see if string ends with suff */
-suffix_in(string, suff)
-char *string, *suff;
-{
-string += strlen(string) - strlen(suff);
-return( ustrcmp(string, suff) == 0);
-}
-
 
 /* count up nodes in a (singly linked) list */
 els_in_list(list)
@@ -115,8 +82,7 @@ return(list);
 }
 
 Name_list *
-sort_name_list(list)
-register Name_list *list;
+sort_name_list(Name_list *list)
 {
 sort_list(list, cmp_name_list);
 }
@@ -200,9 +166,8 @@ register int ix;
 table[(ix>>3)] |= bitmasks[ix&7];
 }
 
-
-free_name_list(lst)
-register Name_list *lst;
+void
+free_name_list(Name_list *lst)
 {
 register Name_list *next;
 
