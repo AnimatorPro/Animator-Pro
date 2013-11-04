@@ -46,7 +46,7 @@ iphase = 0;
 iy = 0;
 if (bopen(name, &gif_bf) == 0)
 	return(0);
-if (bread(&gif_bf, &gif, sizeof(gif) ) < sizeof(gif))
+if ((ULONG) bread(&gif_bf, &gif, sizeof(gif) ) < sizeof(gif))
 	{
 	goto TRUNCOUT;
 	}
@@ -83,7 +83,7 @@ for (;;)	/* skip over extension blocks and other junk til get ',' */
 			}
 		}
 	}
-if (bread(&gif_bf, &gim, sizeof(gim) ) < sizeof(gim) )
+if ((ULONG) bread(&gif_bf, &gim, sizeof(gim) ) < sizeof(gim) )
 	goto TRUNCOUT;
 if (gim.w != XMAX || gim.h != YMAX)
 	{

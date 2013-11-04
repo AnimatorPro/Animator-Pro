@@ -93,7 +93,7 @@ if ((fd = jopen(title, 0)) == 0)
 	return(0);
 	}
 /* read in fli header and check it's magic number */
-if (jread(fd,flih,sizeof(*flih)) < sizeof(*flih) )
+if ((ULONG) jread(fd,flih,sizeof(*flih)) < sizeof(*flih) )
 	{
 	truncated(title);
 	jclose(fd);
@@ -120,7 +120,7 @@ long size_left;
 int ret;
 
 ret = 0;
-if (jread(fd,fliff,sizeof(*fliff)) < sizeof(*fliff) )
+if ((ULONG) jread(fd,fliff,sizeof(*fliff)) < sizeof(*fliff) )
 	{
 	truncated(fname);
 	goto BADOUT;
