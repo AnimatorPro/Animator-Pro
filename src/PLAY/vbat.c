@@ -164,7 +164,7 @@ while ((c!=EOF) && !my_isspace(c=my_getc(bat_file)) && (sym_ptr < MAX_SYM_CHAR))
 	{
 	if (symline < 0) symline=linecount;
 	if (c!=EOF) 
-		symchars[sym_ptr++]=toupper(c);	/* collect characters */
+		symchars[sym_ptr++]=c; /* collect characters */
 	}
 
 if (c==EOF || c==CTRL_Z) /* cause it to wait out one cycle */
