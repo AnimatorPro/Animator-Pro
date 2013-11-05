@@ -34,7 +34,7 @@ p_load_fli()
 {
 char *title;
 
-if ((title = get_filename(prj1_100 /* "Load an animation file?" */, ".FLI"))!=NULL)
+if ((title = get_filename(prj1_100 /* "Load an animation file?" */, ".fli"))!=NULL)
 	{
 	reset();
 	if (load_frame1(title,&vf,1,0)!=0)
@@ -54,7 +54,7 @@ p_load_gif()
 {
 char *title;
 
-if ((title =  get_filename(prj1_102 /* "Load a Picture?" */, ".GIF"))!=NULL)
+if ((title =  get_filename(prj1_102 /* "Load a Picture?" */, ".gif"))!=NULL)
 	{
 /*        zero_palette(); */
 	reset();
