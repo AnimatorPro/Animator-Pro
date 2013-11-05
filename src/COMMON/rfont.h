@@ -28,6 +28,9 @@ struct rast_font
 extern void
 systext();
 
+/* Function: systext_clip */
+extern void systext_clip(int width, const char *str, int x, int y, int col);
+
 /* Function: gftext
  *
  *  Graphics text in any font, no special effects yet at least.

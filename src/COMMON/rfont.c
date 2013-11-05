@@ -32,6 +32,24 @@ while ((c = *s++) != 0)
 	}
 }
 
+void
+systext_clip(int width, const char *str, int x, int y, int col)
+{
+	char c;
+
+	y++;
+	while ((c = *str++) != '\0') {
+		int sw = (width <= 6) ? width : 6;
+		c = toupper(c);
+
+		a1blit(sw, 6, 6*c, 0, sixhi_data, 192, x, y, vf.p, 320, col);
+
+		x += 6;
+		width -= sw;
+		if (width <= 0)
+			break;
+	}
+}
 
 typedef union
 	{
