@@ -232,13 +232,13 @@ close_menu();
 
 build_wild_list()
 {
-extern Name_list *sort_name_list();
+extern Name_list *sort_name_list(Name_list *list);
 
 /* nuke the old wild list... */
 free_name_list(wild_lst);
 wild_lst = NULL;
 fs_build_wild_list(wild);
-wild_lst = sort_name_list(wild_lst);
+wild_lst = (File_list *) sort_name_list((Name_list *) wild_lst);
 }
 
 char *
