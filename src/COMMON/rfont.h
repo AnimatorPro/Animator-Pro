@@ -31,6 +31,9 @@ systext();
 /* Function: systext_clip */
 extern void systext_clip(int width, const char *str, int x, int y, int col);
 
+/* Function: systext_keepcase */
+extern void systext_keepcase(const char *s, int x, int y, int fg, int bg);
+
 /* Function: gftext
  *
  *  Graphics text in any font, no special effects yet at least.

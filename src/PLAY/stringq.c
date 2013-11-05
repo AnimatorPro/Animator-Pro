@@ -28,9 +28,8 @@ if (len >= sq->dcount)
 stext(" ", m->x+sq->pxoff+len*CH_WIDTH, m->y+sq->pyoff, SDETAIL,SBLOCK);
 }
 
-draw_stringq(m, sq)
-Flicmenu *m;
-register Stringq *sq;
+static void
+draw_stringq(Flicmenu *m, register Stringq *sq, int keepcase)
 {
 register WORD len;
 char *string;
@@ -42,7 +41,12 @@ if (len > sq->dcount)
 	len = sq->dcount;
 save = string[len];
 string[len] = 0;
-stext(string, m->x+sq->pxoff, m->y+sq->pyoff, SDETAIL,SBLOCK);
+if (keepcase) {
+	systext_keepcase(string, m->x+sq->pxoff, m->y+sq->pyoff, SDETAIL, SBLOCK);
+}
+else {
+	stext(string, m->x+sq->pxoff, m->y+sq->pyoff, SDETAIL, SBLOCK);
+}
 string[len] = save;
 }
 
@@ -71,16 +75,15 @@ while (--count >= 0)
 }
 
 
-see_stringq(textcol, m)
-WORD textcol;
-register Flicmenu *m;
+static void
+see_stringq(WORD textcol, Flicmenu *m, int keepcase)
 {
 register Stringq *sq;
 WORD count;
 
 
 sq = (Stringq *)m->text;
-draw_stringq(m, sq);
+draw_stringq(m, sq, keepcase);
 vline(m->x + sq->pxoff + (sq->cpos-sq->dpos)*CH_WIDTH, 
 	m->y + 2, m->y + m->height - 2, textcol);
 }
@@ -217,7 +220,7 @@ for (;;)
 		/* next 2 lines aren't always necessary.  Code is shorter if
 		   slower this way. */
 		erase_last(m, sq);
-		draw_stringq(m, sq);
+		draw_stringq(m, sq, 1);
 		stringq_xor_cursor(m, sq);
 		}
 	else if (PJSTDN || RJSTDN)
@@ -258,7 +261,15 @@ Flicmenu *m;
 {
 a_block(SBLOCK, m);
 a_frame(sgrey, m);
-see_stringq(SDETAIL, m);
+see_stringq(SDETAIL, m, 0);
+}
+
+see_path_string_req(m)
+Flicmenu *m;
+{
+a_block(SBLOCK, m);
+a_frame(sgrey, m);
+see_stringq(SDETAIL, m, 1);
 }
 
 init_stq_string(stq)

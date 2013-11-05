@@ -51,6 +51,18 @@ systext_clip(int width, const char *str, int x, int y, int col)
 	}
 }
 
+void
+systext_keepcase(const char *s, int x, int y, int fg, int bg)
+{
+	char c;
+
+	y++;
+	while ((c = *s++) != '\0') {
+		a2blit(6, 6, 6*c, 0, sixhi_data, 192, x, y, vf.p, 320, fg, bg);
+		x += 6;
+	}
+}
+
 typedef union
 	{
 	  WORD theInt;
