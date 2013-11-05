@@ -5,6 +5,7 @@
 #include "jimk.h"
 #include "filedata.str"
 #include "flicmenu.h"
+#include "fs.h"
 #include "io_.h"
 #include "prjctor.h"
 
@@ -268,11 +269,11 @@ struct flicmenu rootdir_sel =
 	&fdev2_sel,
 	NOCHILD,
 	105, 130, 16, 12,
-	"\\",
+	DIR_SEPARATOR_STR,
 	ccorner_text,
 	go_rootdir,
 	NOGROUP, 0,
-	'\\',
+	DIR_SEPARATOR_CHAR,
 	NOOPT,
 	0, 0
 	};
