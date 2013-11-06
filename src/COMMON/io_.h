@@ -33,7 +33,7 @@ enum {
 extern void cset_colors(const UBYTE *src);
 
 /* Function: jset_colors */
-extern void jset_colors(int start, int length, UBYTE *cmap);
+extern void jset_colors(int start, int length, const UBYTE *cmap);
 
 /* Function: flip_video */
 extern void flip_video(void);

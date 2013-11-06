@@ -21,7 +21,6 @@ set_vmode(void)
 void
 cset_colors(const UBYTE *src)
 {
-	SDL_Colour col[256];
 	unsigned int count = ((const UWORD *)src)[0];
 	int dst = 0;
 	src += 2;
@@ -29,7 +28,6 @@ cset_colors(const UBYTE *src)
 	for (; count > 0; count--) {
 		int nskip = src[0];
 		int ncopy = src[1];
-		int c;
 
 		if (ncopy == 0)
 			ncopy = 256;
@@ -37,17 +35,7 @@ cset_colors(const UBYTE *src)
 		src += 2;
 		dst += nskip;
 
-		for (c = dst; c < dst + ncopy; c++) {
-			unsigned int r = src[3 * c + 0];
-			unsigned int g = src[3 * c + 1];
-			unsigned int b = src[3 * c + 2];
-
-			col[c].r = (r << 2) | (r >> 4);
-			col[c].g = (g << 2) | (g >> 4);
-			col[c].b = (b << 2) | (b >> 4);
-		}
-
-		SDL_SetPalette(s_surface, SDL_LOGPAL | SDL_PHYSPAL, col, dst, ncopy);
+		jset_colors(dst, ncopy, src);
 
 		src += 3 * ncopy;
 		dst += ncopy;
@@ -55,7 +43,7 @@ cset_colors(const UBYTE *src)
 }
 
 void
-jset_colors(int start, int length, UBYTE *cmap)
+jset_colors(int start, int length, const UBYTE *cmap)
 {
 	SDL_Colour col[256];
 	int c;
