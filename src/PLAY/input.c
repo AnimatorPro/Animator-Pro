@@ -60,11 +60,20 @@ static WORD sx, sy;	/* xy position of saved buffer */
 /* save under cursor */
 scursor()
 {
-if (!mouse_connected) return;
-sx = uzx-8;
-sy = uzy-8;
-blit8(16,16,sx,sy,vf.p,vf.bpr,
-	0,0,umouse, 16);
+	if (mouse_connected) {
+		int w = 16;
+		int h = 16;
+		int srcx = uzx-8;
+		int srcy = uzy-8;
+		int dstx = 0;
+		int dsty = 0;
+
+		if (clipblit2(&w, &h, &srcx, &srcy, vf.w, vf.h, &dstx, &dsty, 16, 16)) {
+			blit8(w, h, srcx, srcy, vf.p, vf.bpr, dstx, dsty, umouse, 16);
+			sx = uzx-8;
+			sy = uzy-8;
+		}
+	}
 }
 
 /* restore area under cursor */

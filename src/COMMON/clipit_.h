@@ -10,4 +10,10 @@
 extern int
 clipblit_(int *rwidth, int *rheight, int *rsx, int *rsy, int *rdx, int *rdy);
 
+/* Function: clipblit2 */
+extern int
+clipblit2(int *rwidth, int *rheight,
+		int *rsx, int *rsy, int swidth, int sheight,
+		int *rdx, int *rdy, int dwidth, int dheight);
+
 #endif

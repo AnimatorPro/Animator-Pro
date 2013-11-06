@@ -15,24 +15,36 @@ min(int a, int b)
 	return (a <= b) ? a : b;
 }
 
-int
-clipblit_(int *rwidth, int *rheight, int *rsx, int *rsy, int *rdx, int *rdy)
+static int
+clip1d(int *rwidth, int *rsx, int *rdx, int dwidth)
 {
 	int dx1 = max(0, *rdx);
-	int dx2 = min(WIDTH, *rdx + *rwidth);
-	int dy1 = max(0, *rdy);
-	int dy2 = min(HEIGHT, *rdy + *rheight);
+	int dx2 = min(dwidth, *rdx + *rwidth);
 	int width = dx2 - dx1;
-	int height = dy2 - dy1;
 
-	if (width <= 0 || height <= 0)
+	if (width <= 0)
 		return 0;
 
 	*rsx += dx1 - *rdx;
-	*rsy += dy1 - *rdy;
 	*rdx = dx1;
-	*rdy = dy1;
 	*rwidth = width;
-	*rheight = height;
 	return 1;
+}
+
+int
+clipblit_(int *rwidth, int *rheight, int *rsx, int *rsy, int *rdx, int *rdy)
+{
+	return clip1d(rwidth,  rsx, rdx, WIDTH)
+	    && clip1d(rheight, rsy, rdy, HEIGHT);
+}
+
+int
+clipblit2(int *rwidth, int *rheight,
+		int *rsx, int *rsy, int swidth, int sheight,
+		int *rdx, int *rdy, int dwidth, int dheight)
+{
+	return clip1d(rwidth,  rsx, rdx, dwidth)
+	    && clip1d(rheight, rsy, rdy, dheight)
+	    && clip1d(rwidth,  rdx, rsx, swidth)
+	    && clip1d(rheight, rdy, rsy, sheight);
 }
