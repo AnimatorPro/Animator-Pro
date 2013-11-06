@@ -5,7 +5,6 @@
 #include "io_sdl.h"
 #include "sys.h"
 
-static SDL_Surface *s_surface;
 static Uint8 *s_key;
 
 int
@@ -19,8 +18,6 @@ init_system(void)
 	}
 
 	s_key = SDL_GetKeyState(NULL);
-
-	vf.p = s_surface->pixels;
 
 	return 1;
 }
