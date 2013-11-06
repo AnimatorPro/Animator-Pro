@@ -1,11 +1,10 @@
 #include <time.h>  /* for time functions */
-#ifndef SLUFF
-#include <dos.h>  /* for sound test */
-#endif SLUFF
 
 #include "jimk.h"
 #include "fli.h"
 #include "flicmenu.h"
+#include "io_.h"
+#include "jfile.h"
 #include "peekpok_.h"
 #include "prjctor.h"
 
@@ -25,7 +24,7 @@ extern int frame_val;
 extern char file_is_loaded;
 extern Video_form alt_vf;
 extern unsigned char alt_cmap[COLORS*3];
-extern int loaded_file_fd;
+extern FILE *loaded_file_fd;
 extern char global_file_name[];
 extern struct qslider speed_sl;
 extern long get80hz();
@@ -35,7 +34,6 @@ extern WORD mouse_connected;
 char ctrl_hit;
 int ascii_value;
 int ctrl_lock;
-#define CTRL  0x0004
 
 long clock1;
 
@@ -44,7 +42,7 @@ char *name;
 Video_form *screen;
 int num_loops;
 {
-int fd;
+FILE *fd;
 int i, k, last_loop=0;
 
 /* screen->p  = VGA_SCREEN; */ /* test */
@@ -92,38 +90,6 @@ END:
 jclose(fd);
 mouse_on = 1;
 }
-
-
-
-#ifndef EVER
-
-#define UP 	0
-#define ZEROFLAG	64
-
-get_key()
-{
-union regs r;
-
-key_hit = 0;
-r.b.ah = 0x1;
-if (!(sysint(0x16,&r,&r)&ZEROFLAG))
-	{
-	key_hit = 1;
-	r.b.ah = 0;
-	sysint(0x16,&r,&r);
-	key_in = r.w.ax;
-	}
-/** ldg */
-/*  function 16H ah=2; returns in al the ROM BIOS keyobard flags */
-ctrl_hit=UP;   /* ldg  ????????????????? */
-r.b.ah = 0x02;
-sysint(0x16, &r, &r);
-ctrl_hit = (r.b.al & 0x04) ? 1: 0;
-}
-#endif EVER
-
-
-
 
 wait_til2(time)
 long time;
@@ -207,35 +173,6 @@ if (notice_keys)
 	}
 return(1);
 }
-
-
-
-
-
-
-break_key()
-{
-check_button();
-if (notice_keys && RDN)
-	return(0);
-if (bioskey(1)) /* a keystroke is waiting */
-	{
-	key_hit=1;
-	key_in=bioskey(0); /* get the key */
-	ctrl_hit = (bioskey(2) & CTRL);	/* if was control key */
-	ascii_value = ((key_in<<8)>>8);
-	return(key_effect(key_in));
-	}
-else 	
-	{
-	key_hit=0;		
-	return(1);
-	}
-}
-
-
-
-
 
 freeze_frame()
 {
@@ -358,13 +295,8 @@ return(1);
 }
 
 
-
-
-load_frame1(name,screen,hdware_update,close_f)
-Video_form *screen;
-char *name;
-int hdware_update;
-int close_f;  /* if 1 then close the file after loading */
+int
+load_frame1(char *name, Video_form *screen, int hdware_update, int close_f)
 {
 if (file_is_loaded) close_file();
 if ((loaded_file_fd = read_fli_head(name, &fh)) == 0)
@@ -387,10 +319,8 @@ return(0);
 }
 
 
-
-advance_frame(screen,hdware_update) 
-Video_form *screen;
-int hdware_update;
+int
+advance_frame(Video_form *screen, int hdware_update)
 {
 /*notice_keys=0; */
 if (cur_frame_num < fh.frame_count)
@@ -410,9 +340,8 @@ return(1);
 }
 
 
-goto_frame(old_val,new_val)
-int old_val;
-int new_val;
+void
+goto_frame(int old_val, int new_val)
 {
 int i;
 int val;
@@ -431,7 +360,7 @@ copy_form(&vf, &alt_vf);
 #ifdef OLDWAY
 copy_cmap(vf.cmap,alt_vf.cmap);
 copy_structure(vf.p, alt_vf.p, SCREEN_SIZE);
-#endif OLDWAY
+#endif /* OLDWAY */
 
 if (new_val > cur_frame_num)
 	{
@@ -456,7 +385,7 @@ else   /* (new_val < cur_frame_num) so go backwards */
 	see_cmap();
 #ifdef OLDWAY
 	copy_structure(alt_vf.p,vf.p, SCREEN_SIZE);
-#endif OLDWAY
+#endif /* OLDWAY */
 	fh.speed=val;
 	}
 }

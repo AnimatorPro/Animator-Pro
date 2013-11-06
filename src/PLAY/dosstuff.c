@@ -1,9 +1,11 @@
 /* Dosstuff.c - MS-DOS routines (also see jfile.c) to figure out
    about directories, how much disk space is left, etc. */
 
-#include "jimk.h"
-#include "dosstuff.h"
 #include <ctype.h>
+#include <stdio.h>
+#include "jimk.h"
+#include "ptr.h"
+#include "fs.h"
 
 extern WORD device;
 extern char devices[26];
@@ -14,59 +16,6 @@ char devices[26];
 int dev_count;
 
 /*** start new */
-#ifdef EVER
-struct byte_regs 
-	{
-	unsigned char al, ah, bl, bh, cl, ch, dl, dh;
-	unsigned int si, di, ds, es;
-	};
-
-struct word_regs
-	{
-	unsigned ax,bx,cx,dx;
-	unsigned int si, di, ds, es;
-	};
-
-union regs
-	{
-	struct byte_regs b;
-	struct word_regs w;
-	};
-#endif EVER
-
-/* some pointer manipulation routines for the 8086 */
-unsigned
-ptr_offset(offset, seg)
-int offset, seg;
-{
-return(offset);
-}
-
-unsigned
-ptr_seg(offset, seg)
-int offset, seg;
-{
-return(seg);
-}
-
-/* fool C into thinking a pointer is a long */
-long
-make_long(l)
-long l;
-{
-return(l);
-}
-
-
-/* fool C into thinking a long is a pointer */
-void *
-make_ptr(pt)
-void *pt;
-{
-return(pt);
-}
-
-
 #ifdef OLD
 change_dev(newdev)
 int newdev;
@@ -162,7 +111,7 @@ for (i=2; i<26; i++)
 		}
 	}
 change_dev(od);
-#endif OLD
+#endif /* OLD */
 for (i=3; i<=26; i++)
 	{
 	r.b.ah = 0x1c;
@@ -219,14 +168,14 @@ if (!mcurrent_drawer())
 	}
 return(1);
 }
-#endif OLD
+#endif /* OLD */
 /*** end new */
 
 
 /* Tell dos it's time to go to another drive mon.  1 = A:, 2 = B: ...
    you get the idea */
-change_dev(newdev)
-int newdev;
+int
+change_dev(int newdev)
 {
 union regs r;
 
@@ -239,8 +188,8 @@ return(!(sysint(0x21,&r,&r)&1) );
 /* Hey dos - I want to go to this directory.  Actually this changes
    both device and directory at once.  eg name could be
    		C:\VPAINT\FISHIES  B:B:B: */
-change_dir(name)
-char *name;
+int
+change_dir(const char *name)
 {
 union regs r;
 int d;
@@ -292,7 +241,8 @@ return(reg.b.al);
    floppies, we consult the BIOS equipment list for a count of # of
    floppies to fill in the potential A: and B: buttons. 
    B:B:B: */
-get_devices()
+void
+get_devices(void)
 {
 int i, floppies;
 int od;
@@ -319,7 +269,7 @@ for (i=2; i<26; i++)
 		}
 	}
 change_dev(od);
-#endif OLD
+#endif /* OLD */
 for (i=3; i<=26; i++)
 	{
 	r.b.ah = 0x1c;
@@ -371,7 +321,8 @@ extern char init_drawer[];
 /* Do a little error handling if current directory looks bad.  Change
    back to start-up directory.  Otherwise just set device and vs.drawer
    variables to reflect where MS-DOS thinks we are in the filing system */
-make_current_drawer()
+int
+make_current_drawer(void)
 {
 if (!mcurrent_drawer())
 	{
@@ -413,4 +364,3 @@ else
 	return((long)r.w.cx*(long)r.w.ax*(long)r.w.bx);
 	}
 }
-

@@ -1,6 +1,8 @@
-
+#include <stdio.h>
 #include "jimk.h"
 #include "a2blit_.h"
+#include "ptr.h"
+#include "rfont.h"
 #include "shrinkin.str"
 
 extern int gif_line;

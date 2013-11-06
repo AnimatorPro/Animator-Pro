@@ -1,5 +1,6 @@
-
+#include <stdlib.h>
 #include "jimk.h"
+#include "ptr.h"
 #include "stubs.str"
 
 int blocks_out;
@@ -85,7 +86,7 @@ if ((pt = _lalloc(psize)) != NULL)
 		unconfig_ints();
 		exit(0);	/* okok... */
 		}
-#endif CHECKIT
+#endif /* CHECKIT */
 	blocks_out++;
 	*pt++ = psize;
 	*pt++ = START_COOKIE;

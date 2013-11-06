@@ -1,17 +1,19 @@
 /* analog to vpaint.c  in v */
 
 #include <stdio.h>
+#include <string.h>
 #include "jimk.h"
 #include "cblock_.h"
 #include "flicmenu.h"
 #include "fli.h"
+#include "io_.h"
 #include "peekpok_.h"
 #include "prjctor.h"
 #include "prj1.str"
 
 char gif_loaded;
 char file_is_loaded;
-int loaded_file_fd;
+FILE *loaded_file_fd;
 char global_file_name[100];
 
 extern char path_buf[];
@@ -32,7 +34,7 @@ p_load_fli()
 {
 char *title;
 
-if ((title = get_filename(prj1_100 /* "Load an animation file?" */, ".FLI"))!=NULL)
+if ((title = get_filename(prj1_100 /* "Load an animation file?" */, ".fli"))!=NULL)
 	{
 	reset();
 	if (load_frame1(title,&vf,1,0)!=0)
@@ -52,7 +54,7 @@ p_load_gif()
 {
 char *title;
 
-if ((title =  get_filename(prj1_102 /* "Load a Picture?" */, ".GIF"))!=NULL)
+if ((title =  get_filename(prj1_102 /* "Load a Picture?" */, ".gif"))!=NULL)
 	{
 /*        zero_palette(); */
 	reset();
@@ -142,16 +144,6 @@ switch (menu)
 		break;
 	}
 }
-
-
-
-beep()
-{
-sound(70);
-delay(300);
-nosound();
-}
-
 
 
 dokeys()
@@ -276,7 +268,7 @@ status()
 clear_screen()
 /* put color 0 everywhere */
 {
-cblock(VGA_SCREEN, 0, 0, 320, 200, 0);
+cblock(vf.p, 0, 0, 320, 200, 0);
 }
 
 

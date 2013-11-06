@@ -9,9 +9,10 @@
 #include "jimk.h"
 #include "comp_.h"
 #include "fli.h"
-#include "io.h"
+#include "io_.h"
 #include "jfile.h"
 #include "peekpok_.h"
+#include "ptr.h"
 #include "unbrun_.h"
 
 

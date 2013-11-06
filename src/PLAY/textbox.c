@@ -1,11 +1,14 @@
 /* textbox.c - generate a 'continue' alert or a 'yes/no' dialog from
    a couple of C strings. */
 
+#include <stdlib.h>
+#include <string.h>
 #include "jimk.h"
 #include "a1blit_.h"
 #include "blit8_.h"
 #include "cblock_.h"
 #include "flicmenu.h"
+#include "rfont.h"
 #include "textbox.str"
 
 /* This file does assume non-proportional text.  Here's some constants
@@ -55,6 +58,8 @@ while ((name = *names++) != NULL)
 	{
 	height += LINE_HEIGHT;
 	this_width = CHAR_WIDTH*strlen(name);
+	if (this_width > XMAX - 2 * BORDER)
+		this_width = XMAX - 2 * BORDER;
 	if (this_width > width)
 		width = this_width;
 	}
@@ -108,7 +113,7 @@ xoff = box.MinX + BORDER;
 yoff = box.MinY + BORDER;
 while ((name = *names++) != NULL) 
 	{
-	gtext(name, xoff, yoff, sblack);
+	systext_clip(box.MaxX - box.MinX - 2 * BORDER, name, xoff, yoff, sblack);
 	yoff += LINE_HEIGHT;
 	}
 return (yoff);
@@ -241,6 +246,7 @@ unsigned char c;
 
 for (;;)
 	{
+	flip_video();
 	wait_click();
 	if (PJSTDN)
 		{

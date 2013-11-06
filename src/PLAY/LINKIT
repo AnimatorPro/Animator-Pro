@@ -16,13 +16,17 @@ feelmenu.obj+
 filedata.obj+
 filemenu.obj+
 fli.obj+
+fs.obj+
+fs_dos.obj+
 gif.obj+
 gfx.obj+
 int.obj+
 init.obj+
 initcmap.obj+
 input.obj+
+io_dos.obj+
 jfile.obj+
+jfileerr.obj+
 main.obj+
 mainpull.obj+
 mainmenu.obj+
@@ -32,6 +36,7 @@ names.obj+
 peekpoke.obj+
 peekpok_.obj+
 prj1.obj+
+ptr.obj+
 pull.obj+
 rfont.obj+
 scroller.obj+
@@ -41,6 +46,7 @@ sixhi.obj+
 shrinkin.obj+
 slider.obj+
 stringq.obj+
+sys_dos.obj+
 textbox.obj+
 unbrun_.obj+
 vbat.obj+

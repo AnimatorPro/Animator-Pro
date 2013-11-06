@@ -37,4 +37,23 @@ STATIC_ASSERT(jimk, sizeof(UWORD) == 2);
 STATIC_ASSERT(jimk, sizeof( LONG) == 4);
 STATIC_ASSERT(jimk, sizeof(ULONG) == 4);
 
+
+#if defined(__TURBOC__)
+struct byte_regs
+	{
+	UBYTE al, ah, bl, bh, cl, ch, dl, dh;
+	UWORD si, di, ds, es;
+	};
+struct word_regs
+	{
+	UWORD ax, bx, cx, dx;
+	UWORD si, di, ds, es;
+	};
+union regs
+	{
+	struct byte_regs b;
+	struct word_regs w;
+	};
+#endif /* __TURBOC__ */
+
 #endif

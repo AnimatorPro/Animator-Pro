@@ -1,6 +1,8 @@
 #ifndef JIMK_H
 #define JIMK_H
 
+#include "jimk0.h"
+
 #define askmem malloc
 #define freemem free
 
@@ -8,31 +10,14 @@
 #define NULL ((void *)0)
 #endif /* NULL */
 
-#define WORD int
-#define UWORD unsigned int
-#define BYTE char
-#define UBYTE unsigned char
-
 extern void *list_el();
-#ifndef SLUFF
-extern long jreadwrite(int f, void *buf, long size, int ah);
-#define jread(f,b,size) jreadwrite(f,b,(long)(size),0x3f)
-#define jwrite(f,b,size) jreadwrite(f,b,(long)(size),0x40)
 
-extern jcreate(char *title), jopen(char *title, int mode);
-extern long jseek(int f, long offset, int mode);
-#endif /* SLUFF */
-
-extern void *make_ptr();
-extern void *norm_pointer();
 extern void *lbegmem(), *begmem();
 extern void *paskmem();
 extern char *clone_string();
 extern char *get_filename();
 extern long get80hz();
 extern void *askmem(), *laskmem();
-extern long pt_to_long(), make_long();
-extern void *long_to_pt();
 extern unsigned mem_free, largest_frag();
 
 extern void *sort_list();
@@ -123,44 +108,12 @@ extern PLANEPTR brushcursor;
 
 extern WORD firstx, firsty;
 
-/* Arrow key definitions */
-#define PAGEUP  0x4900
-#define PAGEDN  0x5100
-#define ENDKEY  0x4f00
-#define HOMEKEY 0x4700
-#define DELKEY  0x5300
-#define LARROW	0x4b00
-#define RARROW	0x4d00
-#define UARROW	0x4800
-#define DARROW	0x5000
-#define CTRL_D  4  
-#define CTRL_F  6
-#define CTRL_W  23
-#define BACKSPACE 3592
-
 extern int brush_ix, *brushes[];
 
 #define absval(x) ((x) >= 0 ? (x) : -(x) )
 
 extern PLANEPTR white_cursor, black_cursor;
 
-
-struct byte_regs 
-	{
-	unsigned char al, ah, bl, bh, cl, ch, dl, dh;
-	unsigned int si, di, ds, es;
-	};
-struct word_regs
-	{
-	unsigned ax,bx,cx,dx;
-	unsigned int si, di, ds, es;
-	};
-
-union regs
-	{
-	struct byte_regs b;
-	struct word_regs w;
-	};
 struct video_form
 	{
 	WORD x, y;	/* upper left corner in screen coordinates */
@@ -201,8 +154,6 @@ struct blitblock
 	};
 /* graphics macros */
 #ifndef SLUFF
-#define gtext(s, x, y, color) systext(s,x,y,color,a1blit)
-#define stext(s, x, y, color,color1) systext(s,x,y,color,a2blit,color1)
 #define marqi_frame(x0,y0,x1,y1) \
  some_frame(x0,y0,x1,y1,marqidot, &marqidata)
 #define undo_frame(x0,y0,x1,y1) \
@@ -295,18 +246,6 @@ extern int render_xmin, render_ymin, render_xmax, render_ymax;
 extern UBYTE *dot_pens[];
 
 extern char menus_up;
-
-/* stuff for my buffered io */
-#define BSIZE 2048
-struct bfile
-	{
-	int fd;
-	int left;
-	UBYTE *buf;
-	UBYTE *filept;
-	int writable;
-	};
-typedef struct bfile Bfile;
 
 #define TWOPI 1024
 

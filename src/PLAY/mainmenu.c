@@ -1,9 +1,10 @@
 /* #include <conio.h>  for kbdhit */
 #include "jimk.h"
-#include "flicmenu.h"
 #include "fli.h"
-#include "prjctor.h"
+#include "flicmenu.h"
+#include "io_.h"
 #include "mainmenu.str"
+#include "prjctor.h"
 
 extern long clock1;
 extern char sl_overfl, sl_underfl;
@@ -41,14 +42,14 @@ extern struct cursor cdown, cleft, cright, csleft,
 extern struct fli_head fh;
 extern char global_file_name[];
 extern char file_is_loaded;
-extern int loaded_file_fd;
+extern FILE *loaded_file_fd;
 
-int frame_val=0;  /* ldg */
+WORD frame_val=0;  /* ldg */
 int speed_val;
 int global_frame_count;  /* ldg */
 
 struct qslider frame_sl = {0, 0, &frame_val, 1, NULL};
-struct qslider speed_sl = { 0, 120, &fh.speed, 0, };
+struct qslider speed_sl = {0, 120, &fh.speed, 0, NULL};
 
 struct flicmenu tmu_spdsl_sel = {
 	NONEXT,
@@ -60,6 +61,7 @@ struct flicmenu tmu_spdsl_sel = {
 	NOGROUP, 0,
 	NOKEY,
 	NOOPT,
+	0, 0
 	};
 struct flicmenu tmu_spdtag_sel = {
 	&tmu_spdsl_sel,
@@ -71,6 +73,7 @@ struct flicmenu tmu_spdtag_sel = {
 	NOGROUP, 0,
 	NOKEY,
 	NOOPT,
+	0, 0
 	};
 
 struct flicmenu tmu_frame_sl_sel = {
@@ -83,6 +86,7 @@ struct flicmenu tmu_frame_sl_sel = {
 	NOGROUP, 0,
 	NOKEY,
 	NOOPT,
+	0, 0
 	};
 struct flicmenu tmu_play_sel = {
 	&tmu_frame_sl_sel,
@@ -94,6 +98,7 @@ struct flicmenu tmu_play_sel = {
 	NOGROUP, 0,
 	NOKEY,
 	NOOPT,
+	0, 0
 	};
 struct flicmenu tmu_down_sel = {
 	&tmu_play_sel,
@@ -105,6 +110,7 @@ struct flicmenu tmu_down_sel = {
 	NOGROUP, 0,
 	DARROW,
 	NOOPT,
+	0, 0
 	};
 struct flicmenu tmu_up_sel = {
 	&tmu_down_sel,
@@ -116,6 +122,7 @@ struct flicmenu tmu_up_sel = {
 	NOGROUP, 0,
 	UARROW,
 	NOOPT,
+	0, 0
 	};
 
 struct flicmenu main_menu = 
@@ -129,6 +136,7 @@ struct flicmenu main_menu =
 	NOGROUP, 0,
 	NOKEY,
 	NOOPT,
+	0, 0
 	};
 
 
@@ -224,7 +232,7 @@ see_qslider(m);
 }
 
 
-set_frame_val(val)
+set_frame_val(int val)
 {
 frame_val= (val > 0) ? val-1: 0;
 cur_frame_num=val;

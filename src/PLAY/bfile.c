@@ -1,5 +1,7 @@
 
 #include "jimk.h"
+#include "bfile.h"
+#include "jfile.h"
 #include "peekpok_.h"
 
 bclose(bf)
@@ -29,7 +31,7 @@ if (bf->left >= count)
 	return(count);
 	}
 else
-#endif LATER
+#endif /* LATER */
 	{
 	for (i=0; i<count; i++)
 		{
@@ -178,4 +180,4 @@ else
 }
 
 
-#endif REALLY
+#endif /* REALLY */

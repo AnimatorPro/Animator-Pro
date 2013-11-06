@@ -1,8 +1,10 @@
 /* vbat.c  -- batch file processing for stand alone player */
 
-#include <stdio.h>
 #include <ctype.h> 
+#include <stdio.h>
+#include <string.h>
 #include "jimk.h"
+#include "jfile.h"
 #include "prjctor.h"
 #include "vbat.str"
 
@@ -59,7 +61,7 @@ char *resv_words[]=
 #ifdef OLD_FEATURE
 	"KEYSON",     /* keysOn */
 	"KEYSOFF", /* keysOff */
-#endif OLD_FEATURE
+#endif /* OLD_FEATURE */
 	};
 #define MAX_RESV_WORD 3  /* was 5 */
 
@@ -162,7 +164,7 @@ while ((c!=EOF) && !my_isspace(c=my_getc(bat_file)) && (sym_ptr < MAX_SYM_CHAR))
 	{
 	if (symline < 0) symline=linecount;
 	if (c!=EOF) 
-		symchars[sym_ptr++]=toupper(c);	/* collect characters */
+		symchars[sym_ptr++]=c; /* collect characters */
 	}
 
 if (c==EOF || c==CTRL_Z) /* cause it to wait out one cycle */
@@ -508,7 +510,7 @@ if (!bat_closed)
 	{
 	bat_closed=1;
 	was_eof=0;
-	fclose(bat_file);
+	gentle_close(bat_file);
 	}
 }
 
@@ -540,7 +542,7 @@ while (sym!=EOF_SYM && !stop_bat)
 				getsym();
 				notice_keys=0;
 				break;
-#endif OLD_FEATURE
+#endif /* OLD_FEATURE */
 			case R_NOEXIT:
 				getsym();
 				exit_word=0;

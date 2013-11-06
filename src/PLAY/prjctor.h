@@ -1,3 +1,6 @@
+#ifndef PRJCTOR_H
+#define PRJCTOR_H
+
 #define DEFAULT_KBD_NOTICE 1  /* ie, 'yes', do notice key strokes */
 #define MAX_PAUSE  14400  /* 14,400 seconds or 4 hours */
 #define INFINITE_LOOP  999
@@ -40,7 +43,17 @@ extern char notice_keys;
 #define F12 17920
 #define is_funckey(x)  ( (x)>=F1 && (x)<=F10 )
 
+/* Function: load_frame1
+ *
+ *  close_f - if 1 then close the file after loading.
+ */
+extern int
+load_frame1(char *name, Video_form *screen, int hdware_update, int close_f);
 
-advance_frame(Video_form *screen,int hdware_update);
-load_frame1(char *name,Video_form *screen,int hdware_update,int close_f);
-goto_frame(int old_val,int new_val);
+/* Function: advance_frame */
+extern int advance_frame(Video_form *screen, int hdware_update);
+
+/* Function: goto_frame */
+extern void goto_frame(int old_val, int new_val);
+
+#endif

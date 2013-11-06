@@ -1,31 +1,64 @@
-CFLAGS= -c -ml -If:\ -I$(INCLUDE) -I. -I..\COMMON
+CC := gcc
+CFLAGS := -g -W -I. -I../COMMON
+LDFLAGS :=
+LDLIBS := -lSDL
 
-.c.obj:
-	tcc $(CFLAGS) $*.c
-.asm.obj:
-	tasm /Ml $*.asm;
+all: play
 
+OBJS := main.o     \
+	bfile.o    \
+	brush.o    \
+	cursorda.o \
+	debug.o    \
+	decoder.o  \
+	feelmenu.o \
+	filedata.o \
+	filemenu.o \
+	fli.o      \
+	gif.o      \
+	gfx.o      \
+	init.o     \
+	initcmap.o \
+	input.o    \
+	sys_sdl.o  \
+	jfileerr.o \
+	mainmenu.o \
+	mainpull.o \
+	names.o    \
+	prj1.o     \
+	pull.o     \
+	scroller.o \
+	seeme.o    \
+	seemenu.o  \
+	shrinkin.o \
+	slider.o   \
+	stringq.o  \
+	stubs.o    \
+	stubs2.o   \
+	textbox.o  \
+	vbat.o     \
+	view.o     \
+	$(addprefix ../COMMON/, \
+	a1blit_.o  \
+	a2blit_.o  \
+	blit8_.o   \
+	cblock_.o  \
+	closest_.o \
+	clipit_.o  \
+	comp_.o    \
+	fs.o       \
+	fs_unix.o  \
+	io_sdl.o   \
+	jfile.o    \
+	peekpok_.o \
+	rfont.o    \
+	sixhi.o    \
+	unbrun_.o  \
+	)
 
-O= main.obj \
-brush.obj \
-comp.obj cursorda.obj \
-diskerr.obj dosstuff.obj feelmenu.obj \
-filedata.obj filemenu.obj fli.obj gfx.obj \
-init.obj initcmap.obj input.obj jfile.obj \
-mainpull.obj stubs.obj names.obj peekpoke.obj pull.obj rfont.obj \
-prj1.obj scroller.obj seeme.obj seemenu.obj sixhi.obj stringq.obj \
-textbox.obj view.obj vbat.obj mainmenu.obj slider.obj gif.obj \
-stubs2.obj decoder.obj shrinkin.obj bfile.obj int.obj \
-	..\COMMON\a1blit_.obj  \
-	..\COMMON\a2blit_.obj  \
-	..\COMMON\blit8_.obj   \
-	..\COMMON\cblock_.obj  \
-	..\COMMON\clipit_.obj  \
-	..\COMMON\closest_.obj \
-	..\COMMON\comp_.obj    \
-	..\COMMON\peekpok_.obj \
-	..\COMMON\unbrun_.obj
+play: $(OBJS)
+	$(CC) $(LDFLAGS) -o $@ $^ $(LDLIBS)
 
-play: $(O)
-	tlink $(LIB)c0L @linkit, play, play, $(LIB)emu $(LIB)mathl $(LIB)cl
-
+.PHONY: clean
+clean:
+	$(RM) play $(OBJS)

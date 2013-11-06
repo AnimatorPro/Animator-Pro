@@ -3,22 +3,6 @@
 
 #include "jimk0.h"
 
-struct byte_regs 
-	{
-	unsigned char al, ah, bl, bh, cl, ch, dl, dh;
-	UWORD si, di, ds, es;
-	};
-struct word_regs
-	{
-	UWORD ax, bx, cx, dx;
-	UWORD si, di, ds, es;
-	};
-union regs
-	{
-	struct byte_regs b;
-	struct word_regs w;
-	};
-
 #ifndef NULL
 #define NULL ((void *)0)
 #endif /* NULL */
@@ -30,13 +14,6 @@ extern void *malloc();
 #define freemem(p) free(p)
 
 extern void *begmem(unsigned size);
-extern long get80hz();
-
-/* A couple of routines to deal with data spaces potentially greater than
-   64K without resorting to a HUGE model.  In the 320x200 case where
-   a single screen fits inside 64K these may not be necessary. */
-extern long pt_to_long(), make_long();
-extern void *long_to_pt();
 
 #define XMAX 320
 #define BPR 320

@@ -3,5 +3,6 @@
 *.OBJ
 *.o
 *.swp
+PLAY/play
 QUICKFLI/quickfli
 tags

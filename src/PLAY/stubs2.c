@@ -1,6 +1,8 @@
+#include <stdlib.h>
 #include "jimk.h"
 #include "closest_.h"
 #include "peekpok_.h"
+#include "ptr.h"
 
 
 struct bhash
@@ -41,33 +43,6 @@ free_bhash()
 gentle_freemem(bhash);
 bhash = NULL;
 }
-
-
-long 
-pt_to_long(offset, seg)
-unsigned offset, seg;
-{
-long result;
-
-result = seg;
-result <<= 4;
-result += offset;
-return(result);
-}
-
-void *
-long_to_pt(l)
-unsigned long l;
-{
-unsigned segment, offset;
-
-offset = (l&15);
-l >>= 4;
-segment = l;
-return(make_ptr(offset, segment));
-}
-
-
 
 bclosest_col(rgb,count)
 register UBYTE *rgb;
@@ -166,6 +141,6 @@ v->bpr = v->w = w;
 v->h = h;
 v->ix = 0;
 v->p = norm_pointer(v->p);
-v->p = make_ptr(0, ptr_seg(v->p)+1);
+v->p = ptr_next_seg(v->p);
 return(v);
 }

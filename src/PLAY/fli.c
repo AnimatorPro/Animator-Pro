@@ -1,10 +1,11 @@
-
-
+#include <stdlib.h>
 #include "jimk.h"
 #include "comp_.h"
 #include "fli.h"
 #include "fli.str"
+#include "jfile.h"
 #include "peekpok_.h"
+#include "ptr.h"
 #include "unbrun_.h"
 
 notafli(name)
@@ -79,12 +80,12 @@ not_fli_frame()
 continu_line(fli_102 /* "Bad magic! Not a FLI frame." */);
 }
 
-
+FILE *
 read_fli_head(title, flih)
 char *title;
 struct fli_head *flih;
 {
-int fd;
+FILE *fd;
 
 if ((fd = jopen(title, 0)) == 0)
 	{
@@ -92,7 +93,7 @@ if ((fd = jopen(title, 0)) == 0)
 	return(0);
 	}
 /* read in fli header and check it's magic number */
-if (jread(fd,flih,sizeof(*flih)) < sizeof(*flih) )
+if ((ULONG) jread(fd,flih,sizeof(*flih)) < sizeof(*flih) )
 	{
 	truncated(title);
 	jclose(fd);
@@ -110,7 +111,7 @@ return(fd);
 /* got buffer read next frame */
 gb_read_next_frame(fname,fd,fscreen,fliff,colors)
 char *fname;
-int fd;
+FILE *fd;
 Video_form *fscreen;
 struct fli_frame *fliff;
 int colors;
@@ -119,7 +120,7 @@ long size_left;
 int ret;
 
 ret = 0;
-if (jread(fd,fliff,sizeof(*fliff)) < sizeof(*fliff) )
+if ((ULONG) jread(fd,fliff,sizeof(*fliff)) < sizeof(*fliff) )
 	{
 	truncated(fname);
 	goto BADOUT;
@@ -129,7 +130,7 @@ if (fliff->type != FLIF_MAGIC)
 	not_fli_frame(fname);
 	goto BADOUT;
 	}
-if (fliff->size >= CBUF_SIZE)
+if ((ULONG) fliff->size >= CBUF_SIZE)
 	{
 	mangled(fname);
 	goto BADOUT;
@@ -149,7 +150,7 @@ return(ret);
 
 read_next_frame(fname,fd,fscreen,colors)
 char *fname;
-int fd;
+FILE *fd;
 Video_form *fscreen;
 int colors;		/* update hw color map??? */
 {

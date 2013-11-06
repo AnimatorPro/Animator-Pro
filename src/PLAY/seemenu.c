@@ -1,13 +1,13 @@
 
 /* seemenu.c - more seeme routines to display menu buttons */
 
+#include <stdio.h>
+#include <string.h>
 #include "jimk.h"
 #include "a1blit_.h"
 #include "cblock_.h"
 #include "flicmenu.h"
-
-
-
+#include "rfont.h"
 
 color_block1(color,m)
 WORD color;

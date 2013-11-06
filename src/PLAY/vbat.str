@@ -4,7 +4,7 @@
 #define vbat_114 "Expecting int parameter for pause"
 #define vbat_115 "Expecting int parameter for loop"
 #define vbat_117 "Trouble opening "
-#define vbat_118 "Error near line %d in %s"
+#define vbat_118 "Error near line %d in %30s"
 #define vbat_127 "Trouble opening "
 #define vbat_128 "Couldn't open linked-to file"
 #define vbat_129 "Expected filename here"
