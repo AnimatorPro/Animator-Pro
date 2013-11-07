@@ -1,0 +1,30 @@
+Hi -
+	here are some relevant sources for GIF files.  Hopefully you'll be able
+to figure out what you need from these.  The file jimk.h is huge and mostly
+concerned with the inner details of vpaint.  Try not to read more of it
+than you have to.
+
+	For a simpler alternative you might try a .PIC file.  To create one
+save a pic from Vpaint typing in a .PIC suffix in place of the default
+.GIF one for the file name.  You'll then get a 64800 byte file with the
+following structure:
+
+#define PIC_MAGIC 0x9119
+struct pic_header
+	{
+	UWORD type;
+	WORD w,h,x,y;
+	char d;
+	char compress;
+	long csize;
+	char reserved[16];
+	};
+
+as a 32 byte header.  Read it in and make sure the type field is PIC_MAGIC.
+
+Next you have the color map.  This is 256 entries of 3 bytes each.  They
+are RGB components with each component ranging from 0 to 63.
+
+Finally there's 64000 bytes of pixel data.  It's a byte a pixel.  It starts
+in the upper left corner and goes from left to right top to bottom.
+
