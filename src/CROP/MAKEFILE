@@ -5,7 +5,7 @@ CFLAGS= -O -w-par -wstv -c -ml -I$(INCLUDE) -d
 .c.obj:
 	tcc $(CFLAGS) $*.c
 .asm.obj:
-	masm /Ml $*.asm;
+	tasm /Ml $*.asm;
 
 
 O= a1blit.obj a2blit.obj blit.obj blit8.obj brush.obj \
