@@ -1,4 +1,5 @@
-
+#ifndef JIMK_H
+#define JIMK_H
 
 #ifndef NULL
 #define NULL ((void *)0)
@@ -515,3 +516,5 @@ extern long dfree(int device);
 
 extern char devices[26];
 extern int dev_count;
+
+#endif
