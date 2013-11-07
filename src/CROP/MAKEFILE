@@ -29,9 +29,8 @@ skip.obj fccomp.obj lccomp.obj comp.obj unbrun.obj fli.obj writefli.obj \
 screen.obj jfile.obj bfile.obj \
 foolwcc2.obj summa.obj textbox.obj 
 
-overlay: $(O)
-	plink86 file $(LIB)c0l lib $(LIB)cl @crop.lnk
-
 fast: $(O)
 	tlink $(LIB)c0l @linkit, crop, crop, $(LIB)cl
 
+overlay: $(O)
+	plink86 file $(LIB)c0l lib $(LIB)cl @crop.lnk
