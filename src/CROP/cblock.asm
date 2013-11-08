@@ -219,28 +219,6 @@ vlp:
 	ret
 _cvli	ENDP
 
-	PUBLIC	_getd
-;getd(screen, x, y);
-_getd	PROC far
-	push bp
-	mov bp,sp
-	push di
-	push ds
-
-	mov	ax,[bp+10+2]	;y start
-	mov di,320
-	mul di
-	lds	di,[bp+4+2]	;get screen address
-	add	di,ax
-	add di,[bp+8+2]   ;fold in x start
-	mov	al,[di]
-	xor ah,ah
-getdz:
-	pop ds
-	pop di
-	pop bp
-	ret
-_getd	ENDP
 	PUBLIC	_cdot
 
 
