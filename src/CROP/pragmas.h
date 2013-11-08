@@ -32,7 +32,6 @@
 #pragma aux chli "_*" parm caller [] modify [ax dx];
 #pragma aux cvli "_*" parm caller [] modify [ax dx];
 #pragma aux cdot "_*" parm caller [] modify [ax dx];
-#pragma aux xordot "_*" parm caller [] modify [ax dx];
 #pragma aux closestc "_*" parm caller [] modify [ax dx];
 #pragma aux tnskip "_*" parm caller [] modify [ax dx];
 #pragma aux tnsame "_*" parm caller [] modify [ax dx];
