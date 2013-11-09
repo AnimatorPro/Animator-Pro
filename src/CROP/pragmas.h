@@ -15,7 +15,6 @@
 #pragma aux bsame "_*" parm caller [] modify [ax dx];
 #pragma aux fsame "_*" parm caller [] modify [ax dx];
 #pragma aux bcontrast "_*" parm caller [] modify [ax dx];
-#pragma aux fcontrast "_*" parm caller [] modify [ax dx];
 #pragma aux bcompare "_*" parm caller [] modify [ax dx];
 #pragma aux fcompare "_*" parm caller [] modify [ax dx];
 #pragma aux conv_screen "_*" parm caller [] modify [ax dx];
