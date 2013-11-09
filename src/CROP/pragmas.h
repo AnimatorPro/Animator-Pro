@@ -2,7 +2,6 @@
 #pragma aux default parm caller [] modify [ax dx];
 #pragma aux copy_bytes "_*" parm caller [] modify [ax dx];
 #pragma aux exchange_words "_*" parm caller [] modify [ax dx];
-#pragma aux back_scan "_*" parm caller [] modify [ax dx];
 #pragma aux wait_vblank "_*" parm caller [] modify [ax dx];
 #pragma aux jset_colors "_*" parm caller [] modify [ax dx];
 #pragma aux fcuncomp "_*" parm caller [] modify [ax dx];
