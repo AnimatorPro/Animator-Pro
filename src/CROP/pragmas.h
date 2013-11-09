@@ -13,7 +13,6 @@
 #pragma aux stuff_words "_*" parm caller [] modify [ax dx];
 #pragma aux copy_structure "_*" parm caller [] modify [ax dx];
 #pragma aux copy_words "_*" parm caller [] modify [ax dx];
-#pragma aux xlat "_*" parm caller [] modify [ax dx];
 #pragma aux bsame "_*" parm caller [] modify [ax dx];
 #pragma aux fsame "_*" parm caller [] modify [ax dx];
 #pragma aux bcontrast "_*" parm caller [] modify [ax dx];
