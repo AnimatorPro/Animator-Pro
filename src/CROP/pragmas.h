@@ -11,7 +11,6 @@
 #pragma aux norm_pointer "_*" parm caller [] modify [ax dx];
 #pragma aux enorm_pointer "_*" parm caller [] modify [ax dx];
 #pragma aux stuff_words "_*" parm caller [] modify [ax dx];
-#pragma aux xor_words "_*" parm caller [] modify [ax dx];
 #pragma aux copy_structure "_*" parm caller [] modify [ax dx];
 #pragma aux copy_words "_*" parm caller [] modify [ax dx];
 #pragma aux xlat "_*" parm caller [] modify [ax dx];
