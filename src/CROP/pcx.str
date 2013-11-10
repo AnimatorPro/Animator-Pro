@@ -1,0 +1,6 @@
+#define pcx_100 "This isn't a type of .PCX file"
+#define pcx_101 "Converter understands.  Possibly the"
+#define pcx_102 "file is damaged or a new revision."
+#define pcx_103 "Already opened PCX"
+#define pcx_105 "%3d of %d"
+#define pcx_106 "  0 of %d"

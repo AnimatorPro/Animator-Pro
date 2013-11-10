@@ -1,0 +1,3 @@
+#define amigapic_103 "No body - a color file perhaps?"
+#define amigapic_106 "File isn't an IFF ILBM."
+#define amigapic_107 "Amiga file already open"

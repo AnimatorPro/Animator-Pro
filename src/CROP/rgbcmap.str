@@ -1,0 +1,5 @@
+#define rgbcmap_100 "%ld colors in picture"
+#define rgbcmap_101 "Making color histogram"
+#define rgbcmap_102 "%3d of %d"
+#define rgbcmap_103 "Fitting to color map"
+#define rgbcmap_104 "%3d of %d"

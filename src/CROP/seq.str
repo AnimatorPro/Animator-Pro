@@ -1,0 +1,3 @@
+#define seq_100 "Not a Cyber SEQ file"
+#define seq_101 "Seq already open"
+#define seq_102 "Bad Cel Magic! File Damaged!"

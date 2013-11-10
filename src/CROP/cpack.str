@@ -1,0 +1,2 @@
+#define cpack_100 "Pass %d threshold %d"
+#define cpack_101 "Final Pass threshold %d"
