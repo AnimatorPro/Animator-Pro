@@ -3,6 +3,8 @@
    What time is it?  For the answers to these and other questions read on. */
 
 #include "jimk.h"
+#include "a1blit_.h"
+#include "blit8_.h"
 
 /* These variable contain the global input state */
 WORD uzx,uzy;	/* unzoomed xy */

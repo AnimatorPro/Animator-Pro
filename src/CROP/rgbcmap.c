@@ -4,7 +4,10 @@
    file was mostly hacked out of the truecolo.c file in Vpaint. */
 
 #include "jimk.h"
+#include "a2blit_.h"
+#include "closest_.h"
 #include "crop.h"
+#include "peekpok_.h"
 #include "rgbcmap.str"
 
 extern UBYTE bitmasks[];

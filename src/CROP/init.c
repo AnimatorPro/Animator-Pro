@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include "jimk.h"
 #include "init.str"
+#include "peekpok_.h"
 
 extern int ivmode;
 extern char init_drawer[];

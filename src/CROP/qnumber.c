@@ -3,6 +3,7 @@
 	get a single number or a single string */
 
 #include "jimk.h"
+#include "a1blit_.h"
 #include "flicmenu.h"
 #include "gemfont.h"
 #include "qnumber.str"

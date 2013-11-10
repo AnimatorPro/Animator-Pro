@@ -2,8 +2,9 @@
 /* writegif.c - stuff to write out a GIF file.  See also comprs.c */
 
 #include "jimk.h"
-#include "gif.h"
 #include "crop.h"
+#include "gif.h"
+#include "peekpok_.h"
 
 char gifsig[] = "GIF87a";
 struct gif_header gif;

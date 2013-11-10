@@ -5,6 +5,7 @@
 
 
 #include "jimk.h"
+#include "peekpok_.h"
 
 #define MAX_RUN 127
 

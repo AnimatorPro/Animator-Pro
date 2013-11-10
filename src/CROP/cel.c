@@ -3,6 +3,8 @@
    on the screen.)  */
 
 #include "jimk.h"
+#include "a2blit_.h"
+#include "blit8_.h"
 
 free_cel(c)
 Vcel *c;

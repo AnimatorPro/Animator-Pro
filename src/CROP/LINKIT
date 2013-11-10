@@ -1,13 +1,13 @@
-a1blit.obj+
-a2blit.obj+
+a1blit_.obj+
+a2blit_.obj+
 blit.obj+
-blit8.obj+
+blit8_.obj+
 brush.obj+
-cblock.obj+
+cblock_.obj+
 cel.obj+
 choices.obj+
-clipit.obj+
-closestc.obj+
+clipit_.obj+
+closest_.obj+
 cursorda.obj+
 diskerr.obj+
 dosstuff.obj+
@@ -23,6 +23,7 @@ main.obj+
 mmouse.obj+
 names.obj+
 peekpoke.obj+
+peekpok_.obj+
 qnumber.obj+
 rfont.obj+
 scroller.obj+
@@ -44,7 +45,8 @@ jfile.obj+
 bfile.obj+
 crop.obj+
 comp.obj+
-unbrun.obj+
+comp_.obj+
+unbrun_.obj+
 fli.obj+
 writefli.obj+
 pcx.obj+

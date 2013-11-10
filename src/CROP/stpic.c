@@ -3,6 +3,7 @@
 
 #include "jimk.h"
 #include "crop.h"
+#include "peekpok_.h"
 #include "seq.h"
 #include "stpic.str"
 
