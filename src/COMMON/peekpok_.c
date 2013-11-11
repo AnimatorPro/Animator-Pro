@@ -54,3 +54,16 @@ bsame(const UBYTE *src, unsigned int n)
 
 	return i;
 }
+
+unsigned int
+fsame(const UWORD *src, unsigned int n)
+{
+	unsigned int i;
+
+	for (i = 0; i < n; i++) {
+		if (src[i] != src[0])
+			break;
+	}
+
+	return i;
+}

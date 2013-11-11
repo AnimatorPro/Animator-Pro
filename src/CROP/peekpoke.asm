@@ -221,28 +221,6 @@ s3:
 _jset_colors endp
 
 
-	PUBLIC _fsame
-	;fsame(d, count)
-_fsame PROC far
-	push bp
-	mov bp,sp
-	push di
-	cld
-
-	les di,[bp+4+2]
-	mov cx,[bp+8+2]
-	mov ax,es:[di]
-	inc cx
-	repe scasw
-
-	mov ax,[bp+8+2]
-	sub ax,cx
-
-	pop di
-	pop	bp
-	ret	
-_fsame ENDP
-
 	PUBLIC _bcontrast
 	;bcontrast(s1, s2, count)
 _bcontrast PROC far
