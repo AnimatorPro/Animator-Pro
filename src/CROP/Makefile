@@ -18,7 +18,7 @@ scroller.obj seeme.obj seemenu.obj sixhi.obj slider.obj stringq.obj \
 wordwrap.obj \
 crop.obj croppull.obj stubs.obj globals.obj pull.obj memory.obj \
 qnumber.obj cpack.obj rgbcmap.obj scale.obj slide.obj \
-amigapic.obj urif.obj unrif.obj readrif.obj \
+amigapic.obj unrif.obj readrif.obj \
 seq.obj stpic.obj \
 pcx.obj \
 vision.obj \

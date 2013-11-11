@@ -38,7 +38,6 @@ wordwrap.obj+
 memory.obj+
 pull.obj+
 croppull.obj+
-urif.obj+
 unrif.obj+
 readrif.obj+
 jfile.obj+
