@@ -9,7 +9,7 @@
 
 #define MAX_RUN 127
 
-extern unsigned bcompare(), bcontrast(), bsame();
+extern unsigned bcompare(), bcontrast();
 
 
 char *

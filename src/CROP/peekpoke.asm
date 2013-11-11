@@ -220,28 +220,6 @@ s3:
 	ret
 _jset_colors endp
 
-	PUBLIC _bsame
-	;bsame(d, count)
-_bsame PROC far
-	push bp
-	mov bp,sp
-	push di
-	cld
-
-	les di,[bp+4+2]
-	mov cx,[bp+8+2]
-	mov ax,es:[di]
-	inc cx
-	repe scasb
-
-	mov ax,[bp+8+2]
-	sub ax,cx
-
-	pop di
-	pop	bp
-	ret	
-_bsame ENDP
-
 
 	PUBLIC _fsame
 	;fsame(d, count)

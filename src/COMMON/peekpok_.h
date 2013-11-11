@@ -18,6 +18,9 @@ extern void exchange_words(UWORD *xs, UWORD *ys, unsigned int n);
 /* Function: copy_words */
 extern void copy_words(const UWORD *src, UWORD *dst, unsigned int n);
 
+/* Function: bsame */
+extern unsigned int bsame(const UBYTE *src, unsigned int n);
+
 #define zero_structure(s, size) \
 	stuff_words(0, s, ((unsigned int)(size))>>1)
 

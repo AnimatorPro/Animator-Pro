@@ -41,3 +41,16 @@ copy_words(const UWORD *src, UWORD *dst, unsigned int n)
 {
 	memmove(dst, src, 2 * n);
 }
+
+unsigned int
+bsame(const UBYTE *src, unsigned int n)
+{
+	unsigned int i;
+
+	for (i = 0; i < n; i++) {
+		if (src[i] != src[0])
+			break;
+	}
+
+	return i;
+}
