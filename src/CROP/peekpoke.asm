@@ -221,32 +221,6 @@ s3:
 _jset_colors endp
 
 
-	PUBLIC _bcontrast
-	;bcontrast(s1, s2, count)
-_bcontrast PROC far
-	push bp
-	mov bp,sp
-	push ds
-	push si
-	push di
-	cld
-
-	lds si,[bp+4+2]
-	les di,[bp+8+2]
-	mov cx,[bp+12+2]
-	repne cmpsb
-	inc cx
-	mov ax,[bp+12+2]
-	sub ax,cx
-
-	pop di
-	pop si
-	pop ds
-	pop	bp
-	ret	
-_bcontrast ENDP
-
-
 	PUBLIC _bcompare
 	;bcompare(s1,s2,count)
 _bcompare PROC far

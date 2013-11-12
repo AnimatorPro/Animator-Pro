@@ -67,3 +67,16 @@ fsame(const UWORD *src, unsigned int n)
 
 	return i;
 }
+
+unsigned int
+bcontrast(const UBYTE *xs, const UBYTE *ys, unsigned int n)
+{
+	unsigned int i;
+
+	for (i = 0; i < n; i++) {
+		if (xs[i] == ys[i])
+			break;
+	}
+
+	return i;
+}
