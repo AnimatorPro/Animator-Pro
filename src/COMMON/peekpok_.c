@@ -1,5 +1,6 @@
 /* peekpok_.c */
 
+#include <assert.h>
 #include <string.h>
 #include "peekpok_.h"
 
@@ -105,4 +106,45 @@ fcompare(const UWORD *xs, const UWORD *ys, unsigned int n)
 	}
 
 	return i;
+}
+
+unsigned int
+til_next_skip(const UBYTE *xs, const UBYTE *ys, unsigned int n,
+		unsigned int mustmatch)
+{
+	unsigned int diffcount = 0;
+	assert(mustmatch <= n);
+
+	for (;;) {
+		unsigned int num_same;
+		unsigned int num_diff;
+
+		num_diff = bcontrast(xs, ys, n);
+		n -= num_diff;
+		xs += num_diff;
+		ys += num_diff;
+		diffcount += num_diff;
+
+		/* Check last couple of pixels. */
+		if (n < mustmatch) {
+			num_same = bcompare(xs, ys, n);
+
+			if (num_same < n)
+				diffcount += n;
+
+			break;
+		}
+
+		num_same = bcompare(xs, ys, mustmatch);
+
+		if (num_same == mustmatch)
+			break;
+
+		n -= num_same;
+		xs += num_same;
+		ys += num_same;
+		diffcount += num_same;
+	}
+
+	return diffcount;
 }

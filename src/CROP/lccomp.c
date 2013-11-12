@@ -74,53 +74,6 @@ for (;;)
 	}
 }
 
-
-#ifdef CCODE
-unsigned
-til_next_skip(s1, s2, bcount,mustmatch)
-char *s1, *s2;
-register int bcount;
-int mustmatch;
-{
-int dif_count; 
-register int wcount;
-
-
-dif_count = 0;
-for (;;)
-	{
-	wcount = bcontrast(s1, s2, bcount);
-	dif_count += wcount;
-	s1 += wcount;
-	s2 += wcount;
-	bcount -= wcount;
-	if (bcount >= mustmatch)
-		{
-		if ((wcount = bcompare(s1,s2,mustmatch)) == mustmatch)
-			{
-			break;
-			}
-		else
-			{
-			dif_count += wcount;
-			s1 += wcount;
-			s2 += wcount;
-			bcount -= wcount;
-			}
-		}
-	else
-		{
-		if (bcompare(s1,s2,bcount) != bcount)
-			{
-			dif_count += bcount;
-			}
-		break;
-		}
-	}
-return(dif_count);
-}
-#endif /* CCODE */
-
 #ifdef CCODE
 til_next_same(s2x,wcount)
 register char *s2x;
@@ -212,7 +165,7 @@ for (;;)
 	wcount = bsame(s2, bcount);
 	if (wcount >= INERTIA)	/* it's worth doing a same thing thing */
 		{
-		next_match = tnskip(s1, s2, wcount,INERTIA);
+		next_match = til_next_skip(s1, s2, wcount,INERTIA);
 
 		if (next_match < wcount) /* if it's in our space and a decent size */
 			{			/* we'll cut short same run for the skip */
@@ -228,7 +181,9 @@ for (;;)
 		{
 		/* figure out how long until the next worthwhile 'skip' */
 		/* Have wcount of stuff we can't skip through. */
-		wcount = tnsame(s2,tnskip(s1,s2,bcount,INERTIA-1),INERTIA);
+		wcount = tnsame(s2,
+				til_next_skip(s1, s2, bcount, INERTIA-1),
+				INERTIA);
 		/* Say copy positive count as lit copy op, and put bytes to copy
 		   into the compression buffer */
 		*c++ = wcount;

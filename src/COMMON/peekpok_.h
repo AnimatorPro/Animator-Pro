@@ -33,6 +33,11 @@ extern unsigned int bcompare(const UBYTE *xs, const UBYTE *ys, unsigned int n);
 /* Function: fcompare */
 extern unsigned int fcompare(const UWORD *xs, const UWORD *ys, unsigned int n);
 
+/* Function: til_next_skip */
+extern unsigned int
+til_next_skip(const UBYTE *xs, const UBYTE *ys, unsigned int n,
+		unsigned int mustmatch);
+
 #define zero_structure(s, size) \
 	stuff_words(0, s, ((unsigned int)(size))>>1)
 
