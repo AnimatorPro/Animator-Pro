@@ -27,6 +27,9 @@ extern unsigned int fsame(const UWORD *src, unsigned int n);
 /* Function: bcontrast */
 extern unsigned int bcontrast(const UBYTE *xs, const UBYTE *ys, unsigned int n);
 
+/* Function: bcompare */
+extern unsigned int bcompare(const UBYTE *xs, const UBYTE *ys, unsigned int n);
+
 #define zero_structure(s, size) \
 	stuff_words(0, s, ((unsigned int)(size))>>1)
 

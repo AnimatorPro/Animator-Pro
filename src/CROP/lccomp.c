@@ -9,9 +9,6 @@
 
 #define MAX_RUN 127
 
-extern unsigned bcompare();
-
-
 char *
 brun_comp_line(s1, cbuf, count)
 char *s1, *cbuf;
