@@ -51,7 +51,6 @@ writefli.obj+
 pcx.obj+
 fccomp.obj+
 lccomp.obj+
-skip.obj+
 screen.obj+
 seq.obj+
 gif.obj+

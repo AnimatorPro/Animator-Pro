@@ -25,7 +25,7 @@ vision.obj \
 macpic.obj \
 anim.obj \
 writegif.obj gif.obj decoder.obj comprs.obj \
-skip.obj fccomp.obj lccomp.obj comp.obj \
+fccomp.obj lccomp.obj comp.obj \
 fli.obj writefli.obj \
 screen.obj jfile.obj bfile.obj \
 foolwcc2.obj summa.obj textbox.obj \

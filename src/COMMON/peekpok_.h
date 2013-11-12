@@ -38,6 +38,10 @@ extern unsigned int
 til_next_skip(const UBYTE *xs, const UBYTE *ys, unsigned int n,
 		unsigned int mustmatch);
 
+/* Function: til_next_same */
+extern unsigned int
+til_next_same(const UBYTE *src, unsigned int n, unsigned int mustmatch);
+
 #define zero_structure(s, size) \
 	stuff_words(0, s, ((unsigned int)(size))>>1)
 

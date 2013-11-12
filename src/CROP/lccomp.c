@@ -74,35 +74,6 @@ for (;;)
 	}
 }
 
-#ifdef CCODE
-til_next_same(s2x,wcount)
-register char *s2x;
-int wcount;
-{
-int dif_count;
-register int same_count;
-int i;
-
-dif_count = wcount;
-i=0;
-for (;;)
-	{
-	if (wcount <= 3)
-		break;
-	same_count = bsame(s2x, wcount);
-	if (same_count >= 4)
-		{
-		dif_count = i;
-		break;
-		}
-	i += same_count;
-	wcount -= same_count;
-	s2x += same_count;
-	}
-return(dif_count);
-}
-#endif /* CCODE */
-
 #define INERTIA 4
 
 char *
@@ -181,7 +152,7 @@ for (;;)
 		{
 		/* figure out how long until the next worthwhile 'skip' */
 		/* Have wcount of stuff we can't skip through. */
-		wcount = tnsame(s2,
+		wcount = til_next_same(s2,
 				til_next_skip(s1, s2, bcount, INERTIA-1),
 				INERTIA);
 		/* Say copy positive count as lit copy op, and put bytes to copy

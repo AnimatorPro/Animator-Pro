@@ -148,3 +148,23 @@ til_next_skip(const UBYTE *xs, const UBYTE *ys, unsigned int n,
 
 	return diffcount;
 }
+
+unsigned int
+til_next_same(const UBYTE *src, unsigned int n, unsigned int mustmatch)
+{
+	unsigned int num_remaining = n;
+	unsigned int num_examined = 0;
+
+	while (num_remaining >= mustmatch) {
+		unsigned int num_same = bsame(src, num_remaining);
+
+		if (num_same >= mustmatch)
+			return num_examined;
+
+		src += num_same;
+		num_examined += num_same;
+		num_remaining -= num_same;
+	}
+
+	return n;
+}
