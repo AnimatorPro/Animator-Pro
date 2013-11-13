@@ -92,7 +92,7 @@ Vector redraw;
 iscroller(scroll, 
 	names, scroll_sel, list_sel,(list_sel->height-2)/CHEIGHT,redraw);
 }
-#endif SLUFFED
+#endif /* SLUFFED */
 
 redraw_scroller(scroll_sel, list_sel)
 register Flicmenu *scroll_sel, *list_sel;
