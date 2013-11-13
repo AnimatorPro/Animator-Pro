@@ -2,8 +2,10 @@
 /* pcx.c - Stuff to handle PC-PaintBrush (.PCX) files */
 
 #include "jimk.h"
+#include "a2blit_.h"
 #include "crop.h"
 #include "pcx.str"
+#include "peekpok_.h"
 
 struct pcx_header
 	{

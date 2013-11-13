@@ -3,9 +3,10 @@
    (bitplane oriented) picture. */
 
 #include "jimk.h"
-#include "jiff.h"
-#include "crop.h"
 #include "amigapic.str"
+#include "crop.h"
+#include "jiff.h"
+#include "peekpok_.h"
 
 static struct bfile amiga_bf;
 static char *amiga_name;

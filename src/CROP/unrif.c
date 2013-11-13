@@ -4,9 +4,15 @@
 
 #include "jimk.h"
 
+#define RIF_BPR 40
+#define HEIGHT 200
+#define PLANE_SIZE (RIF_BPR*HEIGHT)
+
 extern unsigned WORD ytable[YMAX];
 
-#ifdef C_CODE
+static void conv8(int a, int b, int c, int d, int e, PLANEPTR out);
+
+void
 conv_screen(bits)
 PLANEPTR bits;
 {
@@ -26,12 +32,9 @@ while (--i >= 0)
 	bytes += 8;
 	}
 }
-#endif /* C_CODE */
 
-#ifdef SLUFFED
-conv8(a, b, c, d, e, out)
-int a, b, c, d, e;
-PLANEPTR out;
+static void
+conv8(int a, int b, int c, int d, int e, PLANEPTR out)
 {
 UBYTE byte;
 int i;
@@ -58,7 +61,6 @@ while (--i >= 0)
 	mask >>= 1;
 	}
 }
-#endif /* SLUFFED */
 
 
 PLANEPTR 

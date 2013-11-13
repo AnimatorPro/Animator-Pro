@@ -3,6 +3,7 @@
    frame files much like FLI's on the PC. */
 
 #include "jimk.h"
+#include "peekpok_.h"
 #include "seq.h"
 #include "seq.str"
 

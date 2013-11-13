@@ -9,6 +9,7 @@
 #include "jiff.h"
 #include "anim.h"
 #include "anim.str"
+#include "peekpok_.h"
 
 #define ANIM_BPR 40
 #define YMAX 200

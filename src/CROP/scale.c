@@ -2,7 +2,9 @@
 /* scale.c - Do a nice pixel-averaging scale-up/scale-down */
 
 #include "jimk.h"
+#include "a2blit_.h"
 #include "crop.h"
+#include "peekpok_.h"
 #include "scale.str"
 
 #define WHOLESCALE 256

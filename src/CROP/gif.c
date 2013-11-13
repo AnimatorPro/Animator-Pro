@@ -2,9 +2,10 @@
    write side.  Also decode.c for lower level GIF reading code. */
 
 #include "jimk.h"
-#include "gif.h"
 #include "crop.h"
+#include "gif.h"
 #include "gif.str"
+#include "peekpok_.h"
 
 extern struct gif_header gif;
 extern struct gif_image gim;

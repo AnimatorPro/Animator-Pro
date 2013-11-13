@@ -3,8 +3,10 @@
    Everex Vision 16, hence the name.) */
 
 #include "jimk.h"
+#include "a2blit_.h"
 #include "crop.h"
 #include "img.h"
+#include "peekpok_.h"
 #include "vision.str"
 
 extern UBYTE *get_hist();

@@ -3,6 +3,7 @@
    slightly different parameter conventions. */
 
 #include "jimk.h"
+#include "peekpok_.h"
 
 bclose(bf)
 Bfile *bf;

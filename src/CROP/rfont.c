@@ -6,8 +6,6 @@
 #include "rfont.h"
 #include "gemfont.h"
 
-extern a1blit(), a2blit();
-
 extern UBYTE sixhi_data[];
 extern WORD sixhi_ch_ofst[];
 extern struct font_hdr sixhi_font;
@@ -29,13 +27,8 @@ to_upper(s);
 y+=1;
 while ((c = *s++) != 0)
 	{
-#ifndef __WATCOMC__
 	(*tblit)(6, 6, 6*c, 0, sixhi_data, 
 		192, x, y, VGA_SCREEN, 320, color,bcolor);
-#else  /* __WATCOMC__ */
-	a2blit(6, 6, 6*c, 0, sixhi_data, 
-		192, x, y, VGA_SCREEN, 320, color,bcolor);
-#endif  /* __WATCOMC__ */
 	x+=6;
 	}
 }

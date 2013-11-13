@@ -2,6 +2,7 @@
 /* choices.c - put up a little menu of numbered choices. */
 
 #include "jimk.h"
+#include "a1blit_.h"
 #include "flicmenu.h"
 
 extern gary_menu_back(), gary_see_title(),blacktext(),

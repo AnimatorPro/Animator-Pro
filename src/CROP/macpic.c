@@ -3,9 +3,10 @@
    probably keep it as a bit-plane until someone wants to scale it. */
 
 #include "jimk.h"
+#include "a2blit_.h"
 #include "crop.h"
 #include "macpic.str"
-
+#include "peekpok_.h"
 
 /* fixed width/height of a Macpaint pic */
 #define MW 576
