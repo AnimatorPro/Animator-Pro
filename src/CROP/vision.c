@@ -41,6 +41,8 @@ char *not_vision_lines[] = {
 	NULL,
 	};
 
+static void vitrunc(void);
+
 open_verify_vision()
 {
 int i;
@@ -53,7 +55,7 @@ if ((bopen(vision_name, &vision_bf)) == 0)
 if (bread(&vision_bf, &vh, sizeof(vh)) <
 	sizeof(vh))
 	{
-	trunc();
+	vitrunc();
 	return(0);
 	}
 linebytes = VWID;
@@ -116,8 +118,8 @@ if (vh.maptype != 0)
 return(1);
 }
 
-
-trunc()
+static void
+vitrunc(void)
 {
 truncated(vision_name);
 }
@@ -141,7 +143,7 @@ if (is_compressed)
 		{
 		if ((ww = bgetbyte(&vision_bf)) < 0)
 			{
-			trunc();
+			vitrunc();
 			return(0);
 			}
 		if (ww&0x80)	/* it's a run dude */
@@ -149,7 +151,7 @@ if (is_compressed)
 			ww = (ww&0x7f)+1;	/* length of run - 1*/
 			if (bread(&vision_bf, pbuf, bap) != bap) /* get data to repeat */
 				{
-				trunc();
+				vitrunc();
 				return(1);
 				}
 			while (--ww >= 0)
@@ -164,7 +166,7 @@ if (is_compressed)
 			i = (ww+1)*bap;	/* length in bytes */
 			if (bread(&vision_bf, p, i) != i)
 				{
-				trunc();
+				vitrunc();
 				return(0);
 				}
 			p += i;
@@ -177,7 +179,7 @@ else
 	{
 	if (bread(&vision_bf, buf, (int)linebytes) != linebytes)
 		{
-		trunc();
+		vitrunc();
 		return(0);
 		}
 	}
@@ -245,7 +247,7 @@ see_cmap();
 find_colors();
 if (bseek(&vision_bf, data_offset, 0) < 0L)
 	{
-	trunc();
+	vitrunc();
 	return(0);
 	}
 over_count = 0;
@@ -271,7 +273,7 @@ reset_vbf()
 {
 if (bseek(&vision_bf, data_offset, 0) < 0L)
 	{
-	trunc();
+	vitrunc();
 	return(0);
 	}
 return(1);
