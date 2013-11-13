@@ -196,9 +196,9 @@ while (--h >= 0)
 }
 
 /* interpolate scale a byte-plane in memory in y dimension */
-scaley(inbytes, outbytes, inline, outline, w, oh, nh)
+scaley(inbytes, outbytes, in_line, outline, w, oh, nh)
 UBYTE *inbytes, *outbytes;	/* image and a place to put scaled copy */
-UBYTE *inline, *outline;	/* buffers size oh and nh... */
+UBYTE *in_line, *outline;	/* buffers size oh and nh... */
 int w, oh, nh;
 {
 int i;
@@ -206,8 +206,8 @@ char buf[50];
 
 for (i=0; i<w; i++)
 	{
-	get_column(inbytes++, inline, w, oh);
-	iscale(inline, oh, outline, nh);
+	get_column(inbytes++, in_line, w, oh);
+	iscale(in_line, oh, outline, nh);
 	put_column(outline, outbytes++, w, nh);
 	if (i%10 == 0)
 		{
@@ -245,7 +245,7 @@ Vcel *outcel;
 struct bfile bf;
 int ok = 0;
 long ibsize;
-UBYTE *inline, *outline;
+UBYTE *in_line, *outline;
 
 if (oh == nh)
 	return(1);
@@ -258,19 +258,19 @@ if ((outcel = alloc_cel(w,nh,0,0)) == NULL)
 	return(0);
 	}
 outbytes = outcel->p;
-if ((inline = begmem(oh)) != NULL)
+if ((in_line = begmem(oh)) != NULL)
 	{
 	if ((outline = begmem(nh)) != NULL)
 		{
 		if (read_gulp(name, inbytes, ibsize))
 			{
-			scaley(inbytes, outbytes, inline, outline, w, oh, nh);
+			scaley(inbytes, outbytes, in_line, outline, w, oh, nh);
 			ok = write_gulp(name, outbytes, w * (long)nh);
 			tile_cel(outcel);
 			}
 		freemem(outline);
 		}
-	freemem(inline);
+	freemem(in_line);
 	}
 freemem(inbytes);
 free_cel(outcel);
