@@ -1,17 +1,11 @@
 #ifndef JIMK_H
 #define JIMK_H
 
+#include "jimk0.h"
+
 #ifndef NULL
 #define NULL ((void *)0)
 #endif /* NULL */
-
-#define WORD int
-#define UWORD unsigned int
-#define BYTE char
-#define UBYTE unsigned char
-#define LONG long
-#define ULONG unsigned long
-
 
 extern void *list_el();
 #ifndef SLUFF
@@ -158,23 +152,6 @@ extern int brush_ix, *brushes[];
 
 extern PLANEPTR white_cursor, black_cursor;
 
-
-struct byte_regs 
-	{
-	unsigned char al, ah, bl, bh, cl, ch, dl, dh;
-	unsigned int si, di, ds, es;
-	};
-struct word_regs
-	{
-	unsigned ax,bx,cx,dx;
-	unsigned int si, di, ds, es;
-	};
-
-union regs
-	{
-	struct byte_regs b;
-	struct word_regs w;
-	};
 struct video_form
 	{
 	WORD x, y;	/* upper left corner in screen coordinates */

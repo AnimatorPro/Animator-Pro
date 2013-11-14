@@ -1,3 +1,7 @@
+#ifndef JIFF_H
+#define JIFF_H
+
+#include "jimk.h"
 
 /* EA handy make a long from 4 chars macros redone to work with Aztec*/
 #define MAKE_ID(a, b, c, d)\
@@ -17,12 +21,14 @@ union bytes4
 	char b4_name[4];
 	long b4_type;
 	};
+STATIC_ASSERT(jiff, sizeof(union bytes4) == 4);
 
 struct iff_chunk
 	{
 	union bytes4 iff_type;
 	long iff_length;
 	};
+STATIC_ASSERT(jiff, sizeof(struct iff_chunk) == 8);
 
 struct form_chunk
 	{
@@ -30,6 +36,7 @@ struct form_chunk
 	long fc_length;
 	union bytes4 fc_subtype;
 	};
+STATIC_ASSERT(jiff, sizeof(struct form_chunk) == 12);
 
 struct BitMapHeader
 	{
@@ -43,3 +50,6 @@ struct BitMapHeader
 	UBYTE xAspect, yAspect;
 	WORD pageWidth, pageHeight;
 	};
+STATIC_ASSERT(jiff, sizeof(struct BitMapHeader) == 20);
+
+#endif

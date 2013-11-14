@@ -2,24 +2,7 @@
    about directories, etc. */
 
 #include <ctype.h>
-
-struct byte_regs 
-	{
-	unsigned char al, ah, bl, bh, cl, ch, dl, dh;
-	unsigned int si, di, ds, es;
-	};
-
-struct word_regs
-	{
-	unsigned ax,bx,cx,dx;
-	unsigned int si, di, ds, es;
-	};
-
-union regs
-	{
-	struct byte_regs b;
-	struct word_regs w;
-	};
+#include "jimk.h"
 
 extern int device;
 extern char devices[26];
