@@ -1,6 +1,7 @@
 
 /* pcx.c - Stuff to handle PC-PaintBrush (.PCX) files */
 
+#include <stdio.h>
 #include "jimk.h"
 #include "a2blit_.h"
 #include "crop.h"

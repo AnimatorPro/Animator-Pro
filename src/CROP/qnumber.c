@@ -2,6 +2,7 @@
 /* qnumber.c - This module is for popping up little requestor to 
 	get a single number or a single string */
 
+#include <stdio.h>
 #include "jimk.h"
 #include "a1blit_.h"
 #include "flicmenu.h"

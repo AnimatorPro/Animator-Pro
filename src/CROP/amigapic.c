@@ -15,6 +15,9 @@ static int abpr;
 static int masked;
 static struct BitMapHeader bh;
 
+static void not_ilbm(void);
+static void amtrunc(void);
+
 static
 decode_lplane(buf)
 UBYTE *buf;
@@ -230,14 +233,14 @@ if (!uncode_ilbm(fc.fc_length, (long)sizeof(fc)))
 return(1);
 }
 
-static
-not_ilbm()
+static void
+not_ilbm(void)
 {
 continu_line(amigapic_106 /* "File isn't an IFF ILBM." */);
 }
 
-static
-amtrunc()
+static void
+amtrunc(void)
 {
 truncated(amiga_name);
 }

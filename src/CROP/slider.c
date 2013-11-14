@@ -1,6 +1,8 @@
 
 /* Slider.c - routines for the famous 'numbered knob' slider */
 
+#include <stdio.h>
+#include <string.h>
 #include "jimk.h"
 #include "flicmenu.h"
 

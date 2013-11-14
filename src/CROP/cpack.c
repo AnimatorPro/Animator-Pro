@@ -4,6 +4,7 @@
    if you have duplicate colors in the source it sometimes hangs.
    (So filter out duplicate colors before calling pack_cmap... ) */
 
+#include <stdio.h>
 #include "jimk.h"
 #include "a2blit_.h"
 #include "closest_.h"

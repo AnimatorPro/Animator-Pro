@@ -2,6 +2,7 @@
 /* init.c  Routines to take the PC into and out of graphics mode, 
 	find the mouse,  stow away the startup-directory, etc. */
 #include <stdio.h>
+#include <string.h>
 #include "jimk.h"
 #include "init.str"
 #include "peekpok_.h"

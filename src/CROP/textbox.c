@@ -1,6 +1,7 @@
 /* textbox.c - generate a 'continue' alert or a 'yes/no' dialog from
    a couple of C strings. */
 
+#include <string.h>
 #include "jimk.h"
 #include "a1blit_.h"
 #include "blit8_.h"
@@ -29,6 +30,7 @@
 struct rectangle box, yes_box, no_box;
 static WORD *behind;
 
+static void draw_white_box(struct rectangle *b);
 
 /* find_text_box(names) -
       Pass this an array of names terminated by a NULL, and this baby
@@ -118,9 +120,8 @@ return (yoff);
 }
 
 
-static
-draw_white_box(b)
-struct rectangle *b;
+static void
+draw_white_box(struct rectangle *b)
 {
 draw_frame(sgrey, b->MinX, b->MinY, b->MaxX, b->MaxY);
 }

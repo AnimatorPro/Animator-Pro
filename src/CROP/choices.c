@@ -1,6 +1,8 @@
 
 /* choices.c - put up a little menu of numbered choices. */
 
+#include <stdio.h>
+#include <string.h>
 #include "jimk.h"
 #include "a1blit_.h"
 #include "flicmenu.h"

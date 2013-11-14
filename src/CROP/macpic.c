@@ -2,6 +2,7 @@
 /* macpic.c - Go cope with a MacPaint Pic.  It's a hi-res goodie.   We'll
    probably keep it as a bit-plane until someone wants to scale it. */
 
+#include <stdio.h>
 #include "jimk.h"
 #include "a2blit_.h"
 #include "crop.h"

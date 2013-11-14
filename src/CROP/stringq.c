@@ -5,6 +5,7 @@
    and end of the line.  It backspaces.  It deletes.  It keeps up a
    little cursor.  */
 
+#include <string.h>
 #include "jimk.h"
 #include "a2blit_.h"
 #include "cblock_.h"

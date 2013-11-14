@@ -3,6 +3,7 @@
    browse menu a bit too.  Other scroller users are the draw tools and
    ink types menus.  */
 
+#include <string.h>
 #include "jimk.h"
 #include "a1blit_.h"
 #include "cblock_.h"
@@ -17,6 +18,8 @@
 
 struct name_scroller *scroll;
 static Vector sredraw;
+
+static void prt_list(Flicmenu *m);
 
 calc_scroll_pos(scroll, scroll_sel)
 register Name_scroller *scroll;
@@ -215,9 +218,8 @@ a_frame(sgrey, m);
 prt_list(m);
 }
 
-static
-prt_list(m)
-register Flicmenu *m;
+static void
+prt_list(Flicmenu *m)
 {
 register Name_list *n;
 register Name_scroller *scroller;

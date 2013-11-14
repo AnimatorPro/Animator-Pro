@@ -2,6 +2,7 @@
    byte-a-pixel image buffer with an associated color map and position
    on the screen.)  */
 
+#include <stdio.h>
 #include "jimk.h"
 #include "a2blit_.h"
 #include "blit8_.h"

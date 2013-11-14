@@ -4,6 +4,8 @@
    handle allocations greater than 64K, and does some simple error checking
    during free. */
 
+#include <stdio.h>
+#include <stdlib.h>
 #include "jimk.h"
 #include "memory.str"
 #include "peekpok_.h"

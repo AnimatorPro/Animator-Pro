@@ -4,6 +4,7 @@
    the pull-downs. */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include "jimk.h"
 #include "flicmenu.h"
 #include "main.str"

@@ -1,6 +1,7 @@
 
 /* writegif.c - stuff to write out a GIF file.  See also comprs.c */
 
+#include <string.h>
 #include "jimk.h"
 #include "crop.h"
 #include "gif.h"

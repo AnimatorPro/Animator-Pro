@@ -1,6 +1,7 @@
 
 /* stpic.c - Stuff to handle Atari ST still screen files */
 
+#include <stdio.h>
 #include "jimk.h"
 #include "crop.h"
 #include "peekpok_.h"
@@ -62,6 +63,9 @@ static char *sttype_lines[] =
 	stpic_113 /* "Load Degas Elite High Res (.PC3)" */,
 	stpic_114 /* "CANCEL" */,
 	};
+
+static int st_comp_line(UBYTE *p);
+static int st_line(UBYTE *p);
 
 static
 sttrunc()
@@ -146,9 +150,8 @@ while (--i >= 0)
 return(1);
 }
 
-static
-st_comp_line(p)
-UBYTE *p;
+static int
+st_comp_line(UBYTE *p)
 {
 UBYTE lcbuf[80+128];
 UBYTE omask, imask;
@@ -186,9 +189,8 @@ while (--i >= 0)
 return(1);
 }
 
-static
-st_line(p)
-UBYTE *p;
+static int
+st_line(UBYTE *p)
 {
 UWORD lbuf[80];
 UWORD *nword, *n;

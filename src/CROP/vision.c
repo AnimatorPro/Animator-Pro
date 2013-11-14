@@ -2,6 +2,7 @@
 /* vision.c - Handles AT&T Targa format pictures.  (Which is same as
    Everex Vision 16, hence the name.) */
 
+#include <stdio.h>
 #include "jimk.h"
 #include "a2blit_.h"
 #include "crop.h"

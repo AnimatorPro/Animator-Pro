@@ -3,10 +3,13 @@
 /* Basically a function for each type of button unique to the file */
 /* selector, and the entry point - get_filename() */
 
+#include <ctype.h>
+#include <stdio.h>
+#include <string.h>
 #include "jimk.h"
 #include "flicmenu.h"
-#include <ctype.h>
 
+static void redraw_fscroller(void);
 extern wait_click();
 
 extern Flicmenu fileq_menu, ftitle_sel, flist_sel, fscroll_sel,
@@ -128,10 +131,8 @@ iscroller(&fscroller,wild_lst,&fscroll_sel,&flist_sel,
 	scroll_ycount(&flist_sel),redraw_fscroller);
 }
 
-
-
-
-redraw_fscroller()
+static void
+redraw_fscroller(void)
 {
 redraw_scroller(&fscroll_sel, &flist_sel);
 }

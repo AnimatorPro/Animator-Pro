@@ -5,6 +5,8 @@
    byte counts/offsets (32 bit long integers).
    */
 
+#include <stdio.h>
+#include <string.h>
 #include "jimk.h"
 #include "jfile.str"
 

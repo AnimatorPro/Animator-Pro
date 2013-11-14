@@ -1,6 +1,7 @@
 
 /* scale.c - Do a nice pixel-averaging scale-up/scale-down */
 
+#include <stdio.h>
 #include "jimk.h"
 #include "a2blit_.h"
 #include "crop.h"
