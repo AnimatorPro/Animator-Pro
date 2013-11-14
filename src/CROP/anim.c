@@ -86,15 +86,13 @@ load_fd = 0;
 return(0);
 }
 
-
-
-extern unsigned WORD ytable[YMAX];
+extern UWORD ytable[YMAX];
 
 static 
 make_ytable()
 {
-register unsigned WORD *pt;
-register unsigned WORD acc, bpr;
+register UWORD *pt;
+register UWORD acc, bpr;
 register WORD i;
 
 acc = 0;

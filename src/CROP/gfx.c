@@ -8,7 +8,7 @@
 #include "peekpok_.h"
 
 /* a table for RIF and ANIM decompression */
-unsigned WORD ytable[YMAX];
+UWORD ytable[YMAX];
 
 /* Poke the background color with an rgb value.  Handy for debugging
    sometimes. */
