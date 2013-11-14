@@ -19,21 +19,21 @@
 union bytes4
 	{
 	char b4_name[4];
-	long b4_type;
+	LONG b4_type;
 	};
 STATIC_ASSERT(jiff, sizeof(union bytes4) == 4);
 
 struct iff_chunk
 	{
 	union bytes4 iff_type;
-	long iff_length;
+	LONG iff_length;
 	};
 STATIC_ASSERT(jiff, sizeof(struct iff_chunk) == 8);
 
 struct form_chunk
 	{
 	union bytes4 fc_type; /* == FORM */
-	long fc_length;
+	LONG fc_length;
 	union bytes4 fc_subtype;
 	};
 STATIC_ASSERT(jiff, sizeof(struct form_chunk) == 12);
