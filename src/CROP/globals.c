@@ -131,6 +131,7 @@ Vsettings vs =
 	50,50,50,50,50,		50+0x80,50,50,50,50,
 	50,50,
 	},
+	""
 	};
 
 
@@ -139,4 +140,4 @@ int ivmode;
 char init_drawer[71];
 
 UBYTE sys_cmap[COLORS*3];
-Video_form vf = { 0,0,XMAX,YMAX,Raster_line(XMAX),VGA_SCREEN,sys_cmap, };
+Video_form vf = { 0,0,XMAX,YMAX,Raster_line(XMAX),VGA_SCREEN,sys_cmap,0 };

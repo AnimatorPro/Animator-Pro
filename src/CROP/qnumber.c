@@ -37,6 +37,7 @@ struct flicmenu qnu_can_sel = {
 	NOGROUP,0,
 	NOKEY,
 	NOOPT,
+	0, 0
 	};
 struct flicmenu qnu_ok_sel = {
 	&qnu_can_sel,
@@ -48,6 +49,7 @@ struct flicmenu qnu_ok_sel = {
 	NOGROUP,0,
 	NOKEY,
 	NOOPT,
+	0, 0
 	};
 struct flicmenu qnu_sli_sel = {
 	&qnu_ok_sel,
@@ -59,6 +61,7 @@ struct flicmenu qnu_sli_sel = {
 	NOGROUP,0,
 	NOKEY,
 	NOOPT,
+	0, 0
 	};
 struct flicmenu reqstring_sel =
 	{
@@ -71,6 +74,7 @@ struct flicmenu reqstring_sel =
 	NOGROUP, 0,
 	NOKEY,
 	NOOPT,
+	0, 0
 	};
 
 struct flicmenu reqhail_sel =
@@ -84,6 +88,7 @@ struct flicmenu reqhail_sel =
 	NOGROUP, 0,
 	NOKEY,
 	NOOPT,
+	0, 0
 	};
 
 struct flicmenu qreq_menu =
@@ -97,6 +102,7 @@ struct flicmenu qreq_menu =
 	NOGROUP, 0,
 	NOKEY,
 	NOOPT,
+	0, 0
 	};
 
 menu_text_box(m)

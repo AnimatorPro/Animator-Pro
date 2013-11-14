@@ -32,6 +32,7 @@ struct flicmenu fcancel_sel =
 	NOGROUP, 0,
 	' ',
 	NOOPT,
+	0, 0
 	};
 struct flicmenu fok_sel =
 	{
@@ -44,6 +45,7 @@ struct flicmenu fok_sel =
 	NOGROUP, 0,
 	'\r',
 	NOOPT,
+	0, 0
 	};
 struct flicmenu fplus_sel =
 	{
@@ -56,6 +58,7 @@ struct flicmenu fplus_sel =
 	NOGROUP, 0,
 	'\r',
 	NOOPT,
+	0, 0
 	};
 WORD device;
 #define F8K 1
@@ -70,6 +73,7 @@ struct flicmenu fdev16_sel =
 	&device, 13,
 	'n',
 	NOOPT,
+	0, 0
 	};
 struct flicmenu fdev15_sel =
 	{
@@ -82,6 +86,7 @@ struct flicmenu fdev15_sel =
 	&device, 12,
 	'm',
 	NOOPT,
+	0, 0
 	};
 struct flicmenu fdev14_sel =
 	{
@@ -94,6 +99,7 @@ struct flicmenu fdev14_sel =
 	&device, 11,
 	'l',
 	NOOPT,
+	0, 0
 	};
 struct flicmenu fdev13_sel =
 	{
@@ -106,6 +112,7 @@ struct flicmenu fdev13_sel =
 	&device, 10,
 	'k',
 	NOOPT,
+	0, 0
 	};
 struct flicmenu fdev12_sel =
 	{
@@ -118,6 +125,7 @@ struct flicmenu fdev12_sel =
 	&device, 9,
 	'j',
 	NOOPT,
+	0, 0
 	};
 struct flicmenu fdev11_sel =
 	{
@@ -130,6 +138,7 @@ struct flicmenu fdev11_sel =
 	&device, 8,
 	'i',
 	NOOPT,
+	0, 0
 	};
 struct flicmenu fdev10_sel =
 	{
@@ -142,6 +151,7 @@ struct flicmenu fdev10_sel =
 	&device, 7,
 	'h',
 	NOOPT,
+	0, 0
 	};
 struct flicmenu fdev9_sel =
 	{
@@ -154,6 +164,7 @@ struct flicmenu fdev9_sel =
 	&device, 6,
 	'g',
 	NOOPT,
+	0, 0
 	};
 struct flicmenu fdev8_sel =
 	{
@@ -166,6 +177,7 @@ struct flicmenu fdev8_sel =
 	&device, 5,
 	'f',
 	NOOPT,
+	0, 0
 	};
 struct flicmenu fdev7_sel =
 	{
@@ -178,6 +190,7 @@ struct flicmenu fdev7_sel =
 	&device, 4,
 	'e',
 	NOOPT,
+	0, 0
 	};
 struct flicmenu fdev6_sel =
 	{
@@ -190,6 +203,7 @@ struct flicmenu fdev6_sel =
 	&device, 3,
 	'd',
 	NOOPT,
+	0, 0
 	};
 struct flicmenu fdev5_sel =
 	{
@@ -202,6 +216,7 @@ struct flicmenu fdev5_sel =
 	&device, 2,
 	'c',
 	NOOPT,
+	0, 0
 	};
 struct flicmenu fdev4_sel =
 	{
@@ -214,6 +229,7 @@ struct flicmenu fdev4_sel =
 	&device, 1,
 	'b',
 	NOOPT,
+	0, 0
 	};
 struct flicmenu fdev3_sel =
 	{
@@ -226,6 +242,7 @@ struct flicmenu fdev3_sel =
 	&device, 0,
 	'a',
 	NOOPT,
+	0, 0
 	};
 struct flicmenu fdev2_sel =
 	{
@@ -238,6 +255,7 @@ struct flicmenu fdev2_sel =
 	NOGROUP, 0,
 	'.',
 	NOOPT,
+	0, 0
 	};
 struct flicmenu rootdir_sel =
 	{
@@ -250,6 +268,7 @@ struct flicmenu rootdir_sel =
 	NOGROUP, 0,
 	'\\',
 	NOOPT,
+	0, 0
 	};
 char und_wild[12] = "*.*";
 char wild[12];
@@ -268,6 +287,7 @@ struct flicmenu fwild_sel =
 	NOGROUP, 0,
 	NOKEY,
 	NOOPT,
+	0, 0
 	};
 struct flicmenu fwildp_sel =
 	{
@@ -280,6 +300,7 @@ struct flicmenu fwildp_sel =
 	NOGROUP, 0,
 	'*',
 	NOOPT,
+	0, 0
 	};
 char und_drawer[70] = "c:";
 struct stringq drawer_stringq =
@@ -300,6 +321,7 @@ struct flicmenu fdrawer_sel =
 	NOGROUP, 0,
 	NOKEY,
 	NOOPT,
+	0, 0
 	};
 
 struct flicmenu fdrawerp_sel =
@@ -313,6 +335,7 @@ struct flicmenu fdrawerp_sel =
 	NOGROUP, 0,
 	NOKEY,
 	NOOPT,
+	0, 0
 	};
 char und_file[81] = "zippy";
 struct stringq file_stringq =
@@ -330,6 +353,7 @@ struct flicmenu ffile_sel =
 	NOGROUP, 0,
 	NOKEY,
 	NOOPT,
+	0, 0
 	};
 struct flicmenu ffilep_sel =
 	{
@@ -342,6 +366,7 @@ struct flicmenu ffilep_sel =
 	NOGROUP, 0,
 	NOKEY,
 	NOOPT,
+	0, 0
 	};
 struct name_scroller fscroller;
 struct flicmenu flist_sel =
@@ -355,6 +380,7 @@ struct flicmenu flist_sel =
 	NOGROUP, 0,
 	NOKEY,
 	NOOPT,
+	0, 0
 	};
 
 struct flicmenu fdown_sel =
@@ -368,6 +394,7 @@ struct flicmenu fdown_sel =
 	(WORD *)&fscroller, 0,
 	NOKEY,
 	NOOPT,
+	0, 0
 	};
 
 struct flicmenu fscroll_sel =
@@ -381,6 +408,7 @@ struct flicmenu fscroll_sel =
 	NOGROUP, 0,
 	NOKEY,
 	NOOPT,
+	0, 0
 	};
 
 struct flicmenu fup_sel =
@@ -394,6 +422,7 @@ struct flicmenu fup_sel =
 	(WORD *)&fscroller, 0,
 	NOKEY,
 	NOOPT,
+	0, 0
 	};
 
 struct flicmenu ftitle_sel =
@@ -407,6 +436,7 @@ struct flicmenu ftitle_sel =
 	NOGROUP, 0,
 	NOKEY,
 	NOOPT,
+	0, 0
 	};
 
 struct flicmenu fileq_menu = 
@@ -420,4 +450,5 @@ struct flicmenu fileq_menu =
 	NOGROUP, 0,
 	NOKEY,
 	NOOPT,
+	0, 0
 	};

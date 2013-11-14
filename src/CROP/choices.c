@@ -26,6 +26,7 @@ static struct flicmenu choiceheader = {
 	NOGROUP,0,
 	NOKEY,
 	NOOPT,
+	0, 0
 	};
 static struct flicmenu choicemenu = {
 	NOCHILD, 
@@ -35,6 +36,7 @@ static struct flicmenu choicemenu = {
 	gary_menu_back,
 	NOFEEL,
 	NOGROUP,0,NOKEY,NOOPT,
+	0, 0
 	};
 
 accept_choice(m)
