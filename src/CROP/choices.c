@@ -15,7 +15,7 @@ extern gary_menu_back(), gary_see_title(),blacktext(),
 
 #define CMAX 10
 
-static int chosen;
+static WORD chosen;
 static struct flicmenu choicesels[CMAX];
 static struct flicmenu choiceheader = {
 	NOCHILD, 

@@ -38,8 +38,8 @@ struct flicmenu
 	void *text;
 	int (*seeme)();
 	int (*feelme)();
-	int *group;
-	int identity;
+	WORD *group;
+	WORD identity;
 	WORD key_equiv;
 	int (*optme)();
 	UBYTE disabled, flags;
