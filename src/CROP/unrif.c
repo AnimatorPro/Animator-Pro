@@ -19,7 +19,7 @@ PLANEPTR bits;
 int i;
 PLANEPTR bytes;
 
-bytes = (PLANEPTR)0xa0000000;
+bytes = vf.p;
 i = 8000;
 while (--i >= 0)
 	{
