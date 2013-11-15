@@ -8,6 +8,7 @@
 #include "crop.h"
 #include "macpic.str"
 #include "peekpok_.h"
+#include "rfont.h"
 
 /* fixed width/height of a Macpaint pic */
 #define MW 576

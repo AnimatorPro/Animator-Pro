@@ -7,6 +7,7 @@
 #include "crop.h"
 #include "pcx.str"
 #include "peekpok_.h"
+#include "rfont.h"
 
 struct pcx_header
 	{

@@ -9,6 +9,7 @@
 #include "closest_.h"
 #include "crop.h"
 #include "peekpok_.h"
+#include "rfont.h"
 #include "rgbcmap.str"
 
 extern UBYTE bitmasks[];

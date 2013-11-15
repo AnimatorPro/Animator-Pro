@@ -13,8 +13,8 @@ cel.obj choices.obj cursorda.obj \
 diskerr.obj dosstuff.obj feelmenu.obj \
 filedata.obj filemenu.obj gfx.obj \
 init.obj initcmap.obj input.obj \
-main.obj mmouse.obj names.obj peekpoke.obj rfont.obj \
-scroller.obj seeme.obj seemenu.obj sixhi.obj slider.obj stringq.obj \
+main.obj mmouse.obj names.obj peekpoke.obj \
+scroller.obj seeme.obj seemenu.obj slider.obj stringq.obj \
 wordwrap.obj \
 crop.obj croppull.obj stubs.obj globals.obj pull.obj memory.obj \
 qnumber.obj cpack.obj rgbcmap.obj scale.obj slide.obj \
@@ -37,6 +37,8 @@ foolwcc2.obj summa.obj textbox.obj \
 	..\COMMON\closest_.obj \
 	..\COMMON\comp_.obj    \
 	..\COMMON\peekpok_.obj \
+	..\COMMON\rfont.obj    \
+	..\COMMON\sixhi.obj    \
 	..\COMMON\unbrun_.obj
 
 fast: $(O)

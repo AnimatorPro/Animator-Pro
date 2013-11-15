@@ -9,6 +9,7 @@
 #include "cblock_.h"
 #include "flicmenu.h"
 #include "gemfont.h"
+#include "rfont.h"
 
 extern WORD *mbehind;	/* pointer to what's behind menu */
 

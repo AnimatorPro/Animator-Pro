@@ -8,6 +8,7 @@
 #include "crop.h"
 #include "img.h"
 #include "peekpok_.h"
+#include "rfont.h"
 #include "vision.str"
 
 extern UBYTE *get_hist();

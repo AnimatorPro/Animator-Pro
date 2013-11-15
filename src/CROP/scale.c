@@ -6,6 +6,7 @@
 #include "a2blit_.h"
 #include "crop.h"
 #include "peekpok_.h"
+#include "rfont.h"
 #include "scale.str"
 
 #define WHOLESCALE 256

@@ -7,6 +7,7 @@
 #include "blit8_.h"
 #include "cblock_.h"
 #include "flicmenu.h"
+#include "rfont.h"
 #include "textbox.str"
 
 /* This file does assume non-proportional text.  Here's some constants

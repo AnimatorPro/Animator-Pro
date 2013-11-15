@@ -192,8 +192,6 @@ struct blitblock
 	};
 /* graphics macros */
 #ifndef SLUFF
-#define gtext(s, x, y, color) systext(s,x,y,color,a1blit)
-#define stext(s, x, y, color,color1) systext(s,x,y,color,a2blit,color1)
 #define marqi_frame(x0,y0,x1,y1) \
  some_frame(x0,y0,x1,y1,marqidot, &marqidata)
 #define undo_frame(x0,y0,x1,y1) \

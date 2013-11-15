@@ -7,6 +7,7 @@
 #include "jimk.h"
 #include "a1blit_.h"
 #include "gemfont.h"
+#include "rfont.h"
 #include "text.h"
 
 char *

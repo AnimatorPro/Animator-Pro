@@ -6,6 +6,7 @@
 #include "jimk.h"
 #include "a1blit_.h"
 #include "flicmenu.h"
+#include "rfont.h"
 
 extern gary_menu_back(), gary_see_title(),blacktext(),
 	move_menu(), bottom_menu();
