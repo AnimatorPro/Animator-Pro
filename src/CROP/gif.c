@@ -2,6 +2,7 @@
    write side.  Also decode.c for lower level GIF reading code. */
 
 #include "jimk.h"
+#include "bfile.h"
 #include "crop.h"
 #include "gif.h"
 #include "gif.str"

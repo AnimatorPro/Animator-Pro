@@ -8,22 +8,6 @@
 #endif /* NULL */
 
 extern void *list_el();
-#ifndef SLUFF
-extern long jreadwrite(int f, void *buf, long size, int ah);
-#define jread(f,b,size) jreadwrite(f,b,(long)(size),0x3f)
-#define jwrite(f,b,size) jreadwrite(f,b,(long)(size),0x40)
-
-extern jcreate(char *title), jopen(char *title, int mode);
-extern long jseek(int f, long offset, int mode);
-/* seek modes */
-
-enum JSeekMode {
-	JSEEK_START = 0,
-	JSEEK_REL   = 1,
-	JSEEK_END   = 2
-};
-
-#endif /* SLUFF */
 
 extern void *make_ptr();
 extern void *norm_pointer(), *enorm_pointer();
@@ -286,19 +270,6 @@ extern int render_xmin, render_ymin, render_xmax, render_ymax;
 extern UBYTE *dot_pens[];
 
 extern char menus_up;
-
-/* stuff for my buffered io */
-#define BSIZE 2048
-struct bfile
-	{
-	int fd;
-	int left;
-	UBYTE *buf;
-	UBYTE *filept;
-	long fpos;
-	int writable;
-	};
-typedef struct bfile Bfile;
 
 #define TWOPI 1024
 

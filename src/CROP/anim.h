@@ -1,6 +1,9 @@
 #ifndef ANIM_H
 #define ANIM_H
 
+#include "bfile.h"
+#include "jiff.h"
+
 #ifdef ALLOCATE_GLOBALS
 #define EXTERN 
 #else

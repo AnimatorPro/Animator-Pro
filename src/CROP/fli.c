@@ -7,10 +7,11 @@
 #include "comp_.h"
 #include "fli.h"
 #include "fli.str"
+#include "jfile.h"
 #include "peekpok_.h"
 #include "unbrun_.h"
 
-static int fliin;
+static FILE *fliin;
 static char *fliin_name;
 static int fli_err = -1;
 static struct fli_head inflih;
@@ -94,13 +95,10 @@ not_fli_frame()
 continu_line(fli_101 /* "Bad magic! Not a FLI frame." */);
 }
 
-
-static
-read_fli_head(title, flih)
-char *title;
-struct fli_head *flih;
+static FILE *
+read_fli_head(char *title, struct fli_head *flih)
 {
-int fd;
+FILE *fd;
 
 if ((fd = jopen(title, 0)) == 0)
 	{
@@ -128,7 +126,7 @@ return(fd);
 static
 gb_read_next_frame(fname,fd,fscreen,fliff,colors)
 char *fname;
-int fd;
+FILE *fd;
 Video_form *fscreen;
 struct fli_frame *fliff;
 int colors;

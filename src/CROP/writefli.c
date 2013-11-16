@@ -4,6 +4,7 @@
 #include <fcntl.h>
 #include "jimk.h"
 #include "fli.h"
+#include "jfile.h"
 #include "peekpok_.h"
 
 extern unsigned write(), read();
@@ -11,7 +12,7 @@ extern unsigned write(), read();
 extern char *dcomp(), *run_comp(), *skip_run_comp(), *bcomp(), *bsrcomp(),
 	*sbsccomp(), *sbsrsccomp(), *fccomp(), *lccomp(), *brun();
 
-static int wfli_fd;
+static FILE *wfli_fd;
 static struct fli_head head;
 static char *wfli_name;
 
@@ -90,7 +91,7 @@ long
 fli_save_frame(name,fd,comp_buf,last_screen,
 	last_cmap,this_screen,this_cmap,type)
 char *name;
-int fd;
+FILE *fd;
 char *comp_buf;
 char *last_screen, *last_cmap, *this_screen, *this_cmap;
 WORD type;
@@ -134,7 +135,7 @@ head.type = FLIH_MAGIC;
 head.width = XMAX;
 head.height = YMAX;
 head.bits_a_pixel = 8;
-if (jwrite(wfli_fd, &head, sizeof(head)) < sizeof(head))
+if ((unsigned long)jwrite(wfli_fd, &head, sizeof(head)) < sizeof(head))
 	{
 	truncated(name);
 	return(0);
@@ -162,7 +163,7 @@ if (wfli_fd != 0)
 		success = 0;
 	else
 		{
-		if (jwrite(wfli_fd, &head, sizeof(head)) < sizeof(head))
+		if ((unsigned long)jwrite(wfli_fd, &head, sizeof(head)) < sizeof(head))
 			{
 			truncated(wfli_name);
 			success = 0;

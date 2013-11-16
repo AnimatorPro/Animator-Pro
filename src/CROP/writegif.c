@@ -3,8 +3,10 @@
 
 #include <string.h>
 #include "jimk.h"
+#include "bfile.h"
 #include "crop.h"
 #include "gif.h"
+#include "jfile.h"
 #include "peekpok_.h"
 
 char gifsig[] = "GIF87a";

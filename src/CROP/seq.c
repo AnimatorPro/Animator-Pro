@@ -3,13 +3,14 @@
    frame files much like FLI's on the PC. */
 
 #include "jimk.h"
+#include "jfile.h"
 #include "peekpok_.h"
 #include "seq.h"
 #include "seq.str"
 
 static UBYTE *stscreen;
 static int seq_err = -1;
-static seq_fd;
+static FILE *seq_fd;
 static char *seq_name;
 
 struct seq_header seq_h;
@@ -45,11 +46,10 @@ for (;;)
 	}
 }
 
-open_verify_seq(name, shead)
-char *name;
-struct seq_header *shead;
+static FILE *
+open_verify_seq(char *name, struct seq_header *shead)
 {
-int file;
+FILE *file;
 
 if ((file = jopen(name, 0)) == 0)
 	{

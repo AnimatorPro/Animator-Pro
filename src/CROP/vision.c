@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include "jimk.h"
 #include "a2blit_.h"
+#include "bfile.h"
 #include "crop.h"
 #include "img.h"
 #include "peekpok_.h"

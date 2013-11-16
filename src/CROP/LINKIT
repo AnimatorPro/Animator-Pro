@@ -41,6 +41,7 @@ croppull.obj+
 unrif.obj+
 readrif.obj+
 jfile.obj+
+jfileerr.obj+
 bfile.obj+
 crop.obj+
 comp.obj+

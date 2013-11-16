@@ -9,6 +9,8 @@
 #include "jiff.h"
 #include "anim.h"
 #include "anim.str"
+#include "bfile.h"
+#include "jfile.h"
 #include "peekpok_.h"
 
 #define ANIM_BPR 40
@@ -22,8 +24,7 @@
 
 extern UBYTE sys_cmap[];
 
-
-static load_fd;
+static FILE *load_fd;
 static char *anim_name;
 static PLANEPTR screens[2], cur_screen;
 static int anim_err = -1;
@@ -44,7 +45,7 @@ static
 open_verify_anim(name)
 char *name;
 {
-if ((load_fd = jopen(name, 0)) <= 0)
+if ((load_fd = jopen(name, 0)) == 0)
 	{
 	cant_find(name);
 	return(0);

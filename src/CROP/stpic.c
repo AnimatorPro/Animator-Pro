@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include "jimk.h"
+#include "bfile.h"
 #include "crop.h"
 #include "peekpok_.h"
 #include "seq.h"

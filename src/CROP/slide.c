@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include "jimk.h"
 #include "crop.h"
+#include "jfile.h"
 #include "slide.str"
 
 static int dx, dy, dframes = 50;

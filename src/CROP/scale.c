@@ -4,7 +4,9 @@
 #include <stdio.h>
 #include "jimk.h"
 #include "a2blit_.h"
+#include "bfile.h"
 #include "crop.h"
+#include "jfile.h"
 #include "peekpok_.h"
 #include "rfont.h"
 #include "scale.str"

@@ -59,6 +59,7 @@
 
 #include <setjmp.h>
 #include "jimk.h"
+#include "bfile.h"
 #include "peekpok_.h"
 
 #define LARGEST_CODE	4095

@@ -5,6 +5,7 @@
 #include <string.h>
 #include "jimk.h"
 #include "init.str"
+#include "jfile.h"
 #include "peekpok_.h"
 
 extern int ivmode;
@@ -32,7 +33,7 @@ struct config vconfg;
 
 read_config()
 {
-int f;
+FILE *f;
 
 if ((f = jopen("aa.cfg",0))!= 0)
 	{

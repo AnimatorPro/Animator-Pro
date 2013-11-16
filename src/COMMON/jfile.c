@@ -13,14 +13,46 @@
 #include "jimk.h"
 #include "jfile.h"
 
+int
+jexists(const char *title)
+{
+	FILE *f;
+
+	f = jopen(title, 0);
+	if (f != NULL) {
+		jclose(f);
+		return 1;
+	}
+	else {
+		return 0;
+	}
+}
+
+int
+jdelete(const char *title)
+{
+	return (unlink(title) == 0);
+}
+
 FILE *
-jopen(const char *title, int mode)
+jcreate(const char *title)
+{
+	return jopen(title, JWRITEONLY);
+}
+
+FILE *
+jopen(const char *title, enum JReadWriteMode mode)
 {
 	const char *str;
-	assert(0 <= mode && mode <= 2);
 
-	str = (mode == 0) ? "rb"
-	    : (mode == 1) ? "wb" : "rb+";
+	if (mode == JREADWRITE) {
+		FILE *f = fopen(title, "rb+");
+		if (f != NULL)
+			return f;
+	}
+
+	str = (mode == JREADONLY) ? "rb"
+	    : (mode == JWRITEONLY) ? "wb" : "wb+";
 
 	return fopen(title, str);
 }
@@ -38,26 +70,21 @@ gentle_close(FILE *f)
 		jclose(f);
 }
 
-unsigned int
-jread(FILE *f, void *buf, unsigned int size)
+long
+jread(FILE *f, void *buf, long size)
 {
 	return fread(buf, 1, size, f);
 }
 
-unsigned int
-jwrite(FILE *f, void *buf, unsigned int size)
+long
+jwrite(FILE *f, const void *buf, long size)
 {
 	return fwrite(buf, 1, size, f);
 }
 
 long
-jseek(FILE *f, long offset, int mode)
+jseek(FILE *f, long offset, enum JSeekMode mode)
 {
-	assert(0 <= mode && mode <= 2);
-
-	mode = (mode == 0) ? SEEK_SET
-	     : (mode == 1) ? SEEK_CUR : SEEK_END;
-
 	if (fseek(f, offset, mode) != 0) {
 		return -1;
 	}

@@ -4,6 +4,7 @@
 
 #include "jimk.h"
 #include "amigapic.str"
+#include "bfile.h"
 #include "crop.h"
 #include "jiff.h"
 #include "peekpok_.h"

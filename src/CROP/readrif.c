@@ -6,8 +6,9 @@
 #include <stdio.h>
 #include "jimk.h"
 #include "jiff.h"
-#include "vcomp.h"
+#include "jfile.h"
 #include "readrif.str"
+#include "vcomp.h"
 
 #define RIF_BPR 40
 #define YMAX 200
@@ -20,8 +21,7 @@
 
 extern UBYTE sys_cmap[];
 
-
-static load_fd;
+static FILE *load_fd;
 static char *rif_name;
 static PLANEPTR amiga_screen1;
 static int rif_err = -1;
@@ -36,7 +36,7 @@ static
 open_verify_rif(name)
 char *name;
 {
-if ((load_fd = jopen(name, 0)) <= 0)
+if ((load_fd = jopen(name, 0)) == 0)
 	{
 	cant_find(name);
 	return(0);
