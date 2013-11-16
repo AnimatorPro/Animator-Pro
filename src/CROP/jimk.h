@@ -17,7 +17,7 @@ extern char *clone_string();
 extern char *get_filename();
 extern long get80hz();
 extern void *askmem(), *laskmem();
-extern long pt_to_long(), make_long();
+extern long pt_to_long();
 extern void *long_to_pt();
 extern unsigned mem_free, largest_frag();
 

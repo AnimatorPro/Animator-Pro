@@ -58,14 +58,6 @@ int offset, seg;
 return(seg);
 }
 
-long
-make_long(l)
-long l;
-{
-return(l);
-}
-
-
 void *
 make_ptr(pt)
 void *pt;
