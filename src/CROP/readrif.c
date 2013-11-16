@@ -269,6 +269,6 @@ start_rif()
 if (rif_err)
 	return(0);
 jseek( load_fd, sizeof(riff_h) + (long)riff_h.frame_count*sizeof(long),
-	SEEK_START);	
+	JSEEK_START);
 return(next_rif());
 }

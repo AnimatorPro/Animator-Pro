@@ -209,7 +209,7 @@ start_fli()
 {
 if (fli_err)
 	return(0);
-jseek(fliin, (long)sizeof(struct fli_head), SEEK_START);
+jseek(fliin, (long)sizeof(struct fli_head), JSEEK_START);
 return(next_fli());
 }
 

@@ -158,7 +158,7 @@ int success = 1;
 
 if (wfli_fd != 0)
 	{
-	if (jseek(wfli_fd, 0L, SEEK_START) == -1)
+	if (jseek(wfli_fd, 0L, JSEEK_START) == -1)
 		success = 0;
 	else
 		{

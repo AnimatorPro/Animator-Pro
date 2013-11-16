@@ -17,11 +17,11 @@ extern jcreate(char *title), jopen(char *title, int mode);
 extern long jseek(int f, long offset, int mode);
 /* seek modes */
 
-#define SEEK_START	0
-#define SEEK_REL	1
-#define SEEK_END	2
-
-
+enum JSeekMode {
+	JSEEK_START = 0,
+	JSEEK_REL   = 1,
+	JSEEK_END   = 2
+};
 
 #endif /* SLUFF */
 

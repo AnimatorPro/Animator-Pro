@@ -403,7 +403,7 @@ if (init_pcx_line())
 			{
 			if ((mdbuf = begmem(w)) !=  NULL)
 				{
-				bseek(&pcx_bf, (long)sizeof(pcxh), SEEK_START);
+				bseek(&pcx_bf, (long)sizeof(pcxh), JSEEK_START);
 				for (i=0; i<pch; i++)
 					{
 					if (i%10 == 0)

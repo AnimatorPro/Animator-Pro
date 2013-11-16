@@ -190,7 +190,7 @@ while (fpos < animf_h.fc_length)
 		break;
 		}
 	fpos += sizeof(ff) + ff.fc_length;
-	jseek(load_fd, ff.fc_length-4, SEEK_REL);
+	jseek(load_fd, ff.fc_length-4, JSEEK_REL);
 	frame_count += 1;
 	anim_frame += 1;
 	}
@@ -454,7 +454,7 @@ start_anim()
 {
 if (anim_err)
 	return(0);
-jseek( load_fd, sizeof(animf_h), SEEK_START);	
+jseek( load_fd, sizeof(animf_h), JSEEK_START);
 anim_frame = -1;
 return(next_anim());
 }
