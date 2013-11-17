@@ -486,21 +486,6 @@ for (;;)
 
 do_scale()
 {
-long l;
-extern unsigned mem_free;
-
-/* make sure will have enough memory before go spend 1/2 hour doing it... */
-l = scalew;
-l *= scaleh;
-l += 1000;
-if (pic_cel)
-	l -= (long)pic_cel->w * pic_cel->h;
-if (l >= mem_free*16L)
-	{
-	outta_memory();
-	return;
-	}
-
 switch (intype)
 	{
 	case MAC:
