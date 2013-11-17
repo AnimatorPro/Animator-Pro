@@ -9,13 +9,9 @@
 
 extern void *list_el();
 
-extern void *lbegmem(), *begmem(), *lbegcmem();
-extern void *paskmem();
 extern char *clone_string();
 extern char *get_filename();
 extern long get80hz();
-extern void *askmem(), *laskmem();
-extern unsigned mem_free, largest_frag();
 
 extern void *sort_list();
 extern void *remove_el();

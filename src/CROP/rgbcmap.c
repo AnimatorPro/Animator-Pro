@@ -9,6 +9,7 @@
 #include "bfile.h"
 #include "closest_.h"
 #include "crop.h"
+#include "memory.h"
 #include "peekpok_.h"
 #include "ptr.h"
 #include "rfont.h"

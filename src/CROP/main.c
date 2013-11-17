@@ -8,6 +8,7 @@
 #include "jimk.h"
 #include "flicmenu.h"
 #include "main.str"
+#include "memory.h"
 
 extern int ivmode;
 extern char init_drawer[];

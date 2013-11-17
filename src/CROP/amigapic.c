@@ -7,6 +7,7 @@
 #include "bfile.h"
 #include "crop.h"
 #include "jiff.h"
+#include "memory.h"
 #include "peekpok_.h"
 #include "ptr.h"
 

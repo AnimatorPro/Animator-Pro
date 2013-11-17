@@ -4,6 +4,7 @@
 #include <ctype.h>
 #include <string.h>
 #include "jimk.h"
+#include "memory.h"
 
 /* Force a string to upper case */
 to_upper(s)

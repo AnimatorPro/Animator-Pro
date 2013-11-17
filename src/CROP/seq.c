@@ -4,6 +4,7 @@
 
 #include "jimk.h"
 #include "jfile.h"
+#include "memory.h"
 #include "peekpok_.h"
 #include "seq.h"
 #include "seq.str"

@@ -18,6 +18,8 @@
 #include "crop.str"
 #include "fli.h"
 #include "jfile.h"
+#include "jiff.h"
+#include "memory.h"
 #include "vcomp.h"
 
 int intype;

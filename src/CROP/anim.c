@@ -11,6 +11,7 @@
 #include "anim.str"
 #include "bfile.h"
 #include "jfile.h"
+#include "memory.h"
 #include "peekpok_.h"
 
 #define ANIM_BPR 40

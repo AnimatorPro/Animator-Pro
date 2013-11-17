@@ -5,6 +5,7 @@
 #include "jimk.h"
 #include "bfile.h"
 #include "jfile.h"
+#include "memory.h"
 #include "peekpok_.h"
 
 bclose(bf)

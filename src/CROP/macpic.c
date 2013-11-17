@@ -9,6 +9,7 @@
 #include "crop.h"
 #include "jfile.h"
 #include "macpic.str"
+#include "memory.h"
 #include "peekpok_.h"
 #include "ptr.h"
 #include "rfont.h"

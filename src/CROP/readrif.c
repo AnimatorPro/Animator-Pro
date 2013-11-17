@@ -7,6 +7,7 @@
 #include "jimk.h"
 #include "jiff.h"
 #include "jfile.h"
+#include "memory.h"
 #include "readrif.str"
 #include "vcomp.h"
 

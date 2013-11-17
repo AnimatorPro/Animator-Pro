@@ -5,6 +5,7 @@
    low level assembler drawing primitives count on. */
 
 #include "jimk.h"
+#include "memory.h"
 #include "ptr.h"
 
 free_screen(s)

@@ -6,6 +6,7 @@
 #include "jimk.h"
 #include "init.str"
 #include "jfile.h"
+#include "memory.h"
 #include "peekpok_.h"
 
 extern int ivmode;
