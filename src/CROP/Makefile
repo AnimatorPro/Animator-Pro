@@ -28,7 +28,7 @@ writegif.obj gif.obj decoder.obj comprs.obj \
 fccomp.obj lccomp.obj comp.obj \
 fli.obj writefli.obj \
 screen.obj jfileerr.obj bfile.obj \
-foolwcc2.obj summa.obj textbox.obj \
+summa.obj textbox.obj \
 	..\COMMON\a1blit_.obj  \
 	..\COMMON\a2blit_.obj  \
 	..\COMMON\blit8_.obj   \
@@ -38,6 +38,7 @@ foolwcc2.obj summa.obj textbox.obj \
 	..\COMMON\comp_.obj    \
 	..\COMMON\jfile.obj    \
 	..\COMMON\peekpok_.obj \
+	..\COMMON\ptr.obj      \
 	..\COMMON\rfont.obj    \
 	..\COMMON\sixhi.obj    \
 	..\COMMON\unbrun_.obj

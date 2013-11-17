@@ -6,6 +6,7 @@
 #include "fli.h"
 #include "jfile.h"
 #include "peekpok_.h"
+#include "ptr.h"
 
 extern unsigned write(), read();
 

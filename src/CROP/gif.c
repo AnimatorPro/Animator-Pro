@@ -7,6 +7,7 @@
 #include "gif.h"
 #include "gif.str"
 #include "peekpok_.h"
+#include "ptr.h"
 
 extern struct gif_header gif;
 extern struct gif_image gim;

@@ -14,7 +14,6 @@ dosstuff.obj+
 feelmenu.obj+
 filedata.obj+
 filemenu.obj+
-foolwcc2.obj+
 gfx.obj+
 init.obj+
 initcmap.obj+
@@ -24,6 +23,7 @@ mmouse.obj+
 names.obj+
 peekpoke.obj+
 peekpok_.obj+
+ptr.obj+
 qnumber.obj+
 rfont.obj+
 scroller.obj+

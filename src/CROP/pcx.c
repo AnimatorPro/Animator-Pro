@@ -9,6 +9,7 @@
 #include "jfile.h"
 #include "pcx.str"
 #include "peekpok_.h"
+#include "ptr.h"
 #include "rfont.h"
 
 struct pcx_header

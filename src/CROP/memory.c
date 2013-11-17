@@ -9,6 +9,7 @@
 #include "jimk.h"
 #include "memory.str"
 #include "peekpok_.h"
+#include "ptr.h"
 
 #ifdef NEVER
 #define CHECKIT	/* slow but sure heap */

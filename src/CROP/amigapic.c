@@ -8,6 +8,7 @@
 #include "crop.h"
 #include "jiff.h"
 #include "peekpok_.h"
+#include "ptr.h"
 
 static struct bfile amiga_bf;
 static char *amiga_name;

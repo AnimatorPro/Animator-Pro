@@ -6,6 +6,7 @@
 #include "bfile.h"
 #include "crop.h"
 #include "peekpok_.h"
+#include "ptr.h"
 #include "seq.h"
 #include "stpic.str"
 

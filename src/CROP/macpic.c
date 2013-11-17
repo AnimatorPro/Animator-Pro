@@ -10,6 +10,7 @@
 #include "jfile.h"
 #include "macpic.str"
 #include "peekpok_.h"
+#include "ptr.h"
 #include "rfont.h"
 
 /* fixed width/height of a Macpaint pic */

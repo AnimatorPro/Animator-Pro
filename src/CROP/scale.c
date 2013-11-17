@@ -8,6 +8,7 @@
 #include "crop.h"
 #include "jfile.h"
 #include "peekpok_.h"
+#include "ptr.h"
 #include "rfont.h"
 #include "scale.str"
 

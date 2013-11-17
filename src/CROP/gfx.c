@@ -6,6 +6,7 @@
 #include "jimk.h"
 #include "cblock_.h"
 #include "peekpok_.h"
+#include "ptr.h"
 
 /* a table for RIF and ANIM decompression */
 UWORD ytable[YMAX];

@@ -6,6 +6,7 @@
 #include "jimk.h"
 #include "a2blit_.h"
 #include "blit8_.h"
+#include "ptr.h"
 #include "rfont.h"
 
 free_cel(c)

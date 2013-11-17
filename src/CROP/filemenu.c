@@ -8,6 +8,7 @@
 #include <string.h>
 #include "jimk.h"
 #include "flicmenu.h"
+#include "ptr.h"
 
 static void redraw_fscroller(void);
 extern wait_click();

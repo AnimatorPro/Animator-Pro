@@ -3,6 +3,7 @@
 
 #include <ctype.h>
 #include "jimk.h"
+#include "ptr.h"
 
 extern int device;
 extern char devices[26];

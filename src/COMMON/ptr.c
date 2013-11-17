@@ -13,6 +13,15 @@ void *pt;
 }
 #endif /* make_ptr */
 
+#if !defined(__TURBOC__)
+void *
+enorm_pointer(void *p)
+{
+	intptr_t x = (intptr_t)p;
+	return (void *) ((x + 1) & ~0x1);
+}
+#endif /* __TURBOC__ */
+
 #ifndef ptr_offset
 unsigned int
 ptr_offset(offset, seg)

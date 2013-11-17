@@ -9,6 +9,7 @@
 #include "crop.h"
 #include "img.h"
 #include "peekpok_.h"
+#include "ptr.h"
 #include "rfont.h"
 #include "vision.str"
 

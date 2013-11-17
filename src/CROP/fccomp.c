@@ -2,6 +2,7 @@
 
 #include "jimk.h"
 #include "peekpok_.h"
+#include "ptr.h"
 
 /* fccomp - compress an rgb triples color map just doing 'skip' compression */
 int *

@@ -41,37 +41,3 @@ while (list && --ix>= 0)
 	}
 return(list);
 }
-
-
-/* some pointer manipulation routines for the 8086 */
-unsigned
-ptr_offset(offset, seg)
-int offset, seg;
-{
-return(offset);
-}
-
-unsigned
-ptr_seg(offset, seg)
-int offset, seg;
-{
-return(seg);
-}
-
-void *
-make_ptr(pt)
-void *pt;
-{
-return(pt);
-}
-long 
-pt_to_long(offset, seg)
-unsigned offset, seg;
-{
-long result;
-
-result = seg;
-result <<= 4;
-result += offset;
-return(result);
-}

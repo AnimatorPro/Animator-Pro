@@ -24,4 +24,6 @@ extern void *long_to_pt();
 
 #endif /* __TURBOC__ */
 
+extern void *enorm_pointer(void *p);
+
 #endif
