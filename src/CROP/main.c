@@ -94,23 +94,6 @@ about()
 continu_box(about_lines);
 }
 
-qstatus()
-{
-char *bufs[8];
-char b1[40], b2[40], b3[40];
-extern unsigned mem_free;
-extern unsigned largest_frag();
-
-bufs[0] = main_110 /* "Converter - memory usage" */;
-sprintf(b1, main_111 /* "%ld bytes free" */, mem_free*16L);
-bufs[1] = "";
-bufs[2] = b1;
-sprintf(b2, main_113 /* "%ld largest" */, largest_frag()*16L);
-bufs[3] = b2;
-bufs[4] = NULL;
-continu_box(bufs);
-}
-
 dokeys()
 {
 unsigned char c = key_in;
@@ -199,7 +182,7 @@ switch (m)
 				about();
 				break;
 			case 1:
-				qstatus();
+				/* qstatus(); */
 				break;
 			case 2:
 				qscale();
