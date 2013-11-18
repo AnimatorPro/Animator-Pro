@@ -14,10 +14,8 @@ struct fndata
 	char name[13];
 };
 
-extern char drawer[];
-
 void
-make_path_name(const char *drawer, char *file, const char *suffix,
+make_path_name_suffix(const char *drawer, char *file, const char *suffix,
 		char *path)
 {
 	int len, flen;
@@ -45,7 +43,7 @@ make_path_name(const char *drawer, char *file, const char *suffix,
 }
 
 void
-fs_go_rootdir(void)
+fs_go_rootdir(char *drawer, unsigned int size)
 {
 	if (drawer[1] == ':')
 		strcpy(drawer+2, DIR_SEPARATOR_STR);
@@ -54,7 +52,7 @@ fs_go_rootdir(void)
 }
 
 void
-fs_go_updir(void)
+fs_go_updir(char *drawer)
 {
 	int len = strlen(drawer);
 	char *d = drawer;
@@ -114,7 +112,7 @@ attr_wild_list(int attr, const char *pat, enum FileType type)
 }
 
 void
-fs_build_wild_list(const char *wild)
+fs_build_wild_list(const char *drawer, const char *wild)
 {
 	attr_wild_list(16, "*.*", FILETYPE_DIRECTORY); /* get all directories */
 	attr_wild_list(0, wild, FILETYPE_REGULAR); /* and other files matching wild */

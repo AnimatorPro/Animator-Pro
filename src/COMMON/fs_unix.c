@@ -10,11 +10,6 @@
 #include "jimk.h"
 #include "fs.h"
 
-char devices[26];
-int dev_count;
-
-extern char drawer[71];
-
 int
 change_dev(int newdev)
 {
@@ -41,14 +36,14 @@ get_devices(void)
 }
 
 int
-make_current_drawer(void)
+make_current_drawer(char *drawer, unsigned int size)
 {
-	getcwd(drawer, sizeof(drawer));
+	getcwd(drawer, size);
 	return 0;
 }
 
 void
-make_path_name(const char *drawer, char *file, const char *suffix,
+make_path_name_suffix(const char *drawer, char *file, const char *suffix,
 		char *path)
 {
 	int len;
@@ -74,13 +69,13 @@ make_path_name(const char *drawer, char *file, const char *suffix,
 }
 
 void
-fs_go_rootdir(void)
+fs_go_rootdir(char *drawer, unsigned int size)
 {
-	snprintf(drawer, sizeof(drawer), DIR_SEPARATOR_STR);
+	snprintf(drawer, size, DIR_SEPARATOR_STR);
 }
 
 void
-fs_go_updir(void)
+fs_go_updir(char *drawer)
 {
 	int len = strlen(drawer);
 	char *d = drawer;
@@ -101,7 +96,7 @@ fs_go_updir(void)
 }
 
 void
-fs_build_wild_list(const char *wild)
+fs_build_wild_list(const char *drawer, const char *wild)
 {
 	char pat[1024];
 	glob_t g;

@@ -22,6 +22,8 @@ struct file_list
 };
 typedef struct file_list File_list;
 
+extern char devices[26];
+extern int dev_count;
 extern struct file_list *wild_lst;
 
 /* Function: rtrm */
@@ -45,24 +47,27 @@ extern int change_dir(const char *name);
 /* Function: get_devices */
 extern void get_devices(void);
 
-/* Function: make_current_drawer */
-extern int make_current_drawer(void);
+/* Function: valid_device */
+extern int valid_device(int d);
 
-/* Function: make_path_name */
+/* Function: make_current_drawer */
+extern int make_current_drawer(char *drawer, unsigned int size);
+
+/* Function: make_path_name_suffix */
 extern void
-make_path_name(const char *drawer, char *file, const char *suffix,
+make_path_name_suffix(const char *drawer, char *file, const char *suffix,
 		char *path);
 
 /* Function: fs_go_rootdir */
-extern void fs_go_rootdir(void);
+extern void fs_go_rootdir(char *drawer, unsigned int size);
 
 /* Function: fs_go_updir */
-extern void fs_go_updir(void);
+extern void fs_go_updir(char *drawer);
 
 /* Function: add_wild */
 extern void add_wild(const char *path, enum FileType type);
 
 /* Function: fs_build_wild_list */
-extern void fs_build_wild_list(const char *wild);
+extern void fs_build_wild_list(const char *drawer, const char *wild);
 
 #endif

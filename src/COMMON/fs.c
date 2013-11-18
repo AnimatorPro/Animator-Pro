@@ -7,6 +7,8 @@
 #include "jimk.h"
 #include "fs.h"
 
+char devices[26];
+int dev_count;
 struct file_list *wild_lst;
 
 /* compare two strings ignoring case */
@@ -36,6 +38,18 @@ suffix_in(const char *string, const char *suff)
 {
 	string += strlen(string) - strlen(suff);
 	return (ustrcmp(string, suff) == 0);
+}
+
+int
+valid_device(int d)
+{
+	int i;
+
+	for (i = 0; i < dev_count; i++) {
+		if (devices[i] == d)
+			return 1;
+	}
+	return 0;
 }
 
 void
