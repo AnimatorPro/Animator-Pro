@@ -43,8 +43,7 @@ make_current_drawer(char *drawer, unsigned int size)
 }
 
 void
-make_path_name_suffix(const char *drawer, char *file, const char *suffix,
-		char *path)
+make_path_name(const char *drawer, char *file, char *path)
 {
 	int len;
 
@@ -60,12 +59,7 @@ make_path_name_suffix(const char *drawer, char *file, const char *suffix,
 		}
 	}
 
-	rtrm(file, strlen(file));
 	strcat(path, file);
-	if (suffix[0] == '.' && suffix[1] != '*') {
-		if (!suffix_in(file, suffix))
-			strcat(path, suffix);
-	}
 }
 
 void

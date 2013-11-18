@@ -428,9 +428,4 @@ struct vsettings
 typedef struct vsettings Vsettings;
 extern Vsettings vs, default_vs;
 
-extern long dfree(int device);
-
-extern char devices[26];
-extern int dev_count;
-
 #endif

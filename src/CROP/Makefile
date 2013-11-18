@@ -36,6 +36,8 @@ summa.obj textbox.obj \
 	..\COMMON\cblock_.obj  \
 	..\COMMON\closest_.obj \
 	..\COMMON\comp_.obj    \
+	..\COMMON\fs.obj       \
+	..\COMMON\fs_dos.obj   \
 	..\COMMON\jfile.obj    \
 	..\COMMON\peekpok_.obj \
 	..\COMMON\ptr.obj      \

@@ -26,9 +26,6 @@ extern char devices[26];
 extern int dev_count;
 extern struct file_list *wild_lst;
 
-/* Function: rtrm */
-extern void rtrm(char *s, int i);
-
 /* Function: suffix_in
  *
  *  See if string ends with suff.
@@ -52,6 +49,9 @@ extern int valid_device(int d);
 
 /* Function: make_current_drawer */
 extern int make_current_drawer(char *drawer, unsigned int size);
+
+/* Function: make_path_name */
+extern void make_path_name(const char *drawer, char *file, char *path);
 
 /* Function: make_path_name_suffix */
 extern void

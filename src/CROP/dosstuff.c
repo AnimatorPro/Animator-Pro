@@ -3,11 +3,10 @@
 
 #include <ctype.h>
 #include "jimk.h"
+#include "fs.h"
 #include "ptr.h"
 
-extern int device;
-extern char devices[26];
-extern int dev_count;
+extern WORD device;
 
 change_dev(newdev)
 int newdev;
@@ -22,8 +21,8 @@ return(!(sysint(0x21,&r,&r)&1) );
 /* Hey dos - I want to go to this directory.  Actually this changes
    both device and directory at once.  eg name could be
    		C:\VPAINT\FISHIES  */
-change_dir(name)
-char *name;
+int
+change_dir(const char *name)
 {
 union regs r;
 int d;
@@ -70,15 +69,13 @@ if (sysint(0x21,&reg,&reg)&1)	/* check carry flag for error... */
 return(reg.b.al);
 }
 
-char devices[26];
-int dev_count;
-
 /* get list of devices we believe to be real (for drive buttons on
    browse menu and other uses) by doing a request for info DOS call
    on each letter of the alphabet.  Since this is a little slow on 
    floppies, we consult the BIOS equipment list for a count of # of
    floppies to fill in the potential A: and B: buttons. */
-get_devices()
+void
+get_devices(void)
 {
 int i, floppies;
 int od;
@@ -118,20 +115,22 @@ for (i=3; i<=26; i++)
 	}
 }
 
-valid_device(d)
-int d;
+mcurrent_drawer()
 {
-int i;
+union regs reg;
+char buf[65];
 
-for (i=0; i<dev_count; i++)
-	{
-	if (devices[i] == d)
-		return(1);
-	}
-return(0);
+if ((device = get_device()) < 0)
+	return(0);
+reg.b.ah = 0x47;
+reg.b.dl = 0;	/* default device ... */
+reg.b.si = ptr_offset(buf);
+reg.b.ds = ptr_seg(buf);
+if (sysint(0x21, &reg, &reg)&1)	/* check carry for error */
+	return(0);
+sprintf(vs.drawer,"%c:\\%s", device+'A', buf);
+return(1);
 }
-
-
 
 extern char init_drawer[];
 

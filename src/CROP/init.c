@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "jimk.h"
+#include "fs.h"
 #include "init.str"
 #include "jfile.h"
 #include "memory.h"
@@ -69,7 +70,7 @@ if (r.b.al != 0x13)
 	}
 if (!init_mem())
 	return(0);
-make_current_drawer();
+make_current_drawer(vs.drawer, sizeof(vs.drawer));
 strcpy(init_drawer, vs.drawer);
 if (!init_input())
 	return(0);
