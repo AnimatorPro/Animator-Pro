@@ -3,8 +3,9 @@
    VGA file selector. */
 
 #include "jimk.h"
-#include "flicmenu.h"
 #include "filedata.str"
+#include "flicmenu.h"
+#include "fs.h"
 
 extern bwtext(), text_boxp1(), print_list(),
 	undo_drawer(), undo_file(), fsel_name(), fq_ok(), new_dev(),
@@ -262,11 +263,11 @@ struct flicmenu rootdir_sel =
 	&fdev2_sel,
 	NOCHILD,
 	105+F8K, 130, 16, 12,
-	"\\",
+	DIR_SEPARATOR_STR,
 	ccorner_text,
 	go_rootdir,
 	NOGROUP, 0,
-	'\\',
+	DIR_SEPARATOR_CHAR,
 	NOOPT,
 	0, 0
 	};
