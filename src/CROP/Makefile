@@ -1,52 +1,87 @@
+CC := gcc
+CFLAGS := -W -I. -I../COMMON
+LDFLAGS :=
+LDLIBS := -lSDL
 
+all: crop
 
-CFLAGS= -O -w-par -wstv -c -ml -I$(INCLUDE) -d -I. -I..\COMMON
+OBJS := main.o     \
+	amigapic.o \
+	anim.o     \
+	bfile.o    \
+	blit.o     \
+	brush.o    \
+	cel.o      \
+	choices.o  \
+	comprs.o   \
+	cpack.o    \
+	crop.o     \
+	croppull.o \
+	cursorda.o \
+	decoder.o  \
+	fccomp.o   \
+	feelmenu.o \
+	filedata.o \
+	filemenu.o \
+	fli.o      \
+	gfx.o      \
+	gif.o      \
+	globals.o  \
+	init.o     \
+	initcmap.o \
+	input.o    \
+	sys_sdl.o  \
+	jfileerr.o \
+	lccomp.o   \
+	macpic.o   \
+	main.o     \
+	memory.o   \
+	names.o    \
+	pcx.o      \
+	pull.o     \
+	qnumber.o  \
+	readrif.o  \
+	rgbcmap.o  \
+	scale.o    \
+	screen.o   \
+	scroller.o \
+	seeme.o    \
+	seemenu.o  \
+	seq.o      \
+	slide.o    \
+	slider.o   \
+	stpic.o    \
+	stringq.o  \
+	stubs.o    \
+	sys_sdl.o  \
+	textbox.o  \
+	unrif.o    \
+	vision.o   \
+	wordwrap.o \
+	writefli.o \
+	writegif.o \
+	$(addprefix ../COMMON/, \
+	a1blit_.o  \
+	a2blit_.o  \
+	blit8_.o   \
+	cblock_.o  \
+	clipit_.o  \
+	closest_.o \
+	comp_.o    \
+	fs.o       \
+	fs_unix.o  \
+	io_sdl.o   \
+	jfile.o    \
+	peekpok_.o \
+	ptr.o      \
+	rfont.o    \
+	sixhi.o    \
+	unbrun_.o  \
+	)
 
-.c.obj:
-	tcc $(CFLAGS) $*.c
-.asm.obj:
-	tasm /Ml $*.asm;
+crop: $(OBJS)
+	$(CC) $(LDFLAGS) -o $@ $^ $(LDLIBS)
 
-
-O= blit.obj brush.obj \
-cel.obj choices.obj cursorda.obj \
-diskerr.obj dosstuff.obj feelmenu.obj \
-filedata.obj filemenu.obj gfx.obj \
-init.obj initcmap.obj input.obj \
-main.obj mmouse.obj names.obj peekpoke.obj \
-scroller.obj seeme.obj seemenu.obj slider.obj stringq.obj \
-wordwrap.obj \
-crop.obj croppull.obj stubs.obj globals.obj pull.obj memory.obj \
-qnumber.obj cpack.obj rgbcmap.obj scale.obj slide.obj \
-amigapic.obj unrif.obj readrif.obj \
-seq.obj stpic.obj \
-pcx.obj \
-vision.obj \
-macpic.obj \
-anim.obj \
-writegif.obj gif.obj decoder.obj comprs.obj \
-fccomp.obj lccomp.obj comp.obj \
-fli.obj writefli.obj \
-screen.obj jfileerr.obj bfile.obj \
-summa.obj textbox.obj \
-	..\COMMON\a1blit_.obj  \
-	..\COMMON\a2blit_.obj  \
-	..\COMMON\blit8_.obj   \
-	..\COMMON\clipit_.obj  \
-	..\COMMON\cblock_.obj  \
-	..\COMMON\closest_.obj \
-	..\COMMON\comp_.obj    \
-	..\COMMON\fs.obj       \
-	..\COMMON\fs_dos.obj   \
-	..\COMMON\jfile.obj    \
-	..\COMMON\peekpok_.obj \
-	..\COMMON\ptr.obj      \
-	..\COMMON\rfont.obj    \
-	..\COMMON\sixhi.obj    \
-	..\COMMON\unbrun_.obj
-
-fast: $(O)
-	tlink $(LIB)c0l @linkit, crop, crop, $(LIB)cl
-
-overlay: $(O)
-	plink86 file $(LIB)c0l lib $(LIB)cl @crop.lnk
+.PHONY: clean
+clean:
+	$(RM) crop $(OBJS)

@@ -5,6 +5,7 @@
 #include "jimk.h"
 #include "a1blit_.h"
 #include "blit8_.h"
+#include "io_.h"
 
 /* These variable contain the global input state */
 WORD uzx,uzy;	/* unzoomed xy */
@@ -16,25 +17,11 @@ WORD key_in;
 WORD firstx, firsty;
 WORD mouse_on = 1;
 
-#define ZEROFLAG	64
-static WORD mscale = 4;
-WORD umouse_x, umouse_y;	/* unscaled mousexy */
-
-
 /* wait until start of vertical blank */
 wait_sync()
 {
 wait_novblank();
 wait_vblank();
-}
-
-
-long
-get80hz()
-{
-extern long clock();	/* turbo C clock call */
-
-return(clock()*4);
 }
 
 wait_a_jiffy(j)
@@ -49,16 +36,6 @@ for (;;)
 		break;
 	}
 }
-
-init_input()
-{
-if (vconfg.dev_type == 1)
-	return(init_summa());
-else
-	return(init_mouse());
-}
-
-
 
 char umouse[256];	/* buffer to hold pixels behind the mouse cursor */
 static WORD sx, sy;	/* xy position of saved buffer */
@@ -110,7 +87,7 @@ a1blit(16, 16, 0, 0, white_cursor, 2, sx, sy, vf.p,
 
 #define dcursor() {scursor();ccursor();}
 
-static char reuse;
+char reuse;
 
 /* set flag to reuse current input */
 reuse_input()
@@ -118,75 +95,13 @@ reuse_input()
 reuse = 1;
 }
 
-/* Record the mouse/keyboard input state in the variables uzx, uzy,
-   key_hit, key_in, and mouse_button.  (uzx is for un-zoomed-x ... not
-   really a good name.  Used to be mouse_x, mouse_y, but then things
-   got complicated in vpaint with input macros, zoom, grid-lock etc.) */
-c_input()
-{
-union regs r;
-
-if (reuse)
-	{
-	reuse = 0;
-	return;
-	}
-
-lastx = uzx;
-lasty = uzy;
-
-/* poll keyboard */
-key_hit = 0;
-r.b.ah = 0x1;
-if (!(sysint(0x16,&r,&r)&ZEROFLAG))
-	{
-	key_hit = 1;
-	r.b.ah = 0;
-	sysint(0x16,&r,&r);
-	key_in = r.w.ax;
-	}
-
-omouse_button = mouse_button;
-/* poll pointing device */
-if (vconfg.dev_type == 1)
-	c_summa();
-else
-	c_mouse();
-
-/* clip unscaled mouse position and set scaled mouse_x and mouse_y */
-if (umouse_x < 0)
-	umouse_x = 0;
-if (umouse_x > 319*mscale)
-	umouse_x = 319*mscale;
-if (umouse_y < 0)
-	umouse_y = 0;
-if (umouse_y > 199*mscale)
-	umouse_y = 199*mscale;
-uzx = (umouse_x/mscale);
-uzy = (umouse_y/mscale);
-mouse_moved = 0;
-if (!(uzx == lastx && uzy == lasty))
-	{
-	mouse_moved = 1;
-	if (mouse_on)
-		{
-		ucursor();
-		dcursor();
-		}
-	}
-if (mouse_button != omouse_button)
-	{
-	mouse_moved = 1;
-	}
-}
-
-
 #ifdef SLUFFED
 /* Go grab next input (mouse & keyboard).  Don't wait for anything if
    it's not already there */
 check_input()
 {
 dcursor();
+flip_video();
 c_input();
 ucursor();
 }
@@ -198,6 +113,7 @@ vsync_input(count)
 WORD count;
 {
 dcursor();
+flip_video();
 while (--count >= 0)
 	{
 	wait_sync();
@@ -212,6 +128,7 @@ ucursor();
 wait_input()
 {
 dcursor();
+flip_video();
 for (;;)
 	{
 	c_input();
@@ -225,6 +142,7 @@ ucursor();
 wait_penup()
 {
 dcursor();
+flip_video();
 for (;;)
 	{
 	if (!PDN)
@@ -239,6 +157,7 @@ ucursor();
 wait_rup()
 {
 dcursor();
+flip_video();
 for (;;)
 	{
 	if (!RDN)
@@ -253,6 +172,7 @@ ucursor();
 wait_click()
 {
 dcursor();
+flip_video();
 for (;;)
 	{
 	c_input();

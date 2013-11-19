@@ -7,10 +7,11 @@
 #include <stdlib.h>
 #include "jimk.h"
 #include "flicmenu.h"
+#include "io_.h"
 #include "main.str"
 #include "memory.h"
+#include "sys.h"
 
-extern int ivmode;
 extern char init_drawer[];
 extern char *get_filename(char *prompt, char *suffix);
 
@@ -47,22 +48,6 @@ for (;;)
 		}
 	}
 }
-
-/* set old video mode */
-old_video()
-{
-union regs r;
-r.b.ah = 0;
-r.b.al = ivmode;
-sysint(0x10,&r,&r);
-}
-
-cleanup()
-{
-change_dir(init_drawer);
-old_video();
-}
-
 
 quit()
 {

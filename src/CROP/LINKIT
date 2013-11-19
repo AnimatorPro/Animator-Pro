@@ -20,6 +20,7 @@ gfx.obj+
 init.obj+
 initcmap.obj+
 input.obj+
+io_dos.obj+
 main.obj+
 mmouse.obj+
 names.obj+
@@ -35,6 +36,7 @@ sixhi.obj+
 slider.obj+
 stringq.obj+
 stubs.obj+
+sys_dos.obj+
 textbox.obj+
 wordwrap.obj+
 memory.obj+

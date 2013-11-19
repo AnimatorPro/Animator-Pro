@@ -4,7 +4,7 @@
 
 #include "jimk.h"
 #include "flicmenu.h"
-
+#include "io_.h"
 
 Flicmenu *cur_menu;	/* pointer to current menu */
 extern WORD *abehind;

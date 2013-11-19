@@ -11,7 +11,6 @@ extern void *list_el();
 
 extern char *clone_string();
 extern char *get_filename();
-extern long get80hz();
 
 extern void *sort_list();
 extern void *remove_el();
@@ -109,18 +108,6 @@ extern PLANEPTR brushcursor;
 #define RJSTDN ( (mouse_button & 0x2) && !(omouse_button & 0x2) )
 
 extern WORD firstx, firsty;
-
-/* Arrow key definitions */
-#define PAGEUP  0x4900
-#define PAGEDN  0x5100
-#define ENDKEY  0x4f00
-#define HOMEKEY 0x4700
-#define DELKEY  0x5300
-#define LARROW	0x4b00
-#define RARROW	0x4d00
-#define UARROW	0x4800
-#define DARROW	0x5000
-
 
 extern int brush_ix, *brushes[];
 
