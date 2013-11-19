@@ -15,7 +15,8 @@ extern bwtext(), text_boxp1(), print_list(),
 	ccorner_text(), blacktext(),
 	ccorner_cursor(), fq_toggle_wild(), fq_wild_stringq(),
 	gary_see_title(), dcorner_text(),
-	see_string_req(), text_box(), gary_menu_back(), close_menu();
+	see_string_req(), see_path_string_req(),
+	text_box(), gary_menu_back(), close_menu();
 
 extern wtext(), fincup(), fincdown(), ffeelscroll(), see_scroll();
 extern struct cursor ctriup, ctridown;
@@ -283,7 +284,7 @@ struct flicmenu fwild_sel =
 	NOCHILD,
 	193+58-8, 128+2*16, 11*6+4, 12,
 	(char *)&wild_stringq,
-	see_string_req,
+	see_path_string_req,
 	fq_wild_stringq,
 	NOGROUP, 0,
 	NOKEY,
@@ -317,7 +318,7 @@ struct flicmenu fdrawer_sel =
 	NOCHILD,
 	193+28-8, 128+16, 16*6+4, 12,
 	(char *)&drawer_stringq,
-	see_string_req,
+	see_path_string_req,
 	fq_drawer_stringq,
 	NOGROUP, 0,
 	NOKEY,
@@ -349,7 +350,7 @@ struct flicmenu ffile_sel =
 	NOCHILD,
 	193+34-8, 128, 15*6+4, 12,
 	(char *)&file_stringq,
-	see_string_req,
+	see_path_string_req,
 	type_file_name,
 	NOGROUP, 0,
 	NOKEY,
