@@ -60,6 +60,8 @@ while ((name = *names++) != NULL)
 	{
 	height += LINE_HEIGHT;
 	this_width = CHAR_WIDTH*strlen(name);
+	if (this_width > XMAX - 2 * BORDER)
+		this_width = XMAX - 2 * BORDER;
 	if (this_width > width)
 		width = this_width;
 	}
@@ -115,7 +117,7 @@ xoff = box.MinX + BORDER;
 yoff = box.MinY + BORDER;
 while ((name = *names++) != NULL) 
 	{
-	gtext(name, xoff, yoff, sblack);
+	systext_clip(box.MaxX - box.MinX - 2 * BORDER, name, xoff, yoff, sblack);
 	yoff += LINE_HEIGHT;
 	}
 return (yoff);
