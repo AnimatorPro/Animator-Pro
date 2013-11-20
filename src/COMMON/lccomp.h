@@ -4,12 +4,12 @@
 #include "jimk.h"
 
 /* Function: lccomp */
-extern unsigned int *
-lccomp(const char *s1, const char *s2, unsigned int *cbuf,
+extern UWORD *
+lccomp(const char *s1, const char *s2, UWORD *cbuf,
 		unsigned int width, unsigned int height);
 
 /* Function: brun */
-extern unsigned int *
-brun(const char *s1, const char *s2, int *cbuf, int width, int height);
+extern UWORD *
+brun(const char *s1, const char *s2, WORD *cbuf, int width, int height);
 
 #endif

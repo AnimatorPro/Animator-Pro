@@ -5,8 +5,8 @@
 #include "peekpok_.h"
 #include "ptr.h"
 
-int *
-fccomp(const char *s1, const char *s2, unsigned int *cbuf, unsigned int count)
+UWORD *
+fccomp(const char *s1, const char *s2, UWORD *cbuf, unsigned int count)
 {
 unsigned wcount, i;
 char *c;
@@ -21,10 +21,10 @@ unsigned c3;
 c = (char *)(cbuf+1);
 op_count = 0;
 count *= 3;
-wcount = fcompare(s1, s2, count>>1);
+wcount = fcompare((UWORD *)s1, (UWORD *)s2, count>>1);
 wcount <<= 1;
 if (wcount == count)
-	return((int *)c);	/* stupid way to say got nothing... */
+	return (UWORD *)c; /* stupid way to say got nothing... */
 for (;;)
 	{
 	/* first find out how many words to skip... */
@@ -83,5 +83,5 @@ for (;;)
 	}
 OUT:
 *cbuf = op_count;
-return(enorm_pointer(c));
+return (UWORD *)enorm_pointer(c);
 }

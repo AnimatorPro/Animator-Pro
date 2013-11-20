@@ -167,8 +167,8 @@ OUT:
 return(norm_pointer(c));
 }
 
-unsigned int *
-lccomp(const char *s1, const char *s2, unsigned int *cbuf,
+UWORD *
+lccomp(const char *s1, const char *s2, UWORD *cbuf,
 		unsigned int width, unsigned int height)
 {
 int skip_count, lcount, j;
@@ -185,7 +185,7 @@ skip_count = 0;
 total = 0;
 while (--j >= 0)
 	{
-	if (fcompare(s1, s2, acc) != acc)
+	if (fcompare((UWORD *)s1, (UWORD *)s2, acc) != acc)
 		break;
 	s1 += width;
 	s2 += width;
@@ -204,7 +204,7 @@ last_real = 0;	/* keep track of last moving line */
 for (j=1; j<=height;j++)
 	{
 	oc = c;
-	if (fcompare(s1,s2,acc) == acc)	/* whole line is the same */
+	if (fcompare((UWORD *)s1, (UWORD *)s2, acc) == acc) /* whole line is the same */
 		{
 		*c++ = 0;	/* set op count to 0 */
 		}
@@ -223,11 +223,11 @@ for (j=1; j<=height;j++)
    from buffer */
 *cbuf = last_real;
 c -= height-last_real;
-return(enorm_pointer(c));
+return (UWORD *)enorm_pointer(c);
 }
 
-unsigned int *
-brun(const char *s1, const char *s2, int *cbuf,
+UWORD *
+brun(const char *s1, const char *s2, WORD *cbuf,
 		int width, int height)
 {
 register char *c;
@@ -245,5 +245,5 @@ while (--height >= 0)
 		return(NULL);
 	s1 += width;
 	}
-return(enorm_pointer(c));
+return (UWORD *)enorm_pointer(c);
 }

@@ -7,7 +7,7 @@
  *
  *  Compress an rgb triples color map just doing 'skip' compression.
  */
-extern int *
-fccomp(const char *s1, const char *s2, unsigned int *cbuf, unsigned int count);
+extern UWORD *
+fccomp(const char *s1, const char *s2, UWORD *cbuf, unsigned int count);
 
 #endif
