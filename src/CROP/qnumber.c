@@ -19,7 +19,7 @@ struct stringq qstring_stringq =
 	2, 2, 7, 10, 0, qstring, NULL, 0, 0,
 	};
 
-int qnum;
+static WORD qnum;
 
 struct qslider qnu_slider = 
 	{
