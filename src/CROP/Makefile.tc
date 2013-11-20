@@ -25,13 +25,15 @@ vision.obj \
 macpic.obj \
 anim.obj \
 writegif.obj gif.obj decoder.obj comprs.obj \
-fccomp.obj lccomp.obj comp.obj \
+comp.obj \
 fli.obj writefli.obj \
 screen.obj jfileerr.obj bfile.obj \
 summa.obj textbox.obj sys_dos.obj \
 	..\COMMON\a1blit_.obj  \
 	..\COMMON\a2blit_.obj  \
 	..\COMMON\blit8_.obj   \
+	..\COMMON\fccomp.obj   \
+	..\COMMON\lccomp.obj   \
 	..\COMMON\clipit_.obj  \
 	..\COMMON\cblock_.obj  \
 	..\COMMON\closest_.obj \

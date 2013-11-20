@@ -3,15 +3,14 @@
 
 #include <fcntl.h>
 #include "jimk.h"
+#include "fccomp.h"
 #include "fli.h"
 #include "jfile.h"
+#include "lccomp.h"
 #include "peekpok_.h"
 #include "ptr.h"
 
 extern unsigned write(), read();
-
-extern char *dcomp(), *run_comp(), *skip_run_comp(), *bcomp(), *bsrcomp(),
-	*sbsccomp(), *sbsrsccomp(), *fccomp(), *lccomp(), *brun();
 
 static FILE *wfli_fd;
 static struct fli_head head;

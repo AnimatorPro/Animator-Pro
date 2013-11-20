@@ -19,7 +19,6 @@ OBJS := main.o     \
 	croppull.o \
 	cursorda.o \
 	decoder.o  \
-	fccomp.o   \
 	feelmenu.o \
 	filedata.o \
 	filemenu.o \
@@ -32,7 +31,6 @@ OBJS := main.o     \
 	input.o    \
 	sys_sdl.o  \
 	jfileerr.o \
-	lccomp.o   \
 	macpic.o   \
 	main.o     \
 	memory.o   \
@@ -68,10 +66,12 @@ OBJS := main.o     \
 	clipit_.o  \
 	closest_.o \
 	comp_.o    \
+	fccomp.o   \
 	fs.o       \
 	fs_unix.o  \
 	io_sdl.o   \
 	jfile.o    \
+	lccomp.o   \
 	peekpok_.o \
 	ptr.o      \
 	rfont.o    \

@@ -4,22 +4,20 @@
    for incorporation into a FLI file.  See also writefli.c */
 
 
-#include "jimk.h"
+#include "lccomp.h"
 #include "peekpok_.h"
 #include "ptr.h"
 
 #define MAX_RUN 127
 
-char *
-brun_comp_line(s1, cbuf, count)
-char *s1, *cbuf;
-int count;
+static char *
+brun_comp_line(const char *s1, char *cbuf, int count)
 {
 int wcount;
 register char *c;
 register int bcount;
 int op_count;
-char *start_dif;
+const char *start_dif;
 int dif_count;
 int same_count;
 
@@ -77,10 +75,8 @@ for (;;)
 
 #define INERTIA 4
 
-char *
-sbrc_line(s1, s2, cbuf, count)
-char *s1, *s2, *cbuf;
-int count;
+static char *
+sbrc_line(const char *s1, const char *s2, char *cbuf, int count)
 {
 register int wcount;
 int i;
@@ -171,10 +167,9 @@ OUT:
 return(norm_pointer(c));
 }
 
-unsigned *
-lccomp(s1,s2,cbuf,width,height)
-char *s1, *s2;
-unsigned *cbuf, width, height;
+unsigned int *
+lccomp(const char *s1, const char *s2, unsigned int *cbuf,
+		unsigned int width, unsigned int height)
 {
 int skip_count, lcount, j;
 char *c;
@@ -231,11 +226,9 @@ c -= height-last_real;
 return(enorm_pointer(c));
 }
 
-
-unsigned *
-brun(s1,s2,cbuf,width,height)
-char *s1, *s2;
-int *cbuf, width, height;
+unsigned int *
+brun(const char *s1, const char *s2, int *cbuf,
+		int width, int height)
 {
 register char *c;
 char *oc;
@@ -254,4 +247,3 @@ while (--height >= 0)
 	}
 return(enorm_pointer(c));
 }
-
