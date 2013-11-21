@@ -223,6 +223,10 @@ for (j=1; j<=height;j++)
    from buffer */
 *cbuf = last_real;
 c -= height-last_real;
+
+if (((intptr_t)c) & 1)
+	*c = '\0';
+
 return (UWORD *)enorm_pointer(c);
 }
 
@@ -245,5 +249,9 @@ while (--height >= 0)
 		return(NULL);
 	s1 += width;
 	}
+
+if (((intptr_t)c) & 1)
+	*c = '\0';
+
 return (UWORD *)enorm_pointer(c);
 }

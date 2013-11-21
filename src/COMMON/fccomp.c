@@ -83,5 +83,9 @@ for (;;)
 	}
 OUT:
 *cbuf = op_count;
+
+if (((intptr_t)c) & 1)
+	*c = '\0';
+
 return (UWORD *)enorm_pointer(c);
 }

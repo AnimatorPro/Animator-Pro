@@ -3,6 +3,8 @@
 
 #if defined(__TURBOC__)
 
+typedef long intptr_t;
+
 extern void *make_ptr();
 extern void *norm_pointer(void *p);
 extern unsigned int ptr_offset();
