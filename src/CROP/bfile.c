@@ -3,6 +3,9 @@
    slightly different parameter conventions. */
 
 #include "jimk.h"
+#include "bfile.h"
+#include "jfile.h"
+#include "memory.h"
 #include "peekpok_.h"
 
 bclose(bf)
@@ -87,12 +90,12 @@ int mode;	/* 0 for from start, 2 for from end.  Won't work for relative */
 {
 switch (mode)
 	{
-	case SEEK_START:
-	case SEEK_END:
+	case JSEEK_START:
+	case JSEEK_END:
 		bflush(bf);
 		bf->fpos = jseek(bf->fd,offset,mode);
 		break;
-	case SEEK_REL:
+	case JSEEK_REL:
 		if (offset >= 0 && offset < bf->left)
 			{
 			bf->fpos += offset;
@@ -103,7 +106,7 @@ switch (mode)
 			{
 			bf->fpos += offset;
 			bf->left = 0;
-			jseek(bf->fd, bf->fpos, SEEK_START);
+			jseek(bf->fd, bf->fpos, JSEEK_START);
 			}
 		break;
 	}

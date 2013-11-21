@@ -3,6 +3,8 @@
 
 #if defined(__TURBOC__)
 
+typedef long intptr_t;
+
 extern void *make_ptr();
 extern void *norm_pointer(void *p);
 extern unsigned int ptr_offset();
@@ -23,5 +25,7 @@ extern void *long_to_pt();
 #define long_to_pt(x)   ((void *)(x))
 
 #endif /* __TURBOC__ */
+
+extern void *enorm_pointer(void *p);
 
 #endif

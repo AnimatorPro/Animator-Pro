@@ -2,11 +2,17 @@
 /* macpic.c - Go cope with a MacPaint Pic.  It's a hi-res goodie.   We'll
    probably keep it as a bit-plane until someone wants to scale it. */
 
+#include <stdio.h>
 #include "jimk.h"
 #include "a2blit_.h"
+#include "bfile.h"
 #include "crop.h"
+#include "jfile.h"
 #include "macpic.str"
+#include "memory.h"
 #include "peekpok_.h"
+#include "ptr.h"
+#include "rfont.h"
 
 /* fixed width/height of a Macpaint pic */
 #define MW 576

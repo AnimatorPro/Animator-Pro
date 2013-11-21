@@ -14,16 +14,19 @@ dosstuff.obj+
 feelmenu.obj+
 filedata.obj+
 filemenu.obj+
-foolwcc2.obj+
+fs.obj+
+fs_dos.obj+
 gfx.obj+
 init.obj+
 initcmap.obj+
 input.obj+
+io_dos.obj+
 main.obj+
 mmouse.obj+
 names.obj+
 peekpoke.obj+
 peekpok_.obj+
+ptr.obj+
 qnumber.obj+
 rfont.obj+
 scroller.obj+
@@ -33,6 +36,7 @@ sixhi.obj+
 slider.obj+
 stringq.obj+
 stubs.obj+
+sys_dos.obj+
 textbox.obj+
 wordwrap.obj+
 memory.obj+
@@ -41,6 +45,7 @@ croppull.obj+
 unrif.obj+
 readrif.obj+
 jfile.obj+
+jfileerr.obj+
 bfile.obj+
 crop.obj+
 comp.obj+

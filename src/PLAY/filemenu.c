@@ -24,8 +24,8 @@ extern Name_scroller fscroller;
 
 extern Stringq drawer_stringq, file_stringq, wild_stringq;
 
-extern char und_drawer[], wild[], drawer[], file[];
-
+extern char und_drawer[], wild[], file[];
+extern char drawer[71];
 
 WORD fscroller_top;
 Vector redisplay_drawer;	/* helps share code with browse.c */
@@ -57,7 +57,7 @@ if (m->text)
 	change_mode(m);
 	if (change_dev(device))
 		{
-		make_current_drawer();
+		make_current_drawer(drawer, sizeof(drawer));
 		(*redisplay_drawer)();
 		}
 	}
@@ -70,7 +70,7 @@ go_rootdir(m)
 Flicmenu *m;
 {
 hilight(m);
-fs_go_rootdir();
+fs_go_rootdir(drawer, sizeof(drawer));
 (*redisplay_drawer)();
 draw_sel(m);
 }
@@ -80,7 +80,7 @@ go_updir(m)
 Flicmenu *m;
 {
 hilight(m);
-fs_go_updir();
+fs_go_updir(drawer);
 draw_sel(m);
 (*redisplay_drawer)();
 }
@@ -237,7 +237,7 @@ extern Name_list *sort_name_list(Name_list *list);
 /* nuke the old wild list... */
 free_name_list(wild_lst);
 wild_lst = NULL;
-fs_build_wild_list(wild);
+fs_build_wild_list(drawer, wild);
 wild_lst = (File_list *) sort_name_list((Name_list *) wild_lst);
 }
 
@@ -362,7 +362,7 @@ char *name;
 
 hook_devices(&fdev3_sel, 14);
 redisplay_drawer = new_drawer;
-make_current_drawer();		/* get current directory and device... */
+make_current_drawer(drawer, sizeof(drawer)); /* get current directory and device... */
 ftitle_sel.text = prompt;	/* display prompt in move area... */
 default_suffix = suffix;	/* stash initial suffix... */
 sprintf(wild, "*%s", suffix);	/* and make up initial wild search*/
@@ -378,7 +378,7 @@ name = NULL;
 interp_menu(&fileq_menu, wait_click, &ffile_sel);
 if (fileq_result)
 	{
-	make_path_name(drawer, file ,suffix, path_buf); /* result in path_buf */
+	make_path_name_suffix(drawer, file, suffix, path_buf); /* result in path_buf */
 	name = path_buf;
 	}
 fscroller_top = fscroller.top_name;

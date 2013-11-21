@@ -6,7 +6,10 @@
 #include <string.h>
 #include "jimk.h"
 #include "fs.h"
+#include "memory.h"
 
+char devices[26];
+int dev_count;
 struct file_list *wild_lst;
 
 /* compare two strings ignoring case */
@@ -23,7 +26,7 @@ ustrcmp(const char *as, const char *bs)
 	}
 }
 
-void
+static void
 rtrm(char *s, int i)
 {
 	i--;
@@ -36,6 +39,38 @@ suffix_in(const char *string, const char *suff)
 {
 	string += strlen(string) - strlen(suff);
 	return (ustrcmp(string, suff) == 0);
+}
+
+int
+valid_device(int d)
+{
+	int i;
+
+	for (i = 0; i < dev_count; i++) {
+		if (devices[i] == d)
+			return 1;
+	}
+	return 0;
+}
+
+void
+make_path_name_suffix(const char *drawer, char *file, const char *suffix,
+		char *path)
+{
+	if (!(suffix[0] == '.' && suffix[1] == '*')) { /* dont add in suffix if wild card */
+		if (!suffix_in(file, suffix)) { /* add in suffix ... ldg */
+			int flen;
+
+			rtrm(file, flen = strlen(file));
+			if (file[flen-1] == '.')
+				file[--flen] = '\0'; /* remove dot */
+
+			if (strlen(suffix) < (80-flen))
+				strcat(file, suffix); /* 80 is hard coded len */
+		}
+	}
+
+	make_path_name(drawer, file, path);
 }
 
 void

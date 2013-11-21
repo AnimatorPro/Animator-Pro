@@ -3,11 +3,16 @@
    the closest color in color map to an arbitrary rgb triple.  This
    file was mostly hacked out of the truecolo.c file in Vpaint. */
 
+#include <stdio.h>
 #include "jimk.h"
 #include "a2blit_.h"
+#include "bfile.h"
 #include "closest_.h"
 #include "crop.h"
+#include "memory.h"
 #include "peekpok_.h"
+#include "ptr.h"
+#include "rfont.h"
 #include "rgbcmap.str"
 
 extern UBYTE bitmasks[];

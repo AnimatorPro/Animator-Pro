@@ -6,9 +6,10 @@
 #include "jimk.h"
 #include "cblock_.h"
 #include "peekpok_.h"
+#include "ptr.h"
 
 /* a table for RIF and ANIM decompression */
-unsigned WORD ytable[YMAX];
+UWORD ytable[YMAX];
 
 /* Poke the background color with an rgb value.  Handy for debugging
    sometimes. */

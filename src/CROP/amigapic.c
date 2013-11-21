@@ -4,9 +4,12 @@
 
 #include "jimk.h"
 #include "amigapic.str"
+#include "bfile.h"
 #include "crop.h"
 #include "jiff.h"
+#include "memory.h"
 #include "peekpok_.h"
+#include "ptr.h"
 
 static struct bfile amiga_bf;
 static char *amiga_name;
@@ -14,6 +17,9 @@ static int amiga_err = -1;
 static int abpr;
 static int masked;
 static struct BitMapHeader bh;
+
+static void not_ilbm(void);
+static void amtrunc(void);
 
 static
 decode_lplane(buf)
@@ -230,14 +236,14 @@ if (!uncode_ilbm(fc.fc_length, (long)sizeof(fc)))
 return(1);
 }
 
-static
-not_ilbm()
+static void
+not_ilbm(void)
 {
 continu_line(amigapic_106 /* "File isn't an IFF ILBM." */);
 }
 
-static
-amtrunc()
+static void
+amtrunc(void)
 {
 truncated(amiga_name);
 }

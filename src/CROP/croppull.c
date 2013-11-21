@@ -188,9 +188,9 @@
 				&cro_sca_pull,
 				1+0*CH_WIDTH, 1+1*CH_HEIGHT, 3+9*CH_WIDTH, 1+1*CH_HEIGHT, 
 				NOCHILD,
-				croppull_120 /* "Memory" */,
+				croppull_116 /* "Memory" */,
 				pull_text,
-				0,
+				1,
 				};
 			struct pull cro_abo_pull = {
 				&cro_info_pull,

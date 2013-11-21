@@ -3,6 +3,7 @@
 *.OBJ
 *.o
 *.swp
+CROP/crop
 PLAY/play
 QUICKFLI/quickfli
 tags

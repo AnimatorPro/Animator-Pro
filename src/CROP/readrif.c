@@ -6,8 +6,10 @@
 #include <stdio.h>
 #include "jimk.h"
 #include "jiff.h"
-#include "vcomp.h"
+#include "jfile.h"
+#include "memory.h"
 #include "readrif.str"
+#include "vcomp.h"
 
 #define RIF_BPR 40
 #define YMAX 200
@@ -20,8 +22,7 @@
 
 extern UBYTE sys_cmap[];
 
-
-static load_fd;
+static FILE *load_fd;
 static char *rif_name;
 static PLANEPTR amiga_screen1;
 static int rif_err = -1;
@@ -36,7 +37,7 @@ static
 open_verify_rif(name)
 char *name;
 {
-if ((load_fd = jopen(name, 0)) <= 0)
+if ((load_fd = jopen(name, 0)) == 0)
 	{
 	cant_find(name);
 	return(0);
@@ -120,14 +121,13 @@ if ( (jread(load_fd, comp_buf, load_size)) < load_size)
 return(1);
 }
 
-
-extern unsigned WORD ytable[YMAX];
+extern UWORD ytable[YMAX];
 
 static 
 make_ytable()
 {
-register unsigned WORD *pt;
-register unsigned WORD acc, bpr;
+register UWORD *pt;
+register UWORD acc, bpr;
 register WORD i;
 
 acc = 0;
@@ -270,6 +270,6 @@ start_rif()
 if (rif_err)
 	return(0);
 jseek( load_fd, sizeof(riff_h) + (long)riff_h.frame_count*sizeof(long),
-	SEEK_START);	
+	JSEEK_START);
 return(next_rif());
 }

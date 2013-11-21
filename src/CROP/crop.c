@@ -13,11 +13,14 @@
    to more than one image type.  */
 
 #include "jimk.h"
-#include "fli.h"
 #include "jiff.h"
-#include "vcomp.h"
 #include "crop.h"
 #include "crop.str"
+#include "fli.h"
+#include "jfile.h"
+#include "jiff.h"
+#include "memory.h"
+#include "vcomp.h"
 
 int intype;
 char is_bitplane;

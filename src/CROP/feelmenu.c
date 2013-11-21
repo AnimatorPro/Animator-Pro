@@ -4,13 +4,17 @@
 
 #include "jimk.h"
 #include "flicmenu.h"
-
+#include "io_.h"
 
 Flicmenu *cur_menu;	/* pointer to current menu */
 extern WORD *abehind;
 
 static hmpstack;
 extern WORD *draw_pull();
+
+static int
+interp_menu(struct flicmenu *m, Vector source, struct flicmenu *s,
+		int drawit, int hide_for_sels);
 
 draw_mp()
 {
@@ -223,13 +227,9 @@ return(menu_ok);
 }
 #endif /* LATER */
 
-static
-interp_menu(m, source, s, drawit, hide_for_sels)
-struct flicmenu *m;
-Vector source;
-struct flicmenu *s;	/* initial selection if any */
-int drawit;
-int hide_for_sels;
+static int
+interp_menu(struct flicmenu *m, Vector source, struct flicmenu *s,
+		int drawit, int hide_for_sels)
 {
 Pull *ocpull;
 Flicmenu *ocmenu;

@@ -2,8 +2,10 @@
 /* slide.c - stuff to implement the crop/slide selection.  Lets you
    make a FLI out of a scrolling background among other things. */
 
+#include <stdio.h>
 #include "jimk.h"
 #include "crop.h"
+#include "jfile.h"
 #include "slide.str"
 
 static int dx, dy, dframes = 50;

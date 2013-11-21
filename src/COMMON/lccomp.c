@@ -4,21 +4,20 @@
    for incorporation into a FLI file.  See also writefli.c */
 
 
-#include "jimk.h"
+#include "lccomp.h"
 #include "peekpok_.h"
+#include "ptr.h"
 
 #define MAX_RUN 127
 
-char *
-brun_comp_line(s1, cbuf, count)
-char *s1, *cbuf;
-int count;
+static char *
+brun_comp_line(const char *s1, char *cbuf, int count)
 {
 int wcount;
 register char *c;
 register int bcount;
 int op_count;
-char *start_dif;
+const char *start_dif;
 int dif_count;
 int same_count;
 
@@ -76,10 +75,8 @@ for (;;)
 
 #define INERTIA 4
 
-char *
-sbrc_line(s1, s2, cbuf, count)
-char *s1, *s2, *cbuf;
-int count;
+static char *
+sbrc_line(const char *s1, const char *s2, char *cbuf, int count)
 {
 register int wcount;
 int i;
@@ -170,10 +167,9 @@ OUT:
 return(norm_pointer(c));
 }
 
-unsigned *
-lccomp(s1,s2,cbuf,width,height)
-char *s1, *s2;
-unsigned *cbuf, width, height;
+UWORD *
+lccomp(const char *s1, const char *s2, UWORD *cbuf,
+		unsigned int width, unsigned int height)
 {
 int skip_count, lcount, j;
 char *c;
@@ -189,7 +185,7 @@ skip_count = 0;
 total = 0;
 while (--j >= 0)
 	{
-	if (fcompare(s1, s2, acc) != acc)
+	if (fcompare((UWORD *)s1, (UWORD *)s2, acc) != acc)
 		break;
 	s1 += width;
 	s2 += width;
@@ -208,7 +204,7 @@ last_real = 0;	/* keep track of last moving line */
 for (j=1; j<=height;j++)
 	{
 	oc = c;
-	if (fcompare(s1,s2,acc) == acc)	/* whole line is the same */
+	if (fcompare((UWORD *)s1, (UWORD *)s2, acc) == acc) /* whole line is the same */
 		{
 		*c++ = 0;	/* set op count to 0 */
 		}
@@ -227,14 +223,16 @@ for (j=1; j<=height;j++)
    from buffer */
 *cbuf = last_real;
 c -= height-last_real;
-return(enorm_pointer(c));
+
+if (((intptr_t)c) & 1)
+	*c = '\0';
+
+return (UWORD *)enorm_pointer(c);
 }
 
-
-unsigned *
-brun(s1,s2,cbuf,width,height)
-char *s1, *s2;
-int *cbuf, width, height;
+UWORD *
+brun(const char *s1, const char *s2, WORD *cbuf,
+		int width, int height)
 {
 register char *c;
 char *oc;
@@ -251,6 +249,9 @@ while (--height >= 0)
 		return(NULL);
 	s1 += width;
 	}
-return(enorm_pointer(c));
-}
 
+if (((intptr_t)c) & 1)
+	*c = '\0';
+
+return (UWORD *)enorm_pointer(c);
+}

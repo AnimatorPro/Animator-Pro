@@ -1,11 +1,14 @@
 /* textbox.c - generate a 'continue' alert or a 'yes/no' dialog from
    a couple of C strings. */
 
+#include <string.h>
 #include "jimk.h"
 #include "a1blit_.h"
 #include "blit8_.h"
 #include "cblock_.h"
 #include "flicmenu.h"
+#include "memory.h"
+#include "rfont.h"
 #include "textbox.str"
 
 /* This file does assume non-proportional text.  Here's some constants
@@ -29,6 +32,7 @@
 struct rectangle box, yes_box, no_box;
 static WORD *behind;
 
+static void draw_white_box(struct rectangle *b);
 
 /* find_text_box(names) -
       Pass this an array of names terminated by a NULL, and this baby
@@ -56,6 +60,8 @@ while ((name = *names++) != NULL)
 	{
 	height += LINE_HEIGHT;
 	this_width = CHAR_WIDTH*strlen(name);
+	if (this_width > XMAX - 2 * BORDER)
+		this_width = XMAX - 2 * BORDER;
 	if (this_width > width)
 		width = this_width;
 	}
@@ -111,16 +117,15 @@ xoff = box.MinX + BORDER;
 yoff = box.MinY + BORDER;
 while ((name = *names++) != NULL) 
 	{
-	gtext(name, xoff, yoff, sblack);
+	systext_clip(box.MaxX - box.MinX - 2 * BORDER, name, xoff, yoff, sblack);
 	yoff += LINE_HEIGHT;
 	}
 return (yoff);
 }
 
 
-static
-draw_white_box(b)
-struct rectangle *b;
+static void
+draw_white_box(struct rectangle *b)
 {
 draw_frame(sgrey, b->MinX, b->MinY, b->MaxX, b->MaxY);
 }

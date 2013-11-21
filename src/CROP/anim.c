@@ -9,6 +9,9 @@
 #include "jiff.h"
 #include "anim.h"
 #include "anim.str"
+#include "bfile.h"
+#include "jfile.h"
+#include "memory.h"
 #include "peekpok_.h"
 
 #define ANIM_BPR 40
@@ -22,8 +25,7 @@
 
 extern UBYTE sys_cmap[];
 
-
-static load_fd;
+static FILE *load_fd;
 static char *anim_name;
 static PLANEPTR screens[2], cur_screen;
 static int anim_err = -1;
@@ -44,7 +46,7 @@ static
 open_verify_anim(name)
 char *name;
 {
-if ((load_fd = jopen(name, 0)) <= 0)
+if ((load_fd = jopen(name, 0)) == 0)
 	{
 	cant_find(name);
 	return(0);
@@ -86,15 +88,13 @@ load_fd = 0;
 return(0);
 }
 
-
-
-extern unsigned WORD ytable[YMAX];
+extern UWORD ytable[YMAX];
 
 static 
 make_ytable()
 {
-register unsigned WORD *pt;
-register unsigned WORD acc, bpr;
+register UWORD *pt;
+register UWORD acc, bpr;
 register WORD i;
 
 acc = 0;
@@ -192,7 +192,7 @@ while (fpos < animf_h.fc_length)
 		break;
 		}
 	fpos += sizeof(ff) + ff.fc_length;
-	jseek(load_fd, ff.fc_length-4, SEEK_REL);
+	jseek(load_fd, ff.fc_length-4, JSEEK_REL);
 	frame_count += 1;
 	anim_frame += 1;
 	}
@@ -456,7 +456,7 @@ start_anim()
 {
 if (anim_err)
 	return(0);
-jseek( load_fd, sizeof(animf_h), SEEK_START);	
+jseek( load_fd, sizeof(animf_h), JSEEK_START);
 anim_frame = -1;
 return(next_anim());
 }

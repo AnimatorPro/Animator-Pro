@@ -3,10 +3,12 @@
    browse menu a bit too.  Other scroller users are the draw tools and
    ink types menus.  */
 
+#include <string.h>
 #include "jimk.h"
 #include "a1blit_.h"
 #include "cblock_.h"
 #include "flicmenu.h"
+#include "rfont.h"
 
 #define CHEIGHT (CH_HEIGHT)
 
@@ -17,6 +19,8 @@
 
 struct name_scroller *scroll;
 static Vector sredraw;
+
+static void prt_list(Flicmenu *m);
 
 calc_scroll_pos(scroll, scroll_sel)
 register Name_scroller *scroll;
@@ -92,7 +96,7 @@ Vector redraw;
 iscroller(scroll, 
 	names, scroll_sel, list_sel,(list_sel->height-2)/CHEIGHT,redraw);
 }
-#endif SLUFFED
+#endif /* SLUFFED */
 
 redraw_scroller(scroll_sel, list_sel)
 register Flicmenu *scroll_sel, *list_sel;
@@ -215,15 +219,14 @@ a_frame(sgrey, m);
 prt_list(m);
 }
 
-static
-prt_list(m)
-register Flicmenu *m;
+static void
+prt_list(Flicmenu *m)
 {
 register Name_list *n;
 register Name_scroller *scroller;
 WORD name_count, line_count;
 WORD cheight, cwidth;
-WORD twidth;
+WORD twidth, width;
 WORD xoff, yoff;
 WORD i;
 char *string;
@@ -237,6 +240,7 @@ cheight = scroller->ycount;
 twidth *= CH_WIDTH;
 xoff = m->x + ((m->width-twidth)>>1) + 1;
 yoff = m->y + TOPNAME_OFF;
+width = m->x + m->width - xoff;
 i = scroller->top_name;
 while (--i >= 0)
 	{
@@ -256,7 +260,7 @@ while (--i >= 0)
 	twidth = strlen(string);
 	if (twidth > cwidth)
 		twidth = cwidth;
-	gtext(   string, xoff, yoff, sblack);
+	systext_clip(width, string, xoff, yoff, sblack);
 	n = n->next;
 	yoff += CHEIGHT;
 	}

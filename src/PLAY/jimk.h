@@ -2,9 +2,7 @@
 #define JIMK_H
 
 #include "jimk0.h"
-
-#define askmem malloc
-#define freemem free
+#include "memory.h"
 
 #ifndef NULL
 #define NULL ((void *)0)
@@ -12,13 +10,9 @@
 
 extern void *list_el();
 
-extern void *lbegmem(), *begmem();
-extern void *paskmem();
 extern char *clone_string();
 extern char *get_filename();
 extern long get80hz();
-extern void *askmem(), *laskmem();
-extern unsigned mem_free, largest_frag();
 
 extern void *sort_list();
 extern void *remove_el();
@@ -238,10 +232,6 @@ extern int tr_frames;
 
 /* variables to clip area we render to */
 extern int render_xmin, render_ymin, render_xmax, render_ymax;
-
-/* some day hope these will be changed so alway can be alloced */
-#define paskmem askmem
-#define pfreemem freemem
 
 extern UBYTE *dot_pens[];
 

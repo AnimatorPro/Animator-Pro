@@ -4,11 +4,14 @@
    the pull-downs. */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include "jimk.h"
 #include "flicmenu.h"
+#include "io_.h"
 #include "main.str"
+#include "memory.h"
+#include "sys.h"
 
-extern int ivmode;
 extern char init_drawer[];
 extern char *get_filename(char *prompt, char *suffix);
 
@@ -46,22 +49,6 @@ for (;;)
 	}
 }
 
-/* set old video mode */
-old_video()
-{
-union regs r;
-r.b.ah = 0;
-r.b.al = ivmode;
-sysint(0x10,&r,&r);
-}
-
-cleanup()
-{
-change_dir(init_drawer);
-old_video();
-}
-
-
 quit()
 {
 cleanup();
@@ -91,23 +78,6 @@ char *about_lines[] =
 about()
 {
 continu_box(about_lines);
-}
-
-qstatus()
-{
-char *bufs[8];
-char b1[40], b2[40], b3[40];
-extern unsigned mem_free;
-extern unsigned largest_frag();
-
-bufs[0] = main_110 /* "Converter - memory usage" */;
-sprintf(b1, main_111 /* "%ld bytes free" */, mem_free*16L);
-bufs[1] = "";
-bufs[2] = b1;
-sprintf(b2, main_113 /* "%ld largest" */, largest_frag()*16L);
-bufs[3] = b2;
-bufs[4] = NULL;
-continu_box(bufs);
 }
 
 dokeys()
@@ -198,7 +168,7 @@ switch (m)
 				about();
 				break;
 			case 1:
-				qstatus();
+				/* qstatus(); */
 				break;
 			case 2:
 				qscale();

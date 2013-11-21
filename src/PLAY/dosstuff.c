@@ -8,12 +8,7 @@
 #include "fs.h"
 
 extern WORD device;
-extern char devices[26];
-extern int dev_count;
 extern char drawer[];
-
-char devices[26];
-int dev_count;
 
 /*** start new */
 #ifdef OLD
@@ -282,21 +277,6 @@ for (i=3; i<=26; i++)
 	}
 }
 
-/* Is device really there?  Check device list to see. B:B:B: */
-valid_device(d)
-int d;
-{
-int i;
-
-for (i=0; i<dev_count; i++)
-	{
-	if (devices[i] == d)
-		return(1);
-	}
-return(0);
-}
-
-
 /* Figure out what drive we're in and what directory.  Save
    result in 'device' and 'vs.drawer' */
 mcurrent_drawer()
@@ -322,7 +302,7 @@ extern char init_drawer[];
    back to start-up directory.  Otherwise just set device and vs.drawer
    variables to reflect where MS-DOS thinks we are in the filing system */
 int
-make_current_drawer(void)
+make_current_drawer(char *drawer, unsigned int size)
 {
 if (!mcurrent_drawer())
 	{

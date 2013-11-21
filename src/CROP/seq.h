@@ -1,12 +1,7 @@
+#ifndef SEQ_H
+#define SEQ_H
 
-#define WORD int
-#define UWORD unsigned int
-#ifndef NULL
-#define NULL 0L
-#endif /* NULL */
-
-#define Alloc_a(type) (type *)malloc(sizeof(type))
-#define Array_els(arr) (sizeof(arr)/sizeof(arr[0]))
+#include "jimk.h"
 
 extern WORD *cscreen;				/* points to the "drawing/display" screen */
 
@@ -72,3 +67,4 @@ struct neo_head
 #define seq_LRaster_line(width) (((((width)+15)>>3)&0xfffe)*4)
 #define seq_LRaster_block(width, height) (seq_LRaster_line(width)*(height))
 
+#endif

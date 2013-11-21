@@ -8,7 +8,7 @@
 #define HEIGHT 200
 #define PLANE_SIZE (RIF_BPR*HEIGHT)
 
-extern unsigned WORD ytable[YMAX];
+extern UWORD ytable[YMAX];
 
 static void conv8(int a, int b, int c, int d, int e, PLANEPTR out);
 
@@ -19,7 +19,7 @@ PLANEPTR bits;
 int i;
 PLANEPTR bytes;
 
-bytes = (PLANEPTR)0xa0000000;
+bytes = vf.p;
 i = 8000;
 while (--i >= 0)
 	{

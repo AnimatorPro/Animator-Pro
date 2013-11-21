@@ -2,6 +2,7 @@
 /* qnumber.c - This module is for popping up little requestor to 
 	get a single number or a single string */
 
+#include <stdio.h>
 #include "jimk.h"
 #include "a1blit_.h"
 #include "flicmenu.h"
@@ -18,7 +19,7 @@ struct stringq qstring_stringq =
 	2, 2, 7, 10, 0, qstring, NULL, 0, 0,
 	};
 
-int qnum;
+static WORD qnum;
 
 struct qslider qnu_slider = 
 	{
@@ -36,6 +37,7 @@ struct flicmenu qnu_can_sel = {
 	NOGROUP,0,
 	NOKEY,
 	NOOPT,
+	0, 0
 	};
 struct flicmenu qnu_ok_sel = {
 	&qnu_can_sel,
@@ -47,6 +49,7 @@ struct flicmenu qnu_ok_sel = {
 	NOGROUP,0,
 	NOKEY,
 	NOOPT,
+	0, 0
 	};
 struct flicmenu qnu_sli_sel = {
 	&qnu_ok_sel,
@@ -58,6 +61,7 @@ struct flicmenu qnu_sli_sel = {
 	NOGROUP,0,
 	NOKEY,
 	NOOPT,
+	0, 0
 	};
 struct flicmenu reqstring_sel =
 	{
@@ -70,6 +74,7 @@ struct flicmenu reqstring_sel =
 	NOGROUP, 0,
 	NOKEY,
 	NOOPT,
+	0, 0
 	};
 
 struct flicmenu reqhail_sel =
@@ -83,6 +88,7 @@ struct flicmenu reqhail_sel =
 	NOGROUP, 0,
 	NOKEY,
 	NOOPT,
+	0, 0
 	};
 
 struct flicmenu qreq_menu =
@@ -96,6 +102,7 @@ struct flicmenu qreq_menu =
 	NOGROUP, 0,
 	NOKEY,
 	NOOPT,
+	0, 0
 	};
 
 menu_text_box(m)

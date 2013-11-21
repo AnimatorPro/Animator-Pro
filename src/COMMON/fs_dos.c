@@ -14,13 +14,19 @@ struct fndata
 	char name[13];
 };
 
-extern char drawer[];
-
 void
-make_path_name(const char *drawer, char *file, const char *suffix,
-		char *path)
+make_path_name(const char *drawer, char *file, char *path)
 {
 	int len, flen;
+
+	/* say hey it's got the drive in file string */
+	if (file[1] == ':') {
+		if (!valid_device(file[0] - 'A') )
+			return;
+
+		strcpy(path, file);
+		return;
+	}
 
 	strcpy(path, drawer);
 
@@ -31,21 +37,11 @@ make_path_name(const char *drawer, char *file, const char *suffix,
 			strcat(path, DIR_SEPARATOR_STR);
 	}
 
-	if (!(suffix[0] == '.' && suffix[1] == '*')) { /* dont add in suffix if wild card */
-		if (!suffix_in(file, suffix)) { /* add in suffix ... ldg */
-			rtrm(file, flen = strlen(file));
-			if (file[flen-1] == '.')
-				file[--flen] = '\0'; /* remove dot */
-
-			if (strlen(suffix) < (80-flen))
-				strcat(file, suffix); /* 80 is hard coded len */
-		}
-	}
 	strcat(path, file);
 }
 
 void
-fs_go_rootdir(void)
+fs_go_rootdir(char *drawer, unsigned int size)
 {
 	if (drawer[1] == ':')
 		strcpy(drawer+2, DIR_SEPARATOR_STR);
@@ -54,7 +50,7 @@ fs_go_rootdir(void)
 }
 
 void
-fs_go_updir(void)
+fs_go_updir(char *drawer)
 {
 	int len = strlen(drawer);
 	char *d = drawer;
@@ -114,7 +110,7 @@ attr_wild_list(int attr, const char *pat, enum FileType type)
 }
 
 void
-fs_build_wild_list(const char *wild)
+fs_build_wild_list(const char *drawer, const char *wild)
 {
 	attr_wild_list(16, "*.*", FILETYPE_DIRECTORY); /* get all directories */
 	attr_wild_list(0, wild, FILETYPE_REGULAR); /* and other files matching wild */

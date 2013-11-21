@@ -1,11 +1,17 @@
 
 /* pcx.c - Stuff to handle PC-PaintBrush (.PCX) files */
 
+#include <stdio.h>
 #include "jimk.h"
 #include "a2blit_.h"
+#include "bfile.h"
 #include "crop.h"
+#include "jfile.h"
+#include "memory.h"
 #include "pcx.str"
 #include "peekpok_.h"
+#include "ptr.h"
+#include "rfont.h"
 
 struct pcx_header
 	{
@@ -401,7 +407,7 @@ if (init_pcx_line())
 			{
 			if ((mdbuf = begmem(w)) !=  NULL)
 				{
-				bseek(&pcx_bf, (long)sizeof(pcxh), SEEK_START);
+				bseek(&pcx_bf, (long)sizeof(pcxh), JSEEK_START);
 				for (i=0; i<pch; i++)
 					{
 					if (i%10 == 0)

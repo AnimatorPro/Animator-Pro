@@ -1,9 +1,12 @@
 
 /* choices.c - put up a little menu of numbered choices. */
 
+#include <stdio.h>
+#include <string.h>
 #include "jimk.h"
 #include "a1blit_.h"
 #include "flicmenu.h"
+#include "rfont.h"
 
 extern gary_menu_back(), gary_see_title(),blacktext(),
 	move_menu(), bottom_menu();
@@ -12,7 +15,7 @@ extern gary_menu_back(), gary_see_title(),blacktext(),
 
 #define CMAX 10
 
-static int chosen;
+static WORD chosen;
 static struct flicmenu choicesels[CMAX];
 static struct flicmenu choiceheader = {
 	NOCHILD, 
@@ -24,6 +27,7 @@ static struct flicmenu choiceheader = {
 	NOGROUP,0,
 	NOKEY,
 	NOOPT,
+	0, 0
 	};
 static struct flicmenu choicemenu = {
 	NOCHILD, 
@@ -33,6 +37,7 @@ static struct flicmenu choicemenu = {
 	gary_menu_back,
 	NOFEEL,
 	NOGROUP,0,NOKEY,NOOPT,
+	0, 0
 	};
 
 accept_choice(m)
