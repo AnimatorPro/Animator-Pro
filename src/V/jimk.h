@@ -1,3 +1,6 @@
+#ifndef JIMK_H
+#define JIMK_H
+
 /* -------------  COMPILE SWITCHES --------------- */
 	/* Demo no save version? */
 #undef NOSAVE 
@@ -652,3 +655,5 @@ extern UBYTE sys5;	/* has menu system grabbed last 5 colors in palette? */
 #include "gemfont.h"
 #include "proto.h"
 #endif BUNCH
+
+#endif
