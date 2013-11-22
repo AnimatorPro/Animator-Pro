@@ -1,0 +1,7 @@
+creature turtle
+    {
+    cx=bouncex(cx,cdx)
+    cy=bouncdy(cy,cdy)
+    drawturtle(cx,cy)
+    }
+

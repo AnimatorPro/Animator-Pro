@@ -1,0 +1,5 @@
+#define memory_100 "Out of Memory"
+#define memory_101 "Internal error.  Please see Appendix B of Autodesk Animator Reference Manual."
+#define memory_102 "%x bad START_COOKIE %lx\n"
+#define memory_103 "%x bad END_COOKIE %lx\n"
+#define memory_104 "Zero memory request!"

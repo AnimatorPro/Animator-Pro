@@ -1,0 +1,3 @@
+#define zoom_100 "  Times 2 "
+#define zoom_101 "  Times 4"
+#define zoom_103 "Set zoom level"

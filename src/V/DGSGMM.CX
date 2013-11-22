@@ -1,0 +1,540 @@
+/* Next available MSG number is  15 */
+/*
+      (C) Copyright 1982,83,84,85,87 by Autodesk, Inc.
+
+******************************************************************************
+*									     *
+* The information contained herein is confidential, proprietary to Autodesk, *
+* Inc., and considered a trade secret as defined in section 499C of the      *
+* penal code of the State of California.  Use of this information by anyone  *
+* other than authorized employees of Autodesk, Inc. is granted only under a  *
+* written non-disclosure agreement, expressly prescribing the scope and      *
+* manner of such use.							     *
+*									     *
+**************************************************************************** */
+
+/*	    DGSGMM.CX
+
+    Driver and configurator for the Summagraphcs MM Series Digitizers
+
+    Designed and implemented by John Walker
+
+    This driver operates the MM tablet in binary, at 9600 baud
+    with 8 bits per character, odd parity, and one stop bit.
+    The driver should work with a tablet with factory standard
+    jumpering, and should also work if the auto-baud rate
+    option is selected (but has not been tested with such a tablet).
+    If the format jumper is set to ASCII, or the parity jumper is
+    set to none (instead of the standard odd), the driver will
+    not work.
+
+ */
+
+
+#include    "astdio.h"
+#include    "mcdefs.h"
+
+#ifndef     XQT
+#ifndef     CFG
+}}}}}}}     /*	Force error if neither defined. */
+#endif
+#endif
+
+
+	/*  Configuration record  */
+
+struct mmcfg {
+	      int mmmodel,mmcurs,mmorient,mmdelta;
+	     };
+#define mmclen	sizeof(struct mmcfg)
+
+
+/********   Configurator code	**********/
+
+#ifdef	CFG
+
+#include    "config.h"
+#include    "edcfg.h"
+
+#ifdef	  UNIX
+/* Unix entry point definition */
+VSTATIC int dgcfg();
+struct dsent *dgxqtsgmm();
+static struct devname sgmmname = { NULL, ' ', /*MSG14*/"Summagraphics MM Series" };
+struct devent dgsgmm = { &sgmmname, dgcfg, dgxqtsgmm };
+#endif /* UNIX */
+
+
+extern struct cfghdr chead;	/* Config file header. */
+extern struct edcfg erec;	/* Drawing Editor config record. */
+extern char tbfr[];
+
+static struct mmcfg mmcfr = {1201, 3, 1, 1};
+
+/*  Driver configurator entry.	*/
+
+#ifdef UNIX
+static
+#endif
+/*FCN*/dgcfg(cfgfcn, new)
+  int cfgfcn, new;
+{
+	int newctype;
+
+	switch (cfgfcn) {
+
+	case READCFG:		    /* Read config. */
+	   rreadcfg(chead.ch_dvc[DG], &mmcfr, mmclen);
+	   break;
+
+	case SHOWCFG:		    /* Display configuration. */
+           printf(/*MSG1*/"- model %d.\n",
+	      mmcfr.mmmodel);
+	   showport(DG);
+	   break;
+
+	case CHGCFG:		    /* Revise configuration. */
+	   cfgport(DG, SERIAL, 9600, 1, 8, 1, 0); /* Configure port. */
+	   if (cancel())
+	      return;
+
+	    /*	Configure digitizer model  */
+
+	   if (new) {		   /* If newly configured, */
+	      mmcfr.mmcurs=3;	  /*   assume 3 button cursor  */
+	      mmcfr.mmmodel=1201; /*   and the 12 inch model.  */
+	      mmcfr.mmorient=1;   /*   Set orientation to vertical */
+	      mmcfr.mmdelta=1;	  /*   Assume delta mode off   */
+	   }
+
+           printf(/*MSG2*/"\n\
+The MM series digitizer comes in the following models:\n\n\
+       961  -  9 by 6 inch tablet\n\
+      1201  -  12 by 12 inch tablet\n\
+      1812  -  18 by 12 inch tablet\n");
+
+	   for (;;) {
+              printf(/*MSG3*/"\nEnter the model number you have <%d>: ",
+		 mmcfr.mmmodel);
+	      if (scani(&newctype))
+		 switch (newctype) {
+
+		    case 961:
+		    case 1201:
+		    case 1812:
+		       mmcfr.mmmodel=newctype;
+		       goto gotmodel;
+		 }
+	      else if (cancel())
+		 return;
+	      else if (*tbfr == EOS)
+		 break;
+
+	      invrsp();
+	   }
+gotmodel:
+
+	   /*  Configure tablet orientation for model 961  */
+
+	   if (mmcfr.mmmodel == 961) {
+              printf(/*MSG4*/"\n\
+The model 961 may be operated in either of the following orientations:\n\n\
+      1.  Vertical (portrait) 6 inches wide, 9 inches high\n\
+      2.  Horizontal (landscape) 9 inches wide, 6 inches high\n");
+
+	      for (;;) {
+                 printf(/*MSG5*/"\nEnter the orentation you are using <%d>: ",
+		    mmcfr.mmorient);
+		 if (scani(&newctype))
+		    switch (newctype) {
+
+		       case 1:
+		       case 2:
+			  mmcfr.mmorient=newctype;
+			  goto gotorint;
+		    }
+		 else if (cancel())
+		    return;
+		 else if (*tbfr == EOS)
+		    break;
+
+		 invrsp();
+	      }
+gotorint:
+    ;				      /* Unix needs this */
+	   }
+
+	   /*  Configure cursor type. */
+
+           printf(/*MSG6*/"\n\
+The digitizer can have the following types of cursor:\n\n\
+   1.  Stylus\n\
+   3.  Three-button cursor\n\
+   4.  Four-button cursor\n");
+
+	   for (;;) {
+              printf(/*MSG7*/"\nEnter the type of cursor you are using <%d>: ",
+		 mmcfr.mmcurs);
+	      if (scani(&newctype))
+		 switch (newctype) {
+
+		    case 1:
+		    case 3:
+		    case 4:
+		       mmcfr.mmcurs = newctype;
+		       goto gotctype;
+		   }
+	      else if (cancel())
+		 return;
+	      else if (*tbfr == EOS)
+		 break;
+
+	      invrsp();
+	   }
+gotctype:
+
+	   /*  Configure delta / absolute mode	*/
+
+           printf(/*MSG8*/"\n\
+The digitizer can be used in normal digitizer or mouse mode:\n\n\
+   1.  Digitizer (absolute) mode\n\
+   2.  Mouse (relative / delta) mode\n\
+Note that TABLET mode cannot be used if Mouse mode is selected.\n");
+
+	   for (;;) {
+              printf(/*MSG9*/"\nEnter the mode you wish to use <%d>: ",
+		 mmcfr.mmdelta);
+	      if (scani(&newctype))
+		 switch (newctype) {
+
+		    case 1:
+		    case 2:
+		       mmcfr.mmdelta = newctype;
+		       goto gotdelta;
+		   }
+	      else if (cancel())
+		 return;
+	      else if (*tbfr == EOS)
+		 break;
+
+	      invrsp();
+	   }
+gotdelta:
+
+	   erec.ed_tmnup = (mmcfr.mmdelta == 1);
+	   cfgdig(CHGCFG, new);     /* Call general dig. configurator. */
+	   break;
+
+	case WRITECFG:		    /* Write config. */
+	   writecfg(&mmcfr, mmclen);
+	}
+}
+
+#endif /* CFG */
+
+/********   Runtime code   **********/
+
+
+#ifdef	    XQT
+
+#include    "devin.h"
+#include    "imath.h"
+#include    "config.h"
+
+#define     TIMEOUT 500 	/* Half a second. */
+#define     SEND(x)    iow(digport,x)
+#define     RECEIVE(t) ior(digport,t)
+
+#define     CR  '\r'
+
+extern struct cfghdr chead;
+extern char *digport;		/* Digitizer I/O port. */
+extern int (*diginpp)();	/* Pointer to digitizer input routine. */
+
+static int prior;               /* Previous sample's control code. */
+static long xlimit,ylimit;	/* Calibrated area limits */
+static long slimit;		/* Smaller direction limit */
+static int curstype;		/* Cursor type */
+static int delta;		/* Delta mode */
+static int working=1;		/* Digitizer works flag */
+static dcoord dlx=10240, dly=10240; /* Delta mode current coordinates */
+
+int diginp();
+
+/*  Initialize digitizer driver. */
+
+/*FCN*/dgxqtsgmm()
+{
+	register int i, c;
+	struct mmcfg mmcfr;
+	struct models {
+			int modelno;
+		    /*	long xsize,ysize;	*/
+			unsigned xsize,ysize;
+		      };
+	static struct models m[] = { {1201, 11700, 11700},
+				     {-961, 9000, 6000},
+				     { 961, 6000, 9000},
+				     {1812, 18000, 12000}
+				   };
+
+	diginpp = diginp;	    /* Set pointer to input routine. */
+	rreadcfg(chead.ch_dvc[DG], &mmcfr, mmclen);
+
+	/*  Encode digitizer orientation in model number  */
+
+	if (mmcfr.mmmodel == 961 && mmcfr.mmorient == 2)
+	   mmcfr.mmmodel = -mmcfr.mmmodel;
+
+	for (i=0; i<(sizeof m/sizeof *m); i++)
+	   if (mmcfr.mmmodel==m[i].modelno) {
+	      xlimit=m[i].xsize;
+	      ylimit=m[i].ysize;
+	      break;
+	   }
+	prior = P_NONE; 	    /* No previous sample. */
+	curstype = mmcfr.mmcurs;    /* Save cursor type */
+	if ( !(delta = (mmcfr.mmdelta==2))) /* Save delta mode */
+	    {xlimit /= 2; ylimit /= 2;} /* adjust if digitizer mode */
+	slimit= min(xlimit, ylimit); /* Smaller direction */
+
+	/*  Now initialize the digitizer  */
+
+        working = 1;                /* Assume it's working */
+        SEND(' ');                  /* Send a space to set baud rate */
+
+        SEND('\0');                 /* Reset modes */
+	RECEIVE(TIMEOUT);	    /* Give it a chance to reset */
+
+        SEND('w');                  /* Ask for self-test results */
+	if ((c=RECEIVE(TIMEOUT)) < 0) {
+           printf(/*MSG10*/"\n**Digitizer is not responding.");
+	   working=0;
+	   return;
+	} else {
+
+           /* The 1812 doesn't give valid test results unless the puck
+	      is in proximity to the tablet, so we just throw them out: */
+
+	   if (mmcfr.mmmodel == 1812)
+	      c = 0xFF; 	    /* Fake good results. */
+
+	   if (!(c & 1)) {
+              printf(/*MSG11*/"\n**Digitizer analog circuitry failure.");
+	      working=0;
+	      return;
+	   };
+	   if (!(c & 2)) {
+              printf(/*MSG12*/"\n**Digitizer cursor/stylus failure.");
+	      working=0;
+	      return;
+	   }
+	   if (!(c & 4)) {
+              printf(/*MSG13*/"\n**Digitizer digital circuitry failure.");
+	      working=0;
+	      return;
+	   }
+	}
+
+	if (delta) {
+           SEND('E');               /* Set to delta (mouse) mode if desired */
+           SEND('d');               /* 100 lpi for relative mode */
+	} else
+           SEND('h');               /* 500 lpi resolution */
+        SEND('D');                  /* Set to remote request mode */
+	if (mmcfr.mmmodel < 0)
+           SEND('b');               /* Model 961 Horizontal mode */
+	else
+           SEND('c');               /* Vertical mode */
+}
+
+/* Digitizer input call:  returns status values of:
+
+    P_NONE  0:	No valid point digitized
+    P_COORD 2:	(dgx,dgy) is a tracking coordinate pair
+    P_POINT 3:	(dgx,dgy) is a point select coordinate pair
+    P_BUTTN 4:	dgx is the code for a cursor button (0-n)
+    P_BUTTP 5:	(dgx,dgy) is a point which was read along with
+		  the cursor button number returned on the last call.
+
+*/
+
+static int
+/*FCN*/diginp(dgx, dgy)
+  dcoord *dgx, *dgy;
+{
+	static dcoord x, y;
+	char sample[5],    /* To hold one sample string */
+	    *sp, *endsamp = sample + sizeof sample;
+	int dgstat, c;
+	char ch;
+	long samp;
+
+	if (!working)
+	   return P_NONE;
+
+	/*  If we returned a menu selection last time, now return the
+	    reading that came with it:	*/
+
+	if (prior == P_BUTTN) {
+	   *dgx = x; *dgy = y;
+	   return (prior = P_BUTTP);
+	}
+
+	if (delta)
+	   endsamp -= 2;
+
+	/*  Standard binary-mode digitizer sample collection loop:
+	    Read repeated samples till one comes in properly.  */
+
+	for (;;) {		/* Only abnormal exits */
+
+           SEND('P');                  /* Prompt for a sample */
+
+	   if ((c = RECEIVE(TIMEOUT)) < 0)  /* No retries on first char */
+	      goto digtime;
+
+	    /*	Loop here till timeout or first-byte flag is set,
+		indicating start of sample.  Then read the rest of the
+		sample.  */
+
+	   while (!(c & 0x80))
+	      if ((c = RECEIVE(TIMEOUT)) < 0)
+		 goto digtime;
+
+	   sp = sample;
+	   *sp++ = c;
+	   while (sp < endsamp) {
+	      if ((c = RECEIVE(TIMEOUT)) < 0)
+		 goto digtime;
+	      if (c & 0x80)
+		 /*  We dropped something; start again.  */
+		 goto notok;
+	      *sp++ = c;
+	   }
+
+	   break;
+
+notok:	   continue;
+	  }
+
+#ifdef DEBUG
+    printf(/*MSG0*/"\nS =  %2x %2x %2x %2x %2x",sample[0],sample[1],
+	sample[2],sample[3],sample[4]);
+#endif
+
+	/*  Since we are running in remote request mode, we may have
+	    received a sample even though the cursor is not in proximity.
+	    If this happens, return status zero to indicate no valid
+	    sample.  */
+
+	if (sample[0] & 0x40) {
+	   if (delta) {
+	      *dgx=dlx;
+	      *dgy=dly;
+	      return prior=P_COORD;
+	   } else
+	      return P_NONE;
+	}
+
+	/*  Examine the status bits returned and determine the type of
+	    sample received (tracking coordinate, point selection, or
+	    menu selection).  */
+
+	ch = (sample[0] & (curstype == 1 ? 3 : 7));
+	if (ch==0)
+	   dgstat=P_COORD;	      /*  Tracking coordinate  */
+	else if (ch == 1)
+	   dgstat=P_POINT;	      /* Point selected */
+	else
+	   dgstat=P_BUTTN;	      /* Button pushed */
+
+	/*  Convert sample to binary  */
+
+	if (delta) {
+
+	   samp = (sample[1] & 0x7F)*10;
+	   samp = (samp*20480)/slimit;
+	   if (sample[0] & 0x10)
+	      dlx += samp;
+	   else
+	      dlx -= samp;
+
+	   samp = (sample[2] & 0x7F)*10;
+	   samp = (samp*20480)/slimit;
+	   if (sample[0] & 0x8)
+	      dly += samp;
+	   else
+	      dly -= samp;
+
+	   if (dlx<0)
+	      dlx=0;
+	   else if (dlx>20480)
+	      dlx=20480;
+
+	   if (dly<0)
+	      dly=0;
+	   else if (dly>20480)
+	      dly=20480;
+
+	   x=dlx;
+	   y=dly;
+	} else {
+	   samp=cvalue(sample+1);
+	   if (samp>xlimit)
+	      samp=xlimit;
+	   x = (samp*20480)/slimit;
+	   samp=cvalue(sample+3);
+	   if (samp>ylimit)
+	      samp=ylimit;
+	   y = (samp*20480)/slimit;
+	}
+
+	/*  Wait for button release after select. */
+
+	if (prior > P_COORD && dgstat != P_COORD)
+	   dgstat = P_NONE;
+	else
+	   prior = dgstat;
+
+        /*  It's unfortunate but true that if the user hits the wrong button
+            when pointing to the screen menu, he'll get the
+            "hot" item first, then his pointed-to item.  */
+
+	if (dgstat == P_BUTTN) {
+
+	   /*  In its finite wisdom, the 3-button cursor returns
+	       a value of 4 for the third button (1, 2, 4).  */
+
+	   if (curstype == 3 && ch == 4)
+	      ch = 3;
+	   *dgx = ch - 2;	   /* Menu selection */
+	} else {
+	   *dgx = x;
+	   *dgy = y;	 /* Point selection. */
+#ifdef	DEBUG
+   printf(/*MSG0*/"\nC = %d %d",x,y);
+#endif
+	}
+
+	return dgstat;
+
+
+digtime:
+	return P_NONE;
+}
+
+/*  Convert a sample coordinate to binary.  Units are 500ths of an inch. */
+
+static
+/*FCN*/cvalue(string)
+  char *string;
+{
+	int c;
+
+	c=(*string++);
+	return (*string<<7 | c);
+}
+
+#endif /* XQT */
+

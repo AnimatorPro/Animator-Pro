@@ -1,0 +1,2 @@
+#define fli_100 "Isn't a FLI file, sorry"
+#define fli_101 "File corrupted."

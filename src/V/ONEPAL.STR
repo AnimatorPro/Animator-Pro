@@ -1,0 +1,2 @@
+#define onepal_100 "Too many colors, try fewer frames."
+#define onepal_101 "%d total colors used, packing..."

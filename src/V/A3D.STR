@@ -1,0 +1,4 @@
+#define a3d_100 "Shape too big, sorry."
+#define a3d_101 "Not a good OPTICS file"
+#define a3d_102 "Load Optics Move?"
+#define a3d_104 "Save Optics Move?"
