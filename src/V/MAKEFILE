@@ -4,7 +4,7 @@ CFLAGS= -Z -O -w-par -wstv -c -ml -I$(INCLUDE) -d
 .c.obj:
 	tcc $(CFLAGS) $*.c
 .asm.obj:
-	masm /Ml $*.asm;
+	tasm /Ml $*.asm;
 
 #.c.obj:
 #	wcc386 $*.c /c
