@@ -86,32 +86,6 @@ _bcontrast PROC far
 _bcontrast ENDP
 
 
-	PUBLIC _fcontrast
-	;fcontrast(s1, s2, count)
-_fcontrast PROC far
-	push bp
-	mov bp,sp
-	push ds
-	push si
-	push di
-	cld
-
-	lds si,[bp+4+2]
-	les di,[bp+8+2]
-	mov cx,[bp+12+2]
-	repne cmpsw
-	inc cx
-
-	mov ax,[bp+12+2]
-	sub ax,cx
-
-	pop di
-	pop si
-	pop ds
-	pop	bp
-	ret	
-_fcontrast ENDP
-
 	PUBLIC _bcompare
 	;bcompare(s1,s2,count)
 _bcompare PROC far
