@@ -137,14 +137,6 @@ nownthen equ this word
 skipdos equ this word
 	dw 1
 
-	;check on vblank status
-	public _pollvstatus
-_pollvstatus proc far
-	mov	dx,3dah
-	xor ah,ah
-	in al,dx
-	ret
-_pollvstatus endp
 
 	;busy-wait for vblank
 	public _wait_vblank
