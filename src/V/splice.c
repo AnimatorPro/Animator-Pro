@@ -2,9 +2,11 @@
    with some transition effect */
 
 #include "jimk.h"
+#include "blit8_.h"
+#include "commonst.h"
 #include "fli.h"
 #include "flicmenu.h"
-#include "commonst.h"
+#include "peekpok_.h"
 #include "splice.str"
 
 

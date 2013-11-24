@@ -4,11 +4,9 @@
    for incorporation into a FLI file.  See also writefli.c */
 
 #include "jimk.h"
+#include "peekpok_.h"
 
 #define MAX_RUN 127
-
-extern unsigned bcompare(), bcontrast(), bsame();
-
 
 static char *
 brun_comp_line(s1, cbuf, count)
@@ -213,7 +211,7 @@ for (;;)
 	wcount = bsame(s2, bcount);
 	if (wcount >= INERTIA)	/* it's worth doing a same thing thing */
 		{
-		next_match = tnskip(s1, s2, wcount,INERTIA);
+		next_match = til_next_skip(s1, s2, wcount,INERTIA);
 
 		if (next_match < wcount) /* if it's in our space and a decent size */
 			{			/* we'll cut short same run for the skip */
@@ -229,7 +227,9 @@ for (;;)
 		{
 		/* figure out how long until the next worthwhile "skip" */
 		/* Have wcount of stuff we can't skip through. */
-		wcount = tnsame(s2,tnskip(s1,s2,bcount,INERTIA-1),INERTIA);
+		wcount = til_next_same(s2,
+				til_next_skip(s1, s2, bcount, INERTIA-1),
+				INERTIA);
 		/* Say copy positive count as lit copy op, and put bytes to copy
 		   into the compression buffer */
 		*c++ = wcount;

@@ -60,7 +60,7 @@
 
 #include <setjmp.h>
 #include "jimk.h"
-
+#include "peekpok_.h"
 
 #define LARGEST_CODE	4095
 #define TABLE_SIZE	(8*1024)

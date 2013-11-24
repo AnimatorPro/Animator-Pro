@@ -38,10 +38,11 @@
 
 
 #include "jimk.h"
-#include "flicmenu.h"
-#include "fli.h"
 #include "a3d.h"
 #include "a3ddat.str"
+#include "fli.h"
+#include "flicmenu.h"
+#include "peekpok_.h"
 
 extern dcorner_text(), ccorner_text(), gary_menu_back(), mundo_pic(),
 	change_mode(), change_spin_mode(), change_size_mode(), change_ado_mode(),

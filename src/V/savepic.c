@@ -4,6 +4,7 @@
 
 #include "jimk.h"
 #include "fli.h"
+#include "peekpok_.h"
 #include "savepic.str"
 
 extern unsigned *brun();

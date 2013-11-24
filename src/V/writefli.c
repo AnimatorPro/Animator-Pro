@@ -4,6 +4,7 @@
 #include <fcntl.h>
 #include "jimk.h"
 #include "fli.h"
+#include "peekpok_.h"
 
 extern unsigned write(), read();
 

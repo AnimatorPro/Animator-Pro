@@ -10,9 +10,10 @@
 
 
 #include "jimk.h"
-#include "flicmenu.h"
+#include "a1blit_.h"
+#include "blit8_.h"
 #include "fli.h"
-
+#include "flicmenu.h"
 
 Vip aa_vip;
 WORD gel_input;

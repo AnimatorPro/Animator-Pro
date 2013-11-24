@@ -5,7 +5,10 @@
    */
 
 #include "jimk.h"
+#include "cblock_.h"
+#include "comp_.h"
 #include "fli.h"
+#include "peekpok_.h"
 
 #define SHRINK 5
 

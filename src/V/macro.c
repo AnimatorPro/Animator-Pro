@@ -6,6 +6,7 @@
 #include "jimk.h"
 #include "fli.h"
 #include "macro.str"
+#include "peekpok_.h"
 
 #define MACMAGIC 1811
 

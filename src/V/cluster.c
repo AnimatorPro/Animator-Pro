@@ -3,8 +3,11 @@
    way or another.  Some connections to palet2.c and cpack.c */
 
 #include "jimk.h"
-#include "flicmenu.h"
+#include "cblock_.h"
+#include "closest_.h"
 #include "cluster.str"
+#include "flicmenu.h"
+#include "peekpok_.h"
 
 extern Flicmenu pal_men_sel, pal_pal_sel,  rpal_pal_sel, pal_spe_sel,
 	palette_menu, spec1_sel,

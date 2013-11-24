@@ -1,5 +1,5 @@
-a1blit.obj+
-a2blit.obj+
+a1blit_.obj+
+a2blit_.obj+
 a3d.obj+
 a3ddat.obj+
 a3dpull.obj+
@@ -9,11 +9,12 @@ auto.obj+
 autoseg.obj+
 backward.obj+
 bfile.obj+
-blit8.obj+
+blit8_.obj+
 blue.obj+
 browse.obj+
 brush.obj+
 cblock.obj+
+cblock_.obj+
 cel.obj+
 cfont.obj+
 choices.obj+
@@ -21,11 +22,13 @@ circle.obj+
 cleanup.obj+
 cline.obj+
 clipit.obj+
-closestc.obj+
+clipit_.obj+
+closest_.obj+
 cluster.obj+
 colorave.obj+
 commonst.obj+
 comp.obj+
+comp_.obj+
 comprs.obj+
 config.obj+
 cpack.obj+
@@ -81,6 +84,7 @@ overlay.obj+
 palet2.obj+
 palpull.obj+
 peekpoke.obj+
+peekpok_.obj+
 pentools.obj+
 polytool.obj+
 pstamp.obj+
@@ -103,7 +107,6 @@ sep.obj+
 shrink5.obj+
 sintab.obj+
 sixhi.obj+
-skip.obj+
 slider.obj+
 spiral.obj+
 splice.obj+
@@ -129,7 +132,7 @@ tseg.obj+
 tween.obj+
 ublit8.obj+
 un5brun.obj+
-unbrun.obj+
+unbrun_.obj+
 vip.obj+
 vpaint.obj+
 vpsubs.obj+

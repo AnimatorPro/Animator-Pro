@@ -4,10 +4,13 @@
    doing the actual read and shrink of the first frame of a fli. */
 
 #include "jimk.h"
+#include "a1blit_.h"
+#include "blit8_.h"
+#include "browse.str"
+#include "cblock_.h"
+#include "commonst.h"
 #include "fli.h"
 #include "flicmenu.h"
-#include "commonst.h"
-#include "browse.str"
 
 /* Browse action defines. See browse.c */
 #define BA_LOAD 0

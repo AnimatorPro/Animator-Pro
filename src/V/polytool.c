@@ -6,6 +6,9 @@
    in a polygon.  */
 
 #include "jimk.h"
+#include "a1blit_.h"
+#include "blit8_.h"
+#include "peekpok_.h"
 #include "poly.h"
 
 /* some functions for line drawing */

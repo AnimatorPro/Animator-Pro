@@ -81,6 +81,9 @@ extern void cdot(UBYTE *dst, int x, int y, int col);
 #define vline(x, y0, y1, col) \
 	cvli(vf.p, x, y0, (y1)-(y0)+1, col)
 
+#define putdot(x, y, col) \
+	cdot(vf.p, x, y, col)
+
 #endif /* SLUFF */
 
 #endif

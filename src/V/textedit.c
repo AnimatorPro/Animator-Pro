@@ -5,11 +5,15 @@
    works most of the time!  See also textwind.c wordwrap.c and rfont.c */
 
 #include "jimk.h"
-#include "flicmenu.h"
-#include "fli.h"
-#include "gemfont.h"
-#include "text.h"
+#include "a1blit_.h"
+#include "blit8_.h"
+#include "cblock_.h"
 #include "commonst.h"
+#include "fli.h"
+#include "flicmenu.h"
+#include "gemfont.h"
+#include "peekpok_.h"
+#include "text.h"
 #include "textedit.str"
 
 extern char *text_buf;

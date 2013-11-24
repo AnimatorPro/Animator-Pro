@@ -5,6 +5,7 @@
 
 #include "jimk.h"
 #include "fli.h"
+#include "peekpok_.h"
 
 extern char new_tflx_name[];
 extern render_set();

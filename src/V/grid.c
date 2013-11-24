@@ -3,7 +3,8 @@
    'Snap' input to fall on intersections of a user definable
    grid.  Routines to see and paste the grid too. */
 
-#include  "jimk.h"
+#include "jimk.h"
+#include "cblock_.h"
 #include "flicmenu.h"
 #include "grid.str"
 

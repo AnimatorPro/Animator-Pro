@@ -5,6 +5,7 @@
 
 #include "jimk.h"
 #include "flicmenu.h"
+#include "peekpok_.h"
 
 rthread_cmap(gotit, scmap, dcmap, inertia, ccount)
 PLANEPTR gotit;  /* Pre-zeroed array of bytes ccount long used to

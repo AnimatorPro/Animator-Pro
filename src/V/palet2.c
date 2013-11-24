@@ -5,6 +5,7 @@
 #include "jimk.h"
 #include "flicmenu.h"
 #include "palet2.str"
+#include "peekpok_.h"
 
 extern int see_colgrid(), see_menu_back(),tri_right(),tri_left(),
 	wbtexty1(), text_boxp1(),see_qslider(),feel_qslider(),grey_block(),

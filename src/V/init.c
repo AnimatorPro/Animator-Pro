@@ -8,6 +8,7 @@
 #include "jimk.h"
 #include "flicmenu.h"
 #include "init.str"
+#include "peekpok_.h"
 
 extern int ivmode;
 extern char init_drawer[71];

@@ -2,6 +2,7 @@
    kludging handles most of the ink types menu as well. */
 
 #include "jimk.h"
+#include "a1blit_.h"
 #include "flicmenu.h"
 #include "gemfont.h"
 #include "options.str"

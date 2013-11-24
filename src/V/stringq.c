@@ -2,8 +2,11 @@
    of text */
 
 #include "jimk.h"
-#include "flicmenu.h"
+#include "a2blit_.h"
+#include "cblock_.h"
 #include "commonst.h"
+#include "flicmenu.h"
+#include "peekpok_.h"
 
 #define SDETAIL	sblack
 #define SBLOCK	swhite

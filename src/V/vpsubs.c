@@ -3,8 +3,9 @@
    Not well suited to being in an overlay. */
 
 #include "jimk.h"
-#include "flicmenu.h"
 #include "fli.h"
+#include "flicmenu.h"
+#include "peekpok_.h"
 
 extern Flicmenu dsel1_sel, it0_sel; /* first pen tool slot */
 extern Pull macro_pull, cel_pull, window_pull;

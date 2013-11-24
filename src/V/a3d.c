@@ -2,13 +2,14 @@
 /*	a3d.c - This file contains most of the code for the optics section. */
 
 #include "jimk.h"
+#include "a3d.h"
+#include "a3d.str"
+#include "commonst.h"
 #include "fli.h"
 #include "flicmenu.h"
-#include "a3d.h"
 #include "inks.h"
+#include "peekpok_.h"
 #include "poly.h"
-#include "commonst.h"
-#include "a3d.str"
 
 extern char curveflag;	/* draw points as polygon or curve? */
 extern int is_path;		/* Use path or curve tension cont. bias? */

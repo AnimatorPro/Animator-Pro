@@ -5,9 +5,10 @@
    If you #define NOSAVE this will disable saving. */
 
 #include "jimk.h"
-#include "flicmenu.h"
-#include "fli.h"
 #include "commonst.h"
+#include "fli.h"
+#include "flicmenu.h"
+#include "peekpok_.h"
 #include "vpaint.str"
 
 

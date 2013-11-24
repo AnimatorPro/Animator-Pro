@@ -4,6 +4,7 @@
    generate  polygons that are interpolated beTWEEN them. */
 
 #include "jimk.h"
+#include "peekpok_.h"
 #include "poly.h"
 #include "tween.str"
 

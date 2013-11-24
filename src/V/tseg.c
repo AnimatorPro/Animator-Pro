@@ -3,9 +3,10 @@
    selector" */
 
 #include "jimk.h"
-#include "flicmenu.h"
-#include "fli.h"
+#include "cblock_.h"
 #include "commonst.h"
+#include "fli.h"
+#include "flicmenu.h"
 #include "tseg.str"
 
 extern dcorner_text(), ccorner_text(), gary_menu_back(), mundo_pic(),

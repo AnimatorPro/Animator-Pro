@@ -26,9 +26,13 @@
 
 
 #include "jimk.h"
-#include "fli.h"
-#include "commonst.h"
+#include "a1blit_.h"
 #include "auto.str"
+#include "cblock_.h"
+#include "closest_.h"
+#include "commonst.h"
+#include "fli.h"
+#include "peekpok_.h"
 
 extern char new_tflx_name[];
 extern WORD x_0,y_0,x_1,y_1;

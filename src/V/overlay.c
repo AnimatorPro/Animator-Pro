@@ -3,11 +3,12 @@
    mix two FLICS onto the same screen and eventually same file.  */
 
 #include "jimk.h"
+#include "commonst.h"
 #include "fli.h"
 #include "flicmenu.h"
 #include "inks.h"
-#include "commonst.h"
 #include "overlay.str"
+#include "peekpok_.h"
 
 extern char under_flag;
 

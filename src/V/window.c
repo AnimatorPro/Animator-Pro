@@ -3,7 +3,11 @@
    This is what makes rendering a solid box slow in Vpaint... */
 
 #include "jimk.h"
+#include "a2blit_.h"
+#include "blit8_.h"
+#include "cblock_.h"
 #include "flicmenu.h"
+#include "peekpok_.h"
 
 /* structures for minimalist 'windowing' system that lets us draw behind
    menus.  Horizontal strips only.  */

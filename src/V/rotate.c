@@ -4,6 +4,8 @@
    'persp' code also used by stretch and optics. */
 
 #include "jimk.h"
+#include "blit8_.h"
+#include "peekpok_.h"
 
 /* a structure used to essentially hold food for diag_to_table */
 struct rot_seg

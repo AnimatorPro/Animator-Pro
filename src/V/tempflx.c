@@ -4,6 +4,7 @@
 #include "jimk.h"
 #include "fli.h"
 #include "flicmenu.h"
+#include "peekpok_.h"
 
 struct fli_head fhead;
 Flx *cur_flx;

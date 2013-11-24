@@ -3,8 +3,9 @@
    the sort. */
 
 #include "jimk.h"
-#include "flicmenu.h"
 #include "csort.str"
+#include "flicmenu.h"
+#include "peekpok_.h"
 
 extern UBYTE *cluster_to_cmap();
 

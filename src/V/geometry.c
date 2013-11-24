@@ -2,7 +2,7 @@
 /* geometry.c - Some linear algebra to help do rotations.  */
 
 #include "jimk.h"
-
+#include "peekpok_.h"
 
 /*find_conjugates()
   the guy passed to this is the op or function portion of the act with

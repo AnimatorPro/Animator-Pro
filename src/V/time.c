@@ -4,6 +4,7 @@
 
 #include "jimk.h"
 #include "fli.h"
+#include "peekpok_.h"
 #include "time.str"
 
 extern long fli_comp1(), write_tflx();

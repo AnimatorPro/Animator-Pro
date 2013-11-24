@@ -3,7 +3,7 @@
 #include "jimk.h"
 #include "fli.h"
 #include "flicmenu.h"
-
+#include "peekpok_.h"
 
 venetian_tween(s2, d, tix, tcount)
 Vscreen *s2, *d;	/*  source and  destination */

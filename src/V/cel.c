@@ -7,10 +7,13 @@
    the Cel drop-down */
 
 #include "jimk.h"
-#include "flicmenu.h"
-#include "fli.h"
-#include "inks.h"
+#include "blit8_.h"
+#include "cblock_.h"
 #include "cel.str"
+#include "fli.h"
+#include "flicmenu.h"
+#include "inks.h"
+#include "peekpok_.h"
 
 extern WORD x_0,y_0,x_1,y_1;
 extern char under_flag;

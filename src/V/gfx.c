@@ -3,7 +3,8 @@
    arithmetic helpers too. */
 
 #include "jimk.h"
-
+#include "cblock_.h"
+#include "peekpok_.h"
 
 #ifdef SLUFFED
 poke_bg(p)

@@ -1,6 +1,7 @@
 /* fccomp.c -  code used to delta compress colors. */
 
 #include "jimk.h"
+#include "peekpok_.h"
 
 /* fccomp - compress an rgb triples color map just doing 'skip' compression */
 unsigned *

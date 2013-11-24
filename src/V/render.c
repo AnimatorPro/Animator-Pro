@@ -4,8 +4,9 @@
    the blits for speed and other reasons are implemented separately. */
 
 #include "jimk.h"
-#include "poly.h"
+#include "cblock_.h"
 #include "inks.h"
+#include "poly.h"
 
 extern int copydot(),marqidot(),sdot(), xdot();
 extern a1bdot(), rbdot(), rbbrush();

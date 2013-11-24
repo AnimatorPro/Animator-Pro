@@ -5,8 +5,11 @@
    back and forth a single frame.  */
 
 #include "jimk.h"
+#include "comp_.h"
 #include "fli.h"
 #include "fli.str"
+#include "peekpok_.h"
+#include "unbrun_.h"
 
 /* error message - we decided it's not a good FLI file */
 notafli(name)
@@ -50,20 +53,20 @@ for (j=0;j<frame->chunks;j++)
 	switch (chunk->type)
 		{
 		case FLI_WRUN:
-			unrun(chunk+1, f->p);
+			unrun((const UBYTE *)(chunk+1), f->p);
 			break;
 		case FLI_SBSRSC: 
-			unsbsrsccomp(chunk+1, f->p);
+			unsbsrsccomp((const UBYTE *)(chunk+1), f->p);
 			break;
 		case FLI_COLOR:
 			if (colors)
 				{
 				cset_colors(chunk+1);
 				}
-			fcuncomp(chunk+1,f->cmap);
+			fcuncomp((const UBYTE *)(chunk+1),f->cmap);
 			break;
 		case FLI_LC:
-			unlccomp(chunk+1, f->p);
+			unlccomp((const UBYTE *)(chunk+1), f->p);
 			break;
 		case FLI_ICOLORS:
 			copy_cmap(init_cmap, f->cmap);
@@ -74,10 +77,10 @@ for (j=0;j<frame->chunks;j++)
 			clear_form(f);
 			break;
 		case FLI_BRUN:
-			unbrun(chunk+1, f->p, f->h);
+			unbrun((const UBYTE *)(chunk+1), f->p, f->h);
 			break;
 		case FLI_COPY:
-			copy_words(chunk+1,f->p,32000);
+			copy_words((const UBYTE *)(chunk+1),f->p,32000);
 			break;
 		}
 	c = norm_pointer(c + chunk->size);

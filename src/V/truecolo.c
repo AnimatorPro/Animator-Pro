@@ -3,7 +3,9 @@
    and not an index into the color map.  */
 
 #include "jimk.h"
+#include "closest_.h"
 #include "inks.h"
+#include "peekpok_.h"
 
 extern WORD quant_lx, quant_ly;
 
@@ -203,38 +205,6 @@ dc = rgb[2]-c[2];
 dif += dc*dc;
 return(dif);
 }
-
-
-
-#ifdef CCODE
-c_closestc(rgb,c)
-BYTE *rgb;
-BYTE *c;
-{
-long closest_dif, dif;
-WORD dc;
-register int i;
-int closest;
-
-closest_dif = 62000L;	/* arbitrary huge number */
-for (i=0; i<COLORS; i++)
-	{
-	dc = rgb[0]-c[0];
-	dif = dc*dc;
-	dc = rgb[1]-c[1];
-	dif += dc*dc;
-	dc = rgb[2]-c[2];
-	dif += dc*dc;
-	if (dif < closest_dif)
-		{
-		closest_dif = dif;
-		closest = i;
-		}
-	c += 3;
-	}
-return(closest);
-}
-#endif /* CCODE */
 
 static int rerr,gerr,berr;
 

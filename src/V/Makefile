@@ -1,5 +1,5 @@
 
-CFLAGS= -Z -O -w-par -wstv -c -ml -I$(INCLUDE) -d
+CFLAGS= -Z -O -w-par -wstv -c -ml -I$(INCLUDE) -I. -I..\COMMON -d
 
 .c.obj:
 	tcc $(CFLAGS) $*.c
@@ -9,12 +9,12 @@ CFLAGS= -Z -O -w-par -wstv -c -ml -I$(INCLUDE) -d
 #.c.obj:
 #	wcc386 $*.c /c
 
-O= a1blit.obj a2blit.obj a3d.obj a3ddat.obj a3dpull.obj alt.obj arctan.obj \
+O= a3d.obj a3ddat.obj a3dpull.obj alt.obj arctan.obj \
 auto.obj autoseg.obj backward.obj \
-bfile.obj blit8.obj blue.obj browse.obj brush.obj \
+bfile.obj blue.obj browse.obj brush.obj \
 cblock.obj circle.obj cel.obj cfont.obj choices.obj \
 cleanup.obj cline.obj clipit.obj \
-closestc.obj cluster.obj colorave.obj commonst.obj comp.obj comprs.obj \
+cluster.obj colorave.obj commonst.obj comp.obj comprs.obj \
 config.obj cpack.obj csort.obj cthread.obj cursorda.obj \
 decoder.obj diag.obj diskerr.obj dissolve.obj dosstuff.obj \
 drawmode.obj ellipse.obj emmchek.obj \
@@ -32,16 +32,26 @@ rfont.obj rotate.obj savefli.obj savepic.obj \
 scanedge.obj screen.obj scroller.obj \
 seeme.obj seemenu.obj selbrush.obj sep.obj \
 shrink5.obj sintab.obj sixhi.obj \
-skip.obj slider.obj spiral.obj splice.obj spline.obj \
+slider.obj spiral.obj splice.obj spline.obj \
 sqrroot.obj status.obj stretch.obj stringq.obj summa.obj \
 tablet.obj \
 tblit8.obj tempflx.obj textbox.obj textedit.obj textwind.obj \
 thikline.obj time.obj timemenu.obj title.obj \
 tmove8.obj truecolor.obj tseg.obj \
-tween.obj ublit8.obj unbrun.obj un5brun.obj \
+tween.obj ublit8.obj un5brun.obj \
 vip.obj vpaint.obj vpsubs.obj \
 wacom.obj window.obj wordwrap.obj writefli.obj \
-zoom.obj zoomblit.obj zoom4bli.obj
+zoom.obj zoomblit.obj zoom4bli.obj \
+	..\COMMON\a1blit_.obj  \
+	..\COMMON\a2blit_.obj  \
+	..\COMMON\blit8_.obj   \
+	..\COMMON\cblock_.obj  \
+	..\COMMON\clipit_.obj  \
+	..\COMMON\closest_.obj \
+	..\COMMON\comp_.obj    \
+	..\COMMON\peekpok_.obj \
+	..\COMMON\unbrun_.obj
+
 
 fast: $(O)
 	tlink $(LIB)c0l @linkit, v, v, $(LIB)cl
