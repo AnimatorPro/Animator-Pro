@@ -12,7 +12,7 @@ CFLAGS= -Z -O -w-par -wstv -c -ml -I$(INCLUDE) -I. -I..\COMMON -d
 O= a3d.obj a3ddat.obj a3dpull.obj alt.obj arctan.obj \
 auto.obj autoseg.obj backward.obj \
 bfile.obj blue.obj browse.obj brush.obj \
-cblock.obj circle.obj cel.obj cfont.obj choices.obj \
+circle.obj cel.obj cfont.obj choices.obj \
 cleanup.obj cline.obj clipit.obj \
 cluster.obj colorave.obj commonst.obj comp.obj comprs.obj \
 config.obj cpack.obj csort.obj cthread.obj cursorda.obj \

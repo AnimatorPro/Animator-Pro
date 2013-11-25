@@ -3,6 +3,7 @@
    and not an index into the color map.  */
 
 #include "jimk.h"
+#include "cblock_.h"
 #include "closest_.h"
 #include "inks.h"
 #include "peekpok_.h"

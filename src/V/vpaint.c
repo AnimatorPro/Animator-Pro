@@ -5,6 +5,7 @@
    If you #define NOSAVE this will disable saving. */
 
 #include "jimk.h"
+#include "cblock_.h"
 #include "commonst.h"
 #include "fli.h"
 #include "flicmenu.h"

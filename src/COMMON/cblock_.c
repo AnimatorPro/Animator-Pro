@@ -64,6 +64,12 @@ cvli(UBYTE *dst, int x, int y, int height, int col)
 	}
 }
 
+UBYTE
+getd(const UBYTE *src, int x, int y)
+{
+	return src[WIDTH * y + x];
+}
+
 void
 cdot(UBYTE *dst, int x, int y, int col)
 {

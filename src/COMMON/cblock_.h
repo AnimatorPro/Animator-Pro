@@ -51,6 +51,15 @@ extern void chli(UBYTE *dst, int x, int y, int width, int col);
  */
 extern void cvli(UBYTE *dst, int x, int y, int height, int col);
 
+/* Function: getd
+ *
+ *  Return colour of pixel.  Not clipped.
+ *
+ *  src - byte plane to read from.
+ *  x, y - screen position.
+ */
+extern UBYTE getd(const UBYTE *src, int x, int y);
+
 /* Function: cdot
  *
  *  Draw a single pixel dot.  Clipped to 320x200.
@@ -80,6 +89,9 @@ extern void cdot(UBYTE *dst, int x, int y, int col);
 
 #define vline(x, y0, y1, col) \
 	cvli(vf.p, x, y0, (y1)-(y0)+1, col)
+
+#define getdot(x, y) \
+	getd(vf.p, x, y)
 
 #define putdot(x, y, col) \
 	cdot(vf.p, x, y, col)

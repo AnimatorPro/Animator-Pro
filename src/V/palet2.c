@@ -3,6 +3,7 @@
    the Flicmenu button declarations for the palette editor control panel. */
 
 #include "jimk.h"
+#include "cblock_.h"
 #include "flicmenu.h"
 #include "palet2.str"
 #include "peekpok_.h"

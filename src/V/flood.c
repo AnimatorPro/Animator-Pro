@@ -4,6 +4,7 @@
    */
 
 #include "jimk.h"
+#include "cblock_.h"
 #include "peekpok_.h"
 
 static UBYTE fcolor;
