@@ -17,7 +17,7 @@ extern void xorblock(UBYTE *dst, int x, int y, int width, int height, int col);
 
 /* Function: cblock
  *
- *  Draw a rectangle in a solid colour.  Not clipped.
+ *  Draw a rectangle in a solid colour.  Clipped to fit 320x200 screen.
  *  Used heavily by menu drawing routines.
  *
  *  dst - byte plane to draw on.

@@ -35,6 +35,9 @@ xorblock(UBYTE *dst, int x, int y, int width, int height, int col)
 void
 cblock(UBYTE *dst, int x, int y, int width, int height, int col)
 {
+	if (!clipblock(&x, &y, &width, &height))
+		return;
+
 	dst += WIDTH * y + x;
 
 	for (; height > 0; height--) {
