@@ -5,6 +5,12 @@
 #include "peekpok_.h"
 
 void
+stuff_bytes(UBYTE val, UBYTE *dst, unsigned int n)
+{
+	memset(dst, val, n);
+}
+
+void
 stuff_words(UWORD val, UWORD *dst, unsigned int n)
 {
 	unsigned int i;

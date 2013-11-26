@@ -149,27 +149,6 @@ _enorm_pointer	PROC far
 	ret	
 _enorm_pointer	ENDP
 
-;stuff_bytes(data, offset, seg, bytes)
-	PUBLIC	_stuff_bytes
-_stuff_bytes	PROC far
-	push	bp
-	mov	bp,sp
-	push es
-	push di
-	push cx
-	mov	ax,[bp+8+2]	;seg
-	mov	di,[bp+6+2]	;offset
-	mov es,ax
-	mov ax,[bp+4+2]   ;value to poke
-	mov cx,[bp+10+2]  ;count
-	rep stosb
-	pop cx
-	pop di
-	pop es
-	pop	bp
-	ret	
-_stuff_bytes	ENDP
-
 
 ;xor_words(data, offset, seg, words/8);
 	PUBLIC	_xor_words

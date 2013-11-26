@@ -3,6 +3,9 @@
 
 #include "jimk.h"
 
+/* Function: stuff_bytes */
+extern void stuff_bytes(UBYTE val, UBYTE *dst, unsigned int n);
+
 /* Function: stuff_words */
 extern void stuff_words(UWORD val, UWORD *dst, unsigned int n);
 
