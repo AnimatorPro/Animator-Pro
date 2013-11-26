@@ -42,6 +42,15 @@ copy_structure(const void *src, void *dst, unsigned int n)
 }
 
 void
+xor_group(const UWORD *src, UWORD *dst, unsigned int n)
+{
+	unsigned int i;
+
+	for (i = 0; i < n; i++)
+		dst[i] ^= src[i];
+}
+
+void
 exchange_words(UWORD *xs, UWORD *ys, unsigned int n)
 {
 	for (; n > 0; n--) {

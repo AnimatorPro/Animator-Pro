@@ -150,36 +150,6 @@ _enorm_pointer	PROC far
 _enorm_pointer	ENDP
 
 
-;xor_group(s, d, words)
-	public _xor_group
-_xor_group proc far
-	push bp
-	mov bp,sp
-	push es
-	push ds
-	push si
-	push di
-	push cx
-
-	les	di,[bp+8+2]
-	lds si,[bp+4+2]
-	mov	cx,[bp+12+2]
-xorglp:
-	lodsw
-	mov dx,es:[di]
-	xor ax,dx
-	stosw
-	loop xorglp
-	pop cx
-	pop di
-	pop si
-	pop ds
-	pop es
-	pop bp
-	ret
-_xor_group endp
-
-
 	PUBLIC _xlat
 	;xlat(table, buf, count)
 	;table -> 256 byte translation table
