@@ -9,6 +9,9 @@ extern void stuff_bytes(UBYTE val, UBYTE *dst, unsigned int n);
 /* Function: stuff_words */
 extern void stuff_words(UWORD val, UWORD *dst, unsigned int n);
 
+/* Function: xor_words */
+extern void xor_words(UWORD val, UWORD *dst, unsigned int n_8);
+
 /* Function: copy_bytes */
 extern void copy_bytes(const UBYTE *src, UBYTE *dst, unsigned int n);
 

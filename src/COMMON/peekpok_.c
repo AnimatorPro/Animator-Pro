@@ -20,6 +20,16 @@ stuff_words(UWORD val, UWORD *dst, unsigned int n)
 }
 
 void
+xor_words(UWORD val, UWORD *dst, unsigned int n_8)
+{
+	unsigned int n = n_8 * 8;
+	unsigned int i;
+
+	for (i = 0; i < n; i++)
+		dst[i] ^= val;
+}
+
+void
 copy_bytes(const UBYTE *src, UBYTE *dst, unsigned int n)
 {
 	memmove(dst, src, n);

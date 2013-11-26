@@ -150,43 +150,6 @@ _enorm_pointer	PROC far
 _enorm_pointer	ENDP
 
 
-;xor_words(data, offset, seg, words/8);
-	PUBLIC	_xor_words
-_xor_words	PROC far
-	push	bp
-	mov	bp,sp
-	push ds
-	push es
-	push bx
-	push cx
-
-	mov	ax,[bp+8+2]	;seg
-	mov	bx,[bp+6+2]	;offset
-	mov ds,ax
-	mov es,ax
-	mov ax,[bp+4+2]   ;value to xor
-	mov cx,[bp+10+2]  ;count
-ook:
-	xor [bx],ax
-	xor [bx+2],ax
-	xor [bx+4],ax
-	xor [bx+6],ax
-	xor [bx+8],ax
-	xor [bx+10],ax
-	xor [bx+12],ax
-	xor [bx+14],ax
-	add bx,16
-	loop ook
-
-	pop cx
-	pop bx
-	pop es
-	pop ds
-	pop	bp
-	ret	
-_xor_words	ENDP
-
-
 ;xor_group(s, d, words)
 	public _xor_group
 _xor_group proc far
