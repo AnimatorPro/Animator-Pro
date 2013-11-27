@@ -30,6 +30,9 @@ extern void copy_words(const UWORD *src, UWORD *dst, unsigned int n);
 /* Function: xlat */
 extern void xlat(const UBYTE *src, UBYTE *dst, unsigned int n);
 
+/* Function: back_scan */
+extern unsigned int back_scan(UBYTE val, const UBYTE *ys, unsigned int n);
+
 /* Function: bsame */
 extern unsigned int bsame(const UBYTE *src, unsigned int n);
 

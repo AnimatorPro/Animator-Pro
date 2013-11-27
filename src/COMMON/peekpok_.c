@@ -78,6 +78,20 @@ xlat(const UBYTE *table, UBYTE *xs, unsigned int n)
 }
 
 unsigned int
+back_scan(UBYTE val, const UBYTE *src, unsigned int n)
+{
+	unsigned int i;
+
+	src--;
+	for (i = 0; i < n; i++) {
+		if (*(src - i) != val)
+			break;
+	}
+
+	return i;
+}
+
+unsigned int
 bsame(const UBYTE *src, unsigned int n)
 {
 	unsigned int i;

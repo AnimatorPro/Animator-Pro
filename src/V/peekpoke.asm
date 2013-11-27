@@ -149,30 +149,5 @@ _enorm_pointer	PROC far
 	ret	
 _enorm_pointer	ENDP
 
-
-	public _back_scan
-_back_scan	proc	far
-	push	bp
-	mov		bp,sp
-	push	di
-	push	es
-
-	les	di,[bp+6+2]
-	dec di
-	mov cx,[bp+10+2]
-	mov al,[bp+4+2]
-	std
-	rep scasb
-	cld
-	inc cx
-	mov ax,[bp+10+2]
-	sub ax,cx
-
-	pop	es
-	pop	di
-	pop	bp
-	ret
-_back_scan endp
-
 _TEXT	ENDS
 END
