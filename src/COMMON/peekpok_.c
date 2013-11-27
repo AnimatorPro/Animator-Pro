@@ -68,6 +68,15 @@ copy_words(const UWORD *src, UWORD *dst, unsigned int n)
 	memmove(dst, src, 2 * n);
 }
 
+void
+xlat(const UBYTE *table, UBYTE *xs, unsigned int n)
+{
+	unsigned int i;
+
+	for (i = 0; i < n; i++)
+		xs[i] = table[xs[i]];
+}
+
 unsigned int
 bsame(const UBYTE *src, unsigned int n)
 {
