@@ -280,12 +280,6 @@ struct blitblock
 	};
 #endif SLUFFED
 
-
-/* graphics macros */
-extern
-	ublit8();	/* lo level PC gfx funx */
-
-
 /* some macros that save some typing, but expand too long for code
    sluffer to handle.  These ARE defined for the compiler, just
    not for sluff. */

@@ -117,6 +117,27 @@ tmove8(int width, int height,
 		int dx, int dy, UBYTE *dst, int dstride, int transcol,
 		const UBYTE *undo);
 
+/* Function: ublit8
+ *
+ *  Blit from byte-plane source under byte-plane destination.
+ *  (Only pixels in destination that are transparent are changed.)
+ *  This is used by paste below.
+ *
+ *  width - width of blit in pixels.
+ *  height - height of blit in pixels.
+ *  sx, sy - coordinates of upper left corner of source.
+ *  src - pointer to source byte-plane.
+ *  sstride - how many bytes from one line of source to next.
+ *  dx, dy - coordinates of upper left corner of destination.
+ *  dst - pointer to destination byte-plane.
+ *  dstride - how many bytes from one line of destination to next.
+ *  transcol - transparent colour in destination.
+ */
+extern void
+ublit8(int width, int height,
+		int sx, int sy, const UBYTE *src, int sstride,
+		int dx, int dy, UBYTE *dst, int dstride, int transcol);
+
 #ifndef SLUFF
 
 #define cdraw_brush(brush, x, y, col) \

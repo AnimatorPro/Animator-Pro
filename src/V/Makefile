@@ -13,7 +13,7 @@ O= a3d.obj a3ddat.obj a3dpull.obj alt.obj arctan.obj \
 auto.obj autoseg.obj backward.obj \
 bfile.obj blue.obj browse.obj brush.obj \
 circle.obj cel.obj cfont.obj choices.obj \
-cleanup.obj cline.obj clipit.obj \
+cleanup.obj cline.obj \
 cluster.obj colorave.obj commonst.obj comp.obj comprs.obj \
 config.obj cpack.obj csort.obj cthread.obj cursorda.obj \
 decoder.obj diag.obj diskerr.obj dissolve.obj dosstuff.obj \
@@ -38,7 +38,7 @@ tablet.obj \
 tempflx.obj textbox.obj textedit.obj textwind.obj \
 thikline.obj time.obj timemenu.obj title.obj \
 truecolor.obj tseg.obj \
-tween.obj ublit8.obj un5brun.obj \
+tween.obj un5brun.obj \
 vip.obj vpaint.obj vpsubs.obj \
 wacom.obj window.obj wordwrap.obj writefli.obj \
 zoom.obj zoomblit.obj zoom4bli.obj \

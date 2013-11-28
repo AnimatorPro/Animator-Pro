@@ -18,7 +18,6 @@ choices.obj+
 circle.obj+
 cleanup.obj+
 cline.obj+
-clipit.obj+
 clipit_.obj+
 closest_.obj+
 cluster.obj+
@@ -125,7 +124,6 @@ title.obj+
 truecolo.obj+
 tseg.obj+
 tween.obj+
-ublit8.obj+
 un5brun.obj+
 unbrun_.obj+
 vip.obj+

@@ -4,6 +4,7 @@
    the blits for speed and other reasons are implemented separately. */
 
 #include "jimk.h"
+#include "blit8_.h"
 #include "cblock_.h"
 #include "inks.h"
 #include "poly.h"
