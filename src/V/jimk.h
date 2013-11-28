@@ -284,7 +284,7 @@ struct blitblock
 /* graphics macros */
 extern
 	tmove8(),
-	ublit8(), tblit8();	/* lo level PC gfx funx */
+	ublit8();	/* lo level PC gfx funx */
 
 
 /* some macros that save some typing, but expand too long for code

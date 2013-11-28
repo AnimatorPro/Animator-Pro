@@ -70,6 +70,28 @@ blit8(int width, int height,
 		int sx, int sy, const UBYTE *src, int sstride,
 		int dx, int dy, UBYTE *dst, int dstride);
 
+/* Function: tblit8
+ *
+ *  Blit from byte-plane source to byte-plane destination with a transparent
+ *  colour.  (Pixels that are transparent colour in source are not copied.)
+ *  This is used to paste the cel when key colour clear is turned on.
+ *  Also by the optics, etc.
+ *
+ *  width - width of blit in pixels.
+ *  height - height of blit in pixels.
+ *  sx, sy - coordinates of upper left corner of source.
+ *  src - pointer to source byte-plane.
+ *  sstride - how many bytes from one line of source to next.
+ *  dx, dy - coordinates of upper left corner of destination.
+ *  dst - pointer to destination byte-plane.
+ *  dstride - how many bytes from one line of destination to next.
+ *  transcol - transparent colour in source.
+ */
+extern void
+tblit8(int width, int height,
+		int sx, int sy, const UBYTE *src, int sstride,
+		int dx, int dy, UBYTE *dst, int dstride, int transcol);
+
 #ifndef SLUFF
 
 #define cdraw_brush(brush, x, y, col) \

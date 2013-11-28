@@ -35,7 +35,7 @@ shrink5.obj sintab.obj sixhi.obj \
 slider.obj spiral.obj splice.obj spline.obj \
 sqrroot.obj status.obj stretch.obj stringq.obj summa.obj \
 tablet.obj \
-tblit8.obj tempflx.obj textbox.obj textedit.obj textwind.obj \
+tempflx.obj textbox.obj textedit.obj textwind.obj \
 thikline.obj time.obj timemenu.obj title.obj \
 tmove8.obj truecolor.obj tseg.obj \
 tween.obj ublit8.obj un5brun.obj \
