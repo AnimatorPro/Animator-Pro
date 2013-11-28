@@ -92,6 +92,31 @@ tblit8(int width, int height,
 		int sx, int sy, const UBYTE *src, int sstride,
 		int dx, int dy, UBYTE *dst, int dstride, int transcol);
 
+/* Function: tmove8
+ *
+ *  Blit from byte-plane source to byte plane destination if the source
+ *  is not clear colour, if it is clear colour copy pixel from undo buffer
+ *  instead.  This is used to interactively move the cel around without
+ *  there being too much flickering.
+ *
+ *  width - width of blit in pixels.
+ *  height - height of blit in pixels.
+ *  sx, sy - coordinates of upper left corner of source.
+ *  src - pointer to source byte-plane.
+ *  sstride - how many bytes from one line of source to next.
+ *  dx, dy - coordinates of upper left corner of destination.
+ *  dst - pointer to destination byte-plane.
+ *  dstride - how many bytes from one line of destination to next.
+ *  transcol - transparent colour in source.
+ *  undo - pointer to undo byte-plane.  Assumed same format as
+ *         source plane.  Restore transparent pixels from here.
+ */
+extern void
+tmove8(int width, int height,
+		int sx, int sy, const UBYTE *src, int sstride,
+		int dx, int dy, UBYTE *dst, int dstride, int transcol,
+		const UBYTE *undo);
+
 #ifndef SLUFF
 
 #define cdraw_brush(brush, x, y, col) \

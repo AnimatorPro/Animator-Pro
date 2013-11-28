@@ -127,3 +127,26 @@ tblit8(int width, int height,
 		dst += dstride;
 	}
 }
+
+void
+tmove8(int width, int height,
+		int sx, int sy, const UBYTE *src, int sstride,
+		int dx, int dy, UBYTE *dst, int dstride, int transcol,
+		const UBYTE *undo)
+{
+	if (!clipblit_(&width, &height, &sx, &sy, &dx, &dy))
+		return;
+
+	src += sstride * sy + sx;
+	dst += dstride * dy + dx;
+
+	for (; height > 0; height--) {
+		int x;
+
+		for (x = 0; x < width; x++)
+			dst[x] = (src[x] == transcol) ? undo[x] : src[x];
+
+		src += sstride;
+		dst += dstride;
+	}
+}

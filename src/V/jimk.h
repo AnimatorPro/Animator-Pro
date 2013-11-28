@@ -283,7 +283,6 @@ struct blitblock
 
 /* graphics macros */
 extern
-	tmove8(),
 	ublit8();	/* lo level PC gfx funx */
 
 

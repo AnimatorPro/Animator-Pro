@@ -37,7 +37,7 @@ sqrroot.obj status.obj stretch.obj stringq.obj summa.obj \
 tablet.obj \
 tempflx.obj textbox.obj textedit.obj textwind.obj \
 thikline.obj time.obj timemenu.obj title.obj \
-tmove8.obj truecolor.obj tseg.obj \
+truecolor.obj tseg.obj \
 tween.obj ublit8.obj un5brun.obj \
 vip.obj vpaint.obj vpsubs.obj \
 wacom.obj window.obj wordwrap.obj writefli.obj \
