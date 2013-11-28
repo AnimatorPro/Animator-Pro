@@ -5,8 +5,8 @@
 
 #include <stdio.h>
 #include "jimk.h"
-#include "a2blit_.h"
 #include "bfile.h"
+#include "blit8_.h"
 #include "closest_.h"
 #include "crop.h"
 #include "memory.h"

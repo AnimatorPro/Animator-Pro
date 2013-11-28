@@ -16,8 +16,6 @@ mainpull.obj stubs.obj names.obj peekpoke.obj pull.obj \
 prj1.obj scroller.obj seeme.obj seemenu.obj stringq.obj \
 textbox.obj view.obj vbat.obj mainmenu.obj slider.obj gif.obj \
 stubs2.obj decoder.obj shrinkin.obj bfile.obj int.obj sys_dos.obj \
-	..\COMMON\a1blit_.obj  \
-	..\COMMON\a2blit_.obj  \
 	..\COMMON\blit8_.obj   \
 	..\COMMON\cblock_.obj  \
 	..\COMMON\clipit_.obj  \

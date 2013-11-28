@@ -39,8 +39,6 @@ OBJS := main.o     \
 	vbat.o     \
 	view.o     \
 	$(addprefix ../COMMON/, \
-	a1blit_.o  \
-	a2blit_.o  \
 	blit8_.o   \
 	cblock_.o  \
 	closest_.o \

@@ -3,7 +3,7 @@
    a list of strings.  */
 
 #include "jimk.h"
-#include "a1blit_.h"
+#include "blit8_.h"
 #include "flicmenu.h"
 
 extern gary_menu_back(), gary_see_title(),blacktext(),

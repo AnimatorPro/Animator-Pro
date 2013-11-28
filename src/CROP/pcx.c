@@ -3,8 +3,8 @@
 
 #include <stdio.h>
 #include "jimk.h"
-#include "a2blit_.h"
 #include "bfile.h"
+#include "blit8_.h"
 #include "crop.h"
 #include "jfile.h"
 #include "memory.h"

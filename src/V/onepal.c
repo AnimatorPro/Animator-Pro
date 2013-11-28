@@ -3,7 +3,7 @@
    intermediate palette that is the same for all frames */
 
 #include "jimk.h"
-#include "a2blit_.h"
+#include "blit8_.h"
 #include "fli.h"
 #include "onepal.str"
 #include "peekpok_.h"

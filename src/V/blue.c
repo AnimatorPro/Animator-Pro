@@ -1,7 +1,7 @@
 /* blue.c - Stuff to implement much of the trace drop down */
 
 #include "jimk.h"
-#include "a1blit_.h"
+#include "blit8_.h"
 #include "fli.h"
 #include "peekpok_.h"
 

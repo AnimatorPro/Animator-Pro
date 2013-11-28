@@ -2,7 +2,7 @@
 /* mask.c - Routines to maintain and select our screen-sized bitplane
    used mostly for write-protecting pixels.  */
 #include "jimk.h"
-#include "a1blit_.h"
+#include "blit8_.h"
 #include "flicmenu.h"
 #include "mask.str"
 #include "peekpok_.h"

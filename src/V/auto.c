@@ -26,8 +26,8 @@
 
 
 #include "jimk.h"
-#include "a1blit_.h"
 #include "auto.str"
+#include "blit8_.h"
 #include "cblock_.h"
 #include "closest_.h"
 #include "commonst.h"

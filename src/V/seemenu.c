@@ -5,7 +5,7 @@
    Recursive button display stuff is in here.  Other simple seeme's
    are in seeme.c */
 #include "jimk.h"
-#include "a1blit_.h"
+#include "blit8_.h"
 #include "cblock_.h"
 #include "flicmenu.h"
 

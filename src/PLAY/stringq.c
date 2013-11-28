@@ -7,7 +7,7 @@
 
 #include <string.h>
 #include "jimk.h"
-#include "a2blit_.h"
+#include "blit8_.h"
 #include "cblock_.h"
 #include "flicmenu.h"
 #include "io_.h"

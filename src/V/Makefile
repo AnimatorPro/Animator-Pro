@@ -42,8 +42,6 @@ tween.obj ublit8.obj un5brun.obj \
 vip.obj vpaint.obj vpsubs.obj \
 wacom.obj window.obj wordwrap.obj writefli.obj \
 zoom.obj zoomblit.obj zoom4bli.obj \
-	..\COMMON\a1blit_.obj  \
-	..\COMMON\a2blit_.obj  \
 	..\COMMON\blit8_.obj   \
 	..\COMMON\cblock_.obj  \
 	..\COMMON\clipit_.obj  \

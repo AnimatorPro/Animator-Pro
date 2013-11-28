@@ -2,7 +2,7 @@
    of text */
 
 #include "jimk.h"
-#include "a2blit_.h"
+#include "blit8_.h"
 #include "cblock_.h"
 #include "commonst.h"
 #include "flicmenu.h"
