@@ -10,6 +10,7 @@
 #include "comp_.h"
 #include "fli.h"
 #include "peekpok_.h"
+#include "unbrun_.h"
 
 #define SHRINK 5
 
@@ -41,7 +42,7 @@ for (j=0;j<frame->chunks;j++)
 			cblock(p,0,0,f->w,f->h,0);
 			break;
 		case FLI_BRUN:
-			un5brun(chunk+1, p, f->h);
+			un5brun((const UBYTE *)(chunk+1), p, f->h);
 			break;
 		case FLI_COPY:
 			un5copy(chunk+1,p,BPR,f->h);
