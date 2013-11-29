@@ -5,6 +5,7 @@
    */
 
 #include "jimk.h"
+#include "blit8_.h"
 #include "cblock_.h"
 #include "comp_.h"
 #include "fli.h"

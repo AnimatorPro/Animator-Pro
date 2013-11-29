@@ -138,6 +138,26 @@ ublit8(int width, int height,
 		int sx, int sy, const UBYTE *src, int sstride,
 		int dx, int dy, UBYTE *dst, int dstride, int transcol);
 
+/* Function: shrink5
+ *
+ *  Throw out 4 out of every 5 pixels in a horizontal line (or a
+ *  couple of lines).  Used by pstamp.c; used to display shrunken 1st
+ *  frames in browse menu.
+ *
+ *  width - width of blit in pixels.
+ *  height - height of blit in pixels.
+ *  sx, sy - coordinates of upper left corner of source.
+ *  src - pointer to source byte-plane.
+ *  sstride - how many bytes from one line of source to next.
+ *  dx, dy - coordinates of upper left corner of destination.
+ *  dst - pointer to destination byte-plane.
+ *  dstride - how many bytes from one line of destination to next.
+ */
+extern void
+shrink5(int width, int height,
+		int sx, int sy, const UBYTE *src, int sstride,
+		int dx, int dy, UBYTE *dst, int dstride);
+
 #ifndef SLUFF
 
 #define cdraw_brush(brush, x, y, col) \

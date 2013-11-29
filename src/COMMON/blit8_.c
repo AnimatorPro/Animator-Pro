@@ -174,3 +174,22 @@ ublit8(int width, int height,
 		dst += dstride;
 	}
 }
+
+void
+shrink5(int width, int height,
+		int sx, int sy, const UBYTE *src, int sstride,
+		int dx, int dy, UBYTE *dst, int dstride)
+{
+	src += sstride * sy + sx;
+	dst += dstride * dy + dx;
+
+	for (; height > 0; height--) {
+		int x;
+
+		for (x = 0; x < width; x++)
+			dst[x] = src[5 * x];
+
+		src += sstride;
+		dst += dstride;
+	}
+}

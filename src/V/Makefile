@@ -31,7 +31,7 @@ multimen.obj names.obj overlay.obj random.obj render.obj \
 rfont.obj rotate.obj savefli.obj savepic.obj \
 scanedge.obj screen.obj scroller.obj \
 seeme.obj seemenu.obj selbrush.obj sep.obj \
-shrink5.obj sintab.obj sixhi.obj \
+sintab.obj sixhi.obj \
 slider.obj spiral.obj splice.obj spline.obj \
 sqrroot.obj status.obj stretch.obj stringq.obj summa.obj \
 tablet.obj \
