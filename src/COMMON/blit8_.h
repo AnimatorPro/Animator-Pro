@@ -180,6 +180,28 @@ zoomblit(int swidth, int dheight,
 		int sx, int sy, const UBYTE *src, int sstride,
 		int dx, int dy, UBYTE *dst, int dstride);
 
+/* Function: zoom4blit
+ *
+ *  Move a rectangular area, expanding pixels in source to 4x4 pixel blocks
+ *  in destination.  Currently this routine is only used and tested for
+ *  source width equal to quarter screen (dest width full screen).
+ *
+ *  swidth - width of source in pixels.
+ *  dheight - height of destination in pixels.
+ *  sx, sy - coordinates of upper left corner of source.
+ *  src - pointer to source byte-plane.
+ *  sstride - how many bytes from one line of source to next.
+ *            Routine currently uses 320 some places instead.  Yuck!
+ *  dx, dy - coordinates of upper left corner of destination.
+ *           If dy is not divisible by 4, 1st line partial.
+ *  dst - pointer to destination byte-plane.
+ *  dstride - how many bytes from one line of destination to next.
+ */
+extern void
+zoom4blit(int swidth, int dheight,
+		int sx, int sy, const UBYTE *src, int sstride,
+		int dx, int dy, UBYTE *dst, int dstride);
+
 #ifndef SLUFF
 
 #define cdraw_brush(brush, x, y, col) \

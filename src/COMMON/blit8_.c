@@ -230,3 +230,53 @@ zoomblit(int swidth, int dheight,
 		src += sstride;
 	}
 }
+
+static void
+hafline4(int swidth, const UBYTE *src, UBYTE *dst)
+{
+	int x;
+
+	for (x = 0; x < swidth; x++) {
+		dst[4 * x + 0] = src[x];
+		dst[4 * x + 1] = src[x];
+		dst[4 * x + 2] = src[x];
+		dst[4 * x + 3] = src[x];
+	}
+}
+
+void
+zoom4blit(int swidth, int dheight,
+		int sx, int sy, const UBYTE *src, int sstride,
+		int dx, int dy, UBYTE *dst, int dstride)
+{
+	src += sstride * sy + sx;
+	dst += dstride * dy + dx;
+
+	if (dy & 3) {
+		int y;
+
+		for (y = 4 - (dy & 3); y < 4; y++) {
+			hafline4(swidth, src, dst);
+			dst += dstride;
+			dheight--;
+		}
+
+		src += sstride;
+	}
+
+	for (dheight = dheight / 4; dheight > 0; dheight--) {
+		hafline4(swidth, src, dst);
+		dst += dstride;
+
+		hafline4(swidth, src, dst);
+		dst += dstride;
+
+		hafline4(swidth, src, dst);
+		dst += dstride;
+
+		hafline4(swidth, src, dst);
+		dst += dstride;
+
+		src += sstride;
+	}
+}

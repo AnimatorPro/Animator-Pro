@@ -132,5 +132,4 @@ wacom.obj+
 window.obj+
 wordwrap.obj+
 writefli.obj+
-zoom.obj+
-zoom4bli.obj
+zoom.obj
