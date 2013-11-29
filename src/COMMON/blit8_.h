@@ -158,6 +158,28 @@ shrink5(int width, int height,
 		int sx, int sy, const UBYTE *src, int sstride,
 		int dx, int dy, UBYTE *dst, int dstride);
 
+/* Function: zoomblit
+ *
+ *  Move a rectangular area, expanding pixels in source to 2x2 pixel blocks
+ *  in destination.  Currently this routine is only used and tested for
+ *  source width equal to half screen (dest width full screen).
+ *
+ *  swidth - width of source in pixels.
+ *  dheight - height of destination in pixels.
+ *  sx, sy - coordinates of upper left corner of source.
+ *  src - pointer to source byte-plane.
+ *  sstride - how many bytes from one line of source to next.
+ *            Routine currently uses 320 some places instead.  Yuck!
+ *  dx, dy - coordinates of upper left corner of destination.
+ *           If dy is odd, 1st line is not doubled.
+ *  dst - pointer to destination byte-plane.
+ *  dstride - how many bytes from one line of destination to next.
+ */
+extern void
+zoomblit(int swidth, int dheight,
+		int sx, int sy, const UBYTE *src, int sstride,
+		int dx, int dy, UBYTE *dst, int dstride);
+
 #ifndef SLUFF
 
 #define cdraw_brush(brush, x, y, col) \
