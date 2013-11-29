@@ -45,7 +45,7 @@ for (j=0;j<frame->chunks;j++)
 			un5brun((const UBYTE *)(chunk+1), p, f->h);
 			break;
 		case FLI_COPY:
-			un5copy(chunk+1,p,BPR,f->h);
+			un5copy((const UBYTE *)(chunk+1), p, BPR, f->h);
 			break;
 		default:
 			break;

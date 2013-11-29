@@ -24,4 +24,8 @@ extern void unbrun(const UBYTE *src, UBYTE *dst, unsigned int linect);
  */
 extern void un5brun(const UBYTE *src, UBYTE *dst, unsigned int linect);
 
+/* Function: un5copy */
+extern void
+un5copy(const UBYTE *src, UBYTE *dst, unsigned int bpr, unsigned int linect);
+
 #endif

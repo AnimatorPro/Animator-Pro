@@ -38,7 +38,7 @@ tablet.obj \
 tempflx.obj textbox.obj textedit.obj textwind.obj \
 thikline.obj time.obj timemenu.obj title.obj \
 truecolor.obj tseg.obj \
-tween.obj un5brun.obj \
+tween.obj \
 vip.obj vpaint.obj vpsubs.obj \
 wacom.obj window.obj wordwrap.obj writefli.obj \
 zoom.obj \

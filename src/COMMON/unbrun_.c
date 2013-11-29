@@ -76,3 +76,14 @@ un5brun(const UBYTE *src, UBYTE *dst, unsigned int linect)
 		src = unbrun_skip(src);
 	}
 }
+
+void
+un5copy(const UBYTE *src, UBYTE *dst, unsigned int bpr, unsigned int linect)
+{
+	for (; linect > 0; linect--) {
+		memcpy(dst, src, bpr);
+
+		src += bpr * 5;
+		dst += bpr;
+	}
+}
