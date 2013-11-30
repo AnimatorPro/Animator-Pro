@@ -14,7 +14,7 @@ auto.obj autoseg.obj backward.obj \
 bfile.obj blue.obj browse.obj brush.obj \
 circle.obj cel.obj cfont.obj choices.obj \
 cleanup.obj cline.obj \
-cluster.obj colorave.obj commonst.obj comp.obj comprs.obj \
+cluster.obj commonst.obj comp.obj comprs.obj \
 config.obj cpack.obj csort.obj cthread.obj cursorda.obj \
 decoder.obj diskerr.obj dissolve.obj dosstuff.obj \
 drawmode.obj ellipse.obj emmchek.obj \

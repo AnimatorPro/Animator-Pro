@@ -158,41 +158,6 @@ glow_lookup = NULL;
 got_hash = 0;
 }
 
-
-#ifdef CCODE	
-/* replaced by colorave() in colorave.asm */
-color_ave(x,y,rgb)
-int x, y;
-UBYTE *rgb;
-{
-int i,j, tmp, cx, cy;
-UBYTE d[9*3];
-
-/* unpack the neighborhood into rbg values */
-tmp = 0;
-for (j=y-1; j<=y+1; j++)
-	{
-	if (j < 0)
-		cy = 0;
-	else if (j > vf.h-1)
-		cy = vf.h-1;
-	else
-		cy = j;
-	for (i=x-1; i<=x+1; i++)
-		{
-		copy_bytes(render_form->cmap+getd(blurp,i,cy)*3, d+tmp, 3);
-		tmp += 3;
-		}
-	}
-*rgb++ = (d[0] + 2*d[3] + d[6] + 2*d[9] + 4*d[12] + 2*d[15]
-	+ d[18] + 2*d[21] + d[24])>>4;
-*rgb++ = (d[1] + 2*d[4] + d[7] + 2*d[10] + 4*d[13] + 2*d[16]
-	+ d[19] + 2*d[22] + d[25])>>4;
-*rgb++ = (d[2] + 2*d[5] + d[8] + 2*d[11] + 4*d[14] + 2*d[17]
-	+ d[20] + 2*d[23] + d[26])>>4;
-}
-#endif /* CCODE */
-
 color_dif(rgb,c)
 BYTE *rgb, *c;
 {

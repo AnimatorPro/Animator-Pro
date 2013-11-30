@@ -11,4 +11,8 @@
  */
 extern unsigned int closestc(const UBYTE *rgb, const UBYTE *cmap, int count);
 
+/* Function: colorave */
+extern void
+colorave(int x, int y, UBYTE *rgb, const UBYTE *screen, const UBYTE *cmap);
+
 #endif

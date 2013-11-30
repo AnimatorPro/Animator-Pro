@@ -8,6 +8,7 @@
 #include "cblock_.h"
 #include "inks.h"
 #include "poly.h"
+#include "truecol_.h"
 
 extern int copydot(),marqidot(),sdot(), xdot();
 extern a1bdot(), rbdot(), rbbrush();
