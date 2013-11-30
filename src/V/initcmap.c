@@ -8,8 +8,8 @@
    Most simply squeeze the picture down to < 250 colors. */
 
 #include "jimk.h"
-#include "closest_.h"
 #include "peekpok_.h"
+#include "truecol_.h"
 
 UBYTE sys5;		/* Has system taken over last 5 colors? */
 

@@ -19,7 +19,6 @@ stubs2.obj decoder.obj shrinkin.obj bfile.obj int.obj sys_dos.obj \
 	..\COMMON\blit8_.obj   \
 	..\COMMON\cblock_.obj  \
 	..\COMMON\clipit_.obj  \
-	..\COMMON\closest_.obj \
 	..\COMMON\comp_.obj    \
 	..\COMMON\fs.obj       \
 	..\COMMON\fs_dos.obj   \
@@ -29,6 +28,7 @@ stubs2.obj decoder.obj shrinkin.obj bfile.obj int.obj sys_dos.obj \
 	..\COMMON\ptr.obj      \
 	..\COMMON\rfont.obj    \
 	..\COMMON\sixhi.obj    \
+	..\COMMON\truecol_.obj \
 	..\COMMON\unbrun_.obj
 
 play: $(O)

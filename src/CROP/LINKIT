@@ -5,7 +5,6 @@ cblock_.obj+
 cel.obj+
 choices.obj+
 clipit_.obj+
-closest_.obj+
 cursorda.obj+
 diskerr.obj+
 dosstuff.obj+
@@ -36,6 +35,7 @@ stringq.obj+
 stubs.obj+
 sys_dos.obj+
 textbox.obj+
+truecol_.obj+
 wordwrap.obj+
 memory.obj+
 pull.obj+

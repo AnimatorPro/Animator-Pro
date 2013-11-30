@@ -4,8 +4,8 @@
    to draw menus in given the current color map */
 
 #include "jimk.h"
-#include "closest_.h"
 #include "peekpok_.h"
+#include "truecol_.h"
 
 UBYTE sys5;
 

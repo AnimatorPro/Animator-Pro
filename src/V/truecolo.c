@@ -4,9 +4,9 @@
 
 #include "jimk.h"
 #include "cblock_.h"
-#include "closest_.h"
 #include "inks.h"
 #include "peekpok_.h"
+#include "truecol_.h"
 
 extern WORD quant_lx, quant_ly;
 

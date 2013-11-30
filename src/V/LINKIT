@@ -19,7 +19,6 @@ circle.obj+
 cleanup.obj+
 cline.obj+
 clipit_.obj+
-closest_.obj+
 cluster.obj+
 colorave.obj+
 commonst.obj+
@@ -120,6 +119,7 @@ time.obj+
 timemenu.obj+
 title.obj+
 truecolo.obj+
+truecol_.obj+
 tseg.obj+
 tween.obj+
 unbrun_.obj+

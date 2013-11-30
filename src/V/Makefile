@@ -45,9 +45,9 @@ zoom.obj \
 	..\COMMON\blit8_.obj   \
 	..\COMMON\cblock_.obj  \
 	..\COMMON\clipit_.obj  \
-	..\COMMON\closest_.obj \
 	..\COMMON\comp_.obj    \
 	..\COMMON\peekpok_.obj \
+	..\COMMON\truecol_.obj \
 	..\COMMON\unbrun_.obj
 
 

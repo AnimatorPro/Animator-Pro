@@ -41,7 +41,6 @@ OBJS := main.o     \
 	$(addprefix ../COMMON/, \
 	blit8_.o   \
 	cblock_.o  \
-	closest_.o \
 	clipit_.o  \
 	comp_.o    \
 	fs.o       \
@@ -51,6 +50,7 @@ OBJS := main.o     \
 	peekpok_.o \
 	rfont.o    \
 	sixhi.o    \
+	truecol_.o \
 	unbrun_.o  \
 	)
 

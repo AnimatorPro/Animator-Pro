@@ -3,7 +3,6 @@ bfile.obj+
 brush.obj+
 cblock_.obj+
 clipit_.obj+
-closest_.obj+
 comp.obj+
 comp_.obj+
 cursorda.obj+
@@ -46,6 +45,7 @@ slider.obj+
 stringq.obj+
 sys_dos.obj+
 textbox.obj+
+truecol_.obj+
 unbrun_.obj+
 vbat.obj+
 view.obj

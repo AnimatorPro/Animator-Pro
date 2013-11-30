@@ -62,7 +62,6 @@ OBJS := main.o     \
 	blit8_.o   \
 	cblock_.o  \
 	clipit_.o  \
-	closest_.o \
 	comp_.o    \
 	fccomp.o   \
 	fs.o       \
@@ -74,6 +73,7 @@ OBJS := main.o     \
 	ptr.o      \
 	rfont.o    \
 	sixhi.o    \
+	truecol_.o \
 	unbrun_.o  \
 	)
 

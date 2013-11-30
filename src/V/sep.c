@@ -3,8 +3,8 @@
    edge tool from the looks of it. */
 
 #include "jimk.h"
-#include "closest_.h"
 #include "peekpok_.h"
+#include "truecol_.h"
 
 static PLANEPTR ctable, abs_ctable;
 static int ccount;

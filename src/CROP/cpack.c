@@ -7,12 +7,12 @@
 #include <stdio.h>
 #include "jimk.h"
 #include "blit8_.h"
-#include "closest_.h"
 #include "cpack.str"
 #include "flicmenu.h"
 #include "peekpok_.h"
 #include "ptr.h"
 #include "rfont.h"
+#include "truecol_.h"
 
 /* This is only tested with RGB values 0-63 like PC VGA.  May have
    some arithmetic overflow problems if go to 0-256 */

@@ -29,10 +29,10 @@
 #include "auto.str"
 #include "blit8_.h"
 #include "cblock_.h"
-#include "closest_.h"
 #include "commonst.h"
 #include "fli.h"
 #include "peekpok_.h"
+#include "truecol_.h"
 
 extern char new_tflx_name[];
 extern WORD x_0,y_0,x_1,y_1;

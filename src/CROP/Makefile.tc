@@ -34,7 +34,6 @@ summa.obj textbox.obj sys_dos.obj \
 	..\COMMON\lccomp.obj   \
 	..\COMMON\clipit_.obj  \
 	..\COMMON\cblock_.obj  \
-	..\COMMON\closest_.obj \
 	..\COMMON\comp_.obj    \
 	..\COMMON\fs.obj       \
 	..\COMMON\fs_dos.obj   \
@@ -44,6 +43,7 @@ summa.obj textbox.obj sys_dos.obj \
 	..\COMMON\ptr.obj      \
 	..\COMMON\rfont.obj    \
 	..\COMMON\sixhi.obj    \
+	..\COMMON\truecol_.obj \
 	..\COMMON\unbrun_.obj
 
 fast: $(O)

@@ -1,9 +1,8 @@
 #include <stdlib.h>
 #include "jimk.h"
-#include "closest_.h"
 #include "peekpok_.h"
 #include "ptr.h"
-
+#include "truecol_.h"
 
 struct bhash
 	{

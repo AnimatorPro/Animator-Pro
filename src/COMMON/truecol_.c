@@ -1,6 +1,6 @@
-/* closest_.c */
+/* truecol_.c */
 
-#include "closest_.h"
+#include "truecol_.h"
 
 unsigned int
 closestc(const UBYTE *rgb, const UBYTE *cmap, int count)

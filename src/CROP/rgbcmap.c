@@ -7,13 +7,13 @@
 #include "jimk.h"
 #include "bfile.h"
 #include "blit8_.h"
-#include "closest_.h"
 #include "crop.h"
 #include "memory.h"
 #include "peekpok_.h"
 #include "ptr.h"
 #include "rfont.h"
 #include "rgbcmap.str"
+#include "truecol_.h"
 
 extern UBYTE bitmasks[];
 
