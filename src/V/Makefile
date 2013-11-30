@@ -16,7 +16,7 @@ circle.obj cel.obj cfont.obj choices.obj \
 cleanup.obj cline.obj \
 cluster.obj colorave.obj commonst.obj comp.obj comprs.obj \
 config.obj cpack.obj csort.obj cthread.obj cursorda.obj \
-decoder.obj diag.obj diskerr.obj dissolve.obj dosstuff.obj \
+decoder.obj diskerr.obj dissolve.obj dosstuff.obj \
 drawmode.obj ellipse.obj emmchek.obj \
 fccomp.obj feelmenu.obj filemenu.obj filedata.obj files.obj \
 findfree.obj fli.obj flood.obj freem.obj \

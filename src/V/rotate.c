@@ -6,6 +6,7 @@
 #include "jimk.h"
 #include "blit8_.h"
 #include "peekpok_.h"
+#include "rotate.h"
 
 /* a structure used to essentially hold food for diag_to_table */
 struct rot_seg
@@ -35,15 +36,9 @@ extern Vcel *ccc;
 
 static Rot_seg *rs1, *rs2;
 
-#ifdef CCODE
-/* copy from a diagonal line in s to a horizontal line dsize long starting
-   at 'dtable'. */
-diag_to_table(s,sbpr,dtable,dsize,x0,y0,x1,y1)
-register PLANEPTR s;
-PLANEPTR dtable;
-WORD sbpr;
-register WORD dsize;
-WORD x0,y0,x1,y1;
+void
+diag_to_table(PLANEPTR s, int sbpr, PLANEPTR dtable, int dsize,
+		int x0, int y0, int x1, int y1)
 {
 WORD incx, incy;
 WORD dx, dy;
@@ -94,10 +89,6 @@ NEXTY:
 		}
 	}
 }
-#endif CCODE
-
-
-
 
 static Point source_poly[4], dest_poly[4];
 static struct thread thread1, thread2;
@@ -270,7 +261,7 @@ while (--ylines >= 0)
 					x2+1, yoff, d, BPR);
 			}
 		wid = x2-x1+1;
-		dto_table(scel->p,scel->bpr, linebuf,
+		diag_to_table(scel->p,scel->bpr, linebuf,
 			wid, seg1->s.x,seg1->s.y,seg2->s.x,seg2->s.y);
 		(*blitfunc)(wid, 1, 0, 0, linebuf, BPR, x1, yoff, d, BPR,
 			vs.inks[0], lastparam);

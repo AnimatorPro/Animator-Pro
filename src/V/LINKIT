@@ -32,7 +32,6 @@ csort.obj+
 cthread.obj+
 cursorda.obj+
 decoder.obj+
-diag.obj+
 diskerr.obj+
 dissolve.obj+
 dosstuff.obj+

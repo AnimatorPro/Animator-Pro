@@ -8,6 +8,7 @@
 #include "cluster.str"
 #include "flicmenu.h"
 #include "peekpok_.h"
+#include "rotate.h"
 
 extern Flicmenu pal_men_sel, pal_pal_sel,  rpal_pal_sel, pal_spe_sel,
 	palette_menu, spec1_sel,
@@ -739,7 +740,7 @@ if (PJSTDN)
 	save_undo();
 	if (rub_line())
 		{
-		dto_table(render_form->p,render_form->bpr, bndl,
+		diag_to_table(render_form->p,render_form->bpr, bndl,
 			64, x_0,y_0,x_1,y_1);
 		bctt = 64;
 		}
