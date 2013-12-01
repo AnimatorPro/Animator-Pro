@@ -120,7 +120,7 @@ static WORD cx, cy; /* offset of "menu" level lettering aka amiga terminology */
 static WORD ccx, ccy; /* offset of drop downs */
 static WORD sx, sy;	/* offset of selection */
 static Pull *cchild;
-static Pull *select;	
+static Pull *s_select;
 static WORD menu_down;
 static WORD sel_hi;
 WORD *abehind, *bbehind, *cbehind; /*buffers for
@@ -130,10 +130,10 @@ WORD *mbehind;	/* buffer for behind menu... */
 
 static unselect()
 {
-if (select)
+if (s_select)
 	{
-	undraw_pull(sx, sy, select, cbehind);
-	select = NULL;
+	undraw_pull(sx, sy, s_select, cbehind);
+	s_select = NULL;
 	sel_hi = -1;
 	}
 }
@@ -211,7 +211,7 @@ char in_cchild;
 reuse_input();		/* make nice for loop */
 p = cur_pull;
 ret = 0;
-select = cchild = NULL;
+s_select = cchild = NULL;
 menu_down = sel_hi = -1;
 bbehind = cbehind = NULL;
 x = p->xoff;
@@ -274,7 +274,7 @@ next_child:
 					if (sel_hi != j)
 						{
 						unselect();
-						select = scratch;
+						s_select = scratch;
 						sx = scx;
 						sy = scy;
 						sel_hi = j;
@@ -292,13 +292,13 @@ next_child:
 						}
 					if (PJSTDN)
 						{
-						if (select != NULL)
+						if (s_select != NULL)
 							{
-							if (in_pblock(sx, sy, select))
+							if (in_pblock(sx, sy, s_select))
 								{
 								int s1,s2;
 
-								if (!select->disabled)
+								if (!s_select->disabled)
 									{
 									menu_ix = menu_down;
 									sel_ix = sel_hi;
