@@ -253,7 +253,7 @@ static Flicmenu fml_menu = {
 
 #ifdef SLUFFED
 char save_ok, load_ok, info_ok;
-#endif SLUFFED
+#endif /* SLUFFED */
 
 static
 draw_fml(m)
@@ -512,7 +512,7 @@ if ((title = get_filename("File information", file_ends[file_type])) != NULL)
 	}
 draw_mp();
 }
-#endif LATER
+#endif /* LATER */
 
 static
 fml_kill()

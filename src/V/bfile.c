@@ -142,7 +142,7 @@ if (bf->left >= count)
 	return(count);
 	}
 else
-#endif WORKSOKBUTBIG
+#endif /* WORKSOKBUTBIG */
 	{
 	register int i;
 
@@ -190,7 +190,7 @@ if (bf->left >= count)
 	return(count);
 	}
 else
-#endif LATER
+#endif /* LATER */
 	{
 	for (i=0; i<count; i++)
 		{

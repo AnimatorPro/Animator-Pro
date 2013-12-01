@@ -82,7 +82,7 @@ static short clear_code;
 static short eof_code;
 #ifdef SLUFFED
 static short min_code;
-#endif SLUFFED
+#endif /* SLUFFED */
 static short bit_offset;
 static short max_code;
 static short free_code;

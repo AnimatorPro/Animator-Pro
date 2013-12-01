@@ -21,7 +21,7 @@ if (!cfi)
 		{
 #ifdef LATER
 		Startvbl();
-#endif LATER
+#endif /* LATER */
 		setint();
 		fastint();
 		}

@@ -267,7 +267,7 @@ m->text = buf;
 mb_inside(m,swhite);
 ncorner_text(m);
 }
-#endif SLUFFED
+#endif /* SLUFFED */
 
 static int arrow_width;
 static int arrow_start;

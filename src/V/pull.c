@@ -35,7 +35,7 @@ while (p)
 	}
 return(max);
 }
-#endif SLUFFED
+#endif /* SLUFFED */
 
 in_pblock(x, y, p)
 int x, y;
@@ -411,7 +411,7 @@ while (--one >= 0)
 	p = p->next;
 p->data[0] = '*';
 }
-#endif SLUFFED
+#endif /* SLUFFED */
 
 xonflag(p, flag)
 register Pull *p;
@@ -442,7 +442,7 @@ xonflag(&usem_pull, vs.use_mask);
 xonflag(&createm_pull, vs.make_mask);
 xonflag(&snap_pull, vs.use_grid);
 }
-#endif LATER
+#endif /* LATER */
 
 static
 which_key_pull(p, c)

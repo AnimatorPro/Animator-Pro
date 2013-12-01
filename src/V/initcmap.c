@@ -90,14 +90,13 @@ UBYTE pure_black[3] = {0,0,0};
 UBYTE pure_red[] = {63, 0, 0};
 UBYTE pure_green[] = {0, 63, 0};
 UBYTE pure_blue[] = {0, 0, 63};
-#endif SLUFFED
+#endif /* SLUFFED */
 
 #ifdef SLUFFED
 static UBYTE pure_grey[] = {24, 24, 24};
 static UBYTE pure_bright[3] = {58, 58, 58};
 static UBYTE bright_grey[] = {42, 42, 42};
-#endif SLUFFED
-
+#endif /* SLUFFED */
 
 WORD mc_colors[5];
 

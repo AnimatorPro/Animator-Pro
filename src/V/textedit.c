@@ -694,7 +694,7 @@ undraw_twin()
 blit8(vs.twin_w+2, vs.twin_h+2+font_hgt, 
 	vs.twin_x-1, vs.twin_y-1, uf.p, uf.bpr,
 	vs.twin_x-1, vs.twin_y-1, render_form->p, render_form->bpr);
-#endif SHOULDWORKBUTDOESNT
+#endif /* SHOULDWORKBUTDOESNT */
 copy_form(&uf, render_form);
 }
 

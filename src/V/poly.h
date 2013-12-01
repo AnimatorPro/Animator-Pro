@@ -26,6 +26,4 @@ typedef struct poly Poly;
 #define WP_SPIRAL 3
 #define WP_ELLIPSE 4
 
-
-#endif POLY_H
-
+#endif

@@ -111,7 +111,7 @@ while (--i >= 0)
 	*cmap++ = b;
 	}
 }
-#endif SLUFFED
+#endif /* SLUFFED */
 
 #ifdef SLUFFED
 load_vga(name, screen)
@@ -155,5 +155,5 @@ BADOUT:
 jclose(f);
 return(0);
 }
-#endif SLUFFED
+#endif /* SLUFFED */
 

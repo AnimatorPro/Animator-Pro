@@ -119,8 +119,7 @@ struct thread2_list
 	struct thread2_list *next2;
 	};
 typedef struct thread2_list Thread2_list;
-#endif SLUFFED
-
+#endif /* SLUFFED */
 
 #ifdef SLUFFED
 struct BitMap 
@@ -132,7 +131,7 @@ struct BitMap
 	UWORD pad;
 	PLANEPTR Planes[8];
 	};
-#endif SLUFFED
+#endif /* SLUFFED */
 
 typedef struct vip
 	{
@@ -278,7 +277,7 @@ struct blitblock
 	WORD dx, dy, *dpt, dbpr;
 	WORD color;
 	};
-#endif SLUFFED
+#endif /* SLUFFED */
 
 /* some macros that save some typing, but expand too long for code
    sluffer to handle.  These ARE defined for the compiler, just
@@ -366,7 +365,7 @@ struct ado_setting
 #define MMD_PAINT 0
 #define MMD_TITLE 1
 #define MMD_EDIT 2
-#endif SLUFFED
+#endif /* SLUFFED */
 
 /* size of a buffer big enough to hold a worst case FLI frame */
 #define CBUF_SIZE (64000L+3*COLORS+256+16+sizeof(struct vscreen) )
@@ -398,7 +397,7 @@ extern int render_xmin, render_ymin, render_xmax, render_ymax;
 /* some day hope these will be changed so alway can be alloced */
 #define paskmem askmem
 #define pfreemem freemem
-#endif SLUFFED
+#endif /* SLUFFED */
 
 /* stuff for my buffered io */
 #define BSIZE 2048
@@ -487,9 +486,7 @@ extern WORD mc_colors[];
 #define STAR_TOOL 18
 #define STREAK_TOOL 19
 #define TEXT_TOOL 20
-#endif SLUFFED
-
-
+#endif /* SLUFFED */
 
 #define VP_SETTING 0x9499
 /* See globals.c initialization of default_vs for more comments on
@@ -621,9 +618,9 @@ extern UBYTE sys5;	/* has menu system grabbed last 5 colors in palette? */
 #include "rfont.h"
 #ifndef FLICMENU_H
 #include "flicmenu.h"
-#endif FLICMENU_H
+#endif /* FLICMENU_H */
 #include "gemfont.h"
 #include "proto.h"
-#endif BUNCH
+#endif /* BUNCH */
 
 #endif

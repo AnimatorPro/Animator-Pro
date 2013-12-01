@@ -54,8 +54,7 @@ return(1);
 OUT:
 return(success);
 }
-#endif LATER
-
+#endif /* LATER */
 
 qload_splice()
 {

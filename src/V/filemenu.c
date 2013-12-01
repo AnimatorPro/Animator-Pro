@@ -128,7 +128,7 @@ iscroller(&fscroller,wild_lst,&fscroll_sel,&flist_sel,
 
 #ifdef SLUFFED
 static struct name_scroller *scroll;
-#endif SLUFFED
+#endif /* SLUFFED */
 
 static
 redraw_fscroller()

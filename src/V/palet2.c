@@ -37,7 +37,7 @@ extern Flicmenu ink_group_sel, ink0_sel, inks_sel, ccolor_sel, spec1_sel;
 static WORD ccred,ccgreen,ccblue;
 #ifdef SLUFFED
 static UBYTE *cbuf;
-#endif SLUFFED
+#endif /* SLUFFED */
 static UBYTE *new_cmap;
 
 static struct qslider red_sl = {0,63,&ccred,0,ccolor_from_sliders};
@@ -632,7 +632,7 @@ if (PJSTDN)
 	}
 draw_pull(cur_pull->xoff, cur_pull->yoff, cur_pull);
 }
-#endif SLUFFED
+#endif /* SLUFFED */
 
 
 crestore()

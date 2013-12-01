@@ -145,4 +145,4 @@ extern Flicmenu minitime_sel, ink_group_sel;
 
 extern hang_child();
 
-#endif FLICMENU_h
+#endif

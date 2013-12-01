@@ -284,7 +284,7 @@ for (y=0; y<YMAX; y++)
 			*(np-1) += c;
 			*np++ += c;
 			*np = err - c - c - c;
-#endif FS
+#endif /* FS */
 			}
 		}
 	}
@@ -1046,7 +1046,7 @@ else
 	preview_many(rvec);
 	}
 }
-#endif OLD
+#endif /* OLD */
 
 /* Apply a function over many frames */
 doauto(rvec)

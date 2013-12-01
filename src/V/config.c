@@ -177,7 +177,7 @@ static char *wpucky4_lines[] =
 	config_130 /* " Puck" */,
 	cst__cancel,
 	};
-#endif WACOM
+#endif /* WACOM */
 
 static
 get_pucky4(lines, lcount)
@@ -222,7 +222,7 @@ static char *input_lines[] =
 	config_134 /* " Summagraphics MM 1201 12x12 Tablet" */,
 #ifdef WACOM
 	config_135 /* " Wacom II pressure sensitive Tablet" */,
-#endif WACOM
+#endif /* WACOM */
 	config_136 /* " Set serial port for tablet" */,
 	cst__cancel,
 	};
@@ -256,9 +256,9 @@ switch (choice)
 		vconfg.dev_type = INP_WACOM2;
 		break;
 	case 4:
-#else WACOM
+#else /* WACOM */
 	case 3:
-#endif WACOM
+#endif /* WACOM */
 		get_serial_port();
 		break;
 	}

@@ -10,4 +10,4 @@ struct fndata
 	char name[13];
 	};
 extern struct fndata *find_dta();
-#endif DOSSTUFF_H
+#endif

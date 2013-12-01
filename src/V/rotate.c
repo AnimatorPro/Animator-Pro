@@ -473,7 +473,7 @@ if (first == 2)
 	render_xy(minmax.xmin,minmax.ymin,minmax.xmax,minmax.ymax);
 #ifdef LATER
 	render_full_screen();
-#endif LATER
+#endif /* LATER */
 	}
 ret =  raster_t(b, dpoly, first);
 if (first == 2)

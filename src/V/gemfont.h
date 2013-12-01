@@ -48,4 +48,4 @@ extern struct font_hdr *usr_font;
 #define MFIXED 1
 #define MPROP 2
 
-#endif GEMFONT_H
+#endif

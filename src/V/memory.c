@@ -10,12 +10,11 @@
 
 #ifdef NEVER
 #define CHECKIT	/* slow but sure heap */
-#endif NEVER
-
+#endif /* NEVER */
 
 #ifdef CHECKIT
 #define mem_magic 0x9702
-#endif CHECKIT
+#endif /* CHECKIT */
 
 extern void *lmalloc();
 static int blocks_out;
@@ -124,7 +123,7 @@ continu_line(memory_100 /* "Out of Memory" */);
 
 #ifdef CHECKIT
 static char lomem[4];
-#endif CHECKIT
+#endif /* CHECKIT */
 
 static void *
 _lalloc(psize)
@@ -216,7 +215,7 @@ mem_free += amount;
 #ifdef CHECKIT
 mem_to_magic(nb, amount);
 early_magic(nb);
-#endif CHECKIT
+#endif /* CHECKIT */
 
 if ( (mb = mfree_list) == NULL)
 	{
@@ -239,7 +238,7 @@ if ( ptr_seg(nb) < ptr_seg(mb))
 		nb->size += mb->size;
 #ifdef CHECKIT
 		cruffty_words(mem_magic, mb, 3);
-#endif CHECKIT
+#endif /* CHECKIT */
 #ifdef DEBUG1
 		printf("coalescing into first chunk\n");
 #endif /* DEBUG1 */
@@ -264,7 +263,7 @@ for (;;)
 			lb->next = mb->next;
 #ifdef CHECKIT
 			cruffty_words(mem_magic, mb, 3);
-#endif CHECKIT
+#endif /* CHECKIT */
 #ifdef DEBUG1
 			printf("coalescing both sides\n");
 #endif /* DEBUG1 */
@@ -281,7 +280,7 @@ for (;;)
 		nb->next = mb->next;
 #ifdef CHECKIT
 		cruffty_words(mem_magic, mb, 3);
-#endif CHECKIT
+#endif /* CHECKIT */
 		lb->next = nb;
 #ifdef DEBUG1
 		printf("coalescing into next block\n");
@@ -326,8 +325,7 @@ register UWORD *pt;
 *pt++ = mem_magic;
 *pt++ = mem_magic;
 }
-#endif CHECKIT
-
+#endif /* CHECKIT */
 
 #ifdef CHECKIT
 mem_to_magic(pt, amount)
@@ -356,7 +354,7 @@ while (amount != 0)
 	amount -= 1;
 	}
 }
-#endif CHECKIT
+#endif /* CHECKIT */
 
 #ifdef CHECKIT
 check_mem_magic(p, amount)
@@ -396,7 +394,7 @@ if (!bad_magic)
 	}
 return(0);
 }
-#endif CHECKIT
+#endif /* CHECKIT */
 
 /* magic numbers tagged at beginning and end of allocated memory blocks */
 #define START_COOKIE (0x41f3)
@@ -455,7 +453,7 @@ if ((pt = _lalloc(psize)) != NULL)
 		unconfig_ints();
 		exit(0);	/* okok... */
 		}
-#endif CHECKIT
+#endif /* CHECKIT */
 	blocks_out++;
 	*pt++ = psize;
 	*pt++ = START_COOKIE;
@@ -543,7 +541,7 @@ while (size > 0)
 	}
 return(1);
 }
-#endif CHECKIT
+#endif /* CHECKIT */
 
 #ifdef CHECKIT
 ck_heap()
@@ -559,7 +557,7 @@ while (pt != NULL)
 	}
 return(1);
 }
-#endif CHECKIT
+#endif /* CHECKIT */
 
 #ifdef CHECKIT
 check_heap()
@@ -579,7 +577,7 @@ if (bcompare(NULL, lomem, 4) != 4)
 	exit(0);
 	};
 }
-#endif CHECKIT
+#endif /* CHECKIT */
 
 #ifdef CHECKIT
 seal_heap()
@@ -593,5 +591,4 @@ while (h != NULL)
 	h = h->next;
 	}
 }
-#endif CHECKIT
-
+#endif /* CHECKIT */

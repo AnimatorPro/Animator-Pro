@@ -14,7 +14,7 @@ extern long ff_tflx();
 
 #ifndef SLUFF
 extern long ff_tflx(long size, int count, Flx *xpt);
-#endif SLUFF
+#endif /* SLUFF */
 
 extern UBYTE auto_rgb[3], auto_8rgb[3];
 

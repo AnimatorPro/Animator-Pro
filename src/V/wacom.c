@@ -14,9 +14,7 @@ extern WORD umouse_y;	/* y coordinate value 0 to (199*4) in active area */
 extern WORD mouse_button;	/* bit 0 for left bit 1 for right button */
 extern WORD pressure_sensitive;	/* 1 if pressure sensitive device, 0 else */
 extern WORD pressure;	/* pressure value scaled from 1 to 255 */
-#endif OLD
-
-
+#endif /* OLD */
 
 /* send zero terminated string out serial port */
 static
@@ -209,4 +207,4 @@ switch (stype)
 return(1);
 }
 
-#endif WACOM
+#endif /* WACOM */

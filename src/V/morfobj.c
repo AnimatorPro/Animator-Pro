@@ -133,5 +133,4 @@ moo->tint_percent = mh.strength;
 return((*moo_vtable[moo->type].load_moo)(moo, file));
 }
 
-
-#endif MORPH
+#endif /* MORPH */

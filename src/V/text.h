@@ -23,4 +23,4 @@ extern char *text_buf;
 extern long fstring_width(), fnstring_width();
 extern char *wwnext_line();
 
-#endif TEXT_H
+#endif

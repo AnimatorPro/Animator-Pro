@@ -418,7 +418,7 @@ switch (c)
 	case 's':
 		qsave();
 		break;
-#endif UNUSED
+#endif /* UNUSED */
 	case 'l':
 		qload();
 		break;
@@ -479,7 +479,7 @@ switch (c)
 				sprintf(buf, "%x", key_in);
 				continu_line(buf);
 				}
-#endif LATER
+#endif /* LATER */
 			}
 		break;
 	}

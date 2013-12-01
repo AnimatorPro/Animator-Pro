@@ -627,6 +627,4 @@ l_faces(jfile);
 jclose(jfile);
 }
 
-
-
-#endif MORPH
+#endif /* MORPH */

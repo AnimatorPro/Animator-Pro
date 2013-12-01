@@ -83,7 +83,7 @@ fprintf(f, "NULL,};\n");
 fclose(f);
 return(1);
 }
-#endif USEFUL
+#endif /* USEFUL */
 
 #ifdef USEFUL
 /* make a magnetic copy of a font in memory (Untested lately) */
@@ -125,7 +125,7 @@ BADEND:
 jclose(fd);
 return(0);
 }
-#endif USEFUL
+#endif /* USEFUL */
 
 /* Load up a font chosen by user. */
 static

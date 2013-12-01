@@ -23,8 +23,7 @@ extern render_dot(), render_brush();
 
 #ifdef SLUFFED
 static struct point ptp[PDIV];
-#endif SLUFFED
-
+#endif /* SLUFFED */
 
 static struct point ptp1[] = {
 {0,0,}, {0,0,}, {0,0,}, {-1,0,}, 

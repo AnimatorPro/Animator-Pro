@@ -227,7 +227,7 @@ if (1+new <= fhead.frames_in_table)
 	return(1);
 #ifdef DEBUG
 continu_line("Expanding frames_in_table");
-#endif DEBUG
+#endif /* DEBUG */
 new += 100;	/* don't want to have to do this all the time! */
 if (new > MAXFRAMES)
 	new = MAXFRAMES;

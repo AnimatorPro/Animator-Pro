@@ -96,7 +96,7 @@ if (result >= 0)
 	result += 1<<13;
 else
 	result -= 1<<13;
-#endif LATER
+#endif /* LATER */
 return(result/(1<<14));
 }
 

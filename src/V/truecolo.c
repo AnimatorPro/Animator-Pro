@@ -444,8 +444,7 @@ while (--i > 0)
 	scm+=3;
 	}
 }
-#endif LATER
-
+#endif /* LATER */
 
 static
 shuffle_cmap(s1,s2,d)

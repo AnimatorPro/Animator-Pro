@@ -184,7 +184,7 @@ if (got_mouse)
 		case 2:
 			wacom_get_input();
 			break;
-#endif WACOM
+#endif /* WACOM */
 		}
 	r.b.ah = 0x1;
 	if (!(sysint(0x16,&r,&r)&ZEROFLAG))
@@ -265,7 +265,7 @@ if (key_hit)
 			save_gif("vsnapshot.gif", &vf);
 			key_hit = 0;
 			break;
-#endif DEVEL
+#endif /* DEVEL */
 		case 0x3d00:	/* F3 */
 			vs.mkx = grid_x;
 			vs.mky = grid_y;
@@ -390,7 +390,7 @@ for (;;)
 ucursor();
 recordall = 1;
 }
-#endif SLUFFED
+#endif /* SLUFFED */
 
 wait_click()
 {

@@ -1072,7 +1072,7 @@ if (y + m->height >= vf.h)
 	y = vf.h - m->height - 1;
 rmove_menu(m, 0, y-m->y); 
 }
-#endif SLUFFED
+#endif /* SLUFFED */
 
 
 

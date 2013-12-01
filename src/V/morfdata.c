@@ -87,4 +87,4 @@ Flicmenu morf_tool_group_sel = {
 	NOOPT,
 	};
 
-#endif MORPH
+#endif /* MORPH */

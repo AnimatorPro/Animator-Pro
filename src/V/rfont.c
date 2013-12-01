@@ -114,7 +114,7 @@ struct font_hdr sail_font =
 	72, 7,	/* frm_wdt,frm_hgt */
 	NULL,	/* next font */
 	};
-#endif USEFUL
+#endif /* USEFUL */
 
 struct b1block
 	{
@@ -202,7 +202,7 @@ while ((c = *s++)!=0)
 	x += sw;
 	}
 }
-#endif OLDWAY
+#endif /* OLDWAY */
 
 typedef union
 	{
@@ -304,9 +304,7 @@ write_sail_font()
 if (!jexists(sail_name))
 	save_font(sail_name, &sail_font);
 }
-#endif SLUFFED
-
-
+#endif /* SLUFFED */
 
 fchar_width(f,s)
 register struct font_hdr *f;

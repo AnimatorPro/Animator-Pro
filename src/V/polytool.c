@@ -116,8 +116,7 @@ if ((new = clone_structure(p, sizeof(*p))) != NULL)
 	}
 return(new);
 }
-
-#endif SLUFFED
+#endif /* SLUFFED */
 
 dot_poly(poly, dotout)
 register Poly *poly;
@@ -326,7 +325,7 @@ else
 	}
 #ifdef LATER
 working_poly.clipped_list = this;
-#endif LATER
+#endif /* LATER */
 working_poly.pt_count++;
 return(this);
 }
@@ -360,8 +359,7 @@ hide_mp();
 make_path();
 draw_mp();
 }
-#endif SLUFFED
-
+#endif /* SLUFFED */
 
 make_poly()
 {

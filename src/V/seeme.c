@@ -21,7 +21,7 @@ wwtext(&vf, &sixhi_font,
 	m->text, m->x+2, m->y+2, m->width-3, m->height-3, sgrey,
 	a1blit, 0);
 }
-#endif SLUFFED
+#endif /* SLUFFED */
 
 static
 blit_menu(m, pt)
@@ -260,7 +260,7 @@ mb_inside(m,swhite);
 mb_dcorner(m,sgrey);
 menu_text(m, sgrey);
 }
-#endif SLUFFED
+#endif /* SLUFFED */
 
 move_tab_text(m)
 Flicmenu *m;

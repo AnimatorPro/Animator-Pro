@@ -129,7 +129,7 @@ else if (vs.sep_type == SEP_2PART)
 		}
 	vs.ccolor = occolor;
 	}
-#endif SLUFFED
+#endif /* SLUFFED */
 else if (vs.sep_type == SEP_SINGLE || vs.sep_type == SEP_CLUSTER)
 	{
 	render_separate(ctable,ccount, x_0, y_0,  x_1, y_1);
@@ -188,7 +188,7 @@ else if (vs.sep_type == SEP_2PART)
 	copy_bytes(render_form->cmap+3*c2, rgb_p2[1], 3);
 	return(1);
 	}
-#endif SLUFFED
+#endif /* SLUFFED */
 else if (vs.sep_type == SEP_SINGLE || vs.sep_type == SEP_RGB_THRESH)
 	{
 	for (;;)	/* gather up a table while pen down of colors under cursor */

@@ -405,7 +405,7 @@ cel->x = mp_ox + itmult(dx,scale);
 cel->y = mp_oy + itmult(dy,scale);
 #ifdef LATER
 if (need_fit_cel())
-#endif LATER
+#endif /* LATER */
 if (cfit_rblit_cel(cel))
 	ok = 1;
 free_cel(cel);

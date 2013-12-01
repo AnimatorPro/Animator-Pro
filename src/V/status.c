@@ -48,7 +48,7 @@ sprintf(buf5, status_106 /* "%ld free on drive %c" */,
 #ifdef LATER
 sprintf(buf6, status_107 /* "%ld strokes %ld this session" */, 
 	fhead.strokes, fhead.session);
-#endif LATER
+#endif /* LATER */
 continu_box(bufs);
 }
 
@@ -82,13 +82,13 @@ char *credits_lines[] =
 	"                  Cindy Peringer",
 	NULL,
 	};
-#endif LATER
+#endif /* LATER */
 
 about()
 {
 continu_box(about_lines);
 #ifdef LATER
 continu_box(credits_lines);
-#endif LATER
+#endif /* LATER */
 }
 

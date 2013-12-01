@@ -30,7 +30,7 @@ typedef float fpoint;
 #define oFD(a,b) ((a)/(b))
 #define FVAL(a)	((float)(a))
 #define FINT(a) ((int)(a))
-#endif LATER
+#endif /* LATER */
 
 extern int pxmin, pxmax, pymin, pymax;
 

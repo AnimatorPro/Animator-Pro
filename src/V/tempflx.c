@@ -331,7 +331,7 @@ for (i=0;i <= fhead.frame_count; i++)
 #ifdef TOOSLOW
 	if (check_abort(i, fhead.frame_count) )
 		goto RINGEND;
-#endif TOOSLOW
+#endif /* TOOSLOW */
 	if ((acc = frame_to_tflx(sfile, name, frame, acc, i)) <= 0)
 		{
 		if (acc < 0)

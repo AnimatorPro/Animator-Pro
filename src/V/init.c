@@ -90,7 +90,7 @@ char *pool;
 
 #ifdef CHECKIT
 copy_bytes(NULL, lomem, 4);
-#endif CHECKIT
+#endif /* CHECKIT */
 r.w.bx = 0xffff;	/* ask for a meg.... */
 r.b.ah = 0x48;
 sysint(0x21,&r,&r);
@@ -168,7 +168,7 @@ switch (vconfg.dev_type)
 			}
 		pressure_sensitive = 1;
 		break;
-#endif WACOM
+#endif /* WACOM */
 	}
 if (!got_mouse)
 	{

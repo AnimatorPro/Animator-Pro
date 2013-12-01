@@ -75,7 +75,7 @@ while (a != NULL)
 	}
 return(0);
 }
-#endif SUBROUTINE
+#endif /* SUBROUTINE */
 
 static
 new_dw(y0,y1,image,inmenu)
@@ -174,7 +174,7 @@ else if (y >= dwlist[2].y0 && y < dwlist[2].y1)
 else if (y >= dwlist[3].y0 && y < dwlist[3].y1)
 	return(dwlist[3].image[(y-dwlist[3].y0)*BPR+x]);
 }
-#endif SUBROUTINE
+#endif /* SUBROUTINE */
 
 #ifdef SUBROUTINE
 dwdot(x,y,color)
@@ -194,9 +194,7 @@ else if (y >= dwlist[2].y0 && y < dwlist[2].y1)
 else if (y >= dwlist[3].y0 && y < dwlist[3].y1)
 	dwlist[3].image[(y-dwlist[3].y0)*BPR+x] = color;
 }
-#endif SUBROUTINE
-
-
+#endif /* SUBROUTINE */
 
 static
 cmp_wis(w1,w2)
@@ -216,7 +214,7 @@ if ((new = free_wis) == NULL)
 	{
 #ifdef DEBUG
 	continu_line("No free wis!");
-#endif DEBUG
+#endif /* DEBUG */
 	return(0);
 	}
 free_wis = new->next;
@@ -236,7 +234,7 @@ remove_el(menu_wis,wi);
 wi->next = free_wis;
 free_wis = wi;
 }
-#endif LATER
+#endif /* LATER */
 
 static
 new_wi_list()
@@ -457,7 +455,7 @@ blank_top_bar()
 {
 colrop(swhite, 0, 0, XMAX-1, root_pull.height-2);
 }
-#endif SLUFFED
+#endif /* SLUFFED */
 
 ltop_text(s)
 char *s;

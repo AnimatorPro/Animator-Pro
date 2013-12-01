@@ -107,7 +107,6 @@ while (c = *s)
 	*s++ = toupper(c);
 	}
 }
-
 #endif /* SLUFFED */
 
 tr_string(string, in, out)
@@ -192,7 +191,7 @@ while (list)
 	}
 return(ix);
 }
-#endif SLUFFED
+#endif /* SLUFFED */
 
 els_in_list(list)
 register Name_list *list;
@@ -230,7 +229,7 @@ while ((next = next->next) != NULL)
 	}
 return(list);
 }
-#endif SLUFFED
+#endif /* SLUFFED */
 
 static
 cmp_name_list(l1,l2)
@@ -402,8 +401,7 @@ register int ix;
 {
 table[(ix>>3)] |= bitmasks[ix&7];
 }
-#endif SLUFFED
-
+#endif /* SLUFFED */
 
 free_list(lst)
 register Name_list *lst;

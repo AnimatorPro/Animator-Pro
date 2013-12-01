@@ -160,7 +160,7 @@ hide_mp();
 restore();
 draw_mp();
 }
-#endif SLUFFED
+#endif /* SLUFFED */
 
 mundo_pic()
 {

@@ -110,7 +110,7 @@ if (pushed_text == 0)
 pushed_text++;
 return(1);
 }
-#endif LATER
+#endif /* LATER */
 
 char loaded_screen;
 
@@ -208,7 +208,7 @@ if (--pushed_text == 0)
 	}
 return(1);
 }
-#endif LATER
+#endif /* LATER */
 
 push_most()
 {

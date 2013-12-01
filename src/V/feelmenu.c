@@ -168,7 +168,7 @@ if (x < 0 || x >= width || y < 0 || y >= height )
 
 return(uscale_by(y, g->divy, height)*g->divx + uscale_by(x, g->divx, width) );
 }
-#endif SLUFFED
+#endif /* SLUFFED */
 
 #ifdef SLUFFED
 in_lr_half(m)
@@ -193,7 +193,7 @@ if (s->value < s->min)
 if (s->value > s->max)
 	s->value = s->max;
 }
-#endif SLUFFED
+#endif /* SLUFFED */
 
 #ifdef SLUFFED
 slide_where(m)
@@ -212,7 +212,7 @@ if (x >= width)
 	return(s->max);
 return(uscale_by(x, s->max - s->min + 1, width) + s->min);
 }
-#endif SLUFFED
+#endif /* SLUFFED */
 
 #ifdef SLUFFED
 upd_slidepot(m, erase, draw)
@@ -256,9 +256,7 @@ if (new != s->value)
 	draw_sel(m);
 	}
 }
-#endif SLUFFED
-
-
+#endif /* SLUFFED */
 
 extern see_number_slider();
 
@@ -276,7 +274,7 @@ Flicmenu *m;
 {
 feelslide(m, update_number_slider);
 }
-#endif SLUFFED
+#endif /* SLUFFED */
 
 #ifdef SLUFFED
 feelslide(m, update)
@@ -292,8 +290,7 @@ for (;;)
 		break;
 	}
 }
-#endif SLUFFED
-
+#endif /* SLUFFED */
 
 static WORD processed_key;
 
@@ -594,7 +591,7 @@ Flicmenu *m;
 black_block(m);
 draw_sel(m);
 }
-#endif SLUFFED
+#endif /* SLUFFED */
 
 #ifdef SLUFFED
 toggle_draw_mode(m)
@@ -606,7 +603,7 @@ else
 	vs.draw_mode = 0;
 draw_sel(m);
 }
-#endif SLUFFED
+#endif /* SLUFFED */
 
 tog_pen()
 {
@@ -627,7 +624,7 @@ draw_sel(m);
 
 #ifdef SLUFFED
 static Flicmenu *asl;
-#endif SLUFFED
+#endif /* SLUFFED */
 
 #ifdef SLUFFED
 inc_sl()
@@ -641,7 +638,7 @@ if (sl->value < sl->max)
 	draw_sel(asl);
 	}
 }
-#endif SLUFFED
+#endif /* SLUFFED */
 
 #ifdef SLUFFED
 a_inc_slider(m,vector)
@@ -653,7 +650,7 @@ asl = (Flicmenu *)m->text;
 repeat_on_pdn(vector);
 draw_sel(m);
 }
-#endif SLUFFED
+#endif /* SLUFFED */
 
 #ifdef SLUFFED
 inc_slider(m)
@@ -661,7 +658,7 @@ Flicmenu *m;
 {
 a_inc_slider(m, inc_sl);
 }
-#endif SLUFFED
+#endif /* SLUFFED */
 
 #ifdef SLUFFED
 dec_sl()
@@ -675,7 +672,7 @@ if (sl->value > sl->min)
 	draw_sel(asl);
 	}
 }
-#endif SLUFFED
+#endif /* SLUFFED */
 
 #ifdef SLUFFED
 a_dec_slider(m,vector)
@@ -687,7 +684,7 @@ asl = (Flicmenu *)m->text;
 repeat_on_pdn(vector);
 draw_sel(m);
 }
-#endif SLUFFED
+#endif /* SLUFFED */
 
 #ifdef SLUFFED
 dec_slider(m)
@@ -695,7 +692,7 @@ Flicmenu *m;
 {
 a_dec_slider(m, dec_sl);
 }
-#endif SLUFFED
+#endif /* SLUFFED */
 
 #ifdef SLUFFED
 zero_group(m)
@@ -703,4 +700,4 @@ Flicmenu *m;
 {
 *(m->group) = 0;
 }
-#endif SLUFFED
+#endif /* SLUFFED */

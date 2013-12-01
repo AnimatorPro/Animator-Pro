@@ -300,8 +300,7 @@ lines[0] = line;
 lines[1] = NULL;
 stand_by_box(lines);
 }
-#endif SLUFFED
-
+#endif /* SLUFFED */
 
 static
 inbox(b)
@@ -398,5 +397,4 @@ for (;;)
 undraw_tbox();
 return(ret);
 }
-#endif SLUFFED
-
+#endif /* SLUFFED */

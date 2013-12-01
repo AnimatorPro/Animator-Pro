@@ -105,7 +105,7 @@ for (i=2; i<26; i++)
 		}
 	}
 change_dev(od);
-#endif OLD
+#endif /* OLD */
 for (i=3; i<=26; i++)
 	{
 	r.b.ah = 0x1c;

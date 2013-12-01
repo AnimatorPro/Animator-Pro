@@ -79,7 +79,7 @@ inkblit(cel->w, cel->h, 0, 0, cel->p, cel->bpr, cel->dx, cel->dy,
 	NULL, BPR, vs.inks[0]);
 free_render_cashes();
 }
-#endif SLUFFED
+#endif /* SLUFFED */
 
 /* beware, ignores sx, sy and d */
 static
@@ -244,7 +244,7 @@ render_cel()
 {
 rblit_cel(cel);
 }
-#endif SLUFFED
+#endif /* SLUFFED */
 
 extern Vector cbvec;
 
@@ -633,7 +633,7 @@ if ((dif = p->dy + p->h - render_ymax) > 0)
 	p->h -= dif;
 return(p->w > 0 && p->h > 0);
 }
-#endif SLUFFED
+#endif /* SLUFFED */
 
 render_bitmap_blit(w,h,sx,sy,spt,sbpr,dx,dy)
 WORD w, h, sx, sy, sbpr,dx,dy;
@@ -768,7 +768,7 @@ b->dpt = (WORD *)render_form->p;
 b->dbpr = BPR;
 b->color = vs.ccolor;
 }
-#endif SLUFFED
+#endif /* SLUFFED */
 
 render_brush(x,y)
 WORD x, y;

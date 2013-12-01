@@ -31,7 +31,7 @@ if ((p = m->text)!=NULL)
 		colrop(swhite, m->x+x, m->y+1, 0, m->height-2);
 	}
 }
-#endif SLUFFED
+#endif /* SLUFFED */
 
 color_block1(color,m)
 WORD color;
@@ -81,7 +81,7 @@ if (string)
 		m->y + (1+m->height)/2 - CH_HEIGHT/2, 
 		hilit(m));
 }
-#endif SLUFFED
+#endif /* SLUFFED */
 
 #ifdef SLUFFED
 wbtext(m)
@@ -89,8 +89,7 @@ Flicmenu *m;
 {
 wbtext_offset(m, 0, 0);
 }
-#endif SLUFFED
-
+#endif /* SLUFFED */
 
 #ifdef SLUFFED
 wbtexty1(m)
@@ -98,7 +97,7 @@ Flicmenu *m;
 {
 wbtext_offset(m, 0, 1);
 }
-#endif SLUFFED
+#endif /* SLUFFED */
 
 #ifdef SLUFFED
 wbtext_offset(m, dx, dy)
@@ -113,8 +112,7 @@ gtext( string,
 	dy + m->y + (1+m->height)/2 - CH_HEIGHT/2 - 1, 
 	swhite);
 }
-#endif SLUFFED
-
+#endif /* SLUFFED */
 
 see_num(m, xoff, yoff, fore)
 register Flicmenu *m;
@@ -156,9 +154,7 @@ struct cursor *c;
 a_block(hilit(m), m);
 menu_cursor(m, swhite,c);
 }
-#endif SLUFFED
-
-
+#endif /* SLUFFED */
 
 #ifdef SLUFFED
 extern struct cursor cleft, cright, cup, cdown, ctrileft, ctriright;
@@ -169,7 +165,7 @@ Flicmenu *m;
 {
 inverse_c(m, &cright);
 }
-#endif SLUFFED
+#endif /* SLUFFED */
 
 hilight(m)
 Flicmenu *m;
@@ -321,8 +317,7 @@ while (m)
 	}
 return(NULL);
 }
-#endif SLUFFED
-
+#endif /* SLUFFED */
 
 draw_menus(m)
 register Flicmenu *m;
@@ -387,7 +382,7 @@ Flicmenu *m;
 inverse_c(m, m->text);
 a_frame(swhite, m);
 }
-#endif SLUFFED
+#endif /* SLUFFED */
 
 #ifdef SLUFFED
 text_boxp1(m)
@@ -400,7 +395,7 @@ gtext( m->text,
 	m->y + (1+m->height)/2 - CH_HEIGHT/2, 
 	swhite);
 }
-#endif SLUFFED
+#endif /* SLUFFED */
 
 #ifdef SLUFFED
 white_frame(m)
@@ -408,6 +403,4 @@ Flicmenu *m;
 {
 a_frame(swhite, m);
 }
-#endif SLUFFED
-
-
+#endif /* SLUFFED */

@@ -42,7 +42,7 @@ flash_blue()
 {
 flash_bg(pure_blue);
 }
-#endif SLUFFED
+#endif /* SLUFFED */
 
 see_cmap()
 {
@@ -113,8 +113,7 @@ Vscreen *f;
 clear_form(f);
 copy_structure(init_cmap, f->cmap, COLORS*3);
 }
-#endif SLUFFED
-
+#endif /* SLUFFED */
 
 draw_frame(color, x0, y0, x1, y1)
 int color, x0, y0, x1, y1;
