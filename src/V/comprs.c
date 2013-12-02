@@ -269,7 +269,9 @@ int min_code_size;
 int ret;
 
 ret = -2;	/* out of memory default */
-prior_codes = code_ids = (short *)added_chars = NULL;
+prior_codes = NULL;
+code_ids = NULL;
+added_chars = NULL;
 if ((prior_codes = askmem(TABLE_SIZE*sizeof(short))) == NULL)
 	goto OUT;
 if ((code_ids = askmem(TABLE_SIZE*sizeof(short))) == NULL)

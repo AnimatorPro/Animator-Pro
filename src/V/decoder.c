@@ -366,7 +366,9 @@ UWORD *prefix;
 WORD ret;
 
 ret = OUT_OF_MEMORY;
-stack = suffix = (UBYTE *)prefix = NULL;
+stack = NULL;
+suffix = NULL;
+prefix = NULL;
 if ((buf = (UBYTE *)askmem(linewidth + 1)) == NULL)
 	goto OUT;
 if ((stack = (UBYTE *)askmem(MAX_CODES+1)) == NULL)
