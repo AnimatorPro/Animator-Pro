@@ -83,7 +83,8 @@ return ( small_arctan((long)y,(long)x)<<1  );
 }
 
 /* return an angle normalized to be between -PI and PI */
-arcnorm(t)
+int
+arcnorm(int t)
 {
 t += TWOPI/2;
 t = -t;

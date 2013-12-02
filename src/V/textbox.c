@@ -28,7 +28,7 @@ struct textb_state
 	{
 	struct rectangle box, yes_box, no_box;
 	WORD *behind;
-	omouse_on;
+	WORD omouse_on;
 	Vscreen oscreen;
 	};
 static struct textb_state ts;
