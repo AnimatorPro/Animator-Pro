@@ -759,7 +759,7 @@ occolor = vs.ccolor;
 vs.ccolor = sbright;
 find_range();
 get_ado_cel();
-clock = get80Hz();
+clock = get80hz();
 /* ~~~ */
 for (i=0; i<tr_frames; i++)
 	{
