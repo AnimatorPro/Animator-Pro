@@ -2,16 +2,19 @@
 /* Feelmenu.c - input handling routines for Flicmenus.
    Individual feelme's and a few routines to process whole menus. */
 
+#include <ctype.h>
+#include <stdio.h>
 #include "jimk.h"
 #include "flicmenu.h"
-#include <ctype.h>
 #include "feelmenu.str"
 
 extern Flicmenu quick_menu;
 
 Flicmenu *cur_menu = &quick_menu;
 
+static int rksel(Flicmenu *m);
 
+extern void rmove_menu(Flicmenu *m, WORD dx, WORD dy);
 
 hang_child(m)
 Flicmenu *m;
@@ -37,9 +40,8 @@ if (m->y + m->height + 1 + dy >= YMAX)
 rmove_menu(m, dx, dy);
 }
 
-rmove_menu(m,dx,dy)
-Flicmenu *m;
-WORD dx,dy;
+void
+rmove_menu(Flicmenu *m, WORD dx, WORD dy)
 {
 if (!m)
 	return;
@@ -132,8 +134,8 @@ macrosync();
 return(ok);
 }
 
-repeat_on_pdn(v)
-Vector v;
+void
+repeat_on_pdn(Vector v)
 {
 WORD i;
 
@@ -483,11 +485,8 @@ while (!break_menu)
 break_menu = obreak;
 }
 
-
-
-static
-rksel( m)
-register Flicmenu *m;
+static int
+rksel(Flicmenu *m)
 {
 if (m->next)
 	{

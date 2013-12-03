@@ -35,6 +35,10 @@ static Vertex *ado_vpoly;		/* 3D element point list */
 static Point *ado_dpoly;		/* 2D ready to render point list */
 static int	ado_ptcount;		/* How many points in above lists */
 
+static void free_ado_poly(void);
+static void get_ado_cel(void);
+static int do_move_along(void);
+
 /* is it a vector element or a raster element? */
 static
 is_vector()
@@ -98,8 +102,8 @@ return(0);
 }
 
 /* Free up everything make_ado_poly() above took off the heap */
-static
-free_ado_poly()
+static void
+free_ado_poly(void)
 {
 gentle_freemem(ado_vpoly);
 ado_vpoly = NULL;
@@ -256,7 +260,7 @@ h += y-1;
 #define scale_mult itmult
 
 /* Put position along path defined by poly into delta_array */
-static
+static void
 calc_path_pos(poly, delta_array, scale, closed)
 Poly *poly;
 Vertex *delta_array;
@@ -439,6 +443,7 @@ if (is_vector())
 
 /* Given two polys, generate a poly 'tween' the two.  This is
    a convenient place to promote the 2-D poly to a 3-D one too. */
+void
 xform_to_ado_poly(sp0, sp1, d, count, scale)
 Poly *sp0, *sp1;
 Vertex *d;
@@ -732,13 +737,12 @@ msome_vector(ado_dpoly,
 return(TRUE);
 }
 
-
 /* Go do a wire-frame simulation of what ado move will look like
    so user can get a sense of what the timing will be before
    he goes to the pixel perfect (and slow) preview or even
    (gasp) to render it. */
-static
-ado_preview()
+static void
+ado_preview(void)
 {
 int occolor;
 int i;
@@ -802,9 +806,9 @@ ado_preview();
 draw_mp();
 }
 
-
 /* the response to the 'do it' button */
-mauto_ado()
+void
+mauto_ado(void)
 {
 int omulti;
 
@@ -978,11 +982,10 @@ else
 	return(0);
 }
 
-
 /* Response to pendown over drawing area when path sub-panel is
    being displayed */
-static
-make_path()
+static void
+make_path(void)
 {
 extern int tr_frames;
 int ok;
@@ -1045,8 +1048,8 @@ if (pq[0] > 100)
 /* Response to click over drawing area.  Lets user spin things around
    stretch, scale, etc. by moving around mouse instead of poking numbers
    into sliders. */
-static
-mouse_move()
+static void
+mouse_move(void)
 {
 int lastx, lasty, dx, dy;
 int opong, oease;
@@ -1493,10 +1496,9 @@ if ((title =  get_filename(a3d_104 /* "Save Optics Move?" */,
 	}
 }
 
-
 /* Point ado_cel to the right raster source */
-static
-get_ado_cel()
+static void
+get_ado_cel(void)
 {
 if (vs.ado_source == OPS_CEL)
 	ado_cel = cel;
@@ -1543,8 +1545,8 @@ draw_mp();
 }
 
 /* Duplicate top of transformation stack. */
-static
-do_move_along()
+static int
+do_move_along(void)
 {
 struct ado_setting *as;
 

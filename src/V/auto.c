@@ -24,7 +24,7 @@
    away the result.
    */
 
-
+#include <stdio.h>
 #include "jimk.h"
 #include "auto.str"
 #include "blit8_.h"
@@ -39,8 +39,10 @@ extern WORD x_0,y_0,x_1,y_1;
 
 static UBYTE auto_rgb[3], auto_8rgb[3];
 
-extern dseg();
+static int dall(Vector rvec);
 
+extern void doauto(Vector rvec);
+extern int dseg(Vector rvec);
 
 /* Free up lots of memory by swapping out the world to disk.  Then
    doauto. */
@@ -649,11 +651,9 @@ see_cmap();
 zoom_it();
 }
 
-
 /* apply function to all frames.  Corrupts uf.p */
-static
-dall(rvec)
-Vector rvec;	/* called to draw something on vscreen each frame */
+static int
+dall(Vector rvec)
 {
 int new_tflx;
 Flx *new_flx;
@@ -961,12 +961,11 @@ int ix, intween;
 return((*rvec)(ix,intween, calc_time_scale(ix, intween)));
 }
 
-
 /* Apply rvec just as if were really doing it, but stop short of
    recompressing it into our flic.  Also do the drawing off-screen
    so user only sees result, not intermediate stages */
-dopreview(rvec)
-Vector rvec;
+void
+dopreview(Vector rvec)
 {
 int i;
 int oframe_ix;
@@ -1049,8 +1048,8 @@ else
 #endif /* OLD */
 
 /* Apply a function over many frames */
-doauto(rvec)
-Vector rvec;
+void
+doauto(Vector rvec)
 {
 if (vs.multi)
 	{

@@ -14,9 +14,11 @@ char menu_ix, sel_ix;
 extern Flicmenu fileq_menu;
 extern Pull root_pull;
 
-WORD *draw_pull(), *save_behind();
 struct pull *cur_pull = &root_pull;
 
+static void undraw_pull(int x, int y, Pull *p, WORD *abehind);
+
+extern WORD *draw_pull(int x, int y, Pull *p);
 
 #ifdef SLUFFED
 static
@@ -128,7 +130,8 @@ WORD *abehind, *bbehind, *cbehind; /*buffers for
 												hilit selection */
 WORD *mbehind;	/* buffer for behind menu... */
 
-static unselect()
+static void
+unselect(void)
 {
 if (s_select)
 	{
@@ -138,7 +141,8 @@ if (s_select)
 	}
 }
 
-static unchild()
+static void
+unchild(void)
 {
 unselect();
 if (cchild)
@@ -325,14 +329,8 @@ unchild();
 return(ret);
 }
 
-
-
-
-static
-undraw_pull(x, y, p, abehind)
-register int x, y;
-register Pull *p;
-WORD *abehind;
+static void
+undraw_pull(int x, int y, Pull *p, WORD *abehind)
 {
 WORD abehind_size;
 WORD aline_size;
@@ -348,9 +346,7 @@ if (abehind != NULL)
 }
 
 static WORD *
-save_behind(x, y, p)
-register int x, y;
-register Pull *p;
+save_behind(int x, int y, Pull *p)
 {
 WORD *abehind;
 WORD abehind_size;
@@ -379,10 +375,8 @@ while (p)
 	}
 }
 
-static WORD *
-draw_pull(x, y, p)
-register int x, y;
-register Pull *p;
+WORD *
+draw_pull(int x, int y, Pull *p)
 {
 WORD *abehind;
 
@@ -423,8 +417,8 @@ else
 	p->data[0] = ' ';
 }
 
-enable_pulls(p)
-register struct pull *p;
+void
+enable_pulls(struct pull *p)
 {
 if (!p)
 	return;
@@ -444,10 +438,8 @@ xonflag(&snap_pull, vs.use_grid);
 }
 #endif /* LATER */
 
-static
-which_key_pull(p, c)
-Pull *p;
-UBYTE c;
+static int
+which_key_pull(Pull *p, UBYTE c)
 {
 int abehind;
 int ix, i;
@@ -474,8 +466,8 @@ while (p != NULL)
 return(ix);
 }
 
-static
-hidemc()
+static void
+hidemc(void)
 {
 if (cur_menu == NULL)
 	uncheck_cmap();

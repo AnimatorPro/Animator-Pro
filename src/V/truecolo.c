@@ -25,6 +25,8 @@ static struct thash *thash;
 static struct bhash *bhash;
 static UBYTE tcolor[3];
 
+static int make_glow(void);
+static void flush_dither_err(void);
 
 #define BSIZ (1024*4*sizeof(struct bhash) )
 
@@ -44,17 +46,15 @@ is_bhash()
 return(bhash!=NULL);
 }
 
-
-static
-free_thash()
+static void
+free_thash(void)
 {
 gentle_freemem(thash);
 thash = NULL;
 }
 
-
-static
-make_thash()
+static int
+make_thash(void)
 {
 unsigned size;
 
@@ -120,8 +120,8 @@ return(1);
 
 UBYTE *glow_lookup;
 
-static
-make_glow()
+static int
+make_glow(void)
 {
 int i;
 UBYTE *bun, c, c1;
@@ -174,8 +174,8 @@ return(dif);
 
 static int rerr,gerr,berr;
 
-static 
-flush_dither_err()
+static void
+flush_dither_err(void)
 {
 rerr = gerr = berr = 0;
 }
@@ -446,9 +446,8 @@ while (--i > 0)
 }
 #endif /* LATER */
 
-static
-shuffle_cmap(s1,s2,d)
-PLANEPTR s1,s2,d;
+static int
+shuffle_cmap(PLANEPTR s1, PLANEPTR s2, PLANEPTR d)
 {
 int i;
 int dsize;

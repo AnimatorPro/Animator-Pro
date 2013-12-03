@@ -2,15 +2,21 @@
 /* qnumber.c - This module is for popping up little requestor to 
 	get a single number or a single string */
 
+#include <stdio.h>
 #include "jimk.h"
 #include "blit8_.h"
 #include "flicmenu.h"
 #include "gemfont.h"
 #include "commonst.h"
 
-extern gary_menu_back(), menu_text_box(), see_string_req(), 
+static void menu_text_box(Flicmenu *m);
+static void string_close(Flicmenu *m);
+static void qn_feel_qslider(Flicmenu *m);
+static void init_qnums(void);
+
+extern gary_menu_back(), see_string_req(),
 	close_menu(), close_menu_bad(), dcorner_text(),
-	string_close(), feel_string_req(), see_qslider(), qn_feel_qslider();
+	feel_string_req(), see_qslider();
 
 static char qstring[11];
 static struct stringq qstring_stringq =
@@ -98,9 +104,8 @@ static Flicmenu qreq_menu =
 	NOOPT,
 	};
 
-static
-menu_text_box(m)
-Flicmenu *m;
+static void
+menu_text_box(Flicmenu *m)
 {
 to_upper(m->text);
 wwtext(&vf, &sixhi_font,
@@ -108,9 +113,8 @@ wwtext(&vf, &sixhi_font,
 	a1blit, 0, 0);
 }
 
-static
-string_close(m)
-Flicmenu *m;
+static void
+string_close(Flicmenu *m)
 {
 if (feel_string_req(m))
 	close_menu();
@@ -118,17 +122,16 @@ qnum = atoi(qstring);
 draw_sel(&qnu_sli_sel);
 }
 
-static
-qn_feel_qslider(m)
-Flicmenu *m;
+static void
+qn_feel_qslider(Flicmenu *m)
 {
 feel_qslider(m);
 init_qnums();
 draw_sel(&reqstring_sel);
 }
 
-static
-init_qnums()
+static void
+init_qnums(void)
 {
 sprintf(qstring, "%d", qnum);
 init_stq_string(&qstring_stringq);

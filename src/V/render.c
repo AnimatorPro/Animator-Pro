@@ -10,6 +10,14 @@
 #include "poly.h"
 #include "truecol_.h"
 
+static void
+tblit(WORD w, WORD h,
+		WORD sx, WORD sy, PLANEPTR s, WORD sbpr,
+		WORD dx, WORD dy, PLANEPTR d, WORD dbpr,
+		UBYTE tcolor, int clear, int tinting, PLANEPTR scmap);
+static int emb1c(int s, int d);
+static int close_hole(int x, int y);
+
 extern int copydot(),marqidot(),sdot(), xdot();
 extern a1bdot(), rbdot(), rbbrush();
 extern Vcel *cel;
@@ -125,10 +133,8 @@ for (y=dy; y<yend; y++)
 vs.ccolor = occolor;
 }
 
-
-transpblit(tcel,clearcolor, clear, tinting)
-register Vcel *tcel;
-int clearcolor, clear, tinting;
+void
+transpblit(Vcel *tcel, int clearcolor, int clear, int tinting)
 {
 if (!make_bhash())
 	return;
@@ -137,14 +143,11 @@ tblit(tcel->w, tcel->h, 0, 0, tcel->p, tcel->bpr, tcel->x, tcel->y,
 free_bhash();
 }
 
-
-static
-tblit(w,h,sx,sy,s, sbpr, dx, dy, d, dbpr, tcolor, clear, tinting, scmap)
-WORD w,h,sx,sy,sbpr,dx,dy,dbpr;
-PLANEPTR s,d;
-UBYTE tcolor;
-int clear, tinting;
-PLANEPTR scmap;
+static void
+tblit(WORD w, WORD h,
+		WORD sx, WORD sy, PLANEPTR s, WORD sbpr,
+		WORD dx, WORD dy, PLANEPTR d, WORD dbpr,
+		UBYTE tcolor, int clear, int tinting, PLANEPTR scmap)
 {
 int x, y, i, j, x0, y0;
 unsigned char rgb[3];
@@ -285,11 +288,8 @@ switch (vs.draw_mode)
 	}
 }
 
-
-static
-dfrom_range(p,q,x,y)
-unsigned p,q;
-int x,y;
+static int
+dfrom_range(unsigned int p, unsigned int q, int x, int y)
 {
 WORD color;
 WORD start, samples;
@@ -309,9 +309,8 @@ color = vs.buns[vs.use_bun].bundle[color];
 return(color);
 }
 
-static
-clip_xy(p)
-int *p;
+static void
+clip_xy(int *p)
 {
 int i;
 
@@ -332,8 +331,8 @@ int render_xmin, render_ymin;
 int render_xmax = XMAX, render_ymax = YMAX;
 extern UBYTE *glow_lookup;
 
-render_dot(x,y)
-register WORD x,y;
+void
+render_dot(WORD x, WORD y)
 {
 extern WORD gel_factor;
 extern char *gel_thash;
@@ -544,10 +543,8 @@ if (y >= render_ymin & y < render_ymax && x >= render_xmin
 	}
 }
 
-
-static
-emb1c(s,d)
-int s, d;
+static int
+emb1c(int s, int d)
 {
 int r;
 
@@ -569,9 +566,8 @@ static char chtab[32] = {
 	0x76, 0x0, 0x40, 0x0, 0x24, 0x0, 0x0, 0x0,
 	};
 
-static
-close_hole(x,y)
-int x,y;
+static int
+close_hole(int x, int y)
 {
 WORD color;
 WORD nbd;
@@ -662,9 +658,8 @@ while (--i >= 0)
 	}
 }
 
-render_hline(y, x0, x1)
-register WORD y,x0;
-WORD x1;
+void
+render_hline(WORD y, WORD x0, WORD x1)
 {
 WORD width;
 
@@ -693,9 +688,8 @@ while (--width >= 0)
 	}
 }
 
-
-render_disk(cenx,ceny,rad)
-WORD cenx, ceny, rad;
+void
+render_disk(WORD cenx, WORD ceny, WORD rad)
 {
 if (!make_render_cashes())
 	return;
@@ -704,9 +698,8 @@ ccircle(cenx,ceny,rad,NULL,render_hline,TRUE);
 free_render_cashes();
 }
 
-
-render_frame(x0, y0, x1, y1)
-int x0, y0, x1, y1;
+void
+render_frame(int x0, int y0, int x1, int y1)
 {
 render_full_screen();
 if (!make_render_cashes())
@@ -817,8 +810,8 @@ while (--i >= 0)
 	}
 }
 
-render_circle(cenx, ceny, rad)
-WORD cenx, ceny, rad;
+void
+render_circle(WORD cenx, WORD ceny, WORD rad)
 {
 render_center_rad(cenx,ceny,rad+((vs.pen_width+1)>>1));
 if (!make_render_cashes())

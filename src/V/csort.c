@@ -76,12 +76,10 @@ while (--i >= 0)
 	}
 }
 
-
 /* If in cluster mode simplify remove colors not in cluster from 
    further consideration by making their count in the histogram 0 */
-static
-delete_not_in_cluster(sbuf)
-struct occ_map *sbuf;
+static void
+delete_not_in_cluster(struct occ_map *sbuf)
 {
 UBYTE cflags[COLORS];
 UBYTE *p;

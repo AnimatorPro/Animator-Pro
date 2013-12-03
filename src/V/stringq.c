@@ -1,6 +1,7 @@
 /* stringq.c - Implement a button that lets user edit a single line
    of text */
 
+#include <string.h>
 #include "jimk.h"
 #include "blit8_.h"
 #include "cblock_.h"

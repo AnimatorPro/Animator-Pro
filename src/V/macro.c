@@ -43,8 +43,14 @@ char usemacro;
 static long itime, oitime;
 char inwaittil;
 
-static
-close_macfile()
+static int make_macro(void);
+static void umacr(WORD rpt);
+static void nogood_mac(void);
+static void nomac_defined(void);
+static void rwait(long time);
+
+static void
+close_macfile(void)
 {
 bclose(&macfile);
 }
@@ -61,8 +67,8 @@ realtimemac = 1;
 make_macro();
 }
 
-static
-make_macro()
+static int
+make_macro(void)
 {
 close_macro();
 oitime = get80hz();
@@ -105,9 +111,8 @@ if (qreq_number(macro_100 /* "Repeat macro how many times?" */,
 		umacr(rep);
 }
 
-static
-umacr(rpt)
-WORD rpt;
+static void
+umacr(WORD rpt)
 {
 if (usemacro)
 	return;
@@ -134,14 +139,14 @@ mh.mindex = 0;
 macrorpt = rpt;
 }
 
-static
-nogood_mac()
+static void
+nogood_mac(void)
 {
 continu_line(macro_101 /* "Not a good macro file." */);
 }
 
-static
-nomac_defined()
+static void
+nomac_defined(void)
 {
 continu_line(macro_102 /* "No macro recording defined." */);
 }
@@ -158,8 +163,8 @@ if (defmacro)
 	}
 }
 
-static
-read_next_macro()
+static int
+read_next_macro(void)
 {
 if (mh.mindex == mh.mcount)
 	{
@@ -187,7 +192,8 @@ return(1);
 }
 
 /* process macro into input stream*/
-get_macro()
+void
+get_macro(void)
 {
 if (!macfile.fd)
 	return;
@@ -232,16 +238,15 @@ uzx = ir.mouse_x;
 uzy = ir.mouse_y;
 }
 
-static
-rwait(time)
-long time;
+static void
+rwait(long time)
 {
 while (time > get80hz())
 	;
 }
 
-static
-pmac()
+static void
+pmac(void)
 {
 mh.mcount++;
 if (bwrite(&macfile, &ir, sizeof(ir)) != sizeof(ir))
@@ -253,8 +258,8 @@ if (bwrite(&macfile, &ir, sizeof(ir)) != sizeof(ir))
 	}
 }
 
-static
-pmacro()
+static void
+pmacro(void)
 {
 ir.buttons = mouse_button;
 ir.mk.key = (key_hit ? key_in : 0);
@@ -300,7 +305,8 @@ else
 	}
 }
 
-load_macro()
+void
+load_macro(void)
 {
 char *title;
 int f;
@@ -325,9 +331,8 @@ if ((title =  get_filename(macro_108 /* "Load a macro recording file?" */,
 	}
 }
 
-
-
-macrosync()
+void
+macrosync(void)
 {
 if (defmacro)
 	{

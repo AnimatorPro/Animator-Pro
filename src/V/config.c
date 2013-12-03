@@ -6,6 +6,7 @@
    */
 
 #include <ctype.h>
+#include <string.h>
 #include "jimk.h"
 #include "fli.h"
 #include "commonst.h"

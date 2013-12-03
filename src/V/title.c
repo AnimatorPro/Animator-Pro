@@ -3,6 +3,8 @@
 
 
 /* generated with makemenu */
+#include <stdio.h>
+#include <string.h>
 #include "jimk.h"
 #include "flicmenu.h"
 #include "fli.h"
@@ -11,18 +13,21 @@
 #include "commonst.h"
 #include "title.str"
 
+static void title_back(Flicmenu *m);
+static void qplace_window(void);
+static void mload_font(void);
+static void qnew_text(void);
+static void title_button(void);
+static void suggest_frames(void);
 
 /*** Display Functions ***/
 extern ccorner_text(), ncorner_text(), left_text(), gary_menu_back(),
-	move_tab_text(), title_back();
-
-
+	move_tab_text();
 
 /*** Select Functions ***/
 extern toggle_group(), change_mode(), move_menu(), qedit_text(),
-	bottom_menu(), title_button(), suggest_frames(),
-	mload_text(), mload_font(), qplace_window(), qnew_text();
-
+	bottom_menu(),
+	mload_text();
 
 /*** Button Data ***/
 static Flicmenu tit_fil_sel = {
@@ -273,15 +278,14 @@ static Flicmenu tit_menu = {
 	NOOPT,
 	};
 
-static
-title_disables()
+static void
+title_disables(void)
 {
 tit_do__sel.disabled = !jexists(text_name);
 }
 
-static
-title_back(m)
-Flicmenu *m;
+static void
+title_back(Flicmenu *m)
 {
 gary_menu_back(m);
 title_disables();
@@ -304,22 +308,22 @@ rezoom();
 
 /* Start of code not particularly concerned with menu */
 
-static
-qplace_window()
+static void
+qplace_window(void)
 {
 qpwt(0);
 }
 
-static
-mload_font()
+static void
+mload_font(void)
 {
 hide_mp();
 qfont_text();
 draw_mp();
 }
 
-static
-qnew_text()
+static void
+qnew_text(void)
 {
 hide_mp();
 save_undo();
@@ -333,9 +337,8 @@ static long pixels_to_scroll;
 
 extern render_bitmap_blit();
 
-static
-title1(ix, intween, scale)
-int ix, intween, scale;
+static int
+title1(int ix, int intween, int scale)
 {
 long tscroll;
 int lscroll, pscroll;
@@ -366,11 +369,9 @@ else
 	return(0);
 }
 
-
 /* Scroll a single line of text from right to left */
-static
-timesq1(ix, intween, scale)
-int ix, intween, scale;
+static int
+timesq1(int ix, int intween, int scale)
 {
 long tscroll;
 long so_far;
@@ -418,9 +419,8 @@ static int clines;
 
 extern char *wwnext_line();
 
-static
-type1(ix, intween, scale)
-int ix, intween, scale;
+static int
+type1(int ix, int intween, int scale)
 {
 int stoppos;
 char *stops;
@@ -484,9 +484,8 @@ else
 	return(0);
 }
 
-
-static
-calc_clines()
+static int
+calc_clines(void)
 {
 int h, lines, fh, ch;
 
@@ -501,9 +500,8 @@ while (h >= 0)
 return(lines);
 }
 
-
-static
-find_pixels_to_scroll()
+static void
+find_pixels_to_scroll(void)
 {
 int text_lines;
 
@@ -528,9 +526,8 @@ switch (vs.tit_move)
 	}
 }
 
-
-static
-title_button()	/* aka do text */
+static void
+title_button(void)	/* aka do text */
 {
 int omulti, oh;
 
@@ -588,8 +585,8 @@ static char *sf_lines[3] = {
 	title_121 /* "To get one frame per scroll" */,
 };
 
-static
-suggest_frames()
+static void
+suggest_frames(void)
 {
 char buf[40];
 

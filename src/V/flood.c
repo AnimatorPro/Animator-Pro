@@ -27,9 +27,12 @@ static UBYTE lmasks[] = {0xff,0x7f,0x3f,0x1f,0x0f,0x07,0x03,0x01};
 static UBYTE rmasks[] = {0x80,0xc0,0xe0,0xf0,0xf8,0xfc,0xfe,0xff};
 UBYTE bmasks[] = {0x80,0x40,0x20,0x10,0x08,0x04,0x02,0x01};
 
-static
-visit_hline(y, x1, x2)
-WORD y, x1, x2;
+static void some_flood(unsigned int x, unsigned int y);
+static void
+flood_visit(Vector hout, unsigned int x, unsigned int y, unsigned int color);
+
+static void
+visit_hline(WORD y, WORD x1, WORD x2)
 {
 register PLANEPTR pt;
 WORD xbyte;
@@ -50,11 +53,8 @@ else
 	}
 }
 
-
-
-static
-expand_fseg(s)
-struct fseg *s;
+static void
+expand_fseg(struct fseg *s)
 {
 register int x;
 int y;
@@ -85,9 +85,8 @@ while (x < XMAX-1)
 s->right = x;
 }
 
-static
-add_fseg(y, left, right)
-WORD y, left, right;
+static void
+add_fseg(WORD y, WORD left, WORD right)
 {
 register struct fseg *new;
 
@@ -101,10 +100,8 @@ new->left = left;
 new->right = right;
 }
 
-
-static
-scan_seg(y, left, right)
-WORD y, left, right;
+static void
+scan_seg(WORD y, WORD left, WORD right)
 {
 register WORD fillit;
 register PLANEPTR pt;
@@ -140,11 +137,13 @@ if (fillit)
 
 static fhx0, fhx1, fhy0, fhy1;
 
-static nofunc(){}
+static void
+nofunc(void)
+{
+}
 
-static 
-flood_rhline(y, x0, x1, color)
-WORD y, x0, x1,color;
+static void
+flood_rhline(WORD y, WORD x0, WORD x1, WORD color)
 {
 render_hline(y, x0, x1);
 }
@@ -165,10 +164,8 @@ floodto = 1;
 some_flood(x,y);
 }
 
-
-static
-some_flood(x,y)
-unsigned x, y;
+static void
+some_flood(unsigned int x, unsigned int y)
 {
 if ((fsegments = begmem(FSZ*sizeof(*fsegments))) == NULL)
 	return;
@@ -181,7 +178,7 @@ switch (vs.draw_mode)
 	{
 	case 1:
 	case 2:
-		flood_visit(nofunc,x,y,vs.ccolor);
+		flood_visit((Vector)nofunc, x, y, vs.ccolor);
 		render_xy(fhx0,fhy0,fhx1,fhy1);
 		break;
 	default:
@@ -189,7 +186,7 @@ switch (vs.draw_mode)
 	}
 if (make_render_cashes())
 	{
-	flood_visit(flood_rhline,x,y,vs.ccolor);
+	flood_visit((Vector)flood_rhline, x, y, vs.ccolor);
 	free_render_cashes();
 	}
 freemem(fsegments);
@@ -200,10 +197,8 @@ freemem(visitbuf);
 /* XMAX*YMAX/8 */
 #define M_SIZE 8000
 
-static
-flood_visit(hout,x,y,color)
-Vector hout;
-unsigned x, y, color;
+static void
+flood_visit(Vector hout, unsigned int x, unsigned int y, unsigned int color)
 {
 int left, right;
 struct fseg *next;

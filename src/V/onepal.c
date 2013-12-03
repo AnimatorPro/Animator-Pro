@@ -2,6 +2,7 @@
 /* onepal.c - A routine to force all the frames of a FLIC to a reasonable
    intermediate palette that is the same for all frames */
 
+#include <stdio.h>
 #include "jimk.h"
 #include "blit8_.h"
 #include "fli.h"

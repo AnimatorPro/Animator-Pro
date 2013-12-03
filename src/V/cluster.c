@@ -2,6 +2,7 @@
 /* Cluster.c - most of the routines dealing with color cluster one
    way or another.  Some connections to palet2.c and cpack.c */
 
+#include <stdio.h>
 #include "jimk.h"
 #include "cblock_.h"
 #include "cluster.str"
@@ -19,6 +20,9 @@ static char *icmap;
 
 
 static Flicmenu *bsel[] = {&pal_bun_sel, &pal_spe_sel};
+
+static int in_a_cluster(UBYTE c, struct bundle *bun);
+static void pp_hi_bundle(int ocolor);
 
 /* macros for # of colors in current bundle, and current bundle
    colors list */
@@ -41,10 +45,8 @@ for (i=0; i<ccount && i <bctt; i++)
 	}
 }
 
-
-static
-clus_cmap(cmap)
-UBYTE *cmap;
+static void
+clus_cmap(UBYTE *cmap)
 {
 UBYTE *s;
 int i;
@@ -67,10 +69,8 @@ if ((cmap = begmem(bctt * 3) ) != NULL)
 return(cmap);
 }
 
-static
-ccycle1(ix, intween)
-int ix;
-int intween;
+static int
+ccycle1(int ix, int intween)
 {
 UBYTE *cm, *cm2;
 int ok;
@@ -108,9 +108,8 @@ ccycle()
 pmhmpauto(ccycle1);
 }
 
-
-
-cl_cut()
+void
+cl_cut(void)
 {
 UBYTE *cbuf;
 long ccut_size;
@@ -135,12 +134,8 @@ write_gulp(cclip_name, cbuf, ccut_size);
 freemem(cbuf);
 }
 
-
-static
-do_ramp_cluster(s1, s2, count, b)
-UBYTE *s1, *s2;
-int count;
-struct bundle *b;
+static void
+do_ramp_cluster(UBYTE *s1, UBYTE *s2, int count, struct bundle *b)
 {
 UBYTE rgb[3];
 int i, j;
@@ -154,12 +149,10 @@ for (i=0; i<count; i++)
 b->bun_count = count;
 }
 
-
 /* figure how much difference there is from a 'perfect' ramp of colors
    and the closest count sized ramp we can find in current color map */
 static long
-sum_ramp_error(s1, s2, count)
-UBYTE *s1, *s2, count;
+sum_ramp_error(UBYTE *s1, UBYTE *s2, UBYTE count)
 {
 int d;
 long acc;
@@ -192,9 +185,8 @@ return(acc);
 }
 
 /* Figure out best size for ramp during a 'find ramp' */
-static
-find_ramp_count(r1, r2)
-UBYTE *r1, *r2;	/* ramp truecolor endpoints */
+static int
+find_ramp_count(UBYTE *r1, UBYTE *r2)
 {
 int best;
 long dist, ldist;
@@ -215,9 +207,8 @@ return(best);
 
 static char *rgb_word;
 
-static
-show_rgb(c)
-int c;
+static void
+show_rgb(int c)
 {
 UBYTE *r;
 char buf[40];
@@ -227,9 +218,8 @@ sprintf(buf, " %s (%d %d %d)      ", rgb_word, r[0], r[1], r[2]);
 top_text(buf);
 }
 
-static
-show_startc(c)
-int c;
+static void
+show_startc(int c)
 {
 char buf[40];
 
@@ -253,9 +243,8 @@ static unsigned pwp_yoff[8] = {
 	};
 
 /* find out which color in color matrix cursor is over. */
-static
-which_pp(yoff)
-int yoff;
+static int
+which_pp(int yoff)
 {
 int i,j;
 int y, x;
@@ -295,9 +284,8 @@ predraw();
    sophisticated.  If over color matrix call color matrix which color
    routine so don't pick up grey dividing lines between colors.  Similarly
    if in a cluster call cluster color finder. */
-
-static
-get_pp_color()
+static int
+get_pp_color(void)
 {
 int c;
 
@@ -322,9 +310,8 @@ else if (in_menu(&spec1_sel))
 return(c);
 }
 
-
-static
-draw_cco()
+static void
+draw_cco(void)
 {
 extern Flicmenu *ccolor_sel;
 
@@ -367,8 +354,8 @@ return(c);
 
 static UBYTE r1[3], r2[3];
 
-static
-define_ramp()
+static int
+define_ramp(void)
 {
 int c;
 
@@ -383,9 +370,8 @@ copy_bytes(render_form->cmap + 3*c, r2, 3);
 return(1);
 }
 
-static
-ramp_cluster(which)
-int which;
+static void
+ramp_cluster(int which)
 {
 if (!define_ramp())
 	return;
@@ -394,8 +380,8 @@ do_ramp_cluster(r1, r2, find_ramp_count(r1, r2) , vs.buns+which);
 pp_hi_bundle(sbright);
 }
 
-static
-framp1()
+static int
+framp1(void)
 {
 cmap_to_cluster(icmap, bctt);
 refit_vf();
@@ -404,8 +390,8 @@ return(1);
 
 static int clp_count;
 
-static
-cl_paste1()
+static int
+cl_paste1(void)
 {
 if (vs.pal_to == 0)	/* to cluster */
 	cmap_to_cluster(icmap, clp_count);
@@ -415,9 +401,8 @@ refit_vf();
 return(1);
 }
 
-static
-cl_pblend(autov)
-Vector autov;
+static void
+cl_pblend(Vector autov)
 {
 int colors;
 long ccut_size;
@@ -453,19 +438,16 @@ cl_pblend(cl_paste1);
 draw_mp();
 }
 
-static
-cl_blend_1c(scale, dcol, cix, ix, count)
-int scale,cix,ix,count;
-UBYTE *dcol;
+static void
+cl_blend_1c(int scale, UBYTE *dcol, int cix, int ix, int count)
 {
 if (ix >= clp_count)
 	return;
 true_blend(dcol, icmap + 3*ix, itmult(scale, vs.cblend), dcol);
 }
 
-static
-cl_blend1(ix, intween, scale)
-int ix, intween, scale;
+static int
+cl_blend1(int ix, int intween, int scale)
 {
 some_cmod(cl_blend_1c,scale);
 return(1);
@@ -513,11 +495,8 @@ else
 refit_vf();
 }
 
-
-static
-unique_cluster(s, d)
-struct bundle *s;
-struct bundle *d;
+static void
+unique_cluster(const struct bundle *s, struct bundle *d)
 {
 int i;
 UBYTE c;
@@ -533,26 +512,22 @@ for (i=0; i<s->bun_count; i++)
 	}
 }
 
-
-static
-tint_1c(scale, p)
-int scale;
-UBYTE *p;
+static int
+tint_1c(int scale, UBYTE *p)
 {
 true_blend(p, r1, itmult(scale, vs.ctint), p);
 return(1);
 }
 
-
-static
-ctint1(ix, intween, scale)
-int ix, intween, scale;
+static int
+ctint1(int ix, int intween, int scale)
 {
 some_cmod(tint_1c, scale);
 return(1);
 }
 
-ctint()
+void
+ctint(void)
 {
 int c;
 struct bundle uniq;
@@ -578,10 +553,8 @@ exchange_bytes(cb,&uniq,sizeof(uniq));
 draw_mp();
 }
 
-static
-neg_1c(scale, p)
-int scale;
-UBYTE *p;	/* rgb value */
+static void
+neg_1c(int scale, UBYTE *p)
 {
 UBYTE nrgb[3];
 
@@ -591,9 +564,8 @@ nrgb[2] = 63-p[2];
 true_blend(p, nrgb, itmult(scale, 100), p);
 }
 
-static
-cneg1(ix, intween, scale)
-int ix, intween, scale;
+static int
+cneg1(int ix, int intween, int scale)
 {
 some_cmod(neg_1c, scale);
 return(1);
@@ -613,8 +585,8 @@ hmpauto(cneg1);
 exchange_bytes(cb,&uniq,sizeof(uniq));
 }
 
-
-force_ramp()
+void
+force_ramp(void)
 {
 if (!define_ramp())
 	return;
@@ -651,7 +623,8 @@ for (i=0; i<COLORS; i++)
 	}
 }
 
-cclose()
+void
+cclose(void)
 {
 int ok;
 
@@ -685,10 +658,8 @@ for (i=0; i<COLORS; i++)
 	}
 }
 
-static
-in_a_cluster(c,bun)
-UBYTE c;
-struct bundle *bun;
+static int
+in_a_cluster(UBYTE c, struct bundle *bun)
 {
 int i;
 UBYTE *b;
@@ -773,11 +744,8 @@ else
 draw_mp();
 }
 
-
-
-static
-show_secondc(c2)
-int c2;
+static void
+show_secondc(int c2)
 {
 char buf[40];
 
@@ -786,9 +754,8 @@ sprintf(buf, cluster_111 /* " Start %3d Colors %3d Stop %3d" */,
 top_text(buf);
 }
 
-static
-scrange(b)
-struct bundle *b;
+static void
+scrange(struct bundle *b)
 {
 int ccount, dc;
 UBYTE *pb;
@@ -818,9 +785,8 @@ while (--ccount >= 0)
 pp_hi_bundle(sbright);
 }
 
-static
-select_bundle(which)
-int which;
+static void
+select_bundle(int which)
 {
 Flicmenu *m;
 
@@ -852,11 +818,8 @@ Flicmenu *m;
 select_bundle(m->identity);
 }
 
-
-static
-bp_color(ix, ocolor)
-int ix;
-int ocolor;
+static void
+bp_color(int ix, int ocolor)
 {
 int x,y,w,h;
 
@@ -867,9 +830,8 @@ w = pwp_width[ix]+1;
 draw_frame(ocolor, x-1, y-1, x+w, y+PWP_HEIGHT+1);
 }
 
-static
-pp_hi_bundle(ocolor)
-int ocolor;
+static void
+pp_hi_bundle(int ocolor)
 {
 int color, i, count;
 
@@ -887,9 +849,8 @@ change_mode(m);
 pp_hi_bundle(sbright);
 }
 
-static
-pp_inner_colors(yoff)
-int yoff;
+static void
+pp_inner_colors(int yoff)
 {
 int i,j;
 int y, h, color;
@@ -906,9 +867,8 @@ for (j=0; j<8; j++)
 	}
 }
 
-static
-pp_hi_ccolor(yoff)
-int yoff;
+static void
+pp_hi_ccolor(int yoff)
 {
 int tx, ty;
 
@@ -922,9 +882,8 @@ bp_color(vs.ccolor, sred);
 }
 
 /* erode frames around system coopted colors */
-
-static
-pp_eat_sys()	
+static void
+pp_eat_sys(void)
 {
 extern UBYTE sys5;
 int i;
@@ -952,10 +911,8 @@ pp_hi_ccolor(yoff);
 pp_eat_sys();
 }
 
-
-static
-show_ccp1(c1)
-int c1;
+static void
+show_ccp1(int c1)
 {
 char buf[40];
 
@@ -965,8 +922,8 @@ top_text(buf);
 
 static unsigned char ccopy_rgb[3];
 
-static
-ccopy1()
+static int
+ccopy1(void)
 {
 copy_bytes(ccopy_rgb,render_form->cmap+3*c2,3);
 return(1);
@@ -997,9 +954,8 @@ while (--count >= 0)
 draw_sel(bsel[vs.use_bun]);
 }
 
-
-static
-cl_swap1()
+static int
+cl_swap1(void)
 {
 static int bcount;
 int i;

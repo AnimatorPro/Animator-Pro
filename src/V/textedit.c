@@ -4,6 +4,7 @@
    font - an editor open on an arbitrarily sized window.  Heck, it
    works most of the time!  See also textwind.c wordwrap.c and rfont.c */
 
+#include <string.h>
 #include "jimk.h"
 #include "blit8_.h"
 #include "cblock_.h"
@@ -37,9 +38,17 @@ static UBYTE catend;	/* cursor at end? */
 static WORD twypos;		/* line of text window cursor is in */
 static WORD twxpos;		/* character in line cursor is in */
 
+static void slide_down(void);
+static void slide_up(void);
+static void scroll_up(void);
+static void scroll_down(void);
+static int in_twin(int x, int y);
+static void define_twin(void);
+static void move_twin(void);
+
 /* Make sure cursor is inside defined text area */
-static
-clip_cursorp()
+static void
+clip_cursorp(void)
 {
 if (vs.tcursor_p < 0)
 	vs.tcursor_p = 0;
@@ -49,10 +58,8 @@ if (vs.tcursor_p > text_size)
 
 /* Do wordwrap to find next line assuming current font and text window
    width. */
-static
-char *
-nextline(s)
-char *s;
+static char *
+nextline(char *s)
 {
 char buf[256];
 
@@ -60,11 +67,8 @@ return(wwnext_line(usr_font, s, vs.twin_w, buf, 0));
 }
 
 /* Find character pointer to start of a specific line of buffer */
-static
-char *
-seek_line(s, line)
-char *s;
-int line;
+static char *
+seek_line(char *s, int line)
 {
 while (--line >= 0)
 	{
@@ -73,11 +77,10 @@ while (--line >= 0)
 return(s);
 }
 
-
 /* Plot text window permanently on rendering screen considering inks
    and all. */
-static
-rendr_twin()
+static void
+rendr_twin(void)
 {
 if (text_buf != NULL)
 	{
@@ -94,14 +97,9 @@ if (text_buf != NULL)
 zoom_it();
 }
 
-
 /* Update a couple of lines of text display */
-static
-wwrefresh(s, x, y, w, lines, color,skiplines)
-char *s;
-int x,y,w,lines;
-int color;
-int skiplines;
+static void
+wwrefresh(char *s, int x, int y, int w, int lines, int color, int skiplines)
 {
 char buf[256];
 int dy;
@@ -130,29 +128,25 @@ return;
 }
 
 /* Redraw all text in window */
-static
-refresh_win()
+static void
+refresh_win(void)
 {
 wwrefresh(wstart, vs.twin_x, vs.twin_y, 
 	vs.twin_w, text_lines_visible, vs.ccolor, 0);
 }
 
-
 /* save out text buffer to temp file */
-static
-save_temp_text()
+static int
+save_temp_text(void)
 {
-save_text(text_name);
+return save_text(text_name);
 }
-
-
-
 
 /* get pixel location of cursor.  Return result in pixelx, pixely, and
    pixelw.  Set up a bunch of variables to track current character and
    line position. */
-static
-cursor_to_pixel()
+static void
+cursor_to_pixel(void)
 {
 char buf[256];
 char *np, *p;
@@ -192,22 +186,21 @@ else
 	}
 }
 
-
-static
-show_text_cursor()
+static void
+show_text_cursor(void)
 {
 cursor_to_pixel();
 xorblock(render_form->p, pixelx, pixely, pixelw, font_hgt, text_cursor_color);
 }
 
-static
-hide_text_cursor()
+static void
+hide_text_cursor(void)
 {
 xorblock(render_form->p, pixelx, pixely, pixelw, font_hgt, text_cursor_color);
 }
 
-static
-find_wstart()
+static void
+find_wstart(void)
 {
 if (vs.text_yoff == 0)
 	{
@@ -221,8 +214,8 @@ else
 	}
 }
 
-static
-init_twin()
+static int
+init_twin(void)
 {
 int h;
 char *l;
@@ -273,8 +266,8 @@ return(1);
 }
 
 /* return 1 if cursor is now below text window */
-static
-past_window()
+static int
+past_window(void)
 {
 char *p, *endp;
 int i;
@@ -294,8 +287,8 @@ return(1);
 }
 
 /* if cursor position past end of window, slide it down. */
-static
-slide_down()
+static void
+slide_down(void)
 {
 int slid = 0;
 
@@ -311,8 +304,8 @@ if (slid)
 }
 
 /* if cursor position before start of window slide it up */
-static
-slide_up()
+static void
+slide_up(void)
 {
 clip_cursorp();
 if (wstart == NULL || vs.tcursor_p < wstart - text_buf)
@@ -323,10 +316,8 @@ if (wstart == NULL || vs.tcursor_p < wstart - text_buf)
 }
 
 /* move cursor to closest x position possible in line p */
-static 
-xseek(p, x)
-char *p;
-int x;
+static void
+xseek(char *p, int x)
 {
 char *pp;
 
@@ -350,10 +341,8 @@ else	/* if on last line position at end of file and let clip_cursorp clean
 }
 
 /* Move cursor position to close as it can find to x,y offset from p */
-static
-xyseek(p, x, y)
-char *p;
-int x, y;
+static void
+xyseek(char *p, int x, int y)
 {
 char *np;
 
@@ -368,9 +357,8 @@ xseek(p, x);
 
 /* refresh cursor line to bottom of window.  If cursor line bottom of
    window scroll down too. */
-static
-update_end(nline)
-char *nline;
+static void
+update_end(char *nline)
 {
 if (nline != NULL && 
 	twypos >= text_lines_visible - 1 &&
@@ -388,9 +376,8 @@ else
 
 /* Called when characters inserted or deleted. Tries to minimize lines
    that have to be redrawn. */
-static
-update_win(extracs)
-int extracs;	/* # of characters added or subtracted at cursor position */
+static void
+update_win(int extracs)
 {
 char *new_lstart, *new_nlstart;
 int count;
@@ -460,8 +447,8 @@ else		/* more than one line, figure out which ones to update */
 	}
 }
 
-static
-scroll_up()
+static void
+scroll_up(void)
 {
 if (vs.text_yoff > 0)
 	{
@@ -470,9 +457,8 @@ if (vs.text_yoff > 0)
 	}
 }
 
-
-static
-scroll_down()
+static void
+scroll_down(void)
 {
 int owstart;
 
@@ -486,10 +472,8 @@ for (;;)		/* this loop handles going past bottom... */
 	}
 }
 
-
-static
-insert_char(c)
-char c;
+static void
+insert_char(char c)
 {
 if (text_size < text_alloc-1)
 	{
@@ -503,8 +487,8 @@ if (text_size < text_alloc-1)
 	}
 }
 
-static
-delete_char()
+static void
+delete_char(void)
 {
 int count;
 
@@ -522,8 +506,8 @@ if (text_size > 0)
 	}
 }
 
-static
-text_edit()
+static int
+text_edit(void)
 {
 int i;
 char *p, *pp;
@@ -669,12 +653,8 @@ for (;;)
 return( save_temp_text() );
 }
 
-
-
-
-static
-in_twin(x,y)
-int x,y;
+static int
+in_twin(int x, int y)
 {
 if ((x -= vs.twin_x) < 0)
 	return(0);
@@ -687,8 +667,8 @@ if (y >= vs.twin_h)
 return(1);
 }
 
-static
-undraw_twin()
+static void
+undraw_twin(void)
 {
 #ifdef SHOULDWORKBUTDOESNT
 blit8(vs.twin_w+2, vs.twin_h+2+font_hgt, 
@@ -698,8 +678,8 @@ blit8(vs.twin_w+2, vs.twin_h+2+font_hgt,
 copy_form(&uf, render_form);
 }
 
-static
-define_twin()
+static void
+define_twin(void)
 {
 unundo();
 zoom_it();
@@ -713,8 +693,8 @@ if (cut_out())
 	}
 }
 
-static
-move_twin()
+static void
+move_twin(void)
 {
 int ix, iy;
 int lx, ly;
@@ -794,8 +774,8 @@ draw_mp();
 
 /* Define a box and then let 'em type in it.  When done optionally
    paste text to screen. */
-ttool(paste)
-int paste;
+void
+ttool(int paste)
 {
 if (!pti_input())
 	return;

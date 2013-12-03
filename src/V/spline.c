@@ -34,10 +34,14 @@ typedef float fpoint;
 
 extern int pxmin, pxmax, pymin, pymax;
 
+static void
+do_spline(fpoint *knotx, fpoint *knoty, int knots, int interps, int type,
+		Vector dotout, Vector vecout, Poly *filledp);
+static void gen_sh_matrix(fpoint s);
+static void calc_vecs(fpoint *knotx, fpoint *knoty, int x, int knots);
 
 static fpoint
-FD(a,b)
-fpoint a,b;
+FD(fpoint a, fpoint b)
 {
 return(((a<<FSHIFT)+b/2)/b);
 }
@@ -55,8 +59,8 @@ static fpoint **ftabs[] =
 
 #define FTS (Array_els(ftabs))
 
-static
-free_spline_tab()
+static void
+free_spline_tab(void)
 {
 int i;
 register fpoint **ff;
@@ -73,9 +77,8 @@ gentle_freemem(ly);
 ly = NULL;
 }
 
-static
-aspline_tab(count)
-int count;
+static int
+aspline_tab(int count)
 {
 long size;
 int i;
@@ -96,9 +99,8 @@ if ((ly = lbegmem(size)) == NULL)
 return(1);
 }
 
-static
-alloc_spline_tab(count)
-int count;
+static int
+alloc_spline_tab(int count)
 {
 if (!aspline_tab(count))
 	{
@@ -109,19 +111,13 @@ else
 	return(1);
 }
 
-
 /* Generate a spline that passes through the control points.       */
 /* Supply pointers to control point fpoint arrays (knotx/knoty),    */
 /* number of knots, pointers to integer output arrays and number   */
 /* of interpreted points to generate.				   */
-
-static
-s_spline(poly, dotout, vecout, closed, ir, filledp)
-Poly *poly;
-Vector dotout,vecout;
-int closed;
-int ir;
-Poly *filledp;
+static int
+s_spline(Poly *poly, Vector dotout, Vector vecout, int closed, int ir,
+		Poly *filledp)
 {
 fpoint *newx, *newy;
 int ptcount;
@@ -240,13 +236,9 @@ if (make_sp_poly(poly, &sp_poly, vs.closed_curve, 16))
 
 int is_path;
 
-static
-do_spline(knotx,knoty,knots,interps,type,dotout,vecout,filledp)
-fpoint *knotx,*knoty;
-int knots,interps,type;
-Vector dotout;
-Vector vecout;
-Poly *filledp;
+static void
+do_spline(fpoint *knotx, fpoint *knoty, int knots, int interps, int type,
+		Vector dotout, Vector vecout, Poly *filledp)
 {
 fpoint s;
 int ix,next,tix, fpix;
@@ -322,10 +314,8 @@ for (tix=0; tix<=interps; tix++)
 
 /* Generate hermite interpolation matrix s*h	 */
 /* This is done once for each interpolation step */
-
-static
-gen_sh_matrix(s)
-fpoint s;
+static void
+gen_sh_matrix(fpoint s)
 {
 fpoint s2,s3;
 
@@ -338,11 +328,8 @@ sh4 = FM(s3,s2);
 }
 
 /* Calc incoming & outgoing vectors for knot x */
-
-static
-calc_vecs(knotx,knoty,x,knots)
-fpoint *knotx,*knoty;
-int x,knots;
+static void
+calc_vecs(fpoint *knotx, fpoint *knoty, int x, int knots)
 {
 fpoint c1,c2,dxi,dxo,dyi,dyo,tc1,tc2;
 int next,last;

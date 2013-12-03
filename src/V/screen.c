@@ -4,8 +4,8 @@
 
 #include "jimk.h"
 
-free_screen(s)
-Vscreen *s;
+void
+free_screen(Vscreen *s)
 {
 if (s==NULL)
 	return;

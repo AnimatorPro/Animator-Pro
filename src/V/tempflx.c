@@ -9,6 +9,9 @@
 struct fli_head fhead;
 Flx *cur_flx;
 int tflx;	/* handle for temp file */
+
+static int m_tempflx(char *name);
+
 extern long write_tflx();
 
 /* This module copies a single .FLI file to our TEMP.FLX file.
@@ -309,9 +312,8 @@ maybe_pop_most();
 return(ok);
 }
 
-static
-m_tempflx(name)
-char *name;
+static int
+m_tempflx(char *name)
 {
 int sfile;
 long acc;

@@ -4,6 +4,9 @@
    "seeme" routines suitable for stuffing into Flicmenu structures.
    Recursive button display stuff is in here.  Other simple seeme's
    are in seeme.c */
+
+#include <stdio.h>
+#include <string.h>
 #include "jimk.h"
 #include "blit8_.h"
 #include "cblock_.h"

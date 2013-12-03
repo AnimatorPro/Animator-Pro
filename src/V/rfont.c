@@ -8,6 +8,7 @@
    There are 2 big routines - systext() - for all text rendered by
    menuing system -  and gftext() for text rendered onto user image. */
 
+#include <string.h>
 #include "jimk.h"
 #include "gemfont.h"
 

@@ -4,12 +4,8 @@
 
 #include "jimk.h"
 
-
-ccircle(xcen, ycen, rad, dotout, hlineout, filled)
-int xcen, ycen, rad;
-Vector dotout;	/* some function to pass x/y parameters to for each dot */
-Vector hlineout;	/* some function to pass x/y parameters to for each dot */
-int filled;
+void
+ccircle(int xcen, int ycen, int rad, Vector dotout, Vector hlineout, int filled)
 {
 int err;
 int derr, yerr, xerr;

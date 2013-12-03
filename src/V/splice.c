@@ -31,6 +31,9 @@ static char *transition_choices[] = {
 	cst_cancel,
 	};
 
+static void pushed_load_splice(void);
+static int load_2_flis(char *f1name, char *f2name, int ttype, int tfcount);
+
 #ifdef LATER
 show_1_frame(title, fd, lscreen)
 char *title;
@@ -65,8 +68,8 @@ pop_pics();
 rezoom();
 }
 
-static
-pushed_load_splice()
+static void
+pushed_load_splice(void)
 {
 int where;
 char *title;
@@ -170,11 +173,8 @@ return;
 extern long write_tflx_start(), frame_to_tflx();
 
 static long 
-write_middle_dif(ix,acc,frame,s0,s1)
-int ix;
-long acc;
-struct fli_frame *frame;
-Vscreen *s0,*s1;
+write_middle_dif(int ix, long acc, struct fli_frame *frame,
+		Vscreen *s0, Vscreen *s1)
 {
 long size;
 
@@ -192,20 +192,14 @@ return(acc);
 }
 
 static long
-write_middle_one(ix, acc, frame)
-int ix;
-long acc;
-struct fli_frame *frame;
+write_middle_one(int ix, long acc, struct fli_frame *frame)
 {
 return(write_middle_dif(ix,acc,frame,render_form,&uf));
 }
 
 static long
-write_transition_frames(ttype, tfcount, cur_ix, acc, cbuf)
-int ttype, tfcount;	/* transition type and count */
-int cur_ix;		/* frame index */
-long acc;	/* file offset */
-struct fli_frame *cbuf;		/* CBUF_SIZE compression buffer/frame head */
+write_transition_frames(int ttype, int tfcount, int cur_ix, long acc,
+		struct fli_frame *cbuf)
 {
 int i;
 Vscreen *tframe;
@@ -289,10 +283,8 @@ free_screen(tframe);
 return(write_middle_one(cur_ix, acc, cbuf));
 }
 
-static
-load_2_flis(f1name,f2name,ttype,tfcount)
-char *f1name, *f2name;
-int ttype,tfcount;	/* transition type and frame count */
+static int
+load_2_flis(char *f1name, char *f2name, int ttype, int tfcount)
 {
 int f1,f2;
 struct fli_head fh1,fh2;

@@ -87,7 +87,7 @@ extern long comp_size;
 #define CH_HEIGHT 8
 
 /* Masks for isolating bits in a byte */
-extern UBYTE lmasks[], rmasks[], bmasks[];
+extern UBYTE bmasks[];
 
 struct dlist
 	{
@@ -304,7 +304,8 @@ extern struct marqidata marqidata;
 
 /* Some routines that expect x,y parameters that are passed to many
    of the shape drawing functions */
-extern copydot(), marqidot(), sdot(), render_dot();
+extern copydot(), marqidot(), sdot();
+extern void render_dot(WORD x, WORD y);
 
 /* macro to undraw a stand_by() */
 #define stood_by() undraw_tbox()

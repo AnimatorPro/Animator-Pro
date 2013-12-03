@@ -1,5 +1,6 @@
 /* textbox.c - Stuff for continue alerts and yes/no dialogs. */
 
+#include <string.h>
 #include "jimk.h"
 #include "blit8_.h"
 #include "cblock_.h"
@@ -33,9 +34,10 @@ struct textb_state
 	};
 static struct textb_state ts;
 
-static
-clip_box(b)
-struct rectangle *b;
+static void draw_white_box(struct rectangle *b);
+
+static void
+clip_box(struct rectangle *b)
 {
 int d;
 
@@ -76,10 +78,8 @@ if (d < 0)
 	  variable "box", and also in the variable xborder, which tells
 	  you where to start your text on the left side so as to be
 	  centered. */
-static
-find_text_box(names, button_height)
-register char *names[];	 /* NULL terminated array of strings */
-WORD button_height;
+static int
+find_text_box(char *names[], WORD button_height)
 {
 unsigned width, height;
 unsigned this_width;
@@ -116,9 +116,8 @@ blit8(width, height, ts.box.MinX, ts.box.MinY, vf.p, vf.bpr,
 return(1);
 }
 
-
-static
-undraw_tbox()
+static void
+undraw_tbox(void)
 {
 unsigned w;
 
@@ -131,10 +130,8 @@ if (ts.behind != NULL)
 	}
 }
 
-static
-d_top_lines_of_box(names, button_height)
-char *names[];
-WORD button_height;
+static int
+d_top_lines_of_box(char *names[], WORD button_height)
 {
 WORD xoff, yoff;
 char *name;
@@ -158,21 +155,16 @@ while ((name = *names++) != NULL)
 return (yoff);
 }
 
-
-static
-draw_white_box(b)
-struct rectangle *b;
+static void
+draw_white_box(struct rectangle *b)
 {
 draw_frame(sgrey, b->MinX, b->MinY, b->MaxX, b->MaxY);
 }
 
 /* draw_yes_no_box()
 */
-static
-draw_yes_no_box(names, yes, no)
-char *names[];
-char *yes;
-char *no;
+static int
+draw_yes_no_box(char *names[], char *yes, char *no)
 {
 WORD yesno_size;
 WORD yes_size;
@@ -228,10 +220,8 @@ return(1);
 	given a NULL-terminated array of names, and a prompt to put in a box
 	to tell it to go away, draw a requester, and cut out a hole so the
 	video goes around it */
-static
-draw_continue_box(names, continu)
-char *names[];
-char *continu;
+static int
+draw_continue_box(char *names[], char *continu)
 {
 WORD xoff, yoff;
 WORD continu_size;
@@ -249,7 +239,6 @@ xoff += (CONT_WIDTH-CHAR_WIDTH*continu_size)>>1;
 gtext(continu, xoff, yoff, sblack);
 return(1);
 }
-
 
 continu_line(line)
 char *line;
@@ -302,9 +291,8 @@ stand_by_box(lines);
 }
 #endif /* SLUFFED */
 
-static
-inbox(b)
-struct rectangle *b;
+static int
+inbox(struct rectangle *b)
 {
 if (uzx >= b->MinX && uzx <= b->MaxX && uzy >= b->MinY &&
 	uzy <= b->MaxY)
@@ -312,8 +300,8 @@ if (uzx >= b->MinX && uzx <= b->MaxX && uzy >= b->MinY &&
 return(0);
 }
 
-static
-poll_yes_no()
+static int
+poll_yes_no(void)
 {
 unsigned char c;
 

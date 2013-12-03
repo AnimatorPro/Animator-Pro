@@ -3,21 +3,29 @@
    and seeme's.  
    */
 
+#include <stdio.h>
 #include "jimk.h"
 #include "blit8_.h"
 #include "cblock_.h"
 #include "flicmenu.h"
 #include "quickdat.str"
 
+static void see_ink(Flicmenu *m);
+static void see_ink0(Flicmenu *m);
+static void fill_inkwell(Flicmenu *m);
+static void pget_color(Flicmenu *m);
+static void see_crb(Flicmenu *m);
+static void feel_crb(Flicmenu *m);
+
 extern inverse_cursor(), black_block(), see_islidepot(),
-	see_number_slider(),  move_tab_text(), see_ink0(), toggle_mask(),
+	see_number_slider(),  move_tab_text(), toggle_mask(),
 	change_pen_mode(), ccolor_box(), change_ink_mode(),
 	qmake_frames(), go_time_menu(),
 	mrewind(), mfast_forward(),wcursor(),draw_quick_menu(),
-	mundo_pic(), move_menu(), fill_inkwell(),
+	mundo_pic(), move_menu(),
 	show_sel_mode(), toggle_sel_mode(), see_menu_back(), gary_menu_back(),
-	see_range(), see_colors2(), see_ink(),
-	pget_color(), ccolor_box(), change_mode(),
+	see_range(), see_colors2(),
+	ccolor_box(), change_mode(),
 	mplayit(), mprev_frame(),mnext_frame(), mfirst_frame(), mlast_frame(),
 	text_lineunder(), see_pen(), toggle_pen(), set_pbrush(),
 	set_pspeed(), gbnumber_plus1(),
@@ -27,7 +35,7 @@ extern inverse_cursor(), black_block(), see_islidepot(),
 	dcorner_text(), ccorner_text(), gary_menu_back(), bcursor(),
 	blacktext(), greytext(), grey_block(), toggle_group(),
 	set_zoom_level(), see_mask_m(),
-	go_multi(), mgo_stencil(), toggle_stencil(), feel_crb(), see_crb(),
+	go_multi(), mgo_stencil(), toggle_stencil(),
 	bwtext(), wbtexty1(), wbnumber(), bwnumber(), white_slice();
 
 extern struct cursor cdown, cleft, cright, csleft,
@@ -551,9 +559,8 @@ Flicmenu quick_menu =
 	};
 
 
-static
-see_ink(m)
-Flicmenu *m;
+static void
+see_ink(Flicmenu *m)
 {
 WORD color;
 
@@ -563,9 +570,8 @@ if (color == vs.ccolor)
 	a_frame(sred, m);
 }
 
-static
-see_ink0(m)
-Flicmenu *m;
+static void
+see_ink0(Flicmenu *m)
 {
 a_frame(sgrey, m);
 see_ink(m);
@@ -593,9 +599,8 @@ else
 	}
 }
 
-static
-show_ink(c)
-int c;
+static void
+show_ink(int c)
 {
 char buf[40];
 UBYTE *m;
@@ -605,10 +610,8 @@ sprintf(buf, quickdat_107 /* "color %d rgb %d %d %d" */, c, m[0], m[1], m[2]);
 top_text(buf);
 }
 
-
-static
-fill_inkwell(m)
-Flicmenu *m;
+static void
+fill_inkwell(Flicmenu *m)
 {
 int c, oc;
 
@@ -620,9 +623,8 @@ if ((c = get_a_end(show_ink))>=0)
 predraw();
 }
 
-static
-pget(m)
-Flicmenu *m;
+static void
+pget(Flicmenu *m)
 {
 if ( uzx >= m->x+1 && uzx < m->x + m->width &&
 	uzy >= m->y +1 && uzy < m->y + m->height)
@@ -632,28 +634,22 @@ if ( uzx >= m->x+1 && uzx < m->x + m->width &&
 	}
 }
 
-
-
-static
-pget_color(m)
-Flicmenu *m;
+static void
+pget_color(Flicmenu *m)
 {
 pget(m);
 predraw();
 }
 
-
-static
-see_crb(m)
-Flicmenu *m;
+static void
+see_crb(Flicmenu *m)
 {
 m->identity = vs.use_bun;
 see_cluster(m);
 }
 
-static
-feel_crb(m)
-Flicmenu *m;
+static void
+feel_crb(Flicmenu *m)
 {
 m->identity = vs.use_bun;
 feel_cluster(m);

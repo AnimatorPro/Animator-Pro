@@ -2,6 +2,8 @@
 /* choices.c - build up simple list of selections type menus out of
    a list of strings.  */
 
+#include <stdio.h>
+#include <string.h>
 #include "jimk.h"
 #include "blit8_.h"
 #include "flicmenu.h"

@@ -9,6 +9,10 @@
 
 extern PLANEPTR mask_plane;
 
+static void free_mask(void);
+static int newmask(void);
+static void set_stencil_ast(void);
+
 save_mask(name)
 char *name;
 {
@@ -27,24 +31,23 @@ if (newmask())
 return(0);
 }
 
-
-static
-free_mask()
+static void
+free_mask(void)
 {
 gentle_freemem(mask_plane);
 mask_plane = NULL;
 }
 
-static
-qfree_mask()
+static void
+qfree_mask(void)
 {
 free_mask();
 vs.make_mask = vs.use_mask = 0;
 set_stencil_ast();
 }
 
-static
-newmask()
+static int
+newmask(void)
 {
 free_mask();
 if ((mask_plane = begmemc(MASK_SIZE)) != NULL)
@@ -54,8 +57,8 @@ if ((mask_plane = begmemc(MASK_SIZE)) != NULL)
 return(0);
 }
 
-static
-qcreate_mask()
+static void
+qcreate_mask(void)
 {
 vs.make_mask = !vs.make_mask;
 if (vs.make_mask)
@@ -83,8 +86,8 @@ if (vs.use_mask)
 set_stencil_ast();
 }
 
-static
-paste1_mask()
+static int
+paste1_mask(void)
 {
 if (mask_plane != NULL)
 	{
@@ -99,15 +102,14 @@ if (mask_plane != NULL)
 return(0);
 }
 
-static
-qpaste_mask()
+static void
+qpaste_mask(void)
 {
 uzauto(paste1_mask);
 }
 
-static
-blitmask(color)
-int color;
+static void
+blitmask(int color)
 {
 a1blit(XMAX,YMAX,0,0,mask_plane,Mask_line(XMAX), 
 	0,0,render_form->p, BPR,color);
@@ -115,9 +117,8 @@ zoom_it();
 wait_a_jiffy(10);
 }
 
-
-static
-qshow_mask()
+static void
+qshow_mask(void)
 {
 if (mask_plane != NULL)
 	{
@@ -130,9 +131,8 @@ if (mask_plane != NULL)
 	}
 }
 
-
-static
-qinvert_mask()
+static void
+qinvert_mask(void)
 {
 if (mask_plane != NULL)
 	{
@@ -141,8 +141,8 @@ if (mask_plane != NULL)
 	}
 }
 
-static
-qgrab_mask()
+static void
+qgrab_mask(void)
 {
 register UBYTE *s, m;
 UBYTE *d, c;
@@ -184,17 +184,13 @@ static char *stencil_options[] = {
 	mask_108 /* " Exit Menu" */,
 	};
 
-
-static
-stencil_go_files()
+static void
+stencil_go_files(void)
 {
 go_files(10);
 }
 
-
-extern close_menu(), quse_mask(), qcreate_mask(), qgrab_mask(),
-	qinvert_mask(), qshow_mask(), qpaste_mask(), qfree_mask(),
-	stencil_go_files();
+extern close_menu(), quse_mask();
 
 static Vector stencil_feelers[] =
 	{
@@ -209,8 +205,8 @@ static Vector stencil_feelers[] =
 	close_menu,
 	};
 
-static
-set_stencil_ast()
+static void
+set_stencil_ast(void)
 {
 char *pt;
 

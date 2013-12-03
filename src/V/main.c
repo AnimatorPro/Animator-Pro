@@ -3,6 +3,7 @@
   system. */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include "jimk.h"
 #include "fli.h"
 #include "flicmenu.h"
@@ -21,6 +22,8 @@ static char *noconfig_lines[] =
 	main_102 /* "Assuming defaults." */,
 	NULL,
 	};
+
+static void paint_title_loop(void);
 
 /* Check for a tempflx file on current scratch device.  If it's there
    use it.  Otherwise check for a default flix file in current directory
@@ -90,9 +93,8 @@ draw_mp();
 paint_title_loop();
 }
 
-
-static
-paint_title_loop()
+static void
+paint_title_loop(void)
 {
 for (;;)
 	{

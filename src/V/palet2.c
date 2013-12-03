@@ -8,18 +8,25 @@
 #include "palet2.str"
 #include "peekpok_.h"
 
+static void pal_feel_qslider(Flicmenu *m);
+static void cundo_pic(void);
+static void sliders_from_ccolor(void);
+static void change_hls_mode(Flicmenu *m);
+static void pal_menu_back(Flicmenu *m);
+static void ccolor_from_sliders(void);
+
 extern int see_colgrid(), see_menu_back(),tri_right(),tri_left(),
 	wbtexty1(), text_boxp1(),see_qslider(),feel_qslider(),grey_block(),
 	white_block(), ccolor_box(), gary_menu_back(), see_colors2(),
-	see_powell_palette(),  see_cluster(), pal_feel_qslider(), feel_pp(),
-	right_click_pp(), sliders_from_ccolor(), pal_menu_back(),
+	see_powell_palette(), see_cluster(), feel_pp(),
+	right_click_pp(),
 	ccorner_text(), text_boxp1(), hang_child(), move_tab_text();
 
 extern int move_menu(), bottom_menu(),  change_mode(),
-	change_hls_mode(), pget_color(), crestore(),
+	pget_color(), crestore(),
 	go_multi(), mselect_bundle(), change_cluster_mode(),
 	see_number_slider(), inc_slider(), dec_slider(), mrestore(),
-	inc_rgb_slider(), dec_rgb_slider(), cundo_pic(),
+	inc_rgb_slider(), dec_rgb_slider(),
 	feel_cluster(),
 	see_ink0(), see_ink(), fill_inkwell(), toggle_group(), set_crange(),
 	crange(), cdefault(), cload(), csave(), ccut(), cpaste(),ccopy(),
@@ -28,8 +35,6 @@ extern int move_menu(), bottom_menu(),  change_mode(),
 extern Pull pal_pull, rem_use_pull;
 
 extern palette_selit();
-
-int ccolor_from_sliders();
 
 extern Flicmenu palette_menu;
 extern Flicmenu ink_group_sel, ink0_sel, inks_sel, ccolor_sel, spec1_sel;
@@ -290,9 +295,8 @@ Flicmenu palette_menu = {
 	NOOPT,
 	};
 
-static
-pal_feel_qslider(m)
-Flicmenu *m;
+static void
+pal_feel_qslider(Flicmenu *m)
 {
 save_undo();
 feel_qslider(m);
@@ -305,26 +309,22 @@ if (vs.ccolor == sred || vs.ccolor == sbright || vs.ccolor == swhite ||
 	}
 }
 
-static
-cundo_pic()
+static void
+cundo_pic(void)
 {
 hide_mp();
 undo_pic();
 draw_mp();
 }
 
-static
-save_colors(name)
-char *name;
+static void
+save_colors(char *name)
 {
 write_gulp(name, render_form->cmap, COLORS*3L);
 }
 
-
-static
-load_colors(name, buf)
-char *name;
-UBYTE *buf;
+static int
+load_colors(char *name, UBYTE *buf)
 {
 int f;
 int i;
@@ -354,15 +354,15 @@ jclose(f);
 return(1);
 }
 
-static
-cmapcopy1()
+static int
+cmapcopy1(void)
 {
 copy_cmap(new_cmap, render_form->cmap);
 return(1);
 }
 
-static
-refit1()
+static int
+refit1(void)
 {
 if (vs.pal_fit)
 	refit_screen(render_form, new_cmap, vf.cmap, COLORS);
@@ -455,8 +455,8 @@ if (vs.pal_fit)
 	refit_screen(render_form, render_form->cmap, uf.cmap, COLORS);
 }
 
-static
-cl_refit1()
+static int
+cl_refit1(void)
 {
 some_cmod(refit_1c, SCALE_ONE);
 return(1);
@@ -481,10 +481,8 @@ if (cel != NULL)
 	}
 }
 
-
-
-static
-sliders_from_ccolor()
+static void
+sliders_from_ccolor(void)
 {
 char *rgb;
 WORD r, g, b;
@@ -510,8 +508,8 @@ else
 
 static Flicmenu *slides[3] = {&pal_rsl_sel, &pal_gsl_sel, &pal_bsl_sel};
 
-static
-see_color_sliders()
+static void
+see_color_sliders(void)
 {
 Flicmenu **s, *f;
 int i;
@@ -570,8 +568,6 @@ switch (key_in&0xff)
 	}
 return(0);
 }
-
-extern char break_menu;
 
 get_menu_colors()
 {
@@ -643,8 +639,8 @@ sliders_from_ccolor();
 draw_mp();
 }
 
-static
-ccolor_from_sliders()
+static void
+ccolor_from_sliders(void)
 {
 char *rgb;
 WORD r, g, b;
@@ -667,19 +663,16 @@ wait_sync();
 jset_colors(vs.ccolor,1,rgb);
 }
 
-
-static
-change_hls_mode(m)
-Flicmenu *m;
+static void
+change_hls_mode(Flicmenu *m)
 {
 change_mode(m);
 sliders_from_ccolor();
 see_color_sliders();
 }
 
-static
-pal_menu_back(m)
-Flicmenu *m;
+static void
+pal_menu_back(Flicmenu *m)
 {
 pal_disables();
 gary_menu_back(m);
@@ -693,8 +686,8 @@ palette();
 draw_mp();
 }
 
-static
-get_color()
+static void
+get_color(void)
 {
 vs.ccolor = getdot(uzx, uzy);
 redraw_ccolor();

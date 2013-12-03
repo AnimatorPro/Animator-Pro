@@ -2,6 +2,8 @@
 /* slider.c - functions to implement our famous "number on the knob"
    slider gadgets */
 
+#include <stdio.h>
+#include <string.h>
 #include "jimk.h"
 #include "flicmenu.h"
 
@@ -20,9 +22,10 @@ static char nbuf[10];
 static struct qslider *qs;
 static WORD qslastval;
 
-static
-make_knob(ssel)
-register Flicmenu *ssel;
+static void resee_knob(void);
+
+static void
+make_knob(Flicmenu *ssel)
 {
 register struct qslider *slider;
 WORD nval;
@@ -57,9 +60,8 @@ knob.y = ssel->y+2;
 knob.text = nbuf;
 }
 
-static
-qslide_where(m)
-Flicmenu *m;
+static int
+qslide_where(Flicmenu *m)
 {
 register struct qslider *s;
 WORD width;
@@ -75,9 +77,8 @@ if (x >= width)
 return(uscale_by(x, s->max - s->min + 1, width) + s->min);
 }
 
-
-static
-see_qtleft(color)
+static void
+see_qtleft(int color)
 {
 register Flicmenu *m = slm;
 
@@ -88,17 +89,15 @@ knob.height = m->height;
 menu_cursor(&knob, color, larrs[m->identity]);
 }
 
-static
-see_qsleft(color)
-int color;
+static void
+see_qsleft(int color)
 {
 see_qtleft(color);
 a_frame(sgrey,&knob);
 }
 
-static
-see_qtright(color)
-int color;
+static void
+see_qtright(int color)
 {
 register Flicmenu *m = slm;
 
@@ -109,8 +108,8 @@ knob.height = m->height;
 menu_cursor(&knob, color, rarrs[m->identity]);
 }
 
-static
-see_qsright(color)
+static void
+see_qsright(int color)
 {
 see_qtright(color);
 a_frame(sgrey,&knob);
@@ -139,24 +138,23 @@ see_qsright(sblack);
 resee_knob();
 }
 
-
-static
-resee_knob()
+static void
+resee_knob(void)
 {
 make_knob(slm);
 black_block(&knob);
 menu_text(&knob,swhite);
 }
 
-static
-erase_knob()
+static void
+erase_knob(void)
 {
 make_knob(slm);
 white_block(&knob);		/* erase old position */
 }
 
-static
-inc_qsl()
+static void
+inc_qsl(void)
 {
 erase_knob();
 if (*qs->value < qs->max)
@@ -166,8 +164,8 @@ if (qs->update != NULL)
 resee_knob();
 }
 
-static
-dec_qsl()
+static void
+dec_qsl(void)
 {
 erase_knob();
 white_block(&knob);		/* erase old position */

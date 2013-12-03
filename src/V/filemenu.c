@@ -3,12 +3,14 @@
    implement the normal file requestor, and some helper routines for
    the visual browser in browse.c */
 
-#include "jimk.h"
-#include "flicmenu.h"
-#include "dosstuff.h"
-#include "commonst.h"
-#include "filemenu.str"
 #include <ctype.h>
+#include <stdio.h>
+#include <string.h>
+#include "jimk.h"
+#include "commonst.h"
+#include "dosstuff.h"
+#include "filemenu.str"
+#include "flicmenu.h"
 
 extern Flicmenu fileq_menu, ftitle_sel, flist_sel, fscroll_sel,
 	fwild_sel, menu_save, ffile_sel, fdrawer_sel, fwild_sel,
@@ -28,9 +30,13 @@ static char fileq_result;
 struct name_list *wild_lst;
 extern WORD device;
 
+static void init_fscroller(void);
+static void redraw_fscroller(void);
+static void attr_wild_list(int attr, char *pat, char *prefix);
+static void inc_file(void);
 
-static
-new_drawer()
+static int
+new_drawer(void)
 {
 if (!change_dir(vs.drawer))
 	return(0);
@@ -115,9 +121,8 @@ if (key_hit && (key_in&0xff) == '\r')
 	fq_ok();
 }
 
-
-static
-init_fscroller()
+static void
+init_fscroller(void)
 {
 build_wild_list();
 iscroller(&fscroller,wild_lst,&fscroll_sel,&flist_sel,
@@ -130,8 +135,8 @@ iscroller(&fscroller,wild_lst,&fscroll_sel,&flist_sel,
 static struct name_scroller *scroll;
 #endif /* SLUFFED */
 
-static
-redraw_fscroller()
+static void
+redraw_fscroller(void)
 {
 redraw_scroller(&fscroll_sel, &flist_sel);
 }
@@ -310,11 +315,8 @@ attr_wild_list(0, wild, cst_);		/* and other files matching wild */
 wild_lst = sort_name_list(wild_lst);
 }
 
-static
-attr_wild_list(attr, pat, prefix)
-int attr;
-char *pat;
-char *prefix;
+static void
+attr_wild_list(int attr, char *pat, char *prefix)
 {
 union regs reg;
 int err;
@@ -374,9 +376,7 @@ return(1);
 }
 
 static char *
-fix_suffix(f,remove)
-char *f;
-WORD remove;
+fix_suffix(char *f, WORD remove)
 {
 int len;
 char *pt;
@@ -424,9 +424,8 @@ inc_file();
 fq_ok();
 }
 
-
-static
-inc_file()
+static void
+inc_file(void)
 {
 char *pt;
 char suffix[6];

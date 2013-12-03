@@ -4,6 +4,8 @@
    of many of routines called by above.  The first layer under main(). 
    If you #define NOSAVE this will disable saving. */
 
+#include <stdio.h>
+#include <string.h>
 #include "jimk.h"
 #include "cblock_.h"
 #include "commonst.h"
@@ -24,6 +26,9 @@ extern Vector pentools[];
 extern Option_list *options_list;
 extern auto_shrink();
 
+static int load_defaults(char *name);
+static int save_defaults(char *name);
+static void qquit(void);
 
 get_color()
 {
@@ -32,13 +37,8 @@ vs.ccolor = getd(render_form->p,grid_x,grid_y);
 vs.cycle_draw = 0;
 }
 
-
-
-
-
-
-static
-qreset_seq()
+static void
+qreset_seq(void)
 {
 extern char init_drawer[];
 
@@ -69,9 +69,8 @@ if (yes_no_line(vpaint_100 /* "Reset to default.flx?" */) )
 	}
 }
 
-
-static
-qkill_seq()
+static void
+qkill_seq(void)
 {
 if (yes_no_line(vpaint_102 /* "New Flic - abandon current flic?" */))
 	{
@@ -103,10 +102,8 @@ if ((title = get_filename(vpaint_105 /* "Save settings file?" */,
 	}
 }
 
-
-static
-load_defaults(name)
-char *name;
+static int
+load_defaults(char *name)
 {
 Vsettings new;
 
@@ -132,9 +129,8 @@ rethink_settings();
 return(1);
 }
 
-static
-save_defaults(name)
-char *name;
+static int
+save_defaults(char *name)
 {
 Vsettings old;
 
@@ -156,7 +152,8 @@ if ((title =  get_filename(vpaint_108 /* "Load Mask?" */, ".MSK"))!=NULL)
 rezoom();
 }
 
-qsave_mask()
+void
+qsave_mask(void)
 {
 char *title;
 
@@ -185,7 +182,8 @@ if ((title =  get_filename(vpaint_112 /* "Load Cel?" */, ".CEL"))!=NULL)
 rezoom();
 }
 
-qsave_cel()
+void
+qsave_cel(void)
 {
 char *title;
 
@@ -291,8 +289,8 @@ p = *pt++;
 p[0] = (vs.fit_colors ? '*' : ' ');
 }
 
-static
-qcel_options()
+static void
+qcel_options(void)
 {
 int choice;
 
@@ -326,8 +324,8 @@ static char *macro_options[] = {
 	cst_cancel,
 	};
 
-static
-qmacro()
+static void
+qmacro(void)
 {
 int choice;
 
@@ -358,10 +356,8 @@ switch (choice)
 	}
 }
 
-
-
-
-dokeys()
+void
+dokeys(void)
 {
 unsigned char c = key_in;
 int ok;
@@ -486,7 +482,8 @@ switch (c)
 draw_mp();
 }
 
-static current_bad(int dev, long rroom)
+static int
+current_bad(int dev, long rroom)
 {
 if (rroom < 0)
 	rroom = dfree(dev+1);
@@ -627,9 +624,8 @@ static char *pixel_options[] = {
 	cst_cancel,
 	};
 
-
-static
-pixel_menu()
+static void
+pixel_menu(void)
 {
 int choice;
 
@@ -672,26 +668,24 @@ switch (choice)
 	}
 }
 
-static
-view_frame()
+static void
+view_frame(void)
 {
 hide_mouse();
 wait_click();
 show_mouse();
 }
 
-static 
-v12()
+static void
+v12(void)
 {
 exchange_form(render_form, alt_form);
 see_cmap();
 zoom_it();
 }
 
-
-
-static
-view_alt()
+static void
+view_alt(void)
 {
 if (alt_form != NULL)
 	{
@@ -703,8 +697,8 @@ if (alt_form != NULL)
 	}
 }
 
-static
-qquit()
+static void
+qquit(void)
 {
 char *bufs[3];
 

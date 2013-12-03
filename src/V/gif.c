@@ -2,6 +2,7 @@
 /* gif.c - High level gif routines.  Take care of the file packaging but
    not the compression/decompression.  */
 
+#include <string.h>
 #include "jimk.h"
 #include "gif.h"
 #include "gif.str"

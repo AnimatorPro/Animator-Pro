@@ -3,6 +3,7 @@
    figure out how many words we can fit in a line.  Help titling system
    justify the text. */
 
+#include <string.h>
 #include "jimk.h"
 #include "gemfont.h"
 #include "text.h"
@@ -12,13 +13,16 @@ extern int text_size;
 extern int text_alloc;
 extern char *text_buf;
 
+static void
+just_fill(Vscreen *screen, struct font_hdr *font, char *linebuf,
+		int x, int y, int color, Vector blit, int color2, int xspace);
+
+extern void
+justify_line(Vscreen *screen, struct font_hdr *font, char *linebuf,
+		int x, int y, int w, int color, Vector blit, int color2, int just);
+
 static char *
-wwnext_word(s,buf,f,w,caller_ww)
-char *s;
-char *buf;
-struct font_hdr *f;
-int w;
-int *caller_ww;
+wwnext_word(char *s, char *buf, struct font_hdr *f, int w, int *caller_ww)
 {
 char c;
 int i;
@@ -152,8 +156,7 @@ for (;;)
 return(lines);
 }
 
-
-
+void
 wwtext(screen, f, s, x, y, w, h, color,blit,skiplines, justify)
 Vscreen *screen;
 struct font_hdr *f;
@@ -184,15 +187,9 @@ for (;;)
 return;
 }
 
-justify_line(screen, font, linebuf, x, y, w, color, blit, color2, just)
-Vscreen *screen;
-struct font_hdr *font;
-char *linebuf;
-int x,y,w;
-int color;
-Vector blit;
-int color2;
-int just;
+void
+justify_line(Vscreen *screen, struct font_hdr *font, char *linebuf,
+		int x, int y, int w, int color, Vector blit, int color2, int just)
 {
 int sw;
 int hardcr;
@@ -238,16 +235,9 @@ switch (just)
 gftext(screen, font, linebuf, x, y, color, blit, color2);
 }
 
-static
-just_fill(screen, font, linebuf, x, y, color, blit, color2, xspace)
-Vscreen *screen;
-struct font_hdr *font;
-char *linebuf;
-int x,y;
-int color;
-Vector blit;
-int color2;
-int xspace;
+static void
+just_fill(Vscreen *screen, struct font_hdr *font, char *linebuf,
+		int x, int y, int color, Vector blit, int color2, int xspace)
 {
 int chars, ichars, i;
 static char cb[2];
@@ -272,12 +262,8 @@ for (i=1; i<=chars; i++)
 	}
 }
 
-
 static long
-unch(buf, size, ch)
-register char *buf;
-int size;
-char ch;
+unch(char *buf, int size, char ch)
 {
 register char *out;
 long newsize = 0;

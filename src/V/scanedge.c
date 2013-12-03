@@ -9,6 +9,10 @@
 #include "poly.h"
 #include "scanedge.str"
 
+static void on_off(WORD bpr, WORD width, WORD height);
+static void xor_pt(WORD bpr, WORD x, WORD y);
+static void y_xor_line(WORD bpr, int x1, int y1, int x2, int y2);
+
 extern sdot();
 
 #define UPDIR 1
@@ -130,13 +134,8 @@ vs.pen_width = opw;
 return(1);
 }
 
-
-
-static
-on_off(bpr, width, height)
-WORD bpr;
-WORD width;
-WORD height;
+static void
+on_off(WORD bpr, WORD width, WORD height)
 {
 register UBYTE *imagept = on_off_buf;
 register UBYTE *linept;
@@ -218,12 +217,8 @@ end_in_word:
 	}
 }
 
-
-static
-xor_pt(bpr,x,y)
-WORD bpr;
-register WORD x;
-WORD y;
+static void
+xor_pt(WORD bpr, WORD x, WORD y)
 {
 register UBYTE rot;
 
@@ -231,11 +226,8 @@ rot = ((unsigned)0x80) >> (x&7);
 on_off_buf[ bpr*y + (x>>3) ] ^= rot;
 }
 
-
-static
-y_xor_line(bpr, x1, y1, x2, y2)
-WORD bpr;
-int x1,y1,x2,y2;
+static void
+y_xor_line(WORD bpr, int x1, int y1, int x2, int y2)
 {
 register UBYTE *imagept = on_off_buf;
 WORD height;

@@ -1,6 +1,7 @@
 
 /* spiral.c - help draw a spiral */
 
+#include <stdio.h>
 #include "jimk.h"
 #include "poly.h"
 #include "fli.h"
@@ -17,11 +18,10 @@ extern a1bdot(), rbdot(), rbbrush();
 
 extern int pxmin, pxmax, pymin, pymax;
 
-static
-make_spiral_poly(x0,y0,rad,itheta,ttheta)
-int x0,y0,rad;
-int itheta;
-long ttheta;
+static int rub_spiral(void);
+
+static int
+make_spiral_poly(int x0, int y0, int rad, int itheta, long ttheta)
 {
 int i;
 register int ppoints;
@@ -53,8 +53,8 @@ working_poly.closed = 0;
 return(1);
 }
 
-
-spiral_tool()
+void
+spiral_tool(void)
 {
 brushcursor = dot_pens[vs.pen_width];
 if (!pti_input())
@@ -70,8 +70,8 @@ else
 static int spi_rad;
 static long spi_ttheta;
 
-static
-rub_spiral()
+static int
+rub_spiral(void)
 {
 int itheta;
 int t0,t1,dt;

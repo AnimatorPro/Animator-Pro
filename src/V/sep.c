@@ -17,10 +17,10 @@ static UBYTE sep_rgb_dest[3];
 
 static UBYTE rgb_p2[2][3];
 
-static
-rgb_close_enough(c1, c2, threshold)
-PLANEPTR c1, c2;
-int threshold;
+static void free_ctable(void);
+
+static int
+rgb_close_enough(PLANEPTR c1, PLANEPTR c2, int threshold)
 {
 return( sqr_root((long)color_dif(c1,c2)) <= threshold);
 }
@@ -63,8 +63,8 @@ if (make_render_cashes())
 #define SEP_CLUSTER 2
 #define SEP_2PART 3
 
-static
-sep1()
+static int
+sep1(void)
 {
 int i,j;
 PLANEPTR absc, pt;
@@ -137,7 +137,8 @@ else if (vs.sep_type == SEP_SINGLE || vs.sep_type == SEP_CLUSTER)
 return(1);
 }
 
-static get_sep_box()
+static int
+get_sep_box(void)
 {
 if (vs.sep_box)
 	{
@@ -155,8 +156,8 @@ else
 	}
 }
 
-static
-gather_ctable()
+static int
+gather_ctable(void)
 /* Called at button-state PJSTDN */
 {
 int color;
@@ -225,8 +226,8 @@ ERROUT:
 	}
 }
 
-static
-free_ctable()
+static void
+free_ctable(void)
 {
 gentle_freemem(ctable);
 ctable = NULL;
@@ -252,7 +253,8 @@ if (PJSTDN)
 	}
 }
 
-sep_tool()
+void
+sep_tool(void)
 {
 if (!pti_input())
 	return;

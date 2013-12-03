@@ -12,10 +12,6 @@ extern int gary_menu_back(), gary_see_title(),
 extern int move_menu(), bottom_menu(),
 	see_qslider(), feel_qslider();
 
-
-extern Flicmenu pbrush_menu;
-
-
 static struct qslider brush_sl =
 	{
 	0,
@@ -23,17 +19,6 @@ static struct qslider brush_sl =
 	&vs.pen_width,
 	1,
 	};
-
-set_pbrush()
-{
-hide_mp();
-rmove_menu(&pbrush_menu, 
-	cur_menu->x - pbrush_menu.x, cur_menu->y-pbrush_menu.y); 
-do_menu(&pbrush_menu);
-if (vs.pen_width != 0)
-	vs.large_pen = vs.pen_width;
-draw_mp();
-}
 
 static Flicmenu brush_1f2 = 
 	{
@@ -71,5 +56,13 @@ static Flicmenu pbrush_menu =
 	NOOPT,
 	};
 
-
-
+set_pbrush()
+{
+hide_mp();
+rmove_menu(&pbrush_menu,
+	cur_menu->x - pbrush_menu.x, cur_menu->y-pbrush_menu.y);
+do_menu(&pbrush_menu);
+if (vs.pen_width != 0)
+	vs.large_pen = vs.pen_width;
+draw_mp();
+}

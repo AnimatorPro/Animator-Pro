@@ -2,10 +2,16 @@
 /* time.c - stuff to insert and delete frames in a FLIC.  Used mostly
    by timemenu.c. */
 
+#include <stdio.h>
 #include "jimk.h"
 #include "fli.h"
 #include "peekpok_.h"
 #include "time.str"
+
+static void delete_middle_frames(int start, int frames);
+static void delete_first_frame(int frames);
+static void make_some(int x);
+static void make_frames(int frames);
 
 extern long fli_comp1(), write_tflx();
 extern long frame1_foff(), flx_file_hi();
@@ -61,10 +67,8 @@ if (qreq_number(
 	}
 }
 
-static
-delete_middle_frames(start,frames)
-int start;
-int frames;
+static void
+delete_middle_frames(int start, int frames)
 {
 char *cbuf;
 long size0;
@@ -104,9 +108,8 @@ OUT:
 gentle_freemem(cbuf);
 }
 
-static
-delete_first_frame(frames)
-int frames;
+static void
+delete_first_frame(int frames)
 {
 char *cbuf;
 long size0;
@@ -175,9 +178,8 @@ if ( qreq_number(
 		make_some(x);
 }
 
-static
-make_some(x)
-int x;
+static void
+make_some(int x)
 {
 if (x > 0)
 	{
@@ -193,9 +195,8 @@ if (x > 0)
 
 /* change  the number of frames in this fli.  Will chop off ones at end if
    less, add empty frames (duplicates of last one) if at beginning */
-static
-make_frames(frames)
-int frames;
+static void
+make_frames(int frames)
 {
 if (frames == fhead.frame_count)	/* whew! That was easy */
 	return;
@@ -213,9 +214,8 @@ else
 dirtyf();
 }
 
-
-static expand_cur_flx(new)
-register int new;
+static int
+expand_cur_flx(int new)
 {
 register Flx *new_flx;
 long newbytes;

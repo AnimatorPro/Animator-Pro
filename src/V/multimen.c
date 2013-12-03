@@ -14,12 +14,15 @@
 #include "commonst.h"
 #include "multimen.str"
 
+static void multi_use(void);
+static void multi_preview(void);
+
 extern dcorner_text(), ccorner_text(), ncorner_text(), gary_menu_back(),
 	ccolor_box(), ppalette(), see_pen(), toggle_pen(), set_pbrush(),
 	minks(), see_cur_ink(), force_opaque(),
 	move_tab_text(), move_menu(), bottom_menu(),
 	dcorner_text(), mgo_stencil(), change_time_mode(),
-	multi_preview(), multi_use(), close_menu(),
+	close_menu(),
 	mum_menu_back(), see_mask_m(), toggle_mask(),
 	hang_child(), toggle_group(), change_mode();
 
@@ -283,8 +286,8 @@ static Flicmenu mum_menu = {
 
 static Vector multivec;
 
-static
-multi_use()
+static void
+multi_use(void)
 {
 if (multivec != NULL)
 	{
@@ -295,8 +298,8 @@ if (multivec != NULL)
 close_menu();
 }
 
-static
-multi_preview()
+static void
+multi_preview(void)
 {
 if (multivec != NULL)
 	{

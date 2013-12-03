@@ -10,8 +10,12 @@
 #include "peekpok_.h"
 #include "poly.h"
 
+static int csd_render_poly(Poly *wply, int filled);
+static int save_working_poly(void);
+static void undraw_wpoly(void);
+
 /* some functions for line drawing */
-extern int copydot(),marqidot(),sdot(), xdot(), render_dot(), render_brush();
+extern int copydot(),marqidot(),sdot(), xdot(), render_brush();
 extern a1bdot(), rbdot(), rbbrush();
 
 extern cline(), render_line();
@@ -169,7 +173,7 @@ return(this);
 }
 
 static LLpoint *
-beg_this_mouse()
+beg_this_mouse(void)
 {
 LLpoint *this;
 
@@ -237,10 +241,8 @@ find_pminmax(p);
 render_xy(pxmin-off2,pymin-off2,pxmax+off-off2,pymax+off-off2);
 }
 
-static
-csd_render_poly(wply,filled)
-Poly *wply;
-int filled;
+static int
+csd_render_poly(Poly *wply, int filled)
 {
 int oc;
 int ocl;
@@ -405,15 +407,15 @@ curveflag = 0;
 
 static int occv;
 
-static
-push_ccv()
+static void
+push_ccv(void)
 {
 occv = vs.closed_curve;
 vs.closed_curve = 1;
 }
 
-static
-pop_ccv()
+static void
+pop_ccv(void)
 {
 vs.closed_curve = occv;
 }
@@ -448,12 +450,8 @@ pop_ccv();
 return(1);
 }
 
-
-
 static long
-lround_div(p,q)
-long p;
-int q;
+lround_div(long p, int q)
 {
 if (p > 0)
 	p += q>>1;
@@ -463,8 +461,7 @@ return(p/q);
 }
 
 static long
-llround_div(p,q)
-long p,q;
+llround_div(long p, long q)
 {
 if (p > 0)
 	p += q>>1;
@@ -570,10 +567,8 @@ working_poly.closed = (star != 3);
 return(1);
 }
 
-
-static
-polystartool(star)
-int star;
+static void
+polystartool(int star)
 {
 int x0,y0;
 int theta, rad;
@@ -619,9 +614,8 @@ petlf_tool()
 polystartool(WP_PETAL);
 }
 
-static
-l_working_poly(f)
-Bfile *f;
+static int
+l_working_poly(Bfile *f)
 {
 int i;
 int count;
@@ -673,10 +667,8 @@ bclose(&bf);
 return(res);
 }
 
-static
-s_poly(f, poly)
-Bfile *f;
-Poly *poly;
+static int
+s_poly(Bfile *f, Poly *poly)
 {
 int i;
 LLpoint *pt;
@@ -697,15 +689,14 @@ while (--i >= 0)
 return(1);
 }
 
-static
-save_working_poly()
+static int
+save_working_poly(void)
 {
 return(save_poly(poly_name, &working_poly));
 }
 
-save_poly(name,  poly)
-char *name;
-Poly *poly;
+int
+save_poly(char *name, Poly *poly)
 {
 int res;
 Bfile bf;
@@ -723,7 +714,7 @@ return(res);
 }
 
 static LLpoint *
-closest_point()
+closest_point(void)
 {
 int i;
 LLpoint *pt;
@@ -755,8 +746,8 @@ else
 	return(vs.closed_curve);
 }
 
-static
-undraw_wpoly()
+static void
+undraw_wpoly(void)
 {
 if (curveflag)
 	some_spline(&working_poly, copydot, cline, is_closedp(), 16);
@@ -774,8 +765,8 @@ else
 	some_poly(&working_poly,sdot);
 }
 
-static
-rub_wpoints()
+static void
+rub_wpoints(void)
 {
 LLpoint *p;
 int i;
@@ -808,7 +799,8 @@ while (--i >= 0)
 	}
 }
 
-move_poly_points()
+void
+move_poly_points(void)
 {
 LLpoint restore;
 LLpoint *lp;

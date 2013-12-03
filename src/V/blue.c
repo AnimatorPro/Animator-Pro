@@ -213,8 +213,8 @@ while (--w >= 0)
 	}
 }
 
-
-qget_changes()
+void
+qget_changes(void)
 {
 int w, h;
 PLANEPTR s1,s2,d;

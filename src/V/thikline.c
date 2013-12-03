@@ -19,7 +19,7 @@
 #define PDMK (PDIV-1)
 #define PINC (TWOPI/PDIV)
 
-extern render_dot(), render_brush();
+extern render_brush();
 
 #ifdef SLUFFED
 static struct point ptp[PDIV];
@@ -99,8 +99,8 @@ static Poly rl_poly =
 	};
 
 /* Draw a possibly thick line.  One end is capped with a round brush */
-render_line(x,y,xx,yy)
-int x, y, xx, yy;
+void
+render_line(int x, int y, int xx, int yy)
 {
 int dx, dy;
 int xoff, yoff;

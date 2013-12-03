@@ -66,10 +66,8 @@ static PLANEPTR dts,dtd;
 
 /* a horizontal line routine to pass to disk.  I guess I need this...??? 
    Really hate to be clipping all over the place like this.  Sigh. */
-static
-dthline(y, x0, x1)
-register WORD y,x0;
-WORD x1;
+static void
+dthline(WORD y, WORD x0, WORD x1)
 {
 unsigned offset;
 

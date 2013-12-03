@@ -36,7 +36,7 @@
    when they go beyond simple columns of text.
    */
 
-
+#include <stdio.h>
 #include "jimk.h"
 #include "a3d.h"
 #include "a3ddat.str"
@@ -44,21 +44,35 @@
 #include "flicmenu.h"
 #include "peekpok_.h"
 
+static void a3d_back(Flicmenu *m);
+static void change_rot_scale(Flicmenu *m);
+static void change_size_mode(Flicmenu *m);
+static void change_spin_mode(Flicmenu *m);
+static void change_ado_mode(Flicmenu *m);
+static void set_axis(Flicmenu *m);
+static void csame_size(Flicmenu *m);
+static void csame_spin(Flicmenu *m);
+static void csize_default(Flicmenu *m);
+static void see_size_ratio(Flicmenu *m);
+static void feel_rdc_qslider(Flicmenu *m);
+static void cspin_default(Flicmenu *m);
+static void clear_track(void);
+static void mgo_path_files(void);
+
 extern dcorner_text(), ccorner_text(), gary_menu_back(), mundo_pic(),
-	change_mode(), change_spin_mode(), change_size_mode(), change_ado_mode(),
-	see_qslider(), feel_qslider(), change_rot_scale(), mgo_path_files(),
-	path_info(), set_axis(), mado_preview(), mauto_ado(),
+	change_mode(),
+	see_qslider(), feel_qslider(),
+	path_info(), mado_preview(), mauto_ado(),
 	ado_xyz_slider(), see_seg_size(), move_along(),
 	go_multi(), change_time_mode(), mgo_stencil(),
-	see_cur_ink(), force_opaque(), minks(), see_size_ratio(),
+	see_cur_ink(), force_opaque(), minks(),
 	mview_path(), edit_path(), zero_sl(), xyz_zero_sl(),
-	csame_size(), csame_spin(), clear_track(),
-	csize_default(), cspin_default(), mmouser(),
+	mmouser(),
 	toggle_pen(), ppalette(), ccolor_box(), ncorner_int(),
 	ccorner_cursor(), ncorner_cursor(), ncorner_text(),
 	ncorner_number(), dcorner_text(), iscale_theta(),
 	hang_child(), move_tab_text(), move_menu(), bottom_menu(),
-	feel_rdc_qslider(),  a3d_back(), see_mask_m(), toggle_mask(),
+	see_mask_m(), toggle_mask(),
 	see_pen(), toggle_group(), greytext(), set_pbrush(); 
 
 extern Flicmenu minitime_sel, tseg_group_sel;
@@ -1181,9 +1195,8 @@ Flicmenu a3d_menu =
 	NOOPT,
 	};
 
-static
-a3d_back(m)
-Flicmenu *m;
+static void
+a3d_back(Flicmenu *m)
 {
 set_ado_asterisks();
 gary_menu_back(m);
@@ -1233,19 +1246,16 @@ a3d_yslider.min += YMAX/2;
 a3d_yslider.max += YMAX/2;
 }
 
-
-static
-change_rot_scale(m)
-Flicmenu *m;
+static void
+change_rot_scale(Flicmenu *m)
 {
 change_mode(m);
 arrange_a3d_menu();
 qdraw_a_menu(&a3d_g2_sel);
 }
 
-static
-change_size_mode(m)
-Flicmenu *m;
+static void
+change_size_mode(Flicmenu *m)
 {
 change_mode(m);
 arrange_a3d_menu();
@@ -1255,10 +1265,8 @@ qdraw_a_menu(&a3d_g4_sel);
 draw_sel(&a3d_sz_ratio);
 }
 
-
-static
-change_spin_mode(m)
-Flicmenu *m;
+static void
+change_spin_mode(Flicmenu *m)
 {
 change_mode(m);
 arrange_a3d_menu();
@@ -1266,10 +1274,8 @@ qdraw_a_menu(&a3d_g2_sel);
 qdraw_a_menu(&a3d_g3_sel);
 }
 
-
-static
-change_ado_mode(m)
-Flicmenu *m;
+static void
+change_ado_mode(Flicmenu *m)
 {
 change_mode(m);
 arrange_a3d_menu();
@@ -1278,9 +1284,8 @@ qdraw_a_menu(&a3d_g0_sel);
 qdraw_a_menu(&a3d_g4_sel);
 }
 
-static
-set_axis(m)
-Flicmenu *m;
+static void
+set_axis(Flicmenu *m)
 {
 vs.move3.spin_axis.x = vs.move3.spin_axis.y = vs.move3.spin_axis.z = 0;
 switch (m->identity)
@@ -1298,33 +1303,29 @@ switch (m->identity)
 qdraw_a_menu(&a3d_g2_sel);
 }
 
-static
-csame_size(m)
-Flicmenu *m;
+static void
+csame_size(Flicmenu *m)
 {
 copy_structure(&vs.move3.size_center, &vs.move3.spin_center, sizeof(Vertex) );
 qdraw_a_menu(&a3d_g2_sel);
 }
 
-static
-csame_spin(m)
-Flicmenu *m;
+static void
+csame_spin(Flicmenu *m)
 {
 copy_structure(&vs.move3.spin_center, &vs.move3.size_center, sizeof(Vertex) );
 qdraw_a_menu(&a3d_g2_sel);
 }
 
-static
-csize_default(m)
-Flicmenu *m;
+static void
+csize_default(Flicmenu *m)
 {
 default_center(&vs.move3.size_center);
 qdraw_a_menu(&a3d_g2_sel);
 }
 
-static
-see_size_ratio(m)
-Flicmenu *m;
+static void
+see_size_ratio(Flicmenu *m)
 {
 char buf[10];
 int over, under;
@@ -1353,24 +1354,22 @@ m->text = buf;
 ncorner_text(m);
 }
 
-static
-feel_rdc_qslider(m)
-Flicmenu *m;
+static void
+feel_rdc_qslider(Flicmenu *m)
 {
 feel_qslider(m);
 draw_sel(&a3d_sz_ratio);
 }
 
-static
-cspin_default(m)
-Flicmenu *m;
+static void
+cspin_default(Flicmenu *m)
 {
 default_center(&vs.move3.spin_center);
 qdraw_a_menu(&a3d_g2_sel);
 }
 
-static
-clear_track()
+static void
+clear_track(void)
 {
 switch (vs.ado_mode)
 	{
@@ -1398,8 +1397,8 @@ switch (vs.ado_mode)
 qdraw_a_menu(&a3d_g0_sel);
 }
 
-static
-mgo_path_files()
+static void
+mgo_path_files(void)
 {
 hide_mp();
 go_files(7);

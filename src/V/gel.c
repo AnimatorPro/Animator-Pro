@@ -32,7 +32,8 @@ for (i=0; i<4; i++)
 	zero_structure(th[i], COLORS*2);
 }
 
-gel_tool()
+void
+gel_tool(void)
 {
 int pw;
 int pwt[4];

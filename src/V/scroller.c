@@ -3,6 +3,7 @@
    browse menu a bit too.  Other scroller users are the draw tools and
    ink types menus.  */
 
+#include <string.h>
 #include "jimk.h"
 #include "blit8_.h"
 #include "cblock_.h"
@@ -17,6 +18,10 @@
 
 struct name_scroller *scroll;
 static Vector sredraw;
+
+static void prt_list(Flicmenu *m);
+
+extern void fflscr(Flicmenu *m, int realtime);
 
 calc_scroll_pos(scroll, scroll_sel)
 register Name_scroller *scroll;
@@ -122,9 +127,8 @@ if (scroll->top_name > last)
 	}
 }
 
-
-static
-fpagedown()
+static void
+fpagedown(void)
 {
 int nt, last;
 
@@ -133,8 +137,8 @@ end_clip_scroll();
 (*sredraw)();
 }
 
-static
-fpageup()
+static void
+fpageup(void)
 {
 int nt;
 
@@ -151,9 +155,8 @@ Flicmenu *m;
 fflscr(m, 1);
 }
 
-fflscr(m, realtime)
-register Flicmenu *m;
-int realtime;
+void
+fflscr(Flicmenu *m, int realtime)
 {
 register Name_scroller *scroller;
 WORD temp;
@@ -215,9 +218,8 @@ a_frame(sgrey, m);
 prt_list(m);
 }
 
-static
-prt_list(m)
-register Flicmenu *m;
+static void
+prt_list(Flicmenu *m)
 {
 register Name_list *n;
 register Name_scroller *scroller;
@@ -314,11 +316,8 @@ else
 	return(NULL);
 }
 
-
-
-static
-fincu(m)
-Flicmenu *m;
+static void
+fincu(Flicmenu *m)
 {
 if (scroll->top_name > 0)
 	{
@@ -335,8 +334,8 @@ repeat_on_pdn(fincu);
 draw_sel(m);
 }
 
-static
-fincd()
+static void
+fincd(void)
 {
 scroll->top_name++;
 end_clip_scroll();

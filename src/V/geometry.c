@@ -4,6 +4,8 @@
 #include "jimk.h"
 #include "peekpok_.h"
 
+static void act_rot_offset(struct vertex *point, WORD *op, WORD scale);
+
 /*find_conjugates()
   the guy passed to this is the op or function portion of the act with
   the axis  - function6-8 - already filled in. It fills in function3&4,
@@ -33,12 +35,8 @@ while (theta < -TWOPI/2) theta += TWOPI;
 function->itheta2 = theta;
 }
 
-
-static
-act_rot_offset( point, op, scale)
-register struct vertex *point;
-register WORD *op;
-WORD scale;
+static void
+act_rot_offset(struct vertex *point, WORD *op, WORD scale)
 {
 register WORD theta;
 register WORD s,c;

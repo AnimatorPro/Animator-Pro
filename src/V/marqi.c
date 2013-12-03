@@ -3,6 +3,7 @@
 /* Also some "Dotout" family functions that take x/y parameters and act
    on render_form.  Dotout's are used by line drawers, circle drawers etc. */
 
+#include <stdio.h>
 #include "jimk.h"
 #include "flicmenu.h"
 #include "marqi.str"

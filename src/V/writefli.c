@@ -16,9 +16,10 @@ static int wfli_fd;
 static struct fli_head head;
 static char *wfli_name;
 
+static int fli_finish(void);
+
 static char *
-full_cmap(cbuf, cmap)
-char *cbuf, *cmap;
+full_cmap(char *cbuf, char *cmap)
 {
 *cbuf++ = 1;
 *cbuf++ = 0;
@@ -88,13 +89,8 @@ return(frame->size);
 }
 
 static long
-fli_save_frame(name,fd,comp_buf,last_screen,
-	last_cmap,this_screen,this_cmap,type)
-char *name;
-int fd;
-char *comp_buf;
-char *last_screen, *last_cmap, *this_screen, *this_cmap;
-WORD type;
+fli_save_frame(char *name, int fd, char *comp_buf, char *last_screen,
+		char *last_cmap, char *this_screen, char *this_cmap, WORD type)
 {
 long size; 
 
@@ -153,8 +149,8 @@ return(
  	last_cmap, this_screen, this_cmap, FLI_LC) != 0);
 }
 
-static
-fli_finish()
+static int
+fli_finish(void)
 {
 int success = 1;
 

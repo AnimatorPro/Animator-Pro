@@ -40,7 +40,6 @@ struct font_hdr	*nxt_fnt; /* Set to 0 */
 /* face identifer for font loaded from disk... */
 #define CYP_CUSTOM_FONT	0xabc
 
-extern struct font_hdr cfont;
 extern struct font_hdr sixhi_font;
 extern struct font_hdr *usr_font;
 

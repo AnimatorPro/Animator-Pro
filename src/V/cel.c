@@ -18,6 +18,10 @@
 extern WORD x_0,y_0,x_1,y_1;
 extern char under_flag;
 
+static void see_cel(void);
+static void unsee_cel(void);
+static void rub_cel_box(Vcel *c);
+
 /* Release a cel back onto the heap */
 free_cel(c)
 Vcel *c;
@@ -99,9 +103,7 @@ if (cel != NULL)
 /* Load up a cel from disk.  Allocate the memory for it as you go.
    Return pointer to it if successful, NULL if not. */
 static Vcel *
-ld_cel(name, ocel)
-char *name;
-Vcel *ocel;	/* Cel to free if looks like load OK, or NULL */
+ld_cel(char *name, Vcel *ocel)
 {
 int file;
 struct pic_header pic;
@@ -157,12 +159,9 @@ char *name;
 return((cel = ld_cel(name,cel)) != NULL);
 }
 
-
 /* Create a cel from a rectangular patch of the screen */
-static 
-Vcel *
-clip_from_vf(w,h,x0,y0)
-int w, h, x0, y0;
+static Vcel *
+clip_from_vf(int w, int h, int x0, int y0)
 {
 register Vcel *c;
 
@@ -179,9 +178,8 @@ return(c);
 
 /* Make a cel from rectangular area of screen user has defined with
    a box */
-static
-Vcel *
-clip_from_rub_box()
+static Vcel *
+clip_from_rub_box(void)
 {
 return(clip_from_vf( intabs(grid_x-firstx)+1, intabs(grid_y-firsty)+1,
 	intmin(grid_x, firstx), intmin(grid_y, firsty)));
@@ -294,9 +292,8 @@ else
 }
 
 /* Plop down a cel on screen */
-static
-see_a_cel(cl)
-register Vcel *cl;
+static void
+see_a_cel(Vcel *cl)
 {
 set_zero_clear();
 (*cbvec)(cl->w, cl->h, 0, 0, cl->p, cl->bpr, 
@@ -305,25 +302,24 @@ zoom_it();
 }
 
 /* Plop down THE cel on screen */
-static
-see_cel()
+static void
+see_cel(void)
 {
 see_a_cel(cel);
 }
 
 /* Erase cel image (presuming undo screen's been saved).  Heck,
    would erase almost anything! */
-static
-unsee_cel()
+static void
+unsee_cel(void)
 {
 unundo();
 zoom_it();
 }
 
 /* Display a marqi frame around a cel */
-static
-rub_cel_box(c)
-Vcel *c;
+static void
+rub_cel_box(Vcel *c)
 {
 marqi_frame(c->x, c->y, c->x+c->w-1, c->y+c->h-1);
 }
@@ -389,9 +385,8 @@ if (ccc != cel)
 static  WORD mp_ox,mp_oy,mp_nx,mp_ny;
 
 /* auto vec for moving a cel in a straight line.  Ie paste multi */
-static
-paste1(ix,it,scale)
-int ix,it,scale;
+static int
+paste1(int ix, int it, int scale)
 {
 int ok;
 int dx,dy;
@@ -416,10 +411,8 @@ return(ok);
 /* This routine draws a cel in place of an old cel while minimizing
    visible flicker without double buffering.  The area of old cel not
    covered by new cel is taken from the undo buffer. */
-static
-redraw_cel(c, ox,oy,ow,oh)
-Vcel *c;
-WORD ox,oy,ow,oh;
+static void
+redraw_cel(Vcel *c, WORD ox, WORD oy, WORD ow, WORD oh)
 {
 int oend, nend, dif;
 
@@ -457,10 +450,8 @@ zoom_it();
 }
 
 /* Move the old cel while minimizing horrible screen flashing.  */
-static
-move_screen_cel(c, dx, dy)
-Vcel *c;
-WORD dx, dy;
+static void
+move_screen_cel(Vcel *c, WORD dx, WORD dy)
 {
 WORD x, y;
 
@@ -471,11 +462,9 @@ c->y = y+dy;
 redraw_cel(c, x,y,cel->w, cel->h);
 }
 
-
 /* Move or paste a cel. */
-static
-mp_cel(paste)
-WORD paste;
+static int
+mp_cel(WORD paste)
 {
 WORD mod, lx, ly;
 
@@ -564,14 +553,14 @@ mp_cel(1);
 under_flag = 0;
 }
 
-
 /* The old move tool.  User defines a box.  We pretend a piece of
    the screen (or undo buffer actually) is a cel and move it to a
    new place.  Fill in the place they grabbed cel from with key color,
    and plop cel down in new position.  
 
    This is only place in vpaint where cel->bpr != cel->w.  */
-move_tool()
+void
+move_tool(void)
 {
 Vcel *ocel;
 Vcel lcel;
@@ -602,12 +591,9 @@ if (rub_box())
 	}
 }
 
-
 /* Squoosh down cel so all pixels not clear become color */
-static
-mask_cel(c, color, clear)
-Vcel *c;
-UBYTE color, clear;
+static void
+mask_cel(Vcel *c, UBYTE color, UBYTE clear)
 {
 register UBYTE *p, a;
 long l;

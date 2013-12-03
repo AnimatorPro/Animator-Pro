@@ -3,6 +3,7 @@
    call the same raster twisting routine in assemble rotate.c and
    a3d.c (optics) use. */
 
+#include <stdio.h>
 #include "jimk.h"
 #include "fli.h"
 
@@ -46,7 +47,8 @@ else
 dirties();
 }
 
-vstretch_cel()
+void
+vstretch_cel(void)
 {
 int ow,oh;
 int dx,dy, odx,ody;

@@ -12,12 +12,165 @@
 #include "inks.h"
 #include "drawmode.str"
 
+static void set_rad_center(void);
+
+extern see_qslider();
+extern feel_qslider();
+extern blacktext();
+extern toggle_group();
+extern ccorner_text();
+
+static struct qslider tint_sl = {0,100,&vs.tint_percent, 0, NULL};
+
+static Flicmenu tinting_sel = {
+	NONEXT,
+	NOCHILD,
+	114, 182, 152, 13,
+	&tint_sl,
+	see_qslider,
+	feel_qslider,
+	NOGROUP, 0,
+	NOKEY,
+	NOOPT,
+	};
+static Flicmenu tinttag_sel = {
+	&tinting_sel,
+	NOCHILD,
+	114,170,152,11,
+	drawmode_162 /* "Ink Strength" */,
+	blacktext,
+	NOFEEL,
+	NOGROUP, 0,
+	NOKEY,
+	NOOPT,
+	};
+static Flicmenu tintgroup_sel =
+	{
+	NONEXT,
+	&tinttag_sel,
+	58,152,257,45,
+	NOTEXT,
+	NOSEE,
+	NOFEEL,
+	NOGROUP, 0,
+	NOKEY,
+	NOOPT,
+	};
+/* -------------------------- */	/* for dithered ink strengths */
+static Flicmenu dtinting_sel = {
+	NONEXT,
+	NOCHILD,
+	114, 182, 152, 13,
+	&tint_sl,
+	see_qslider,
+	feel_qslider,
+	NOGROUP, 0,
+	NOKEY,
+	feel_qslider,
+	};
+static Flicmenu dtinttag_sel = {
+	&dtinting_sel,
+	NOCHILD,
+	114,170,152,11,
+	drawmode_162 /* "Ink Strength" */,
+	blacktext,
+	NOFEEL,
+	NOGROUP, 0,
+	NOKEY,
+	NOOPT,
+	};
+static Flicmenu dtint_sel = {
+	&dtinttag_sel,
+	NOCHILD,
+	161,158,60,11,
+	drawmode_165 /* "Dither" */,
+	ccorner_text,
+	toggle_group,
+	&vs.dither, 1,
+	NOKEY,
+	NOOPT,
+	};
+static Flicmenu dtintgroup_sel =
+	{
+	NONEXT,
+	&dtint_sel,
+	58,152,257,45,
+	NOTEXT,
+	NOSEE,
+	NOFEEL,
+	NOGROUP, 0,
+	NOKEY,
+	NOOPT,
+	};
+/* ------------ */
+static Flicmenu dither_sel =
+	{
+	NONEXT,
+	NOCHILD,
+	161, 180, 60, 12,
+	drawmode_165 /* "Dither" */,
+	ccorner_text,
+	toggle_group,
+	&vs.dither, 1,
+	NOKEY,
+	NOOPT,
+	};
+static Flicmenu dithergroup_sel =
+	{
+	NONEXT,
+	&dither_sel,
+	58,152,257,45,
+	NOTEXT,
+	NOSEE,
+	NOFEEL,
+	NOGROUP, 0,
+	NOKEY,
+	NOOPT,
+	};
+/* -------- */
+static Flicmenu rdither_sel =
+	{
+	NONEXT,
+	NOCHILD,
+	161, 180, 60, 12,
+	drawmode_165 /* "Dither" */,
+	ccorner_text,
+	toggle_group,
+	&vs.dither, 1,
+	NOKEY,
+	NOOPT,
+	};
+static Flicmenu setrad_sel =
+	{
+	&rdither_sel,
+	NOCHILD,
+	161, 160, 60, 12,
+	drawmode_166 /* "Center" */,
+	ccorner_text,
+	set_rad_center,
+	NOGROUP, 0,
+	NOKEY,
+	NOOPT,
+	};
+static Flicmenu radgroup_sel =
+	{
+	NONEXT,
+	&setrad_sel,
+	58,152,257,45,
+	NOTEXT,
+	NOSEE,
+	NOFEEL,
+	NOGROUP, 0,
+	NOKEY,
+	NOOPT,
+	};
+
 extern Flicmenu dtintgroup_sel,tintgroup_sel, radgroup_sel, dithergroup_sel;
 extern UBYTE idmd_lookup[];
 extern UBYTE dmd_lookup[];
 
-extern inverse_cursor(), blacktext(), black_block(), see_islidepot(),
-	see_qslider(), feel_qslider(), ccorner_text(), close_menu(),
+extern inverse_cursor(), black_block(), see_islidepot(),
+	close_menu(),
 	mrewind(), mfast_forward(),wcursor(), 
 	undo_pic(), move_menu(), fill_inkwell(),
 	show_sel_mode(), toggle_sel_mode(), see_menu_back(),
@@ -25,7 +178,7 @@ extern inverse_cursor(), blacktext(), black_block(), see_islidepot(),
 	mget_color(), ccolor_box(), change_mode(),
 	playit(), prev_frame(),next_frame(), first_frame(), last_frame(),
 	text_lineunder(), see_pen(), toggle_pen(), set_pspeed(),
-	text_boxp1(), toggle_group(),
+	text_boxp1(),
 	see_draw_mode(), toggle_draw_mode(), toggle_zoom(),
 	bottom_menu(), palette(), options(),text_boxp1(),
 	white_block(), hang_child(), wbtext(), hang_ink_option(),
@@ -41,8 +194,6 @@ extern wtext(), fincup(), fincdown(), ffeelscroll(), see_scroll();
 extern struct cursor ctriup, ctridown;
 extern int see_colors2(), see_menu_back(),print_list(),cursor_box(),bwtext(),
 	wbtext();
-
-extern pick_1dm(), pick_dm(), dm_help(), set_rad_center();
 
 extern WORD x_0, y_0, x_1, y_1;
 
@@ -242,154 +393,8 @@ Option_list add_option =
 #define first_option (&add_option)
 Option_list *dm_list = first_option;
 
-
-static struct qslider tint_sl = {0,100,&vs.tint_percent, 0, NULL};
-
-static Flicmenu tinting_sel = {
-	NONEXT,
-	NOCHILD,
-	114, 182, 152, 13,
-	&tint_sl,
-	see_qslider,
-	feel_qslider,
-	NOGROUP, 0,
-	NOKEY,
-	NOOPT,
-	};
-static Flicmenu tinttag_sel = {
-	&tinting_sel,
-	NOCHILD,
-	114,170,152,11,
-	drawmode_162 /* "Ink Strength" */,
-	blacktext,
-	NOFEEL,
-	NOGROUP, 0,
-	NOKEY,
-	NOOPT,
-	};
-static Flicmenu tintgroup_sel =
-	{
-	NONEXT,
-	&tinttag_sel,
-	58,152,257,45,
-	NOTEXT,
-	NOSEE,
-	NOFEEL,
-	NOGROUP, 0,
-	NOKEY,
-	NOOPT,
-	};
-/* -------------------------- */	/* for dithered ink strengths */
-static Flicmenu dtinting_sel = {
-	NONEXT,
-	NOCHILD,
-	114, 182, 152, 13,
-	&tint_sl,
-	see_qslider,
-	feel_qslider,
-	NOGROUP, 0,
-	NOKEY,
-	feel_qslider,
-	};
-static Flicmenu dtinttag_sel = {
-	&dtinting_sel,
-	NOCHILD,
-	114,170,152,11,
-	drawmode_162 /* "Ink Strength" */,
-	blacktext,
-	NOFEEL,
-	NOGROUP, 0,
-	NOKEY,
-	NOOPT,
-	};
-static Flicmenu dtint_sel = {
-	&dtinttag_sel,
-	NOCHILD,
-	161,158,60,11,
-	drawmode_165 /* "Dither" */,
-	ccorner_text,
-	toggle_group,
-	&vs.dither, 1,
-	NOKEY,
-	NOOPT,
-	};
-static Flicmenu dtintgroup_sel =
-	{
-	NONEXT,
-	&dtint_sel,
-	58,152,257,45,
-	NOTEXT,
-	NOSEE,
-	NOFEEL,
-	NOGROUP, 0,
-	NOKEY,
-	NOOPT,
-	};
-/* ------------ */
-static Flicmenu dither_sel =
-	{
-	NONEXT,
-	NOCHILD,
-	161, 180, 60, 12,
-	drawmode_165 /* "Dither" */,
-	ccorner_text,
-	toggle_group,
-	&vs.dither, 1,
-	NOKEY,
-	NOOPT,
-	};
-static Flicmenu dithergroup_sel =
-	{
-	NONEXT,
-	&dither_sel,
-	58,152,257,45,
-	NOTEXT,
-	NOSEE,
-	NOFEEL,
-	NOGROUP, 0,
-	NOKEY,
-	NOOPT,
-	};
-/* -------- */
-static Flicmenu rdither_sel =
-	{
-	NONEXT,
-	NOCHILD,
-	161, 180, 60, 12,
-	drawmode_165 /* "Dither" */,
-	ccorner_text,
-	toggle_group,
-	&vs.dither, 1,
-	NOKEY,
-	NOOPT,
-	};
-static Flicmenu setrad_sel =
-	{
-	&rdither_sel,
-	NOCHILD,
-	161, 160, 60, 12,
-	drawmode_166 /* "Center" */,
-	ccorner_text,
-	set_rad_center,
-	NOGROUP, 0,
-	NOKEY,
-	NOOPT,
-	};
-static Flicmenu radgroup_sel =
-	{
-	NONEXT,
-	&setrad_sel,
-	58,152,257,45,
-	NOTEXT,
-	NOSEE,
-	NOFEEL,
-	NOGROUP, 0,
-	NOKEY,
-	NOOPT,
-	};
-
-
-static set_rad_center()
+static void
+set_rad_center(void)
 {
 hide_mp();
 save_undo();

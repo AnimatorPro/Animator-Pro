@@ -2,6 +2,7 @@
 /* cfont.c  - Stuff to load and free up the 'user' (as opposed to built 
 	in system) font */
 #include <stdio.h>
+#include <string.h>
 #include "jimk.h"
 #include "gemfont.h"
 #include "cfont.str"
@@ -128,9 +129,8 @@ return(0);
 #endif /* USEFUL */
 
 /* Load up a font chosen by user. */
-static
-load_cfont(title)
-char *title;
+static int
+load_cfont(char *title)
 {
 char *cf_OWtab;  /*ldg */
 
@@ -205,8 +205,8 @@ jclose(fd);
 return(0);
 }
 
-static 
-use_sysfont()
+static void
+use_sysfont(void)
 {
 usr_font = &sixhi_font;
 strcpy(vs.fonts[0], cfont_101 /* "SYSTEM" */);

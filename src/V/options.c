@@ -10,22 +10,32 @@
 extern UBYTE idmd_lookup[];
 extern UBYTE dmd_lookup[];
 
+static void zero_slider(Flicmenu *m);
+static void sample_text(Flicmenu *m);
+static void pick_option(Flicmenu *m);
+static void opt_help(Flicmenu *m);
+static void hang_option(Flicmenu *m);
+static void mfont_text(void);
+static void msave_text(void);
+static void go_poly_files(void);
+static void iopt_scroller(void);
+
 extern int see_colors2(), see_menu_back(),print_list(),cursor_box(),bwtext(),
 	wbtext(), ccolor_box(), right_arrow(), left_arrow(),see_number_slider(),
 	white_block(), black_block(), text_boxp1(),toggle_group(),
 	ncorner_text(), dcorner_text(), ccorner_text(), gary_menu_back(), bcursor(),
 	gary_see_title(), ccorner_cursor(), edit_curve(), edit_poly(),
 	see_qslider(), feel_qslider(), close_menu(),
-	sample_text(), greytext(), blacktext(),change_mode(),
-	tween_poly(), tween_curve(), go_poly_files(),
+	greytext(), blacktext(),change_mode(),
+	tween_poly(), tween_curve(),
 	ccorner_poly_text(), blacktext(), greytext(), grey_block(), toggle_group(),
 	inc_slider(), save_text_text(), dec_slider();
-extern int move_menu(), bottom_menu(), mget_color(), pick_option(),
-	msave_text(), mload_text(), qedit_text(), mfont_text(),
+extern int move_menu(), bottom_menu(), mget_color(),
+	mload_text(), qedit_text(),
 	qplace_text(),
-	hang_option(), hang_child(), opt_name(), opt_help();
-extern Flicmenu options_menu, dsel1_sel,dsel_group_sel,fill2c_group_sel,
-	freepoly_group_sel, sep_group_sel, itgroup_sel, it0_sel;
+	hang_child(), opt_name();
+extern Flicmenu dsel1_sel,dsel_group_sel,
+	itgroup_sel, it0_sel;
 
 extern wtext(), fincup(), fincdown(), ffeelscroll(), see_scroll();
 extern struct cursor ctriup, ctridown;
@@ -33,7 +43,7 @@ extern struct cursor ctriup, ctridown;
 
 extern draw_tool(), streak_tool(), drizl_tool(), flood_tool(), box_tool(),
 	spray_tool(), sep_tool(), circle_tool(),  edge_tool(),
-	zero_slider(), zero_sl(),
+	zero_sl(),
 	line_tool(), fill_tool(), polyf_tool(), 
 	shapef_tool(), gel_tool(), text_tool(),
 	petlf_tool(), spiral_tool(),
@@ -48,179 +58,9 @@ Vector pentools[] = {box_tool, circle_tool,
 	sep_tool, shapef_tool, spiral_tool, curve_tool, spray_tool, 
 	starf_tool, streak_tool, text_tool};
 
-
-extern Flicmenu om_points_group_sel, om_sratio_group_sel, om_osped_group_sel,
-	text_group_sel, curve_group_sel;
-
-
 static char in_ink_menu;
 
 static Flicmenu *optm;
-
-static Option_list text_option =
-	{
-	NONEXT,
-	options_100 /* "TEXT" */,
-	options_101 /* "Edit text in a boxed area of the screen.  Load ascii files or " */
-	options_102 /* "fonts below." */,
-	&text_group_sel,
-	};
-static Option_list streak_option =
-	{
-	&text_option,
-	options_103 /* "STREAK" */,
-	options_104 /* "Freehand, brush-size line. May be broken depending on mouse speed." */,
-	NOOOM,
-	};
-static Option_list starf_option =
-	{
-	&streak_option,
-	options_105 /* "STAR" */,
-	options_106 /* "Create a star shape.  Define center first,  then size and angle.  " */
-	options_118 /* "(Tweenable)" */,
-	&om_sratio_group_sel,
-	};
-static Option_list spray_option =
-	{
-	&starf_option,
-	options_108 /* "SPRAY" */,
-	options_109 /* "Apply brush-size ink in random, circular pattern.  Set speed and width " */
-	options_110 /* "below." */,
-	&om_osped_group_sel,
-	};
-static Option_list curve_option =
-	{
-	&spray_option,
-	options_111 /* "SPLINE" */,
-	options_112 /* "CURVED SPLINE.  SET CURVATURE BELOW.  LOAD AND SAVE FROM POLY TOOL.  " */
-	options_113 /* "(TWEENABLE)" */,
-	&curve_group_sel,
-	};
-static Option_list spiral_option =
-	{
-	&curve_option,
-	options_114 /* "SPIRAL" */,
-	options_115 /* "Spiral-shaped line.  Set center, then angle, then turns.  (Tweenable)" */,
-	NOOOM,
-	};
-static Option_list shapef_option =
-	{
-	&spiral_option,
-	options_116 /* "SHAPE" */,
-	options_117 /* "Drag mouse to apply freehand boundary.  Then release to close shape.  " */
-	options_118 /* "(Tweenable)" */,
-	&fill2c_group_sel,
-	};
-static Option_list sep_option =
-	{
-	&shapef_option,
-	options_119 /* "SEP." */,
-	options_120 /* "Separate colors:  replace selected color(s) with current ink." */,
-	&sep_group_sel,
-	};
-static Option_list rpolyf_option =
-	{
-	&sep_option,
-	options_121 /* "RPOLY" */,
-	options_122 /* "REGULAR POLYGON:  ALL SIDES SAME LENGTH.  Set points below.  (Tweenable)" */,
-	&om_points_group_sel,
-	};
-static Option_list polyf_option =
-	{
-	&rpolyf_option,
-	options_123 /* "POLY" */,
-	options_124 /* "Irregular polygon:  define one point at a time.  (Tweenable)" */,
-	&freepoly_group_sel,
-	};
-static Option_list petlf_option =
-	{
-	&polyf_option,
-	options_125 /* "PETAL" */,
-	options_126 /* "A flower-like shape.  Set radius and points below.  (Tweenable)" */,
-	&om_sratio_group_sel,
-	};
-static Option_list ovlf_option =
-	{
-	&petlf_option,
-	options_127 /* "OVAL" */,
-	options_128 /* "Define minor axis, then angle and major axis.  (Tweenable)" */,
-	&fill2c_group_sel,
-	};
-static Option_list move_option =
-	{
-	&ovlf_option,
-	options_129 /* "MOVE" */,
-	options_130 /* "Move a boxed area of the screen.  Uses key color but not current ink." */,
-	NOOOM,
-	};
-static Option_list line_option =
-	{
-	&move_option,
-	options_131 /* "LINE" */,
-	options_132 /* "Apply ink in a straight line using current brush." */,
-	NOOOM,
-	};
-static Option_list gel_option =
-	{
-	&line_option,
-	options_133 /* "GEL" */,
-	options_134 /* "Freehand line with soft tapered edge.  Effect varies with brush size." */,
-	NOOOM,
-	};
-static Option_list flood_option =
-	{
-	&gel_option,
-	options_135 /* "FILLTO" */,
-	options_136 /* "Click on boundary color.  Then click anywhere within boundary to fill." */,
-	NOOOM,
-	};
-static Option_list fill_option =
-	{
-	&flood_option,
-	options_137 /* "FILL" */,
-	options_138 /* "APPLY INK TO ALL PIXELS UNTIL STOPPED BY A DIFFERENT COLOR." */,
-	NOOOM,
-	};
-static Option_list edge_option =
-	{
-	&fill_option,
-	options_139 /* "EDGE" */,
-	options_140 /* "Click on a color.  Edges of that color will be fringed with current ink." */,
-	NOOOM,
-	};
-static Option_list driz_option =
-	{
-	&edge_option,
-	options_141 /* "DRIZ." */,
-	options_142 /* "DRIZZLE:  LINE GETS THINNER WITH FASTER MOTION.  BEST WITH A MEDIUM TO " */
-	options_143 /* "LARGE BRUSH." */,
-	NOOOM,
-	};
-static Option_list draw_option =
-	{
-	&driz_option,
-	options_144 /* "DRAW" */, 
-	options_145 /* "HOLD DOWN LEFT BUTTON TO APPLY UNBROKEN LINE USING CURRENT BRUSH." */,
-	NOOOM,
-	};
-static Option_list circle_option =
-	{
-	&draw_option,
-	options_146 /* "CIRCLE" */,
-	options_147 /* "MAKE A CIRCLE.  USES CURRENT BRUSH IF NOT FILLED." */,
-	&fill2c_group_sel,
-	};
-static Option_list box_option =
-	{
-	&circle_option,
-	options_148 /* "BOX" */,
-	options_149 /* "DRAW A RECTANGLE.  USES CURRENT BRUSH IF NOT FILLED." */,
-	&fill2c_group_sel,
-	};
-
-#define first_op (&box_option)
-Option_list *options_list = first_op;
-static Option_list *olist;
 
 /* block for Text options */
 static Flicmenu tsample_sel =
@@ -981,7 +821,6 @@ static Flicmenu otitle_sel =
 	bottom_menu,
 	};
 
-
 static Flicmenu options_menu =
 	{
 	NONEXT,
@@ -994,6 +833,171 @@ static Flicmenu options_menu =
 	NOKEY,
 	NOOPT,
 	};
+
+static Option_list text_option =
+	{
+	NONEXT,
+	options_100 /* "TEXT" */,
+	options_101 /* "Edit text in a boxed area of the screen.  Load ascii files or " */
+	options_102 /* "fonts below." */,
+	&text_group_sel,
+	};
+static Option_list streak_option =
+	{
+	&text_option,
+	options_103 /* "STREAK" */,
+	options_104 /* "Freehand, brush-size line. May be broken depending on mouse speed." */,
+	NOOOM,
+	};
+static Option_list starf_option =
+	{
+	&streak_option,
+	options_105 /* "STAR" */,
+	options_106 /* "Create a star shape.  Define center first,  then size and angle.  " */
+	options_118 /* "(Tweenable)" */,
+	&om_sratio_group_sel,
+	};
+static Option_list spray_option =
+	{
+	&starf_option,
+	options_108 /* "SPRAY" */,
+	options_109 /* "Apply brush-size ink in random, circular pattern.  Set speed and width " */
+	options_110 /* "below." */,
+	&om_osped_group_sel,
+	};
+static Option_list curve_option =
+	{
+	&spray_option,
+	options_111 /* "SPLINE" */,
+	options_112 /* "CURVED SPLINE.  SET CURVATURE BELOW.  LOAD AND SAVE FROM POLY TOOL.  " */
+	options_113 /* "(TWEENABLE)" */,
+	&curve_group_sel,
+	};
+static Option_list spiral_option =
+	{
+	&curve_option,
+	options_114 /* "SPIRAL" */,
+	options_115 /* "Spiral-shaped line.  Set center, then angle, then turns.  (Tweenable)" */,
+	NOOOM,
+	};
+static Option_list shapef_option =
+	{
+	&spiral_option,
+	options_116 /* "SHAPE" */,
+	options_117 /* "Drag mouse to apply freehand boundary.  Then release to close shape.  " */
+	options_118 /* "(Tweenable)" */,
+	&fill2c_group_sel,
+	};
+static Option_list sep_option =
+	{
+	&shapef_option,
+	options_119 /* "SEP." */,
+	options_120 /* "Separate colors:  replace selected color(s) with current ink." */,
+	&sep_group_sel,
+	};
+static Option_list rpolyf_option =
+	{
+	&sep_option,
+	options_121 /* "RPOLY" */,
+	options_122 /* "REGULAR POLYGON:  ALL SIDES SAME LENGTH.  Set points below.  (Tweenable)" */,
+	&om_points_group_sel,
+	};
+static Option_list polyf_option =
+	{
+	&rpolyf_option,
+	options_123 /* "POLY" */,
+	options_124 /* "Irregular polygon:  define one point at a time.  (Tweenable)" */,
+	&freepoly_group_sel,
+	};
+static Option_list petlf_option =
+	{
+	&polyf_option,
+	options_125 /* "PETAL" */,
+	options_126 /* "A flower-like shape.  Set radius and points below.  (Tweenable)" */,
+	&om_sratio_group_sel,
+	};
+static Option_list ovlf_option =
+	{
+	&petlf_option,
+	options_127 /* "OVAL" */,
+	options_128 /* "Define minor axis, then angle and major axis.  (Tweenable)" */,
+	&fill2c_group_sel,
+	};
+static Option_list move_option =
+	{
+	&ovlf_option,
+	options_129 /* "MOVE" */,
+	options_130 /* "Move a boxed area of the screen.  Uses key color but not current ink." */,
+	NOOOM,
+	};
+static Option_list line_option =
+	{
+	&move_option,
+	options_131 /* "LINE" */,
+	options_132 /* "Apply ink in a straight line using current brush." */,
+	NOOOM,
+	};
+static Option_list gel_option =
+	{
+	&line_option,
+	options_133 /* "GEL" */,
+	options_134 /* "Freehand line with soft tapered edge.  Effect varies with brush size." */,
+	NOOOM,
+	};
+static Option_list flood_option =
+	{
+	&gel_option,
+	options_135 /* "FILLTO" */,
+	options_136 /* "Click on boundary color.  Then click anywhere within boundary to fill." */,
+	NOOOM,
+	};
+static Option_list fill_option =
+	{
+	&flood_option,
+	options_137 /* "FILL" */,
+	options_138 /* "APPLY INK TO ALL PIXELS UNTIL STOPPED BY A DIFFERENT COLOR." */,
+	NOOOM,
+	};
+static Option_list edge_option =
+	{
+	&fill_option,
+	options_139 /* "EDGE" */,
+	options_140 /* "Click on a color.  Edges of that color will be fringed with current ink." */,
+	NOOOM,
+	};
+static Option_list driz_option =
+	{
+	&edge_option,
+	options_141 /* "DRIZ." */,
+	options_142 /* "DRIZZLE:  LINE GETS THINNER WITH FASTER MOTION.  BEST WITH A MEDIUM TO " */
+	options_143 /* "LARGE BRUSH." */,
+	NOOOM,
+	};
+static Option_list draw_option =
+	{
+	&driz_option,
+	options_144 /* "DRAW" */,
+	options_145 /* "HOLD DOWN LEFT BUTTON TO APPLY UNBROKEN LINE USING CURRENT BRUSH." */,
+	NOOOM,
+	};
+static Option_list circle_option =
+	{
+	&draw_option,
+	options_146 /* "CIRCLE" */,
+	options_147 /* "MAKE A CIRCLE.  USES CURRENT BRUSH IF NOT FILLED." */,
+	&fill2c_group_sel,
+	};
+static Option_list box_option =
+	{
+	&circle_option,
+	options_148 /* "BOX" */,
+	options_149 /* "DRAW A RECTANGLE.  USES CURRENT BRUSH IF NOT FILLED." */,
+	&fill2c_group_sel,
+	};
+
+#define first_op (&box_option)
+Option_list *options_list = first_op;
+static Option_list *olist;
 
 save_text_text(m)
 Flicmenu *m;
@@ -1019,26 +1023,23 @@ s = m->text;
 draw_sel(m);
 }
 
-static
-zero_slider(m)
-Flicmenu *m;
+static void
+zero_slider(Flicmenu *m)
 {
 m = (Flicmenu *)m->group;
 zero_sl(m);
 }
 
-
-static
-refresh_options()
+static void
+refresh_options(void)
 {
 qdraw_a_menu(&opt_hanger_sel);
 qdraw_a_menu(&om_hanger_sel);
 draw_sel(&opt_help_sel);
 }
 
-static
-sample_text(m)
-Flicmenu *m;
+static void
+sample_text(Flicmenu *m)
 {
 int w,h;
 char *s;
@@ -1074,11 +1075,8 @@ rmove_menu(m, 0, y-m->y);
 }
 #endif /* SLUFFED */
 
-
-
-static
-pick_option(m)
-Flicmenu *m;
+static void
+pick_option(Flicmenu *m)
 {
 Option_list *o;
 int newmode;
@@ -1103,9 +1101,8 @@ if ((o = which_sel(m) ) != NULL)
 refresh_options();
 }
 
-static
-opt_help(m)
-Flicmenu *m;
+static void
+opt_help(Flicmenu *m)
 {
 Option_list *o;
 
@@ -1156,9 +1153,8 @@ if (cur_menu == &options_menu)
 	}
 }
 
-static
-hang_option(m)
-Flicmenu *m;
+static void
+hang_option(Flicmenu *m)
 {
 Option_list *o;
 
@@ -1168,8 +1164,8 @@ m->children = o->options;
 hang_child(m);
 }
 
-static
-redraw_oscroller()
+static void
+redraw_oscroller(void)
 {
 redraw_scroller(&oscroll_sel, &olist_sel);
 }
@@ -1181,8 +1177,8 @@ qload_text();
 draw_mp();
 }
 
-static
-mfont_text()
+static void
+mfont_text(void)
 {
 hide_mp();
 vs.oscroller_top = oscroller.top_name;
@@ -1212,8 +1208,8 @@ rezoom();
 iopt_scroller();
 }
 
-static
-msave_text()
+static void
+msave_text(void)
 {
 hide_mp();
 qsave_text();
@@ -1238,8 +1234,8 @@ if (jexists(text_name) )
 iopt_scroller();
 }
 
-static
-go_poly_files()
+static void
+go_poly_files(void)
 {
 hide_mp();
 go_files(6);
@@ -1253,18 +1249,16 @@ draw_mp();
    are part of a button that could directly or indirectly get you
    to files menu.  (Should redesign the )*(& thing, this is fragile
    code.)  */
-static
-iopt_scroller()
+static void
+iopt_scroller(void)
 {
 oscroller.top_name = vs.oscroller_top;
 iscroller(&oscroller,(Name_list *)olist,&oscroll_sel,&olist_sel,
 	scroll_ycount(&olist_sel),redraw_oscroller);
 }
 
-
-static
-opt_menu(m)
-Flicmenu *m;
+static void
+opt_menu(Flicmenu *m)
 {
 om_hanger_sel.text = olist;
 optm = m;
@@ -1278,8 +1272,7 @@ rezoom();
 }
 
 static Flicmenu *
-match_id(m, id)
-Flicmenu *m;
+match_id(Flicmenu *m, WORD id)
 {
 for (;;)
 	{
@@ -1289,9 +1282,8 @@ for (;;)
 	}
 }
 
-static
-go_tools(m)
-Flicmenu *m;
+static void
+go_tools(Flicmenu *m)
 {
 grab_usr_font();
 opt_hanger_sel.children = &dsel_group_sel;
@@ -1301,8 +1293,8 @@ opt_menu(m);
 free_cfont();
 }
 
-options(m)
-Flicmenu *m;
+void
+options(Flicmenu *m)
 {
 if (cur_menu == &options_menu)	/* avoid recursing */
 	return;
@@ -1314,9 +1306,8 @@ draw_mp();
 
 extern Option_list add_option;
 
-static
-go_inks(m)
-Flicmenu *m;
+static void
+go_inks(Flicmenu *m)
 {
 int otool_ix;
 
@@ -1332,8 +1323,8 @@ vs.tool_ix = otool_ix;
 in_ink_menu = 0;
 }
 
-go_dmmenu(m)
-Flicmenu *m;
+void
+go_dmmenu(Flicmenu *m)
 {
 if (cur_menu == &options_menu)	/* avoid recursing */
 	return;

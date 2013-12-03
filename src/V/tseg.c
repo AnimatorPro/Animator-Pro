@@ -9,15 +9,22 @@
 #include "flicmenu.h"
 #include "tseg.str"
 
+static void see_twidth(Flicmenu *m);
+static void inc_tseg(Flicmenu *m);
+static void dec_tseg(Flicmenu *m);
+static void see_tseg(Flicmenu *m);
+static void feel_tseg(Flicmenu *m);
+static void prop_drag_tseg(void);
+static void rfeel_tseg(Flicmenu *m);
+static void stuff_with_cur_ix(Flicmenu *m);
+
 extern dcorner_text(), ccorner_text(), gary_menu_back(), mundo_pic(),
 	toggle_pen(), palette(), ccolor_box(), ncorner_int(),
 	ccorner_cursor(), ncorner_cursor(), ncorner_text(),
-	ncorner_number(), see_seg_size(), see_tseg(), feel_tseg(), rfeel_tseg(),
+	ncorner_number(), see_seg_size(),
 	hang_child(), move_tab_text(), move_menu(), bottom_menu(),
-	stuff_with_cur_ix(), see_twidth(), change_mode(), change_time_mode(),
+	change_mode(), change_time_mode(),
 	see_pen(), toggle_group(), set_pbrush(); 
-
-extern inc_tseg(), dec_tseg();
 
 extern Flicmenu minitime_sel;
 
@@ -163,13 +170,10 @@ Flicmenu tseg_group_sel = {
 	NOOPT,
 	};
 
-extern inc_tseg(), dec_tseg(), inc_tseg(), dec_tseg();
-
 static WORD *itg;
 
-static
-see_twidth(m)
-Flicmenu *m;
+static void
+see_twidth(Flicmenu *m)
 {
 extern int tr_frames;
 
@@ -191,8 +195,8 @@ if (cur_menu == &tmu_menu)	/* in time menu? Update ranges... */
 	redraw_range_buttons();
 }
 
-static
-itseg()
+static void
+itseg(void)
 {
 if (*itg < fhead.frame_count-1)
 	{
@@ -201,8 +205,8 @@ if (*itg < fhead.frame_count-1)
 	}
 }
 
-static
-dtseg()
+static void
+dtseg(void)
 {
 if (*itg > 0)
 	{
@@ -211,9 +215,8 @@ if (*itg > 0)
 	}
 }
 
-static
-inc_tseg(m)
-Flicmenu *m;
+static void
+inc_tseg(Flicmenu *m)
 {
 hilight(m);
 itg = m->group;
@@ -221,9 +224,8 @@ repeat_on_pdn(itseg);
 draw_sel(m);
 }
 
-static
-dec_tseg(m)
-Flicmenu *m;
+static void
+dec_tseg(Flicmenu *m)
 {
 hilight(m);
 itg = m->group;
@@ -235,8 +237,8 @@ static int seg_size;
 static int seg_lower;
 static char seg_sign;
 
-static
-find_seg_size()
+static void
+find_seg_size(void)
 {
 seg_size = vs.stop_seg - vs.start_seg;
 if (seg_size < 0)
@@ -274,9 +276,8 @@ static int arrow_start;
 static int nwidth, nx;
 static int asteps;
 
-static
-see_tseg(m)
-Flicmenu *m;
+static void
+see_tseg(Flicmenu *m)
 {
 int i;
 int ny, nh;
@@ -317,8 +318,8 @@ for (i=0; i<=nh; i++)
 	}
 }
 
-static
-prop_clip_tseg()
+static void
+prop_clip_tseg(void)
 {
 int x, dx;
 
@@ -344,11 +345,8 @@ if ((dx = fhead.frame_count - 1 - vs.stop_seg) < 0)
 	}
 }
 
-
-
-static
-prop_move_tseg(x)
-int x;
+static void
+prop_move_tseg(int x)
 {
 vs.start_seg += x;
 vs.stop_seg += x;
@@ -356,9 +354,8 @@ prop_clip_tseg();
 redraw_tseg();
 }
 
-static
-feel_tseg(m)
-Flicmenu *m;
+static void
+feel_tseg(Flicmenu *m)
 {
 if (uzx < arrow_start)		/* page left */
 	{
@@ -374,9 +371,8 @@ else		/* drag it around keeping length the same */
 	}
 }
 
-
-static
-prop_drag_tseg()
+static void
+prop_drag_tseg(void)
 {
 int lastp, p;
 int firstx, dx;
@@ -396,18 +392,15 @@ for (;;)
 	}
 }
 
-static
-tseg_dist(seg_end)
-int seg_end;
+static int
+tseg_dist(int seg_end)
 {
 return(intabs(
 	rscale_by(seg_end, nwidth, fhead.frame_count) + nx - uzx));
 }
 
-
-static
-rfeel_tseg(m)
-Flicmenu *m;
+static void
+rfeel_tseg(Flicmenu *m)
 {
 int *which;		/* start or stop of segment??? */
 int dist;
@@ -440,10 +433,8 @@ change_mode(m);
 draw_sel(&ts_wid_sel);
 }
 
-
-static
-stuff_with_cur_ix(m)
-Flicmenu *m;
+static void
+stuff_with_cur_ix(Flicmenu *m)
 {
 int *v;
 

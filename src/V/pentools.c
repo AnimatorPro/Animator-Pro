@@ -6,13 +6,16 @@
 
 extern WORD x_0,y_0,x_1,y_1;
 
+static void dtool(int mode);
+
 /* some functions for line drawing */
 extern int copydot(),marqidot(),sdot(), xdot();
 extern a1bdot(), rbdot(), rbbrush();
 /* some functions for circle drawing */
 extern int sdot(), copydot();
 
-box_tool()
+void
+box_tool(void)
 {
 int ocolor;
 
@@ -42,8 +45,8 @@ if (PJSTDN)
 	}
 }
 
-
-fill_tool()
+void
+fill_tool(void)
 {
 if (!pti_input())
 	return;
@@ -52,7 +55,8 @@ if (vs.cycle_draw) cycle_ccolor();
 fill(grid_x, grid_y);
 }
 
-flood_tool()
+void
+flood_tool(void)
 {
 int fcolor;
 
@@ -68,7 +72,8 @@ if (PJSTDN)
 	}
 }
 
-edge_tool()
+void
+edge_tool(void)
 {
 if (!pti_input())
 	return;
@@ -98,9 +103,8 @@ extern WORD dot_c[], circ1_cursor[], circ2_cursor[], circ3_cursor[],
 	box1_cursor[];
 
 /* wierd tool that makes line thinner the faster you go */
-static
-dtool(mode)
-int mode;
+static void
+dtool(int mode)
 {
 WORD *speedc;
 WORD first, delt,i,j;
@@ -199,8 +203,8 @@ for (;;)
 	}
 }
 
-
-spray_tool()
+void
+spray_tool(void)
 {
 short xy[2];
 char rgb[3];
@@ -246,7 +250,8 @@ for (;;)
 	}
 }
 
-circle_tool()
+void
+circle_tool(void)
 {
 int ocolor;
 
@@ -274,9 +279,8 @@ if (rub_circle())
 	}
 }
 
-
-
-line_tool()
+void
+line_tool(void)
 {
 WORD firstx,firsty;
 WORD lx,ly;

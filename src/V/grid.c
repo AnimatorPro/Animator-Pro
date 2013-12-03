@@ -16,8 +16,12 @@ static char *grid_options[] = {
 		grid_104 /* " Exit Menu" */,
 		};
 
-extern int quse_grid(), qmake_grid(), qpaste_grid(), qsee_grid(),
-	close_menu();
+static void qpaste_grid(void);
+static void qsee_grid(void);
+static void qmake_grid(void);
+static void quse_grid(void);
+
+extern close_menu();
 
 static Vector grid_feelers[] =
 	{
@@ -28,8 +32,8 @@ static Vector grid_feelers[] =
 	close_menu,
 	};
 
-static 
-grid_asterisks()
+static void
+grid_asterisks(void)
 {
 char *pt;
 
@@ -47,8 +51,8 @@ qmenu(grid_105 /* "Grid Snap Control" */,
 	grid_options, Array_els(grid_options), grid_feelers);
 }
 
-static
-paste1_grid()
+static int
+paste1_grid(void)
 {
 int x, y;
 
@@ -67,8 +71,8 @@ free_render_cashes();
 return(1);
 }
 
-static
-paste_grid()
+static void
+paste_grid(void)
 {
 int x, y;
 
@@ -82,14 +86,14 @@ for (y=vs.gridy; y<YMAX; y+=vs.gridh)
 	}
 }
 
-static
-qpaste_grid()
+static void
+qpaste_grid(void)
 {
 uzauto(paste1_grid);
 }
 
-static
-qsee_grid()
+static void
+qsee_grid(void)
 {
 save_undo();
 paste_grid();
@@ -99,8 +103,8 @@ unundo();
 zoom_it();
 }
 
-static
-qmake_grid()
+static void
+qmake_grid(void)
 {
 save_undo();
 vs.use_grid = 0;
@@ -124,8 +128,8 @@ qsee_grid();
 grid_asterisks();
 }
 
-static
-quse_grid()
+static void
+quse_grid(void)
 {
 vs.use_grid = !vs.use_grid;
 grid_asterisks();

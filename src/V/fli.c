@@ -302,8 +302,8 @@ check_loop();
 }
 
 /* Do what it takes to move to last frame of our temp file */
-static
-last_frame()
+static void
+last_frame(void)
 {
 if (!tflx)
 	return;
@@ -328,7 +328,8 @@ draw_mp();
 
 /* do what it takes to go to previous frame of our temp file.  If go before
    first frame then wrap back to last frame */
-prev_frame()
+void
+prev_frame(void)
 {
 int dest;
 
@@ -351,9 +352,9 @@ prev_frame();
 draw_mp();
 }
 
-
 /* Jump to first frame of temp file */
-first_frame()
+void
+first_frame(void)
 {
 if (!tflx)
 	return;
@@ -374,7 +375,8 @@ draw_mp();
 
 /* Jump to next frame of temp file, wrapping back to 1st frame if go past
    end... */
-next_frame()
+void
+next_frame(void)
 {
 int oix;
 
@@ -448,11 +450,9 @@ playit();
 draw_mp();
 }
 
-
 /* Play frames from start to stop of temp file */
-static
-pflip_thru(start, stop)
-int start, stop;
+static void
+pflip_thru(int start, int stop)
 {
 int i;
 Vscreen *tmp;

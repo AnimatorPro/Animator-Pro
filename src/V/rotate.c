@@ -3,6 +3,7 @@
    done elsewhere in assembler.  This is an interface to the
    'persp' code also used by stretch and optics. */
 
+#include <stdio.h>
 #include "jimk.h"
 #include "blit8_.h"
 #include "peekpok_.h"
@@ -31,7 +32,6 @@ struct min_max
 	WORD ymax_ix;
 	WORD height;
 	};
-extern struct min_max minmax;
 extern Vcel *ccc;
 
 static Rot_seg *rs1, *rs2;
@@ -523,8 +523,8 @@ raster_transform(c, dpoly, render_first);
 zoom_it();
 }
 
-
-vrotate_cel()
+void
+vrotate_cel(void)
 {
 int ox,oy;
 int dx,dy, odx,ody;

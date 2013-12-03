@@ -1,8 +1,11 @@
 
 /* names.c - simple string and list management utility routines */
 
-#include "jimk.h"
 #include <ctype.h>
+#include <string.h>
+#include "jimk.h"
+
+extern void sort_array(Name_list **array, int count, Vector cmp);
 
 #ifdef SLUFFED
 string_in(pat, string)
@@ -311,10 +314,8 @@ for (;;)
 #endif /* SLUFFED */
 
 /* a little shell sort on an array of strings */
-sort_array(array, count, cmp)
-Name_list **array;
-int count;
-Vector cmp;
+void
+sort_array(Name_list **array, int count, Vector cmp)
 {
 register Name_list **pt1, **pt2;
 register Name_list *swap;

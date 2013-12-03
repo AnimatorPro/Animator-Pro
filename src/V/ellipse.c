@@ -35,7 +35,8 @@ for (;;)
 	}
 }
 
-ovalf_tool()
+void
+ovalf_tool(void)
 {
 int bk ;
 

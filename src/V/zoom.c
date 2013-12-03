@@ -16,8 +16,10 @@ static char *zoom_choices[] =
 	cst_cancel,
 	};
 
-static
-calc_zoom_w()
+static void clip_zoom(void);
+
+static void
+calc_zoom_w(void)
 {
 if (vs.zoom4)
 	{
@@ -61,9 +63,8 @@ rezoom();
 draw_mp();
 }
 
-
-static
-clip_zoom()
+static void
+clip_zoom(void)
 {
 if (vs.zoomx < 0)
 	vs.zoomx = 0;
@@ -75,8 +76,8 @@ if (vs.zoomy+vs.zoomh > YMAX)
 	vs.zoomy = YMAX-vs.zoomh;
 }
 
-static
-set_alloced_zoom()
+static void
+set_alloced_zoom(void)
 {
 copy_form(&vf,zoom_form);	/* copy unzoomed screen to zoom_form */
 render_form = zoom_form;
@@ -85,8 +86,8 @@ make_dw();
 zoom_it();
 }
 
-static
-set_zoom()
+static int
+set_zoom(void)
 {
 if ((zoom_form = alloc_screen())!=NULL)
 	{

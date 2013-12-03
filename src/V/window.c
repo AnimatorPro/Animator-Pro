@@ -2,6 +2,7 @@
 /* window.c - Direct pixel output around menus and behind Zoom screen.
    This is what makes rendering a solid box slow in Vpaint... */
 
+#include <string.h>
 #include "jimk.h"
 #include "blit8_.h"
 #include "cblock_.h"
@@ -47,6 +48,10 @@ static struct wi_list wia[4] = {
 static struct wi_list *free_wis = wia;
 static struct wi_list *menu_wis;
 
+static void make_lookups(void);
+static void swap_with_frame(Vscreen *s);
+static void copy_from_frame(Vscreen *s);
+static void zoom_seg(int y0, int height);
 
 in_control_space()
 {
@@ -77,11 +82,8 @@ return(0);
 }
 #endif /* SUBROUTINE */
 
-static
-new_dw(y0,y1,image,inmenu)
-int y0,y1;
-PLANEPTR image;
-int inmenu;
+static void
+new_dw(int y0, int y1, PLANEPTR image, int inmenu)
 {
 register struct dwindow *d;
 
@@ -130,9 +132,8 @@ anywin = (dw_ct != 1);
 make_lookups();
 }
 
-
-static
-make_lookups()
+static void
+make_lookups(void)
 {
 register UBYTE **p = dwlinestart;
 register UBYTE *image;
@@ -196,17 +197,14 @@ else if (y >= dwlist[3].y0 && y < dwlist[3].y1)
 }
 #endif /* SUBROUTINE */
 
-static
-cmp_wis(w1,w2)
-struct wi_list *w1, *w2;
+static int
+cmp_wis(struct wi_list *w1, struct wi_list *w2)
 {
 return(w1->y0 - w2->y0);
 }
 
-static
-add_wi(y0, y1, image)
-int y0, y1;
-PLANEPTR image;
+static int
+add_wi(int y0, int y1, PLANEPTR image)
 {
 register struct wi_list *new;
 
@@ -236,8 +234,8 @@ free_wis = wi;
 }
 #endif /* LATER */
 
-static
-new_wi_list()
+static void
+new_wi_list(void)
 {
 register struct wi_list *wi, *next;
 
@@ -270,9 +268,8 @@ swap_undo()
 swap_with_frame(&uf);
 }
 
-static
-swap_with_frame(s)
-Vscreen *s;
+static void
+swap_with_frame(Vscreen *s)
 {
 register int i;
 PLANEPTR p;
@@ -293,9 +290,8 @@ save_undo()
 copy_from_frame(&uf);
 }
 
-static
-copy_from_frame(s)
-Vscreen *s;
+static void
+copy_from_frame(Vscreen *s)
 {
 register int i;
 PLANEPTR p;
@@ -311,9 +307,8 @@ for (i=0; i<dw_ct; i++)
 copy_cmap(render_form->cmap, s->cmap);
 }
 
-static
-copy_frame_screen(s)
-Vscreen *s;
+static void
+copy_frame_screen(Vscreen *s)
 {
 register int i;
 PLANEPTR p;
@@ -334,7 +329,8 @@ unundo()
 copy_frame_screen(&uf);
 }
 
-zoom_it()
+void
+zoom_it(void)
 {
 register int i;
 
@@ -349,9 +345,8 @@ for (i=0; i<zw_ct; i++)
 	}
 }
 
-static
-zoom_seg(y0, height)
-int y0, height;
+static void
+zoom_seg(int y0, int height)
 {
 if (vs.zoom4)
 	{
@@ -367,8 +362,8 @@ else
 	}
 }
 
-upd_zoom_dot(x,y,c)
-int x,y,c;
+void
+upd_zoom_dot(int x, int y, int c)
 {
 register PLANEPTR p;
 int i;

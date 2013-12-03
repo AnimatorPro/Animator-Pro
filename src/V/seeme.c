@@ -3,13 +3,16 @@
    "seeme" routines suitable for stuffing into Flicmenu structures.
    Recursive button display stuff is in seemenu.c. */
 
+#include <stdio.h>
+#include <string.h>
 #include "jimk.h"
 #include "blit8_.h"
 #include "cblock_.h"
 #include "flicmenu.h"
 #include "gemfont.h"
 
-
+static int draw_a_menu(Flicmenu *m);
+static void ncnum(Flicmenu *m, int offset);
 
 #ifdef SLUFFED
 gary_menu_ww(m)
@@ -23,10 +26,8 @@ wwtext(&vf, &sixhi_font,
 }
 #endif /* SLUFFED */
 
-static
-blit_menu(m, pt)
-Flicmenu *m;
-WORD *pt;
+static void
+blit_menu(Flicmenu *m, WORD *pt)
 {
 blit8(m->width+1, m->height+1, m->x, m->y, vf.p, vf.bpr,
 	0,0,pt,Raster_line(m->width+1) );
@@ -51,11 +52,8 @@ if ((mbehind = sunder_menu(m))!=NULL)
 return(mbehind != NULL);
 }
 
-
-static
-unblit_menu(m, pt)
-Flicmenu *m;
-WORD *pt;
+static void
+unblit_menu(Flicmenu *m, WORD *pt)
 {
 blit8(m->width+1, m->height+1, 0, 0, pt, Raster_line(m->width+1),
 	m->x, m->y, vf.p, vf.bpr);
@@ -72,9 +70,8 @@ if (pt != NULL)
 	}
 }
 
-static
-draw_a_menu(m)
-Flicmenu *m;
+static int
+draw_a_menu(Flicmenu *m)
 {
 find_colors();
 qdraw_a_menu(m);
@@ -94,9 +91,8 @@ if (m != NULL)
 	}
 }
 
-static
-bright(m)
-Flicmenu *m;
+static int
+bright(Flicmenu *m)
 {
 if (m->group)
 	if (*m->group == m->identity)
@@ -129,10 +125,8 @@ Flicmenu *m;
 draw_frame(color,  m->x,  m->y,  m->x + m->width+1, m->y + m->height+1);
 }
 
-static
-box_cut_corner(x0,y0,w,h,color)
-int x0,y0,w,h;
-int color;
+static void
+box_cut_corner(int x0, int y0, int w, int h, int color)
 {
 chli(vf.p, x0+1, y0, w-2, color);
 chli(vf.p, x0+1, y0+h-1, w-2, color);
@@ -158,20 +152,16 @@ cdot(vf.p,x1-2,y0+1,color);
 cdot(vf.p,x1-2,y1-2,color);
 }
 
-static
-diag_inside(x0,y0,w,h,color)
-int x0,y0,w,h;
-int color;
+static void
+diag_inside(int x0, int y0, int w, int h, int color)
 {
 chli(vf.p, x0+2, y0+1, w-4, color);
 cblock(vf.p,x0+1, y0+2, w-2, h-4, color);
 chli(vf.p, x0+2, y0+h-2, w-4, color);
 }
 
-static
-ccorner_inside(x0,y0,w,h,color)
-int x0,y0,w,h;
-int color;
+static void
+ccorner_inside(int x0, int y0, int w, int h, int color)
 {
 cblock(vf.p,x0+1, y0+1, w-2, h-2, color);
 }
@@ -190,18 +180,14 @@ int color;
 ccorner_inside(m->x,m->y,m->width+1,m->height+1,color);
 }
 
-static
-mb_dcorner(m,color)
-Flicmenu *m;
-int color;
+static void
+mb_dcorner(Flicmenu *m, int color)
 {
 box_diag_corner(m->x,m->y,m->width+1,m->height+1,color);
 }
 
-static
-mb_inside(m,color)
-Flicmenu *m;
-int color;
+static void
+mb_inside(Flicmenu *m, int color)
 {
 diag_inside(m->x,m->y,m->width+1,m->height+1,color);
 }
@@ -291,10 +277,8 @@ Flicmenu *m;
 ncnum(m, 0);
 }
 
-static
-ncnum(m, offset)
-Flicmenu *m;
-int offset;
+static void
+ncnum(Flicmenu *m, int offset)
 {
 char buf[10];
 char *otext;
@@ -339,10 +323,8 @@ Flicmenu *m;
 m2color_block(m, sgrey, swhite);
 }
 
-
-static
-gbnumber(m)
-Flicmenu *m;
+static void
+gbnumber(Flicmenu *m)
 {
 a_block(sgrey, m);
 see_num(m, 0, 2, hilit(m));

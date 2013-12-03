@@ -2,6 +2,7 @@
 /* overlay.c - handle requests off the "composite..." menu.  Stuff to
    mix two FLICS onto the same screen and eventually same file.  */
 
+#include <stdio.h>
 #include "jimk.h"
 #include "commonst.h"
 #include "fli.h"
@@ -26,6 +27,9 @@ static char *cmap_options[] ={
 	overlay_105 /* "No Fitting" */,
 	cst_cancel,
 	};
+
+static void load_overlay(int how);
+static int load_fli_overlay(char *title, int how);
 
 extern char *ink_word();
 
@@ -70,9 +74,8 @@ static char *overl_msgs[3] = {
 	overlay_114 /* "Composite cross fade" */,
 	};
 
-static 
-load_overlay(how)
-int how;
+static void
+load_overlay(int how)
 {
 char *title;
 int oink, ostrength, oclear;
@@ -95,10 +98,8 @@ vs.draw_mode = oink;
 vs.zero_clear = oclear;
 }
 
-static
-may_cfit_blit_cel(cel, fit)
-Vscreen *cel;
-int fit;
+static int
+may_cfit_blit_cel(Vscreen *cel, int fit)
 {
 if (fit == 0 || fit == 4 || fit == 3)
 	{
@@ -112,11 +113,8 @@ else
 return(1);
 }
 
-
-static
-load_fli_overlay(title, how)
-char *title;
-int how;
+static int
+load_fli_overlay(char *title, int how)
 {
 Vscreen *lscreen;
 Vscreen *unders;

@@ -8,16 +8,19 @@
 #include "poly.h"
 #include "files.str"
 
+static void draw_fml(Flicmenu *m);
+static void fml_save(void);
+static void fml_load(void);
+static void fml_kill(void);
+static void enable_saves(void);
+static void fml_change_mode(Flicmenu *m);
 
 /*** Display Functions ***/
 extern ccorner_text(), ncorner_text(), gary_menu_back(),
-	dcorner_text(), draw_fml();
+	dcorner_text();
 
 extern toggle_group(), change_mode(),
 	close_menu(), move_menu(), bottom_menu(), move_tab_text();
-
-extern fml_load(), fml_save(), fml_info(), fml_kill(),
-	fml_change_mode();
 
 extern char *text_buf;
 
@@ -255,9 +258,8 @@ static Flicmenu fml_menu = {
 char save_ok, load_ok, info_ok;
 #endif /* SLUFFED */
 
-static
-draw_fml(m)
-Flicmenu *m;
+static void
+draw_fml(Flicmenu *m)
 {
 gary_menu_back(m);
 enable_saves();
@@ -271,7 +273,8 @@ else
 	jcopyfile(sname, dname);
 }
 
-static verify_poly(char *name)
+static int
+verify_poly(char *name)
 {
 Poly p;
 
@@ -284,38 +287,34 @@ if (read_gulp(name, &p, (long)sizeof(p)))
 return(0);
 }
 
-static
-load_path(name)
-char *name;
+static void
+load_path(char *name)
 {
 if (verify_poly(name))
 	qcopyfile(name,ppoly_name);
 }
 
-static
-save_path(name)
-char *name;
+static void
+save_path(char *name)
 {
 qcopyfile(ppoly_name,name);
 }
 
-static
-load_polygon(name)
-char *name;
+static void
+load_polygon(char *name)
 {
 if (verify_poly(name))
 	qcopyfile(name,poly_name);
 }
 
-static
-save_polygon(name)
-char *name;
+static void
+save_polygon(char *name)
 {
 qcopyfile(poly_name, name);
 }
 
-static
-qload_path()
+static void
+qload_path(void)
 {
 char *title;
 
@@ -326,8 +325,8 @@ if ((title = get_filename(files_129 /* "Load path file?" */, ".PLY")) != NULL)
 	}
 }
 
-static
-qsave_path()
+static void
+qsave_path(void)
 {
 char *title;
 
@@ -338,8 +337,8 @@ if ((title = get_filename(files_131 /* "Save path file?" */, ".PLY")) != NULL)
 	}
 }
 
-static
-qload_polygon()
+static void
+qload_polygon(void)
 {
 char *title;
 
@@ -350,8 +349,8 @@ if ((title = get_filename(files_133 /* "Load polygon file?" */, ".PLY")) != NULL
 	}
 }
 
-static
-qsave_polygon()
+static void
+qsave_polygon(void)
 {
 char *title;
 
@@ -362,9 +361,8 @@ if ((title = get_filename(files_135 /* "Save polygon file?" */, ".PLY")) != NULL
 	}
 }
 
-
-static
-fml_save()
+static void
+fml_save(void)
 {
 #ifdef NOSAVE
 #else /* NOSAVE */
@@ -412,8 +410,8 @@ draw_mp();
 #endif /* NOSAVE */
 }
 
-static
-fml_load()
+static void
+fml_load(void)
 {
 hide_mp();
 switch (file_type)
@@ -514,8 +512,8 @@ draw_mp();
 }
 #endif /* LATER */
 
-static
-fml_kill()
+static void
+fml_kill(void)
 {
 char *title;
 
@@ -530,9 +528,8 @@ if ((title = get_filename(files_137 /* "Delete a file?" */, file_ends[file_type]
 draw_mp();
 }
 
-
-static
-enable_saves()
+static void
+enable_saves(void)
 {
 #ifdef NOSAVE
 fml_sav_sel.disabled = 1;
@@ -575,9 +572,8 @@ switch (file_type)
 #endif /* NOSAVE */
 }
 
-static
-fml_change_mode(m)
-Flicmenu *m;
+static void
+fml_change_mode(Flicmenu *m)
 {
 change_mode(m);
 enable_saves();

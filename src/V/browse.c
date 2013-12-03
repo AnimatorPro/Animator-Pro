@@ -3,6 +3,8 @@
    in filemenu.c in a semi-gnarly fashion.  Wants pstamp.c for
    doing the actual read and shrink of the first frame of a fli. */
 
+#include <stdio.h>
+#include <string.h>
 #include "jimk.h"
 #include "blit8_.h"
 #include "browse.str"
@@ -26,12 +28,26 @@ extern struct name_list *wild_lst;
 extern char wild[];
 extern Vector redisplay_drawer;
 
+static void see_browse(Flicmenu *m);
+static void feel_browse(Flicmenu *m);
+static void bredraw_cpic(void);
+static void feel_1_browse(struct name_list *el);
+static void draw_cpi_name(Flicmenu *m);
+static void draw_cpi(Flicmenu *m);
+static void baction_button(Flicmenu *m);
+static void redraw_bscroller(void);
+static void bfeel_scroller(Flicmenu *m);
+static void bincup(Flicmenu *m);
+static void bincdown(Flicmenu *m);
+static void init_bscroller(void);
+static void browse_action(void);
+static void short_path(Flicmenu *m);
+
 extern inverse_cursor(), black_block(), see_islidepot(), 
-	see_string_req(), ccorner_cursor(), feel_browse(), see_browse(),
-	see_number_slider(),  close_menu(), draw_cpi(), draw_cpi_name(),
-	qmake_frames(), short_path(),
+	see_string_req(), ccorner_cursor(),
+	see_number_slider(),  close_menu(),
+	qmake_frames(),
 	mrewind(), mfast_forward(),wcursor(),
-	baction_button(),
 	mundo_pic(), move_menu(), fill_inkwell(),
 	show_sel_mode(), toggle_sel_mode(), see_menu_back(), gary_menu_back(),
 	see_range(), see_colors2(), see_ink(),
@@ -46,10 +62,8 @@ extern inverse_cursor(), black_block(), see_islidepot(),
 	blacktext(), greytext(), grey_block(), toggle_group(),
 	gary_menu_ww(), see_scroll(), print_list(),
 	fq_drawer_stringq(),
-	bfeel_scroller(), new_dev(), go_updir(), go_rootdir(),
+	new_dev(), go_updir(), go_rootdir(),
 	bwtext(), wbtexty1(), wbnumber(), bwnumber(), white_slice();
-
-static bincup(), bincdown();
 
 extern WORD device;
 
@@ -436,9 +450,8 @@ static Flicmenu bro_menu = {
 
 static int elx,ely,elix;
 
-static
-Name_list *
-find_elix()
+static Name_list *
+find_elix(void)
 {
 struct name_list *el;
 
@@ -456,8 +469,8 @@ if ((el = name_in_list(cpi_name,wild_lst)) != NULL)
 return(el);
 }
 
-static
-which_browse()
+static void
+which_browse(void)
 {
 elx = (uzx - brw_list_sel.x)/BRO_DX;
 ely = (uzy)/BRO_DY;
@@ -467,19 +480,14 @@ ely *= BRO_DY;
 elx += brw_list_sel.x;
 }
 
-
-static
-bro_frame(x,y,color)
-int x,y,color;
+static void
+bro_frame(int x, int y, int color)
 {
 draw_frame(color, x, y, x+66, y+42);
 }
 
-
-static
-draw_1_browse(x,y,el)
-int x,y;
-struct name_list *el;
+static void
+draw_1_browse(int x, int y, struct name_list *el)
 {
 char rname[16];
 
@@ -497,11 +505,8 @@ if (el != NULL)
 	}
 }
 
-static
-some_browse_line(x,y,list,something)
-int x,y;
-struct name_list *list;
-Vector something;
+static void
+some_browse_line(int x, int y, struct name_list *list, Vector something)
 {
 int i;
 
@@ -515,10 +520,8 @@ while (--i >= 0)
 	}
 }
 
-static
-some_browse(m,something)
-Flicmenu *m;
-Vector something;
+static void
+some_browse(Flicmenu *m, Vector something)
 {
 int i, y;
 struct name_list *list;
@@ -534,16 +537,14 @@ while (--i >= 0)
 	}
 }
 
-static
-see_browse(m)
-Flicmenu *m;
+static void
+see_browse(Flicmenu *m)
 {
-some_browse(m,draw_1_browse);
+some_browse(m, (Vector)draw_1_browse);
 }
 
-static
-fbrowse(m)
-Flicmenu *m;
+static void
+fbrowse(Flicmenu *m)
 {
 int mx,my,mix;
 long dtime;
@@ -572,24 +573,22 @@ while (dtime > get80hz())
 bro_frame(mx,my,swhite);
 }
 
-static
-feel_browse(m)
-Flicmenu *m;
+static void
+feel_browse(Flicmenu *m)
 {
 fbrowse(m);
 macrosync();
 }
 
-static
-bredraw_cpic()
+static void
+bredraw_cpic(void)
 {
 draw_sel(&bro_tna_sel);
 draw_sel(&bro_cpi_sel);
 }
 
-
-static
-new_bdrawer()
+static int
+new_bdrawer(void)
 {
 if (!change_dir(vs.drawer))
 	return(0);
@@ -599,11 +598,8 @@ redraw_bscroller();
 return(1);
 }
 
-static
-view_fli(name, screen, loop)
-char *name;
-Vscreen *screen;
-int loop; /* 0 or 1.  1 if want to repeat animation until key hit */
+static int
+view_fli(char *name, Vscreen *screen, int loop)
 {
 struct fli_head fh;
 int fd;
@@ -647,10 +643,8 @@ jclose(fd);
 mouse_on = 1;
 }
 
-
-static
-feel_1_browse(el)
-struct name_list *el;
+static void
+feel_1_browse(struct name_list *el)
 {
 char *title;
 
@@ -676,9 +670,8 @@ else if (title[0] != 0)
 	}
 }
 
-static
-draw_cpi_name(m)
-Flicmenu *m;
+static void
+draw_cpi_name(Flicmenu *m)
 {
 char buf[81];
 
@@ -693,10 +686,8 @@ m->text = buf;
 blacktext(m);
 }
 
-
-static
-draw_cpi(m)
-Flicmenu *m;
+static void
+draw_cpi(Flicmenu *m)
 {
 gary_menu_back(m);
 /* if we can find it somewhere else on screen... */
@@ -714,17 +705,14 @@ else
 	}
 }
 
-
-static
-baction_button(m)
-Flicmenu *m;
+static void
+baction_button(Flicmenu *m)
 {
 browse_action();
 }
 
-static
-fli_info(title)
-char *title;
+static void
+fli_info(char *title)
 {
 struct fli_head fh;
 int fd;
@@ -734,7 +722,7 @@ char buf3[40];
 char *bufs[8];
 
 if ((fd = read_fli_head(title, &fh)) == 0)
-	return(0);
+	return;
 jclose(fd);
 sprintf(buf1, browse_123 /* "%d frames in %ld bytes" */, 
 	fh.frame_count, fh.size);
@@ -751,10 +739,8 @@ bufs[5] = NULL;
 continu_box(bufs);
 }
 
-
-
-static
-brescroll()
+static void
+brescroll(void)
 {
 calc_scroll_pos(&bscroller, &brw_scroller_sel);
 draw_sel(&brw_scroller_sel);
@@ -762,40 +748,37 @@ draw_sel(&brw_scroller_sel);
 
 extern struct name_scroller *scroll;
 
-static
-redraw_bscroller()
+static void
+redraw_bscroller(void)
 {
 draw_sel(&brw_list_sel);
 brescroll();
 }
 
-static
-bfeel_scroller(m)
-Flicmenu *m;
+static void
+bfeel_scroller(Flicmenu *m)
 {
 fflscr(m, 0);
 }
 
-
-static
-bincu()
+static void
+bincu(void)
 {
 if ((scroll->top_name -= 4) < 0)
 	scroll->top_name = 0;
 redraw_bscroller();
 }
 
-static
-bincup(m)
-Flicmenu *m;
+static void
+bincup(Flicmenu *m)
 {
 hilight(m);
 repeat_on_pdn(bincu);
 draw_sel(m);
 }
 
-static
-bincd()
+static void
+bincd(void)
 {
 int end;
 
@@ -814,32 +797,29 @@ else
 		brw_list_sel.x, brw_list_sel.y+BRO_DY, vf.p, vf.bpr,
 		brw_list_sel.x, brw_list_sel.y, vf.p, vf.bpr);
 	some_browse_line(brw_list_sel.x, brw_list_sel.y+2*BRO_DY,
-		list_el(wild_lst, scroll->top_name+8), draw_1_browse);
+		list_el(wild_lst, scroll->top_name+8), (Vector)draw_1_browse);
 	brescroll();
 	}
 }
 
-static
-bincdown(m)
-Flicmenu *m;
+static void
+bincdown(Flicmenu *m)
 {
 hilight(m);
 repeat_on_pdn(bincd);
 draw_sel(m);
 }
 
-
-static
-init_bscroller()
+static void
+init_bscroller(void)
 {
 build_wild_list();
 iscroller(&bscroller, wild_lst, 
 	&brw_scroller_sel, &brw_list_sel,12,redraw_bscroller);
 }
 
-
-static
-browse_action()
+static void
+browse_action(void)
 {
 struct name_list *el;
 
@@ -889,15 +869,14 @@ switch (vs.browse_action)
 	}
 }
 
-static
-scalec(c)
-int c;
+static int
+scalec(int c)
 {
 return( 64*c/6 );
 }
 
-static
-make_browse_cmap()
+static void
+make_browse_cmap(void)
 {
 int r,g,b;
 UBYTE *cm;
@@ -913,8 +892,8 @@ for (r=0; r<6; r++)
 			}
 }
 
-static
-draw_browse_menu()
+static void
+draw_browse_menu(void)
 {
 make_browse_cmap();
 see_cmap();
@@ -923,6 +902,7 @@ color_form(render_form,sblack);
 qdraw_a_menu(&bro_menu);
 }
 
+static void
 short_path(Flicmenu *m)
 /* draw clipped text */
 {
@@ -939,7 +919,7 @@ blacktext(m);
 /* Put up browse screen.  Return with name of file selected, or NULL if
    no file selected.  Pass in a title string and string to put on
    button for default/accept file radio button */
-char  *
+char *
 browse_files(say, button)
 char *say, *button;
 {
@@ -969,9 +949,9 @@ rezoom();
 return(browse_ok ? cpi_name : NULL);
 }
 
-
 /* do browse menu with default action to load */
-go_browse()
+void
+go_browse(void)
 {
 char *name;
 

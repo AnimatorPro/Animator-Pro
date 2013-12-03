@@ -1,6 +1,7 @@
 
 /* status.c - display continue alert box with program info */
 
+#include <stdio.h>
 #include "jimk.h"
 #include "fli.h"
 #include "status.str"

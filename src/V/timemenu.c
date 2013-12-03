@@ -7,17 +7,28 @@
 #include "fli.h"
 #include "timemenu.str"
 
+static void feel_time_slider(Flicmenu *m);
+static void jump_to_frame(Flicmenu *m);
+static void see_time_slider(Flicmenu *m);
+static void minsert(void);
+static void mdelete_frame(void);
+static void set_total_frames(void);
+static void set_range_button(Flicmenu *m);
+static void see_range_button(Flicmenu *m);
+static void use_range_button(Flicmenu *m);
+static void set_mark(Flicmenu *m);
+static void jump_to_mark(Flicmenu *m);
+static void frame_double(Flicmenu *m);
+
 extern dcorner_text(), ccorner_text(), ncorner_text(), gary_menu_back(),
 	ccolor_box(), ppalette(), see_pen(), toggle_pen(), set_pbrush(),
 	ccorner_cursor(), blacktext(), greytext(), toggle_group(),
-	insert_a_frame(), kill_a_frame(), set_total_frames(),
-	see_time_slider(), feel_time_slider(), see_range_width(),
+	insert_a_frame(), kill_a_frame(),
+	see_range_width(),
 	see_qslider(), feel_qslider(), ncorner_number(),
-	mplayit(), mfirst_frame(), mlast_frame(), minsert(), mdelete_frame(),
-	jump_to_frame(), jump_to_mark(), set_mark(),
-	frame_double(), go_multi(), bcursor(),
+	mplayit(), mfirst_frame(), mlast_frame(),
+	go_multi(), bcursor(),
 	mplayit(), mprev_frame(),mnext_frame(), mfirst_frame(), mlast_frame(),
-	see_range_button(), use_range_button(), set_range_button(),
 	move_tab_text(), move_menu(), bottom_menu(),
 	multi_preview(), multi_use(), close_menu(),
 	hang_child(), toggle_group(), change_mode();
@@ -345,10 +356,8 @@ Flicmenu tmu_menu =
 	NOOPT,
 	};
 
-
-static
-feel_time_slider(m)
-Flicmenu *m;
+static void
+feel_time_slider(Flicmenu *m)
 {
 int oframe_ix;
 int newix;
@@ -368,9 +377,8 @@ zoom_it();
 draw_mp();
 }
 
-static
-jump_to_frame(m)
-Flicmenu *m;
+static void
+jump_to_frame(Flicmenu *m)
 {
 int x;
 
@@ -416,18 +424,15 @@ OUT:
 draw_mp();
 }
 
-
-static
-see_time_slider(m)
-Flicmenu *m;
+static void
+see_time_slider(Flicmenu *m)
 {
 frame_sl.max = fhead.frame_count-1;
 see_qtslider(m);
 }
 
-static
-insert_some(frames)
-int frames;
+static void
+insert_some(int frames)
 {
 hide_mp();
 unzoom();
@@ -442,8 +447,8 @@ insert_a_frame()
 insert_some(1);
 }
 
-static
-minsert()
+static void
+minsert(void)
 {
 hide_mp();
 unzoom();
@@ -452,8 +457,8 @@ rezoom();
 draw_mp();
 }
 
-static
-mdelete_frame()
+static void
+mdelete_frame(void)
 {
 hide_mp();
 unzoom();
@@ -472,8 +477,8 @@ rezoom();
 draw_mp();
 }
 
-static
-set_total_frames()
+static void
+set_total_frames(void)
 {
 hide_mp();
 unzoom();
@@ -482,9 +487,8 @@ rezoom();
 draw_mp();
 }
 
-static
-set_range_button(m)
-Flicmenu *m;
+static void
+set_range_button(Flicmenu *m)
 {
 int ix;
 
@@ -494,9 +498,8 @@ vs.stoptr[ix] = vs.stop_seg;
 redraw_range_buttons();
 }
 
-static
-see_range_button(m)
-Flicmenu *m;
+static void
+see_range_button(Flicmenu *m)
 {
 int ix;
 
@@ -520,9 +523,8 @@ draw_sel(&tmu_rc_sel);
 draw_sel(&tmu_rd_sel);
 }
 
-static
-use_range_button(m)
-Flicmenu *m;
+static void
+use_range_button(Flicmenu *m)
 {
 int ix;
 
@@ -534,10 +536,8 @@ redraw_tseg();
 redraw_range_buttons();
 }
 
-
-static
-set_mark(m)
-Flicmenu *m;
+static void
+set_mark(Flicmenu *m)
 {
 int ix;
 
@@ -546,9 +546,8 @@ m->identity = vs.marks[ix] = vs.frame_ix;
 change_mode(m);
 }
 
-static
-jump_to_mark(m)
-Flicmenu *m;
+static void
+jump_to_mark(Flicmenu *m)
 {
 int ix;
 
@@ -567,8 +566,8 @@ rezoom();
 draw_mp();
 }
 
-static
-attatch_marks()
+static void
+attatch_marks(void)
 {
 WORD *mark;
 Flicmenu *menu;
@@ -586,9 +585,8 @@ while (--i >= 0)
 
 extern check_max_frames(long new);
 
-static
-frame_double(m)
-Flicmenu *m;
+static void
+frame_double(Flicmenu *m)
 {
 long i;
 long count;

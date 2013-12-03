@@ -2,6 +2,7 @@
 /* vpsubs.c - routines used by all sort of menu panels.  Really a mismatch.
    Not well suited to being in an overlay. */
 
+#include <stdlib.h>
 #include "jimk.h"
 #include "fli.h"
 #include "flicmenu.h"

@@ -84,10 +84,8 @@ if (!jexists(name))
 return(1);
 }
 
-
-static
-adjust_p(name)
-char *name;
+static void
+adjust_p(char *name)
 {
 if (!force_poly(name))
 	return;
@@ -131,7 +129,8 @@ end_to_start()
 jcopyfile(poly2_name, poly1_name);
 }
 
-do_tween()
+void
+do_tween(void)
 {
 Poly opoly;
 int omulti;

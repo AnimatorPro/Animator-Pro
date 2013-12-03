@@ -72,7 +72,6 @@ typedef struct option_list Option_list;
 
 
 extern Flicmenu *cur_menu;
-extern char break_menu;
 
 /* This is the tree structure that is the core of the pull-down system */
 struct pull
@@ -99,7 +98,6 @@ extern pull_block(), pull_color(), pull_oblock(),
 	spull_text(), pull_text(), pull_brush();
 
 extern int ccolor;
-extern char qstring[];
 
 struct cursor 
     {
