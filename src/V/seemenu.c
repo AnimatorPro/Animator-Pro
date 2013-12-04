@@ -11,8 +11,7 @@
 #include "blit8_.h"
 #include "cblock_.h"
 #include "flicmenu.h"
-
-
+#include "rfont.h"
 
 ccolor_box(m)
 Flicmenu *m;

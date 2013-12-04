@@ -18,6 +18,22 @@ static UBYTE *cf_data;
 extern struct font_hdr sixhi_font; 
 extern struct font_hdr *usr_font;
 
+static void
+intel_swap(pt, count)
+register char *pt;
+int count;
+{
+register char swap;
+
+while (--count >= 0)
+	{
+	swap = pt[1];
+	pt[1] = pt[0];
+	pt[0] = swap;
+	pt += 2;
+	}
+}
+
 /* Release memory associated with user font.  Point user font back to
    compiled-in font */
 free_cfont()

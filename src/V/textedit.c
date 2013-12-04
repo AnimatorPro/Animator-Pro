@@ -13,6 +13,7 @@
 #include "flicmenu.h"
 #include "gemfont.h"
 #include "peekpok_.h"
+#include "rfont.h"
 #include "text.h"
 #include "textedit.str"
 

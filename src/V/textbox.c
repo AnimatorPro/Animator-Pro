@@ -6,6 +6,7 @@
 #include "cblock_.h"
 #include "flicmenu.h"
 #include "textbox.str"
+#include "rfont.h"
 
 /* This file does assume non-proportional text.  Here's some constants
    that tell us how to format around the font */

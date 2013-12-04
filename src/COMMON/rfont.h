@@ -46,15 +46,19 @@ gftext(Video_form *screen, struct font_hdr *f, const unsigned char *s,
  *
  *  Find width of the first character in string.
  */
-extern int
-fchar_width(struct font_hdr *f, const char *s);
+extern int fchar_width(struct font_hdr *f, const unsigned char *s);
+
+/* Function: fnstring_width */
+extern long fnstring_width(struct font_hdr *f, const unsigned char *s, int n);
 
 /* Function: fstring_width
  *
  *  Find width of whole string.
  */
-extern long
-fstring_width(struct font_hdr *f, const char *s);
+extern long fstring_width(struct font_hdr *f, const unsigned char *s);
+
+/* Function: widest_char */
+extern int widest_char(struct font_hdr *f);
 
 /* Function: font_cel_height
  *

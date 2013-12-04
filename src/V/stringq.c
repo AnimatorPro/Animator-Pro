@@ -8,6 +8,7 @@
 #include "commonst.h"
 #include "flicmenu.h"
 #include "peekpok_.h"
+#include "rfont.h"
 
 #define SDETAIL	sblack
 #define SBLOCK	swhite

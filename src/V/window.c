@@ -8,6 +8,7 @@
 #include "cblock_.h"
 #include "flicmenu.h"
 #include "peekpok_.h"
+#include "rfont.h"
 
 /* structures for minimalist 'windowing' system that lets us draw behind
    menus.  Horizontal strips only.  */

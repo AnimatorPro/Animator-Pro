@@ -28,10 +28,10 @@ polytool.obj pstamp.obj pull.obj qnumber.obj quickdat.obj \
 macro.obj main.obj MAINPULL.OBJ marqi.obj mask.obj memory.obj \
 morfdata.obj morfface.obj morfmenu.obj morfobj.obj morfpull.obj \
 multimen.obj names.obj overlay.obj random.obj render.obj \
-rfont.obj rotate.obj savefli.obj savepic.obj \
+rotate.obj savefli.obj savepic.obj \
 scanedge.obj screen.obj scroller.obj \
 seeme.obj seemenu.obj selbrush.obj sep.obj \
-sintab.obj sixhi.obj \
+sintab.obj \
 slider.obj spiral.obj splice.obj spline.obj \
 sqrroot.obj status.obj stretch.obj stringq.obj summa.obj \
 tablet.obj \
@@ -47,6 +47,8 @@ zoom.obj \
 	..\COMMON\clipit_.obj  \
 	..\COMMON\comp_.obj    \
 	..\COMMON\peekpok_.obj \
+	..\COMMON\rfont.obj    \
+	..\COMMON\sixhi.obj    \
 	..\COMMON\truecol_.obj \
 	..\COMMON\unbrun_.obj
 

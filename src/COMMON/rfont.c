@@ -1,8 +1,13 @@
+/* rfont.c - Raster Font stuff, draws text based on a blit and a font
+   in a format that some day may approach Ventura Publisher, but currently
+   looks much more like GEM on the ST with some Mac-like mutations.
+   Also data for the Aegis Animator font with proportional stuff stripped.
+   (This font is just a handy example of the format, unused itself.)
 
-/* rfont.c - raster font drawer.  Takes a font in our hybrid GEM/Macintosh
-   format and displays it, or tells you how big a character or string is. */
-
+   There are 2 big routines - systext() - for all text rendered by
+   menuing system -  and gftext() for text rendered onto user image. */
 #include <ctype.h>
+#include <string.h>
 #include "jimk.h"
 #include "blit8_.h"
 #include "gemfont.h"
@@ -73,7 +78,7 @@ gftext(Video_form *screen, struct font_hdr *f, const unsigned char *s,
 		int x, int y, int color, Vector tblit, int bcolor)
 {
 const unsigned char *ss;
-unsigned char c, lo, hi;
+int c, lo, hi;
 int sx, imageWid;
 WORD *off, wd, ht, *data;
 myInt *OWtab, *iPtr;
@@ -93,7 +98,11 @@ font_type = f->id;
 
 while ((c = *s++)!=0)
 	{
+	if (c > hi)
+		c = ' ';
 	c -= lo;
+	if (c < 0)
+		c = ' ' - lo;
 	/* Mac prop font && its a missing char */
 	if (font_type == MPROP && (*(OWtab+c)).theInt == -1) 
 		{            
@@ -144,9 +153,9 @@ while ((c = *s++)!=0)
 }
 
 int
-fchar_width(struct font_hdr *f, const char *s)
+fchar_width(struct font_hdr *f, const unsigned char *s)
 {
-char c;
+int c;
 char *offsets;
 int width;
 int t;
@@ -156,7 +165,7 @@ if (c > f->ADE_hi)
 	c = ' ';
 c -= f->ADE_lo;
 if (c < 0)
-	c = 0;
+	c = ' ' - f->ADE_lo;
 switch (f->id)
 	{
 	case MFIXED:
@@ -185,16 +194,44 @@ switch (f->id)
 }
 
 long
-fstring_width(struct font_hdr *f, const char *s)
+fnstring_width(struct font_hdr *f, const unsigned char *s, int n)
 {
 long acc = 0;
 
-while (*s != 0)
+while (--n >= 0)
 	{
 	acc += fchar_width(f, s);
 	s++;
 	}
 return(acc);
+}
+
+long
+fstring_width(struct font_hdr *f, const unsigned char *s)
+{
+return(fnstring_width(f, s, strlen(s)));
+}
+
+int
+widest_char(struct font_hdr *f)
+{
+unsigned char buf[2];
+int i;
+int c;
+int widest = 1;
+int w;
+
+c = f->ADE_lo;
+i = f->ADE_hi - c;
+buf[1] = 0;
+while (--i >= 0)
+	{
+	buf[0] = c++;
+	w = fchar_width(f, buf);
+	if (w > widest)
+		widest = w;
+	}
+return(widest);
 }
 
 int

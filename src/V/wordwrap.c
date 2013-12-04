@@ -5,9 +5,10 @@
 
 #include <string.h>
 #include "jimk.h"
-#include "gemfont.h"
-#include "text.h"
 #include "commonst.h"
+#include "gemfont.h"
+#include "rfont.h"
+#include "text.h"
 
 extern int text_size;
 extern int text_alloc;

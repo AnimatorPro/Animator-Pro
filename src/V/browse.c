@@ -12,6 +12,7 @@
 #include "commonst.h"
 #include "fli.h"
 #include "flicmenu.h"
+#include "rfont.h"
 
 /* Browse action defines. See browse.c */
 #define BA_LOAD 0

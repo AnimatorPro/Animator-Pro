@@ -6,11 +6,12 @@
 #include <stdio.h>
 #include <string.h>
 #include "jimk.h"
-#include "flicmenu.h"
-#include "fli.h"
-#include "gemfont.h"
-#include "text.h"
 #include "commonst.h"
+#include "fli.h"
+#include "flicmenu.h"
+#include "gemfont.h"
+#include "rfont.h"
+#include "text.h"
 #include "title.str"
 
 static void title_back(Flicmenu *m);

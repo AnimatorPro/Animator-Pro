@@ -8,6 +8,7 @@
 #include "fli.h"
 #include "onepal.str"
 #include "peekpok_.h"
+#include "rfont.h"
 
 #define MAXC (21000)
 

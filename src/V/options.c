@@ -6,6 +6,7 @@
 #include "flicmenu.h"
 #include "gemfont.h"
 #include "options.str"
+#include "rfont.h"
 
 extern UBYTE idmd_lookup[];
 extern UBYTE dmd_lookup[];
@@ -1049,7 +1050,7 @@ w = fstring_width(usr_font, s);
 h = usr_font->frm_hgt;
 if (w < m->width && h < m->height)
 	gftext(&vf, usr_font, s, m->x + (m->width - w)/2, 
-		m->y + (m->height - h)/2, sgrey, a1blit, 0);
+		m->y + (m->height - h)/2, sgrey, (Vector)a1blit, 0);
 else
 	{
 	m->text = s;
