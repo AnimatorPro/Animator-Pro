@@ -18,11 +18,11 @@ cluster.obj commonst.obj comp.obj comprs.obj \
 config.obj cpack.obj csort.obj cthread.obj cursorda.obj \
 decoder.obj diskerr.obj dissolve.obj dosstuff.obj \
 drawmode.obj ellipse.obj emmchek.obj \
-fccomp.obj feelmenu.obj filemenu.obj filedata.obj files.obj \
+feelmenu.obj filemenu.obj filedata.obj files.obj \
 findfree.obj fli.obj flood.obj freem.obj \
 gel.obj geometry.obj gfx.obj gif.obj globals.obj grid.obj \
 hlstorgb.obj init.obj initcmap.obj input.obj int.obj \
-jfile.obj lccomp.obj \
+jfile.obj \
 onepal.obj options.obj palet2.obj palpull.obj peekpoke.obj pentools.obj \
 polytool.obj pstamp.obj pull.obj qnumber.obj quickdat.obj \
 macro.obj main.obj MAINPULL.OBJ marqi.obj mask.obj memory.obj \
@@ -46,6 +46,8 @@ zoom.obj \
 	..\COMMON\cblock_.obj  \
 	..\COMMON\clipit_.obj  \
 	..\COMMON\comp_.obj    \
+	..\COMMON\fccomp.obj   \
+	..\COMMON\lccomp.obj   \
 	..\COMMON\peekpok_.obj \
 	..\COMMON\rfont.obj    \
 	..\COMMON\sixhi.obj    \
