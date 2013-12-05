@@ -1,6 +1,7 @@
 #ifdef UNUSED  /* But interesting */
 #include "jimk.h"
 #include "jfile.h"
+#include "ptr.h"
 
 typedef struct vip_head
 	{

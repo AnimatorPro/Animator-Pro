@@ -7,6 +7,7 @@
 #include "jimk.h"
 #include "flicmenu.h"
 #include "peekpok_.h"
+#include "ptr.h"
 #include "truecol_.h"
 
 /* This is only tested with RGB values 0-63 like PC VGA.  May have

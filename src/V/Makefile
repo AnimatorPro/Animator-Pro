@@ -50,6 +50,7 @@ zoom.obj \
 	..\COMMON\jfile.obj    \
 	..\COMMON\lccomp.obj   \
 	..\COMMON\peekpok_.obj \
+	..\COMMON\ptr.obj      \
 	..\COMMON\rfont.obj    \
 	..\COMMON\sixhi.obj    \
 	..\COMMON\truecol_.obj \

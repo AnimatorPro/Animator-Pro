@@ -8,6 +8,7 @@
 #include "jfile.h"
 #include "lccomp.h"
 #include "peekpok_.h"
+#include "ptr.h"
 
 static FILE *wfli_fd;
 static struct fli_head head;

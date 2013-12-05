@@ -10,6 +10,7 @@
 #include "jfile.h"
 #include "peekpok_.h"
 #include "poly.h"
+#include "ptr.h"
 
 static int csd_render_poly(Poly *wply, int filled);
 static int save_working_poly(void);

@@ -10,6 +10,7 @@
 #include "init.str"
 #include "jfile.h"
 #include "peekpok_.h"
+#include "ptr.h"
 
 extern int ivmode;
 extern char init_drawer[71];

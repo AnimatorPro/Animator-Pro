@@ -27,20 +27,12 @@ extern void *list_el();
 #define freemem(p) freememory((unsigned int *)(p));
 #endif /* SLUFF */
 
-/* Stuff to cope with segmented 8086 pointer arithmetic mostly
-   without resorting to HUGE model. */
-extern void *make_ptr();
-extern void *norm_pointer();
-extern void *enorm_pointer();
-extern long pt_to_long(), make_long();
-
 extern void *lbegmem(long), *begmem(unsigned), *begmemc(unsigned);
 extern void *paskmem();
 extern char *clone_string();
 extern char *get_filename();
 extern long get80hz();
 extern void *askmem(), *laskmem();
-extern void *long_to_pt();
 extern unsigned mem_free, largest_frag();
 
 extern void *sort_list();

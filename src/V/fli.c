@@ -10,6 +10,7 @@
 #include "fli.str"
 #include "jfile.h"
 #include "peekpok_.h"
+#include "ptr.h"
 #include "unbrun_.h"
 
 /* error message - we decided it's not a good FLI file */

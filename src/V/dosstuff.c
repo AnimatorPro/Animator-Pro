@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include "jimk.h"
 #include "dosstuff.h"
+#include "ptr.h"
 
 extern WORD device;
 extern char devices[26];

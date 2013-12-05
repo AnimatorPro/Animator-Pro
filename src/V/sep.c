@@ -4,6 +4,7 @@
 
 #include "jimk.h"
 #include "peekpok_.h"
+#include "ptr.h"
 #include "truecol_.h"
 
 static PLANEPTR ctable, abs_ctable;

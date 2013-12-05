@@ -3,6 +3,7 @@
    the pixel data begins on an even paragraph.  */
 
 #include "jimk.h"
+#include "ptr.h"
 
 void
 free_screen(Vscreen *s)
@@ -40,7 +41,7 @@ v->bpr = v->w = w;
 v->h = h;
 v->ix = 0;
 v->p = norm_pointer(v->p);
-v->p = make_ptr(0, ptr_seg(v->p)+1);
+v->p = ptr_next_seg(v->p);
 return(v);
 }
 

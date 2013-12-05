@@ -8,6 +8,7 @@
 #include "gif.str"
 #include "jfile.h"
 #include "peekpok_.h"
+#include "ptr.h"
 
 static struct gif_header gif;
 static struct gif_image gim;

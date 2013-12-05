@@ -82,6 +82,7 @@ peekpok_.obj+
 pentools.obj+
 polytool.obj+
 pstamp.obj+
+ptr.obj+
 pull.obj+
 qnumber.obj+
 quickdat.obj+

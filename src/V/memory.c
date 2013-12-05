@@ -7,6 +7,7 @@
 #include "jimk.h"
 #include "memory.str"
 #include "peekpok_.h"
+#include "ptr.h"
 
 #ifdef NEVER
 #define CHECKIT	/* slow but sure heap */
@@ -27,37 +28,6 @@ struct mblock
 
 static struct mblock *mfree_list;
 unsigned mem_free;
-
-/* some pointer manipulation routines for the 8086 */
-unsigned
-ptr_offset(offset, seg)
-int offset, seg;
-{
-return(offset);
-}
-
-unsigned
-ptr_seg(offset, seg)
-int offset, seg;
-{
-return(seg);
-}
-
-long
-make_long(l)
-long l;
-{
-return(l);
-}
-
-
-void *
-make_ptr(pt)
-void *pt;
-{
-return(pt);
-}
-
 
 #ifdef LATER
 frags()
@@ -90,30 +60,6 @@ while (n)
 	n = n->next;
 	}
 return (i);
-}
-
-void *
-long_to_pt(l)
-unsigned long l;
-{
-unsigned segment, offset;
-
-offset = (l&15);
-l >>= 4;
-segment = l;
-return(make_ptr(offset, segment));
-}
-
-long 
-pt_to_long(offset, seg)
-unsigned offset, seg;
-{
-long result;
-
-result = seg;
-result <<= 4;
-result += offset;
-return(result);
 }
 
 outta_memory()
