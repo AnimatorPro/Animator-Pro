@@ -27,6 +27,12 @@ extern int jexists(const char *title);
  */
 extern int jdelete(const char *title);
 
+/* Function: jrename
+ *
+ *  Rename a file.
+ */
+extern int jrename(const char *oldname, const char *newname);
+
 /* Function: jcreate
  *
  *  Create a file to read/write.
@@ -73,5 +79,8 @@ extern long jwrite(FILE *f, const void *buf, long size);
  *  mode - relative to (0) start, (1) current position, (2) end of file.
  */
 extern long jseek(FILE *f, long offset, enum JSeekMode mode);
+
+/* Function: jtell */
+extern long jtell(FILE *f);
 
 #endif

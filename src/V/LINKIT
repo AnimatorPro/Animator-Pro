@@ -56,6 +56,7 @@ init.obj+
 initcmap.obj+
 input.obj+
 jfile.obj+
+jfileerr.obj+
 lccomp.obj+
 macro.obj+
 main.obj+

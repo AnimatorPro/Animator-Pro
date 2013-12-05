@@ -4,6 +4,7 @@
 
 #include "jimk.h"
 #include "fli.h"
+#include "jfile.h"
 #include "peekpok_.h"
 #include "savepic.str"
 
@@ -15,7 +16,7 @@ char *name;
 Vscreen *screen;
 int squawk;
 {
-int f;
+FILE *f;
 struct pic_header pic;
 PLANEPTR buf, endbuf;
 int cbuf;
@@ -65,7 +66,7 @@ load_pic(name, screen)
 char *name;
 Vscreen *screen;
 {
-int f;
+FILE *f;
 struct pic_header pic;
 
 if ((f = jopen(name, 0)) == 0)
@@ -118,7 +119,7 @@ load_vga(name, screen)
 char *name;
 Vscreen *screen;
 {
-int f;
+FILE *f;
 struct vga_header pic;
 char linebuf[XMAX];
 int i;

@@ -5,6 +5,7 @@
 #include "blit8_.h"
 #include "flicmenu.h"
 #include "gemfont.h"
+#include "jfile.h"
 #include "options.str"
 #include "rfont.h"
 

@@ -8,6 +8,7 @@
 #include "comp_.h"
 #include "fli.h"
 #include "fli.str"
+#include "jfile.h"
 #include "peekpok_.h"
 #include "unbrun_.h"
 
@@ -149,11 +150,10 @@ return(ret);
 }
 
 /* read in the FLI header and verify that it has right magic number */
-read_fli_head(title, flih)
-char *title;
-struct fli_head *flih;
+FILE *
+read_fli_head(char *title, struct fli_head *flih)
 {
-int fd;
+FILE *fd;
 
 if ((fd = jopen(title, 0)) == 0)
 	{
@@ -182,7 +182,7 @@ check_fli(title)
 char *title;
 {
 struct fli_head fh;
-int f;
+FILE *f;
 
 if ((f = read_fli_head(title, &fh)) == 0)
 	return(0);
@@ -191,12 +191,9 @@ return(1);
 }
 
 /* read in next frame from FLI (non-indexed) file */
-gb_read_next_frame(fname,fd,fscreen,fliff,colors)
-char *fname;	/* name of file to report errors */
-int fd;			/* file handle */
-Vscreen *fscreen;	/* screen to update */
-struct fli_frame *fliff;	/* 64K buffer area (K not 1000) */
-int colors;		/* wait for vblank and update hardware palette? */
+int
+gb_read_next_frame(char *fname, FILE *fd, Vscreen *fscreen,
+		struct fli_frame *fliff, int colors)
 {
 long size_left;
 int ret;
@@ -232,11 +229,8 @@ return(ret);
 
 /* Allocate a buffer and then call above to read in next frame from a 
    FLI file */
-read_next_frame(fname,fd,fscreen,colors)
-char *fname;
-int fd;
-Vscreen *fscreen;
-int colors;		/* update hw color map??? */
+int
+read_next_frame(char *fname, FILE *fd, Vscreen *fscreen, int colors)
 {
 struct fli_frame *fliff;
 int ret;

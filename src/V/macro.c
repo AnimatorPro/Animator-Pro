@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include "jimk.h"
 #include "fli.h"
+#include "jfile.h"
 #include "macro.str"
 #include "peekpok_.h"
 
@@ -309,7 +310,7 @@ void
 load_macro(void)
 {
 char *title;
-int f;
+FILE *f;
 
 if ((title =  get_filename(macro_108 /* "Load a macro recording file?" */, 
 	".REC"))!= NULL)

@@ -13,6 +13,7 @@
 #include "fli.h"
 #include "flicmenu.h"
 #include "inks.h"
+#include "jfile.h"
 #include "peekpok_.h"
 
 extern WORD x_0,y_0,x_1,y_1;
@@ -105,7 +106,7 @@ if (cel != NULL)
 static Vcel *
 ld_cel(char *name, Vcel *ocel)
 {
-int file;
+FILE *file;
 struct pic_header pic;
 Vcel *c;
 long size;

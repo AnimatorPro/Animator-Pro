@@ -11,6 +11,7 @@
 #include "jimk.h"
 #include "fli.h"
 #include "inks.h"
+#include "jfile.h"
 
 extern char *text_buf;
 

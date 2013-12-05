@@ -9,6 +9,7 @@
 #include "cblock_.h"
 #include "comp_.h"
 #include "fli.h"
+#include "jfile.h"
 #include "peekpok_.h"
 #include "unbrun_.h"
 
@@ -54,11 +55,8 @@ for (j=0;j<frame->chunks;j++)
 	}
 }
 
-static
-un5fli(f,fd,name)
-Vscreen *f;
-int fd;
-char *name;
+static int
+un5fli(Vscreen *f, FILE *fd, char *name)
 {
 struct fli_frame frame;	
 char *cbuf;
@@ -111,7 +109,7 @@ int x,y;
 char *name;
 {
 struct fli_head flih;
-int fd;
+FILE *fd;
 Vscreen *form;
 int ret;
 PLANEPTR tcmap;

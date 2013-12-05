@@ -2,6 +2,7 @@
 #ifdef MORPH
 
 #include "jimk.h"
+#include "jfile.h"
 #include "morf.h"
 
 static Morf_obj *morf_list[MOL_SIZE];

@@ -31,6 +31,7 @@
 #include "cblock_.h"
 #include "commonst.h"
 #include "fli.h"
+#include "jfile.h"
 #include "peekpok_.h"
 #include "rfont.h"
 #include "truecol_.h"
@@ -656,7 +657,7 @@ zoom_it();
 static int
 dall(Vector rvec)
 {
-int new_tflx;
+FILE *new_tflx;
 Flx *new_flx;
 long acc;
 int i;

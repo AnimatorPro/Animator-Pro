@@ -7,6 +7,7 @@
 
 #include "jimk.h"
 #include "blit8_.h"
+#include "jfile.h"
 #include "peekpok_.h"
 #include "poly.h"
 

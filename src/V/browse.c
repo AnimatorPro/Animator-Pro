@@ -12,6 +12,7 @@
 #include "commonst.h"
 #include "fli.h"
 #include "flicmenu.h"
+#include "jfile.h"
 #include "rfont.h"
 
 /* Browse action defines. See browse.c */
@@ -603,7 +604,7 @@ static int
 view_fli(char *name, Vscreen *screen, int loop)
 {
 struct fli_head fh;
-int fd;
+FILE *fd;
 long clock;
 int i;
 long f1off;
@@ -716,7 +717,7 @@ static void
 fli_info(char *title)
 {
 struct fli_head fh;
-int fd;
+FILE *fd;
 char buf1[40];
 char buf2[40];
 char buf3[40];

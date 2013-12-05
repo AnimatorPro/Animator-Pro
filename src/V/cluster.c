@@ -7,6 +7,7 @@
 #include "cblock_.h"
 #include "cluster.str"
 #include "flicmenu.h"
+#include "jfile.h"
 #include "peekpok_.h"
 #include "rotate.h"
 #include "truecol_.h"
@@ -407,7 +408,7 @@ cl_pblend(Vector autov)
 int colors;
 long ccut_size;
 unsigned char c;
-int f;
+FILE *f;
 
 icmap = NULL;
 if ((f = jopen(cclip_name, 0)) == 0)

@@ -1,6 +1,8 @@
 #ifndef JIMK_H
 #define JIMK_H
 
+#include <stdio.h>
+
 /* -------------  COMPILE SWITCHES --------------- */
 	/* Demo no save version? */
 #undef NOSAVE 
@@ -22,20 +24,7 @@
 
 extern void *list_el();
 #ifndef SLUFF
-extern long jreadwrite(int f, void *buf, long size, int ah);
-#define jread(f,b,size) jreadwrite(f,b,(long)(size),0x3f)
-#define jwrite(f,b,size) jreadwrite(f,b,(long)(size),0x40)
 #define freemem(p) freememory((unsigned int *)(p));
-
-extern jcreate(char *title), jopen(char *title, int mode);
-#define JREADONLY 0
-#define JWRITEONLY 1
-#define JREADWRITE 2
-extern long jseek(int f, long offset, int mode);
-#define JSEEK_START	0
-#define JSEEK_REL	1
-#define JSEEK_END	2
-extern long jtell(int f);
 #endif /* SLUFF */
 
 /* Stuff to cope with segmented 8086 pointer arithmetic mostly
@@ -403,7 +392,7 @@ extern int render_xmin, render_ymin, render_xmax, render_ymax;
 #define BSIZE 2048
 struct bfile
 	{
-	int fd;
+	FILE *fd;
 	int left;
 	UBYTE *buf;
 	UBYTE *filept;

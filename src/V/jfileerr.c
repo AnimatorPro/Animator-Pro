@@ -4,154 +4,16 @@
    buffer space pointers (32 bit large model pointers), and
    byte counts/offsets (32 bit long integers).
    */
-
+#include <string.h>
 #include "jimk.h"
 #include "commonst.h"
+#include "jfile.h"
 #include "jfile.str"
-
-
-/* Does file exist? */
-jexists(title)
-char *title;
-{
-int f;
-
-if ((f = jopen(title, 0))!=0)
-	{
-	jclose(f);
-	return(1);
-	}
-return(0);
-}
-
-/* Delete a file if possible.  Don't complain if it's not there. */
-jdelete(title)
-char *title;
-{
-union regs reg;
-
-reg.b.ah = 0x41;
-reg.w.dx = ptr_offset(title);
-reg.w.ds = ptr_seg(title);
-if (sysint(0x21,&reg,&reg)&1)
-	return(0);
-return(1);
-}
-
-
-/* Rename a file */
-jrename(oldname, newname)
-char *oldname, *newname;
-{
-union regs reg;
-
-reg.b.ah = 0x56;
-reg.w.dx = ptr_offset(oldname);
-reg.w.ds = ptr_seg(oldname);
-reg.w.di = ptr_offset(newname);
-reg.w.es = ptr_seg(newname);
-if (sysint(0x21,&reg,&reg)&1)
-	return(0);
-return(1);
-}
-
-/* Create a file to read/write */
-jcreate(title)
-char *title;
-{
-union regs reg;
-
-reg.b.ah = 0x3c;
-reg.w.cx = 0;
-reg.w.dx = ptr_offset(title);
-reg.w.ds = ptr_seg(title);
-if (sysint(0x21,&reg,&reg)&1)	/* check carry */
-	return(0);
-else
-	return(reg.w.ax);
-}
-
-/* Open a file that already exists */
-jopen(title, mode)
-char *title;
-int mode;
-{
-union regs reg;
-
-reg.b.ah = 0x3d;	/* open file */
-reg.b.al = mode;		/* read/write etc... */
-reg.w.dx = ptr_offset(title);
-reg.w.ds = ptr_seg(title);
-if (sysint(0x21,&reg,&reg)&1)	/* check carry */
-	return(0);
-else
-	return(reg.w.ax);
-}
-
-/* Close file */
-jclose(f)
-int f;
-{
-union regs reg;
-
-reg.b.ah = 0x3e;
-reg.w.bx = f;
-sysint(0x21,&reg, &reg);
-}
-
-/* Check for non-zero file handle and then close */
-gentle_close(f)
-int f;
-{
-if (f)
-	jclose(f);
-}
-
-
-/* Read or write a buffer from file.  Usually you use jread() or jwrite()
-   macros rather than calling this one directly */
-long 
-jreadwrite(f,buf,size,ah)
-int f;
-void *buf;
-long size;
-int ah;
-{
-union regs reg;
-long written;
-unsigned s1;
-
-written = 0;
-while (size > 0)
-	{
-	reg.b.ah = ah;
-	reg.w.bx = f;
-	s1 = (size > 0x0c000L ?  0xc000 : size);
-	reg.w.cx = s1;
-	reg.w.dx = ptr_offset(buf);
-	reg.w.ds = ptr_seg(buf);
-	if ((sysint(0x21,&reg,&reg))&1)	/* check carry */
-		{
-		goto OUT;
-		}
-	else
-		{
-		written += (unsigned)reg.w.ax;
-		size -= (unsigned)reg.w.ax;
-		if (s1 != reg.w.ax)
-			goto OUT;
-		}
-	buf = norm_pointer((char *)buf + s1);
-	}
-OUT:
-return(written);
-}
 
 /* Move a piece of a file from one place to another.  Used occassionally
    on my indexed temp.flx file */
-copy_in_file(file, bytes, soff, doff)
-int file;
-long bytes, soff, doff;
+int
+copy_in_file(FILE *file, long bytes, long soff, long doff)
 {
 char sbuf[256];	/* static buffer */
 char *dbuf;		/* dynamic (large) buffer */
@@ -220,7 +82,8 @@ return(status);
 jcopyfile(source,dest)
 char *source,*dest;
 {
-int in,out;
+FILE *in;
+FILE *out;
 unsigned size;
 char sbuf[256];	/* static buffer */
 char *dbuf;		/* dynamic (large) buffer */
@@ -265,41 +128,13 @@ return(success);
 }
 
 
-
-/* Reposition file pointer */
-long
-jseek(f, offset, mode)
-int f, mode;
-long offset;
-{
-union regs reg;
-
-reg.b.ah = 0x42;
-reg.b.al = mode;
-reg.w.bx = f;
-reg.w.cx = ptr_seg(offset);
-reg.w.dx = ptr_offset(offset);
-if (sysint(0x21,&reg,&reg)&1) 
-	return(-1);
-else
-	return(make_long(reg.w.ax, reg.w.dx));
-}
-
-long
-jtell(f)
-int f;
-{
-return(jseek(f, 0L, 1) );
-}
-
-
 /* Read in a file of known size all at once. */
 read_gulp(name, buf, size)
 char *name;
 void *buf;
 long size;
 {
-int f;
+FILE *f;
 
 if ((f = jopen(name,0))==0)
 	{
@@ -322,7 +157,7 @@ char *name;
 void *buf;
 long size;
 {
-int f;
+FILE *f;
 
 if ((f = jcreate(name))==0)
 	{

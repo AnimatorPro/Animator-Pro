@@ -10,6 +10,7 @@
 #include "fli.h"
 #include "flicmenu.h"
 #include "gemfont.h"
+#include "jfile.h"
 #include "rfont.h"
 #include "text.h"
 #include "title.str"

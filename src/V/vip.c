@@ -1,5 +1,6 @@
 #ifdef UNUSED  /* But interesting */
 #include "jimk.h"
+#include "jfile.h"
 
 typedef struct vip_head
 	{
@@ -59,7 +60,7 @@ return(1);
 
 check_exe(char *name)
 {
-int file;
+FILE *file;
 Vlib ev;
 int ok;
 
@@ -88,7 +89,7 @@ unsigned long fixup_offset;
 UWORD fixup[2];
 UWORD *segpt;
 UWORD code_seg;
-int f;
+FILE *f;
 unsigned i;
 int ok = 0;
 

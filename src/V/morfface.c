@@ -4,6 +4,7 @@
 
 #include "jimk.h"
 #include "blit8_.h"
+#include "jfile.h"
 #include "morf.h"
 #include "poly.h"
 

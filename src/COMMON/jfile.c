@@ -34,6 +34,12 @@ jdelete(const char *title)
 	return (unlink(title) == 0);
 }
 
+int
+jrename(const char *oldname, const char *newname)
+{
+	return (rename(oldname, newname) == 0);
+}
+
 FILE *
 jcreate(const char *title)
 {
@@ -91,4 +97,10 @@ jseek(FILE *f, long offset, enum JSeekMode mode)
 	else {
 		return ftell(f);
 	}
+}
+
+long
+jtell(FILE *f)
+{
+	return ftell(f);
 }

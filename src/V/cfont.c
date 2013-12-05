@@ -4,13 +4,14 @@
 #include <stdio.h>
 #include <string.h>
 #include "jimk.h"
-#include "gemfont.h"
 #include "cfont.str"
+#include "gemfont.h"
+#include "jfile.h"
 
 extern unsigned read();
 
 static struct font_hdr cfont;
-static fd;
+static FILE *fd;
 static long cf_offset_size;
 static long cf_data_size;
 static WORD *cf_offsets;

@@ -1,9 +1,10 @@
 /* a3dpull.c - pull-down system for optics */
 
 #include "jimk.h"
-#include "flicmenu.h"
 #include "a3d.h"
 #include "a3dpull.str"
+#include "flicmenu.h"
+#include "jfile.h"
 
 			static Pull ado_outline_pull = 
 				{

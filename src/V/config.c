@@ -8,9 +8,10 @@
 #include <ctype.h>
 #include <string.h>
 #include "jimk.h"
-#include "fli.h"
 #include "commonst.h"
 #include "config.str"
+#include "fli.h"
+#include "jfile.h"
 
 char tflxname[] = "H:\\AAT\\AATEMP.FLX";	/* main animation temp file */
 char new_tflx_name[] = "H:\\AAT\\AATEMP2.FLX";
@@ -96,7 +97,7 @@ jdelete(bscreen_name);	/* get rid of back frame buffer */
 rewrite_config()
 {
 extern char init_drawer[];
-int f;
+FILE *f;
 char odrawer[80];
 
 strcpy(odrawer, vs.drawer);

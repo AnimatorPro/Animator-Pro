@@ -88,7 +88,7 @@ extern Flx *cur_flx;
 extern unsigned long maxflx;
 extern struct fli_head fhead;
 
-extern int tflx;	/* handle for temp file */
+extern FILE *tflx;	/* handle for temp file */
 #ifndef SLUFF
 extern long find_free_tflx(long size);
 #endif /* SLUFF */
@@ -145,5 +145,17 @@ struct pic_header
 
 #define PIC_UNC  0
 #define PIC_BRUN 1
+
+/* Function: gb_read_next_frame */
+extern int
+gb_read_next_frame(char *fname, FILE *fd, Vscreen *fscreen,
+		struct fli_frame *fliff, int colors);
+
+/* Function: read_next_frame */
+extern int
+read_next_frame(char *fname, FILE *fd, Vscreen *fscreen, int colors);
+
+/* Function: read_fli_head */
+extern FILE *read_fli_head(char *title, struct fli_head *flih);
 
 #endif

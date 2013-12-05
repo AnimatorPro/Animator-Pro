@@ -6,6 +6,7 @@
 #include "jimk.h"
 #include "gif.h"
 #include "gif.str"
+#include "jfile.h"
 #include "peekpok_.h"
 
 static struct gif_header gif;

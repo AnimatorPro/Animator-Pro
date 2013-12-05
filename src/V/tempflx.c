@@ -4,11 +4,12 @@
 #include "jimk.h"
 #include "fli.h"
 #include "flicmenu.h"
+#include "jfile.h"
 #include "peekpok_.h"
 
 struct fli_head fhead;
 Flx *cur_flx;
-int tflx;	/* handle for temp file */
+FILE *tflx;	/* handle for temp file */
 
 static int m_tempflx(char *name);
 
@@ -267,12 +268,7 @@ return(0);
 }
 
 long
-frame_to_tflx(sfile, name, frame, acc, ix)
-int sfile;
-char *name;
-struct fli_frame *frame;
-long acc;
-int ix;
+frame_to_tflx(FILE *sfile, char *name, struct fli_frame *frame, long acc, int ix)
 {
 long size;
 
@@ -315,7 +311,7 @@ return(ok);
 static int
 m_tempflx(char *name)
 {
-int sfile;
+FILE *sfile;
 long acc;
 long size;
 struct fli_frame *frame = NULL;	/* buffer area */

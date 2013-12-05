@@ -2,8 +2,9 @@
 /* backwards.c - This is what we got to do to save a flic backwards. */
 
 #include "jimk.h"
-#include "fli.h"
 #include "backward.str"
+#include "fli.h"
+#include "jfile.h"
 
 static
 back_fli(title,cbuf)

@@ -42,6 +42,7 @@
 #include "a3ddat.str"
 #include "fli.h"
 #include "flicmenu.h"
+#include "jfile.h"
 #include "peekpok_.h"
 
 static void a3d_back(Flicmenu *m);

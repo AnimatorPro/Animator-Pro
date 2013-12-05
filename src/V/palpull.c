@@ -7,8 +7,8 @@
 /* generated with makepull */
 #include "jimk.h"
 #include "flicmenu.h"
+#include "jfile.h"
 #include "palpull.str"
-
 
 			static struct pull val_ble_pull = {
 				NONEXT,

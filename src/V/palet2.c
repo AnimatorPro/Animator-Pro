@@ -5,6 +5,7 @@
 #include "jimk.h"
 #include "cblock_.h"
 #include "flicmenu.h"
+#include "jfile.h"
 #include "palet2.str"
 #include "peekpok_.h"
 
@@ -326,7 +327,7 @@ write_gulp(name, render_form->cmap, COLORS*3L);
 static int
 load_colors(char *name, UBYTE *buf)
 {
-int f;
+FILE *f;
 int i;
 
 if ((f = jopen(name, 0))==0)

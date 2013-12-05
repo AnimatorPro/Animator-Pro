@@ -12,6 +12,7 @@
 */
 
 #include "jimk.h"
+#include "jfile.h"
 #include "peekpok_.h"
 
 /* flush and close a buffered file.  Free up memory used by buffer. */

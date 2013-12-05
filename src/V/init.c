@@ -8,6 +8,7 @@
 #include "jimk.h"
 #include "flicmenu.h"
 #include "init.str"
+#include "jfile.h"
 #include "peekpok_.h"
 
 extern int ivmode;
@@ -190,7 +191,7 @@ static struct config ivconfg = {VCFGMAGIC,2,0,"", 0, 0};
 static
 init_config()
 {
-int jcf;
+FILE *jcf;
 int dev;
 extern char conf_name[];
 

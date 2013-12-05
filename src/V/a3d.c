@@ -8,6 +8,7 @@
 #include "fli.h"
 #include "flicmenu.h"
 #include "inks.h"
+#include "jfile.h"
 #include "peekpok_.h"
 #include "poly.h"
 
@@ -1377,7 +1378,7 @@ load_a3d(title)
 char *title;
 {
 struct magic_moves mm;
-int fd;
+FILE *fd;
 int i;
 struct ado_setting *as;
 
@@ -1426,7 +1427,7 @@ well_save_a3d(title)
 char *title;
 {
 struct magic_moves mm;
-int fd;
+FILE *fd;
 int i;
 struct ado_setting *as;
 

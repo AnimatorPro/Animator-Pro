@@ -8,6 +8,7 @@
 #include "fli.h"
 #include "flicmenu.h"
 #include "inks.h"
+#include "jfile.h"
 #include "overlay.str"
 #include "peekpok_.h"
 
@@ -122,7 +123,7 @@ Vscreen ouf;
 int ret;
 Vcel vcel;
 Vcel *ocel;
-int fd;
+FILE *fd;
 struct fli_head flih;
 int i;
 int fit_option;

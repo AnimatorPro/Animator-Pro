@@ -2,7 +2,7 @@
 /* alt.c - A few functions for the alt screen */
 
 #include "jimk.h"
-
+#include "jfile.h"
 
 free_alt()
 {

@@ -5,12 +5,11 @@
 #include "jimk.h"
 #include "fccomp.h"
 #include "fli.h"
+#include "jfile.h"
 #include "lccomp.h"
 #include "peekpok_.h"
 
-extern unsigned write(), read();
-
-static int wfli_fd;
+static FILE *wfli_fd;
 static struct fli_head head;
 static char *wfli_name;
 
@@ -87,7 +86,7 @@ return(frame->size);
 }
 
 static long
-fli_save_frame(char *name, int fd, char *comp_buf, char *last_screen,
+fli_save_frame(char *name, FILE *fd, char *comp_buf, char *last_screen,
 		char *last_cmap, char *this_screen, char *this_cmap, WORD type)
 {
 long size; 

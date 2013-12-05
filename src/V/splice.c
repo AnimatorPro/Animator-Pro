@@ -6,6 +6,7 @@
 #include "commonst.h"
 #include "fli.h"
 #include "flicmenu.h"
+#include "jfile.h"
 #include "peekpok_.h"
 #include "splice.str"
 
@@ -73,7 +74,7 @@ pushed_load_splice(void)
 {
 int where;
 char *title;
-int fd;
+FILE *fd;
 struct fli_head flih;
 Vscreen *lscreen;
 int transition;
@@ -286,7 +287,8 @@ return(write_middle_one(cur_ix, acc, cbuf));
 static int
 load_2_flis(char *f1name, char *f2name, int ttype, int tfcount)
 {
-int f1,f2;
+FILE *f1;
+FILE *f2;
 struct fli_head fh1,fh2;
 long acc;
 long frames;

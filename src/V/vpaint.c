@@ -11,6 +11,7 @@
 #include "commonst.h"
 #include "fli.h"
 #include "flicmenu.h"
+#include "jfile.h"
 #include "peekpok_.h"
 #include "vpaint.str"
 

@@ -15,6 +15,7 @@ static void make_frames(int frames);
 
 extern long fli_comp1(), write_tflx();
 extern long frame1_foff(), flx_file_hi();
+extern int copy_in_file(FILE *file, long bytes, long soff, long doff);
 
 qinsert_frames()
 {

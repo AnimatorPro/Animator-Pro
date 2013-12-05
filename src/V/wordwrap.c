@@ -7,6 +7,7 @@
 #include "jimk.h"
 #include "commonst.h"
 #include "gemfont.h"
+#include "jfile.h"
 #include "rfont.h"
 #include "text.h"
 
@@ -287,7 +288,7 @@ return(newsize);
 load_text(name)
 char *name;
 {
-int f;
+FILE *f;
 
 if ((f = jopen(name, 0)) == 0)
 	return(0);
@@ -308,7 +309,7 @@ return(1);
 save_text(name)
 char *name;
 {
-int f;
+FILE *f;
 
 if (!text_buf)
 	return(1);

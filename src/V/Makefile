@@ -22,7 +22,7 @@ feelmenu.obj filemenu.obj filedata.obj files.obj \
 findfree.obj fli.obj flood.obj freem.obj \
 gel.obj geometry.obj gfx.obj gif.obj globals.obj grid.obj \
 hlstorgb.obj init.obj initcmap.obj input.obj int.obj \
-jfile.obj \
+jfileerr.obj \
 onepal.obj options.obj palet2.obj palpull.obj peekpoke.obj pentools.obj \
 polytool.obj pstamp.obj pull.obj qnumber.obj quickdat.obj \
 macro.obj main.obj MAINPULL.OBJ marqi.obj mask.obj memory.obj \
@@ -47,6 +47,7 @@ zoom.obj \
 	..\COMMON\clipit_.obj  \
 	..\COMMON\comp_.obj    \
 	..\COMMON\fccomp.obj   \
+	..\COMMON\jfile.obj    \
 	..\COMMON\lccomp.obj   \
 	..\COMMON\peekpok_.obj \
 	..\COMMON\rfont.obj    \

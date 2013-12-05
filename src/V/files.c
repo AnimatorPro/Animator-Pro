@@ -3,10 +3,11 @@
 
 /* generated with makemenu */
 #include "jimk.h"
-#include "flicmenu.h"
 #include "dosstuff.h"
-#include "poly.h"
 #include "files.str"
+#include "flicmenu.h"
+#include "jfile.h"
+#include "poly.h"
 
 static void draw_fml(Flicmenu *m);
 static void fml_save(void);

@@ -6,12 +6,13 @@
 #include "jimk.h"
 #include "fli.h"
 #include "flicmenu.h"
+#include "jfile.h"
 #include "savefli.str"
 
 char dirty_file;
 char dirty_frame;
 
-extern int tflx;
+extern FILE *tflx;
 extern char tflxname[];
 extern struct fli_head fhead;
 extern long frame1_foff(), flx_file_hi();
@@ -205,7 +206,7 @@ char *name;
 #else /* NOSAVE */
 int i;
 char *cbuf;
-int ofile;
+FILE *ofile;
 long sz;
 long acc;
 int success;

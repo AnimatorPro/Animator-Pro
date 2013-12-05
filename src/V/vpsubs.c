@@ -6,6 +6,7 @@
 #include "jimk.h"
 #include "fli.h"
 #include "flicmenu.h"
+#include "jfile.h"
 #include "peekpok_.h"
 
 extern Flicmenu dsel1_sel, it0_sel; /* first pen tool slot */
