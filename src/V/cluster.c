@@ -8,6 +8,7 @@
 #include "cluster.str"
 #include "flicmenu.h"
 #include "jfile.h"
+#include "memory.h"
 #include "peekpok_.h"
 #include "rotate.h"
 #include "truecol_.h"

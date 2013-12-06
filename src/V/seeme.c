@@ -10,6 +10,7 @@
 #include "cblock_.h"
 #include "flicmenu.h"
 #include "gemfont.h"
+#include "memory.h"
 #include "rfont.h"
 
 static int draw_a_menu(Flicmenu *m);

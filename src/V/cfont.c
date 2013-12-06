@@ -7,6 +7,7 @@
 #include "cfont.str"
 #include "gemfont.h"
 #include "jfile.h"
+#include "memory.h"
 
 extern unsigned read();
 

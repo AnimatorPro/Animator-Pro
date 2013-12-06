@@ -2,8 +2,9 @@
 /* zoom.c - help simulate fat-bits.  Position zoom window on screen. */
 
 #include "jimk.h"
-#include "flicmenu.h"
 #include "commonst.h"
+#include "flicmenu.h"
+#include "memory.h"
 #include "zoom.str"
 
 

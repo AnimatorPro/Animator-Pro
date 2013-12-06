@@ -5,6 +5,7 @@
 #include "jimk.h"
 #include "csort.str"
 #include "flicmenu.h"
+#include "memory.h"
 #include "peekpok_.h"
 
 extern UBYTE *cluster_to_cmap();

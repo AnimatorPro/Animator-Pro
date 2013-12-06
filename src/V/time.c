@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include "jimk.h"
 #include "fli.h"
+#include "memory.h"
 #include "peekpok_.h"
 #include "time.str"
 

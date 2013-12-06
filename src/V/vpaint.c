@@ -12,6 +12,7 @@
 #include "fli.h"
 #include "flicmenu.h"
 #include "jfile.h"
+#include "memory.h"
 #include "peekpok_.h"
 #include "vpaint.str"
 

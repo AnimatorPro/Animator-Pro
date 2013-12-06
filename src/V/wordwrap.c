@@ -8,6 +8,7 @@
 #include "commonst.h"
 #include "gemfont.h"
 #include "jfile.h"
+#include "memory.h"
 #include "rfont.h"
 #include "text.h"
 

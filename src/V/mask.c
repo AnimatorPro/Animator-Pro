@@ -5,6 +5,7 @@
 #include "blit8_.h"
 #include "flicmenu.h"
 #include "mask.str"
+#include "memory.h"
 #include "peekpok_.h"
 
 extern PLANEPTR mask_plane;

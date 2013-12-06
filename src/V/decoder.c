@@ -18,7 +18,7 @@
 
 #include "jimk.h"
 #include "gif.h"
-
+#include "memory.h"
 
 /* extern int gif_get_byte()
  *

@@ -3,6 +3,7 @@
    the pixel data begins on an even paragraph.  */
 
 #include "jimk.h"
+#include "memory.h"
 #include "ptr.h"
 
 void

@@ -4,6 +4,7 @@
 #include <ctype.h>
 #include <string.h>
 #include "jimk.h"
+#include "memory.h"
 
 extern void sort_array(Name_list **array, int count, Vector cmp);
 

@@ -9,6 +9,7 @@
 #include "commonst.h"
 #include "jfile.h"
 #include "jfile.str"
+#include "memory.h"
 
 /* Move a piece of a file from one place to another.  Used occassionally
    on my indexed temp.flx file */

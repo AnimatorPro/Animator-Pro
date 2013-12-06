@@ -7,6 +7,7 @@
 #include "fli.h"
 #include "flicmenu.h"
 #include "jfile.h"
+#include "memory.h"
 #include "savefli.str"
 
 char dirty_file;

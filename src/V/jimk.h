@@ -23,22 +23,15 @@
 #define UBYTE unsigned char
 
 extern void *list_el();
-#ifndef SLUFF
-#define freemem(p) freememory((unsigned int *)(p));
-#endif /* SLUFF */
 
-extern void *lbegmem(long), *begmem(unsigned), *begmemc(unsigned);
-extern void *paskmem();
 extern char *clone_string();
 extern char *get_filename();
 extern long get80hz();
-extern void *askmem(), *laskmem();
 extern unsigned mem_free, largest_frag();
 
 extern void *sort_list();
 extern void *remove_el();
 
-#define free_string(pt) freemem(pt)
 #define string_width(s) (strlen(s)*CH_WIDTH)
 
 typedef int (*Vector)();	/* AKA pointer to a function */
@@ -373,12 +366,6 @@ extern int tr_frames;
 
 /* variables to clip area we render to */
 extern int render_xmin, render_ymin, render_xmax, render_ymax;
-
-#ifdef SLUFFED
-/* some day hope these will be changed so alway can be alloced */
-#define paskmem askmem
-#define pfreemem freemem
-#endif /* SLUFFED */
 
 /* stuff for my buffered io */
 #define BSIZE 2048

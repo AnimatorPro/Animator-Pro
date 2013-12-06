@@ -5,6 +5,7 @@
 #include "backward.str"
 #include "fli.h"
 #include "jfile.h"
+#include "memory.h"
 
 static
 back_fli(title,cbuf)

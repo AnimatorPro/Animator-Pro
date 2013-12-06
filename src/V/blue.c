@@ -3,6 +3,7 @@
 #include "jimk.h"
 #include "blit8_.h"
 #include "fli.h"
+#include "memory.h"
 #include "peekpok_.h"
 
 /* map everything but clearc to destc */

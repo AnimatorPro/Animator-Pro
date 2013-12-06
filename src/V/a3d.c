@@ -9,6 +9,7 @@
 #include "flicmenu.h"
 #include "inks.h"
 #include "jfile.h"
+#include "memory.h"
 #include "peekpok_.h"
 #include "poly.h"
 

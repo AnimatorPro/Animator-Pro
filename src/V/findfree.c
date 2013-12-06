@@ -3,6 +3,7 @@
    if necessary.  Works on temp_flx - our basic indexed frame/state file. */
 #include "jimk.h"
 #include "fli.h"
+#include "memory.h"
 
 extern long frame1_foff();
 

@@ -3,8 +3,9 @@
 
 #include <stdio.h>
 #include "jimk.h"
-#include "poly.h"
 #include "fli.h"
+#include "memory.h"
+#include "poly.h"
 #include "spiral.str"
 
 extern WORD x_0,y_0,x_1,y_1;

@@ -4,11 +4,14 @@
 
 
 #include <stdio.h>
+#define freemem _dos_freemem
 #include <dos.h>
+#undef freemem
 #include "jimk.h"
 #include "flicmenu.h"
 #include "init.str"
 #include "jfile.h"
+#include "memory.h"
 #include "peekpok_.h"
 #include "ptr.h"
 
@@ -82,6 +85,7 @@ if ((uf.p = laskmem(64016L)) != NULL)
 return(0);
 }
 
+#ifdef USE_MEMORY_MANAGEMENT
 static
 init_mem()
 {
@@ -116,6 +120,13 @@ for (;;)
 mfree(make_ptr(0,r.w.ax), size);
 return(1);
 }
+#else /* USE_MEMORY_MANAGEMENT */
+static int
+init_mem(void)
+{
+	return 1;
+}
+#endif /* USE_MEMORY_MANAGEMENT */
 
 static char *nomouse_lines[] =
 	{

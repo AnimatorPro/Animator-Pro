@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include "jimk.h"
 #include "blit8_.h"
+#include "memory.h"
 #include "peekpok_.h"
 #include "rotate.h"
 

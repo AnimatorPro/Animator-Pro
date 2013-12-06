@@ -9,6 +9,7 @@
 #define CLOSED 1
 
 #include "jimk.h"
+#include "memory.h"
 #include "peekpok_.h"
 #include "poly.h"
 #include "spline.str"

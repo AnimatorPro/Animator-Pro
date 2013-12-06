@@ -6,6 +6,7 @@
 #include "jimk.h"
 #include "blit8_.h"
 #include "fli.h"
+#include "memory.h"
 #include "onepal.str"
 #include "peekpok_.h"
 #include "rfont.h"

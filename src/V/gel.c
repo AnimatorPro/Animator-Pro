@@ -3,6 +3,7 @@
   circles with the wider ones thinner. */
 
 #include "jimk.h"
+#include "memory.h"
 #include "peekpok_.h"
 
 extern WORD x_0,y_0,x_1,y_1;

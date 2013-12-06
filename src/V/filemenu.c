@@ -11,6 +11,7 @@
 #include "dosstuff.h"
 #include "filemenu.str"
 #include "flicmenu.h"
+#include "memory.h"
 #include "ptr.h"
 
 extern Flicmenu fileq_menu, ftitle_sel, flist_sel, fscroll_sel,

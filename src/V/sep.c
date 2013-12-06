@@ -3,6 +3,7 @@
    edge tool from the looks of it. */
 
 #include "jimk.h"
+#include "memory.h"
 #include "peekpok_.h"
 #include "ptr.h"
 #include "truecol_.h"

@@ -6,6 +6,7 @@
 #include "jimk.h"
 #include "fli.h"
 #include "jfile.h"
+#include "memory.h"
 #include "peekpok_.h"
 
 extern char new_tflx_name[];

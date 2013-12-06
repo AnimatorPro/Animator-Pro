@@ -6,6 +6,7 @@
 
 #include "jimk.h"
 #include "flicmenu.h"
+#include "memory.h"
 #include "poly.h"
 #include "scanedge.str"
 

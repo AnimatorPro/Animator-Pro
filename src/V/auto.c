@@ -32,6 +32,7 @@
 #include "commonst.h"
 #include "fli.h"
 #include "jfile.h"
+#include "memory.h"
 #include "peekpok_.h"
 #include "rfont.h"
 #include "truecol_.h"

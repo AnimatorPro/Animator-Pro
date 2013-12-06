@@ -7,6 +7,7 @@
 #include "blit8_.h"
 #include "cblock_.h"
 #include "inks.h"
+#include "memory.h"
 #include "poly.h"
 #include "truecol_.h"
 

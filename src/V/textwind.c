@@ -7,6 +7,7 @@
 #include "flicmenu.h"
 #include "fli.h"
 #include "gemfont.h"
+#include "memory.h"
 #include "text.h"
 
 extern render_bitmap_blit();

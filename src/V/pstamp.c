@@ -10,6 +10,7 @@
 #include "comp_.h"
 #include "fli.h"
 #include "jfile.h"
+#include "memory.h"
 #include "peekpok_.h"
 #include "ptr.h"
 #include "unbrun_.h"

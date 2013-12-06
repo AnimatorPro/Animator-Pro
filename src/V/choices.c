@@ -7,6 +7,7 @@
 #include "jimk.h"
 #include "blit8_.h"
 #include "flicmenu.h"
+#include "memory.h"
 #include "rfont.h"
 
 extern gary_menu_back(), gary_see_title(),blacktext(),

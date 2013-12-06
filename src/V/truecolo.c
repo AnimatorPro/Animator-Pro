@@ -5,6 +5,7 @@
 #include "jimk.h"
 #include "cblock_.h"
 #include "inks.h"
+#include "memory.h"
 #include "peekpok_.h"
 #include "truecol_.h"
 

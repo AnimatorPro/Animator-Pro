@@ -6,6 +6,7 @@
 #include "cblock_.h"
 #include "flicmenu.h"
 #include "jfile.h"
+#include "memory.h"
 #include "palet2.str"
 #include "peekpok_.h"
 
