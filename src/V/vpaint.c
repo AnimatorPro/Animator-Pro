@@ -435,7 +435,7 @@ switch (c)
 		defrag();
 		break;
 	case '?':
-		status();
+		/* status(); */
 		break;
 	case ' ':
 		toggle_menu();
@@ -927,7 +927,7 @@ switch (menu)
 				new_config();
 				break;
 			case 5:
-				status();
+				/* status(); */
 				break;
 			default:
 				break;

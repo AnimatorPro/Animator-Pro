@@ -9,6 +9,7 @@
 #include "mainpull.str"
 
 
+#if 0
 			static struct pull oth_sta_pull = {
 				NONEXT,
 				1, 1+5*CH_HEIGHT, 75, 9,
@@ -17,8 +18,9 @@
 				pull_text,
 				0,
 				};
+#endif
 			static struct pull oth_con_pull = {
-				&oth_sta_pull,
+				NONEXT,
 				1, 1+4*CH_HEIGHT, 75, 9,
 				NOCHILD,
 				mainpull_101 /* "CONFIGURE..." */,
@@ -59,7 +61,7 @@
 				};
 		static struct pull roth_pull = {
 			NONEXT,
-			-1-36-2, 8, 77, 43+CH_HEIGHT,
+			-1-36-2, 8, 77, 35+CH_HEIGHT,
 			&oth_ste_pull,
 			NODATA,
 			pull_oblock,
