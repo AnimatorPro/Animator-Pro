@@ -11,12 +11,11 @@
 
 #define MACMAGIC 1811
 
-
-struct machead 
+struct GCC_PACKED machead
 	{
 	WORD mmagic;
-	long mcount;
-	long mindex;
+	LONG mcount;
+	LONG mindex;
 	char realtime;
 	char reserved[5];
 	};
