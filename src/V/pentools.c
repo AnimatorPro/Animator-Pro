@@ -238,7 +238,7 @@ for (;;)
 			}
 		while (--i >= 0)
 			{
-			polar( random()+roff++, random()%spread, xy);
+			polar( v_random()+roff++, v_random()%spread, xy);
 			xy[0]+=grid_x;
 			xy[1]+= grid_y;
 			if (vs.cycle_draw) cycle_ccolor();

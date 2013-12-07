@@ -388,8 +388,8 @@ if (y >= render_ymin & y < render_ymax && x >= render_xmin
 			break;
 		case 9: /* jumble */
 			endc = vs.tint_percent+1;
-			nxy[0] = x+random()%(endc) - (endc>>1);
-			nxy[1] = y+random()%(endc) - (endc>>1);
+			nxy[0] = x+v_random()%(endc) - (endc>>1);
+			nxy[1] = y+v_random()%(endc) - (endc>>1);
 			clip_xy(&nxy[0]);
 			color = getd(uf.p,nxy[0],nxy[1]);
 			break;
