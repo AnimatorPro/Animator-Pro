@@ -10,6 +10,7 @@
 #include "jimk.h"
 #include "flicmenu.h"
 #include "init.str"
+#include" io_dos.h"
 #include "jfile.h"
 #include "memory.h"
 #include "peekpok_.h"
@@ -27,17 +28,6 @@ char *s;
 puts(s);
 puts(init_100 /* "Hit <enter> to continue" */);
 getchar();
-}
-
-/* set us to 13H 320x200x256 */
-static
-new_video()
-{
-union regs r;
-
-r.b.ah = 0;
-r.b.al = 0x13;
-sysint(0x10,&r,&r);
 }
 
 extern char uf_in_emm;
@@ -263,13 +253,10 @@ r.b.ah = 0xf;
 sysint(0x10, &r, &r);
 ivmode = r.b.al;
 
-
-new_video();
+set_vmode(0x13);
 
 /* make sure made int into 13H */
-r.b.ah = 0xf;
-sysint(0x10, &r, &r);
-if (r.b.al != 0x13)
+if (get_vmode() != 0x13)
 	{
 	early_err(init_109 /* "Not a VGA/MCGA display, sorry\n" */);
 	return(0);

@@ -781,7 +781,7 @@ for (i=0; i<tr_frames; i++)
 	see_ado_poly(scale);
 	copy_structure(ado_dpoly, lado_dpoly, sizeof(*lado_dpoly)*ado_ptcount );
 	clock += fhead.speed;
-	c_input();
+	c_poll_input();
 	while (clock > get80hz())
 		wait_sync();
 	if (clock < get80hz())

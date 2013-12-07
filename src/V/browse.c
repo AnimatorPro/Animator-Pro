@@ -13,6 +13,7 @@
 #include "fli.h"
 #include "flicmenu.h"
 #include "fs.h"
+#include "io_.h"
 #include "jfile.h"
 #include "rfont.h"
 

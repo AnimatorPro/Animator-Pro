@@ -3,8 +3,9 @@
    Frames control panel. */
 
 #include "jimk.h"
-#include "flicmenu.h"
 #include "fli.h"
+#include "flicmenu.h"
+#include "io_.h"
 #include "timemenu.str"
 
 static void feel_time_slider(Flicmenu *m);

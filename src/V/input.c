@@ -12,6 +12,7 @@
 #include "jimk.h"
 #include "blit8_.h"
 #include "cblock_.h"
+#include "clipit_.h"
 #include "fli.h"
 #include "flicmenu.h"
 
@@ -26,28 +27,30 @@ WORD mouse_moved;	/* mouse not same as last time - x,y or buttons */
 WORD key_hit;
 WORD key_in;
 WORD mouse_on = 1;
-static WORD reuse;
-static WORD lmouse_x, lmouse_y;
+WORD reuse;
+WORD lmouse_x, lmouse_y;
 char zoomcursor;
 PLANEPTR brushcursor;
 
 extern char inwaittil;
 
-union regs mouse_regs;
-/*  Registers defined as mouse input and output values per Microsoft Mouse
-    Installation and Operation Manual 8808-100-00 P/N 99F37B Chapter 4	*/
-#define MOUSEINT	51
-static WORD mscale = 4;
-
-char got_mouse;
-
 static Point hr_buf[HSZ];
 static WORD hr_n;
 
-/* init input coordinate histerisus (sp).  Ie stuff for a basic lo-pass
-   filter on the mouse/tablet coordinates */
-extern Point hr_buf[HSZ];	/* in input.c */
-extern WORD hr_n;	/* in input.c */
+void scursor(void);
+void ccursor(void);
+static void
+zoom_bitmap_blit(WORD w, WORD h,
+		WORD sx, WORD sy, PLANEPTR spt, WORD sbpr,
+		WORD dx, WORD dy, WORD color);
+static void zo_line(int j, PLANEPTR spt, int xs, int xd, int yd, int color);
+static void
+unzoom_bitmap_blit(WORD w, WORD h,
+		WORD sx, WORD sy, PLANEPTR spt, WORD sbpr, WORD dx, WORD dy);
+static void unzo_line(int j, PLANEPTR spt, int xs, int xd, int yd);
+
+extern void c_poll_input(void);
+extern void c_wait_input(void);
 
 init_hr()
 {
@@ -68,8 +71,8 @@ hr_n = 0;
 
 /* update historisis buffer with latest mouse coordinates, and return
    x/y position after hirstorisis smoothing in grid_x, grid_y */
-static
-next_histrs()
+void
+next_histrs(void)
 {
 extern WORD gel_input;
 int divs;
@@ -127,7 +130,6 @@ mouse_on = 1;
 
 
 #define dcursor() {scursor();ccursor();}
-#define ZEROFLAG	64
 
 get_gridxy()
 {
@@ -146,172 +148,11 @@ if (vs.use_grid)
 	}
 }
 
-c_input()
-{
-unsigned WORD w;
-register WORD *a;
-unsigned long l;
-WORD mouse_color;
-union regs r;
-
-
-AGAIN:
-if (reuse)
-	{
-	reuse = 0;
-	return;
-	}
-lastx = uzx;
-lasty = uzy;
-omouse_button = mouse_button;
-key_hit = 0;
-if (got_mouse)
-	{
-	switch (vconfg.dev_type)
-		{
-		case 0:	/* mousey */
-			mouse_int(3);
-			/* Extract the button bits */
-			mouse_button = mouse_regs.w.bx & ((1 << 2) - 1); 
-			mouse_int(11);
-			umouse_x += mouse_regs.w.cx;
-			umouse_y += mouse_regs.w.dx;
-			break;
-		case 1:	/* where's my summa tablet? */
-			summa_get_input();
-			break;
-#ifdef WACOM
-		case 2:
-			wacom_get_input();
-			break;
-#endif /* WACOM */
-		}
-	r.b.ah = 0x1;
-	if (!(sysint(0x16,&r,&r)&ZEROFLAG))
-		{
-		key_hit = 1;
-		r.b.ah = 0;
-		sysint(0x16,&r,&r);
-		key_in = r.w.ax;
-		}
-	}
-else
-	{
-	r.b.ah = 2;
-	sysint(0x16,&r,&r);
-	mouse_button = 0;
-	if (r.b.al & 0x2)	/* pendown on alt */
-		mouse_button |= 0x1;
-	if (r.b.al & 0x1)	/* right button on control */
-		mouse_button |= 0x2;
-	r.b.ah = 0x1;
-	if (!(sysint(0x16,&r,&r)&ZEROFLAG))	/* snoop for arrow keys... */
-		{
-		w = 1;
-		switch (r.w.ax)
-			{
-			case LARROW:
-				umouse_x += -4*mscale;
-				break;
-			case RARROW:
-				umouse_x += 4*mscale;
-				break;
-			case UARROW:
-				umouse_y += -4*mscale;
-				break;
-			case DARROW:
-				umouse_y += 4*mscale;
-				break;
-			default:
-				w = 0;
-				break;
-			}
-		r.b.ah = 0;
-		sysint(0x16,&r,&r);
-		if (!w)	/* eat character if arrow... */
-			{
-			key_hit = 1;
-			key_in = r.w.ax;
-			}
-		}
-	}
-
-/* clip unscaled mouse position and set scaled mouse_x and mouse_y */
-if (umouse_x < 0)
-	umouse_x = 0;
-if (umouse_x > 319*mscale)
-	umouse_x = 319*mscale;
-if (umouse_y < 0)
-	umouse_y = 0;
-if (umouse_y > 199*mscale)
-	umouse_y = 199*mscale;
-uzx = (umouse_x/mscale);
-uzy = (umouse_y/mscale);
-if (usemacro)
-	get_macro();
-grid_x = uzx;
-grid_y = uzy;
-if (vs.zoom_mode)
-	{
-	grid_x = vs.zoomx + uzx/vs.zoomscale;
-	grid_y = vs.zoomy + uzy/vs.zoomscale;
-	}
-if (key_hit)
-	{
-	switch (key_in)
-		{
-#ifdef DEVEL
-		case 0x3c00:	/* F2 */
-			save_gif("vsnapshot.gif", &vf);
-			key_hit = 0;
-			break;
-#endif /* DEVEL */
-		case 0x3d00:	/* F3 */
-			vs.mkx = grid_x;
-			vs.mky = grid_y;
-			mouse_button |= 0x1;
-			key_hit = 0;
-			break;
-		case 0x3e00:	/* F4 */
-			grid_x = vs.mkx;
-			grid_y = vs.mky;
-			init_hr();	/* for GEL brush */
-			mouse_button |= 0x1;
-			key_hit = 0;
-			break;
-		}
-	}
-get_gridxy();
-next_histrs();
-mouse_moved = 0;
-if (!(uzx == lastx && uzy == lasty))
-	{
-	if (!zoomcursor || uzy/vs.zoomscale != lasty/vs.zoomscale ||
-		uzx/vs.zoomscale != lastx/vs.zoomscale  )
-		{
-		lmouse_x = lastx;
-		lmouse_y = lasty;
-		mouse_moved = 1;
-		if (mouse_on)
-			{
-			ucursor();
-			dcursor();
-			}
-		}
-	}
-if (mouse_button != omouse_button)
-	{
-	lmouse_x = uzx;
-	lmouse_y = uzy;
-	mouse_moved = 1;
-	}
-put_macro(clickonly);
-}
-
 check_input()
 {
 dcursor();
-c_input();
+flip_video();
+c_poll_input();
 ucursor();
 }
 
@@ -322,10 +163,11 @@ WORD count, mm;
 {
 recordall = 0;
 dcursor();
+flip_video();
 while (--count >= 0)
 	{
 	mwaits();
-	c_input();
+	c_poll_input();
 	if ((mm && mouse_moved) || key_hit)
 		break;
 	}
@@ -349,9 +191,10 @@ wait_input()
 {
 recordall = 0;
 dcursor();
+flip_video();
 for (;;)
 	{
-	c_input();
+	c_wait_input();
 	if (mouse_moved || key_hit)
 		break;
 	mwaits();
@@ -364,12 +207,13 @@ wait_penup()
 {
 recordall = 0;
 dcursor();
+flip_video();
 for (;;)
 	{
 	if (!PDN)
 		break;
 	mwaits();
-	c_input();
+	c_wait_input();
 	}
 ucursor();
 recordall = 1;
@@ -380,12 +224,13 @@ wait_rup()
 {
 recordall = 0;
 dcursor();
+flip_video();
 for (;;)
 	{
 	if (!RDN)
 		break;
 	mwaits();
-	c_input();
+	c_wait_input();
 	}
 ucursor();
 recordall = 1;
@@ -397,9 +242,10 @@ wait_click()
 clickonly = 1;
 if (mouse_on)
 	dcursor();
+flip_video();
 for (;;)
 	{
-	c_input();
+	c_wait_input();
 	mwaits();
 	if (key_hit || RJSTDN || PJSTDN)
 		break;
@@ -409,27 +255,27 @@ if (mouse_on)
 	ucursor();
 }
 
-
-/*FCN*/mouse_int(fcn)
-  int fcn;
-{
-	mouse_regs.w.ax = fcn;
-	sysint(MOUSEINT, &mouse_regs, &mouse_regs);
-}
-
-
 static char umouse[256];
 static WORD sx, sy;
 
 
-static scursor()
+void
+scursor(void)
 {
 if (!zoomcursor)
 	{
-	sx = uzx-8;
-	sy = uzy-8;
-	blit8(16,16,sx,sy,vf.p,vf.bpr,
-		0,0,umouse, 16);
+		int w = 16;
+		int h = 16;
+		int srcx = uzx-8;
+		int srcy = uzy-8;
+		int dstx = 0;
+		int dsty = 0;
+
+		if (clipblit2(&w, &h, &srcx, &srcy, vf.w, vf.h, &dstx, &dsty, 16, 16)) {
+			blit8(w, h, srcx, srcy, vf.p, vf.bpr, dstx, dsty, umouse, 16);
+			sx = uzx-8;
+			sy = uzy-8;
+		}
 	}
 else
 	{
@@ -452,8 +298,8 @@ else
 		sx,sy,vf.p,vf.bpr);
 }
 
-static
-ccursor()
+void
+ccursor(void)
 {
 if (zoomcursor)
 	{
@@ -474,10 +320,10 @@ else
 	}
 }
 
-static
-zoom_bitmap_blit(w,h,sx,sy,spt,sbpr,dx,dy,color)
-WORD w, h, sx, sy, sbpr,dx,dy,color;
-register PLANEPTR spt;
+static void
+zoom_bitmap_blit(WORD w, WORD h,
+		WORD sx, WORD sy, PLANEPTR spt, WORD sbpr,
+		WORD dx, WORD dy, WORD color)
 {
 spt += sy*sbpr;
 while (--h >= 0)
@@ -488,12 +334,8 @@ while (--h >= 0)
 	}
 }
 
-static
-zo_line(j, spt, xs, xd, yd, color)
-int j;
-register int xs;
-register PLANEPTR spt;
-int xd,yd,color;
+static void
+zo_line(int j, PLANEPTR spt, int xs, int xd, int yd, int color)
 {
 while (--j >= 0)
 	{
@@ -504,10 +346,9 @@ while (--j >= 0)
 	}
 }
 
-static
-unzoom_bitmap_blit(w,h,sx,sy,spt,sbpr,dx,dy)
-WORD w, h, sx, sy, sbpr,dx,dy;
-register PLANEPTR spt;
+static void
+unzoom_bitmap_blit(WORD w, WORD h,
+		WORD sx, WORD sy, PLANEPTR spt, WORD sbpr, WORD dx, WORD dy)
 {
 spt += sy*sbpr;
 while (--h >= 0)
@@ -518,12 +359,8 @@ while (--h >= 0)
 	}
 }
 
-static
-unzo_line(j, spt, xs, xd, yd)
-int j;
-register int xs;
-register PLANEPTR spt;
-int xd,yd;
+static void
+unzo_line(int j, PLANEPTR spt, int xs, int xd, int yd)
 {
 PLANEPTR p;
 
@@ -537,38 +374,10 @@ while (--j >= 0)
 	}
 }
 
-
-/* either returns my interrupt clock, or system clock depending if
-   interrupt in place */
-long
-get80hz()
-{
-extern long _get80hz();
-extern long clock(void);
-
-if (vconfg.noint)
-	return(clock()*4);
-else
-	return(_get80hz());
-}
-
 wait_sync()
 {
 wait_novblank();
 wait_vblank();
-}
-
-
-static
-mwaits()
-{
-union regs r;
-
-sysint(0x28, &r, &r);	/* call idle interrupt */
-if (!usemacro)
-	{
-	wait_sync();
-	}
 }
 
 wait_a_jiffy(j)
@@ -600,7 +409,7 @@ ok = 1;
 inwaittil = 1;	/* effectively squelch macro activity  */
 for (;;)
 	{
-	c_input();
+	c_poll_input();
 	if (RDN || key_hit)
 		{
 		ok = 0;
@@ -616,7 +425,7 @@ inwaittil = 0;	/* make macros happen again */
 put_macro(0);	/* write out last input state into macro file */
 if (usemacro)
 	{
-	c_input();	/* read last input state from macro file */
+	c_poll_input();	/* read last input state from macro file */
 	if (RDN || key_hit)
 		{
 		ok = 0;

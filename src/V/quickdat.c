@@ -8,6 +8,7 @@
 #include "blit8_.h"
 #include "cblock_.h"
 #include "flicmenu.h"
+#include "io_.h"
 #include "quickdat.str"
 
 static void see_ink(Flicmenu *m);

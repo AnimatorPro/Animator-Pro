@@ -7,6 +7,7 @@
 #include "cblock_.h"
 #include "commonst.h"
 #include "flicmenu.h"
+#include "io_.h"
 #include "peekpok_.h"
 #include "rfont.h"
 

@@ -135,18 +135,6 @@ extern WORD key_in;				/* What the extended character code
 #define PJSTDN ( (mouse_button & 0x1) && !(omouse_button & 0x1) )
 #define RJSTDN ( (mouse_button & 0x2) && !(omouse_button & 0x2) )
 
-/* Arrow key definitions */
-#define PAGEUP  0x4900
-#define PAGEDN  0x5100
-#define ENDKEY  0x4f00
-#define HOMEKEY 0x4700
-#define INSERTKEY 0x5200
-#define DELKEY  0x5300
-#define LARROW	0x4b00
-#define RARROW	0x4d00
-#define UARROW	0x4800
-#define DARROW	0x5000
-
 /* size of histerisis buffer (used by gel and drizzle mostly) */
 #define HSZ 4	
 

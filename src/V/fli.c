@@ -410,6 +410,7 @@ if (tflx != 0)
 	mouse_on = 0;
 	for (;;)
 		{
+		flip_video();
 		if (frames == 0)
 			break;
 		--frames;

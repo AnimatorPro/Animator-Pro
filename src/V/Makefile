@@ -1,68 +1,135 @@
+CC := gcc
+CFLAGS := -W -Wno-missing-field-initializers -Wno-sign-compare -I. -I../COMMON
+LDFLAGS :=
+LDLIBS := -lSDL
 
-CFLAGS= -Z -O -w-par -wstv -c -ml -I$(INCLUDE) -I. -I..\COMMON -d
+all: v
 
-.c.obj:
-	tcc $(CFLAGS) $*.c
-.asm.obj:
-	tasm /Ml $*.asm;
+OBJS := main.o     \
+	a3d.o      \
+	a3ddat.o   \
+	a3dpull.o  \
+	alt.o      \
+	arctan.o   \
+	auto.o     \
+	autoseg.o  \
+	backward.o \
+	bfile.o    \
+	blue.o     \
+	browse.o   \
+	brush.o    \
+	cel.o      \
+	cfont.o    \
+	choices.o  \
+	circle.o   \
+	cline.o    \
+	cluster.o  \
+	commonst.o \
+	comprs.o   \
+	cpack.o    \
+	csort.o    \
+	cthread.o  \
+	cursorda.o \
+	decoder.o  \
+	dissolve.o \
+	drawmode.o \
+	ellipse.o  \
+	feelmenu.o \
+	filedata.o \
+	filemenu.o \
+	files.o    \
+	findfree.o \
+	fli.o      \
+	flood.o    \
+	freem.o    \
+	gel.o      \
+	geometry.o \
+	gfx.o      \
+	gif.o      \
+	globals.o  \
+	grid.o     \
+	hlstorgb.o \
+	initcmap.o \
+	input.o    \
+	jfileerr.o \
+	macro.o    \
+	mainpull.o \
+	marqi.o    \
+	mask.o     \
+	multimen.o \
+	names.o    \
+	onepal.o   \
+	options.o  \
+	overlay.o  \
+	palet2.o   \
+	palpull.o  \
+	pentools.o \
+	polytool.o \
+	pstamp.o   \
+	pull.o     \
+	qnumber.o  \
+	quickdat.o \
+	random.o   \
+	render.o   \
+	rotate.o   \
+	savefli.o  \
+	savepic.o  \
+	scanedge.o \
+	screen.o   \
+	scroller.o \
+	seeme.o    \
+	seemenu.o  \
+	selbrush.o \
+	sep.o      \
+	sintab.o   \
+	slider.o   \
+	spiral.o   \
+	splice.o   \
+	spline.o   \
+	sqrroot.o  \
+	status.o   \
+	stretch.o  \
+	stringq.o  \
+	sys_sdl.o  \
+	tempflx.o  \
+	textbox.o  \
+	textedit.o \
+	textwind.o \
+	thikline.o \
+	time.o     \
+	timemenu.o \
+	title.o    \
+	truecolo.o \
+	tseg.o     \
+	tween.o    \
+	vpaint.o   \
+	vpsubs.o   \
+	window.o   \
+	wordwrap.o \
+	writefli.o \
+	zoom.o     \
+	$(addprefix ../COMMON/, \
+	blit8_.o   \
+	cblock_.o  \
+	clipit_.o  \
+	comp_.o    \
+	fccomp.o   \
+	fs.o       \
+	fs_unix.o  \
+	io_sdl.o   \
+	jfile.o    \
+	lccomp.o   \
+	peekpok_.o \
+	ptr.o      \
+	rfont.o    \
+	sixhi.o    \
+	truecol_.o \
+	unbrun_.o  \
+	)
 
-#.c.obj:
-#	wcc386 $*.c /c
+v: $(OBJS)
+	$(CC) $(LDFLAGS) -o $@ $^ $(LDLIBS)
 
-O= a3d.obj a3ddat.obj a3dpull.obj alt.obj arctan.obj \
-auto.obj autoseg.obj backward.obj \
-bfile.obj blue.obj browse.obj brush.obj \
-circle.obj cel.obj cfont.obj choices.obj \
-cleanup.obj cline.obj \
-cluster.obj commonst.obj comp.obj comprs.obj \
-config.obj cpack.obj csort.obj cthread.obj cursorda.obj \
-decoder.obj diskerr.obj dissolve.obj dosstuff.obj \
-drawmode.obj ellipse.obj emmchek.obj \
-feelmenu.obj filemenu.obj filedata.obj files.obj \
-findfree.obj fli.obj flood.obj freem.obj \
-gel.obj geometry.obj gfx.obj gif.obj globals.obj grid.obj \
-hlstorgb.obj init.obj initcmap.obj input.obj int.obj \
-jfileerr.obj \
-onepal.obj options.obj palet2.obj palpull.obj peekpoke.obj pentools.obj \
-polytool.obj pstamp.obj pull.obj qnumber.obj quickdat.obj \
-macro.obj main.obj MAINPULL.OBJ marqi.obj mask.obj memory.obj \
-morfdata.obj morfface.obj morfmenu.obj morfobj.obj morfpull.obj \
-multimen.obj names.obj overlay.obj random.obj render.obj \
-rotate.obj savefli.obj savepic.obj \
-scanedge.obj screen.obj scroller.obj \
-seeme.obj seemenu.obj selbrush.obj sep.obj \
-sintab.obj \
-slider.obj spiral.obj splice.obj spline.obj \
-sqrroot.obj status.obj stretch.obj stringq.obj summa.obj \
-tablet.obj \
-tempflx.obj textbox.obj textedit.obj textwind.obj \
-thikline.obj time.obj timemenu.obj title.obj \
-truecolor.obj tseg.obj \
-tween.obj \
-vip.obj vpaint.obj vpsubs.obj \
-wacom.obj window.obj wordwrap.obj writefli.obj \
-zoom.obj \
-	..\COMMON\blit8_.obj   \
-	..\COMMON\cblock_.obj  \
-	..\COMMON\clipit_.obj  \
-	..\COMMON\comp_.obj    \
-	..\COMMON\fccomp.obj   \
-	..\COMMON\fs.obj       \
-	..\COMMON\fs_dos.obj   \
-	..\COMMON\jfile.obj    \
-	..\COMMON\lccomp.obj   \
-	..\COMMON\peekpok_.obj \
-	..\COMMON\ptr.obj      \
-	..\COMMON\rfont.obj    \
-	..\COMMON\sixhi.obj    \
-	..\COMMON\truecol_.obj \
-	..\COMMON\unbrun_.obj
-
-
-fast: $(O)
-	tlink $(LIB)c0l @linkit, v, v, $(LIB)cl
-
-compile: $(O)
-	@echo All compiled!
-
-
+.PHONY: clean
+clean:
+	$(RM) v $(OBJS)

@@ -254,6 +254,7 @@ NULL, 	/* "Invalid parameter", */
 net_err,
 };
 
+#if 0
 extern int crit_errval;
 get_dos_err_line(char *errbuf)
 {
@@ -290,10 +291,12 @@ else
 		strcpy(errbuf, errs);
 	}
 }
+#endif
 
 /* Some standard file error error messages. Generally you'll have to
    replace them with something made up out of printf's or call to your
    own error handlers if  you're trying to reuse this code. */
+#if 0
 cant_create(name)
 char *name;
 {
@@ -307,6 +310,18 @@ bufs[2] = ebuf;
 bufs[3] = NULL;
 continu_box(bufs);
 }
+#else
+cant_create(name)
+char *name;
+{
+char *bufs[3];
+
+bufs[0] = jfile_100 /* "Sorry Autodesk Animator can't create:" */,
+bufs[1] = name;
+bufs[2] = NULL;
+continu_box(bufs);
+}
+#endif
 
 cant_find(name)
 char *name;
@@ -370,6 +385,7 @@ continu_box(bufs);
 }
 
 /* delete file and squawk about errors */
+#if 0
 jdelete_rerr(title)
 char *title;
 {
@@ -388,7 +404,24 @@ if (!jdelete(title))
 	}
 return(1);
 }
+#else
+jdelete_rerr(title)
+char *title;
+{
+char ebuf[80];
+char *bufs[3];
 
+if (!jdelete(title))
+	{
+	bufs[0] = "Can't delete file:";
+	bufs[1] = title;
+	bufs[2] = NULL;
+	continu_box(bufs);
+	return(0);
+	}
+return(1);
+}
+#endif
 
 /* Poll input to see if they'd like to call it off... */
 check_abort(frame, of)

@@ -11,6 +11,7 @@
 #include "commonst.h"
 #include "fli.h"
 #include "flicmenu.h"
+#include "io_.h"
 #include "jfile.h"
 #include "memory.h"
 #include "peekpok_.h"

@@ -12,6 +12,7 @@
 #include "fli.h"
 #include "flicmenu.h"
 #include "gemfont.h"
+#include "io_.h"
 #include "jfile.h"
 #include "memory.h"
 #include "peekpok_.h"

@@ -68,6 +68,12 @@ flip_video(void)
 }
 
 void
+mwaits(void)
+{
+	SDL_Delay(5);
+}
+
+void
 wait_vblank(void)
 {
 }

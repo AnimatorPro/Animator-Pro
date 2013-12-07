@@ -20,6 +20,7 @@ enum {
 	ENDKEY      = 0x4f00,
 	DARROW      = 0x5000,
 	PAGEDN      = 0x5100,
+	INSERTKEY   = 0x5200,
 	DELKEY      = 0x5300
 };
 
@@ -37,6 +38,9 @@ extern void jset_colors(int start, int length, const UBYTE *cmap);
 
 /* Function: flip_video */
 extern void flip_video(void);
+
+/* Function: mwaits */
+extern void mwaits(void);
 
 /* Function: wait_vblank */
 extern void wait_vblank(void);
