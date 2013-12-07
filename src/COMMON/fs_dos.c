@@ -14,7 +14,7 @@ struct fndata
 	char name[13];
 };
 
-void
+int
 make_path_name(const char *drawer, char *file, char *path)
 {
 	int len, flen;
@@ -22,10 +22,10 @@ make_path_name(const char *drawer, char *file, char *path)
 	/* say hey it's got the drive in file string */
 	if (file[1] == ':') {
 		if (!valid_device(file[0] - 'A') )
-			return;
+			return 0;
 
 		strcpy(path, file);
-		return;
+		return 1;
 	}
 
 	strcpy(path, drawer);
@@ -38,6 +38,7 @@ make_path_name(const char *drawer, char *file, char *path)
 	}
 
 	strcat(path, file);
+	return 1;
 }
 
 void

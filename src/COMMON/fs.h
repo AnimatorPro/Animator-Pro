@@ -51,7 +51,7 @@ extern int valid_device(int d);
 extern int make_current_drawer(char *drawer, unsigned int size);
 
 /* Function: make_path_name */
-extern void make_path_name(const char *drawer, char *file, char *path);
+extern int make_path_name(const char *drawer, char *file, char *path);
 
 /* Function: make_path_name_suffix */
 extern void

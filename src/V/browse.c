@@ -12,6 +12,7 @@
 #include "commonst.h"
 #include "fli.h"
 #include "flicmenu.h"
+#include "fs.h"
 #include "jfile.h"
 #include "rfont.h"
 
@@ -26,7 +27,6 @@
 #define BRO_DX 77	
 #define BRO_DY 50
 
-extern struct name_list *wild_lst;
 extern char wild[];
 extern Vector redisplay_drawer;
 
@@ -934,7 +934,7 @@ redisplay_drawer = new_bdrawer;
 unzoom();
 push_most();
 save_undo();
-make_current_drawer();		/* get current directory and device... */
+make_current_drawer(vs.drawer, sizeof(vs.drawer)); /* get current directory and device... */
 strcpy(wild, "*.FLI");
 
 scroll = &bscroller;

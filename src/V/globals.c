@@ -182,7 +182,3 @@ int text_alloc;
 /* Set to 1 when want to blit under something.  Be sure to set it
    back to 0 again when you're through. */
 char under_flag;
-
-/* list of disk drives that look like they're really on this machine */
-char devices[26];
-int dev_count;

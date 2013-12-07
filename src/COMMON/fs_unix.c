@@ -42,7 +42,7 @@ make_current_drawer(char *drawer, unsigned int size)
 	return 0;
 }
 
-void
+int
 make_path_name(const char *drawer, char *file, char *path)
 {
 	int len;
@@ -60,6 +60,7 @@ make_path_name(const char *drawer, char *file, char *path)
 	}
 
 	strcat(path, file);
+	return 1;
 }
 
 void

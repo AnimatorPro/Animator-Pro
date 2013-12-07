@@ -484,6 +484,7 @@ switch (c)
 draw_mp();
 }
 
+#if defined(__TURBOC__)
 static int
 current_bad(int dev, long rroom)
 {
@@ -606,9 +607,22 @@ if (l < MIN_DFREE)
 	config_scratch();
 	}
 }
+#else /* __TURBOC__ */
+static int
+current_bad(int dev, long rroom)
+{
+	return FALSE;
+}
 
+config_scratch()
+{
+	return 1;
+}
 
-
+check_dfree()
+{
+}
+#endif /* __TURBOC__ */
 
 static char *pixel_options[] = {
 	vpaint_145 /* "Shrink x2" */,

@@ -11,6 +11,7 @@
 #include "dosstuff.h"
 #include "filemenu.str"
 #include "flicmenu.h"
+#include "fs.h"
 #include "memory.h"
 #include "ptr.h"
 
@@ -29,12 +30,10 @@ Vector redisplay_drawer;	/* helps share code with browse.c */
 static char *default_suffix;
 static char 	path_buf[180];
 static char fileq_result;
-struct name_list *wild_lst;
 extern WORD device;
 
 static void init_fscroller(void);
 static void redraw_fscroller(void);
-static void attr_wild_list(int attr, char *pat, char *prefix);
 static void inc_file(void);
 
 static int
@@ -57,7 +56,7 @@ if (m->text)
 	{
 	change_dev(m->identity);
 	unhi_group(cur_menu, m->group);
-	make_current_drawer();
+	make_current_drawer(vs.drawer, sizeof(vs.drawer));
 	hi_group(cur_menu, m->group);
 	(*redisplay_drawer)();
 	}
@@ -69,10 +68,7 @@ go_rootdir(m)
 Flicmenu *m;
 {
 hilight(m);
-if (vs.drawer[1] == ':')
-	strcpy(vs.drawer+2, cst_fsep);
-else
-	strcpy(vs.drawer, cst_fsep);
+fs_go_rootdir(vs.drawer, sizeof(vs.drawer));
 (*redisplay_drawer)();
 draw_sel(m);
 }
@@ -81,36 +77,8 @@ draw_sel(m);
 go_updir(m)
 Flicmenu *m;
 {
-int len;
-char *d,c;
-
 hilight(m);
-d = vs.drawer;
-len = strlen(d);
-/* move 'd' pointer past device if any */
-if (len >= 2)
-	{
-	if (d[1] == ':')
-		{
-		d += 2;
-		len -= 2;
-		}
-	}
-if (len > 0)
-	{
-	if (d[0] == '\\')
-		{
-		d++;
-		len--;
-		}
-	}
-while (--len >= 0)
-	{
-	c = d[len];
-	d[len] = 0;
-	if (c == '\\')
-		break;
-	}
+fs_go_updir(vs.drawer);
 draw_sel(m);
 (*redisplay_drawer)();
 }
@@ -172,17 +140,18 @@ return(FALSE);
 fsel_name(m)
 Flicmenu *m;
 {
-char *name;
+File_list *n;
 static long last_time;
 static char *last_name;
 long time;
 
 time = get80hz();
-if ((name = sel_name(m))!=NULL)
+if ((n = which_sel(m)) != NULL)
 	{
-	if (name[0] == '\\')	/* a directory */
+	char *name = n->name;
+	if (n->type == FILETYPE_DIRECTORY)
 		{
-		if (vs.drawer[strlen(vs.drawer)-1] == '\\')
+		if (vs.drawer[strlen(vs.drawer)-1] == DIR_SEPARATOR_CHAR)
 			name++;
 		if (!dir_too_long(vs.drawer, name))
 			{
@@ -220,7 +189,7 @@ feel_string_req(m);
 if (vs.drawer[0] != 0)
 	{
 	len = strlen(vs.drawer);
-	if (vs.drawer[len-1] == '\\')	/* perhaps extra slash at end? */
+	if (vs.drawer[len-1] == DIR_SEPARATOR_CHAR) /* perhaps extra slash at end? */
 		{
 		if (len == 1)	/* just say root, ok */
 			;
@@ -269,37 +238,6 @@ fileq_result = 1;
 close_menu();
 }
 
-
-static
-add_wild(fn, prefix)
-struct fndata *fn;
-char *prefix;
-{
-struct name_list *next;
-char buf[16];
-int dir;
-int c2;
-
-if (fn->name[0] == '.')	/* filter out '.' and '..' */
-	{
-	c2 = fn->name[1];
-	if (c2 == '.' || c2 == 0)
-		return(1);
-	}
-if ((next = askmem(sizeof(*next))) == NULL)
-	return(0);
-sprintf(buf, "%s%s", prefix, fn->name);
-if ((next->name = clone_string(buf)) == NULL)
-	{
-	freemem(next);
-	return(0);
-	}
-next->next = wild_lst;
-wild_lst = next;
-}
-
-
-
 free_wild_list()
 {
 free_name_list(wild_lst);
@@ -308,73 +246,12 @@ wild_lst = NULL;
 
 build_wild_list()
 {
-extern Name_list *sort_name_list();
+extern Name_list *sort_name_list(Name_list *list);
 
 /* nuke the old wild list... */
 free_wild_list();
-attr_wild_list(16, cst_wild_all, cst_fsep);	/* get all directories */
-attr_wild_list(0, wild, cst_);		/* and other files matching wild */
-wild_lst = sort_name_list(wild_lst);
-}
-
-static void
-attr_wild_list(int attr, char *pat, char *prefix)
-{
-union regs reg;
-int err;
-struct fndata *fn;
-
-/* get the 'DTA' area for directory search */
-reg.b.ah = 0x2f;
-sysint(0x21,&reg,&reg);
-fn = make_ptr(reg.w.bx, reg.w.es);
-
-/* now do the find first... */
-reg.b.ah = 0x4e;	/* int 21 function # */
-reg.w.cx = attr;	/* 'attribute' */
-reg.w.dx = ptr_offset(pat);
-reg.w.ds = ptr_seg(pat);
-if (!(sysint(0x21,&reg,&reg)&1))	/* check 'carry' flag for error... */
-	{
-	if ((fn->attribute&16) == attr)
-		add_wild(fn,prefix);
-	for (;;)
-		{
-		reg.b.ah = 0x4f;
-		if (sysint(0x21,&reg,&reg) & 1)
-			break;
-		if ((fn->attribute&16) == attr)
-			add_wild(fn,prefix);
-		}
-	}
-}
-
-
-
-make_path_name(drawer, file, path)
-char *drawer, *file, *path;
-{
-int len; 
-char c;
-
-if (file[1] == ':')	/* say hey it's got the drive in file string */
-	{
-	if (!valid_device(file[0] - 'A') )
-		return(0);
-	strcpy(path, file);
-	return(1);
-	}
-strcpy(path, drawer);
-/* if no : or \ at end of drawer better add it */
-if ((len = strlen(drawer)) != 0)
-	{
-	c = drawer[len-1];
-	if (c != ':' && c != '\\')
-		strcat(path, cst_fsep);
-	}
-/* add in the drawer */
-strcat(path, file);
-return(1);
+fs_build_wild_list(vs.drawer, wild);
+wild_lst = (File_list *) sort_name_list((Name_list *) wild_lst);
 }
 
 static char *
@@ -504,7 +381,7 @@ char *name;
 unzoom();
 hook_devices(&fdev3_sel, 14);
 redisplay_drawer = new_drawer;
-make_current_drawer();		/* get current directory and device... */
+make_current_drawer(vs.drawer, sizeof(vs.drawer)); /* get current directory and device... */
 ftitle_sel.text = prompt;	/* display prompt in move area... */
 default_suffix = suffix;	/* stash initial suffix... */
 sprintf(wild, "*%s", suffix);	/* and make up initial wild search*/

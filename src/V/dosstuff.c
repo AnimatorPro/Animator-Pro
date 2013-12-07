@@ -5,11 +5,10 @@
 #include <stdio.h>
 #include "jimk.h"
 #include "dosstuff.h"
+#include "fs.h"
 #include "ptr.h"
 
 extern WORD device;
-extern char devices[26];
-extern int dev_count;
 
 /* Tell dos it's time to go to another drive mon.  1 = A:, 2 = B: ...
    you get the idea */
@@ -27,8 +26,8 @@ return(!(sysint(0x21,&r,&r)&1) );
 /* Hey dos - I want to go to this directory.  Actually this changes
    both device and directory at once.  eg name could be
    		C:\VPAINT\FISHIES  B:B:B: */
-change_dir(name)
-char *name;
+int
+change_dir(const char *name)
 {
 union regs r;
 int d;
@@ -80,7 +79,8 @@ return(reg.b.al);
    floppies, we consult the BIOS equipment list for a count of # of
    floppies to fill in the potential A: and B: buttons. 
    B:B:B: */
-get_devices()
+void
+get_devices(void)
 {
 int i, floppies;
 int od;
@@ -119,21 +119,6 @@ for (i=3; i<=26; i++)
 		}
 	}
 }
-
-/* Is device really there?  Check device list to see. B:B:B: */
-valid_device(d)
-int d;
-{
-int i;
-
-for (i=0; i<dev_count; i++)
-	{
-	if (devices[i] == d)
-		return(1);
-	}
-return(0);
-}
-
 
 /* Figure out what drive we're in and what directory.  Save
    result in 'device' and 'vs.drawer' */

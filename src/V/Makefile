@@ -47,6 +47,8 @@ zoom.obj \
 	..\COMMON\clipit_.obj  \
 	..\COMMON\comp_.obj    \
 	..\COMMON\fccomp.obj   \
+	..\COMMON\fs.obj       \
+	..\COMMON\fs_dos.obj   \
 	..\COMMON\jfile.obj    \
 	..\COMMON\lccomp.obj   \
 	..\COMMON\peekpok_.obj \

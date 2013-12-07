@@ -55,27 +55,6 @@ while ((c = *s++) != 0)
 	}
 }
 
-/* string compare ignoring case */
-ustrcmp(as, bs)
-register char *as, *bs;
-{
-register char a, b;
-
-for (;;)
-	{
-	a = *as++;
-	b = *bs++;
-	if (isupper(a))
-		a = _tolower(a);
-	if (isupper(b))
-		b = _tolower(b);
-	if (a != b)
-		return(a-b);
-	if (a == 0)
-		return(0);
-	}
-}
-
 #ifdef SLUFFED
 ustrncmp(as, bs, len)
 register char *as, *bs;
@@ -131,13 +110,6 @@ cut_suffix(title, suffix)
 char *title, *suffix;
 {
 title[strlen(title) - strlen(suffix)] = 0;
-}
-
-suffix_in(string, suff)
-char *string, *suff;
-{
-string += strlen(string) - strlen(suff);
-return( ustrcmp(string, suff) == 0);
 }
 
 #ifdef SLUFFED

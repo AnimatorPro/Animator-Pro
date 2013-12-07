@@ -45,6 +45,8 @@ findfree.obj+
 fli.obj+
 flood.obj+
 freem.obj+
+fs.obj+
+fs_dos.obj+
 gel.obj+
 geometry.obj+
 gfx.obj+
