@@ -2,6 +2,7 @@
 #define JIMK_H
 
 #include <stdio.h>
+#include "jimk0.h"
 
 /* -------------  COMPILE SWITCHES --------------- */
 	/* Demo no save version? */
@@ -16,11 +17,6 @@
 #ifndef NULL
 #define NULL ((void *)0)
 #endif /* NULL */
-
-#define WORD int
-#define UWORD unsigned int
-#define BYTE char
-#define UBYTE unsigned char
 
 extern void *list_el();
 
@@ -179,25 +175,6 @@ extern PLANEPTR brushcursor;	/* points to brush that's drawn
 									or maybe NULL and invisible */
 
 #define absval(x) ((x) >= 0 ? (x) : -(x) )
-
-
-
-/* intel 8086 emulator... */
-struct byte_regs 
-	{
-	unsigned char al, ah, bl, bh, cl, ch, dl, dh;
-	unsigned int si, di, ds, es;
-	};
-struct word_regs
-	{
-	unsigned ax,bx,cx,dx;
-	unsigned int si, di, ds, es;
-	};
-union regs
-	{
-	struct byte_regs b;
-	struct word_regs w;
-	};
 
 /* This structure is your basic blitter food.  A rectangular image
    with associated color map. */

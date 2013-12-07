@@ -20,6 +20,8 @@ struct machead
 	char realtime;
 	char reserved[5];
 	};
+STATIC_ASSERT(macro, sizeof(struct machead) == 16);
+
 static struct machead mh;
 static Bfile macfile;
 
@@ -33,6 +35,8 @@ struct irec
 	union menukey mk;
 	WORD mouse_x, mouse_y;
 	};
+STATIC_ASSERT(macro, sizeof(struct irec) == 8);
+
 static struct irec ir;
 
 int recordall = 1;

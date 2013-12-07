@@ -33,6 +33,7 @@ struct fli_head
 	long session; /* stokes since file's been loaded. */
 	char reserved[88];
 	};
+STATIC_ASSERT(fli, sizeof(struct fli_head) == 128);
 
 #define FLI_FINISHED 1
 #define FLI_LOOPED	2
@@ -44,7 +45,7 @@ struct fli_frame
 	WORD chunks;
 	char pad[8];
 	};
-
+STATIC_ASSERT(fli, sizeof(struct fli_frame) == 16);
 
 #define FLI_COL 0
 #define FLI_WRUN 1
@@ -70,7 +71,7 @@ struct fli_chunk
 	long size;
 	WORD type;
 	};
-
+STATIC_ASSERT(fli, sizeof(struct fli_chunk) == 6);
 
 #define EMPTY_DCOMP 8  /* sizeof of a FLI_SKIP chunk with no change */
 
@@ -81,6 +82,7 @@ struct flx
 	long foff;
 	long fsize;
 	};
+STATIC_ASSERT(fli, sizeof(struct flx) == 8);
 typedef struct flx Flx;
 long ff_tflx(long size,int xcount,Flx *xpt);
 
@@ -131,6 +133,7 @@ struct vga_header
 	char unknown[10];
 	WORD w,h,d;
 	};
+STATIC_ASSERT(fli, sizeof(struct vga_header) == 18);
 
 #define PIC_MAGIC 0x9119
 struct pic_header
@@ -142,6 +145,7 @@ struct pic_header
 	long csize;
 	char reserved[16];
 	};
+STATIC_ASSERT(fli, sizeof(struct pic_header) == 32);
 
 #define PIC_UNC  0
 #define PIC_BRUN 1

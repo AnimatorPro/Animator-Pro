@@ -1,3 +1,8 @@
+#ifndef GIF_H
+#define GIF_H
+
+#include "jimk.h"
+
 struct gif_header
 	{
 	char giftype[6];
@@ -6,6 +11,7 @@ struct gif_header
 	unsigned char bgcolor;
 	unsigned char reserved;
 	};
+STATIC_ASSERT(gif, sizeof(struct gif_header) == 13);
 
 #define COLTAB	0x80
 #define COLMASK 0x70
@@ -18,6 +24,8 @@ struct gif_image
 	int x,y,w,h;
 	unsigned char flags;
 	};
+STATIC_ASSERT(gif, sizeof(struct gif_image) == 9);
+
 #define ITLV_BIT 0x40
 
 /* Various error codes used by decoder
@@ -35,3 +43,4 @@ struct gif_image
 #define CREATE_ERROR -4
 #define TOO_HIGH	-5
 
+#endif

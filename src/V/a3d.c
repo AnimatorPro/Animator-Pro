@@ -1371,6 +1371,7 @@ struct magic_moves
 	WORD magic;
 	WORD moves;
 	};
+STATIC_ASSERT(a3d, sizeof(struct magic_moves) == 4);
 
 /* Load up transformation stack from some file somebody must have liked
    sometime... */
