@@ -10,6 +10,8 @@
 #include "jfile.h"
 #include "palpull.str"
 
+static char palpull_buf_128[] = palpull_128;
+
 			static struct pull val_ble_pull = {
 				NONEXT,
 				1+0*CH_WIDTH, 1+8*CH_HEIGHT, 3+8*CH_WIDTH, 1+1*CH_HEIGHT, 
@@ -262,7 +264,7 @@
 				&pal_one_pull,
 				1+0*CH_WIDTH, 1+1*CH_HEIGHT, 3+12*CH_WIDTH, 1+1*CH_HEIGHT, 
 				NOCHILD,
-				palpull_128 /* " cycle draw" */,
+				palpull_buf_128 /* " cycle draw" */,
 				pull_text,
 				0,
 				};
