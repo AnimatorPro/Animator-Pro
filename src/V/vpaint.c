@@ -274,11 +274,13 @@ rezoom();
 #endif /* NOSAVE */
 }
 
+static char vpaint_buf_127[] = vpaint_127;
+static char vpaint_buf_128[] = vpaint_128;
 
 static char *cel_options[] = {
-	vpaint_127 /* "* Clear Key Color" */,
-	vpaint_128 /* "* Auto Fit Colors" */,
-	vpaint_129 /* "  Exit Menu" */,
+	vpaint_buf_127 /* "* Clear Key Color" */,
+	vpaint_buf_128 /* "* Auto Fit Colors" */,
+	vpaint_129     /* "  Exit Menu" */,
 	};
 
 check_cel_options()
