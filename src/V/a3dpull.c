@@ -6,13 +6,25 @@
 #include "flicmenu.h"
 #include "jfile.h"
 
+static char a3dpull_buf_100[] = a3dpull_100;
+static char a3dpull_buf_102[] = a3dpull_102;
+static char a3dpull_buf_103[] = a3dpull_103;
+static char a3dpull_buf_104[] = a3dpull_104;
+static char a3dpull_buf_105[] = a3dpull_105;
+static char a3dpull_buf_107[] = a3dpull_107;
+static char a3dpull_buf_108[] = a3dpull_108;
+static char a3dpull_buf_109[] = a3dpull_109;
+static char a3dpull_buf_110[] = a3dpull_110;
+static char a3dpull_buf_111[] = a3dpull_111;
+static char a3dpull_buf_112[] = a3dpull_112;
+
 			static Pull ado_outline_pull = 
 				{
 				NONEXT,
 				1, 1+5*CH_HEIGHT,
 				3+10*CH_WIDTH,1+CH_HEIGHT,
 				NOCHILD,
-				a3dpull_100 /* " OUTLINE" */,
+				a3dpull_buf_100 /* " OUTLINE" */,
 				pull_text,
 				};
 			static Pull ado_dots2_pull = 
@@ -30,7 +42,7 @@
 				1, 1+3*CH_HEIGHT,
 				3+10*CH_WIDTH,1+CH_HEIGHT,
 				NOCHILD,
-				a3dpull_102 /* " SPLINE" */,
+				a3dpull_buf_102 /* " SPLINE" */,
 				pull_text,
 				};
 			static Pull ado_poly_pull = 
@@ -39,7 +51,7 @@
 				1, 1+2*CH_HEIGHT,
 				3+10*CH_WIDTH,1+CH_HEIGHT,
 				NOCHILD,
-				a3dpull_103 /* " POLYGON" */,
+				a3dpull_buf_103 /* " POLYGON" */,
 				pull_text,
 				};
 			static Pull ado_cel_pull = 
@@ -48,7 +60,7 @@
 				1, 1+1*CH_HEIGHT,
 				3+10*CH_WIDTH,1+CH_HEIGHT,
 				NOCHILD,
-				a3dpull_104 /* " CEL" */,
+				a3dpull_buf_104 /* " CEL" */,
 				pull_text,
 				};
 			static Pull ado_frames_pull = 
@@ -57,7 +69,7 @@
 				1, 1+0*CH_HEIGHT,
 				3+10*CH_WIDTH,1+CH_HEIGHT,
 				NOCHILD,
-				a3dpull_105 /* " FLIC" */,
+				a3dpull_buf_105 /* " FLIC" */,
 				pull_text,
 				};
 		static Pull rtest_pull =
@@ -84,7 +96,7 @@ static Pull test_pull =
 				1, 1+5*CH_HEIGHT,
 				3+13*CH_WIDTH,1+CH_HEIGHT,
 				NOCHILD,
-				a3dpull_107 /* " COMPLETE" */,
+				a3dpull_buf_107 /* " COMPLETE" */,
 				pull_text,
 				};
 			static Pull ado_reverse_pull =
@@ -93,7 +105,7 @@ static Pull test_pull =
 				1, 1+4*CH_HEIGHT,
 				3+13*CH_WIDTH,1+CH_HEIGHT,
 				NOCHILD,
-				a3dpull_108 /* " REVERSE" */,
+				a3dpull_buf_108 /* " REVERSE" */,
 				pull_text,
 				};
 			static Pull ado_pong_pull =
@@ -102,7 +114,7 @@ static Pull test_pull =
 				1, 1+3*CH_HEIGHT,
 				3+13*CH_WIDTH,1+CH_HEIGHT,
 				NOCHILD,
-				a3dpull_109 /* " PING-PONG" */,
+				a3dpull_buf_109 /* " PING-PONG" */,
 				pull_text,
 				};
 			static Pull ado_still_pull =
@@ -111,7 +123,7 @@ static Pull test_pull =
 				1, 1+2*CH_HEIGHT,
 				3+13*CH_WIDTH,1+CH_HEIGHT,
 				NOCHILD,
-				a3dpull_110 /* " STILL" */,
+				a3dpull_buf_110 /* " STILL" */,
 				pull_text,
 				};
 			static Pull ado_easeo_pull = 
@@ -120,7 +132,7 @@ static Pull test_pull =
 				1, 1+1*CH_HEIGHT,
 				3+13*CH_WIDTH,1+CH_HEIGHT,
 				NOCHILD,
-				a3dpull_111 /* " OUT SLOW" */,
+				a3dpull_buf_111 /* " OUT SLOW" */,
 				pull_text,
 				};
 			static Pull ado_ease_pull = 
@@ -129,7 +141,7 @@ static Pull test_pull =
 				1, 1+0*CH_HEIGHT,
 				3+13*CH_WIDTH,1+CH_HEIGHT,
 				NOCHILD,
-				a3dpull_112 /* " IN SLOW" */,
+				a3dpull_buf_112 /* " IN SLOW" */,
 				pull_text,
 				};
 		static Pull roptions_pull =
