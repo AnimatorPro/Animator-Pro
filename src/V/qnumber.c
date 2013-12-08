@@ -107,7 +107,7 @@ static Flicmenu qreq_menu =
 static void
 menu_text_box(Flicmenu *m)
 {
-to_upper(m->text);
+/* to_upper(m->text); */
 wwtext(&vf, &sixhi_font,
 	m->text, m->x+2, m->y+2, m->width-3, m->height-3, sgrey,
 	a1blit, 0, 0);

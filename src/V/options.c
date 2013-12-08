@@ -1110,7 +1110,7 @@ Option_list *o;
 
 o = list_el(olist, vs.tool_ix);
 gary_menu_back(m);
-to_upper(o->help);
+/* to_upper(o->help); */
 wwtext(&vf, &sixhi_font,
 	o->help, m->x+2, m->y+2, m->width-3, m->height-3, sgrey,
 	a1blit, 0, 0);
