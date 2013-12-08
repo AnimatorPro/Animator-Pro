@@ -10,10 +10,13 @@
 
 Vscreen *zoom_form;
 
+static char zoom_buf_100[] = zoom_100;
+static char zoom_buf_101[] = zoom_101;
+
 static char *zoom_choices[] =
 	{
-	zoom_100 /* "  Times 2 " */,
-	zoom_101 /* "  Times 4" */,
+	zoom_buf_100 /* "  Times 2 " */,
+	zoom_buf_101 /* "  Times 4" */,
 	cst_cancel,
 	};
 
