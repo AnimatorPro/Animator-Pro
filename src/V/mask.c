@@ -173,16 +173,19 @@ if (newmask())
 	}
 }
 
+static char mask_buf_100[] = mask_100;
+static char mask_buf_101[] = mask_101;
+
 static char *stencil_options[] = {
-	mask_100 /* " Use" */,
-	mask_101 /* " Create" */,
-	mask_102 /* " Clip" */,
-	mask_103 /* " Invert" */,
-	mask_104 /* " View" */,
-	mask_105 /* " Paste" */,
-	mask_106 /* " Release" */,
-	mask_107 /* " Files..." */,
-	mask_108 /* " Exit Menu" */,
+	mask_buf_100 /* " Use" */,
+	mask_buf_101 /* " Create" */,
+	mask_102     /* " Clip" */,
+	mask_103     /* " Invert" */,
+	mask_104     /* " View" */,
+	mask_105     /* " Paste" */,
+	mask_106     /* " Release" */,
+	mask_107     /* " Files..." */,
+	mask_108     /* " Exit Menu" */,
 	};
 
 static void
