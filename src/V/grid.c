@@ -8,13 +8,15 @@
 #include "flicmenu.h"
 #include "grid.str"
 
+static char grid_buf_100[] = grid_100;
+
 static char *grid_options[] = {
-		grid_100 /* " use" */,
-		grid_101 /* " create" */,
-		grid_102 /* " paste" */,
-		grid_103 /* " view" */,
-		grid_104 /* " Exit Menu" */,
-		};
+	grid_buf_100 /* " use" */,
+	grid_101     /* " create" */,
+	grid_102     /* " paste" */,
+	grid_103     /* " view" */,
+	grid_104     /* " Exit Menu" */,
+	};
 
 static void qpaste_grid(void);
 static void qsee_grid(void);
