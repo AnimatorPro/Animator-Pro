@@ -139,6 +139,7 @@ tmove8(int width, int height,
 
 	src += sstride * sy + sx;
 	dst += dstride * dy + dx;
+	undo += dstride * dy + dx;
 
 	for (; height > 0; height--) {
 		int x;
@@ -148,6 +149,7 @@ tmove8(int width, int height,
 
 		src += sstride;
 		dst += dstride;
+		undo += dstride;
 	}
 }
 
