@@ -258,8 +258,9 @@ struct cgrid
 
 struct point
 	{
-	int x,y;
+	WORD x, y;
 	};
+STATIC_ASSERT(jimk, sizeof(struct point) == 4);
 typedef struct point Point;
 
 struct vertex
