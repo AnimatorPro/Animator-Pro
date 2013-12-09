@@ -42,8 +42,8 @@ struct flicmenu
 	void *text;					/* data for seeme and feelmes */
 	int (*seeme)();				/* function to draw a button */
 	int (*feelme)();			/* function on left click */
-	int *group;					/* a group of radio buttons share this */
-	int identity;				/* which one of radio button this is */
+	WORD *group;				/* a group of radio buttons share this */
+	WORD identity;				/* which one of radio button this is */
 	WORD key_equiv;				/* keyboard equivalent */
 	int (*optme)();				/* function on right click */
 	UBYTE disabled;				/* 1 if greyed out */

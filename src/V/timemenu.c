@@ -502,7 +502,7 @@ redraw_range_buttons();
 static void
 see_range_button(Flicmenu *m)
 {
-int ix;
+WORD ix;
 
 ix = m->identity;
 if (vs.start_seg == vs.starttr[ix] && vs.stop_seg == vs.stoptr[ix])
