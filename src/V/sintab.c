@@ -111,7 +111,7 @@ xy[1] = itmult(s,rad);
 rotate_points(theta, cx, cy, spt, dpt, count)
 int theta;
 int cx, cy;
-int *spt, *dpt;
+WORD *spt, *dpt;
 int count;
 {
 int x,y;
