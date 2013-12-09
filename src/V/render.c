@@ -311,7 +311,7 @@ return(color);
 }
 
 static void
-clip_xy(int *p)
+clip_xy(WORD *p)
 {
 int i;
 
