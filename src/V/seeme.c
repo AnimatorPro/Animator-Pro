@@ -285,7 +285,7 @@ ncnum(Flicmenu *m, int offset)
 char buf[10];
 char *otext;
 
-sprintf(buf, "%d", offset + *((int *)(m->text)));
+sprintf(buf, "%d", offset + *((WORD *)(m->text)));
 otext = m->text;
 m->text = buf;
 mb_inside(m,bright(m));
