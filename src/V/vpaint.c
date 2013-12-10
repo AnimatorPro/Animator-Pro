@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "jimk.h"
+#include "a3d.h"
 #include "cblock_.h"
 #include "commonst.h"
 #include "fli.h"
@@ -105,17 +106,62 @@ if ((title = get_filename(vpaint_105 /* "Save settings file?" */,
 	}
 }
 
+#define offsetof(st, m) ((size_t)(&((st *)0)->m))
+
+int
+load_settings(FILE *f, Vsettings *s)
+{
+	long size = 0;
+
+	size += jread(f, &s->size, sizeof(LONG));
+	size += jread(f, &s->type, offsetof(Vsettings, move3) - offsetof(Vsettings, type));
+
+	if (load_ado_setting(f, &s->move3))
+		size += SIZEOF_ADO_SETTING;
+
+	size += jread(f, &s->ado_first, sizeof(Vsettings) - offsetof(Vsettings, ado_first));
+
+	return (size == s->size);
+}
+
+int
+save_settings(FILE *f, const Vsettings *s)
+{
+	LONG size_on_disk = SIZEOF_VSETTINGS;
+	long size = 0;
+
+	size += jwrite(f, &size_on_disk, sizeof(LONG));
+	size += jwrite(f, &s->type, offsetof(Vsettings, move3) - offsetof(Vsettings, type));
+
+	if (save_ado_setting(f, &s->move3))
+		size += SIZEOF_ADO_SETTING;
+
+	size += jwrite(f, &s->ado_first, sizeof(Vsettings) - offsetof(Vsettings, ado_first));
+
+	return (size == size_on_disk);
+}
+
+#undef offsetof
+
 static int
 load_defaults(char *name)
 {
 Vsettings new;
+FILE *f;
 
-if (!read_gulp(name, &new, (long)sizeof(new)))
+if ((f = jopen(name, JREADONLY)) == NULL)
 	{
+	cant_find(name);
+	return(0);
+	}
+if (!load_settings(f, &new))
+	{
+	jclose(f);
 	return(0);
 	}
 if (new.type != SETTINGS_MAGIC)
 	{
+	jclose(f);
 	continu_line(vpaint_107 /* "Not a good settings file" */);
 	return(0);
 	}
@@ -129,6 +175,7 @@ if (cur_menu)		/* and menu position */
 	new.rmyoff = cur_menu->y;
 exchange_words(&new, &vs, sizeof(vs)/sizeof(WORD));
 rethink_settings();
+jclose(f);
 return(1);
 }
 
@@ -136,10 +183,26 @@ static int
 save_defaults(char *name)
 {
 Vsettings old;
+FILE *f;
+
+if ((f = jcreate(name)) == NULL)
+    {
+	cant_create(name);
+	return(0);
+	}
 
 copy_structure(&vs, &old, sizeof(old));
 old.type = SETTINGS_MAGIC;
-return(write_gulp(name, &old, (long)sizeof(old) ));
+
+if (!save_settings(f, &old))
+	{
+	truncated(name);
+	jclose(f);
+	jdelete(name);
+	return(0);
+	}
+jclose(f);
+return(1);
 }
 
 

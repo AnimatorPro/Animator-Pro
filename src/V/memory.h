@@ -23,10 +23,10 @@ extern void freememory(UWORD *pt);
 #include <stdlib.h>
 
 #if defined(__TURBOC__)
-#define laskmem(size)       farmalloc(size)
+#define laskmem(size)       farmalloc((size) > 0 ? (size) : 1)
 #define lbegmem(size)       farmalloc(size)
 #else /* __TURBOC__ */
-#define laskmem(size)       malloc(size)
+#define laskmem(size)       malloc((size) > 0 ? (size) : 1)
 #define lbegmem(size)       malloc(size)
 #endif /* __TURBOC__ */
 

@@ -1373,7 +1373,7 @@ struct magic_moves
 	};
 STATIC_ASSERT(a3d, sizeof(struct magic_moves) == 4);
 
-static int
+int
 load_ado_setting(FILE *f, struct ado_setting *as)
 {
 	unsigned int size = 0;
@@ -1447,7 +1447,7 @@ BADOUT:
 	return(0);
 }
 
-static int
+int
 save_ado_setting(FILE *f, const struct ado_setting *as)
 {
 	unsigned int size = 0;

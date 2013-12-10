@@ -9,6 +9,7 @@
 #include "jfile.h"
 #include "memory.h"
 #include "savefli.str"
+#include "vpaint.h"
 
 char dirty_file;
 char dirty_frame;
@@ -93,7 +94,7 @@ if (tflx)
 	jseek(tflx, 0L, 0);
 	jwrite(tflx, &fhead, (long)sizeof(fhead) );
 	vs.rmyoff = quick_menu.y;
-	jwrite(tflx, &vs, (long)sizeof(vs) );
+	save_settings(tflx, &vs);
 	jwrite(tflx, cur_flx, (long)(fhead.frames_in_table)*sizeof(Flx) );
 	}
 }

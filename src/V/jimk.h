@@ -255,6 +255,7 @@ struct cgrid
 	WORD divx, divy;
 	WORD startc, dc;
 	};
+STATIC_ASSERT(jimk, sizeof(struct cgrid) == 8);
 
 struct point
 	{
@@ -265,8 +266,9 @@ typedef struct point Point;
 
 struct vertex
 	{
-	int x,y,z;
+	WORD x,y,z;
 	};
+STATIC_ASSERT(jimk, sizeof(struct vertex) == 6);
 typedef struct vertex Vertex;
 
 extern char loaded_screen;	/* another flag kludge */
@@ -288,7 +290,7 @@ extern char loaded_screen;	/* another flag kludge */
 #define SIZEOF_ADO_SETTING 50
 
 /* An optics move (well except for the path) */
-struct ado_setting
+struct GCC_PACKED ado_setting
 	{
 	struct ado_setting *next;
 	Vertex spin_center;
@@ -379,9 +381,10 @@ extern struct config_ext vconfg_ext;
 
 struct bundle
 	{
-	int bun_count;
+	WORD bun_count;
 	UBYTE bundle[256];
 	};
+STATIC_ASSERT(jimk, sizeof(struct bundle) == 258);
 
 extern UBYTE *cluster_bundle();
 
@@ -426,12 +429,15 @@ extern WORD mc_colors[];
 #endif /* SLUFFED */
 
 #define VP_SETTING 0x9499
+
+#define SIZEOF_VSETTINGS 1076
+
 /* See globals.c initialization of default_vs for more comments on
    this structure.  This is where I try to put all the global
    variables in program */
-struct vsettings 
+struct GCC_PACKED vsettings
 	{
-	long size;	/* How long struct is so can expand it later ok */
+	LONG size;	/* How long struct is so can expand it later ok */
 	WORD type;	/* == VP_SETTING */
 	WORD frame_ix;		/* Current frame */
 	WORD ccolor;		/* Current drawing color */
@@ -529,6 +535,11 @@ struct vsettings
 	char big_pad[40];
 	};
 typedef struct vsettings Vsettings;
+
+#if defined(__TURBOC__)
+STATIC_ASSERT(jimk, sizeof(struct vsettings) == SIZEOF_VSETTINGS);
+#endif
+
 extern Vsettings vs, default_vs;
 
 extern long dfree(int device);

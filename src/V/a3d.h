@@ -1,4 +1,7 @@
+#ifndef A3D_H
+#define A3D_H
 
+#include <stdio.h>
 
 #define ADO_SPIN 0
 #define ADO_SIZE 1
@@ -18,3 +21,11 @@
 #define OPS_CEL 1
 #define OPS_POLY 2
 #define OPS_SPLINE 3
+
+/* Function: load_ado_setting */
+extern int load_ado_setting(FILE *f, struct ado_setting *as);
+
+/* Function: save_ado_setting */
+extern int save_ado_setting(FILE *f, const struct ado_setting *as);
+
+#endif

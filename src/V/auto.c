@@ -36,6 +36,7 @@
 #include "peekpok_.h"
 #include "rfont.h"
 #include "truecol_.h"
+#include "vpaint.h"
 
 extern char new_tflx_name[];
 extern WORD x_0,y_0,x_1,y_1;
@@ -691,7 +692,7 @@ if (jwrite(new_tflx, &fhead, (long)sizeof(fhead)) < sizeof(fhead))
 	{
 	goto NEWTRUNC;
 	}
-if (jwrite(new_tflx, &vs, (long)sizeof(vs)) < sizeof(vs))
+if (!save_settings(new_tflx, &vs))
 	{
 	goto NEWTRUNC;
 	}

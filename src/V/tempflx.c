@@ -7,6 +7,7 @@
 #include "jfile.h"
 #include "memory.h"
 #include "peekpok_.h"
+#include "vpaint.h"
 
 struct fli_head fhead;
 Flx *cur_flx;
@@ -63,7 +64,7 @@ if (jwrite(tflx,&fhead,(long)sizeof(fhead) ) < sizeof(fhead) )
 	noroom();
 	goto BAD;
 	}
-if (jwrite(tflx, &vs, (long)sizeof(vs) ) < sizeof(vs) )
+if (!save_settings(tflx, &vs))
 	{
 	noroom();
 	goto BAD;
@@ -80,7 +81,7 @@ if (jwrite(tflx, cur_flx, tsz) < tsz)
 
 /* Make up first frame of two chunks ... default color and clear screen */
 fl = cur_flx;
-of = sizeof(fhead) + sizeof(vs) + ITABLE*sizeof(Flx);
+of = sizeof(fhead) + SIZEOF_VSETTINGS + ITABLE*sizeof(Flx);
 #define FULLCMSIZE (4+COLORS*3)
 sz = sizeof(frame)+2*sizeof(chunk) + FULLCMSIZE;
 zero_structure(&frame, sizeof(frame) );
@@ -158,7 +159,7 @@ if (jwrite(tflx,&fhead,(long)sizeof(fhead) ) < sizeof(fhead) )
 	noroom();
 	goto BAD;
 	}
-if (jwrite(tflx,&vs,(long)sizeof(vs) ) < sizeof(vs) )
+if (!save_settings(tflx, &vs))
 	{
 	noroom();
 	goto BAD;
@@ -196,7 +197,7 @@ if (fhead.type != FLIX_MAGIC)
 	notafli(tflxname);
 	goto BADEND;
 	}
-if (jread(tflx, &vs, (long)sizeof(vs)) < sizeof(vs))
+if (!load_settings(tflx, &vs))
 	{
 	noroom();
 	goto BADEND;
@@ -252,7 +253,7 @@ if (jwrite(tflx, &fhead, (long)sizeof(fhead)) < sizeof(fhead))
 	noroom();
 	goto BADEND;
 	}
-if (jwrite(tflx, &vs, (long)sizeof(vs) ) < sizeof(vs) )
+if (!save_settings(tflx, &vs))
 	{
 	noroom();
 	goto BADEND;
@@ -262,7 +263,7 @@ if (jwrite(tflx, cur_flx, acc) < acc)
 	noroom();
 	goto BADEND;
 	}
-acc += sizeof(fhead) + sizeof(vs);
+acc += sizeof(fhead) + SIZEOF_VSETTINGS;
 return(acc);
 BADEND:
 return(0);

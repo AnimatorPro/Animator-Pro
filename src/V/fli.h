@@ -99,7 +99,7 @@ extern long fli_comp_frame();
 extern long fli_comp1();
 extern long write_tflx();
 
-#define FLX_OFFSETS ((long)sizeof(struct fli_head) + sizeof(vs) )
+#define FLX_OFFSETS ((long)sizeof(struct fli_head) + (SIZEOF_VSETTINGS))
 
 #ifdef SLUFFED
 struct vedit
