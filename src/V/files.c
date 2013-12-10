@@ -277,11 +277,11 @@ else
 static int
 verify_poly(char *name)
 {
-Poly p;
+unsigned char buf[SIZEOF_POLY];
 
-if (read_gulp(name, &p, (long)sizeof(p)))
+if (read_gulp(name, buf, SIZEOF_POLY))
 	{
-	if (p.polymagic == POLYMAGIC)
+	if (buf[7] == POLYMAGIC)
 		return(1);
 	continu_line(files_138   /* "Not a polygon/path file." */);
 	}

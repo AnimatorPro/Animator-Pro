@@ -620,14 +620,20 @@ polystartool(WP_PETAL);
 static int
 l_working_poly(Bfile *f)
 {
+unsigned int size = 0;
+char dummy[4];
 int i;
 int count;
 LLpoint *this, *last;
 int abort;
 
 poly_nopoints(&working_poly);
-if (bread(f, &working_poly, sizeof(working_poly)) < 
-	sizeof(working_poly) )
+
+size += bread(f, &working_poly.pt_count, sizeof(working_poly.pt_count));
+size += bread(f,  dummy, 4); /* clipped_list */
+size += bread(f, &working_poly.closed, sizeof(working_poly.closed));
+size += bread(f, &working_poly.polymagic, sizeof(working_poly.polymagic));
+if (size != SIZEOF_POLY)
 	{
 	goto ABORT;
 	}
@@ -673,14 +679,22 @@ return(res);
 static int
 s_poly(Bfile *f, Poly *poly)
 {
+unsigned int size = 0;
+char dummy[4];
 int i;
 LLpoint *pt;
 
 poly->polymagic = POLYMAGIC;
 pt = poly->clipped_list;
 poly->clipped_list = NULL;
-if (bwrite(f, poly, sizeof(Poly) ) < sizeof(Poly) )
+
+size += bwrite(f, &poly->pt_count, sizeof(poly->pt_count));
+size += bwrite(f,  dummy, 4); /* clipped_list */
+size += bwrite(f, &poly->closed, sizeof(poly->closed));
+size += bwrite(f, &poly->polymagic, sizeof(poly->polymagic));
+if (size != SIZEOF_POLY)
 	return(0);
+
 poly->clipped_list = pt;
 i = poly->pt_count;
 while (--i >= 0)
