@@ -285,6 +285,7 @@ extern char loaded_screen;	/* another flag kludge */
 /* biggest positive integer */
 #define BIG_WORD ((31*1024)+1023)
 
+#define SIZEOF_ADO_SETTING 50
 
 /* An optics move (well except for the path) */
 struct ado_setting
@@ -299,7 +300,9 @@ struct ado_setting
 	Vertex move;
 	};
 
-
+#if defined(__TURBOC__)
+STATIC_ASSERT(jimk, sizeof(struct ado_setting) == SIZEOF_ADO_SETTING);
+#endif /* __TURBOC__ */
 
 #ifdef SLUFFED
 #define MMD_PAINT 0

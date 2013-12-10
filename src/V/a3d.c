@@ -1373,6 +1373,30 @@ struct magic_moves
 	};
 STATIC_ASSERT(a3d, sizeof(struct magic_moves) == 4);
 
+static int
+load_ado_setting(FILE *f, struct ado_setting *as)
+{
+	unsigned int size = 0;
+	char dummy[4];
+
+	size += jread(f, dummy, 4); /* next */
+	size += jread(f, &as->spin_center, sizeof(as->spin_center));
+	size += jread(f, &as->spin_axis, sizeof(as->spin_axis));
+	size += jread(f, &as->spin_theta, sizeof(as->spin_theta));
+	size += jread(f, &as->itheta1, sizeof(as->itheta1));
+	size += jread(f, &as->itheta2, sizeof(as->itheta2));
+	size += jread(f, &as->size_center, sizeof(as->size_center));
+	size += jread(f, &as->xp, sizeof(as->xp));
+	size += jread(f, &as->xq, sizeof(as->xq));
+	size += jread(f, &as->yp, sizeof(as->yp));
+	size += jread(f, &as->yq, sizeof(as->yq));
+	size += jread(f, &as->bp, sizeof(as->bp));
+	size += jread(f, &as->bq, sizeof(as->bq));
+	size += jread(f, &as->move, sizeof(as->move));
+
+	return (size == SIZEOF_ADO_SETTING);
+}
+
 /* Load up transformation stack from some file somebody must have liked
    sometime... */
 static
@@ -1404,7 +1428,7 @@ as = NULL;
 i = mm.moves;
 while (--i >= 0)
 	{
-	if (jread(fd, &vs.move3, sizeof(vs.move3) ) != sizeof(vs.move3) )
+	if (!load_ado_setting(fd, &vs.move3))
 		{
 		truncated(title);
 		goto BADOUT;
@@ -1421,6 +1445,30 @@ return(1);
 BADOUT:
 	jclose(fd);
 	return(0);
+}
+
+static int
+save_ado_setting(FILE *f, const struct ado_setting *as)
+{
+	unsigned int size = 0;
+	char dummy[4] = { 0, 0, 0, 0 };
+
+	size += jwrite(f, dummy, 4); /* next */
+	size += jwrite(f, &as->spin_center, sizeof(as->spin_center));
+	size += jwrite(f, &as->spin_axis, sizeof(as->spin_axis));
+	size += jwrite(f, &as->spin_theta, sizeof(as->spin_theta));
+	size += jwrite(f, &as->itheta1, sizeof(as->itheta1));
+	size += jwrite(f, &as->itheta2, sizeof(as->itheta2));
+	size += jwrite(f, &as->size_center, sizeof(as->size_center));
+	size += jwrite(f, &as->xp, sizeof(as->xp));
+	size += jwrite(f, &as->xq, sizeof(as->xq));
+	size += jwrite(f, &as->yp, sizeof(as->yp));
+	size += jwrite(f, &as->yq, sizeof(as->yq));
+	size += jwrite(f, &as->bp, sizeof(as->bp));
+	size += jwrite(f, &as->bq, sizeof(as->bq));
+	size += jwrite(f, &as->move, sizeof(as->move));
+
+	return (size == SIZEOF_ADO_SETTING);
 }
 
 /* Try and save the transformation stack */
@@ -1448,7 +1496,7 @@ if (jwrite(fd, &mm, (long)sizeof(mm)) != sizeof(mm) )
 while (--i >= 0)
 	{
 	as = list_el(&vs.move3, i);
-	if (jwrite(fd, as, sizeof(vs.move3) ) != sizeof(*as) )
+	if (!save_ado_setting(fd, as))
 		{
 		truncated(title);
 		goto BADOUT;
