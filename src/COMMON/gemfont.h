@@ -11,33 +11,39 @@
    This is followed by the data which is a single bitmap.
    */
 
+#define SIZEOF_FONT_HDR 88
+
 struct	font_hdr {
-int	id;			/* some random number, doesnt matter */
-int	size;		/* Size in points.  Somehow related to pixel height. */
+WORD	id;			/* some random number, doesnt matter */
+WORD	size;		/* Size in points.  Somehow related to pixel height. */
 char	facename[32];	/* Give it a name, don't really matter. */
-int	ADE_lo;		/* Lowest ascii character in font */
-int	ADE_hi;		/* Highest ascii character in font */
-int	top_dist;
-int	asc_dist;	/* Ascender to baseline?? */
-int	hlf_dist;
-int	des_dist;	/* des for descender. */
-int	bot_dist;
-int	wchr_wdt;	/* Widest character width. */
-int	wcel_wdt;	/* Widest 'cell' width (includes distance to next character) */
-int	lft_ofst;
-int	rgt_ofst;
-int	thckning;
-int	undrline;
-int	lghtng_m;	/* Lightening mask.  Just use 0x55aa. */
-int	skewng_m;	/* Skewing mask for italics. If 1 bit rotate this line. 0xaaaa*/
-int	flags;		/* Just set to zero.  Half-assed intel swap if otherwise. */
+WORD	ADE_lo;		/* Lowest ascii character in font */
+WORD	ADE_hi;		/* Highest ascii character in font */
+WORD	top_dist;
+WORD	asc_dist;	/* Ascender to baseline?? */
+WORD	hlf_dist;
+WORD	des_dist;	/* des for descender. */
+WORD	bot_dist;
+WORD	wchr_wdt;	/* Widest character width. */
+WORD	wcel_wdt;	/* Widest 'cell' width (includes distance to next character) */
+WORD	lft_ofst;
+WORD	rgt_ofst;
+WORD	thckning;
+WORD	undrline;
+WORD	lghtng_m;	/* Lightening mask.  Just use 0x55aa. */
+WORD	skewng_m;	/* Skewing mask for italics. If 1 bit rotate this line. 0xaaaa*/
+WORD	flags;		/* Just set to zero.  Half-assed intel swap if otherwise. */
 char *hz_ofst;  /* On disk byte offset from beginning of file to hor. offsets */
 WORD *ch_ofst;	/* On disk byte offset to beginning of ?? kerning ?? data. */
 WORD *fnt_dta;	/* On disk byte offset to beginning of bitmap. */
-int	frm_wdt;	/* Byte width of bitmap. */
-int	frm_hgt;	/* Pixel height of bitmap. */
+WORD	frm_wdt;	/* Byte width of bitmap. */
+WORD	frm_hgt;	/* Pixel height of bitmap. */
 struct font_hdr	*nxt_fnt; /* Set to 0 */
 }; 
+
+#if defined(__TURBOC__)
+STATIC_ASSERT(gemfont, sizeof(struct font_hdr) == SIZEOF_FONT_HDR);
+#endif /* __TURBOC__ */
 
 /* face identifer for font loaded from disk... */
 #define CYP_CUSTOM_FONT	0xabc

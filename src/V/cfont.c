@@ -146,6 +146,41 @@ return(0);
 }
 #endif /* USEFUL */
 
+static int
+load_font_header(FILE *fd, struct font_hdr *fnt)
+{
+	unsigned int size = 0;
+	char dummy[4];
+
+	size += jread(fd, &fnt->id, sizeof(fnt->id));
+	size += jread(fd, &fnt->size, sizeof(fnt->size));
+	size += jread(fd,  fnt->facename, sizeof(fnt->facename));
+	size += jread(fd, &fnt->ADE_lo, sizeof(fnt->ADE_lo));
+	size += jread(fd, &fnt->ADE_hi, sizeof(fnt->ADE_hi));
+	size += jread(fd, &fnt->top_dist, sizeof(fnt->top_dist));
+	size += jread(fd, &fnt->asc_dist, sizeof(fnt->asc_dist));
+	size += jread(fd, &fnt->hlf_dist, sizeof(fnt->hlf_dist));
+	size += jread(fd, &fnt->des_dist, sizeof(fnt->des_dist));
+	size += jread(fd, &fnt->bot_dist, sizeof(fnt->bot_dist));
+	size += jread(fd, &fnt->wchr_wdt, sizeof(fnt->wchr_wdt));
+	size += jread(fd, &fnt->wcel_wdt, sizeof(fnt->wcel_wdt));
+	size += jread(fd, &fnt->lft_ofst, sizeof(fnt->lft_ofst));
+	size += jread(fd, &fnt->rgt_ofst, sizeof(fnt->rgt_ofst));
+	size += jread(fd, &fnt->thckning, sizeof(fnt->thckning));
+	size += jread(fd, &fnt->undrline, sizeof(fnt->undrline));
+	size += jread(fd, &fnt->lghtng_m, sizeof(fnt->lghtng_m));
+	size += jread(fd, &fnt->skewng_m, sizeof(fnt->skewng_m));
+	size += jread(fd, &fnt->flags, sizeof(fnt->flags));
+	size += jread(fd,  dummy, 4); /* hz_ofst */
+	size += jread(fd,  dummy, 4); /* ch_ofst */
+	size += jread(fd,  dummy, 4); /* fnt_dta */
+	size += jread(fd, &fnt->frm_wdt, sizeof(fnt->frm_wdt));
+	size += jread(fd, &fnt->frm_hgt, sizeof(fnt->frm_hgt));
+	size += jread(fd,  dummy, 4); /* nxt_fnt */
+
+	return (size == SIZEOF_FONT_HDR);
+}
+
 /* Load up a font chosen by user. */
 static int
 load_cfont(char *title)
@@ -158,7 +193,7 @@ if ((fd = jopen(title, 0)) == 0)
 	cant_find(title);
 	return(0);
 	}
-if (jread(fd, &cfont, (long)sizeof(cfont)) < sizeof(cfont))
+if (!load_font_header(fd, &cfont))
 	{
 	truncated(title);
 	goto BADEND;
