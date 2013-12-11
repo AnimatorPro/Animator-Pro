@@ -6,6 +6,7 @@
 #include "flicmenu.h"
 #include "commonst.h"
 #include "filedata.str"
+#include "fs.h"
 
 extern bwtext(), text_boxp1(), print_list(),
 	undo_drawer(), undo_file(), fsel_name(), fq_ok(), new_dev(),
@@ -248,7 +249,7 @@ static Flicmenu rootdir_sel =
 	ccorner_text,
 	go_rootdir,
 	NOGROUP, 0,
-	'\\',
+	DIR_SEPARATOR_CHAR,
 	NOOPT,
 	};
 char wild[12];
