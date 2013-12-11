@@ -226,7 +226,7 @@ register Name_list *n;
 register Name_scroller *scroller;
 WORD name_count, line_count;
 WORD cheight, cwidth;
-WORD twidth;
+WORD twidth, width;
 WORD xoff, yoff;
 WORD i;
 char *string;
@@ -240,6 +240,7 @@ cheight = scroller->ycount;
 twidth *= CH_WIDTH;
 xoff = m->x + ((m->width-twidth)>>1) + 1;
 yoff = m->y + TOPNAME_OFF;
+width = m->x + m->width - xoff;
 i = scroller->top_name;
 while (--i >= 0)
 	{
@@ -259,7 +260,7 @@ while (--i >= 0)
 	twidth = strlen(string);
 	if (twidth > cwidth)
 		twidth = cwidth;
-	gtext(   string, xoff, yoff, sblack);
+	systext_clip(width, string, xoff, yoff, sblack);
 	n = n->next;
 	yoff += CHEIGHT;
 	}

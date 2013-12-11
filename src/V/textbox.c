@@ -96,6 +96,8 @@ while ((name = *names++) != NULL)
 		{
 		name[XMAX/CHAR_WIDTH - 4] = 0;
 		};
+	if (this_width > XMAX - 2 * BORDER)
+		this_width = XMAX - 2 * BORDER;
 	if (this_width > width)
 		width = this_width;
 	}
@@ -151,7 +153,8 @@ xoff = ts.box.MinX + BORDER;
 yoff = ts.box.MinY + BORDER;
 while ((name = *names++) != NULL) 
 	{
-	gtext(name, xoff, yoff, sblack);
+	systext_clip(ts.box.MaxX - ts.box.MinX - 2 * BORDER,
+			name, xoff, yoff, sblack);
 	yoff += LINE_HEIGHT;
 	}
 return (yoff);
