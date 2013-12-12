@@ -990,11 +990,14 @@ fli_tseek(&uf, vs.frame_ix, tr_r1);
 vs.frame_ix = tr_r1;
 for (i=0;;i++)
 	{
+	int delay;
 	check_input();
 	if (key_hit || RJSTDN)
 		{
 		goto OUT;
 		}
+	for (delay = 4; delay >= 0; delay--)
+		get80hz();
 	if ((tf = alloc_screen()) != NULL)
 		{
 		copy_form(&uf, tf);
