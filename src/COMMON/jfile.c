@@ -43,7 +43,7 @@ jrename(const char *oldname, const char *newname)
 FILE *
 jcreate(const char *title)
 {
-	return jopen(title, JWRITEONLY);
+	return fopen(title, "wb+");
 }
 
 FILE *
