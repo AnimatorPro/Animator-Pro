@@ -4,11 +4,14 @@
 #include <string.h>
 #include <SDL/SDL.h>
 #include "jimk.h"
-#include "io_.h"
 #include "fs.h"
+#include "io_.h"
+#include "jfile.h"
 #include "peekpok_.h"
 
 extern Vscreen menu_vf;
+
+static void init_config(void);
 
 #include "memory.str"
 outta_memory()
@@ -41,6 +44,8 @@ init_sys(void)
 	SDL_EnableUNICODE(SDL_ENABLE);
 	SDL_ShowCursor(SDL_DISABLE);
 
+	init_config();
+	copy_structure(&default_vs, &vs, sizeof(vs));
 	copy_cmap(init_cmap, sys_cmap);
 	init_seq();
 	make_current_drawer(vs.drawer, sizeof(vs.drawer));
@@ -81,15 +86,77 @@ char conf_name[] = "aa.cfg";			/* Small stuff unlikely to change*/
 
 struct config vconfg;					/* Ram image of v.cfg */
 struct config_ext vconfg_ext;
+static struct config ivconfg = {VCFGMAGIC,2,0,"", 0, 0};
+
+extern char goodconf;
+extern char init_drawer[];
 
 void
 rewrite_config(void)
 {
+	FILE *f;
+	char odrawer[80];
+
+	strcpy(odrawer, vs.drawer);
+	change_dir(init_drawer);
+	if ((f = jcreate(conf_name)) != 0) {
+		jwrite(f, &vconfg, sizeof(vconfg) );
+		jwrite(f, &vconfg_ext, sizeof(vconfg_ext) );
+		jclose(f);
+	}
+	change_dir(odrawer);
+}
+
+static void
+save_settings(void)
+{
+	extern FILE *tflx;
+
+	flush_tempflx();	/* make sure latest configuration stuff is written */
+	jclose(tflx);
+	change_dir(init_drawer);
+	jcopyfile(tflxname, default_name);
+	change_dir(vs.drawer);
+	tflx = jopen(tflxname, 2);
 }
 
 void
 new_config(void)
 {
+	save_settings();
+}
+
+static void
+init_config(void)
+{
+	FILE *jcf;
+	int dev = 0;
+
+	if ((jcf = jopen(conf_name, 0)) != 0) {
+		if (jread(jcf, &vconfg, sizeof(vconfg)) == sizeof(vconfg) ) {
+			if (vconfg.cmagic == VCFGMAGIC) {
+				/* deal with variable sized configuration extention */
+				zero_structure(&vconfg_ext, sizeof(vconfg_ext));
+				if (vconfg.extention_size > 0) {
+					if (vconfg.extention_size > sizeof(vconfg_ext))
+						vconfg.extention_size = sizeof(vconfg_ext);
+					if (jread(jcf, &vconfg_ext, vconfg.extention_size))
+						goodconf = 1;
+				}
+				else {
+					goodconf = 1;
+				}
+				vconfg.extention_size = sizeof(vconfg_ext);
+			}
+		}
+		jclose(jcf);
+	}
+
+	if (!goodconf) {
+		copy_structure(&ivconfg, &vconfg, sizeof(vconfg));
+		vconfg.scratch_drive = dev;
+		zero_structure(&vconfg_ext, sizeof(vconfg_ext));
+	}
 }
 
 /*--------------------------------------------------------------*/
