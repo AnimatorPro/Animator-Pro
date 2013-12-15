@@ -1,6 +1,0 @@
-void main(void)
-{
-	Qtext("atof(\"3.141592\") = %f", atof("3.141592"));
-	Qtext("atof(\"-9.9e-8\") = %e", atof("-9.9e-8"));
-}
-

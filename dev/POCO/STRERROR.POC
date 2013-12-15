@@ -1,9 +1,0 @@
-void main(void)
-{
-	int i;
-
-	for (i = 0; i > -50; --i) {
-		printf("Err %04d = %s\n", i, strerror(i));
-	}
-}
-

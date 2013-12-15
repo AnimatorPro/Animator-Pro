@@ -1,8 +1,0 @@
-/* Test what happens when there's no body of an if statement */
-#pragma poco echo "expect>expecting a number, variable, or string got '}'"
-
-main()
-{
-puts("I shouldn't compile");
-if (1)
-}

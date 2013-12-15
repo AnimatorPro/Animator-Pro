@@ -1,4 +1,0 @@
-#setdef REXLIB_CODE def
-#setdef PUBLIC_CODE def
-#setdef PRIVATE_CODE undef
-#setdef JFILE_INTERNALS undef

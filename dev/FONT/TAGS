@@ -1,9 +1,0 @@
-debug_log type1.c /^FILE *debug_log;
-in_debug type1.c /^Boolean in_debug = FALSE;
-open_debug_log type1.c /^void open_debug_log()
-dvprintf type1.c /^void dvprintf(char *fmt, va_
-dlog type1.c /^void dlog(char *fmt, ...)
-ddlog type1.c /^void ddlog(char *fmt, ...)
-type1_debug type1.c /^void type1_debug()	// Just a
-vfont_gftext type1.c /^Errcode vfont_gftext(Raster 
-type1_font_dev type1.c /^Font_dev type1_font_dev = {

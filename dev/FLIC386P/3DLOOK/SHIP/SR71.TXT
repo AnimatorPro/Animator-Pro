@@ -1,7 +1,0 @@
-sr71-l3.flc
-sr71-l2.flc
-sr71-l1.flc
-sr71-c.flc
-sr71-r1.flc
-sr71-r2.flc
-sr71-r3.flc

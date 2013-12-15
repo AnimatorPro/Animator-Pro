@@ -1,7 +1,0 @@
-4/20/92 - Sent out second version to Autodesk QA.  Some fixes to prototypes
-	in various .h files to bring it closer to documentation.
-4/27/92 - Uploaded third version to Autodesk QA.  Add's __8087 symbol to
-	math.lib,  and fixes bug in colorutl\ClosestColor().
-4/28/92 - Changed dnumpic.poc and patchtst.poc a bit and uploaded to
-	qa as poekit04.zip.
-6/12/92 - Added testmake.bat.  Sent to Autodesk as poekit15.zip.
