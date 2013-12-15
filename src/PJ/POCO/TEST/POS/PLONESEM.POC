@@ -1,0 +1,13 @@
+/* test lone semicolons */
+#pragma poco echo "expect>Success"
+
+	;
+
+main()
+{
+printf("Success");;
+ ; ;
+}
+
+;
+

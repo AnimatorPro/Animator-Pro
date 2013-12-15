@@ -1,0 +1,9 @@
+!include "..\inc\make.inc"
+!include "objlist.inc"
+
+v8514dev.lib: $(OBJ) objlist.inc
+	del  $<
+	wlib $< @&&%
+$(OBJ)
+%
+

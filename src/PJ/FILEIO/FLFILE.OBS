@@ -1,0 +1,8 @@
++flopen.obj
++flread.obj
++flreados.obj
++flwrite.obj
++flwriteo.obj
++flseek.obj
++fltell.obj
++flstdiol.obj

@@ -1,0 +1,10 @@
+..\poekit\testmake.bat
+..\poekit\inc\*.*
+..\poekit\lib\*.*
+..\poekit\skeleton\*.*
+..\poekit\poepatch\*.*
+..\poekit\colorutl\*.*
+..\poekit\lookup\*.*
+..\poekit\otdemo\*.*
+..\poekit\pdrdemo\*.*
+..\poekit\pstamp\*.*

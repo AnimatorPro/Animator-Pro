@@ -1,0 +1,15 @@
++libdummy.obj
++cmapshif.obj
++getplane.obj
++nullinit.obj
++nullrlib.obj
++nullrast.obj
++grctblil.obj
++grcommon.obj
++grc_comp.obj
++grcdcomp.obj
++grcfulib.obj
++grclib.obj
++grcset.obj
++grcrwcal.obj
++custrast.obj

@@ -1,0 +1,16 @@
+*.c
+*.cc
+*.h
+*.asm
+*.i*
+*.lnk
+*.bat
+*.mak
+makefile
+makefile.*
+tagslist
+*.mac
+*.poc
+*.doc
+*.obs
+*.cpy

@@ -1,0 +1,10 @@
+// start
+ 
+main()
+{
+FILE *f;
+ 
+    f = fopen("foo.gif", "w");
+    fclose(f);
+}
+
