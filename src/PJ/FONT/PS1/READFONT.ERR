@@ -1,2 +1,0 @@
-readfont.c(571): Warning! W107: Missing return value for function 'dcstring'
-readfont.c(658): Warning! W202: Symbol 'fname' has been defined, but not referenced
