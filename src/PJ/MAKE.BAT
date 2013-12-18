@@ -17,7 +17,7 @@ rem ***** check which version we want to make, default to test version ****
 	if not ERRORLEVEL 1 goto make_test
 
 	echo .
-	choice "Warning! configuring for TEST version. Continue? [y/n] " y
+	choice "Warning! configuring for TEST version. Continue?" y
 	if not ERRORLEVEL 1 goto out
 	copy >nul inc\reltest.h inc\release.h
 	touch >nul inc\release.h
@@ -46,7 +46,7 @@ rem ***** check which version we want to make, default to test version ****
 	if not ERRORLEVEL 1 goto make_release
 
 	echo .
-	choice "Warning! using %-foo% Continue? [y/n] " y
+	choice "Warning! using %-foo% Continue?" y
 	if not ERRORLEVEL 1 goto out
 	copy >nul %-foo% inc\release.h
 	touch >nul inc\release.h
