@@ -7,7 +7,8 @@ C_IL	= ..\	  # include path list for C   (format: \path\;\path\;...)
 A_IL	= ..\	  # include path list for ASM (format: \path\,\path\,...)
 
 CC	= wcc386
-CPF = -d2 -j -oxt -fpi -w2 -DFLILIB_CODE
+CPF = -j -fpi -w2 -DFLILIB_CODE
+# removed -oxt -d2 to reduce memory usage
 
 AS	= 386asm
 APF = -80386 -NOLIST -TWOCASE

@@ -9,7 +9,8 @@ REXSTARTUP = ..\lib\rexentry.obj	# startup, 1st file in link obj list
 CC  = wcc386				# can use wcc386 or wcc386p
 AS  = 386asm				# can use 386asm or 386asmp
 
-CPF = -j -3s -oxt -fpi87 -w2		# default compile options
+# removed -oxt to reduce memory usage
+CPF = -j -3s -fpi87 -w2			# default compile options
 APF = -80386 -NOLIST -TWOCASE		# default assembler options
 
 CFLAGS =				# brain-dead wmake gives warning on

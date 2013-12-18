@@ -25,7 +25,8 @@ A_IL	= ..\inc\ # include path list for ASM (format: \path\,\path\,...)
 CC  = wcc386
 
 #add -d2 to the CPF to get debugging info
-CPF = -j -3s -oxt -fpi -w2 -DFLILIB_CODE -fi=compiler.h 
+CPF = -j -3s -fpi -w2 -DFLILIB_CODE -fi=compiler.h 
+# removed -oxt to reduce memory usage
 
 AS  = 386asm
 APF = -80386 -NOLIST -TWOCASE

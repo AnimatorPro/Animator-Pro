@@ -4,7 +4,8 @@ IL = \paa\rexlib\inc\\
 ## these macros are for the watcom 386 c compiler
 
 CC = wcc386 $(CFLAGS)
-CPF = -j -3s -oxt -fpi87 -w2 -I$(IL) $(EXTCPF)
+CPF = -j -3s -fpi87 -w2 -I$(IL) $(EXTCPF)
+# removed -oxt to reduce memory usage
 
 .c.obj:
 	$(CC) $*.c $(CPF) 

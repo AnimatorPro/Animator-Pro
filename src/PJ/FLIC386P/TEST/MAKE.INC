@@ -5,7 +5,8 @@ C_IL	= ..\	  # include path list for C   (format: \path\;\path\;...)
 A_IL	= ..\	  # include path list for ASM (format: \path\,\path\,...)
 
 CC  = wcc386
-CPF = -j -3s -oxt -fpi -w2 -DFLILIB_CODE
+CPF = -j -3s -fpi -w2 -DFLILIB_CODE
+# removed -oxt to reduce memory usage
 
 AS  = 386asm
 APF = -80386 -NOLIST -TWOCASE
@@ -16,4 +17,3 @@ APF = -80386 -NOLIST -TWOCASE
 .asm.obj:
 	$(AS) $< $(APF) -i $(A_IL) $(EXTAPF) $(AFLAGS)
 
-
