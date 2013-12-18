@@ -79,7 +79,7 @@ rem ***** check which version we want to make, default to test version ****
 	cd inc
 	tcmake ilib
 	cd ..
-	tcmake %1 %2 %3 %4 %5 %6 %7 %8 %9
+	wmake %1 %2 %3 %4 %5 %6 %7 %8 %9
 	if ERRORLEVEL 1 goto error
 	if not "%1"=="" goto out
 	cd rastlib
