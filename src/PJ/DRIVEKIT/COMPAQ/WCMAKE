@@ -57,7 +57,7 @@ compaq.drv: $(DRIVERO)
 # COMPILER RULES
 
 #CC = wcc386 $*.c -i=$(IL) -j -3s -ox -fpc -w2
-CC = wcc386p $*.c -j -3s -ox -fpc -w2
+CC = wcc386 $*.c -j -3s -ox -fpc -w2
 
 .c.obj:
 	$(CC)

@@ -6,7 +6,7 @@ IL = \paa\inc\\
 
 # cc and "c post flags"
 
-CC = wcc386p
+CC = wcc386
 CPF = -I$(IL) -j -3s -fpi -w2 -oxt -d2
 
 .c.obj:

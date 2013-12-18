@@ -22,7 +22,7 @@
 C_IL	= ..\inc\ # include path list for C   (format: \path\;\path\;...)
 A_IL	= ..\inc\ # include path list for ASM (format: \path\,\path\,...)
 
-CC  = wcc386p
+CC  = wcc386
 
 #add -d2 to the CPF to get debugging info
 CPF = -j -3s -oxt -fpi -w2 -DFLILIB_CODE -fi=compiler.h 

@@ -11,7 +11,7 @@ A_IL	= ..\ # include files path for ASM
 
 LFILE	= ..\flc386ws.lib	# lib for watcom extender, stack parms
 
-CC	= wcc386p
+CC	= wcc386
 CPF = -j -ox -fpi -w2 -3s -g=CGROUP
 
 .c.obj:

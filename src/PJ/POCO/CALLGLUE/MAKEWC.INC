@@ -10,7 +10,7 @@ CFLAGS=
 # CC = wcc386 $(CFLAGS)
 # CPF = -I$(IL) -j -3s -ox -fpc -w2
 
-CC = wcc386p $(CFLAGS)
+CC = wcc386 $(CFLAGS)
 CPF = -I$(IL) -j -3s -ox -fpc -w2
 
 .c.obj:

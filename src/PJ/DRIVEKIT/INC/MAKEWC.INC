@@ -5,7 +5,7 @@ IL = $(HOME)inc\			# where to find C & ASM include files
 
 ## these macros are for the watcom 386 c compiler
 
-CC  = wcc386p
+CC  = wcc386
 CPF = -j -3s -ox -fpi87 -w2 -DREX_LOADABLE
 
 .c.obj:

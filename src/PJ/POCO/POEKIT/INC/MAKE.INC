@@ -6,7 +6,7 @@ C_IL	   = ..\inc\			# include files path for C
 A_IL	   = ..\inc\			# include files path for ASM
 REXSTARTUP = ..\lib\rexentry.obj	# startup, 1st file in link obj list
 
-CC  = wcc386p				# can use wcc386 or wcc386p
+CC  = wcc386				# can use wcc386 or wcc386p
 AS  = 386asm				# can use 386asm or 386asmp
 
 CPF = -j -3s -oxt -fpi87 -w2		# default compile options

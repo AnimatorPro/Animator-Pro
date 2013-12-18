@@ -3,7 +3,7 @@ IL = \paa\inc\\
 
 ## these macros are for the watcom 386 c compiler
 
-CC = wcc386p $(CFLAGS)
+CC = wcc386 $(CFLAGS)
 CPF = -j -3s -oxt -fpi -w2 -I$(IL) $(EXTCPF)
 
 .c.obj:
