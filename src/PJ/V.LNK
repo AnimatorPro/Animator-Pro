@@ -26,8 +26,7 @@ LIBRARY
 \paa\menus\menulib.lib,
 \paa\poco\poco.lib,
 \paa\softmenu\softmenu.lib,
-\paa\pjhigh\pjhigh.lib,
-\paa\widget\widget.lib
+\paa\pjhigh\pjhigh.lib
 FILE
 \paa\a3d.obj,
 \paa\a3ddat.obj,

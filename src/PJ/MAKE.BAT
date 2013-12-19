@@ -138,10 +138,6 @@ rem ***** check which version we want to make, default to test version ****
 	call make host
 	if ERRORLEVEL 1 goto error
 	cd ..
-	cd widget
-	tcmake
-	if ERRORLEVEL 1 goto error
-	cd ..
 
 if not "%-all%"=="all" goto link_release
 
