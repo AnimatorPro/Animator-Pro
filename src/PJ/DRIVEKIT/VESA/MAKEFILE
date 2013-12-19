@@ -22,8 +22,7 @@ vesa.drv: $(DRIVEROBJ) $(COMMONOBJ) vesa.lib makefile
 	copy vesa.drv \paa\resource\vesa.drv
 
 vesa.lib: $(DRIVERLIB)
-	del  vesa.lib
-	wlib vesa.lib $(DRIVERLIB)
+	wlib /n vesa.lib $(DRIVERLIB)
 
 archive:
 	zip vesa$(VERSION) $(SOURCE1) $(EXTRAS)

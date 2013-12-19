@@ -15,5 +15,4 @@ libs:
 
 ps1.lib: 	$(O)\
 		 		ps1.obs
-	del ps1.lib
-	wlib ps1.lib @ps1.obs 
+	wlib /n ps1.lib @ps1.obs 

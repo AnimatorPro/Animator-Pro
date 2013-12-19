@@ -12,6 +12,5 @@ libs: wndolib.lib
 
 wndolib.lib: 	$(O)\
 		 		wndolib.obs
-	del wndolib.lib
-	wlib wndolib.lib @wndolib.obs 
+	wlib /n wndolib.lib @wndolib.obs 
 

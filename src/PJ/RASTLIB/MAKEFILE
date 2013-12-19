@@ -77,8 +77,7 @@ raster.lib:	makefile\
 			$(CBOXO)	clipbox.obs\
 			$(RASTCALLO) rastcall.obs\
 			$(VDRIVERO) vdriver.obs
- @del raster.lib
- wlib raster.lib \
+ wlib /n raster.lib \
 	 @rastlow.obs @bymrast.obs @bymutil.obs @bitrast.obs \
 	 @mcgarast.obs @clipbox.obs @rastcall.obs @vdriver.obs
 

@@ -47,8 +47,7 @@ all: libjpeg.lib
 # libjpeg.lib is useful if you are including the JPEG software in a larger
 # program; you'd include it in your link, rather than the individual modules.
 libjpeg.lib: $(LIBOBJECTS) $(RFILE)
-    del libjpeg.lib
-	wlib libjpeg.lib @$(RFILE)
+	wlib /n libjpeg.lib @$(RFILE)
 
 # linker response file for same
 $(RFILE) : Makefile

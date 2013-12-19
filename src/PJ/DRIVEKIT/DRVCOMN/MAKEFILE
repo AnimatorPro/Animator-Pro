@@ -18,8 +18,7 @@ EXTRAS	= *.h *.i *.lnk *.obs makefile versions.doc
 # LINK RULES
 
 drvcomn.lib: $(COMMONO) drvcomn.obs makefile
-	del drvcomn.lib
-	wlib drvcomn.lib @drvcomn.obs
+	wlib /n drvcomn.lib @drvcomn.obs
 
 $(COMMONO): drvcomn.h drvcomn.i
 
@@ -27,4 +26,3 @@ archive:
 	zip drv$(VERSION) $(SOURCE2)
 	zip drv$(VERSION) $(SOURCE3)
 	zip drv$(VERSION) $(EXTRAS)
-

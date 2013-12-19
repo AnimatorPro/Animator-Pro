@@ -10,5 +10,4 @@ objlib: softmenu.lib
 
 softmenu.lib: $(O)\
 			  softmenu.obs
-	del softmenu.lib
-	wlib softmenu.lib @softmenu.obs 
+	wlib /n softmenu.lib @softmenu.obs 

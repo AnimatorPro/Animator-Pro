@@ -58,7 +58,5 @@ libs: pjfli.lib
 pjfli.lib:	$(ALLO)\
 			fli.obs\
 			pjfli.obs
-			del pjfli.lib
-			wlib pjfli.lib @fli.obs @pjfli.obs
+			wlib /n pjfli.lib @fli.obs @pjfli.obs
 
-

@@ -120,8 +120,7 @@ trdfile.lib: makefile\
 			 $(JFUTILSO) jfutils.obs\
 			 $(LFILEO) lfile.obs\
 			 $(FLFILEO) flfile.obs
- @del trdfile.lib
- wlib trdfile.lib \
+ wlib /n trdfile.lib \
 	@dos.obs @jdevice.obs @fparse.obs @jfiletrd.obs \
 	@jfutils.obs @lfile.obs @flfile.obs
 
@@ -135,8 +134,7 @@ doslfile.lib:	makefile\
 				$(JFUTILSO) jfutils.obs\
 				$(LFILEO) lfile.obs\
 				$(FLFILEO) flfile.obs
- @del doslfile.lib
- wlib doslfile.lib \
+ wlib /n doslfile.lib \
 	@dos.obs @jdevice.obs @fparse.obs @jfiledos.obs \
 	@jfutils.obs @lfile.obs @flfile.obs
 
@@ -149,8 +147,7 @@ dosfile.lib:	makefile\
 				$(JFILEDO) jfiledos.obs\
 				$(JFUTILSO) jfutils.obs\
 		   		$(FFILEO) ffile.obs
- @del dosfile.lib
- wlib dosfile.lib \
+ wlib /n dosfile.lib \
 	@dos.obs @jdevice.obs @fparse.obs @jfiledos.obs \
 	@jfutils.obs @ffile.obs
 

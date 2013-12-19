@@ -120,6 +120,5 @@ $(SYSLIBO): $(IL)aasyslib.i
 
 $(L)aasyslib.lib:	$(BASMS) $(SYSLIBO)\
 					aasyslib.obs
- del $(L)aasyslib.lib
- wlib $(L)aasyslib.lib @aasyslib.obs 
+ wlib /n $(L)aasyslib.lib @aasyslib.obs 
 

@@ -12,5 +12,4 @@ libs: menulib.lib
 
 menulib.lib: $(O)\
 		 	menulib.obs
-	del menulib.lib
-	wlib menulib.lib @menulib.obs 
+	wlib /n menulib.lib @menulib.obs 

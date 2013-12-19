@@ -89,6 +89,5 @@ startup.obj: $(IL)release.h
 
 pjhigh.lib: $(O)\
 			pjhigh.obs
-	del pjhigh.lib
-	wlib pjhigh.lib @pjhigh.obs
+	wlib /n pjhigh.lib @pjhigh.obs
 

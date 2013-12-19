@@ -131,7 +131,6 @@ gfx.lib:	makefile\
 			$(RCELO) rcel.obs\
 			$(RECTANGO) rectang.obs\
 			$(GFXLIBO) gfxlib.obs
- del gfx.lib
- wlib gfx.lib \
+ wlib /n gfx.lib \
 	@image.obs @rastgfx.obs @procblit.obs @rcel.obs @rectang.obs @gfxlib.obs
 

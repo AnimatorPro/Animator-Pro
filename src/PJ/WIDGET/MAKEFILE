@@ -8,8 +8,7 @@ libs: widget.lib
 
 widget.lib: rexwidge.obj\
 		 	widget.obs
-	del widget.lib
-	wlib widget.lib @widget.obs 
+	wlib /n widget.lib @widget.obs 
 
 test: widget.rex test.exp
 	@donothin

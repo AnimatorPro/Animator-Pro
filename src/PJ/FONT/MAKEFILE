@@ -15,5 +15,4 @@ libs: fontlib.lib
 
 fontlib.lib: 	$(O)\
 		 		fontlib.obs
-	del fontlib.lib
-	wlib fontlib.lib @fontlib.obs 
+	wlib /n fontlib.lib @fontlib.obs 

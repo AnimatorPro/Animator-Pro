@@ -19,6 +19,5 @@ $(STDIOLIBO): $(IL)stdiolib.i $(IL)stdiolib.h
 
 $(L)stdiolib.lib:	$(STDIOLIBO)\
 					stdiolib.obs
- del $(L)stdiolib.lib
- wlib $(L)stdiolib.lib @stdiolib.obs 
+ wlib /n $(L)stdiolib.lib @stdiolib.obs 
 

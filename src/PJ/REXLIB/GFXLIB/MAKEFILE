@@ -24,6 +24,5 @@ $(GFXLIBO): $(IL)gfxlib.i
 
 $(L)gfxlib.lib:	$(GFXLIBO)\
 				gfxlib.obs
- del $(L)gfxlib.lib
- wlib $(L)gfxlib.lib @gfxlib.obs 
+ wlib /n $(L)gfxlib.lib @gfxlib.obs 
 

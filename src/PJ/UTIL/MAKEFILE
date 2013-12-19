@@ -94,8 +94,7 @@ trdutil.lib: makefile\
 			$(FORMATFO) formatf.obs\
 			$(IMATHO)	intmath.obs\
 			$(FMATHO)	fpmath.obs
- @del trdutil.lib
- wlib trdutil.lib \
+ wlib /n trdutil.lib \
 	@lowutil.obs @memtrd.obs @memutil.obs @strutil.obs \
 	@linklist.obs @formatf.obs @intmath.obs @fpmath.obs
 
@@ -110,8 +109,7 @@ cutil.lib: makefile\
 			$(FORMATFO) formatf.obs\
 			$(IMATHO) intmath.obs\
 			$(FMATHO) fpmath.obs
- @del cutil.lib
- wlib cutil.lib \
+ wlib /n cutil.lib \
 	@lowutil.obs @memc.obs @memutil.obs @strutil.obs \
 	@linklist.obs @formatf.obs @intmath.obs @fpmath.obs
 

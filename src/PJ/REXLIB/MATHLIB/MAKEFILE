@@ -103,7 +103,6 @@ wc_fchop.obj: wc_fchop.asm
 
 $(L)mathhost.lib: $(BASMS) $(CALLO) $(LOCALO)\
 				  mathhost.obs
- del $(L)mathhost.lib
- wlib $(L)mathhost.lib @mathhost.obs 
+ wlib /n $(L)mathhost.lib @mathhost.obs 
 
 
