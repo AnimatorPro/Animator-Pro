@@ -1,7 +1,6 @@
 !include ..\inc\make.inc
 
 all: breaksub.poe cycle.poe
-	donothin
 
 BREAKO = breaksub.obj
 
@@ -13,4 +12,3 @@ CYCLEO = cycle.obj
 cycle.poe: $(CYCLEO)
 	fastlink $(REXSTARTUP) @cycle.lnk -RELEXE cycle.poe
 
-

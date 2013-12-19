@@ -11,7 +11,6 @@ widget.lib: rexwidge.obj\
 	wlib /n widget.lib @widget.obs 
 
 test: widget.rex test.exp
-	@donothin
 
 test.exp: test.obj rexwidge.obj 
 	wlink @test.lnk option map 

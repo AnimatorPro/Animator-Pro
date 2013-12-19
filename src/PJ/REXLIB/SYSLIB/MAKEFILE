@@ -14,7 +14,6 @@ BASMS = malloc.asm zalloc.asm free.asm memset.asm memcpy.asm memcmp.asm\
  pj_delet.asm pj_renam.asm pj_exist.asm boxf.asm clock.asm
 
 built_asms: $(BASMS)
-	@donothin
 
 clock.asm: makecall.bat sljump.i
 	makecall pj_clock_1000 clock

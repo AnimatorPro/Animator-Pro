@@ -5,7 +5,6 @@ allmem.exp: allmem.obj
 	wlink @allmem.lnk
 
 testrex: test.rex
-	@donothin
 
 test.exp: test.obj testmain.obj testasm.obj
 	wlink @test.lnk option map

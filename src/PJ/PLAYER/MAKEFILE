@@ -15,7 +15,6 @@ PJLIBS = \paa\rastlib\raster.lib\
 
 
 all: \paa\aniplay.exp stepper.exp
-	@donothin
 
 PLAYERO = doscript.obj errors.obj player.obj playfli.obj playpull.obj\
  playmenu.obj playanim.obj token.obj pjstubs.obj

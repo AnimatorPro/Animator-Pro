@@ -14,7 +14,6 @@ BASMS = acos.asm asin.asm atan.asm atan2.asm ceil.asm cos.asm cosh.asm\
  		log10.asm modf.asm pow.asm sin.asm sinh.asm sqrt.asm tan.asm tanh.asm
 
 built_asms: $(BASMS)
-	@donothin
 
 acos.asm: rmlcall.bat rmljump.i 
 	rmlcall acos
