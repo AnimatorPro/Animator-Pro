@@ -94,11 +94,10 @@ trdutil.lib: makefile\
 			$(FORMATFO) formatf.obs\
 			$(IMATHO)	intmath.obs\
 			$(FMATHO)	fpmath.obs
- @copy lowutil.obs+memtrd.obs+memutil.obs+strutil.obs trdutil.lbc
- @copy trdutil.lbc+linklist.obs+formatf.obs+intmath.obs+fpmath.obs trdutil.lbc
  @del trdutil.lib
- wlib trdutil.lib @trdutil.lbc
- @del trdutil.lbc
+ wlib trdutil.lib \
+	@lowutil.obs @memtrd.obs @memutil.obs @strutil.obs \
+	@linklist.obs @formatf.obs @intmath.obs @fpmath.obs
 
 ## utilities library with all modules and "C" memory allocation
 
@@ -111,9 +110,8 @@ cutil.lib: makefile\
 			$(FORMATFO) formatf.obs\
 			$(IMATHO) intmath.obs\
 			$(FMATHO) fpmath.obs
- @copy lowutil.obs+memc.obs+memutil.obs+strutil.obs cutil.lbc
- @copy cutil.lbc+linklist.obs+formatf.obs+intmath.obs+fpmath.obs cutil.lbc
  @del cutil.lib
- wlib cutil.lib @cutil.lbc
- @del cutil.lbc
+ wlib cutil.lib \
+	@lowutil.obs @memc.obs @memutil.obs @strutil.obs \
+	@linklist.obs @formatf.obs @intmath.obs @fpmath.obs
 

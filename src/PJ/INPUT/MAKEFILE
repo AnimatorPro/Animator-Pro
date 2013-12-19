@@ -38,10 +38,8 @@ input.lib:	makefile\
 			$(LOWDOSO) lowdos.obs\
 			$(INPUTHIO) inputhi.obs\
 			$(INPUTO) input.obs
- @copy lowdos.obs+input.obs+inputhi.obs input.lbc
  @del input.lib
- wlib input.lib @input.lbc 
- @del input.lbc
+ wlib input.lib @lowdos.obs @input.obs @inputhi.obs
 
 ##**** input library for pj with loadable input drivers and macro handling
 
@@ -54,9 +52,7 @@ macinput.lib:	makefile\
 				$(LOWDOSO) lowdos.obs\
 				$(INPUTHIO) inputhi.obs\
 				$(MACINPUTO) macinput.obs
- @copy lowdos.obs+macinput.obs+inputhi.obs macinput.lbc
  @del macinput.lib
- wlib macinput.lib @macinput.lbc 
- @del macinput.lbc
+ wlib macinput.lib @lowdos.obs @macinput.obs @inputhi.obs
 
 

@@ -124,23 +124,14 @@ GFXLIBO = \
  scaletab.obj
 
 
-gfx.lbc: makefile\
-		 image.obs\
-		 rastgfx.obs\
-		 procblit.obs\
-		 rcel.obs\
-		 rectang.obs\
-		 gfxlib.obs
- @copy image.obs+rastgfx.obs+procblit.obs+rcel.obs+rectang.obs gfx.lbc
- @copy gfx.lbc+gfxlib.obs gfx.lbc
-
-gfx.lib:	gfx.lbc\
-			$(IMAGEO)\
-			$(RASTGFXO)\
-			$(PBLITO)\
-			$(RCELO)\
-			$(RECTANGO)\
-			$(GFXLIBO)
+gfx.lib:	makefile\
+			$(IMAGEO) image.obs\
+			$(RASTGFXO) rastgfx.obs\
+			$(PBLITO) procblit.obs\
+			$(RCELO) rcel.obs\
+			$(RECTANGO) rectang.obs\
+			$(GFXLIBO) gfxlib.obs
  del gfx.lib
- wlib gfx.lib @gfx.lbc
+ wlib gfx.lib \
+	@image.obs @rastgfx.obs @procblit.obs @rcel.obs @rectang.obs @gfxlib.obs
 

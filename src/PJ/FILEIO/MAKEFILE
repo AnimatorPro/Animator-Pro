@@ -120,11 +120,10 @@ trdfile.lib: makefile\
 			 $(JFUTILSO) jfutils.obs\
 			 $(LFILEO) lfile.obs\
 			 $(FLFILEO) flfile.obs
- @copy dos.obs+jdevice.obs+fparse.obs+jfiletrd.obs trdfile.lbc
- @copy trdfile.lbc+jfutils.obs+lfile.obs+flfile.obs trdfile.lbc
  @del trdfile.lib
- wlib trdfile.lib @trdfile.lbc 
- @del trdfile.lbc
+ wlib trdfile.lib \
+	@dos.obs @jdevice.obs @fparse.obs @jfiletrd.obs \
+	@jfutils.obs @lfile.obs @flfile.obs
 
 #** library with dos and lstdio file system and all utilities *
 
@@ -136,11 +135,10 @@ doslfile.lib:	makefile\
 				$(JFUTILSO) jfutils.obs\
 				$(LFILEO) lfile.obs\
 				$(FLFILEO) flfile.obs
- @copy dos.obs+jdevice.obs+fparse.obs+jfiledos.obs doslfile.lbc
- @copy doslfile.lbc+jfutils.obs+lfile.obs+flfile.obs doslfile.lbc
  @del doslfile.lib
- wlib doslfile.lib @doslfile.lbc 
- @del doslfile.lbc
+ wlib doslfile.lib \
+	@dos.obs @jdevice.obs @fparse.obs @jfiledos.obs \
+	@jfutils.obs @lfile.obs @flfile.obs
 
 #** library with dos and stdio (no lfile) file system and all utilities *
 
@@ -151,9 +149,8 @@ dosfile.lib:	makefile\
 				$(JFILEDO) jfiledos.obs\
 				$(JFUTILSO) jfutils.obs\
 		   		$(FFILEO) ffile.obs
- @copy dos.obs+jdevice.obs+fparse.obs+jfiledos.obs dosfile.lbc
- @copy dosfile.lbc+jfutils.obs+ffile.obs dosfile.lbc
  @del dosfile.lib
- wlib dosfile.lib @dosfile.lbc 
- @del doslfile.lbc
+ wlib dosfile.lib \
+	@dos.obs @jdevice.obs @fparse.obs @jfiledos.obs \
+	@jfutils.obs @ffile.obs
 
