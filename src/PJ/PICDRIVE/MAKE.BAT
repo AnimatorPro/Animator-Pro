@@ -4,7 +4,7 @@ rem *************************************************************************
 rem * update inc\ and lib\ dirs, but don't make distribution files...
 rem *************************************************************************
 
-	call makekit no_distribution_file
+	call makekit_ no_distribution_file
 
 rem *************************************************************************
 rem * the following subdirs are parts of the pdrkit that gets distributed...
