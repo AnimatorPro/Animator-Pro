@@ -151,7 +151,7 @@ rem above here the include directory and the object modules etc.
 	tcmake
 	if ERRORLEVEL 1 goto error
 	cd ..\drivekit
-	call makekit
+	call makekit_
 	if ERRORLEVEL 1 goto error
 	call make
 	if ERRORLEVEL 1 goto error
