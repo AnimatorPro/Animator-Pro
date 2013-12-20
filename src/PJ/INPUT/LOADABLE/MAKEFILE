@@ -1,5 +1,8 @@
 !include "\paa\rexlib\inc\make.inc"
 
+# add -s (disable stack overflow checks) to avoid undefined reference to _end
+CPF = $(CPF) -s
+
 RD = \paa\resource\\
 
 

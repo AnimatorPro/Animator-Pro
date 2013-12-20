@@ -10,7 +10,8 @@ CC  = wcc386				# can use wcc386 or wcc386p
 AS  = 386asm				# can use 386asm or 386asmp
 
 # removed -oxt to reduce memory usage
-CPF = -j -3s -fpi87 -w2			# default compile options
+# add -s (disable stack overflow checks) to avoid undefined reference to _end
+CPF = -j -3s -fpi87 -w2 -s		# default compile options
 APF = -80386 -NOLIST -TWOCASE		# default assembler options
 
 .c.obj:

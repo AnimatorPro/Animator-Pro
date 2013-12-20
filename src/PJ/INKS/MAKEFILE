@@ -1,5 +1,8 @@
 !include "\paa\make.inc"
 
+# add -s (disable stack overflow checks) to avoid undefined reference to _end
+CPF = $(CPF) -s
+
 .obj.ink: 
 #	fastlink @ink.lnk $*.obj -RELEXE $*.ink
 	wlink @usual.lnk NAME $*.ink FILE $*.obj
