@@ -1,0 +1,1 @@
+@echo *BEEEP* %1
