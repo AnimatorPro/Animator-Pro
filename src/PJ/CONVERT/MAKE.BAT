@@ -2,7 +2,6 @@
 	call setwc386
 	if "%1"=="link" goto link
 	if "%1"=="convert" goto justmake
-	pushdir
 	cd \paa\inc
 	tcmake ilib
 	if ERRORLEVEL 1 goto error
@@ -15,7 +14,7 @@ rem *************
 	tcmake
 	if ERRORLEVEL 1 goto error
 rem *************
-	popdir
+	cd \paa\convert
 :justmake
 	tcmake %1 %2 %3 %4 %5 %6 %7 %8 %9
 	if ERRORLEVEL 1 goto error
