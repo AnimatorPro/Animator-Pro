@@ -162,12 +162,12 @@ rem above here the include directory and the object modules etc.
 	call make
 	if ERRORLEVEL 1 goto error
 	cd ..\..
-	cd flic386p\libsrc
-	call makeall
-	cd ..\..
-	cd poco\poekit
-	call make
-	cd ..\..
+rem	cd flic386p\libsrc
+rem	call makeall
+rem	cd ..\..
+rem	cd poco\poekit
+rem	call make
+rem	cd ..\..
 
 rem Here we do the player and convert program.
 	cd player
