@@ -39,9 +39,6 @@ char relnum[16];
 char idtext[32];
 
 	get_relvers(relnum);
-#ifdef WIDGET
-	strcat(relnum,"L"); /* "L" for locked version */
-#endif
 	get_userid_string(idtext);
 	soft_continu_box("!%s%s%.3s%.2s%.4s%.5s","about",relnum,idtext,
 			         &date[0], &date[4], &date[7], __TIME__ );

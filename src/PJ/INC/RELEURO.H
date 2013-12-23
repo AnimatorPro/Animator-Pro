@@ -3,6 +3,4 @@
 
 #define EURO_VERSION
 
-#define WIDGET  /* the hardware lock */
-
 #endif /* RELEASE_H */

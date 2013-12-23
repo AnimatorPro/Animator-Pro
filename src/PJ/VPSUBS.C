@@ -385,7 +385,6 @@ void pal_save_undo(void)
 	pj_cmap_copy(vb.pencel->cmap,undof->cmap);
 }
 #endif /* SLUFFED */
-#undef save_undo  /* this is defined to reset the widget */
 void save_undo(void)
 {
 	pj_blitrect(vb.pencel,0,0,

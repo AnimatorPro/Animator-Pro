@@ -3,6 +3,4 @@
 
 #define TESTING
 
-/* #define WIDGET */
-
 #endif /* RELEASE_H */

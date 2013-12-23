@@ -29,9 +29,6 @@ static void cleanup_low(Errcode err)
  	cleanup_resources();
 	if(smu_is_open(&smu_sm))
 		softerr(err,"fatal_exit");
-#ifdef WIDGET
-	cleanup_widget();
-#endif
 	cleanup_startup();
 
 }

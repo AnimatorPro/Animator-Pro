@@ -2,7 +2,7 @@
 
 
 ilib: aasyslib.i errcodes.i gfxlib.i mathhost.i procblit.i raster.i\
-	rastlib.i stdiolib.i widget.i wndo.i 
+	rastlib.i stdiolib.i wndo.i
 	@cd
 	@echo include made
 
@@ -15,7 +15,6 @@ cleanout:
 	del raster.i
 	del rastlib.i 
 	del stdiolib.i 
-	del widget.i
 	del wndo.i 
 
 force: cleanout ilib
@@ -79,13 +78,6 @@ stdiolib.i: rexlib.h stdiolib.h stdiolib.c stdiolib.ih
  	wlink NAME $*.exp @watcom.lnk FILE $*.obj 
  	run386 $*.exp $*.i
  	copy $*.i+$*.ih $*.i
-	del $*.exp
-	del $*.obj
-
-widget.i: widget.h widget.c   
- 	$(CC) $*.c $(CPF)
-	wlink NAME $*.exp @watcom.lnk FILE $*.obj 
-	run386 $*.exp $*.i
 	del $*.exp
 	del $*.obj
 

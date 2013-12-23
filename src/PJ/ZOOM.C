@@ -8,8 +8,6 @@
 #include "errcodes.h"
 #include "softmenu.h"
 
-#undef zoom_it  /* this is defined for the widget code */
-
 static char esize_zwin_line[] = "zoom_win";
 
 void hmp_zwin_repos(), zwin_fullsize(), deltascale_zwndo(),

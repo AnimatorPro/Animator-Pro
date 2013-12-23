@@ -1384,7 +1384,7 @@ Errcode do_autodraw(EFUNC avec, void *avecdat)
 {
 	return(go_autodraw(avec,avecdat,0));
 }
-#undef go_autodraw /* defined in Jimk.h for widget bracket */
+
 Errcode go_autodraw(EFUNC avec, void *avecdat, USHORT flags)
 {
 Autoarg aa;
@@ -1395,7 +1395,7 @@ Autoarg aa;
 	aa.flags = flags;
 	return(do_auto(&aa));
 }
-#undef do_auto /* for widget define */
+
 Errcode do_auto(Autoarg *aa)
 /* possibly apply a function over many frames after bringing up multimenu */
 {

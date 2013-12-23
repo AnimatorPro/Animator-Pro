@@ -593,46 +593,5 @@ Errcode flic_create(char *name,Flifile *flif);
 Errcode text_mode_exec(char *command_line); /* run dos command in text mode  */
 Errcode shell_out_to_dos(void); 			/* run command shell interactive */
 
-#ifdef WIDGET
-
-#ifndef WIDGET_H
-	#include "widget.h"
-#endif
-
-#ifndef AUTO_H
-	#include "auto.h"
-#endif
-
-#ifndef PICDRIVE_H
-	#include "picdrive.h"
-#endif
-
-extern Errcode set_penwndo_size(SHORT width, SHORT height);
-
-/* functions to bracket with widget tests in pj */
-
-/** items in main() **/
-
-#define add_local_pdr(a) WBRACK(add_local_pdr,(a,add_local_pdr,__DATE__))
-
-#define open_pj_startup_screen(a) \
-	WBRACK(open_pj_startup_screen,(a,resize_pencel))
-
-#define resize_pencel(a,b) WBRACK(resize_pencel,(a,b))
-#define set_penwndo_size(a,b) WBRACK(set_penwndo_size,(a,b))
-#define do_menuloop(a,b,c,d,e) WBRACK(do_menuloop,(a,b,c,d,e))
-#define do_reqloop(a,b,c,d,e) WBRACK(do_reqloop,(a,b,c,d,e))
-#define go_autodraw(a,b,c) WBRACK(go_autodraw,(a,b,c))
-#define do_auto(a) WBRACK(do_auto,(a))
-
-/* these are here to prevent tampering with widget pointers
- * they replace them with the global items at each one of these calls
- * it would be a real pain to alter all of these */
-
-#define save_undo() WRESET1(save_undo,())
-#define zoom_it() WRESET2(zoom_it,())
-
-#endif /* WIDGET */
-
 /* leave at end of file */
 #endif /* JIMK_H */

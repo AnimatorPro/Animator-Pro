@@ -279,19 +279,6 @@ static Errcode get_rest_of_command_line(Argparse_list *ap,int argc,
 	return argc;
 }
 
-#ifdef WIDGET
-#endif /* WIDGET */
-static char widge_ask = FALSE;
-Boolean widge_ask_retry()
-/* this is called by the widget code to ask for a retry */
-{
-static char *keys[] = { "ask", "r", "c", NULL };
-
-	if(widge_ask)
-		return(soft_multi_box(keys, "widge_retry") == 1);
-	return(0);
-}
-
 #ifdef TEST_LO_MEM
 int eat_memory()
 /* Just for testing eat all but 10K. */
@@ -359,10 +346,6 @@ static Argparse_list apl[] = {
 	if((err = open_pj_startup_screen(init_after_screen)) < Success)
 		goto error;
 
-#ifdef WIDGET
-	widge_ask = TRUE;
-#endif /* WIDGET */
-
 	if(!oldconfig)
 		soft_continu_box("newconfig");
 
@@ -412,7 +395,6 @@ error:
 	exit(err);
 }
 
-#undef resize_pencel  /* widget code in jimk.h will define this */
 static Errcode resize_pencel(Boolean err_on_abort,Boolean reset)
 {
 Errcode err;
