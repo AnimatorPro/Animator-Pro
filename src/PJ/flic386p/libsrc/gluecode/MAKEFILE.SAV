@@ -46,4 +46,3 @@ C_IL = $(C_IL);..\..\	# add fliclib root dir to include pathlist
 
 $(OUT_LIB): $(OBJ)
 	@echo $(OUT_LIB) made!
-

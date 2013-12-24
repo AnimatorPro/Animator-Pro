@@ -249,5 +249,3 @@ OUT:
 
 	return packed_mode_count;
 }
-
-

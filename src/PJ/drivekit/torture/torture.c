@@ -595,5 +595,3 @@ done:
 	pj_clock_cleanup();
 	exit(tcb.got_error ? -1 : 0);
 }
-
-

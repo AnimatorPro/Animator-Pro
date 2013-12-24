@@ -145,4 +145,3 @@ Errcode pj_open_mcga_vdriver(Vdevice **pvd)
 }
 
 #endif /* FLILIB_CODE */
-

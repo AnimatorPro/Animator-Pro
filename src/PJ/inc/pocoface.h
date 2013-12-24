@@ -57,4 +57,3 @@ char *po_fuf_name(void *fuf);
 
 
 #endif /* POCOFACE_H */
-

@@ -56,4 +56,3 @@ extern void pj_svga_cleanup(void);
 extern int	pj_svga_setmode(SMInfo *sminf);
 extern void pj_svga_clrmode(long old_mode_data);
 extern char *pj_svga_getname(void);
-

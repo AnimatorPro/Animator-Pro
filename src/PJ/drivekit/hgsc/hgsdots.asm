@@ -120,5 +120,3 @@ hgs_cgetdot endp
 
 _CODE	ends
 	end
-
-

@@ -28,5 +28,3 @@ unsigned long pj_time(unsigned long *ptime)
 		*ptime = 0;
 	return 0;		/* ::sigh:: this is the best we can do */
 }
-
-

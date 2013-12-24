@@ -37,5 +37,3 @@ PUBNAME proc near
 	jmp dword ptr LIBCALL[eax]
 PUBNAME endp
 	ENDM
-
-

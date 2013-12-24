@@ -199,4 +199,3 @@ Errcode do_flic_options(Flic	  *pflic,
 	}
 
 }
-

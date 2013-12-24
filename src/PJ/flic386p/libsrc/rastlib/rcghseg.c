@@ -28,4 +28,3 @@ void pj_get_hseg(Raster *v, void *pixbuf, Coor x, Coor y, Ucoor width)
 	GET_HSEG(v, pixbuf, x, y, width - x);
 	return;
 }
-

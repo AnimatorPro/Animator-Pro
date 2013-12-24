@@ -37,5 +37,3 @@ memglu3r.obj: memglu.c
 
 rtlglu3r.obj: rtlglu.c
 		$(CC) rtlglu.c $(CPF) -I$(C_IL) $(EXTCPF) $(CFLAGS) -3r /fo=$<
-
-

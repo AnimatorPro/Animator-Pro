@@ -7,4 +7,3 @@ LOBJ = movie.obj,movutil.obj,shoframe.obj,bytecopy.obj
 $(EXE): $(OBJ)
 	wlink @pdr.lnk FILE $(LOBJ) NAME $(EXE)
 	copy $(EXE) \paa\resource
-

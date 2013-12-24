@@ -672,5 +672,3 @@ pj_vdrv_8bit_uncc64 endp
 
 _TEXT	ends
 	end
-
-

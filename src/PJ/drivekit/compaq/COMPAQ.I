@@ -98,4 +98,3 @@ ms_filler	db  242 dup (?)
 modestruc   ends
 
 args	equ	[ebp + 8]
-

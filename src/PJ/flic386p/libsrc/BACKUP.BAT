@@ -10,5 +10,3 @@ rem **********************************************************************
 	zip -r -P -x*.bak flic386p\libsrc\FLC386BK @flic386p\libsrc\flc386bk.inc
 
 	cd flic386p\libsrc
-
-

@@ -25,4 +25,3 @@ Errcode pj_animinfo_init(AnimInfo *ainfo)
 
 	return Success;
 }
-

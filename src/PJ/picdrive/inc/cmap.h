@@ -22,4 +22,3 @@ void pj_cmap_free(Cmap *cmap);
 void pj_get_default_cmap(Cmap *cmap);
 
 #endif /* CMAP_H */
-

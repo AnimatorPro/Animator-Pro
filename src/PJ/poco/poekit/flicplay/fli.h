@@ -210,4 +210,3 @@ extern Errcode	pj_fli_read_uncomp(char *name, Flifile *flif, Rcel *fscreen,
 extern Errcode	pj_fli_alloc_cbuf(Fli_frame **pcbuf, USHORT width, USHORT height,
 								  LONG num_colors);
 #endif /* FLI_H */
-

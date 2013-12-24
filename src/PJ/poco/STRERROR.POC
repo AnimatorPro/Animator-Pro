@@ -6,4 +6,3 @@ void main(void)
 		printf("Err %04d = %s\n", i, strerror(i));
 	}
 }
-

@@ -989,4 +989,3 @@ String_ref *po_sr_cat_and_clean(String_ref *a, String_ref *b);
 /* end of protos */
 
 #endif /* POCO_H */
-

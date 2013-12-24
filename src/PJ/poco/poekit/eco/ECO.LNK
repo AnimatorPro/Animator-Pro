@@ -6,4 +6,3 @@ eco.obj
 -LIB ..\lib\stdiolib.lib
 -TWOCASE
 -DOSORDER
-

@@ -22,5 +22,3 @@ gluepoe.lib: $(OBJ) makefile.
    wlib $< @&&%
 $(OBJ)
 %
-
-

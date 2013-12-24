@@ -238,4 +238,3 @@ Errcode rgb_seekstart(Tiff_file *tf)
 
 	return 0;	/* retval 0 indicates image is not upside down in file */
 }
-

@@ -349,4 +349,3 @@ vgdone:
 hgs_get_vseg endp
 _CODE	ends
 	end
-

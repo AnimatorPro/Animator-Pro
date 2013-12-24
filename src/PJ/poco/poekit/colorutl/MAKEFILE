@@ -7,4 +7,3 @@ LOBJ = colorutl.obj,poclosec.obj,rgbhls.obj,..\lib\patch10a.obj
 
 $(EXE): $(OBJ)
 	wlink @poe.lnk FILE $(LOBJ) NAME $(EXE)
-

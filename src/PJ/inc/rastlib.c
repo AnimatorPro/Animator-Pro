@@ -53,4 +53,3 @@ main(int argc, char **argv)
 	rloset(RL_WAIT_VSYNC, wait_vsync);
 	closeit();
 }
-

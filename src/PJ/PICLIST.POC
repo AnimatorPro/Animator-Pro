@@ -252,4 +252,3 @@ EXIT:
 	GlobalVarSet("$piclist_lastpath", picpath);
 
 }
-

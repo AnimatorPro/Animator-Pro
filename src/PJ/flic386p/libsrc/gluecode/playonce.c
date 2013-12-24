@@ -19,4 +19,3 @@ Errcode pj_flic_play_once(char *path, FlicPlayOptions *options)
 {
 	return pj_flic_play_until(path, options, until_once_through, NULL);
 }
-

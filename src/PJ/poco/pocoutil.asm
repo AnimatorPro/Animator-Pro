@@ -374,5 +374,3 @@ __po_chop_csym__ endp
 
 _CODE	ends
 	end
-
-

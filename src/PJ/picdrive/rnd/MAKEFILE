@@ -7,4 +7,3 @@ LOBJ = rnd.obj,rndutil.obj,bytecopy.obj,imusclby.obj,convex.obj,concave.obj,poly
 $(EXE): $(OBJ)
 	wlink @pdr.lnk FILE $(LOBJ) NAME $(EXE)
 	copy $(EXE) \paa\resource
-

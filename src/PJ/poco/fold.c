@@ -114,5 +114,3 @@ Boolean po_is_static_init_const(Poco_cb *pcb, Code_buf *cb)
 
 	return rv;
 }
-
-

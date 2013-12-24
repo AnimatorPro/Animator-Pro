@@ -143,4 +143,3 @@ pj_flic_write_next();
 pj_flic_write_finish();
 
 }
-

@@ -176,5 +176,3 @@ static Lib_proto poe_calls[] = {
 };
 
 Setup_Pocorex(NOFUNC, NOFUNC, "OverTime Demo POE", poe_calls);
-
-

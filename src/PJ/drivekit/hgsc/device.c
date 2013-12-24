@@ -333,5 +333,3 @@ Vdevice rexlib_header = {
 	NULL,										/* grclib - filled in by PJ */
 	NUM_LIB_CALLS,								/* rast_lib_count */
 };
-
-

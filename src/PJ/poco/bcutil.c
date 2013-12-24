@@ -55,4 +55,3 @@ char *po_chop_csym(char *line, char *word, int maxlen, char **wordnext)
 	}
 	return line;
 }
-

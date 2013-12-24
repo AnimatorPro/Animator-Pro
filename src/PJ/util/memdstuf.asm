@@ -30,4 +30,3 @@ pj_stuff_pointers	endp
 
 _TEXT	ends
 	end
-

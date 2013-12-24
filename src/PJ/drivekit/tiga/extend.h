@@ -245,4 +245,3 @@
 #define styled_piearc(a,b,c,d,e,f,g,h)  \
         dm_cmd(STYLED_PIEARC, 9,64,(short)(a),(short)(b),(short)(c),    \
                 (short)(d),(short)(e),(short)(f),(unsigned long)(g),(short)(h))
-

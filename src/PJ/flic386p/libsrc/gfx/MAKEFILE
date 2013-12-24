@@ -6,4 +6,3 @@ gfx.lib: $(OBJ) objlist.inc
 	wlib $< @&&%
 $(OBJ)
 %
-

@@ -117,4 +117,3 @@ splitit:	;here the line is split, but maybe this part of it isn't
 _vram_double_hline endp
 _text	ends
 	end
-

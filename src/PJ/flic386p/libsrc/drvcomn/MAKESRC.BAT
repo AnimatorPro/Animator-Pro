@@ -5,4 +5,3 @@
 :do_it
 	cpynewer %-opts% -v1 -i \paa\drivekit\drvcomn\ @objlist.inc
 	set -opts=
-

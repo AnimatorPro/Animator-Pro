@@ -267,5 +267,3 @@ Pdr rexlib_header = {
 	NOFUNC, 				/* (*read_delta_next)() */
 	flow_save_frames,		/* (*save_frames)() */
 };
-
-

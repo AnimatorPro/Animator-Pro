@@ -258,5 +258,3 @@ xor_video_with_color endp
 _text	ends
 
 	end
-
-

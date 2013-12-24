@@ -19,4 +19,3 @@ error:
 	pj_close_raster(cel);
 	return(err);
 }
-

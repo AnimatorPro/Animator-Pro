@@ -5,4 +5,3 @@
 :do_it
 	@echo (Nothing gets copied into the gluecode dir!)
 	set -opts=
-

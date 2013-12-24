@@ -79,4 +79,3 @@ Errcode pj_flic_complete_filename(char *path, AnimInfo *ainfo, Boolean force_typ
 
 	return Success;
 }
-

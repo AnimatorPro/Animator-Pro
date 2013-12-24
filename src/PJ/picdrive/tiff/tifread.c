@@ -641,4 +641,3 @@ Errcode read_strip(Tiff_file *tf, char *stripbuf, Strip_data *curstrip)
 
 	return Success;
 }
-

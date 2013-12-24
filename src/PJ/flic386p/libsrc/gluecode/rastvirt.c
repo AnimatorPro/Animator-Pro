@@ -81,4 +81,3 @@ FlicRaster *pj_raster_center_virtual(FlicRaster *root, FlicRaster *virt,
 	pj_raster_clip_virtual(root, virt, x, y, width, height);
 	return(virt);
 }
-

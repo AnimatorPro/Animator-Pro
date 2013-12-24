@@ -311,4 +311,3 @@ Op_type po_dupe_ops[NUM_IDOS] =
 	SE(OP_IDUPE, OP_LDUPE, OP_DDUPE, OP_PDUPE, \
 	OP_BAD, OP_BAD, OP_BAD, OP_BAD);
 #undef SE
-

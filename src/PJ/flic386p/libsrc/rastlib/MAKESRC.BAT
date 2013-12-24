@@ -6,4 +6,3 @@
 	cpynewer %-opts% -v1 -i \paa\rastlib\ @objlist.inc
 	cpynewer %-opts% -v1 -i \paa\rastlib\ rastcall.ih
 	set -opts=
-

@@ -36,4 +36,3 @@ Errcode pj_flic_info(Flic *pflic, AnimInfo *pinf)
 
 	return Success;
 }
-

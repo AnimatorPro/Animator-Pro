@@ -25,5 +25,3 @@ char *slow;
 		ssize -= pj_bsame(slow, ssize);
 	return(ssize);
 }
-
-

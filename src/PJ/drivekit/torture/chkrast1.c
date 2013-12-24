@@ -189,4 +189,3 @@ void test_close_raster(Raster *r)
 	r->lib->close_raster(r);
 	log_progress("...testing of close_raster() completed.\n\n");
 }
-

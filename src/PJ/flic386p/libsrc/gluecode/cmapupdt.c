@@ -31,5 +31,3 @@ Errcode pj_cmap_update(FlicRaster *prast, PjCmap *cmap)
 
 	return Success;
 }
-
-

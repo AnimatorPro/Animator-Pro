@@ -439,5 +439,3 @@ mov_videodot_to_ram endp
 _text	ends
 
 	end
-
-

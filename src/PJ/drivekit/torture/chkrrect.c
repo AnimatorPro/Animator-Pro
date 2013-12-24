@@ -557,4 +557,3 @@ XRECT_DONE:
 
 	return;
 }
-

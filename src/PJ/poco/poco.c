@@ -3086,5 +3086,3 @@ void po_free_run_env(Poco_run_env *pev)
 po_freelist(&pev->literals);
 free_fuf_list(&pev->protos);
 }
-
-

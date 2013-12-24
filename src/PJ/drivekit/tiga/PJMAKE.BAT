@@ -44,4 +44,3 @@ goto DONE
 :DONE
 set path=%savepath%
 set savepath=
-

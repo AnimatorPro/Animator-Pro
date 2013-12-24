@@ -672,5 +672,3 @@ if (err < Success )
 
 	return err;
 }
-
-

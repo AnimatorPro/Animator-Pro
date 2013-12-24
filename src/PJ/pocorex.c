@@ -75,6 +75,3 @@ while ((lib=next) != NULL)
 	}
 *libs = NULL;
 }
-
-
-

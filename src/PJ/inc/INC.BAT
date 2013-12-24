@@ -8,4 +8,3 @@ copy h:\inc\FLI.H inc\FLI.H
 copy h:\inc\INC.BAT inc\INC.BAT
 copy h:\inc\JIMK.H inc\JIMK.H
 copy h:\inc\MAKEHC.INC inc\MAKEHC.INC
-

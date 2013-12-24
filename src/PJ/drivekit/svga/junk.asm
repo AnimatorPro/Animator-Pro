@@ -19,4 +19,3 @@ all_done:
 strcpy	endp
 _TEXT	ends
 	end
-

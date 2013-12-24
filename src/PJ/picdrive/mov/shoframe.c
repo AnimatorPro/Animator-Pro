@@ -328,5 +328,3 @@ USHORT ftype;
 	}
 	return(draw_frame(mf,mf->cur_frame));
 }
-
-

@@ -25,4 +25,3 @@ memxlate.obj \
 memxorbt.obj \
 ptrenorm.obj \
 #endoflist
-

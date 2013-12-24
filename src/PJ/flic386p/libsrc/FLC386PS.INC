@@ -7,4 +7,3 @@ libsrc\*.h
 libsrc\*.c
 libsrc\*.asm
 libsrc\*.obs
-

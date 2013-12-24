@@ -68,5 +68,3 @@ static Lib_proto poe_calls[] = {
 };
 
 Setup_Pocorex(init_func, NOFUNC, "Patch POE v1.0a", poe_calls);
-
-

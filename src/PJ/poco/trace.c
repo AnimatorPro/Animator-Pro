@@ -341,4 +341,3 @@ void po_print_trace(Poco_run_env *pe, FILE *tfile, Pt_num *stack, Pt_num *base,
 		}
 	fprintf(tfile,"\n");
 }
-

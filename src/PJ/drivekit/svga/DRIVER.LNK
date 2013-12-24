@@ -4,4 +4,3 @@ svgaintf.obj
 -l ..\lib\aasyslib.lib
 -DOSORDER
 -MAP svga.map
-

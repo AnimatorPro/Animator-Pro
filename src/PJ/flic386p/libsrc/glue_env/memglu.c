@@ -40,5 +40,3 @@ void pj_free(void *block)
 {
 	free(block);
 }
-
-

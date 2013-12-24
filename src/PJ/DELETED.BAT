@@ -8,5 +8,3 @@ del \paa\drivekit\torture\getclock.c
 
 rem renamed to globlvar.poc...
 del \paa\globals.poc
-
-

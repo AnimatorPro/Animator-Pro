@@ -1679,6 +1679,3 @@ char		*instring;
 
 	return(pcb->t.line_buf = instring);
 }
-
-
-

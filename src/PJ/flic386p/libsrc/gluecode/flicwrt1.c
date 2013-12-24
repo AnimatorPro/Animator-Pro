@@ -28,4 +28,3 @@ Errcode pj_flic_write_first(Flic *pflic, FlicRaster *firstframe)
 	return err;
 
 }
-

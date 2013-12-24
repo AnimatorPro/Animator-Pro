@@ -34,5 +34,3 @@ Errcode pj_flic_write_finish(Flic *pflic, FlicRaster *lastframe)
 
 	return err;
 }
-
-

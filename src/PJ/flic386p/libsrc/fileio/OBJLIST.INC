@@ -16,4 +16,3 @@ dftell.obj \
 jfreadec.obj \
 jfwritec.obj \
 #endoflist
-

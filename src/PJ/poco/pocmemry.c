@@ -347,4 +347,3 @@ d = po_memalloc(pcb, size);
 poco_copy_bytes(s, d, size);
 return(d);
 }
-

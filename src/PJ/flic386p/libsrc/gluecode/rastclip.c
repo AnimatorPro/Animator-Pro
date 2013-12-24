@@ -87,5 +87,3 @@ Errcode pj_raster_free_centered(FlicRaster **pprast)
 {
 	return pj_raster_free_offset(pprast);
 }
-
-

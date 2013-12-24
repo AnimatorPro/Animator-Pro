@@ -59,5 +59,3 @@ Syslib aa_syslib = {
 /* debugging printer */
 	boxf,
 };
-
-

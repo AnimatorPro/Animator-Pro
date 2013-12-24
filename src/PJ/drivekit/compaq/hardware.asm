@@ -747,5 +747,3 @@ set_colors endp
 _text	ends
 
 	end
-
-

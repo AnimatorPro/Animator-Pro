@@ -93,4 +93,3 @@
   #define HLIB_TYPE HLIB_TYPE_9
   #include <usehlib.h>
 #endif
-

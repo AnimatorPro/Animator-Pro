@@ -177,4 +177,3 @@ typedef Boolean (UserEventFunc)(UserEventData *pdata);
 typedef struct local_vdevice LocalVdevice;
 
 #endif /* PJLTYPES_H */
-

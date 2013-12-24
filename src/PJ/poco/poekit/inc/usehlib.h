@@ -66,4 +66,3 @@
 #endif
 
 #undef HLIB_TYPE	/* undef it so it can be #define'd again in main source */
-

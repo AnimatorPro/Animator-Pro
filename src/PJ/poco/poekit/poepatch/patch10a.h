@@ -19,4 +19,3 @@ extern void 	po_release_cel(void);
 #define poeCelRelease  po_release_cel
 
 #endif
-

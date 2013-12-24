@@ -11,4 +11,3 @@ rcelcopy.obj \
 cmapcopy.obj \
 cmapload.obj \
 #endoflist
-

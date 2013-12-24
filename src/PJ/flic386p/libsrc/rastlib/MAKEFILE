@@ -6,4 +6,3 @@ rastlib.lib: $(OBJ) objlist.inc
 	wlib $< @&&%
 $(OBJ)
 %
-

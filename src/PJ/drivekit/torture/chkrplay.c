@@ -361,4 +361,3 @@ void test_playback(Raster *r)
 			test_one_flic(r, cur);
 	}
 }
-

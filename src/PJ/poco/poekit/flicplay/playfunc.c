@@ -280,5 +280,3 @@ void do_seek_frame(Flic *pflic, int the_frame)
 
 	return;
 }
-
-

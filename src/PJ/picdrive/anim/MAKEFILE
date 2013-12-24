@@ -7,4 +7,3 @@ LOBJ = anim.obj,convbits.obj,unrif.obj,unpic.obj
 $(EXE): $(OBJ)
 	wlink @pdr.lnk FILE $(LOBJ) NAME $(EXE)
 	copy $(EXE) \paa\resource
-

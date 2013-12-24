@@ -20,5 +20,3 @@ Errcode pj_flic_close(Flic *pflic)
 	pj_freez(&pflic->libctl);
 	return Success;
 }
-
-

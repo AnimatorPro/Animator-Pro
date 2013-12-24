@@ -5,4 +5,3 @@ initcmap.obj \
 palwrite.obj \
 palread.obj \
 #endoflist
-

@@ -15,4 +15,3 @@ mmmmrect.obj  \
 mmmmsetc.obj  \
 mmmmsync.obj  \
 #endoflist
-

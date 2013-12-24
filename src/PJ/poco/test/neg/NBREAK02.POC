@@ -456,4 +456,3 @@ if (game_init(10, 5, 0, 32, 36, 40, 44, 48))
 	}
 pjstate_restore(&old_state);
 }
-

@@ -499,5 +499,3 @@ hgs_wait_vsync endp
 
 _CODE	ends
 	end
-
-

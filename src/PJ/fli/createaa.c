@@ -11,4 +11,3 @@ Errcode pj_fli_create_aa(char *path, Flifile *flif)
 	flif->comp_type = pj_fli_comp_aa;
 	return(pj_i_create(path,flif));
 }
-

@@ -208,4 +208,3 @@ Errcode get_flic_info(char *name, struct anim_info *pinf);	/* in flicinfo.c */
 
 Errcode get_flic_names(void);				/* in getflist.c */
 void	free_flic_names(void);
-

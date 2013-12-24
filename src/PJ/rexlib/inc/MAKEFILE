@@ -203,5 +203,3 @@ compiler.h:  $(IL)compiler.h
 
 pjinline.h:  $(IL)pjinline.h
 	copy $(IL)$*.h $*.h
-
-

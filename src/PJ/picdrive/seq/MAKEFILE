@@ -7,4 +7,3 @@ LOBJ = seq.obj,suffixin.obj,blit.obj,convbits.obj
 $(EXE): $(OBJ)
 	wlink @pdr.lnk FILE $(LOBJ) NAME $(EXE)
 	copy $(EXE) \paa\resource
-

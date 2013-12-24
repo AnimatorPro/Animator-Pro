@@ -40,4 +40,3 @@ pj_copy_bytes endp
 
 _TEXT	ends
 	end
-

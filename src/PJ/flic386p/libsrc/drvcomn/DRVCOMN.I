@@ -140,4 +140,3 @@ ytab_offs equ	pj_vdrv_ytable+4	; below; Phar Lap's dumb fwd ref junk!
 	extrn	_pj_vdrv_get_hseg:near		; in drvsegs.asm
 
 ; end of drvcomn.i
-

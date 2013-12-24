@@ -114,5 +114,3 @@ pj_mcga_put_dot endp
 
 _TEXT	ends
 	end
-
-

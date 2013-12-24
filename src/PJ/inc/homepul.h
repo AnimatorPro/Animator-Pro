@@ -68,4 +68,3 @@
 #define EXT_CON_PUL 805
 #define EXT_INF_PUL 806
 #define EXT_SCR_PUL 807
-

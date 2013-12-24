@@ -182,4 +182,3 @@ _pj_vesa_int10 endp
 
 _TEXT	ends
 	end
-

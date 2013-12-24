@@ -326,4 +326,3 @@ if (game_init(10, 5,
 	}
 pjstate_restore(&old_state);
 }
-

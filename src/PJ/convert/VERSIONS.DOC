@@ -25,6 +25,3 @@ Version notes for CONVERT...
 			  > The interface to the Pdr options mechanism was changed from
 				soft_qchoice() to qchoicef().
 			  > A menu selection was added for 'Save Targa'.
-
-
-

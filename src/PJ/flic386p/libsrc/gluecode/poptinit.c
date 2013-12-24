@@ -30,4 +30,3 @@ Errcode pj_playoptions_init(FlicPlayOptions *poptions)
 	return Success;
 
 }
-

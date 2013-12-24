@@ -26,5 +26,3 @@ rem
 
 set ipath=..\inc;
 nmake.exe -f hcmake
-
-

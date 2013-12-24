@@ -45,4 +45,3 @@ Errcode pj_fli_error_report(Errcode err, char *msg, char *filename)
 
 	return err;
 }
-

@@ -6,4 +6,3 @@ an image.
 
 This file, because it has 'dmyrgb' in the name, will cause skeleton.pdr
 to use its RGB read logic instead of the normal read logic.
-

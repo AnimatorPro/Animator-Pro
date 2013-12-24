@@ -235,5 +235,3 @@ Porexlib aa_pocolib = {
 	&po_libflicplay,
 	{NULL}, 				/* reserved2[1] */
 	};
-
-

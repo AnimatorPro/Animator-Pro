@@ -277,4 +277,3 @@ extern Op_type po_dupe_ops[];
 
 
 #endif /* POCOOP_H */
-

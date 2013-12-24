@@ -23,5 +23,3 @@ Errcode pj_flic_open_info(char *path, Flic *pflic, AnimInfo *pinf)
 
 	return pj_flic_info(pflic, pinf);
 }
-
-

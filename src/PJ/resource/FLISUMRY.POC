@@ -450,4 +450,3 @@ void main(void)
 
 	GlobalVarSet(disk_flicpath_gvar,last_path);
 }
-

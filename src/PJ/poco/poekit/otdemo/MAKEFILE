@@ -5,4 +5,3 @@ OBJ = otdemo.obj
 
 $(EXE): $(OBJ)
 	wlink @poe.lnk FILE $(OBJ) NAME $(EXE)
-

@@ -8,4 +8,3 @@ $(EXE): $(OBJ)
 	wlink @poe.lnk FILE $(LOBJ) NAME $(EXE)
 	copy patch10a.obj ..\lib
 	copy patch10a.h   ..\inc
-

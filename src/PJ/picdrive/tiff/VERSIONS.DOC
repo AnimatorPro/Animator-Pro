@@ -57,5 +57,3 @@ TIFF picture driver version notes...
 					give better (!) LZW compression, equal performance, and on
 					a load it looks smoother (and it looks faster, although
 					it's a teeny tiny bit slower).
-
-

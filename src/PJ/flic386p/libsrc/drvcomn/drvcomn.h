@@ -253,4 +253,3 @@ extern void pj_vdrv_mask2line(void);
 extern void pj_vdrv_memcpy(UBYTE *dest, UBYTE *source, int count);
 
 #endif /* DRVCOMN_H */
-

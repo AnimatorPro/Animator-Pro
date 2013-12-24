@@ -57,5 +57,3 @@ Common driver routines revision notes...
 024 07/30/91        Split common driver routines into their own directory.
                     Also, all global names now start with pj_ for FLILIB
                     compatibility.
-
-

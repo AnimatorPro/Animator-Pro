@@ -10,4 +10,3 @@ Errcode err;
 		err = pj_fli_error_report(err, "Can't open FLC \"%s\"", path );
 	return(err);
 }
-

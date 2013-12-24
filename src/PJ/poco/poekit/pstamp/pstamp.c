@@ -465,5 +465,3 @@ static Lib_proto calls[] = {
 };
 
 Setup_Pocorex(NOFUNC, NOFUNC, "Postage Stamp Library", calls);
-
-

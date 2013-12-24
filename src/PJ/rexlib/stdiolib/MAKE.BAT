@@ -10,4 +10,3 @@
 :out
 	beep 3
 @echo on
-

@@ -301,5 +301,3 @@ return(sif);
 ERROR:
 return(NULL);
 }
-
-

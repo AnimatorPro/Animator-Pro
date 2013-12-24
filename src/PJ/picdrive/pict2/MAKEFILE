@@ -14,4 +14,3 @@ $(EXE): $(OBJ)
 $(LOBJ)
 % NAME $(EXE)
 	copy $(EXE) \paa\resource
-

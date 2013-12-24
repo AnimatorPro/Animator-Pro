@@ -100,6 +100,3 @@ static got_lib = 0;
 	}
 	return(&mmmm_raster_library);
 }
-
-
-

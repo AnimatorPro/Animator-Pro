@@ -339,4 +339,3 @@ DGROUP	group	_DATA,_BSS
 	assume	cs:CGROUP,ds:DGROUP
 
 ; end of stdmacro.i
-

@@ -105,5 +105,3 @@ uncomp.obj: uncomp.asm compaq.i
 compaq.drv: $(DRIVERO)
 	386linkp ..\lib\rexentry.obj @driver.lnk -RELEXE compaq.drv -MAP compaq.map
 # you may want to copy 'compaq.drv' to the resource directory at this point
-
-

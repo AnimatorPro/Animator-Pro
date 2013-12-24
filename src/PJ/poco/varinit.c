@@ -398,5 +398,3 @@ void po_var_init(Poco_cb *pcb, Exp_frame *e, Symbol *var, SHORT frame_type)
 		po_dispose_expframe(pcb, exp);
 	}
 }
-
-

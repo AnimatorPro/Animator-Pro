@@ -95,4 +95,3 @@ Errcode err;
 		err = Err_nogood;
 	return(err);
 }
-

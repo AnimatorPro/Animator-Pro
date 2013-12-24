@@ -28,4 +28,3 @@ i86_outw				pj_8514_i86_outw
 i86_outb				pj_8514_i86_outb
 i86_inb 				pj_8514_i86_inb
 i86_inw 				pj_8514_i86_inw
-

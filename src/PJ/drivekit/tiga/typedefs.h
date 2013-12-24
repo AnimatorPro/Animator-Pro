@@ -331,4 +331,3 @@ typedef struct
     void           (**host_commands)();
     short          command_count;
 } HOST_INIT;
-

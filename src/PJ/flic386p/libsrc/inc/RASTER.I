@@ -107,6 +107,3 @@ maskarg	struc
 	maskarg_oncolor dd ?
 	maskarg_offcolor dd ?
 maskarg ends
-
-
-

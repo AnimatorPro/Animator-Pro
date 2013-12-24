@@ -248,4 +248,3 @@ Errcode rgb_seekstart(Tiff_file *tf);
 #endif
 
 /* end of TIFF.H */
-

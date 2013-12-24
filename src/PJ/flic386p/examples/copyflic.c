@@ -122,4 +122,3 @@ void main(int argc, char **argv)
 			   , argv[1], argv[2], pj_error_get_message(err));
 	exit(err);
 }
-

@@ -47,4 +47,3 @@ Poco_lib po_math_lib = {
 	NULL, "(C Standard) Math",
 	mathlib, Array_els(mathlib),
 	};
-

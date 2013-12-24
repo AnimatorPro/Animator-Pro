@@ -5,4 +5,3 @@
 	tcmake %1
 
 @echo on
-

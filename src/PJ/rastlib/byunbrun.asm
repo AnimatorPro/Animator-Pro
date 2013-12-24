@@ -115,5 +115,3 @@ pj_bym_unbrun_rect endp
 
 code	ends
 	end
-
-

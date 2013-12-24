@@ -19,5 +19,3 @@ Errcode pj_flic_file_info(char *path, AnimInfo *pinf)
 	pj_flic_close(&flic);
 	return Success;
 }
-
-

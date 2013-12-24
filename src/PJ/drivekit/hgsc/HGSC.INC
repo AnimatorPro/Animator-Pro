@@ -144,4 +144,3 @@ hrast ends
 		extrn	_hgs_put_ehseg:near
 		extrn	_hgs_get_ohseg:near
 		extrn	_hgs_get_ehseg:near
-

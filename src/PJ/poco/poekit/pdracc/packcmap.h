@@ -21,4 +21,3 @@ void	hist_set_bits(UBYTE *h,  Rgb3 *linebuf, int count);
 Errcode hist_to_cmap(UBYTE **phist, Cmap *cmap);
 
 #endif /* RGBCMAP_H */
-

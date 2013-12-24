@@ -308,5 +308,3 @@ static Lib_proto poe_calls[] = {
 };
 
 Setup_Pocorex(NOFUNC, do_flic_close_all, "FlicPlay Library v1.0", poe_calls);
-
-

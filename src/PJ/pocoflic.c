@@ -967,4 +967,3 @@ Poco_lib po_flicplay_lib =
 	do_flic_close_all,		/* cleanup func */
 	NULL,					/* resource pointer (not used) */
 	};
-

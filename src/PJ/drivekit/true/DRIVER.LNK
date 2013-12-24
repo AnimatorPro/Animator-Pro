@@ -7,4 +7,3 @@ plint10.obj
 -l ..\lib\aasyslib.lib
 -l ..\lib\stdiolib.lib
 -DOSORDER
-

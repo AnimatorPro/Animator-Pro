@@ -43,5 +43,3 @@ Recently-fixed bugs...
 
  185 --> Address-of operator makes any following expression look to be
          a pure constant, even if it's not (ie, &(*ptr);).
-
-

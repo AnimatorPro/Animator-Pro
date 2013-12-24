@@ -263,5 +263,3 @@ ERROR_EXIT:
 	lzw_cleanup();
 	return Err_no_memory;
 }
-
-

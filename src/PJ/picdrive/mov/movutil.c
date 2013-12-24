@@ -86,4 +86,3 @@ char *maxas;
 	}
 	return(a-bs[-1]);
 }
-

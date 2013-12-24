@@ -5,4 +5,3 @@
 -fastclk.obj
 -playntil.obj
 +glue_poe\gluepoe.lib
-

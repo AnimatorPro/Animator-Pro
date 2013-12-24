@@ -130,5 +130,3 @@ long ccount;
 	pj_cmap_free(ccmap);
 	return(1);
 }
-
-

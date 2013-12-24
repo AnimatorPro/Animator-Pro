@@ -253,5 +253,3 @@ struct rastlib *get_rlib(Vdevice *dev, int mode, Raster *r)
 
     return &raster_library;
 }
-
-

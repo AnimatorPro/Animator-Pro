@@ -37,5 +37,3 @@
     .globl  _sys_memory
     .globl  _pHCOUNT, _pHEBLNK, _pHESYNC, _pHSBLNK, _pHTOTAL
     .globl  _pVCOUNT, _pVEBLNK, _pVESYNC, _pVSBLNK, _pVTOTAL
-               
-

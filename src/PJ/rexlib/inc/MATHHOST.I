@@ -50,5 +50,3 @@ PUBNAMEB proc near
 PUBNAMEB endp
 PUBNAMEA endp
 	ENDM
-
-

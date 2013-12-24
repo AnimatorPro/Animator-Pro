@@ -522,5 +522,3 @@ Changes made in each Poco version...
                       the true end of the string would be missed, and any macros
                       following that point on the line wouldn't get
                       substituted.
-
-

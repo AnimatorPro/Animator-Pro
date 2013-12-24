@@ -5,4 +5,3 @@ OBJ = pstamp.obj
 
 $(EXE): $(OBJ)
 	wlink @poe.lnk FILE $(OBJ) NAME $(EXE)
-

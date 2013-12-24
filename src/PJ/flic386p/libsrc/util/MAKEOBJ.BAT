@@ -5,4 +5,3 @@
 	del *.lib
 :do_it
 	make %1 %2 %3 %4
-

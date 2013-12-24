@@ -444,4 +444,3 @@ void pj_video_add(LocalVdevice *pldev)
 		pdevlist = pldev;
 	}
 }
-

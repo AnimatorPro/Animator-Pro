@@ -215,5 +215,3 @@ OUT:
 		pd->close_image_file(&pimage);
 	exit(0);
 }
-
-

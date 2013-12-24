@@ -209,5 +209,3 @@ void free_flic_names(void)
 		free(cur);
 	}
 }
-
-

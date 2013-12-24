@@ -6,4 +6,3 @@ fileio.lib: $(OBJ) objlist.inc
 	wlib $< @&&%
 $(OBJ)
 %
-

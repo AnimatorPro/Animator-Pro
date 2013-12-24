@@ -5,4 +5,3 @@
  * module into a dummy runccall.obj, just to keep the make
  * and link rules happy.
  */
-

@@ -849,5 +849,3 @@ static Lib_proto calls[] = {
 };
 
 Setup_Pocorex(init_pdracces, pdr_unload, "PDR Access Library v0.8", calls);
-
-

@@ -5,4 +5,3 @@
 :do_it
 	cpynewer %-opts% -v1 -i \paa\rastlib\ @objlist.inc
 	set -opts=
-

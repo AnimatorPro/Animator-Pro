@@ -30,4 +30,3 @@ Errcode pj_flic_set_speed(Flic *pflic, int speed)
 
 	return Success;
 }
-

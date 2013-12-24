@@ -66,4 +66,3 @@ error:
 		err = pj_fli_error_report(err,"Bad frame in \"%s\"",fname);
 	return(err);
 }
-

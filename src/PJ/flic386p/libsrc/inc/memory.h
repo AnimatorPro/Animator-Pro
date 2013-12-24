@@ -54,4 +54,3 @@ extern long mem_free, init_mem_free;
 extern long pj_mem_used, pj_max_mem_used;
 
 #endif /* MEMORY_H */
-

@@ -60,4 +60,3 @@ Errcode pj_raster_unbind_ram(FlicRaster **pprast)
 	pj_freez(pprast);
 	return Success;
 }
-

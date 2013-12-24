@@ -184,5 +184,3 @@ stristr endp
 
 _CODE	ends
 	end
-
-

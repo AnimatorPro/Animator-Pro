@@ -41,5 +41,3 @@ Errcode pj_flic_open(char *path, Flic *pflic)
 
 	return Success;
 }
-
-

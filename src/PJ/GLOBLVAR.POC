@@ -37,4 +37,3 @@ if (GlobalVarFirst(&gvars[0],&gvalues[0]) >= Success)
 		} while (result >= Success);
 	}
 }
-

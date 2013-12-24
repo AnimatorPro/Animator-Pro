@@ -73,4 +73,3 @@ typedef struct vesarast {
 #endif
 
 /* end of VESA.H */
-

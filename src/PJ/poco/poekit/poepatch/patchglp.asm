@@ -74,4 +74,3 @@ poe_patch_getlibproto endp
 
 _TEXT	ends
 	end
-

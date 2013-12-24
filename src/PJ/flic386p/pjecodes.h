@@ -160,4 +160,3 @@
 #define Err_swap	(FATALERR -1) /* can't restore context of file we swapped */
 
 #endif /* PJECODES_H */
-

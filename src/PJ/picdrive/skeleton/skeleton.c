@@ -408,6 +408,3 @@ Pdr rexlib_header = {
 	rgb_seekstart,		/* (*rgb_seekstart)() */
 	rgb_readline,		/* (*rgb_readline() */
 };
-
-
-

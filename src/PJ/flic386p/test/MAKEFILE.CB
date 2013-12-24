@@ -38,4 +38,3 @@ linktest.exe linktest: linktest.obj $(FLH)
 	$(LK) $(LPF) linktest.obj ..\flic386c.lib
 	del linktest.exe # don't need exe, just link map
 	del linktest.obj # don't need obj
-

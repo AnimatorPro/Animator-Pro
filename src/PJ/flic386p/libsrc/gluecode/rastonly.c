@@ -80,4 +80,3 @@ Errcode pj_raster_free_compress_only(FlicRaster **pprast)
 	pj_freez(pprast);
 	return Success;
 }
-

@@ -20,4 +20,3 @@ Errcode pj_flic_rewind(Flic *pflic)
 	pflic->libctl->cur_frame = 0;
 	return Success;
 }
-

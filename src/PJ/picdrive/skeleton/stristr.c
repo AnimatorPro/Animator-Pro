@@ -42,4 +42,3 @@ char *stristr(char *string, char *pattern)
 
 	return NULL;
 }
-

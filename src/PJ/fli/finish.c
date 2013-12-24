@@ -29,5 +29,3 @@ error:
 		err = pj_fli_error_report(err,"Error writing FLC \"%s\"", name);
 	return(err);
 }
-
-

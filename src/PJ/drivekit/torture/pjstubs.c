@@ -15,5 +15,3 @@ void old_video()
 {
 pj_set_vmode(old_vmode);
 }
-
-

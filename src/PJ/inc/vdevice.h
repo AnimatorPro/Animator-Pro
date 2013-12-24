@@ -102,4 +102,3 @@ Errcode pj__vdr_initload_open(Errcode (*loadit)(Vdevice **pvd, char *name),
 /* VDEV_INTERNALS */ #endif
 
 #endif /* VDEVICE_H */
-

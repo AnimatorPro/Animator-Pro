@@ -83,4 +83,3 @@
     .globl  _swap_bm
     .globl  _text_width
     .globl  _zoom_rect
-

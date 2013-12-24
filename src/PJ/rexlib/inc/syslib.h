@@ -34,4 +34,3 @@ void boxf(char *fmt,...);	/* special debugging print for testing will
 							 * display text and wait for input key */
 
 #endif /* SYSLIB_H */
-

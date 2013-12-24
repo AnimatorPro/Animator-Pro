@@ -16,4 +16,3 @@ time_t pj_time(time_t *timer)
 {
 	return time(timer);
 }
-

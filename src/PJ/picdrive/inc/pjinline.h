@@ -198,4 +198,3 @@ void pj_xlate(unsigned char *table, unsigned char *buffer, unsigned count);
 
 
 #endif /* PJINLINE_H */
-

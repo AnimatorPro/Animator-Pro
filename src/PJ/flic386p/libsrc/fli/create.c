@@ -20,4 +20,3 @@ Errcode pj_fli_create(char *path, Flifile *flif)
 	flif->comp_type = pj_fli_comp_ani;
 	return(pj_i_create(path,flif));
 }
-

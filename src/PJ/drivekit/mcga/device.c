@@ -117,4 +117,3 @@ Vdevice rexlib_header = {
 	NULL,			/* grclib set by host */
 	NUM_LIB_CALLS,	/* rast_lib_count */
 };
-

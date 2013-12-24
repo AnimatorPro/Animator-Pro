@@ -554,4 +554,3 @@ OUT:
 SetAbortHandler(NULL, NULL);
 pjstate_restore(&old_state);
 }
-

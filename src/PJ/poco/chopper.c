@@ -292,5 +292,3 @@ for (;;)
 *word = '\0';
 return(--line);
 }
-
-

@@ -442,5 +442,3 @@ Poco_lib po_str_lib =
 	lib,
 	Array_els(lib),
 	};
-
-

@@ -671,5 +671,3 @@ THREECHAR:
 	goto OUT;
 
 }
-
-

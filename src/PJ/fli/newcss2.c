@@ -96,5 +96,3 @@ void *pj_ss2_rects(Raster	*r1,
 		return end;
 
 }
-
-

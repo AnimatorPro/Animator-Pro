@@ -10,5 +10,3 @@ LIB  = \paa\flic386p\flic386p.lib
 
 $(EXE): $(OBJ)
 	wlink @poe.lnk FILE $(LOBJ) LIB $(LIB) NAME $(EXE) OPTION MAP
-
-

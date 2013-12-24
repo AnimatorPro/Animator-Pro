@@ -24,4 +24,3 @@ HDR1	= *.h
 
 EXTRAS	= pocfiles.inc poco.lnk tcpoco.lnk vers*.doc integrat.doc make*.*
 POC	= *.poc
-

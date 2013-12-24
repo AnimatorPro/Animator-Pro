@@ -26,4 +26,3 @@ cbvesa.lib: $(CBOBJ)
 wcvesa.lib: $(WCOBJ)
 	del  $<
 	wlib $< $(WCOBJ)
-

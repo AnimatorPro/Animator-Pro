@@ -39,4 +39,3 @@ LONG ospeed;
 	flif->hdr.speed = ospeed;
 	return(err);
 }
-

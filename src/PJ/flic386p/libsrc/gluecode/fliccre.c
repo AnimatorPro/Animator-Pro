@@ -73,6 +73,3 @@ Errcode pj_flic_create(char *path, Flic *pflic, AnimInfo *ainfo)
 	return Success;
 
 }
-
-
-

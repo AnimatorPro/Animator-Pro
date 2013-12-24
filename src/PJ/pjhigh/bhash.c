@@ -165,5 +165,3 @@ GOTIT:
 	return(closest);
 }
 #endif /* CCODE */
-
-

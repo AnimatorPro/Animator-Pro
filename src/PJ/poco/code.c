@@ -398,5 +398,3 @@ Boolean po_compress_func(Poco_cb *pcb, Poco_frame *pf, Func_frame *new)
 	pf->ld = NULL;
 	return(TRUE);
 }
-
-

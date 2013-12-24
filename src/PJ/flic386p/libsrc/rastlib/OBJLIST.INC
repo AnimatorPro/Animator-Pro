@@ -78,4 +78,3 @@ rcxorast.obj \
 rcxorect.obj \
 rczoombl.obj \
 #endoflist
-

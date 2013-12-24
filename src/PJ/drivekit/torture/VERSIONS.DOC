@@ -87,5 +87,3 @@ History of changes for driver torture program...
                     it is presumed to be a list of flic files to test.
                   > Tweaked verify_raster() routine to run must faster during
                     verification of flic playback.
-
-

@@ -15,5 +15,3 @@ void pj_clock_cleanup(void)
 {
 	return;
 }
-
-

@@ -5,4 +5,3 @@
 :do_it
 	cpynewer %-opts% -v1 -i \paa\fli\ @objlist.inc
 	set -opts=
-

@@ -317,4 +317,3 @@ Errcode write_strip(Tiff_file *tf, char *stripbuf,
 	return Success;
 
 }
-

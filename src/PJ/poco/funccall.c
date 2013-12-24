@@ -324,5 +324,3 @@ Func_frame	*fuf;
 		po_code_op(pcb, &e->left, OP_NOP);	/* to signal we do have an lval.  */
 		}									/* if it gets deref'd the NOP gets*/
 }											/* replaced by the call code later*/
-
-

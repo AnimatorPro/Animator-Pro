@@ -72,4 +72,3 @@ int ocount;
 error:
 	return(fli_write_error(err,name));
 }
-

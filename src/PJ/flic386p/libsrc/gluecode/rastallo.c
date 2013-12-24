@@ -48,4 +48,3 @@ Errcode pj_raster_free_ram(FlicRaster **pprast)
 	*pprast = NULL;
 	return Success;
 }
-

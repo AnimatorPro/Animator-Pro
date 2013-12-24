@@ -522,5 +522,3 @@ Clipbox cb;
 		mc_frame(b,MC_BLACK);
 	}
 }
-
-

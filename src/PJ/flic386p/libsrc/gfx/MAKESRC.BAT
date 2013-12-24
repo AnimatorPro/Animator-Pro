@@ -6,4 +6,3 @@
 	cpynewer %-opts% -v1 -i \paa\gfx\ @objlist.inc
 	cpynewer %-opts% -v1 -i \paa\gfx\ rastgfx.ih
 	set -opts=
-

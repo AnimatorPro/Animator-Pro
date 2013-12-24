@@ -203,6 +203,3 @@ Poco_lib po_misc_lib = {
 	NULL, "Misc. Functions",
 	(Lib_proto *)&po_libmisc, POLIB_MISC_SIZE,
 	};
-
-
-

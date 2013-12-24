@@ -19,4 +19,3 @@ LONG l;
 	l /= q;
 	return((int)l);
 }
-

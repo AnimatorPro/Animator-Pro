@@ -6,4 +6,3 @@ mcgavdev.lib: $(OBJ) objlist.inc
 	wlib $< @&&%
 $(OBJ)
 %
-

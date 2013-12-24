@@ -23,4 +23,3 @@ extern int	   cc_hist_color_count(void);
 extern void    cc_hist_to_ctab(Rgb3 *big_ctab);
 
 #endif
-

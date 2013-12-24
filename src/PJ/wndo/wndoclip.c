@@ -421,5 +421,3 @@ Wndo *root;
 	}
 	return;
 }
-
-

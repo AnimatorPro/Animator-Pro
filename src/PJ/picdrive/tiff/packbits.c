@@ -140,4 +140,3 @@ ERROR_EXIT:
 
 	return (destcount == 0) ? sourcep : NULL;
 }
-

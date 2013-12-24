@@ -193,5 +193,3 @@ void po_release_cel(void)
 	}
 	noask_delete_the_cel();
 }
-
-

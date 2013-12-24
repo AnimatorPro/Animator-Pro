@@ -190,5 +190,3 @@ cget_dot    endp
 _text	ends
 
 	end
-
-

@@ -17,5 +17,3 @@ APF = -80386 -NOLIST -TWOCASE		    # default assembler options
 
 .asm.obj:
 	$(AS) $*.asm $(APF) -i $(A_IL) $(AFLAGS)
-
-

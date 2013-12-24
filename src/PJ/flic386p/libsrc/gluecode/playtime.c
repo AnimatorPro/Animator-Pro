@@ -37,4 +37,3 @@ Errcode pj_flic_play_timed(char *path, FlicPlayOptions *options,
 
 	return err;
 }
-

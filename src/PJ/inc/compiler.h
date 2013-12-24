@@ -135,4 +135,3 @@ extern char *_STACKLOW; 					/* not sure what these are for, */
 #endif
 
 #endif /* COMPILER_H */
-

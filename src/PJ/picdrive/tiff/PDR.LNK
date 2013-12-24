@@ -8,4 +8,3 @@ LIBRARY
 	..\lib\stdiolib.lib
 FILE
 	..\lib\rexentry.obj
-

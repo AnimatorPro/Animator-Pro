@@ -127,4 +127,3 @@ extern VBEInfo	 *pj_vesa_get_bios_info(void);
 extern VModeInfo *pj_vesa_get_mode_info(int mode);
 
 /* end of VESA.H */
-

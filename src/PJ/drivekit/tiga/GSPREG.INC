@@ -133,5 +133,3 @@ BSFLTD20        .set    0C0000320h      ;bus fault data
 REV_34010   .set  3         ; REV bit number if 34010
 REV_34020   .set  4         ; REV bit number if 34020
 REV_MASK    .set  0FFF8h    ; GSP part number mask
-
-

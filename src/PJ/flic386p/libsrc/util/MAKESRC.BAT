@@ -7,4 +7,3 @@
 	cpynewer %-opts% -v1 -i \paa\input\  @obj2list.inc
 	cpynewer %-opts% -v1 -i \paa\pjhigh\ @obj3list.inc
 	set -opts=
-

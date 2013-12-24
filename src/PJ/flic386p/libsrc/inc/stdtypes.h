@@ -119,4 +119,3 @@ typedef UBYTE Pixel; /* type used in pixel buffers by get_hseg etc */
 
 
 #endif /* STDTYPES_H -- leave at end of file */
-

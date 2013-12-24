@@ -194,4 +194,3 @@ void	get_vseg(VRaster *r, void *buf, Ucoor x, Ucoor y, Ucoor h);
 
 
 #endif /* NULL_H */
-

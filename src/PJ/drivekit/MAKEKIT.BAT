@@ -69,4 +69,3 @@ rem *** get aasyslib source
 :out
 
 @echo on
-

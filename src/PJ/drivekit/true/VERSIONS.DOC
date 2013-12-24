@@ -57,4 +57,3 @@ VESA driver (and common driver modules) revision notes...
                     that require special handling for different DOS extenders
                     are allocation of memory below the 1mb line, and calling
                     the vesa bios via int10 with a segmented pointer in ES:DI.
-

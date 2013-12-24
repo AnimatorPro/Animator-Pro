@@ -472,5 +472,3 @@ Poco_lib po_globalv_lib = {
 	NULL,								// library init routine
 	dump_global_vars,					// library cleanup routine
 	};
-
-

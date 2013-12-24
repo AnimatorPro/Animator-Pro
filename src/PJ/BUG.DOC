@@ -160,7 +160,3 @@ Number    Problem Description
           Bug:  Edge tool uses the current brush settings.  If I continue 
           to click on the circle, eventually the edge tool will fill in the 
           bounding rect of the circle, changing the circle to a square.
-          
- 
-
-

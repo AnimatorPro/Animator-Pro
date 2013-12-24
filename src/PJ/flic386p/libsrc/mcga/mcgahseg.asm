@@ -80,4 +80,3 @@ pj_mcga_put_hseg endp
 
 _TEXT	ends
 	end
-

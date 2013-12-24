@@ -167,4 +167,3 @@ main(int argc, char **argv)
 	printit("\n\n");
 	closeit();
 }
-

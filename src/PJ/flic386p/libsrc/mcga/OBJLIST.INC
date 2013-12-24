@@ -6,4 +6,3 @@ mccset64.obj \
 mcgarast.obj \
 mcgadev.obj  \
 #endoflist
-

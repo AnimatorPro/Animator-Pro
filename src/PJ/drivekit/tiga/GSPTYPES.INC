@@ -318,5 +318,3 @@ MM_NUM_DRAMS    .set    MM_END_TIGAGM+SDW       ; word
 MM_NUM_VRAMS    .set    MM_NUM_DRAMS+SW         ; word
 MM_DRAM_START   .set    MM_NUM_VRAMS+SW         ; dword  
 MM_DRAM_SIZE    .set    MM_DRAM_START+SDW       ; dword    
-
-

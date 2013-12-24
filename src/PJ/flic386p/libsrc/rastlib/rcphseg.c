@@ -24,4 +24,3 @@ void pj_put_hseg(Raster *v, void *pixbuf, Coor x, Coor y, Ucoor width)
 	PUT_HSEG(v, pixbuf, x, y, width - x);
 	return;
 }
-

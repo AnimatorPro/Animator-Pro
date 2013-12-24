@@ -30,4 +30,3 @@ void main(void)
 
 	pj_clock_cleanup();
 }
-

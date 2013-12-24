@@ -3,4 +3,3 @@
 	tcmake %1
 	beep 3
 @echo on
-

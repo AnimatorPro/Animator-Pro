@@ -74,4 +74,3 @@ UBYTE	 *tokenize_word(UBYTE *line, UBYTE *oword, UBYTE *qstring,
 
 
 #endif /* TOKEN_H */
-

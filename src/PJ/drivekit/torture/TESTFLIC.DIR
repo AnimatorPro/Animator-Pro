@@ -13,4 +13,3 @@ run2col.flc 	// test handling of FLI_SS2 with 2-color runs
 shortrun.flc	// test FLI_SS2 and FLI_BRUN with short runs
 shortrun.fli	// test FLI_LC and FLI_BRUN with short runs
 sun.flc 		// "real world" FLI_SS2 test
-

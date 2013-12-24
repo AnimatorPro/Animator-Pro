@@ -32,4 +32,3 @@ Errcode pj_flic_write_next(Flic *pflic,
 	return err;
 
 }
-

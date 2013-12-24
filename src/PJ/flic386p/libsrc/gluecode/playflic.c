@@ -24,4 +24,3 @@ Errcode pj_flic_play(char *path, FlicPlayOptions *options)
 {
 	return pj_flic_play_until(path, options, until_keyhit, NULL);
 }
-

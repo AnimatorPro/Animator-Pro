@@ -678,5 +678,3 @@ fputc('\n',stdout);
 fclose(f);
 return Success;
 }
-
-

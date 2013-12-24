@@ -5,4 +5,3 @@
 	cpynewer %-opts% -v1 -i \paa\inc\		   @main_inc.cpy
 	cpynewer %-opts% -v1 -i \paa\drivekit\inc\ @vdrv_inc.cpy
 	set -opts=
-

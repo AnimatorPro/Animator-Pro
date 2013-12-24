@@ -23,4 +23,3 @@ Errcode pj_error_internal(Errcode err, char *file, int line)
 {
 	return err;
 }
-

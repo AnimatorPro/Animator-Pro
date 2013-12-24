@@ -195,4 +195,3 @@ void vs_cleanup_func(void)
 
 	Setup_Pocorex(NOFUNC, vs_cleanup_func, "Virtual Screen Manager", poe_calls);
 #endif
-

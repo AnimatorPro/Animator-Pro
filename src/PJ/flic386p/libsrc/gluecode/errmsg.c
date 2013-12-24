@@ -77,4 +77,3 @@ char *pj_error_get_message(Errcode err)
 	}
 	return "Unknown error";
 }
-

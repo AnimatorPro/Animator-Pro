@@ -6,4 +6,3 @@ LOBJ = lookup.obj,strfuncs.obj
 
 $(EXE): $(OBJ)
 	wlink @poe.lnk FILE $(LOBJ) NAME $(EXE)
-

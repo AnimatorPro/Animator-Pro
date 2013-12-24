@@ -182,5 +182,3 @@ stristr endp
 
 _TEXT	ends
 	end
-
-

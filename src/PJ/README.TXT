@@ -14,5 +14,3 @@ or height like the BMP bug was doing.
 
  And in TIFF.C, it now scales the palettes into the 0-65535 range when it
 writes a palette-mapped file.
-
-

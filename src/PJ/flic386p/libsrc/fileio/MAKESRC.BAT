@@ -5,4 +5,3 @@
 :do_it
 	cpynewer %-opts% -v1 -i \paa\fileio\ @objlist.inc dfile.ih jflstruct.ih
 	set -opts=
-

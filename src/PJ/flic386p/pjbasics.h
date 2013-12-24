@@ -11,4 +11,3 @@
 #include "pjprotos.h"   /* prototypes of lib functions          */
 
 #endif /* PJBASICS_H */
-

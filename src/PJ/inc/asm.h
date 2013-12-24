@@ -253,4 +253,3 @@ int pj_tnskip(Pixel *s1,Pixel *s2,int bcount,int mustmatch);
 int pj_tnsame(Pixel *s2x,int bcount,int mustmatch);
 
 #endif /* ASM_H */
-

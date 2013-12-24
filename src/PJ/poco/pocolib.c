@@ -140,4 +140,3 @@ Errcode po_check_formatf(int maxlen, int vargcount, int vargsize,
 #endif /* not borland or turbo c */
 
 }
-

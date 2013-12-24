@@ -306,4 +306,3 @@ CGROUP	group	_TEXT
 DGROUP	group	_DATA,_BSS
 
 ; end of stdmacro.i
-

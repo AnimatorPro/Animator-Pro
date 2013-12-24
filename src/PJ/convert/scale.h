@@ -20,4 +20,3 @@ Errcode rgb_files_to_cel(Rcel *cel, int comp_count, Boolean new_cmap,
 						 Boolean flip);
 void cc_fit_line(Ccache *cc, Cmap *cmap, UBYTE **rgb_bufs, UBYTE *dest, int count);
 #endif /* SCALE_H */
-

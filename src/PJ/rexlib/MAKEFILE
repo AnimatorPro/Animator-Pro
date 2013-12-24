@@ -24,5 +24,3 @@ rex: ilib
 	cd ..\mathlib
 	tcmake
 	cd ..
-
-

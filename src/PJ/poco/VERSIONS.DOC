@@ -180,5 +180,3 @@ Changes made in each Poco version...
                       address-of (&) operator is now propogated upwards
                       properly. (eg, &(*ptr) is no longer seen as pure_const).
                       Changes in POCO.C.
-
-

@@ -46,4 +46,3 @@ done:
 	*pcel = cel;
 	return(err);
 }
-

@@ -1666,5 +1666,3 @@ Errcode po_run_ops(Poco_run_env *p, Code *code_pt, Pt_num *pret)
 
 	return(poco_cont_ops(code_pt, pret, 0));
 }
-
-

@@ -269,4 +269,3 @@ hgs_setrast endp
 
 _CODE	ends
 	end
-

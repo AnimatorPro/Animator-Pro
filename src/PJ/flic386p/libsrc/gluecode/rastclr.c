@@ -16,4 +16,3 @@ Errcode pj_raster_clear(FlicRaster *prast)
 	pj_set_rast(prast,0);
 	return Success;
 }
-

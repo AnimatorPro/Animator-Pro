@@ -159,4 +159,3 @@ void rgb_to_hls(int ir, int ig, int ib, int *ph, int *pl, int *ps)
 	*pl = lv;
 	*ps = sv;
 }
-

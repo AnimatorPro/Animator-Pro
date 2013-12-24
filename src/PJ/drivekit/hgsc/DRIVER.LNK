@@ -9,4 +9,3 @@ hgsdcomp.obj
 maskblit.obj
 -l ..\lib\stdiolib.lib
 -DOSORDER
-

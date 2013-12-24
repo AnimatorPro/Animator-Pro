@@ -60,4 +60,3 @@ extern Errcode	do_play_timed(Flic *pflic, ULONG millisecs);
 extern Errcode	do_play_count(Flic *pflic, int frame_count);
 extern void 	do_rewind(Flic *pflic);
 extern void 	do_seek_frame(Flic *pflic, int theframe);
-

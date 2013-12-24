@@ -1615,5 +1615,3 @@ parts of the vdevice structure commented "set by driver" below.
                        redirected to a file or the serial port, this can be
                        useful for debugging.   Should not be used in debugged
                        code!
-
-

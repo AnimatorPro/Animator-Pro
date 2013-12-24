@@ -78,4 +78,3 @@ pj_clock_jiffies2ms  endp
 
 _TEXT	ends
 	end
-

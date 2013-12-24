@@ -43,5 +43,3 @@ static Lib_proto poe_calls[] = {
 };
 
 Setup_Pocorex(NOFUNC, NOFUNC, "Skeleton POE", poe_calls);
-
-
