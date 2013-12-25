@@ -23,7 +23,7 @@ return(aid->bclosest_col(&result, aid->ccount, inky->dither) );
 
 static Errcode init_merge(Aa_ink_data *aid,  Ink_groups *igs);
 
-RootInk rexlib_header = {
+RootInk merge_ink_opt = {
 	INKINIT(
 		NONEXT,
 		RL_KEYTEXT("merge_n")"Merge",
@@ -45,7 +45,7 @@ RootInk rexlib_header = {
 static Errcode init_merge(Aa_ink_data *aid,  Ink_groups *igs)
 /* fill in ink cache and stuff */
 {
-#define mi (rexlib_header.ink)
+#define mi (merge_ink_opt.ink)
 mi.make_cashe = aid->make_bhash;
 mi.free_cashe = aid->free_bhash;
 mi.ot.options = igs->dstrength_group;
