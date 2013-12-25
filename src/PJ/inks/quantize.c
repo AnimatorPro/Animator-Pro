@@ -7,9 +7,9 @@
 #include "options.h"
 #include "inkdot.h"
 
-UBYTE dif_table[256];
-UBYTE clip_table[256*3];
-UBYTE *clip = clip_table + 256;
+static UBYTE dif_table[256];
+static UBYTE clip_table[256*3];
+static UBYTE *clip = clip_table + 256;
 
 static UBYTE quantize(int a)
 {
@@ -103,7 +103,7 @@ for (i=0; i<width; ++i)
 PUT_HSEG(aid->screen,buf,x0,y,width);
 }
 
-RootInk rexlib_header = {
+RootInk quantize_ink_opt = {
 	INKINIT(
 		NONEXT,
 		RL_KEYTEXT("quantize_n")"Quantize",
