@@ -29,7 +29,7 @@ while (--i >= 0)
 PUT_HSEG(aid->screen,buf,x0,y,width);
 }
 
-RootInk rexlib_header = {
+RootInk or_ink_opt = {
 	INKINIT(
 		NONEXT,
 		RL_KEYTEXT("or_n")"Or",
