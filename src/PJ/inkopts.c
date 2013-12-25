@@ -464,6 +464,7 @@ void cleanup_inks()
 #include "inks/slice.c"
 #include "inks/smooth.c"
 #include "inks/subtract.c"
+#include "inks/unbuzz.c"
 
 static void
 add_root_ink(RootInk *ri)
@@ -506,6 +507,7 @@ init_test_inks(void)
 	add_root_ink(&slice_ink_opt);
 	add_root_ink(&smooth_ink_opt);
 	add_root_ink(&subtract_ink_opt);
+	add_root_ink(&unbuzz_ink_opt);
 }
 #endif
 

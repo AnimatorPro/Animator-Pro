@@ -111,7 +111,7 @@ Rgb3 above, this, below;
 
 static Errcode init_unbuzz(Aa_ink_data *aid,  Ink_groups *igs);
 
-RootInk rexlib_header = {
+RootInk unbuzz_ink_opt = {
 	INKINIT(
 		NONEXT,
 		RL_KEYTEXT("unbuzz_n")"UnBuzz",
@@ -132,7 +132,7 @@ RootInk rexlib_header = {
 
 static Errcode init_unbuzz(Aa_ink_data *aid,  Ink_groups *igs)
 {
-#define mi (rexlib_header.ink)
+#define mi (unbuzz_ink_opt.ink)
 	mi.ot.options = igs->dstrength_group;
 	mi.make_cashe = aid->make_bhash;
 	mi.free_cashe = aid->free_bhash;
