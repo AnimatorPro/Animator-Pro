@@ -455,6 +455,8 @@ void cleanup_inks()
 }
 
 #ifdef BUILD_TEST_INKS
+#include "inks/and.c"
+
 static void
 add_root_ink(RootInk *ri)
 {
@@ -483,6 +485,12 @@ add_root_ink(RootInk *ri)
 		loaded_ink->ot.closeit = NULL; /* only root counts */
 	}
 }
+
+static void
+init_test_inks(void)
+{
+	add_root_ink(&and_ink_opt);
+}
 #endif
 
 Errcode init_inks()
@@ -502,6 +510,10 @@ Ink *loaded_ink;
 		ink_list = (Option_tool *)ink;
 		ink->ot.closeit = (ink_closer)close_static_ink;
 	}
+
+#ifdef BUILD_TEST_INKS
+	init_test_inks();
+#endif
 
 	while (ink != NULL)
 	{
