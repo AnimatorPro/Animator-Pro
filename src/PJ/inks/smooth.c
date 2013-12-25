@@ -6,8 +6,7 @@
 #include "options.h"
 #include "inkdot.h"
 
-
-static Pixel ink_dot(Ink *inky, SHORT x, SHORT y)
+static Pixel smooth_dot(Ink *inky, SHORT x, SHORT y)
 {
 Aa_ink_data *aid = inky->aid;
 Rgb3 result;
@@ -22,7 +21,7 @@ Rgb3 result;
 	return(aid->bclosest_col(&result, aid->ccount, inky->dither) );
 }
 
-static void ink_hline(const Ink *inky, SHORT x0, const SHORT y, SHORT width)
+static void smooth_hline(const Ink *inky, SHORT x0, const SHORT y, SHORT width)
 {
 UBYTE buf[SBSIZE+1];
 UBYTE *bpt = buf;
@@ -60,7 +59,7 @@ int (*bclose)(Rgb3 *rgb,int count,SHORT dither) = aid->bclosest_col;
 
 static Errcode init_smooth(Aa_ink_data *aid,  Ink_groups *igs);
 
-RootInk rexlib_header = {
+RootInk smooth_ink_opt = {
 	INKINIT(
 		NONEXT,
 		RL_KEYTEXT("smooth_n")"Smooth",
@@ -68,8 +67,8 @@ RootInk rexlib_header = {
 		0,
 		RL_KEYTEXT("smooth_help"),
 		NO_SUBOPTS,
-		ink_dot,
-		ink_hline,
+		smooth_dot,
+		smooth_hline,
 		50,
 		FALSE,
 		NO_MC,
@@ -82,7 +81,7 @@ RootInk rexlib_header = {
 static Errcode init_smooth(Aa_ink_data *aid,  Ink_groups *igs)
 /* fill in ink cache and stuff */
 {
-#define mi (rexlib_header.ink)
+#define mi (smooth_ink_opt.ink)
 	mi.make_cashe = aid->make_bhash;
 	mi.free_cashe = aid->free_bhash;
 	return(Success);
