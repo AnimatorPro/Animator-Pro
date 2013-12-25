@@ -69,7 +69,6 @@ int strength = inky->strength;
 static Errcode init_cloud(Aa_ink_data *aid,  Ink_groups *igs);
 
 RootInk rexlib_header = {
-	{ REX_INK,0,NULL,NULL,NULL,NULL },
 	INKINIT(
 		NONEXT,
 		RL_KEYTEXT("cloud_n")"Cloud",

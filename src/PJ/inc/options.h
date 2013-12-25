@@ -139,7 +139,6 @@ typedef struct optgroup_data {
 
 /* first ink in chain of rex library inks has rexlib header */
 typedef struct rootink {
-	Rexlib hdr;
 	Ink ink; 	 /* first ink in singly linked chain (at least one) */
 	Errcode (*init_inks)(Aa_ink_data *aid, Ink_groups *g);
 } RootInk;

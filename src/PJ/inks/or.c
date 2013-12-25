@@ -30,7 +30,6 @@ PUT_HSEG(aid->screen,buf,x0,y,width);
 }
 
 RootInk rexlib_header = {
-	{ REX_INK,0,NULL,NULL,NULL,NULL },
 	INKINIT(
 		NONEXT,
 		RL_KEYTEXT("or_n")"Or",

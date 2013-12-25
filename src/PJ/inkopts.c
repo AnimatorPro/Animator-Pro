@@ -16,6 +16,7 @@
 #include "resource.h"
 #include "softmenu.h"
 
+/* #define BUILD_TEST_INKS */
 
 extern Button dtintgroup_sel,tintgroup_sel, radgroup_sel, dithergroup_sel;
 
@@ -424,7 +425,6 @@ Ink add_ink_opt = INKINIT(
 
 #define first_option ((Option_tool*)&add_ink_opt)
 static Ink *static_inks = &add_ink_opt;
-static Ink *loaded_inks = NULL;
 Option_tool *ink_list = NULL;
 
 extern Button dtintgroup_sel,tintgroup_sel, radgroup_sel, dithergroup_sel;
@@ -434,39 +434,6 @@ static Ink_groups igs = {
 	&tintgroup_sel, 
 	&dtintgroup_sel,
 };
-
-
-static void free_loaded_ink(Ink *ink)
-
-/* used to free an ink gotten with load_ink_driver() may only be called with 
- * first ink in list returned by load_ink_driver() */
-{
-Rexlib *prl;
-
-	prl = &(TOSTRUCT(RootInk,ink,ink)->hdr);
-	pj_rexlib_free(&prl);
-}
-static Errcode load_ink_driver(char *fname, Ink **pink)
-{
-RootInk *ri;
-Errcode err;
-static void *libs_for_inks[] = { &aa_syslib, &aa_stdiolib, &aa_gfxlib, NULL };
-
-	if((err = pj_rexlib_load(fname,REX_INK,(Rexlib **)&ri,libs_for_inks,NULL)) 
-		< Success)
-		goto error;
-	if ((err = pj_rexlib_init((Rexlib *)ri, NULL)) < Success)
-		goto error;
-	if (ri->init_inks != NULL)
-		if ((err = (*ri->init_inks)(&ink_aid, &igs)) < Success)
-			goto error;
-	*pink = &(ri->ink);
-	return(Success);
-error:
-	*pink = NULL;
-	pj_rexlib_free((Rexlib **)&ri);
-	return(err);
-}
 
 static void close_static_ink(Ink *ink)
 /* simply put ink back on static inks list and set close to null */
@@ -478,23 +445,45 @@ static void close_static_ink(Ink *ink)
 
 typedef void (*ink_closer)(struct option_tool *ot);
 
-static void close_loaded_ink(Ink *ink)
-/* move loadable ink root ink to loaded_inks to loaded list */
-{
-	ink->ot.next = loaded_inks;
-	loaded_inks = ink;
-	ink->ot.closeit = (ink_closer)free_loaded_ink;
-}
 static void *ink_ss = NULL;
 
 void cleanup_inks()
 {
 	/* transfer to loaded or static list */
 	close_option_tools((Option_tool **)&ink_list);
-	/* cleanup and free loaded ones */
-	close_option_tools((Option_tool **)&loaded_inks);
 	smu_free_scatters(&ink_ss);
 }
+
+#ifdef BUILD_TEST_INKS
+static void
+add_root_ink(RootInk *ri)
+{
+	static SHORT loaded_id = FIRST_LOADABLE_INKID;
+	Ink *loaded_ink = &(ri->ink);
+
+	if (ri->init_inks != NULL)
+		if ((*ri->init_inks)(&ink_aid, &igs) < Success)
+			return;
+
+	/* put loaded inks on end of ink list */
+	ink_list = (Option_tool *)join_slists((Slnode *)ink_list,
+			(Slnode *)loaded_ink);
+
+	/* set closit function and set their id's */
+	loaded_ink->ot.closeit = (ink_closer)close_static_ink;
+
+	for (;;)
+	{
+		loaded_ink->ot.id = loaded_id++;
+		loaded_ink->aid = &ink_aid;
+		if (loaded_ink->hline == NULL)
+			loaded_ink->hline = gink_hline;
+		if ((loaded_ink = loaded_ink->ot.next) == NULL)
+			break;
+		loaded_ink->ot.closeit = NULL; /* only root counts */
+	}
+}
+#endif
 
 Errcode init_inks()
 {
@@ -503,7 +492,6 @@ Ink *ink;
 Names *ink_devs = NULL;
 Names *inkd;
 Ink *loaded_ink;
-SHORT loaded_id = FIRST_LOADABLE_INKID;
 
 	/* move static inks into ink_list */
 	while(static_inks != NULL)
@@ -515,57 +503,6 @@ SHORT loaded_id = FIRST_LOADABLE_INKID;
 		ink->ot.closeit = (ink_closer)close_static_ink;
 	}
 
-	if((err = change_dir(resource_dir)) < Success)
-	{
-		err = no_resource(err);
-		goto no_resource_load;
-	}
-
-	/* attempt to load any loadable inks found in resource dir */
-
-	build_wild_list(&ink_devs, "*.INK", FALSE);
-	inkd = ink_devs;
-	while (inkd != NULL)
-	{
-		if ((err = load_ink_driver(inkd->name, &loaded_ink)) >= Success)
-		{
-			if (slist_len(loaded_ink) + slist_len(ink_list) > MAX_INKS)
-			{
-				free_loaded_ink(loaded_ink);
-				err = softerr(Err_unimpl,"inks_100");
-				goto error;
-			}
-			else
-			{
-				/* put loaded inks on end of ink list */
-				ink_list = (Option_tool *)join_slists((Slnode *)ink_list, 
-								(Slnode *)loaded_ink);
-
-				/* set closit function and set their id's */
-				loaded_ink->ot.closeit = (ink_closer)close_loaded_ink;
-
-				for(;;)
-				{
-					loaded_ink->ot.id = loaded_id++;
-					loaded_ink->aid = &ink_aid;
-					if (loaded_ink->hline == NULL)
-						loaded_ink->hline = gink_hline;
-					if((loaded_ink = loaded_ink->ot.next) == NULL)
-						break;
-					loaded_ink->ot.closeit = NULL; /* only root counts */
-				}
-			}
-		}
-		else
-		{
-			softerr(err,"!%s", "ink_load", inkd->name);
-		}
-		inkd = inkd->next;
-	}
-	free_wild_list(&ink_devs);
-	ink = (Ink *)ink_list;
-
-no_resource_load:
 	while (ink != NULL)
 	{
 		ink->aid = &ink_aid;

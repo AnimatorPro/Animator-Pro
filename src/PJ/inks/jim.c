@@ -33,7 +33,6 @@ Hostlib _a_a_gfxlib = { &_a_a_stdiolib, AA_GFXLIB, AA_GFXLIB_VERSION };
 Hostlib _a_a_syslib = { &_a_a_gfxlib, AA_SYSLIB, AA_SYSLIB_VERSION };
 
 RootInk rexlib_header = {
-	{ REX_INK,0,NULL,NULL,&_a_a_syslib },
 	INKINIT(
 		NONEXT,
 		"Jim",

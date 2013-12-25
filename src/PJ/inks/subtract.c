@@ -15,7 +15,6 @@ return((CGET_DOT(aid->undo,x,y) - aid->ccolor)&COLORS-1);
 }
 
 RootInk rexlib_header = {
-	{ REX_INK,0,NULL,NULL,NULL,NULL },
 	INKINIT(
 		NONEXT,
 		RL_KEYTEXT("minus_n")"Minus",

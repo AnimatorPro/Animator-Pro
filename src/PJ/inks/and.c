@@ -15,7 +15,6 @@ return(CGET_DOT(aid->undo,x,y) & aid->ccolor);
 }
 
 RootInk rexlib_header = {
-	{ REX_INK,0,NULL,NULL,NULL,NULL },
 	INKINIT(
 		NONEXT,
 		RL_KEYTEXT("and_n")"And",

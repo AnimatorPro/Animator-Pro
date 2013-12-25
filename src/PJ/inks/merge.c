@@ -24,7 +24,6 @@ return(aid->bclosest_col(&result, aid->ccount, inky->dither) );
 static Errcode init_merge(Aa_ink_data *aid,  Ink_groups *igs);
 
 RootInk rexlib_header = {
-	{ REX_INK,0,NULL,NULL,NULL,NULL },
 	INKINIT(
 		NONEXT,
 		RL_KEYTEXT("merge_n")"Merge",

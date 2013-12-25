@@ -26,7 +26,6 @@ else
 static Errcode init_slice(Aa_ink_data *aid,  Ink_groups *igs);
 
 RootInk rexlib_header = {
-	{ REX_INK,0,NULL,NULL,NULL,NULL },
 	INKINIT(
 		NONEXT,
 		RL_KEYTEXT("slice_n")"Slice",

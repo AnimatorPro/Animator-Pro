@@ -147,9 +147,9 @@ rem above here the include directory and the object modules etc.
 	cd rexlib
 	tcmake rex
 	if ERRORLEVEL 1 goto error
-	cd ..\inks
-	tcmake
-	if ERRORLEVEL 1 goto error
+rem	cd ..\inks
+rem	tcmake
+rem	if ERRORLEVEL 1 goto error
 	cd ..\drivekit
 	call makekit_
 	if ERRORLEVEL 1 goto error
