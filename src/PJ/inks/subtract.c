@@ -14,7 +14,7 @@ Aa_ink_data *aid = inky->aid;
 return((CGET_DOT(aid->undo,x,y) - aid->ccolor)&COLORS-1);
 }
 
-RootInk rexlib_header = {
+RootInk subtract_ink_opt = {
 	INKINIT(
 		NONEXT,
 		RL_KEYTEXT("minus_n")"Minus",
