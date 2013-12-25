@@ -456,6 +456,7 @@ void cleanup_inks()
 
 #ifdef BUILD_TEST_INKS
 #include "inks/and.c"
+#include "inks/cloud.c"
 
 static void
 add_root_ink(RootInk *ri)
@@ -490,6 +491,7 @@ static void
 init_test_inks(void)
 {
 	add_root_ink(&and_ink_opt);
+	add_root_ink(&cloud_ink_opt);
 }
 #endif
 

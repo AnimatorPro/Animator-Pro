@@ -33,7 +33,7 @@ static int grey_strength;	/* grey level to match ink-strenght.  Precomputed
 							 * by ink_cache function. */
 static int strength_factor;	/* Partial factor precomputed by ink_cache */
 
-static Pixel ink_dot(Ink *inky, SHORT x, SHORT y)
+static Pixel cloud_dot(Ink *inky, SHORT x, SHORT y)
 {
 Aa_ink_data *aid = inky->aid;
 Rcel *undo = aid->undo;
@@ -68,7 +68,7 @@ int strength = inky->strength;
 
 static Errcode init_cloud(Aa_ink_data *aid,  Ink_groups *igs);
 
-RootInk rexlib_header = {
+RootInk cloud_ink_opt = {
 	INKINIT(
 		NONEXT,
 		RL_KEYTEXT("cloud_n")"Cloud",
@@ -77,7 +77,7 @@ RootInk rexlib_header = {
 		RL_KEYTEXT("cloud_help")"Force luminance to ink strength.  "
 			"Makes picture look like it's uniformly lit and a bit washed out.",
 		NO_SUBOPTS,
-		ink_dot,
+		cloud_dot,
 		NULL,
 		50,
 		FALSE,
@@ -103,7 +103,7 @@ return((*aid_make_bhash)(inky));
 static Errcode init_cloud(Aa_ink_data *aid,  Ink_groups *igs)
 /* fill in ink cache and stuff */
 {
-#define mi (rexlib_header.ink)
+#define mi (cloud_ink_opt.ink)
 	aid_make_bhash = aid->make_bhash;
 	mi.make_cashe = cloud_cashe;
 	mi.free_cashe = aid->free_bhash;
