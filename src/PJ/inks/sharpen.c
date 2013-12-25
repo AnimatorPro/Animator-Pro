@@ -67,7 +67,7 @@ else
 
 static Errcode init_sharpen(Aa_ink_data *aid,  Ink_groups *igs);
 
-RootInk rexlib_header = {
+RootInk sharpen_ink_opt = {
 	INKINIT(
 		NONEXT,
 		RL_KEYTEXT("sharpen_n")"Sharpen",
@@ -90,7 +90,7 @@ RootInk rexlib_header = {
 static Errcode init_sharpen(Aa_ink_data *aid,  Ink_groups *igs)
 /* fill in ink cache and stuff */
 {
-#define mi (rexlib_header.ink)
+#define mi (sharpen_ink_opt.ink)
 mi.make_cashe = aid->make_bhash;
 mi.free_cashe = aid->free_bhash;
 mi.ot.options = igs->dstrength_group;
