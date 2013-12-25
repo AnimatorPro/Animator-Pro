@@ -461,6 +461,7 @@ void cleanup_inks()
 #include "inks/or.c"
 #include "inks/quantize.c"
 #include "inks/sharpen.c"
+#include "inks/slice.c"
 
 static void
 add_root_ink(RootInk *ri)
@@ -500,6 +501,7 @@ init_test_inks(void)
 	add_root_ink(&or_ink_opt);
 	add_root_ink(&quantize_ink_opt);
 	add_root_ink(&sharpen_ink_opt);
+	add_root_ink(&slice_ink_opt);
 }
 #endif
 

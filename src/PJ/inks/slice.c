@@ -25,7 +25,7 @@ else
 
 static Errcode init_slice(Aa_ink_data *aid,  Ink_groups *igs);
 
-RootInk rexlib_header = {
+RootInk slice_ink_opt = {
 	INKINIT(
 		NONEXT,
 		RL_KEYTEXT("slice_n")"Slice",
@@ -47,7 +47,7 @@ RootInk rexlib_header = {
 static Errcode init_slice(Aa_ink_data *aid,  Ink_groups *igs)
 /* fill in ink cache and stuff */
 {
-#define mi (rexlib_header.ink)
+#define mi (slice_ink_opt.ink)
 mi.ot.options = igs->strength_group;
 return(Success);
 #undef mi
