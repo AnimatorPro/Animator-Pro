@@ -35,9 +35,9 @@ rem	if ERRORLEVEL 1 goto out
 	cd ..\null
 	tcmake
 	if ERRORLEVEL 1 goto out
-	cd ..\hgsc
-	tcmake
-	if ERRORLEVEL 1 goto out
+rem	cd ..\hgsc
+rem	tcmake
+rem	if ERRORLEVEL 1 goto out
 rem	cd ..\compaq
 rem	tcmake
 	cd ..
