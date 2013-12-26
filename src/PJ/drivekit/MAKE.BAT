@@ -38,8 +38,8 @@ rem	if ERRORLEVEL 1 goto out
 	cd ..\hgsc
 	tcmake
 	if ERRORLEVEL 1 goto out
-	cd ..\compaq
-	tcmake
+rem	cd ..\compaq
+rem	tcmake
 	cd ..
 
 :out
