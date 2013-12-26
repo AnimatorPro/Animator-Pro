@@ -1,4 +1,5 @@
 #define VDEV_INTERNALS
+#include "errcodes.h"
 #include "vdevcall.h"
 
 Errcode pj_open_ddriver(Vdevice **pvd, char *name)
@@ -23,5 +24,9 @@ Errcode pj_open_ddriver(Vdevice **pvd, char *name)
 {
 	if (!txtcmp(pj_get_path_name(name), pj_mcga_name))
 		return(pj_open_mcga_vdriver(pvd));
+#ifdef USE_DYNAMIC_VIDEO_DRIVERS
 	return(pj_open_loadable_vdriver(pvd,name));
+#else /* USE_DYNAMIC_VIDEO_DRIVERS */
+	return Err_unimpl;
+#endif /* USE_DYNAMIC_VIDEO_DRIVERS */
 }

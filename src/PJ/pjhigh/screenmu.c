@@ -45,7 +45,11 @@ char wstr[32];
 char hstr[32];
 int mode_count;
 
+#ifdef USE_DYNAMIC_VIDEO_DRIVERS
 	build_wild_list(pwildlist, "*.drv", FALSE);
+#else /* USE_DYNAMIC_VIDEO_DRIVERS */
+	*pwildlist = NULL;
+#endif /* USE_DYNAMIC_VIDEO_DRIVERS */
 
 	drv_entry = &mcga_entry;
 	mcga_entry.name = pj_mcga_name;
