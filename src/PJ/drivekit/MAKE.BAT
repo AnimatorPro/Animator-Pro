@@ -29,9 +29,9 @@ rem making of drvcomn, vesa, and svga must be done in that order!
 rem	cd ..\8514
 rem	tcmake
 rem	if ERRORLEVEL 1 goto out
-	cd ..\mcga
-	tcmake
-	if ERRORLEVEL 1 goto out
+rem	cd ..\mcga
+rem	tcmake
+rem	if ERRORLEVEL 1 goto out
 	cd ..\null
 	tcmake
 	if ERRORLEVEL 1 goto out
