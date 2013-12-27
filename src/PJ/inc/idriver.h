@@ -6,10 +6,6 @@
 	#include "stdtypes.h"
 #endif
 
-#ifndef REXLIB_H
-	#include "rexlib.h"
-#endif
-
 #define IDR_MAX_OPTIONS 4  /* maximum number of options each with up to 
 							* 9 modes that are saved in the config */ 
 
@@ -24,7 +20,11 @@ typedef struct idr_option {
 
 typedef struct idriver
 	{
-	Rexlib hdr;
+	struct {
+		Errcode (*init)(struct idriver *idr);
+		Errcode (*cleanup)(struct idriver *idr);
+	} hdr;
+
 	void *hardware;		/* driver specific data pointer */
 	struct idr_library *lib;
 

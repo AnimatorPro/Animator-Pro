@@ -12,23 +12,22 @@ char summa_idriver_name[] = "summa.idr";
 
 extern Errcode init_key_idriver(Idriver *idr);
 extern Errcode init_mouse_idriver(Idriver *idr);
-extern Errcode init_summa_idriver(Idriver *idr);
 
-
+static Errcode do_init_idriver(Idriver *idr)
+{
+	if (idr->hdr.init == NULL)
+		return Success;
+	return (*idr->hdr.init)(idr);
+}
 void close_idriver(Idriver **pidr)
 {
 Idriver *idr;
 
 	if((idr = *pidr) == NULL)
 		return;
-	if(idr->hdr.host_data == NULL) /* this is NOT a loaded rex driver */
-	{
-		if(idr->hdr.cleanup)
-			(*(idr->hdr.cleanup))(idr);
-		pj_freez(pidr);
-	}
-	else
-		pj_rexlib_free((Rexlib **)pidr);
+	if (idr->hdr.cleanup != NULL)
+		(*idr->hdr.cleanup)(idr);
+	pj_freez(pidr);
 }
 static Errcode alloc_local_idr(Errcode (*initit)(Idriver *idr),Idriver **pidr)
 {
@@ -46,7 +45,6 @@ int i;
 Errcode err;
 Idriver *idr = NULL;
 char *local_name;
-static Libhead *libs_for_idr[] = { &aa_syslib, NULL };
 
 	local_name = pj_get_path_name(iname);
 	if(!(txtcmp(local_name,key_idriver_name)))
@@ -54,16 +52,7 @@ static Libhead *libs_for_idr[] = { &aa_syslib, NULL };
 	else if (!(txtcmp(local_name,mouse_idriver_name)))
 		err = alloc_local_idr(init_mouse_idriver,pidr);
 	else 
-	{
-		if((err = pj_rexlib_load(iname, REX_IDRIVER, (Rexlib **)pidr,
-							 libs_for_idr,NULL)) < Success)
-		{
-			goto error;
-		}
-
-		if((*pidr)->hdr.version != IDR_VERSION)
-			err = Err_version;
-	}
+		err = Err_unimpl;
 
 	if(err < Success)
 		goto error;
@@ -85,7 +74,7 @@ static Libhead *libs_for_idr[] = { &aa_syslib, NULL };
 	}
 
 	/* call the initializer */
-	if((err = pj_rexlib_init(&idr->hdr)) < Success)
+	if((err = do_init_idriver(idr)) < Success)
 		goto error;
 	return(Success);
 error:
