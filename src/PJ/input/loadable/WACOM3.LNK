@@ -1,5 +1,0 @@
-\paa\rexlib\rexentry.obj
-wacom3.obj
-serial.obj
-lokey.obj
--lib \build\wc386\lib386\dos\clib3s.lib

@@ -158,16 +158,17 @@ rem	if ERRORLEVEL 1 goto error
 	cd ..\picdrive
 	call make rex
 	if ERRORLEVEL 1 goto error
-	cd ..\input\loadable
-	call make
-	if ERRORLEVEL 1 goto error
-	cd ..\..
+rem	cd ..\input\loadable
+rem	call make
+rem	if ERRORLEVEL 1 goto error
+rem	cd ..\..
 rem	cd flic386p\libsrc
 rem	call makeall
 rem	cd ..\..
 rem	cd poco\poekit
 rem	call make
 rem	cd ..\..
+	cd ..
 
 rem Here we do the player and convert program.
 	cd player

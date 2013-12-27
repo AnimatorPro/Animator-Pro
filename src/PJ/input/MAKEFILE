@@ -26,7 +26,6 @@ INPUTHIO = \
  lodos.obj\
  mouseidr.obj\
  reponpdn.obj\
- summaidr.obj\
  upcinkey.obj\
  waitask.obj
 
