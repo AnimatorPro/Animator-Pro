@@ -603,7 +603,7 @@ else
 			tween_menu(TRUE);
 			break;
 		case ANI_DOS_PUL:
-			shell_out_to_dos();
+			/* shell_out_to_dos(); */
 			break;
 		case ANI_QUI_PUL:	/* quit */
 			qquit();

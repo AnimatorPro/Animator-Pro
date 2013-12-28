@@ -275,8 +275,6 @@ Pull home
 	"Inks",108
 	"Titling",109,'l'
 	"Tween",110,'w'
-	"----",113
-	"DOS Shell",114
 	"----",111
 	"Quit",112,'q','Q'
 	}

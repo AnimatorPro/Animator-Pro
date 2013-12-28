@@ -7,11 +7,6 @@
  *	   is passed), then restores the graphics state.  It does no error
  *	   reporting (unless it bombs the whole application because the graphics
  *	   state can't be restored).  This one is used by the Poco system() call.
- *
- *	 Errcode shell_out_to_dos(void)
- *	   This function runs the interactive shell, or if the shell can't be
- *	   started it reports the problem via softerr().  This one is used by
- *	   the pulldown menu DOS SHELL selection.
  ****************************************************************************/
 
 #include "jimk.h"
@@ -212,17 +207,4 @@ FATAL_ERROR:
 
 	exit(1);							/* so sorry, gotta go. */
 
-}
-
-Errcode shell_out_to_dos(void)
-/*****************************************************************************
- * function to process pulldown menu selection to shell out to dos.
- ****************************************************************************/
-{
-	Errcode err;
-
-	if (Success != (err = text_mode_exec(NULL))) {
-		softerr(err, "dos_command");
-	}
-	return err;
 }
