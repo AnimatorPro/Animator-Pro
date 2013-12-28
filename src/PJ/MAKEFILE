@@ -14,7 +14,7 @@ O = testasm.obj test.obj a3d.obj a3ddat.obj alt.obj&
  celmenu.obj celpaste.obj celpull.obj celtrans.obj cfit.obj&
  cursor.obj cutcurs.obj cleanup.obj cluster.obj composit.obj&
  composmu.obj csort.obj cthread.obj&
- dosexec.obj diskerr.obj ellipse.obj&
+ diskerr.obj ellipse.obj&
  files.obj findfree.obj fli.obj&
  flicel.obj flicelio.obj fli.obj flipath.obj flood.obj freem.obj flxovlay.obj&
  gel.obj geometry.obj globals.obj grid.obj hitext.obj&

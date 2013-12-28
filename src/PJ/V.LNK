@@ -51,7 +51,6 @@ FILE
 \paa\cthread.obj,
 \paa\cursor.obj,
 \paa\cutcurs.obj,
-\paa\dosexec.obj,
 \paa\ellipse.obj,
 \paa\files.obj,
 \paa\findfree.obj,

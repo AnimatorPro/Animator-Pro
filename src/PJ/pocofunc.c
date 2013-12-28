@@ -133,13 +133,7 @@ static Errcode po_system(Popot cmdline)
  *	this case, we return the status to the caller without stopping the show.
  ****************************************************************************/
 {
-	Errcode err;
-
-	if (cmdline.pt == NULL) {	/* ANSI behavior:  a NULL pointer is	*/
-		return TRUE;			/* asking whether a command processor	*/
-	} else {					/* is available.						*/
-		return text_mode_exec(cmdline.pt);
-	}
+	return Err_unimpl;
 }
 
 

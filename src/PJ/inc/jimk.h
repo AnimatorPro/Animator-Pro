@@ -590,7 +590,5 @@ extern long pj_ddfree(int device);
 
 Errcode flic_create(char *name,Flifile *flif);
 
-Errcode text_mode_exec(char *command_line); /* run dos command in text mode  */
-
 /* leave at end of file */
 #endif /* JIMK_H */
