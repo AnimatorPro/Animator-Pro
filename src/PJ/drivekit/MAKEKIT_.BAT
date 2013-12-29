@@ -8,21 +8,9 @@ rem popdir
 
 rem *** rexlib include files ******************
 
-copy \paa\rexlib\inc\compiler.h inc
-copy \paa\rexlib\inc\pjinline.h inc
 copy \paa\rexlib\inc\raster.i inc
-copy \paa\rexlib\inc\raster.h inc
 copy \paa\rexlib\inc\rastlib.i inc
-copy \paa\rexlib\inc\rastlib.h inc
-copy \paa\rexlib\inc\stdtypes.h inc
 copy \paa\rexlib\inc\stdmacro.i inc
-copy \paa\rexlib\inc\syslib.h inc
-copy \paa\rexlib\inc\rexlib.h inc
-copy \paa\rexlib\inc\filemode.h inc
-copy \paa\rexlib\inc\filepath.h inc
-copy \paa\rexlib\inc\jfile.h inc
-copy \paa\rexlib\inc\stdio.h inc
-copy \paa\rexlib\inc\stddef.h inc
 
 rem **** include file from pj includes with cmacro processing ****
 
