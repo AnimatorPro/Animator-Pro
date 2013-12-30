@@ -39,6 +39,11 @@ rem *************************************************************************
 	if ERRORLEVEL 1 goto error
 	cd ..
 
+	cd pcx
+	make
+	if ERRORLEVEL 1 goto error
+	cd ..
+
 	if "%1" == "host" goto make_host
 
 rem *************************************************************************
@@ -81,13 +86,6 @@ rem *************************************************************************
 	cd ..
 
 	cd neo
-	cd
-	make
-	if ERRORLEVEL 1 goto error
-	copy *.pdr \paa\resource
-	cd ..
-
-	cd pcx
 	cd
 	make
 	if ERRORLEVEL 1 goto error

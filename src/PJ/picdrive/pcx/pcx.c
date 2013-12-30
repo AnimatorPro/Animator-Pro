@@ -4,35 +4,15 @@
 #define REXLIB_INTERNALS
 #include "errcodes.h"
 #include "stdio.h"
+#include "memory.h"
 #include "pcx.h"
 #include "picdrive.h"
-#include "syslib.h"
 
 #define PCX_MAX_RUN 63	/* longest run (since hi 2 bits are used elsewhere */
 #define PCX_CMAP_MAGIC 12
 
-unsigned pj_bsame(UBYTE *buf, unsigned count);	/* from membsame.asm */
-
-									/* macro for zeroing out memory  */
-#define clear_mem(pt, count) memset((pt), 0, (count))
-									/* macro for initing a struct to zero */
-#define clear_struct(pt) clear_mem((pt), sizeof(*(pt)))
-									/* macro to copy memory */
-#define pj_copy_bytes(source,dest,count) memcpy(dest,source,count)
-
-void pj_freez(void **ppt)
-/* Pass in a pointer to a pointer.  If  the  pointer is non-null free it
- * and set it to NULL */
-{
-void *pt;
-
-if ((pt = *ppt) != NULL)
-	{
-	free(pt);
-	*ppt = NULL;
-	}
-}
-
+unsigned pj_bsame(UBYTE *buf, unsigned count);
+void pj_copy_bytes(void *buf1, void *buf2, unsigned count);
 
 /***** Uncompression and bit-plane to byte-a-pixel routines *******/
 
@@ -47,7 +27,7 @@ typedef struct unpcx_obj
 	FILE *file;
 	} Unpcx_obj;
 
-Errcode unpcx_init(
+static Errcode unpcx_init(
 	Unpcx_obj *upo, 	/* line unpacker object */
 	int bpl, 			/* bytes-per-line */
 	FILE *file)			/* source file */
@@ -55,7 +35,7 @@ Errcode unpcx_init(
  * overflow.  */
 {
 clear_struct(upo);
-if ((upo->buf = malloc(bpl + PCX_MAX_RUN + 1)) ==  NULL)
+if ((upo->buf = pj_malloc(bpl + PCX_MAX_RUN + 1)) ==  NULL)
 	return(Err_no_memory);
 upo->over = upo->buf + bpl;		/* Overflow area is just past buf proper */
 upo->file = file;
@@ -63,7 +43,7 @@ upo->bpl = bpl;
 return(Success);
 }
 
-void unpcx_cleanup(Unpcx_obj *upo)
+static void unpcx_cleanup(Unpcx_obj *upo)
 /* Cleanup resources associated with upo object. */
 {
 pj_freez(&upo->buf);
@@ -176,7 +156,7 @@ if ((err = unpcx_init(&rupo, hdr->bpl, f)) < Success)
 	goto OUT;
 width = hdr->x2 - hdr->x1 + 1;
 height = hdr->y2 - hdr->y1 + 1;
-if ((uout_buf = malloc(width)) == NULL)
+if ((uout_buf = pj_malloc(width)) == NULL)
 	{
 	err = Err_no_memory;
 	goto OUT;
@@ -237,7 +217,7 @@ return(err);
 
 /**** Compression code ****/
 
-void pcx_comp_buf(FILE *out, UBYTE *buf, int count)
+static void pcx_comp_buf(FILE *out, UBYTE *buf, int count)
 /* Do PCX compression of buf into file out */
 {
 int same_count, lcount;
@@ -272,7 +252,7 @@ while ((count -= same_count) > 0)
 	}
 }
 
-Errcode pcx_save_screen(FILE *out, Rcel *screen)
+static Errcode pcx_save_screen(FILE *out, Rcel *screen)
 /* Save out header, pixel, and color map corresponding to screen.  Assumes
  * file open and at start of  file. */
 {
@@ -297,7 +277,7 @@ rhdr.nplanes = 1;
 rhdr.bpl = screen->width;
 if (fwrite(&rhdr, sizeof(rhdr), 1, out) < 1)	/* Write header */
 	goto IOERR;
-if ((buf = malloc(screen->width)) == NULL)		/* Get line buffer */
+if ((buf = pj_malloc(screen->width)) == NULL)		/* Get line buffer */
 	{
 	err = Err_no_memory;
 	goto OUT;
@@ -336,33 +316,7 @@ static pcx_files_open = 0;						/* lock data structures
 											     * to prevent open without
 											     * close */
 
-static int to_upper(char a)
-/* Convert lower case character to upper case.  Leave other characters
- * unchanged. */
-{
-if (a >= 'a' && a <= 'z')
-	return(a + 'A' -  'a');
-else
-	return(a);
-}
-
-static txtcmp(char *a, char *b)
-/* compare two strings ignoring case */
-{
-char aa,bb;
-
-for (;;)
-	{
-	aa = to_upper(*a++);	/* fetch next characters converted to upper case */
-	bb = to_upper(*b++);
-	if (aa != bb)			/* if not equals return difference */
-		return(aa-bb);
-	if (aa == 0)
-		return(0);
-	}
-}
-
-suffix_in(string, suff)
+static Boolean suffix_in(string, suff)
 char *string, *suff;
 {
 string += strlen(string) - strlen(suff);
@@ -467,7 +421,7 @@ if(pcxile == NULL || (gf = *pcxile) == NULL)
 	return;
 if(gf->file)
 	fclose(gf->file);
-free(gf);
+pj_free(gf);
 *pcxile = NULL;
 pcx_files_open = FALSE;
 }
@@ -487,7 +441,7 @@ if(pcx_files_open)
 if (!suffix_in(path, ".PCX"))
 	return(Err_suffix);
 
-if((gf = zalloc(sizeof(Pcx_file))) == NULL)
+if((gf = pj_zalloc(sizeof(Pcx_file))) == NULL)
 	return(Err_no_memory);
 
 if((gf->file = fopen(path, rwmode)) == NULL)
@@ -640,14 +594,11 @@ return(pcx_save_screen(gf->file, screen));
 
 /**** driver header declaration ******/
 
-Hostlib _a_a_stdiolib = { NULL, AA_STDIOLIB, AA_STDIOLIB_VERSION };
-Hostlib _a_a_gfxlib = { &_a_a_stdiolib, AA_GFXLIB, AA_GFXLIB_VERSION };
-Hostlib _a_a_syslib = { &_a_a_gfxlib, AA_SYSLIB, AA_SYSLIB_VERSION };
-
+static char pcx_pdr_name[] = "PCX.PDR";
 static char pcx_title_info[] = "PCX standard picture format.";
 
-Pdr rexlib_header = {
-	{ REX_PICDRIVER, PDR_VERSION, NOFUNC, NOFUNC, &_a_a_syslib },
+static Pdr pcx_pdr_header = {
+	{ REX_PICDRIVER, PDR_VERSION, NOFUNC, NOFUNC, NULL, NULL, NULL },
 	pcx_title_info,  		/* title_info */
 	"",  					/* long_info */
 	".PCX",			 		/* default_suffi */
@@ -661,3 +612,8 @@ Pdr rexlib_header = {
 	pcx_save_frame,			/* (*save_frames)() */
 };
 
+Local_pdr pcx_local_pdr = {
+	NULL,
+	pcx_pdr_name,
+	&pcx_pdr_header
+};
