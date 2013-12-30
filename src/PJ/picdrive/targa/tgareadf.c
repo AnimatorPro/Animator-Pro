@@ -165,7 +165,7 @@ Errcode read_targa_header(Targa_file *tf)
 		tf->data_offset += ((th->tcmdata.mapbits+7)/8)*th->tcmdata.mapcnt;
 
 	tf->bpr = tf->width * tf->bpp;
-	if (NULL == (tf->lbuf = malloc(tf->bpr+130*tf->bpp)))
+	if (NULL == (tf->lbuf = pj_malloc(tf->bpr+130*tf->bpp)))
 		return Err_no_memory;
 
 	tf->over = tf->lbuf + tf->bpr; /* extra at end to make decompression easier */

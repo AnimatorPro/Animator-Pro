@@ -20,14 +20,12 @@ rem *************************************************************************
 	if ERRORLEVEL 1 goto error
 	cd ..
 
-	if "%1" == "host" goto make_host
-
 	cd targa
-	cd
-	wmake
+	make
 	if ERRORLEVEL 1 goto error
-	copy *.pdr \paa\resource
 	cd ..
+
+	if "%1" == "host" goto make_host
 
 rem *************************************************************************
 rem * the following subdirs are our own private things...

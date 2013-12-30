@@ -215,7 +215,7 @@ static Errcode write_compressed_image(Targa_file *tf)
 	Pixel	*buf = NULL;
 	long	pixcount = tf->width * tf->height;
 
-	if (NULL == (buf = malloc(tf->width)))
+	if (NULL == (buf = pj_malloc(tf->width)))
 		{
 		err = Err_no_memory;
 		goto ERROR_EXIT;
@@ -275,7 +275,7 @@ static Errcode write_compressed_image(Targa_file *tf)
 ERROR_EXIT:
 
 	if (buf != NULL)
-		free(buf);
+		pj_free(buf);
 	return err;
 
 }

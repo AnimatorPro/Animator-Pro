@@ -80,15 +80,15 @@ static void close_file(Image_file **ptf)
 		tf = (Targa_file *)*ptf;
 
 	if (tf->hsegbuf != NULL)
-		free(tf->hsegbuf);
+		pj_free(tf->hsegbuf);
 
 	if (tf->lbuf != NULL)
-		free(tf->lbuf);
+		pj_free(tf->lbuf);
 
 	if(tf->file != NULL)
 		fclose(tf->file);
 
-	free(tf);
+	pj_free(tf);
 	*ptf = NULL;
 	return;
 }
@@ -100,7 +100,7 @@ static Errcode alloc_and_open(Targa_file **ptf, char *path, char *openmode)
 {
 	Targa_file	 *tf;
 
-	if (NULL == (tf = zalloc(sizeof(Targa_file))))
+	if (NULL == (tf = pj_zalloc(sizeof(Targa_file))))
 		return Err_no_memory;
 	*ptf = tf;
 
@@ -174,7 +174,7 @@ static Errcode create_file(Pdr			*pd,
 	tf->width  = ainfo->width;
 	tf->height = ainfo->height;
 
-	if (NULL == (tf->hsegbuf = malloc(tf->width)))
+	if (NULL == (tf->hsegbuf = pj_malloc(tf->width)))
 		{
 		err = Err_no_memory;
 		goto ERROR_EXIT;
@@ -267,11 +267,7 @@ static Errcode save_frames(Image_file	*ifile,
  * Rexlib interface...
  ****************************************************************************/
 
-#define HLIB_TYPE_1 AA_SYSLIB
-#define HLIB_TYPE_2 AA_STDIOLIB
-#define HLIB_TYPE_3 AA_GFXLIB
-#include "hliblist.h"
-
+static char targa_pdr_name[] = "TARGA.PDR";
 static char title_info[] = "TARGA Image File Format.";
 
 static char long_info[]  = RL_KEYTEXT("targa_info")
@@ -283,8 +279,8 @@ static char long_info[]  = RL_KEYTEXT("targa_info")
 						   "use the ANICONV program.  "
 						   ;
 
-Pdr rexlib_header = {
-	{ REX_PICDRIVER, PDR_VERSION, NOFUNC, NOFUNC, HLIB_LIST },
+static Pdr targa_pdr_header = {
+	{ REX_PICDRIVER, PDR_VERSION, NOFUNC, NOFUNC, NULL, NULL, NULL },
 	title_info, 		/* title_info */
 	long_info,			/* long_info */
 	".TGA;.PIX",             /* default_suffix */
@@ -299,4 +295,10 @@ Pdr rexlib_header = {
 	&save_options,		/* Pdroptions pointer */
 	read_seekstart, 	/* (*rgb_seekstart)() */
 	read_nextline,		/* (*rgb_readline()() */
+};
+
+Local_pdr targa_local_pdr = {
+	NULL,
+	targa_pdr_name,
+	&targa_pdr_header
 };

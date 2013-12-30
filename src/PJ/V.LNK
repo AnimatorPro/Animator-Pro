@@ -160,4 +160,5 @@ FILE
 \paa\zoom.obj,
 \paa\picdrive\flilo\flilores.lib,
 \paa\picdrive\rif\rif.lib,
+\paa\picdrive\targa\targa.lib,
 \paa\picdrive\host\picdrive.obj

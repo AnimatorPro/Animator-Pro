@@ -4,7 +4,6 @@
 
 #include "picdrive.h"
 #include "errcodes.h"
-#include "syslib.h"
 #include "stdio.h"
 #include "gfx.h"
 
