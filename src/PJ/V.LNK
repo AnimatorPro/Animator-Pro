@@ -159,4 +159,5 @@ FILE
 \paa\writeflx.obj,
 \paa\zoom.obj,
 \paa\picdrive\flilo\flilores.lib,
+\paa\picdrive\rif\rif.lib,
 \paa\picdrive\host\picdrive.obj

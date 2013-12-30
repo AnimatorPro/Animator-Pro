@@ -5,12 +5,10 @@
 #include "errcodes.h"
 #include "stdtypes.h"
 #include "stdio.h"
+#include "memory.h"
 #include "picdrive.h"
-#include "syslib.h"
 #include "rif.h"
 
-
-Boolean suffix_in(char *string, char *suff);
 Errcode conv_bitmaps(UBYTE *planes[], int pcount,
 					 int bpr, int width, int height, Rcel *screen);
 UBYTE *decode_vplane(UBYTE *comp, UBYTE *plane, int BytesPerRow);
@@ -33,14 +31,6 @@ typedef struct ifile {
 	int *ytable;
 } Ifile;
 
-
-
-#define copy_bytes(source,dest,count) memcpy(dest,source,count)
-#define clear_mem(dest,count) memset(dest,0,count)
-#define clear_struct(s) clear_mem(s, sizeof(s))
-
-
-
 static void intel_swaps(void *p, int length)
 /*****************************************************************************
  * Convert an array of 16 bit quantitys between 68000 and intel format.
@@ -58,7 +48,7 @@ while (--length >= 0)
 	}
 }
 
-intel_swap(void *pt)
+static void intel_swap(void *pt)
 /*****************************************************************************
  * Convert a 16 bit quantity between 68000 and intel format.
  ****************************************************************************/
@@ -71,23 +61,6 @@ x[0] = x[1];
 x[1] = swap;
 #undef x
 }
-
-long_intel_swap(void *pt)
-/*****************************************************************************
- * Convert a 32 bit quantity between 68000 and intel format.
- ****************************************************************************/
-{
-#define x ((SHORT *)pt)
-SHORT swap;
-
-swap = x[0];
-x[0] = x[1];
-x[1] = swap;
-intel_swap((char *)x);
-intel_swap((char *)(x+1));
-#undef x
-}
-
 
 static Boolean spec_best_fit(Anim_info *ainfo)
 /*****************************************************************************
@@ -112,7 +85,7 @@ static Errcode make_ytable(int **pytable, int bpr, int height)
 int *pt;
 int acc;
 
-if ((*pytable = pt = malloc(height * sizeof(*pt))) == NULL)
+if ((*pytable = pt = pj_malloc(height * sizeof(*pt))) == NULL)
 	return(Err_no_memory);
 acc = 0;
 while (--height >= 0)
@@ -138,7 +111,7 @@ int i;
 
 *pif = NULL;	/* for better error recovery */
 
-if((gf = zalloc(sizeof(*gf))) == NULL)
+if((gf = pj_zalloc(sizeof(*gf))) == NULL)
 	return(Err_no_memory);
 
 if((f = gf->file = fopen(path, "rb")) == NULL)
@@ -177,7 +150,7 @@ gf->psize = gf->bpr*rif.height;
 						/** Allocate bitplanes for Amiga screen
 						 ** simulation.
 						 **/
-if ((gf->sbuf = sbuf = malloc(gf->psize*rif.depth)) == NULL)
+if ((gf->sbuf = sbuf = pj_malloc(gf->psize*rif.depth)) == NULL)
 	{
 	err = Err_no_memory;
 	goto ERROR;
@@ -220,14 +193,14 @@ if(pgf == NULL || (gf = *pgf) == NULL)
 if(gf->file)
 	fclose(gf->file);
 if (gf->sbuf != NULL)
-	free(gf->sbuf);
+	pj_free(gf->sbuf);
 if (gf->ytable != NULL)
-	free(gf->ytable);
-free(gf);
+	pj_free(gf->ytable);
+pj_free(gf);
 *pgf = NULL;
 }
 
-conv_amiga_cmap(USHORT *ami_cmap, UBYTE *pj_ctab, int size)
+static void conv_amiga_cmap(USHORT *ami_cmap, UBYTE *pj_ctab, int size)
 /*****************************************************************************
  * Convert color map from Amiga format (a nibble each of red green and blue
  * with the hi nibble clear,  16 bits total per color) to our one byte for
@@ -258,7 +231,7 @@ Errcode err = Success;
 
 if ((size = comp->size) != 0)
 	{
-	if ((comp_buf = malloc(size)) == NULL)
+	if ((comp_buf = pj_malloc(size)) == NULL)
 		{
 		err = Err_no_memory;
 		goto ERROR;
@@ -297,7 +270,7 @@ if ((size = comp->size) != 0)
 	}
 ERROR:
 if (comp_buf != NULL)
-	free(comp_buf);
+	pj_free(comp_buf);
 return(err);
 }
 
@@ -371,16 +344,11 @@ return(read_next(ifile, screen));
  * Rex/Pdr interface stuff...
  ****************************************************************************/
 
-#define HLIB_TYPE_1 AA_STDIOLIB
-#define HLIB_TYPE_2 AA_SYSLIB
-#define HLIB_TYPE_3 AA_GFXLIB
-
-#include "hliblist.h"   /* auto-build hostlib linked list */
-
+static char rif_pdr_name[] = "RIF.PDR";
 static char title_info[] = "Amiga Zoetrope & Live! format.";
 
-Pdr rexlib_header = {
-	{ REX_PICDRIVER, PDR_VERSION, NOFUNC, NOFUNC, HLIB_LIST},
+static Pdr rif_pdr_header = {
+	{ REX_PICDRIVER, PDR_VERSION, NOFUNC, NOFUNC, NULL, NULL, NULL },
 	title_info, 		/* title_info */
 	"",                 /* long_info */
 	ISUFFI, 			/* default_suffi */
@@ -394,4 +362,8 @@ Pdr rexlib_header = {
 	NOFUNC, 			/* (*save_frames)() */
 };
 
-
+Local_pdr rif_local_pdr = {
+	NULL,
+	rif_pdr_name,
+	&rif_pdr_header
+};

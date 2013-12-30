@@ -301,11 +301,13 @@ int eat_memory()
 static void add_local_pdrs(void)
 {
 	extern Local_pdr flilo_local_pdr;
+	extern Local_pdr rif_local_pdr;
 
 	add_local_pdr(&fli_local_pdr);
 	add_local_pdr(&pic_local_pdr);
 
 	add_local_pdr(&flilo_local_pdr);
+	add_local_pdr(&rif_local_pdr);
 }
 
 void main(int argc, char **argv)

@@ -1,9 +1,8 @@
 
 #include "errcodes.h"
-#include "syslib.h"
 #include "picdrive.h"
 
-void bits_to_bytes(UBYTE *in, UBYTE *out, int w, UBYTE out_mask)
+static void bits_to_bytes(UBYTE *in, UBYTE *out, int w, UBYTE out_mask)
 /*****************************************************************************
  * Subroutine to help convert from bit-plane to byte-a-pixel representation
  * or the out_mask into out byte-plane wherever a bit in in bit-plane is set.
@@ -46,7 +45,7 @@ UBYTE *planes[8];
 if (pcount > 8)
 	return(Err_pdepth_not_avail);
 memcpy(planes, oplanes, pcount*sizeof(UBYTE *));
-if ((pix_buf = malloc(width)) == NULL)
+if ((pix_buf = pj_malloc(width)) == NULL)
 	return(Err_no_memory);
 for (i=0; i<height; ++i)
 	{
@@ -60,6 +59,6 @@ for (i=0; i<height; ++i)
 		}
 	pj_put_hseg(screen, pix_buf, 0, i, width);
 	}
-free(pix_buf);
+pj_free(pix_buf);
 return(Success);
 }

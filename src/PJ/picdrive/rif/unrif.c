@@ -4,8 +4,7 @@
 
 #include "stdtypes.h"
 
-
-UBYTE *decode_vcolumn(UBYTE *comp, UBYTE *plane, int BytesPerRow)
+static UBYTE *decode_vcolumn(UBYTE *comp, UBYTE *plane, int BytesPerRow)
 {
 int op_count;
 BYTE op;
@@ -50,7 +49,7 @@ while (--i >= 0)
 return(comp);
 }
 
-UBYTE *decode_vkcolumn(UBYTE * comp, UBYTE * plane, 
+static UBYTE *decode_vkcolumn(UBYTE * comp, UBYTE * plane,
 					   int BytesPerRow, int *ytable)
 {
 int op_count;
