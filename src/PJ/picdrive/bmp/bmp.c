@@ -6,9 +6,8 @@
 #define REXLIB_INTERNALS
 #include "errcodes.h"
 #include "stdio.h"
+#include "memory.h"
 #include "picdrive.h"
-#include "syslib.h"
-
 
 /*-------------------------BMP STRUCTURE SECTION----------------------------*/
 
@@ -121,17 +120,8 @@ typedef struct
 
 
 /*-------------------------UTILITY SECTION---------------------------------*/
-									/* See how many bytes in a row are same. */
-unsigned pj_bsame(UBYTE *buf, unsigned count);	/* from membsame.asm */
-									/* macro for zeroing out memory  */
-#define clear_mem(pt, count) memset((pt), 0, (count))
-									/* macro for initing a struct to zero */
-#define clear_struct(pt) clear_mem((pt), sizeof(*(pt)))
-									/* macro to copy memory */
-#define pj_copy_bytes(source,dest,count) memcpy(dest,source,count)
 
-
-Errcode read_buf(FILE *f, void *buf, int size)
+static Errcode read_buf(FILE *f, void *buf, int size)
 /* Read a buffer of a certain size */
 {
 	if (fread(buf, size, 1, f) != 1)
@@ -140,7 +130,7 @@ Errcode read_buf(FILE *f, void *buf, int size)
 		return(Success);
 }
 
-Errcode write_buf(FILE *f, void *buf, int size)
+static Errcode write_buf(FILE *f, void *buf, int size)
 /* Write a buffer of a certain size */
 {
 	if (fwrite(buf, size, 1, f) != 1)
@@ -155,64 +145,7 @@ Errcode write_buf(FILE *f, void *buf, int size)
 #define write_var(f,s) write_buf(f,&s,sizeof(s))
 /* Write a variable to file. */
 
-Errcode alloc_and_read(FILE *f, void **pbuf, int size)
-/* Allocate a buffer and fill it with next bits from file. */
-{
-	if ((*pbuf = malloc(size)) == NULL)
-		return(Err_no_memory);
-	return(read_buf(f,*pbuf,size));
-}
-
-Errcode ealloc(void **pbuf, int size)
-/* Try to allocate memory - return error code if can't. */
-{
-	if ((*pbuf = malloc(size)) == NULL)
-		return(Err_no_memory);
-	return(Success);
-}
-
-
-void freez(void **ppt)
-/* Pass in a pointer to a pointer.  If  the  pointer is non-null free it
- * and set it to NULL */
-{
-	void *pt;
-
-	if ((pt = *ppt) != NULL)
-	{
-		free(pt);
-		*ppt = NULL;
-	}
-}
-
-
 /*--------------------------STRING SECTION---------------------------------*/
-
-static int to_upper(char a)
-/* Convert lower case character to upper case.  Leave other characters
- * unchanged. */
-{
-	if (a >= 'a' && a <= 'z')
-		return(a + 'A' -  'a');
-	else
-		return(a);
-}
-
-static int txtcmp(char *a, char *b)
-/* compare two strings ignoring case */
-{
-	char aa,bb;
-
-	for (;;)
-	{
-		aa = to_upper(*a++);	/* fetch next characters and to upper case */
-		bb = to_upper(*b++);
-		if (aa != bb)			/* if not equals return difference */
-			return(aa-bb);
-		if (aa == 0)
-			return(0);
-	}
-}
 
 static Boolean suffix_in(char *string, char *suff)
 /* Return TRUE if string ends with suff. */
@@ -228,7 +161,7 @@ static Boolean suffix_in(char *string, char *suff)
 	/* Find next number greater than or equal to input but divisible by 4. */
 #define NEXT_QUAD(x) (((x)+3)&0xfffffffc)
 
-int bytes_per_row(int width, int bits_per_pixel)
+static int bytes_per_row(int width, int bits_per_pixel)
 /* Figure out how many bytes in a line of the picture.  Round to
  * nearest byte boundary, and then to nearest long-word boundary.
  * That is the result will always be a multiple of 4. */
@@ -264,7 +197,7 @@ int bytes_per_row(int width, int bits_per_pixel)
 	return (bpr+3)&0xfffc;		/* Round up to longword boundary. */
 }
 
-void bits_to_bytes(char *in, char *out, int in_size, 
+static void bits_to_bytes(char *in, char *out, int in_size,
 	char zero_color, char one_color)
 /* Convert 1 bits in "in" to one_color bytes in out,  and likewise
  * zero bits into zero_color bytes.  Out better be in_size*8 big. */
@@ -284,7 +217,7 @@ void bits_to_bytes(char *in, char *out, int in_size,
 	}
 }
 
-void nibbles_to_bytes(char *in, char *out, int in_size)
+static void nibbles_to_bytes(char *in, char *out, int in_size)
 /* Convert nibbles (4 bit quantities) to bytes.  Out better be 
  * in_size*2 big. */
 {
@@ -499,8 +432,8 @@ static Errcode read_uncompressed(FILE *f, BITMAPINFOHEADER *info, Rcel *screen)
 	}
 ERROR:
 	if (pixel_buf != data_buf)
-		freez(&pixel_buf);
-	freez(&data_buf);
+		pj_freez(&pixel_buf);
+	pj_freez(&data_buf);
 	return err;
 }
 
@@ -648,8 +581,8 @@ static Errcode read_rle(FILE *f, BITMAPINFOHEADER *info, Rcel *screen)
 OUT:
 ERROR:
 	if (pixel_buf != data_buf)
-		freez(&pixel_buf);
-	freez(&data_buf);
+		pj_freez(&pixel_buf);
+	pj_freez(&data_buf);
 	return err;
 }
 
@@ -793,7 +726,7 @@ static Errcode write_pixels(FILE *f, BITMAPINFOHEADER *info, Rcel *screen)
 	Errcode err = Success;
 	int i = info->biHeight;
 
-	if ((buf = zalloc(bpr)) == NULL)
+	if ((buf = pj_zalloc(bpr)) == NULL)
 	{
 		err = Err_no_memory;
 		goto ERROR;
@@ -805,7 +738,7 @@ static Errcode write_pixels(FILE *f, BITMAPINFOHEADER *info, Rcel *screen)
 			goto ERROR;
 	}
 ERROR:
-	freez(&buf);
+	pj_freez(&buf);
 	return err;
 }
 
@@ -862,7 +795,7 @@ static close_file(Bmp_image_file **pf)
 		return;
 	if(f->file)
 		fclose(f->file);
-	free(f);
+	pj_free(f);
 	*pf = NULL;
 	is_open = FALSE;
 }
@@ -884,7 +817,7 @@ static Errcode open_helper(Bmp_image_file **pf, char *path, char *rwmode)
 	&& !suffix_in(path, ".DIB"))
 		return(Err_suffix);
 
-	if((f = zalloc(sizeof(*f))) == NULL)
+	if((f = pj_zalloc(sizeof(*f))) == NULL)
 		return(Err_no_memory);
 
 	if((f->file = fopen(path, rwmode)) == NULL)
@@ -1007,14 +940,11 @@ static Errcode rgb_read_seekstart(Image_file *ifile)
 
 /*--------------------DRIVER HEADER SECTION--------------------------------*/
 
-Hostlib _a_a_stdiolib = { NULL, AA_STDIOLIB, AA_STDIOLIB_VERSION };
-Hostlib _a_a_gfxlib = { &_a_a_stdiolib, AA_GFXLIB, AA_GFXLIB_VERSION };
-Hostlib _a_a_syslib = { &_a_a_gfxlib, AA_SYSLIB, AA_SYSLIB_VERSION };
-
+static char bmp_pdr_name[] = "BMP.PDR";
 static char title_info[] = "Microsoft Windows BMP, DIB and RLE Files.";
 
-Pdr rexlib_header = {
-	{ REX_PICDRIVER, PDR_VERSION, NOFUNC, NOFUNC, &_a_a_syslib },
+static Pdr bmp_pdr_header = {
+	{ REX_PICDRIVER, PDR_VERSION, NOFUNC, NOFUNC, NULL, NULL, NULL },
 	title_info,  		/* title_info */
 	"",  				/* long_info */
 	".BMP;.RLE;.DIB", 	/* default_suffi */
@@ -1031,3 +961,8 @@ Pdr rexlib_header = {
 	rgb_read_nextline,		/* (*rgb_readline()() */
 };
 
+Local_pdr bmp_local_pdr = {
+	NULL,
+	bmp_pdr_name,
+	&bmp_pdr_header
+};

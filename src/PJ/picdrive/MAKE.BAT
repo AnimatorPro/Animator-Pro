@@ -25,20 +25,22 @@ rem *************************************************************************
 	if ERRORLEVEL 1 goto error
 	cd ..
 
-	if "%1" == "host" goto make_host
-
 rem *************************************************************************
 rem * the following subdirs are our own private things...
 rem *************************************************************************
 
-	cd anim
-	cd
+	cd bmp
 	make
 	if ERRORLEVEL 1 goto error
-	copy *.pdr \paa\resource
 	cd ..
 
-	cd bmp
+	if "%1" == "host" goto make_host
+
+rem *************************************************************************
+rem * the following subdirs are not still not supported...
+rem *************************************************************************
+
+	cd anim
 	cd
 	make
 	if ERRORLEVEL 1 goto error

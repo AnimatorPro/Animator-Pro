@@ -158,6 +158,7 @@ FILE
 \paa\vsetfnam.obj,
 \paa\writeflx.obj,
 \paa\zoom.obj,
+\paa\picdrive\bmp\bmp.obj,
 \paa\picdrive\flilo\flilores.lib,
 \paa\picdrive\rif\rif.lib,
 \paa\picdrive\targa\targa.lib,

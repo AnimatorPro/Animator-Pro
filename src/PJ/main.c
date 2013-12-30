@@ -300,6 +300,7 @@ int eat_memory()
 
 static void add_local_pdrs(void)
 {
+	extern Local_pdr bmp_local_pdr;
 	extern Local_pdr flilo_local_pdr;
 	extern Local_pdr rif_local_pdr;
 	extern Local_pdr targa_local_pdr;
@@ -307,6 +308,7 @@ static void add_local_pdrs(void)
 	add_local_pdr(&fli_local_pdr);
 	add_local_pdr(&pic_local_pdr);
 
+	add_local_pdr(&bmp_local_pdr);
 	add_local_pdr(&flilo_local_pdr);
 	add_local_pdr(&rif_local_pdr);
 	add_local_pdr(&targa_local_pdr);
