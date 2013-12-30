@@ -34,6 +34,11 @@ rem *************************************************************************
 	if ERRORLEVEL 1 goto error
 	cd ..
 
+	cd gif
+	make
+	if ERRORLEVEL 1 goto error
+	cd ..
+
 	if "%1" == "host" goto make_host
 
 rem *************************************************************************
@@ -48,13 +53,6 @@ rem *************************************************************************
 	cd ..
 
 	cd degas
-	cd
-	make
-	if ERRORLEVEL 1 goto error
-	copy *.pdr \paa\resource
-	cd ..
-
-	cd gif
 	cd
 	make
 	if ERRORLEVEL 1 goto error

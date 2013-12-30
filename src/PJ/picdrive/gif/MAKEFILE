@@ -1,9 +1,6 @@
-!include "..\inc\make.inc"
+!include "\paa\inc\make.inc"
 
-EXE  = gif.pdr
 OBJ  = compress.obj decoder.obj gif.obj
-LOBJ = compress.obj,decoder.obj,gif.obj
 
-$(EXE): $(OBJ)
-	wlink @pdr.lnk FILE $(LOBJ) NAME $(EXE)
-	copy $(EXE) \paa\resource
+gif.lib: $(OBJ)
+	wlib /n $@ $(OBJ)

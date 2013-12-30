@@ -94,9 +94,6 @@ static int free_code;
 
 static Errcode err_status;
 
-extern void *malloc(int size);
-extern void free(void *mem);
-
 static void init_table(int min_code_size)
 /*****************************************************************************
  *
@@ -280,16 +277,16 @@ int ret;
 
 	ret = Err_no_memory;	/* out of memory default */
 
-	if ((hash_table = malloc(TABLE_SIZE * sizeof(*hash_table))) == NULL)
+	if ((hash_table = pj_malloc(TABLE_SIZE * sizeof(*hash_table))) == NULL)
 		goto no_hash;
-	if ((chain_buf = malloc((1<<12) * sizeof(*chain_buf))) == NULL)
+	if ((chain_buf = pj_malloc((1<<12) * sizeof(*chain_buf))) == NULL)
 		goto no_chain;
 
 	ret = compress_data(min_code_size, pixel_count);
 
-	free(chain_buf);
+	pj_free(chain_buf);
 no_chain:
-	free(hash_table);
+	pj_free(hash_table);
 no_hash:
 	return(ret);
 }

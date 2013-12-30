@@ -6,8 +6,8 @@
 #include "errcodes.h"
 #include "stdio.h"
 #include "gif.h"
+#include "memory.h"
 #include "picdrive.h"
-#include "syslib.h"
 
 #ifndef isdigit
   #define isdigit(a) ( a >= '0' && a <= '9')
@@ -208,7 +208,7 @@ Gif_file *gf;
 		return;
 	if(gf->file)
 		fclose(gf->file);
-	free(gf);
+	pj_free(gf);
 	*gifile = NULL;
 	gif_files_open = FALSE;
 }
@@ -222,7 +222,7 @@ Gif_file *gf;
 	if(gif_files_open)
 		return(Err_too_many_files);
 
-	if((gf = zalloc(sizeof(Gif_file))) == NULL)
+	if((gf = pj_zalloc(sizeof(Gif_file))) == NULL)
 		return(Err_no_memory);
 
 	/* gf->hdr.needs_work_cel = FALSE */
@@ -343,7 +343,7 @@ long gif_wcount;
 	gifscreen = screen;
 	pixy = 0;
 	pixleft = pixw	= screen->width;
-	if ((pixb = pixbuf = malloc(pixw)) == NULL)
+	if ((pixb = pixbuf = pj_malloc(pixw)) == NULL)
 		return(Err_no_memory);
 	pj_get_hseg(screen, pixbuf, 0, 0, pixw);
 
@@ -386,22 +386,18 @@ error:
 done:
 	if (pixbuf != NULL)
 		{
-		free(pixbuf);
+		pj_free(pixbuf);
 		pixbuf = NULL;
 		}
 	return(err);
 }
 /**** driver header declaration ******/
 
-#define HLIB_TYPE_1 AA_STDIOLIB
-#define HLIB_TYPE_2 AA_GFXLIB
-#define HLIB_TYPE_3 AA_SYSLIB
-#include "hliblist.h"
-
+static char gif_pdr_name[] = "GIF.PDR";
 static char gif_title_info[] = "GIF standard picture format.";
 
-Pdr rexlib_header = {
-	{ REX_PICDRIVER, PDR_VERSION, NOFUNC, NOFUNC, HLIB_LIST },
+static Pdr gif_pdr_header = {
+	{ REX_PICDRIVER, PDR_VERSION, NOFUNC, NOFUNC, NULL, NULL, NULL },
 	gif_title_info, 		/* title_info */
 	"",                     /* long_info */
 	".GIF",                 /* default_suffi */
@@ -415,3 +411,8 @@ Pdr rexlib_header = {
 	gif_save_frame, 		/* (*save_frames)() */
 };
 
+Local_pdr gif_local_pdr = {
+	NULL,
+	gif_pdr_name,
+	&gif_pdr_header,
+};

@@ -349,23 +349,23 @@ UBYTE *suffix = NULL;
 USHORT *prefix = NULL;
 int   ret = Err_no_memory;
 
-	if ((buf = (UBYTE *)malloc(linewidth + 1)) == NULL)
+	if ((buf = (UBYTE *)pj_malloc(linewidth + 1)) == NULL)
 		goto no_buff;
-	if ((stack = (UBYTE *)malloc(MAX_CODES+1)) == NULL)
+	if ((stack = (UBYTE *)pj_malloc(MAX_CODES+1)) == NULL)
 		goto no_stack;
-	if ((suffix = (UBYTE *)malloc(MAX_CODES+1)) == NULL)
+	if ((suffix = (UBYTE *)pj_malloc(MAX_CODES+1)) == NULL)
 		goto no_suffix;
-	if ((prefix = (USHORT *)malloc((MAX_CODES+1)*sizeof(USHORT) )) == NULL)
+	if ((prefix = (USHORT *)pj_malloc((MAX_CODES+1)*sizeof(USHORT) )) == NULL)
 		goto no_prefix;
 	ret = decoder(linewidth,buf,stack,suffix,prefix,oline_data);
 
-	free(prefix);
+	pj_free(prefix);
 no_prefix:
-	free(suffix);
+	pj_free(suffix);
 no_suffix:
-	free(stack);
+	pj_free(stack);
 no_stack:
-	free(buf);
+	pj_free(buf);
 no_buff:
 	return(ret);
 }

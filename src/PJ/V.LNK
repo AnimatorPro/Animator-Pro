@@ -160,6 +160,7 @@ FILE
 \paa\zoom.obj,
 \paa\picdrive\bmp\bmp.obj,
 \paa\picdrive\flilo\flilores.lib,
+\paa\picdrive\gif\gif.lib,
 \paa\picdrive\rif\rif.lib,
 \paa\picdrive\targa\targa.lib,
 \paa\picdrive\host\picdrive.obj
