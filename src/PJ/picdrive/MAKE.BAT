@@ -10,14 +10,12 @@ rem *************************************************************************
 rem * the following subdirs are parts of the pdrkit that gets distributed...
 rem *************************************************************************
 
-	if "%1" == "host" goto make_host
-
 	cd flilo
-	cd
-	wmake
+	make
 	if ERRORLEVEL 1 goto error
-	copy *.pdr \paa\resource
 	cd ..
+
+	if "%1" == "host" goto make_host
 
 	cd rif
 	cd

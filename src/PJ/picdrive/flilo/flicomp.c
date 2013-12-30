@@ -20,7 +20,7 @@ register UBYTE *bbuf = cbuf;
 	shift_copy_cmap((UBYTE *)ctab,(UBYTE *)bbuf,COLORS*3);
 	return(norm_pointer(bbuf+COLORS*3));
 }
-void *comp_cmap(Rgb3 *last_ctab, Rgb3 *this_ctab, void *cbuf)
+static void *comp_cmap(Rgb3 *last_ctab, Rgb3 *this_ctab, void *cbuf)
 {
 UBYTE *last, *this;
 extern void *pj_fccomp();
@@ -32,7 +32,7 @@ extern void *pj_fccomp();
 	return(pj_fccomp(last,this,cbuf,COLORS));
 }
 
-LONG pj_fli_comp_rect(void *comp_buf, 
+static LONG flow_comp_rect(void *comp_buf,
 					Rcel *last_screen,
 					Rcel *this_screen, Rectangle *rect, 
 					Boolean do_colors, SHORT type)
@@ -92,7 +92,7 @@ extern void *pj_fccomp();
 					  	      rect->x,rect->y,rect->width,rect->height);
 			break;
 		case FLI_BRUN:
-			vp = pj_brun_rect(this_screen, chunk+1,
+			vp = flow_brun_rect(this_screen, chunk+1,
 					  	   rect->x,rect->y,rect->width,rect->height);
 			break;
 	}
@@ -124,7 +124,7 @@ extern void *pj_fccomp();
 	frame->size = SIZE(comp_buf,vp);
 	return(frame->size);
 }
-LONG pj_fli_comp_cel(void *comp_buf, 
+LONG flow_comp_cel(void *comp_buf,
 				  Rcel *last_screen,
 				  Rcel *this_screen, SHORT type)
 
@@ -138,5 +138,5 @@ Rectangle rect;
 	rect.width = this_screen->width;
 	rect.height = this_screen->height;
 
-	return(pj_fli_comp_rect(comp_buf,last_screen,this_screen,&rect,TRUE,type));
+	return(flow_comp_rect(comp_buf,last_screen,this_screen,&rect,TRUE,type));
 }

@@ -5,12 +5,10 @@
 #define RASTCOMP_INTERNALS
 #include "ptrmacro.h"
 #include "rastcomp.h"
-#include "syslib.h"
-
 
 extern USHORT pj_bcompare(), pj_fcompare(), pj_bsame();
 
-static char *brun_comp_line(char *s1, char *cbuf, int count)
+static char *flow_brun_comp_line(char *s1, char *cbuf, int count)
 {
 int wcount;
 register char *c;
@@ -70,7 +68,7 @@ int dif_count;
 		}
 	}
 }
-void *pj_brun_rect(Raster *r,void *cbuf,
+void *flow_brun_rect(Raster *r,void *cbuf,
 				SHORT x,SHORT y,USHORT width,USHORT height)
 
 /* brun compresses all pixels in a raster rectangle and puts them in cbuf
@@ -87,7 +85,7 @@ UBYTE *lbuf;
 	while(height--)
 	{
 		pj_get_hseg(r,lbuf,x,y++,width);
-		c = brun_comp_line(lbuf,c,width);
+		c = flow_brun_comp_line(lbuf,c,width);
 		if(c >= cmax)
 			return(NULL);
 	}

@@ -21,7 +21,7 @@
 	#define RASType void /* because many types have same first fields */
 #endif
 
-void *pj_brun_rect(RASType *r,void *cbuf,
+void *flow_brun_rect(RASType *r,void *cbuf,
 				SHORT x,SHORT y,USHORT width,USHORT height);
 
 void *pj_lccomp_rects(RASType *r1, void *cbuf, 

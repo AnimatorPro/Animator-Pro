@@ -2,7 +2,7 @@
 #include "errcodes.h"
 #include "jfile.h"
 
-Errcode pj_jwriteoset(Jfile f,void *buf, LONG oset,LONG size)
+Errcode flow_jwriteoset(Jfile f,void *buf, LONG oset,LONG size)
 
 /* combo seek and read */
 {

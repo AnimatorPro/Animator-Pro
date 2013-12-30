@@ -158,4 +158,5 @@ FILE
 \paa\vsetfnam.obj,
 \paa\writeflx.obj,
 \paa\zoom.obj,
+\paa\picdrive\flilo\flilores.lib,
 \paa\picdrive\host\picdrive.obj
