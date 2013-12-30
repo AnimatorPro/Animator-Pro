@@ -36,8 +36,6 @@ Pdr *pd;
 	{
 		if(pd->hdr.version == ~(PDR_VERSION))
 			*ppdr = NULL;
-		else
-			pj_rexlib_free((Rexlib **)ppdr);
 	}
 }
 Errcode load_pdr(char *path, Pdr **ppdr)
@@ -48,12 +46,10 @@ Errcode load_pdr(char *path, Pdr **ppdr)
 Local_pdr *lpd;
 Errcode err;
 char *name;
-static Libhead *libs_for_pdrs[] =
-	{ &aa_syslib, &aa_gfxlib, &aa_stdiolib, NULL };
 
 	name = pj_get_path_name(path);
 
-	if(name[0] == LOCAL_PDR_CHAR)
+	if (1)
 	{
 		if((lpd = (Local_pdr *)(name_in_list(name,
 									(Names *)local_pdrs))) != NULL)
@@ -64,12 +60,7 @@ static Libhead *libs_for_pdrs[] =
 		return(Err_not_found);
 	}
 
-	if((err = pj_rexlib_load(path, REX_PICDRIVER,
-						   (Rexlib **)ppdr,libs_for_pdrs,NULL)) >= Success)
-	{
-		if((err = pj_rexlib_init((Rexlib *)(*ppdr))) < Success)
-			free_pdr(ppdr);
-	}
+	err = Err_unimpl;
 	return(err);
 }
 int pdr_get_title(Pdr *pd, char *buf, int maxlen)

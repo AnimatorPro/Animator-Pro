@@ -298,6 +298,12 @@ int eat_memory()
 }
 #endif /* TEST_LO_MEM */
 
+static void add_local_pdrs(void)
+{
+	add_local_pdr(&fli_local_pdr);
+	add_local_pdr(&pic_local_pdr);
+}
+
 void main(int argc, char **argv)
 {
 Errcode err;
@@ -314,9 +320,7 @@ static Argparse_list apl[] = {
 	}
 	oldconfig = err;
 
-
-	add_local_pdr(&fli_local_pdr);
-	add_local_pdr(&pic_local_pdr);
+	add_local_pdrs();
 	set_hotkey_func(do_pj_hotkey); /* set input hot key function */
 
 	/* initialize pj resource files */

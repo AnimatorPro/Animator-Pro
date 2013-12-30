@@ -282,8 +282,6 @@ Errcode find_pdr_loader(char *ifname, Boolean multi_frame,
  * independent loader */
 {
 Errcode err, wlerr;
-Names *wildlist = NULL;
-Names *wildentry;
 int type, check_type;
 Anim_info screen_info;
 Config_pdr *cpd;
@@ -342,37 +340,12 @@ Config_pdr *cpd;
 			break;
 	}
 
-	if((wlerr = build_dir_list(&wildlist, "*.pdr",  
-							 FALSE, resource_dir)) < Success)
-	{
-		err = wlerr;
-		goto error;
-	}
-
-	for(wildentry = wildlist; wildentry != NULL;
-		wildentry = (Names *)(wildentry->next))
-	{
-
-		if(  !txtcmp(wildentry->name,cpd->save_pdr)
-			|| !txtcmp(wildentry->name,cpd->last_read))
-		{
-			continue;
-		}
-		*ainfo = screen_info;
-		if((err = check_try_pdr(make_resource_name(wildentry->name,pdr_name),
-								ifname,ainfo)) >= Success)
-		{
-			goto done; 
-		}
-	}
-
 error:
 	err = softerr(err, "!%s", "unknown_image", ifname);
 	goto out;
 done:
 	strcpy(cpd->last_read,pj_get_path_name(pdr_name));
 out:
-	free_wild_list(&wildlist);
 	return(err);
 }
 Errcode load_any_picture(char *name,Rcel *screen)

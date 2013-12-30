@@ -246,7 +246,6 @@ Errcode err;
 char opath[PATH_SIZE];
 char cur_name[PATH_SIZE];
 Names *namelist;
-Names *wildlist;
 Pdr_entry *pdrlist = NULL;
 Pdr_entry *current;
 
@@ -259,10 +258,10 @@ Pdr_entry *current;
 	pdat.name = name_buf;
 	pdat.suffi = suffi_buf;
 
-	if((err = build_wild_list(&wildlist,"*.pdr",FALSE)) < Success)
-		goto error;
-
-	namelist = join_slists((Slnode *)local_names, (Slnode *)wildlist);
+	/* Use the entire local_pdr list instead of the two Config_pdrs
+	 * and any PDRs found in the resource directory.
+	 */
+	namelist = local_pdrs;
 
 	if((err = build_pdr_list(namelist,&pdrlist,&current,name_buf,
 							 rwmode,multiframe_only)) < Success)
@@ -276,7 +275,6 @@ Pdr_entry *current;
 
 error:
 	free_wild_list((Names **)&(pdrlist));
-	free_wild_list((Names **)&(wildlist));
 	change_dir(opath);
 	err = softerr(err, "screen_menu");
 	show_mp();
