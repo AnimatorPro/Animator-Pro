@@ -53,7 +53,7 @@ How to build PJ (Animator Pro) in DOSBox
  9. You can now build inside DOSBox:
 
         cd \PAA
-        make all  (enter Y to the first prompt)
+        make
 
 10. If successful, you can start it with:
 
