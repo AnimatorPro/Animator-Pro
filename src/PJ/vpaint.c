@@ -404,7 +404,9 @@ static Keyequiv home_keys[] = {
 	{ "qnew", qnew_flx,     KE_HIDE, 'n' },
 	{ "quit", qquit,        KE_HIDE, 'q' },
 	{ "quit2", qquit,       KE_HIDE, ESCKEY },
+#ifdef WITH_POCO
 	{ "pouse", quse_poco,   KE_HIDE, 'u' },
+#endif /* WITH_POCO */
 	{ "optic", go_ado,      KE_HIDE, 'o' },
 	{ "qinsf", insert_a_frame,  KE_HIDE, INSERTKEY },
 	{ "qkillf", kill_a_frame,   KE_HIDE, DELKEY },
@@ -729,10 +731,14 @@ else
 			qfree_alt();
 			break;
 		case POC_PRO_PUL:
+#ifdef WITH_POCO
 			go_pgmn();
+#endif /* WITH_POCO */
 			break;
 		case POC_USE_PUL:
+#ifdef WITH_POCO
 			quse_poco();
+#endif /* WITH_POCO */
 			break;
 		case EXT_MAS_PUL:		/* stencil */
 			qmask();

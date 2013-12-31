@@ -226,6 +226,7 @@ extern Errcode go_quick_menu();
 	vl.redoit = do_auto_redo;
 	menu_to_quickcent(&quick_menu);
 
+#ifdef WITH_POCO
 	if(cl_poco_name != NULL)
 	{
 		err = do_cl_poco(cl_poco_name);
@@ -238,6 +239,8 @@ extern Errcode go_quick_menu();
 		}
 		cl_poco_name = NULL; /* don't keep re-executing */
 	}
+#endif /* WITH_POCO */
+
 	return(go_quick_menu());
 }
 
@@ -347,6 +350,7 @@ static Argparse_list apl[] = {
 	if((err = init_inks()) < Success) /* load any loadable inks */
 		goto error;
 
+#ifdef WITH_POCO
 	if(cl_poco_name != NULL)
 	{
 		if ((err = compile_cl_poco(cl_poco_name)) < Success)
@@ -357,6 +361,7 @@ static Argparse_list apl[] = {
 			goto error;
 		}
 	}
+#endif /* WITH_POCO */
 
 	vs = default_vs; /* copy in default settings */
 

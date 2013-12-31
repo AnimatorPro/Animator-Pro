@@ -55,7 +55,10 @@
 #include <ctype.h>
 #include "stdtypes.h"
 #include "errcodes.h"
-#include "poco.h"
+#include "token.h"
+
+#define SZTOKE			512 	/* max line length, token length */
+#define MAX_SYM_LEN 	40		/* max significant chars in sym name */
 
 extern UBYTE *po_chop_csym(UBYTE *line, UBYTE *word, int maxlen, UBYTE **nextword);
 #pragma aux po_chop_csym "__*__" parm [esi] [edi] [ecx] [edx] value [esi];

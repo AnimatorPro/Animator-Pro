@@ -127,7 +127,7 @@ rem ***** check which version we want to make, default to test version ****
 	if ERRORLEVEL 1 goto error
 	cd ..
 	cd poco
-	call make watcom objlib
+	call make watcom minipoco
 	if ERRORLEVEL 1 goto error
 	cd ..
 	cd rexlib

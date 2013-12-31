@@ -30,6 +30,9 @@ poco.lib:	$(OBJ)\
 	del poco.lib
 	wlib poco.lib @poco.obs
 
+minipoco: token.obj pocoutil.obj
+	wlib /n minipoco.lib token.obj pocoutil.obj
+
 #
 # the following dependency *MUST* remain in place!
 #	when the version number in pocfiles.inc changes, these are the three

@@ -23,12 +23,8 @@ O = testasm.obj test.obj a3d.obj a3ddat.obj alt.obj&
  messages.obj multimen.obj muparts.obj names.obj onepal.obj&
  options.obj overlay.obj palet2.obj pencel.obj&
  penopts.obj pentools.obj penwndo.obj picfiles.obj pixbuf.obj pjfont.obj&
- pocoa3d.obj pocoalt.obj pocoblit.obj pococel.obj pocodos.obj&
- pocodraw.obj pocofile.obj pocoflic.obj pocofunc.obj pocogvar.obj&
- pocomode.obj pocorex.obj pocotext.obj pocotime.obj&
- pocotur.obj pocotwee.obj pocouser.obj pocolibs.obj pocoqnum.obj&
  qconfig.obj qmacro.obj qmenu.obj&
- qpoco.obj qpocoed.obj poly.obj polyrub.obj polytool.obj pstamp.obj&
+ poly.obj polyrub.obj polytool.obj pstamp.obj&
  quickdat.obj random.obj rcel.obj resource.obj redo.obj render.obj&
  savefli.obj saveseg.obj selbrush.obj  sep.obj&
  sizemenu.obj spiral.obj spline.obj tempflx.obj&
@@ -36,6 +32,13 @@ O = testasm.obj test.obj a3d.obj a3ddat.obj alt.obj&
  timemenu.obj title.obj truecolor.obj tseg.obj tween.obj tweendat.obj&
  tweenhi.obj tweenlo.obj tweenmag.obj vfeelme.obj vpaint.obj&
  vpsubs.obj vsetting.obj vsetfnam.obj writeflx.obj zoom.obj
+
+POCOOBJS = &
+ pocoa3d.obj pocoalt.obj pocoblit.obj pococel.obj pocodos.obj&
+ pocodraw.obj pocofile.obj pocoflic.obj pocofunc.obj pocogvar.obj&
+ pocomode.obj pocorex.obj pocotext.obj pocotime.obj&
+ pocotur.obj pocotwee.obj pocouser.obj pocolibs.obj pocoqnum.obj&
+ qpoco.obj qpocoed.obj
 
 objlib: .symbolic $(O) status.obj
 	@cd

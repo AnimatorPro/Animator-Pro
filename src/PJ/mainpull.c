@@ -144,8 +144,12 @@ strcat(buf, ".POC");
 
 Errcode run_pull_poco(Menuhdr *mh, SHORT id)
 {
+#ifdef WITH_POCO
 char ppath[PATH_SIZE];
 
 poco_pull_path(mh,id,ppath);
 return(qrun_pocofile(ppath,FALSE));
+#else /* WITH_POCO */
+return(Err_unimpl);
+#endif /* WITH_POCO */
 }
