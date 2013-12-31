@@ -13,6 +13,7 @@ rem ***** check which version we want to make, default to test version ****
 
 :test_version
 	echo Making test version.....
+	goto make_test
 	\build\bin\cmpfiles >nul inc\reltest.h inc\release.h
 	if not ERRORLEVEL 1 goto make_test
 
