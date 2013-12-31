@@ -34,10 +34,17 @@ typedef void (*Vd_cleanup)(Vdevice *vd);
 		if (vd->lib->close_graphics != NULL)
 			(*vd->lib->close_graphics)(vd);
 	}
+
+#ifdef USE_DYNAMIC_VIDEO_DRIVERS
 	if(vd->hdr.host_data != NULL) /* this is a loaded driver */
 		pj_rexlib_free((Rexlib **)pvd);
 	else if(vd->hdr.cleanup)  /* one of our static drivers */
 		((Vd_cleanup)(vd->hdr.cleanup))(vd);
+#else /* USE_DYNAMIC_VIDEO_DRIVERS */
+	if(vd->hdr.cleanup)  /* one of our static drivers */
+		((Vd_cleanup)(vd->hdr.cleanup))(vd);
+#endif /* USE_DYNAMIC_VIDEO_DRIVERS */
+
 	*pvd = NULL; 
 }
 Errcode pj__vdr_initload_open(Errcode (*loadit)(Vdevice **pvd,char *name),
@@ -53,8 +60,10 @@ Errcode err;
 		goto error;
 	vd = *pvd;
 
+#ifdef USE_DYNAMIC_VIDEO_DRIVERS
 	if((err = pj_rexlib_init(&vd->hdr)) < Success)
 		goto error;
+#endif /* USE_DYNAMIC_VIDEO_DRIVERS */
 
 	if(vd->num_rtypes == 0)
 	{

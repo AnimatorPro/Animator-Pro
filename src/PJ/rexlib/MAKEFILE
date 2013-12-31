@@ -24,3 +24,8 @@ rex: ilib
 	cd ..\mathlib
 	tcmake
 	cd ..
+
+minirex: ilib
+	cd \paa\rexlib\rexhost
+	tcmake minirex
+	cd ..

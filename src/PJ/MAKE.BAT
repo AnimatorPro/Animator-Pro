@@ -131,7 +131,7 @@ rem ***** check which version we want to make, default to test version ****
 	if ERRORLEVEL 1 goto error
 	cd ..
 	cd rexlib
-	tcmake host
+	tcmake minirex
 	if ERRORLEVEL 1 goto error
 	cd ..
 	cd picdrive

@@ -18,7 +18,6 @@ LIBRARY
 \paa\rastlib\raster.lib,
 \paa\gfx\gfx.lib,
 \paa\fileio\trdfile.lib,
-\paa\rexlib\rexhost.lib,
 \paa\input\macinput.lib,
 \paa\fli\pjfli.lib,
 \paa\wndo\wndolib.lib,
@@ -143,4 +142,5 @@ FILE
 \paa\picdrive\pcx\pcx.obj,
 \paa\picdrive\rif\rif.lib,
 \paa\picdrive\targa\targa.lib,
-\paa\picdrive\host\picdrive.obj
+\paa\picdrive\host\picdrive.obj,
+\paa\rexlib\rexhost\keytext.obj
