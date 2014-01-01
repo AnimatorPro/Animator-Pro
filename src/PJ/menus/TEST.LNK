@@ -24,7 +24,6 @@ test.obj
 \paa\cthread.obj
 \paa\images.obj
 \paa\decoder.obj
-\paa\diskerr.obj
 \paa\dissolve.obj
 \paa\dosstuff.obj
 \paa\inkcashe.obj

@@ -32,10 +32,6 @@
 #pragma aux i86_swout "*" parm caller [] \
    value struct float struct routine [eax]	modify [eax];
 
-#pragma aux init_de "*" parm caller [] \
-   value struct float struct routine [eax]	modify [eax];
-#pragma aux end_de "*" parm caller [] \
-   value struct float struct routine [eax]	modify [eax];
 #pragma aux pj_bsame "*" parm caller [] \
    value struct float struct routine [eax]	modify [eax];
 #pragma aux pj_fsame "*" parm caller [] \
@@ -176,9 +172,6 @@ int i86_inw(int port);
 void i86_outb(int port, int value);
 void i86_outw(int port, int value);
 void i86_swout(int port, void *data, int count);
-
-void init_de(void); /* get rid of abort/retry/fail message */
-void end_de(void);	/* bring back abort/retry/fail message */
 
 int pj_bsame(void *buf, unsigned count);
 int pj_fsame(void *buf, unsigned count);
