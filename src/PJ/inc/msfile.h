@@ -5,7 +5,7 @@
 	#include "stdtypes.h"
 #endif
 
-#ifndef FLIEMODE_H
+#ifndef FILEMODE_H
 	#include "filemode.h"
 #endif
 
