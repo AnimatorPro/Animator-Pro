@@ -39,7 +39,6 @@ FLILIBO = \
  readunc1.obj\
  skipbrun.obj\
  unbrun.obj\
- unccomp.obj\
  uncomp.obj\
  unscbrun.obj\
  userid.obj\

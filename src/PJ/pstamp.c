@@ -27,7 +27,7 @@ int type = 0;
 		{
 			case FLI_COLOR:
 				if(do_colors)
-					pj_fcuncomp64(chunk+1,f->cmap->ctab);
+					pj_fcuncomp64((const UBYTE *)(chunk+1), f->cmap->ctab);
 				break;
 			case FLI_COLOR256:
 				if(do_colors)

@@ -1,8 +1,6 @@
 #include "errcodes.h"
 #include "fli.h"
 
-extern void pj_fcuncomp64(void *buf,Rgb3 *ctab);
-
 Errcode fli_read_colors(Flifile *flif, Cmap *cmap)
 
 /* returns Success if got it Err_no_record not or errcode (<0) */
@@ -10,7 +8,7 @@ Errcode fli_read_colors(Flifile *flif, Cmap *cmap)
 Errcode err;
 Fli_frame ff;
 Chunk_id *chunk;
-void (*uncomp)(void *buf,Rgb3 *ctab);
+void (*uncomp)(const UBYTE *buf, Rgb3 *dst);
 LONG oset;
 
 	oset = flif->hdr.frame1_oset;

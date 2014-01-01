@@ -11,7 +11,6 @@
 +\paa\fli\fliseek2.obj
 +\paa\fli\bufsize.obj
 +\paa\fli\allocbuf.obj
-+\paa\fli\unccomp.obj
 +\paa\fli\uncomp.obj
 +\paa\fli\readunc.obj
 +\paa\fli\readunc1.obj

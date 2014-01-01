@@ -31,6 +31,37 @@ pj_fcuncomp(const UBYTE *src, Rgb3 *dst)
 	}
 }
 
+/* Function: pj_fcuncomp64
+ *
+ *  Uncompress colour palette onto a buffer.
+ */
+void
+pj_fcuncomp64(const UBYTE *src, Rgb3 *dst)
+{
+	unsigned int count = ((const uint16_t *)src)[0];
+	src += 2;
+
+	for (; count > 0; count--) {
+		unsigned int nskip = src[0];
+		unsigned int ncopy = src[1];
+
+		if (ncopy == 0)
+			ncopy = 256;
+
+		src += 2;
+		dst += nskip;
+
+		for (; ncopy > 0; ncopy--) {
+			dst->r = 4 * src[0];
+			dst->g = 4 * src[1];
+			dst->b = 4 * src[2];
+
+			src += 3;
+			dst += 1;
+		}
+	}
+}
+
 void pj_fli_uncomp_rect(Rcel *f, 
 	             struct fli_frame *frame, Rectangle *rect,
 			     int colors)	/* update color registers? */
@@ -58,7 +89,7 @@ void *vp;
 					pj_wait_rast_vsync(f);
 					pj_uncc64(f, CHUNK+1);
 				}
-				pj_fcuncomp64(CHUNK+1,f->cmap->ctab);
+				pj_fcuncomp64((const UBYTE *)(CHUNK+1), f->cmap->ctab);
 				break;
 			case FLI_COLOR256:
 				if(colors)

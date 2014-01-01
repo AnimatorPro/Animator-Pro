@@ -265,6 +265,7 @@ Errcode pj_fli_read_next(char *name, Flifile *flif, Rcel *fscreen,
 					  Boolean colors );
 
 extern void pj_fcuncomp(const UBYTE *src, Rgb3 *dst);
+extern void pj_fcuncomp64(const UBYTE *src, Rgb3 *dst);
 
 /*----------------------------------------------------------------------------
  * This proto is for a temporary kludge to eliminate flilib references to
