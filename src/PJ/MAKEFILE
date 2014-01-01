@@ -9,7 +9,7 @@ CFLAGS= -d2
 # Force wcc386p because some modules are too big for wcc386.
 CC = wcc386p
 
-O = testasm.obj test.obj a3d.obj a3ddat.obj alt.obj&
+O = test.obj a3d.obj a3ddat.obj alt.obj&
  arctan.obj auto.obj autoseg.obj blue.obj browse.obj broadcas.obj brush.obj&
  celmenu.obj celpaste.obj celpull.obj celtrans.obj cfit.obj&
  cursor.obj cutcurs.obj cleanup.obj cluster.obj composit.obj&
