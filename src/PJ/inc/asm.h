@@ -137,12 +137,6 @@
    value struct float struct routine [eax]	modify [eax];
 #pragma aux set_vmode "*" parm caller [] \
    value struct float struct routine [eax]	modify [eax];
-#pragma aux clear_seg "*" parm caller [] \
-   value struct float struct routine [eax]	modify [eax];
-#pragma aux copy_seg "*" parm caller [] \
-   value struct float struct routine [eax]	modify [eax];
-#pragma aux copy_bseg "*" parm caller [] \
-   value struct float struct routine [eax]	modify [eax];
 #pragma aux wait_vblank "*" parm caller [] \
    value struct float struct routine [eax]	modify [eax];
 #pragma aux wait_novblank "*" parm caller [] \
@@ -230,11 +224,6 @@ long dos_mem_free();
 
 int get_vmode(void);
 void set_vmode(int mode);
-void clear_seg(void *doffset, USHORT dseg, ULONG count);
-void copy_seg(void *soffset, USHORT sseg, void *doffset, USHORT dseg,
-	ULONG count);
-void copy_bseg(void *soffset, USHORT sseg, void *doffset, USHORT dseg,
-	ULONG count);
 void wait_vblank(void);
 void wait_novblank(void);
 
