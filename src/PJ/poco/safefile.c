@@ -12,14 +12,7 @@
 #include "linklist.h"
 #include "memory.h"
 
-#ifdef __TURBOC__
-  #include <errno.h>
-#endif
-
-#ifndef __TURBOC__
-  #include "formatf.h"    /* PJ text formatter used by local sprintf etc */
-#endif /* __TURBOC__ */
-
+#include "formatf.h"    /* PJ text formatter used by local sprintf etc */
 
 void po_free(Popot ppt);
 

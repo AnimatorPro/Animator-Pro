@@ -44,18 +44,7 @@
 #include "poco.h"
 #include "pocoface.h"
 
-#ifdef __TURBOC__
-  static long i86_ptr_to_long(void *ptr)
-  {
-  long lptr = (long)ptr;
-  long seg	= (lptr & 0xFFFF0000) << 4;
-  long off	= (lptr & 0x0000FFFF);
-  return seg | off;
-  }
-#else
-  #define i86_ptr_to_long(a) (a)
-#endif /* __TURBOC__ */
-
+#define i86_ptr_to_long(a) (a)
 
 Line_data *po_new_line_data(Poco_cb *pcb)
 /*****************************************************************************

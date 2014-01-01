@@ -8,65 +8,6 @@
 #include "jfile.h"
 #include "linklist.h"
 
-#ifdef __TURBOC__
-#else
-#endif /* __TURBOC__ */
-
-#ifdef __TURBOC__
-struct byte_regs 
-	{
-	unsigned char al, ah, bl, bh, cl, ch, dl, dh;
-	unsigned int si, di, ds, es;
-	};
-struct word_regs
-	{
-	unsigned ax,bx,cx,dx;
-	unsigned int si, di, ds, es;
-	};
-union regs
-	{
-	struct byte_regs b;
-	struct word_regs w;
-	};
-
-pj_dmake_dir(char *s)
-{
-if (!pj_dmake_dir(s))
-	return(Err_nogood);
-}
-
-pj_dget_err()
-{
-union regs reg;
-
-reg.b.ah = 0x59;
-reg.w.bx = 0;
-i86_sysint(0x21,&reg,&reg);
-return(reg.w.ax);
-}
-
-/* Figure how much free space is on a device */
-long
-pj_ddfree(d)
-int d;
-{
-union regs r;
-
-r.b.ah = 0x36;
-r.b.dl = d;
-i86_sysint(0x21,&r,&r);
-if (r.w.ax == 0xffff)
-	return(0L);
-else
-	{
-	return((long)r.w.cx*(long)r.w.ax*(long)r.w.bx);
-	}
-}
-
-#else
-
-#endif /* __TURBOC__ */
-
 void *tflush_alloc(long size)
 {
 void *pt;

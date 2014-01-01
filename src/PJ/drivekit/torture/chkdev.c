@@ -1,9 +1,5 @@
 #include "torture.h"
-#ifdef __TURBOC__
-#include <alloc.h>
-#else
 #include <malloc.h>
-#endif
 
 void check_device_sanity(void)
 /*****************************************************************************

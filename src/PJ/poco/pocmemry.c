@@ -20,11 +20,7 @@
  * Tweakable defines...
  *--------------------------------------------------------------------------*/
 
-#ifdef __TURBOC__
-  #define MBLK_SIZE 12000L		/* TPROF eats memory, we need small chunks. */
-#else
-  #define MBLK_SIZE 65500L		/* Live version of Poco uses bigger chunks. */
-#endif
+#define MBLK_SIZE 65500L		/* Live version of Poco uses bigger chunks. */
 
 #define NUM_SBLK	16			/* Number of small blocks in cache. 		*/
 #define NUM_EXPF	32			/* Number of expression frames in cache.	*/

@@ -21,10 +21,6 @@
 #include "ptrmacro.h"
 #include "pocoface.h"
 
-#ifdef __TURBOC__
-  unsigned _stklen = MAX_STACK+1024;	/* big stack when running under TC */
-#endif
-
 short	jioerr; /* last io error */
 
 #if defined(IAN)						/* Where Ian keeps poco source */
@@ -172,79 +168,6 @@ int matherr()
 	return 1;
 }
 
-#ifdef __TURBOC__
-void boxf(long vargcount, long vargsize, char *fmt,...)
-/****************************************************************************
- *
- ***************************************************************************/
-/* this puts up a formated textbox for debugging etc */
-{
-va_list argptr;
-
-va_start(argptr, fmt);
-vfprintf(stdout,fmt,argptr);
-va_end(argptr);
-fprintf(stdout,"\n");
-}
-
-Boolean check_abort(void *nobody)
-/****************************************************************************
- *
- ***************************************************************************/
-{
-if (dos_key_is())
-	{
-	dos_key_in();
-	return(TRUE);
-	}
-else
-	return FALSE;
-}
-
-int pj_delete(char *name)
-/****************************************************************************
- *
- ***************************************************************************/
-{
-return(dos_delete(name));
-}
-
-int pj_ioerr()
-/****************************************************************************
- *
- ***************************************************************************/
-{
-return(Err_nogood);
-}
-
-void upc(register char *s)
-/****************************************************************************
- *
- ***************************************************************************/
-/* force a string to upper case */
-{
-register char c;
-
-while ((c = *s) != 0)
-	{
-	*s++ = toupper(c);
-	}
-}
-
-char *clone_string(char *s)
-/****************************************************************************
- *
- ***************************************************************************/
-{
-char *d;
-
-if ((d = (char *)pj_malloc(strlen(s)+1)) != NULL)
-	strcpy(d, s);
-return(d);
-}
-
-#else /* TURBO */
-
 pj_delete(char *name)
 /****************************************************************************
  *
@@ -274,9 +197,6 @@ if (pj_key_is())
 	}
 return(FALSE);
 }
-
-
-#endif	/* __TURBOC__ */
 
 void errline(int err, char *fmt, ...)
 /****************************************************************************
@@ -552,9 +472,7 @@ Poco_lib *builtin_libs;
 
 builtin_libs = get_poco_libs();
 
-#ifndef __TURBOC__
-  init_stdfiles();	/* initialize PJ stdin, stdout, etc */
-#endif
+init_stdfiles(); /* initialize PJ stdin, stdout, etc */
 
 signal(SIGFPE, fpe_handler);	// install floating point error trapping
 
@@ -666,9 +584,7 @@ if (err < Success )
 	if (efname != NULL)
 		close_redirect_stdout();
 
-#ifndef __TURBOC__
-  cleanup_lfiles(); /* cleanup PJ stdin, stdout, etc */
-#endif
+cleanup_lfiles(); /* cleanup PJ stdin, stdout, etc */
 
 	return err;
 }

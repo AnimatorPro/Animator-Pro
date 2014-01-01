@@ -13,19 +13,6 @@
 	#include "errcodes.h"
 #endif 
 
-#ifdef __TURBOC__
-#define Lfile int
-#define lopen pj_dopen
-#define lcreate pj_dcreate
-#define lclose pj_dclose
-#define lseek pj_dseek
-#define lread pj_dread
-#define lwrite pj_dwrite
-/* File read/write.  Normally don't use dos_rw, but go through macros */
-long dos_rw(Lfile f,void *buf,long size,int ah);
-#define pj_dread(f,b,size) dos_rw(f,b,size,0x3f)
-#define pj_dwrite(f,b,size) dos_rw(f,b,size,0x40)
-#else	/* __TURBOC__ */
 #include "jfile.h"
 #define Lfile Jfile
 #define lopen pj_open
@@ -34,8 +21,6 @@ long dos_rw(Lfile f,void *buf,long size,int ah);
 #define lseek pj_seek
 #define lread pj_read
 #define lwrite pj_write
-#endif /* __TURBOC__ */
-
 
 /* LFILE->flags structure flags */
 #define	BFL_READ		0x0001		/* file may be read from */

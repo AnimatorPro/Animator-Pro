@@ -5,9 +5,5 @@
 
 #ifndef LOSTDIO_H
 #define LOSTDIO_H
-#ifdef __TURBOC__
-	#include <stdio.h>
-#else
 	#include "lstdio.h"
-#endif /* __TURBOC__ */
 #endif /* LOSTDIO_H */

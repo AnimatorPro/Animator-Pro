@@ -73,27 +73,18 @@
 
 /* prototypes for functions in runccall.asm... */
 
-#ifdef __TURBOC__
-  #define VC_call(s, f) (*((void   (*)() )(f)))(*(Parmdata *)s)
-  #define IC_call(s, f) (*((int    (*)() )(f)))(*(Parmdata *)s)
-  #define LC_call(s, f) (*((long   (*)() )(f)))(*(Parmdata *)s)
-  #define DC_call(s, f) (*((double (*)() )(f)))(*(Parmdata *)s)
-  #define PC_call(s, f) (*((Popot  (*)() )(f)))(*(Parmdata *)s)
-  #define STRING_C_call(s, f) (*((PoString	(*)() )(f)))(*(Parmdata *)s)
-#else
-  extern void	po_vccall(void *stack, void *func);
-  extern int	po_iccall(void *stack, void *func);
-  extern long	po_lccall(void *stack, void *func);
-  extern double po_dccall(void *stack, void *func);
-  extern Popot	po_pccall(void *stack, void *func);
-  extern PoString po_string_ccall(void *stack, void *func);
-  #define VC_call(s, f) po_vccall(s, f)
-  #define IC_call(s, f) po_iccall(s, f)
-  #define LC_call(s, f) po_lccall(s, f)
-  #define DC_call(s, f) po_dccall(s, f)
-  #define PC_call(s, f) po_pccall(s, f)
-  #define STRING_C_call(s, f) po_string_ccall(s, f)
-#endif
+extern void     po_vccall(void *stack, void *func);
+extern int      po_iccall(void *stack, void *func);
+extern long     po_lccall(void *stack, void *func);
+extern double   po_dccall(void *stack, void *func);
+extern Popot    po_pccall(void *stack, void *func);
+extern PoString po_string_ccall(void *stack, void *func);
+#define VC_call(s, f) po_vccall(s, f)
+#define IC_call(s, f) po_iccall(s, f)
+#define LC_call(s, f) po_lccall(s, f)
+#define DC_call(s, f) po_dccall(s, f)
+#define PC_call(s, f) po_pccall(s, f)
+#define STRING_C_call(s, f) po_string_ccall(s, f)
 
 typedef union eax
 	{

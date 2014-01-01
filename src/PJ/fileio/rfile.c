@@ -613,12 +613,7 @@ return(Success);
 
 /******************** Ramdisk compaction routines ********************/
 
-#ifdef __TURBOC__
-extern long i86_ptr_to_long(void *pt);
-#define pt_to_long(pt) i86_ptr_to_long(pt)
-#else
 #define pt_to_long(pt) ((long)(pt))
-#endif /* __TURBOC__ */
 
 typedef struct tcs_block
 /* This structure is used in rearranging things so as to compact the
