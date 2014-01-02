@@ -82,18 +82,34 @@ typedef int Boolean;
 #define TRUE 1
 #define FALSE 0
 
+#if defined(__WATCOMC__)
+typedef   signed char    int8_t;
+typedef unsigned char   uint8_t;
+typedef   signed short   int16_t;
+typedef unsigned short  uint16_t;
+typedef   signed long    int32_t;
+typedef unsigned long   uint32_t;
+#else
+#include <stdint.h>
+#endif
+
+STATIC_ASSERT(stdtypes, sizeof( int8_t ) == 1);
+STATIC_ASSERT(stdtypes, sizeof(uint8_t ) == 1);
+STATIC_ASSERT(stdtypes, sizeof( int16_t) == 2);
+STATIC_ASSERT(stdtypes, sizeof(uint16_t) == 2);
+STATIC_ASSERT(stdtypes, sizeof( int32_t) == 4);
+STATIC_ASSERT(stdtypes, sizeof(uint32_t) == 4);
+
 /* BYTE, UBYTE, etc is to keep code portable between different compilers
    where especially 'int' can mean different things. */
-
-typedef signed char 	BYTE;
-typedef unsigned char	UBYTE;
-typedef signed short	SHORT;
-typedef unsigned short	USHORT;
-typedef signed long 	LONG;
-typedef unsigned long	ULONG;
-typedef double			FLOAT;
-
-typedef UBYTE		   *PTR;
+typedef  int8_t      BYTE;
+typedef uint8_t     UBYTE;
+typedef  int16_t     SHORT;
+typedef uint16_t    USHORT;
+typedef  int32_t     LONG;
+typedef uint32_t    ULONG;
+typedef double      FLOAT;
+typedef UBYTE *     PTR;
 
 /* Function pointer declarations are a little hard to type in C, so have
    the following short-cut typedefs. */
