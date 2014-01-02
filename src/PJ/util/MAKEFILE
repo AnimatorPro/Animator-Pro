@@ -1,6 +1,9 @@
 #CFLAGS= -d2
 !include "\paa\make.inc"
 
+# add -s (disable stack overflow checks) to avoid undefined reference to _stk
+CPF = -j -3s -fpi -w2 -s -I$(IL) $(EXTCPF)
+
 libs: trdutil.lib cutil.lib
 	@cd
 	@echo libs made
