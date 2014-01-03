@@ -15,7 +15,6 @@
 +memwstuf.obj
 +memxlate.obj
 +memxorbt.obj
-+memxorgr.obj
 +memxorwd.obj
 +memzero.obj
 +memcask.obj
