@@ -12,7 +12,6 @@
 +memnulod.obj
 +memwcomp.obj
 +memwcopy.obj
-+memwsame.obj
 +memwstuf.obj
 +memxlate.obj
 +memxorbt.obj
