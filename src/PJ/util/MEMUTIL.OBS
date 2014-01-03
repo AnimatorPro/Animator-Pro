@@ -8,7 +8,6 @@
 +membnon0.obj
 +membset.obj
 +memdcomp.obj
-+memdcopy.obj
 +memdstuf.obj
 +memnulod.obj
 +memwcomp.obj
