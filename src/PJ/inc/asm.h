@@ -66,8 +66,6 @@
    value struct float struct routine [eax]	modify [eax];
 #pragma aux xlate "*" parm caller [] \
    value struct float struct routine [eax]	modify [eax];
-#pragma aux back_scan "*" parm caller [] \
-   value struct float struct routine [eax]	modify [eax];
 #pragma aux pj_enorm_pointer "*" parm caller [] \
    value struct float struct routine [eax]	modify [eax];
 #pragma aux long_to_pt "*" parm caller [] \
@@ -184,7 +182,6 @@ void exchange_words(void *buf1, void *buf2, unsigned count);
 void xor_words(USHORT data, void *buf, unsigned words_8);
 void xor_group(USHORT data, void *buf, unsigned words);
 void xlate(UBYTE *table, UBYTE *buf, unsigned count);
-int back_scan(int value, UBYTE *buf, unsigned count);
 void *pj_enorm_pointer(void *p);
 void *long_to_pt(long l);
 long pt_to_long(void *p);
