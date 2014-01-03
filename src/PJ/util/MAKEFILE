@@ -31,7 +31,7 @@ MEMCO = \
 MEMO = \
  membcomp.obj membcont.obj membcopy.obj membkcpy.obj\
  membnon0.obj membsame.obj membset.obj memcask.obj memcrc.obj memdcomp.obj\
- memdstuf.obj memnulod.obj memswap.obj memwcomp.obj memwcont.obj\
+ memdstuf.obj memnulod.obj memswap.obj memwcomp.obj\
  memwcopy.obj memwsame.obj memwstuf.obj memxlate.obj\
  memxorbt.obj memxorgr.obj memxorwd.obj memzero.obj memeallo.obj memgfree.obj\
  memfreez.obj blockall.obj

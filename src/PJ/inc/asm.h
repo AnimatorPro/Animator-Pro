@@ -42,8 +42,6 @@
    value struct float struct routine [eax]	modify [eax];
 #pragma aux pj_bcontrast "*" parm caller [] \
    value struct float struct routine [eax]	modify [eax];
-#pragma aux fcontrast "*" parm caller [] \
-   value struct float struct routine [eax]	modify [eax];
 #pragma aux pj_stuff_bytes "*" parm caller [] \
    value struct float struct routine [eax]	modify [eax];
 #pragma aux pj_stuff_words "*" parm caller [] \
@@ -166,7 +164,6 @@ int pj_fsame(void *buf, unsigned count);
 int pj_bcompare(void *buf1, void *buf2, unsigned count);
 int pj_fcompare(void *buf1, void *buf2, unsigned count);
 int pj_bcontrast(void *buf1, void *buf2, unsigned count);
-int fcontrast(void *buf1, void *buf2, unsigned count);
 void pj_stuff_bytes(UBYTE data, void *buf, unsigned count);
 void pj_stuff_words(USHORT data, void *buf, unsigned count);
 void pj_stuff_dwords(ULONG data, void *buf, unsigned count);
