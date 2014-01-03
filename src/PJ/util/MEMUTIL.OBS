@@ -13,7 +13,6 @@
 +memwcomp.obj
 +memwcont.obj
 +memwcopy.obj
-+memwexcg.obj
 +memwsame.obj
 +memwstuf.obj
 +memxlate.obj
