@@ -52,8 +52,6 @@
    value struct float struct routine [eax]	modify [eax];
 #pragma aux pj_copy_structure "*" parm caller [] \
    value struct float struct routine [eax]	modify [eax];
-#pragma aux xor_words "*" parm caller [] \
-   value struct float struct routine [eax]	modify [eax];
 #pragma aux xlate "*" parm caller [] \
    value struct float struct routine [eax]	modify [eax];
 #pragma aux pj_enorm_pointer "*" parm caller [] \
@@ -165,7 +163,6 @@ void pj_stuff_dwords(ULONG data, void *buf, unsigned count);
 void pj_copy_bytes(void *buf1, void *buf2, unsigned count);
 void pj_copy_words(void *buf1, void *buf2, unsigned count);
 void pj_copy_structure(void *buf1, void *buf2, unsigned count);
-void xor_words(USHORT data, void *buf, unsigned words_8);
 void xlate(UBYTE *table, UBYTE *buf, unsigned count);
 void *pj_enorm_pointer(void *p);
 void *long_to_pt(long l);

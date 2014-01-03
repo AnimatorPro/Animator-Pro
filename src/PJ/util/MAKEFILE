@@ -33,7 +33,7 @@ MEMO = \
  membnon0.obj membsame.obj membset.obj memcask.obj memcrc.obj memdcomp.obj\
  memdstuf.obj memnulod.obj memswap.obj memwcomp.obj\
  memwcopy.obj memwstuf.obj memxlate.obj\
- memxorbt.obj memxorwd.obj memzero.obj memeallo.obj memgfree.obj\
+ memxorbt.obj memzero.obj memeallo.obj memgfree.obj\
  memfreez.obj blockall.obj
 
 ## string and data oriented utilities
