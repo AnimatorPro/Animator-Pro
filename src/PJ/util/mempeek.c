@@ -49,3 +49,19 @@ pj_dcompare(const void *xs, const void *ys, unsigned int n)
 
 	return i;
 }
+
+/* Function: pj_bcontrast */
+unsigned int
+pj_bcontrast(const void *xs, const void *ys, unsigned int n)
+{
+	const uint8_t *x = xs;
+	const uint8_t *y = ys;
+	unsigned int i;
+
+	for (i = 0; i < n; i++) {
+		if (x[i] == y[i])
+			break;
+	}
+
+	return i;
+}
