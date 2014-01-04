@@ -119,20 +119,6 @@ void pj_stuff_pointers(void *value, void *dst, unsigned count);
 	modify exact [ecx edi];
 
 /*----------------------------------------------------------------------------
- * pj_copy_words
- *--------------------------------------------------------------------------*/
-
-void pj_copy_words(void *src, void *dst, unsigned count);
-
-#pragma aux pj_copy_words = 										\
-	  0xD1 0xE9 	 /* 			shr 	ecx,1			   */	\
-	  0xF3 0xA5 	 /* 			rep movsd				   */	\
-	  0x13 0xC9 	 /* 			adc 	ecx,ecx 		   */	\
-	  0xF3 0x66 0xA5 /* 			rep movsw				   */	\
-	parm caller [esi] [edi] [ecx]									\
-	modify exact [ecx esi edi];
-
-/*----------------------------------------------------------------------------
  * pj_xlate
  *--------------------------------------------------------------------------*/
 
