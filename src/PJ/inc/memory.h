@@ -50,6 +50,8 @@ ULONG mem_crcsum(void *sbuf, LONG size);
 /* stuff NULL pointers in source with contents of dest of same index */
 void pj_load_array_nulls(void **source, void **dest, int num_pointers);
 
+extern unsigned int pj_bcompare(const void *xs, const void *ys, unsigned int n);
+
 extern long mem_free, init_mem_free;
 extern long pj_mem_used, pj_max_mem_used;
 

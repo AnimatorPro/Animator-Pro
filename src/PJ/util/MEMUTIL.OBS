@@ -1,7 +1,7 @@
++mempeek.obj
 +membkcpy.obj
 +memcrc.obj
 +memswap.obj
-+membcomp.obj
 +membcont.obj
 +membcopy.obj
 +membsame.obj

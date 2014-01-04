@@ -3,10 +3,9 @@
    for incorporation into a FLI file.  See also writefli.c */
 
 #define RASTCOMP_INTERNALS
+#include "memory.h"
 #include "ptrmacro.h"
 #include "rastcomp.h"
-
-extern USHORT pj_bcompare(), pj_fcompare(), pj_bsame();
 
 static char *flow_brun_comp_line(char *s1, char *cbuf, int count)
 {

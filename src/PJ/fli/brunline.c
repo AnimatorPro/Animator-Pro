@@ -1,10 +1,9 @@
 /* brunline.c */
 
 #define RASTCOMP_INTERNALS
+#include "memory.h"
 #include "ptrmacro.h"
 #include "rastcomp.h"
-
-extern USHORT pj_bcompare(), pj_fcompare(), pj_bsame();
 
 char *pj_brun_comp_line(char *src, char *cbuf, int count)
 {

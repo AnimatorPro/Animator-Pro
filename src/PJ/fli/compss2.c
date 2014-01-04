@@ -6,10 +6,11 @@
 
 #define RASTCOMP_INTERNALS
 #include "stdtypes.h"
+#include "asm.h"
+#include "fli.h"
+#include "memory.h"
 #include "ptrmacro.h"
 #include "rastcomp.h"
-#include "fli.h"
-#include "asm.h"
 
 #define INERT 3
 

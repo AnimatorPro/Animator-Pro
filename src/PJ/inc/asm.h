@@ -34,8 +34,6 @@
 
 #pragma aux pj_bsame "*" parm caller [] \
    value struct float struct routine [eax]	modify [eax];
-#pragma aux pj_bcompare "*" parm caller [] \
-   value struct float struct routine [eax]	modify [eax];
 #pragma aux pj_fcompare "*" parm caller [] \
    value struct float struct routine [eax]	modify [eax];
 #pragma aux pj_bcontrast "*" parm caller [] \
@@ -154,7 +152,6 @@ void i86_outw(int port, int value);
 void i86_swout(int port, void *data, int count);
 
 int pj_bsame(void *buf, unsigned count);
-int pj_bcompare(void *buf1, void *buf2, unsigned count);
 int pj_fcompare(void *buf1, void *buf2, unsigned count);
 int pj_bcontrast(void *buf1, void *buf2, unsigned count);
 void pj_stuff_bytes(UBYTE data, void *buf, unsigned count);

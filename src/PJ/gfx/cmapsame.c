@@ -1,4 +1,5 @@
 #include "cmap.h"
+#include "memory.h"
 
 Boolean cmaps_same(Cmap *s1, Cmap *s2)
 {

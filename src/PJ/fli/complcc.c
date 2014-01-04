@@ -4,12 +4,9 @@
    a 320 X 200 screen results are unpredictable with other sizes */
 
 #define RASTCOMP_INTERNALS
+#include "memory.h"
 #include "ptrmacro.h"
 #include "rastcomp.h"
-
-extern void *pj_enorm_pointer(void *pt);
-
-extern ULONG pj_bcompare(), pj_fcompare(), pj_bsame();
 
 static char *sbrc_line(char *s1, char *s2, char *cbuf, int count)
 {
