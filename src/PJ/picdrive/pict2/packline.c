@@ -9,6 +9,7 @@ Pict file pdr modules:
 /* brunline.c */
 #include "stdtypes.h"
 #include "errcodes.h"
+#include "memory.h"
 
 #define MAX_RUN (0x0080) 
 

@@ -12,7 +12,6 @@
 #define PCX_CMAP_MAGIC 12
 
 unsigned pj_bsame(UBYTE *buf, unsigned count);
-void pj_copy_bytes(void *buf1, void *buf2, unsigned count);
 
 /***** Uncompression and bit-plane to byte-a-pixel routines *******/
 

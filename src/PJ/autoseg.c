@@ -4,8 +4,9 @@
 
 #include "errcodes.h"
 #include "jimk.h"
-#include "fli.h"
 #include "auto.h"
+#include "fli.h"
+#include "memory.h"
 
 extern Boolean auto_abort_verify();
 extern long ff_tflx();

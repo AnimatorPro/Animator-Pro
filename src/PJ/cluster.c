@@ -4,6 +4,7 @@
 
 #include "errcodes.h"
 #include "jimk.h"
+#include "memory.h"
 #include "menus.h"
 
 extern Button pal_men_sel, pal_pal_sel,  rpal_pal_sel, pal_spe_sel,

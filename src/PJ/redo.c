@@ -1,14 +1,12 @@
-
+#include "errcodes.h"
 #include "jimk.h"
 #include "lstdio.h"
-#include "errcodes.h"
+#include "auto.h"
+#include "commonst.h"
 #include "jfile.h"
+#include "memory.h"
 #include "rastcall.h"
 #include "redo.h"
-#include "commonst.h"
-#include "auto.h"
-
-
 
 /* stuff to deal with redo-draw */
 static FILE *rbf;

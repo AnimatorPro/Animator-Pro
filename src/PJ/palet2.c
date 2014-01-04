@@ -2,15 +2,16 @@
    of related code in cluster.c and palpull.c.  This file starts with
    the Button button declarations for the palette editor control panel. */
 
-#include "jimk.h"
 #include "errcodes.h"
-#include "menus.h"
-#include "palpul.h"
+#include "jimk.h"
 #include "broadcas.h"
-#include "inks.h"
-#include "softmenu.h"
 #include "commonst.h"
+#include "inks.h"
+#include "memory.h"
+#include "menus.h"
 #include "palchunk.h"
+#include "palpul.h"
+#include "softmenu.h"
 
 extern Button inks_sel, ccolor_sel, spec1_sel;
 extern void see_cluster(), feel_cluster(), go_multi(), sliders_from_ccolor(),

@@ -4,6 +4,7 @@
 
 #include "errcodes.h"
 #include "jimk.h"
+#include "memory.h"
 #include "menus.h"
 
 extern UBYTE *cluster_to_ctable();

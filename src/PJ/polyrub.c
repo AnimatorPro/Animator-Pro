@@ -1,8 +1,9 @@
 
 #include "errcodes.h"
+#include "jimk.h"
 #include "poly.h"
 #include "polyrub.h"
-#include "jimk.h"
+#include "memory.h"
 
 void rub_wpoints(Poly *poly, Pixel pt_color, Pixel pt1_color)
 {

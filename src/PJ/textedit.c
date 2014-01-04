@@ -6,9 +6,11 @@
 #include <stdio.h>
 #include "errcodes.h"
 #include "jimk.h"
-#include "textedit.h"
 #include "commonst.h"
+#include "memory.h"
 #include "softmenu.h"
+#include "textedit.h"
+
 extern char *strstr(char *s1, char *s2);
 
 

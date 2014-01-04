@@ -29,7 +29,7 @@ MEMCO = \
 ## basic memory oriented utilities
 
 MEMO = \
- mempeek.obj membcopy.obj membkcpy.obj\
+ mempeek.obj mempoke.obj membkcpy.obj\
  membnon0.obj membsame.obj membset.obj memcask.obj memcrc.obj\
  memdstuf.obj memnulod.obj memswap.obj\
  memwcopy.obj memwstuf.obj memxlate.obj\

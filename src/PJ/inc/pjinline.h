@@ -119,34 +119,6 @@ void pj_stuff_pointers(void *value, void *dst, unsigned count);
 	modify exact [ecx edi];
 
 /*----------------------------------------------------------------------------
- * pj_copy_bytes
- *--------------------------------------------------------------------------*/
-
-void pj_copy_bytes(void *src, void *dst, unsigned count);
-
-#pragma aux pj_copy_bytes = 										\
-	  0xD1 0xE9 	 /* 			shr 	ecx,1			   */	\
-	  0xF3 0x66 0xA5 /* 			rep movsw				   */	\
-	  0x13 0xC9 	 /* 			adc 	ecx,ecx 		   */	\
-	  0xF3 0xA4 	 /* 			rep movsb				   */	\
-	parm caller [esi] [edi] [ecx]									\
-	modify exact [ecx esi edi];
-
-/*----------------------------------------------------------------------------
- * pj_copy_structure (no longer has the must-be-even-count restriction)
- *--------------------------------------------------------------------------*/
-
-void pj_copy_structure(void *src, void *dst, unsigned count);
-
-#pragma aux pj_copy_structure = 									\
-	  0xD1 0xE9 	 /* 			shr 	ecx,1			   */	\
-	  0xF3 0x66 0xA5 /* 			rep movsw				   */	\
-	  0x13 0xC9 	 /* 			adc 	ecx,ecx 		   */	\
-	  0xF3 0xA4 	 /* 			rep movsb				   */	\
-	parm caller [esi] [edi] [ecx]									\
-	modify exact [ecx esi edi];
-
-/*----------------------------------------------------------------------------
  * pj_copy_words
  *--------------------------------------------------------------------------*/
 

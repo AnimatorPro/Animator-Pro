@@ -7,6 +7,7 @@ Pict file pdr modules:
 		single line pixel buffers in true color mode.
 ****************************************************************/
 #include "errcodes.h"
+#include "memory.h"
 #include "pict.h"
 #include "picdrive.h"
 #include "syslib.h"

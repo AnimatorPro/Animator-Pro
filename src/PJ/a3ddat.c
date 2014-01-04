@@ -38,11 +38,12 @@
 
 
 #include "jimk.h"
-#include "menus.h"
+#include "a3d.h"
 #include "broadcas.h"
 #include "fli.h"
-#include "a3d.h"
 #include "inks.h"
+#include "memory.h"
+#include "menus.h"
 #include "softmenu.h"
 
 extern Button tseg_group_sel;

@@ -2,6 +2,7 @@
 /* geometry.c - Some linear algebra to help do rotations.  */
 
 #include "jimk.h"
+#include "memory.h"
 
 void act_rot_offset();
 

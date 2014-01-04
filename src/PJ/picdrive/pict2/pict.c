@@ -7,6 +7,7 @@ Pict file pdr modules:
 		opcodes.
 ****************************************************************/
 #include "errcodes.h"
+#include "memory.h"
 #include "pict.h"
 
 extern Errcode pict_save_frame(Image_file *ifile, Rcel *screen, int num_frames,

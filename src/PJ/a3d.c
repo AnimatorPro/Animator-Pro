@@ -6,12 +6,13 @@
 #include "auto.h"
 #include "a3d.h"
 #include "a3dpul.h"
-#include "rastrans.h"
-#include "inks.h"
-#include "poly.h"
-#include "tween.h"
 #include "commonst.h"
+#include "inks.h"
+#include "memory.h"
+#include "poly.h"
+#include "rastrans.h"
 #include "softmenu.h"
+#include "tween.h"
 
 /************** Stuff for 2-Dimensional point-lists *****************/
 typedef struct poly2

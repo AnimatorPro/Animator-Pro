@@ -1,10 +1,11 @@
 /* sep.c - stuff to implement the color separation functions. Also the
    edge tool from the looks of it. */
 
-#include "jimk.h"
 #include "errcodes.h"
-#include "redo.h"
+#include "jimk.h"
 #include "auto.h"
+#include "memory.h"
+#include "redo.h"
 
 /* separate control block. */
 typedef struct sep_cb

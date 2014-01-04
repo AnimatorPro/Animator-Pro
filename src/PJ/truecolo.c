@@ -5,6 +5,7 @@
 #include "errcodes.h"
 #include "jimk.h"
 #include "inks.h"
+#include "memory.h"
 #include "render.h"
 
 void true_blend();

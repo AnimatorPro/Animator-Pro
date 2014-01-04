@@ -5,6 +5,7 @@
 #include "errcodes.h"
 #include "jimk.h"
 #include "fli.h"
+#include "memory.h"
 
 extern long pj_fli_comp_frame1();
 extern long flx_data_offset(Flxfile *flx), flx_file_hi();

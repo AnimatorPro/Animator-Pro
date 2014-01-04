@@ -1,8 +1,8 @@
 +mempeek.obj
++mempoke.obj
 +membkcpy.obj
 +memcrc.obj
 +memswap.obj
-+membcopy.obj
 +membsame.obj
 +membnon0.obj
 +membset.obj

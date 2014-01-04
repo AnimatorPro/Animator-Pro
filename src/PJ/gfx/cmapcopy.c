@@ -1,4 +1,5 @@
 #include "cmap.h"
+#include "memory.h"
 
 void pj_cmap_copy(Cmap *s,Cmap *d)
 
