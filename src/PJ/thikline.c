@@ -12,13 +12,13 @@
 
 #include <stdio.h>
 #include "jimk.h"
-#include "ptrmacro.h"
-#include "poly.h"
-#include "render.h"
-#include "gfx.h"
 #include "brush.h"
 #include "fpmath.h"
-
+#include "gfx.h"
+#include "memory.h"
+#include "poly.h"
+#include "ptrmacro.h"
+#include "render.h"
 
 #ifdef SLUFFED
 

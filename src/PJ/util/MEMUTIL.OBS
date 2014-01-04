@@ -3,7 +3,6 @@
 +membkcpy.obj
 +memcrc.obj
 +memswap.obj
-+membsame.obj
 +membnon0.obj
 +membset.obj
 +memdstuf.obj

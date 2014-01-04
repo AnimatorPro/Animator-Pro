@@ -11,8 +11,6 @@
 #define PCX_MAX_RUN 63	/* longest run (since hi 2 bits are used elsewhere */
 #define PCX_CMAP_MAGIC 12
 
-unsigned pj_bsame(UBYTE *buf, unsigned count);
-
 /***** Uncompression and bit-plane to byte-a-pixel routines *******/
 
 

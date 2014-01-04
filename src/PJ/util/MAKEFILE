@@ -30,7 +30,7 @@ MEMCO = \
 
 MEMO = \
  mempeek.obj mempoke.obj membkcpy.obj\
- membnon0.obj membsame.obj membset.obj memcask.obj memcrc.obj\
+ membnon0.obj membset.obj memcask.obj memcrc.obj\
  memdstuf.obj memnulod.obj memswap.obj\
  memwstuf.obj memxlate.obj\
  memxorbt.obj memzero.obj memeallo.obj memgfree.obj\

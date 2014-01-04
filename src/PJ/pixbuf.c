@@ -1,4 +1,5 @@
 #include "gfx.h"
+#include "memory.h"
 
 int pixsame(void *pixbuf, USHORT numpix, Pixel first_color)
 

@@ -13,8 +13,6 @@ Pict file pdr modules:
 
 #define MAX_RUN (0x0080) 
 
-extern USHORT pj_bsame();
-
 Errcode brun_unpack_3compbytes(BYTE *packline, UBYTE *buf, int len)
 /* Unpack records that are byte run compressed so that one ends up with 
  * 4 contiguous buffers for r,g,b, and alpha each bpr/4 long.  We ignore 

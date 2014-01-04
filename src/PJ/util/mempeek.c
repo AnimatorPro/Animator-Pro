@@ -2,6 +2,21 @@
 
 #include "memory.h"
 
+/* Function: pj_bsame */
+unsigned int
+pj_bsame(const void *src, unsigned int n)
+{
+	const uint8_t *x = src;
+	unsigned int i;
+
+	for (i = 0; i < n; i++) {
+		if (x[i] != x[0])
+			break;
+	}
+
+	return i;
+}
+
 /* Function: pj_bcompare */
 unsigned int
 pj_bcompare(const void *xs, const void *ys, unsigned int n)
