@@ -62,6 +62,8 @@ extern void pj_copy_bytes(const void *src, void *dst, unsigned int n);
 extern void pj_copy_words(const void *src, void *dst, unsigned int n);
 extern void pj_copy_structure(const void *src, void *dst, unsigned int n);
 
+extern void pj_xor_bytes(uint8_t data, void *dst, unsigned int n);
+
 extern long mem_free, init_mem_free;
 extern long pj_mem_used, pj_max_mem_used;
 

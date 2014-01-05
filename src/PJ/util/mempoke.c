@@ -63,3 +63,14 @@ pj_copy_structure(const void *src, void *dst, unsigned int n)
 {
 	memmove(dst, src, n);
 }
+
+/* Function: pj_xor_bytes */
+void
+pj_xor_bytes(uint8_t data, void *dst, unsigned int n)
+{
+	uint8_t *dest = dst;
+	unsigned int i;
+
+	for (i = 0; i < n; i++)
+		dest[i] ^= data;
+}
