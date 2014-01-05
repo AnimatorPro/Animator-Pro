@@ -34,7 +34,6 @@ void pj_freez(void *pmem);	/* actually a pointer to the memory pointer */
 #define clear_mem(mem,size) pj_stuff_bytes(0,mem,size)
 #define clear_struct(s) clear_mem((s),sizeof(*(s)))
 
-void pj_stuff_bytes(UBYTE data, void *buf, unsigned bcount);
 void pj_stuff_words(USHORT data, void *buf, unsigned wcount);
 void pj_stuff_dwords(ULONG data, void *buf, unsigned dwcount);
 void pj_stuff_pointers(void *ptr, void *buf, unsigned ptrcount);
@@ -57,6 +56,8 @@ extern unsigned int pj_dcompare(const void *xs, const void *ys, unsigned int n);
 
 extern unsigned int
 pj_bcontrast(const void *xs, const void *ys, unsigned int n);
+
+extern void pj_stuff_bytes(uint8_t data, void *dst, unsigned int n);
 
 extern void pj_copy_bytes(const void *src, void *dst, unsigned int n);
 extern void pj_copy_words(const void *src, void *dst, unsigned int n);

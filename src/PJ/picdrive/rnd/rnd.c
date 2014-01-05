@@ -7,6 +7,7 @@ RND file pdr modules:
 		a screen.
 ****************************************************************/
 #include "errcodes.h"
+#include "memory.h"
 #include "rnd.h"
 
 

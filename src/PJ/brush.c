@@ -2,11 +2,12 @@
 /* brush.c:  code for handling drawing brushes */
 
 #include "errcodes.h"
-#include "menus.h"
-#include "brush.h"
 #include "jimk.h"
-#include "inks.h"
+#include "brush.h"
 #include "fpmath.h"
+#include "inks.h"
+#include "memory.h"
+#include "menus.h"
 
 #ifdef SLUFFED
 

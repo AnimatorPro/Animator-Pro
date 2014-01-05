@@ -16,11 +16,10 @@ static void calc_vecs();
 
 #include "errcodes.h"
 #include "jimk.h"
-#include "poly.h"
-#include "imath.h"
 #include "fixpoint.h"
-
-
+#include "imath.h"
+#include "memory.h"
+#include "poly.h"
 
 static fixpoint sh1,sh2,sh3,sh4;
 static int *lx, *ly;

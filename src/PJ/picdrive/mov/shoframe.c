@@ -6,8 +6,9 @@ Autodesk Movie file pdr modules:
 		EGA pixel animations.  Slide records, buttons looping and other
 		functions of movie files are not implemented.
 ****************************************************************/
-#include "movie.h"
 #include "compress.h"
+#include "memory.h"
+#include "movie.h"
 
 static void convert_ega_pixels(UBYTE *egabuf, UBYTE *pixbuf, int width)
 /* Convert a buffer containing 3, 80 byte contiguous chunks of bitplane

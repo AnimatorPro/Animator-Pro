@@ -4,7 +4,6 @@
 +memcrc.obj
 +memswap.obj
 +membnon0.obj
-+membset.obj
 +memdstuf.obj
 +memnulod.obj
 +memwstuf.obj

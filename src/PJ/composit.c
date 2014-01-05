@@ -1,9 +1,9 @@
 #include "errcodes.h"
 #include "jimk.h"
-#include "rastrans.h"
 #include "composit.h"
 #include "imath.h"
-
+#include "memory.h"
+#include "rastrans.h"
 
 Compocb ccb;
 

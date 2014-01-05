@@ -1,8 +1,8 @@
 
 #include "jimk.h"
-#include "render.h"
 #include "imath.h"
-
+#include "memory.h"
+#include "render.h"
 
 void make_cfit_table(Rgb3 *scm,Rgb3 *dcm,Pixel *cnums, int clearc)
 {

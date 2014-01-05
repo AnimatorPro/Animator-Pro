@@ -1,8 +1,8 @@
-#include "rastcomp.h"
-#include "ptrmacro.h"
 #include "fli.h"
 #include "flicomp.h"
-
+#include "memory.h"
+#include "ptrmacro.h"
+#include "rastcomp.h"
 
 LONG pj_fli_comp_rect(void *comp_buf,
 					Rcel *last_screen,

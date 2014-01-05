@@ -1,5 +1,6 @@
-#include "jfile.h"
 #include "fli.h"
+#include "jfile.h"
+#include "memory.h"
 
 Errcode pj_fli_create(char *path, Flifile *flif)
 /*************************************************************************

@@ -9,12 +9,13 @@
 #include "lstdio.h"
 #include "ffile.h"
 #include "jimk.h"
-#include "poly.h"
+#include "commonst.h"
 #include "inks.h"
 #include "marqi.h"
+#include "memory.h"
+#include "poly.h"
 #include "rectang.h"
 #include "render.h"
-#include "commonst.h"
 
 Poly working_poly;
 char curveflag;

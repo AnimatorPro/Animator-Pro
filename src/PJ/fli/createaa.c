@@ -1,4 +1,5 @@
 #include "fli.h"
+#include "memory.h"
 
 Errcode pj_fli_create_aa(char *path, Flifile *flif)
 
