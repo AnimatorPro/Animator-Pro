@@ -6,11 +6,12 @@
  * done some light maintenance work and commenting.
  */
 #include "errcodes.h"
-#include "composit.h"
-#include "picdrive.h"
-#include "commonst.h"
-#include "softmenu.h"
 #include "jimk.h"
+#include "commonst.h"
+#include "composit.h"
+#include "memory.h"
+#include "picdrive.h"
+#include "softmenu.h"
 
 static void qload_fli_b(), see_fli_bname(), see_fli_aname(), see_trans_icon(),
 	setup_nonmask_mode(), inc_overlap(), tog_ends(), qrender_composite(),

@@ -263,7 +263,6 @@ extern void *remove_el();
 
 #define free_string(pt) pj_free(pt)
 #define string_width(s) (strlen(s)*CH_WIDTH)
-#define zero_words(s,size) pj_stuff_words(0, s, (unsigned)(size))
 
 extern LONG comp_size;
 

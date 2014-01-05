@@ -71,17 +71,6 @@ void *memset(void *dst, int value, unsigned count);
 	modify exact [eax ecx edx edi];
 
 /*----------------------------------------------------------------------------
- * pj_stuff_words
- *--------------------------------------------------------------------------*/
-
-void pj_stuff_words(unsigned short value, void *dst, unsigned count);
-
-#pragma aux pj_stuff_words =										\
-	  0xF3 0x66 0xAB /* 			rep stosw				   */	\
-	parm caller [eax] [edi] [ecx]									\
-	modify exact [ecx edi];
-
-/*----------------------------------------------------------------------------
  * pj_stuff_dwords
  *--------------------------------------------------------------------------*/
 
