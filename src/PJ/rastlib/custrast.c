@@ -1,7 +1,8 @@
 #include "errcodes.h"
-#include "rastlib.h"
-#include "rastcall.h"
 #include "libdummy.h"
+#include "memory.h"
+#include "rastcall.h"
+#include "rastlib.h"
 
 static Pixel not_implemented()
 {

@@ -71,28 +71,6 @@ void *memset(void *dst, int value, unsigned count);
 	modify exact [eax ecx edx edi];
 
 /*----------------------------------------------------------------------------
- * pj_stuff_dwords
- *--------------------------------------------------------------------------*/
-
-void pj_stuff_dwords(unsigned long value, void *dst, unsigned count);
-
-#pragma aux pj_stuff_dwords =										\
-	  0xF3 0xAB 	 /* 			rep stosd				   */	\
-	parm caller [eax] [edi] [ecx]									\
-	modify exact [ecx edi];
-
-/*----------------------------------------------------------------------------
- * pj_stuff_pointers
- *--------------------------------------------------------------------------*/
-
-void pj_stuff_pointers(void *value, void *dst, unsigned count);
-
-#pragma aux pj_stuff_pointers = 									\
-	  0xF3 0xAB 	 /* 			rep stosd				   */	\
-	parm caller [eax] [edi] [ecx]									\
-	modify exact [ecx edi];
-
-/*----------------------------------------------------------------------------
  * pj_xlate
  *--------------------------------------------------------------------------*/
 

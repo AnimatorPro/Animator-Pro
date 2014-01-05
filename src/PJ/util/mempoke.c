@@ -21,6 +21,28 @@ pj_stuff_words(uint16_t data, void *dst, unsigned int n)
 		dest[i] = data;
 }
 
+/* Function: pj_stuff_dwords */
+void
+pj_stuff_dwords(uint32_t data, void *dst, unsigned int n)
+{
+	uint32_t *dest = dst;
+	unsigned int i;
+
+	for (i = 0; i < n; i++)
+		dest[i] = data;
+}
+
+/* Function: pj_stuff_pointers */
+void
+pj_stuff_pointers(void *data, void *dst, unsigned int n)
+{
+	void **dest = dst;
+	unsigned int i;
+
+	for (i = 0; i < n; i++)
+		dest[i] = data;
+}
+
 /* Function: pj_copy_bytes */
 void
 pj_copy_bytes(const void *src, void *dst, unsigned int n)

@@ -1,9 +1,10 @@
-#include "rastlib.h"
 #include "jimk.h"
-#include "render.h"
-#include "options.h"
-#include "inks.h"
 #include "inkdot.h"
+#include "inks.h"
+#include "memory.h"
+#include "options.h"
+#include "rastlib.h"
+#include "render.h"
 #include "rexlib.h"
 
 Thash *gel_thash;
