@@ -1,10 +1,11 @@
 #include "errcodes.h"
-#include "rastlib.h"
 #include "jimk.h"
-#include "render.h"
-#include "options.h"
-#include "inkdot.h"
 #include "floatgfx.h"
+#include "inkdot.h"
+#include "memory.h"
+#include "options.h"
+#include "rastlib.h"
+#include "render.h"
 
 /*********** Cel tile ink stuff *************************/
 

@@ -32,8 +32,6 @@
 #pragma aux i86_swout "*" parm caller [] \
    value struct float struct routine [eax]	modify [eax];
 
-#pragma aux xlate "*" parm caller [] \
-   value struct float struct routine [eax]	modify [eax];
 #pragma aux pj_enorm_pointer "*" parm caller [] \
    value struct float struct routine [eax]	modify [eax];
 #pragma aux long_to_pt "*" parm caller [] \
@@ -133,7 +131,6 @@ void i86_outb(int port, int value);
 void i86_outw(int port, int value);
 void i86_swout(int port, void *data, int count);
 
-void xlate(UBYTE *table, UBYTE *buf, unsigned count);
 void *pj_enorm_pointer(void *p);
 void *long_to_pt(long l);
 long pt_to_long(void *p);

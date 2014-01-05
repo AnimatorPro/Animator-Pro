@@ -7,11 +7,12 @@
    the Cel drop-down */
 
 #include "errcodes.h"
-#include "rastrans.h"
 #include "jimk.h"
 #include "auto.h"
 #include "floatgfx.h"
+#include "memory.h"
 #include "rastlib.h"
+#include "rastrans.h"
 
 #ifdef SLUFFED
 LONG jwrite_celchunk(Jfile f,Celdata *cd)

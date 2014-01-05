@@ -5,7 +5,6 @@
 +memswap.obj
 +membnon0.obj
 +memnulod.obj
-+memxlate.obj
 +memzero.obj
 +memcask.obj
 +memeallo.obj

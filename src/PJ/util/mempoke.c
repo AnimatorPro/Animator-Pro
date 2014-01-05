@@ -74,3 +74,17 @@ pj_xor_bytes(uint8_t data, void *dst, unsigned int n)
 	for (i = 0; i < n; i++)
 		dest[i] ^= data;
 }
+
+/* Function: pj_xlate
+ *
+ *  table -> 256 byte translation table
+ *  buf -> area of count bytes to translate
+ */
+void
+pj_xlate(const uint8_t *table, uint8_t *xs, unsigned int n)
+{
+	unsigned int i;
+
+	for (i = 0; i < n; i++)
+		xs[i] = table[xs[i]];
+}

@@ -32,7 +32,6 @@ MEMO = \
  mempeek.obj mempoke.obj membkcpy.obj\
  membnon0.obj memcask.obj memcrc.obj\
  memnulod.obj memswap.obj\
- memxlate.obj\
  memzero.obj memeallo.obj memgfree.obj\
  memfreez.obj blockall.obj
 

@@ -70,30 +70,4 @@ void *memset(void *dst, int value, unsigned count);
 	value [edx] 													\
 	modify exact [eax ecx edx edi];
 
-/*----------------------------------------------------------------------------
- * pj_xlate
- *--------------------------------------------------------------------------*/
-
-void pj_xlate(unsigned char *table, unsigned char *buffer, unsigned count);
-
-#pragma aux pj_xlate =												\
-	  0xD1 0xE9 	 /* 			shr 	ecx,1			   */	\
-	  0x74 0x0E 	 /* 			jz		short justone	   */	\
-	  0x66 0x8B 0x07 /*   xloop:	mov 	ax,[edi]		   */	\
-	  0xD7			 /* 			xlatb					   */	\
-	  0x86 0xE0 	 /* 			xchg	ah,al			   */	\
-	  0xD7			 /* 			xlatb					   */	\
-	  0x86 0xE0 	 /* 			xchg	ah,al			   */	\
-	  0x66 0xAB 	 /* 			stosw					   */	\
-	  0x49			 /* 			dec 	ecx 			   */	\
-	  0x75 0xF2 	 /*   justone:	jnz 	short xloop 	   */	\
-	  0x73 0x04 	 /* 			jnc 	short alldone	   */	\
-	  0x8A 0x07 	 /* 			mov 	al,[edi]		   */	\
-	  0xD7			 /* 			xlatb					   */	\
-	  0xAA			 /* 			stosb					   */	\
-					 /*   alldone:							   */	\
-	parm caller [ebx] [edi] [ecx]									\
-	modify exact [eax edi ecx];
-
-
 #endif /* PJINLINE_H */
