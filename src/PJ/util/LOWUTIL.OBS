@@ -1,9 +1,7 @@
 +doserror.obj
 +dosecode.obj
 +dosmfree.obj
-+dossvmod.obj
-+dosgvmod.obj
-+dosvblan.obj
++dosvideo.obj
 +fastclk.obj
 +i86_inb.obj
 +i86_inw.obj
