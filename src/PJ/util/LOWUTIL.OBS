@@ -3,7 +3,6 @@
 +dosmfree.obj
 +dosvideo.obj
 +fastclk.obj
-+i86_outw.obj
 +i86_swou.obj
 +i86dswap.obj
 +i86swap.obj
