@@ -12,7 +12,7 @@ libs: trdutil.lib cutil.lib
 
 LOWUTILO = \
  dosecode.obj doserror.obj dosmfree.obj dosvideo.obj\
- i86_inb.obj i86_inw.obj i86_outb.obj i86_outw.obj\
+ i86_inw.obj i86_outb.obj i86_outw.obj\
  i86_swou.obj i86dswap.obj i86swap.obj ptrenorm.obj ptrtoint.obj\
  fastclk.obj stackchk.obj setgs.obj
 
