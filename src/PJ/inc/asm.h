@@ -25,8 +25,6 @@
    value struct float struct routine [eax]	modify [eax];
 #pragma aux i86_outw "*" parm caller [] \
    value struct float struct routine [eax]	modify [eax];
-#pragma aux i86_inw "*" parm caller [] \
-   value struct float struct routine [eax]	modify [eax];
 #pragma aux i86_swout "*" parm caller [] \
    value struct float struct routine [eax]	modify [eax];
 
@@ -123,7 +121,6 @@
 
 #endif /*  __WATCOMC__ */
 
-int i86_inw(int port);
 void i86_outb(int port, int value);
 void i86_outw(int port, int value);
 void i86_swout(int port, void *data, int count);
