@@ -21,9 +21,6 @@
 
 #ifdef __FOOLISH__
 
-#pragma aux i86_swout "*" parm caller [] \
-   value struct float struct routine [eax]	modify [eax];
-
 #pragma aux pj_enorm_pointer "*" parm caller [] \
    value struct float struct routine [eax]	modify [eax];
 #pragma aux long_to_pt "*" parm caller [] \
@@ -116,8 +113,6 @@
    value struct float struct routine [eax]	modify [eax];
 
 #endif /*  __WATCOMC__ */
-
-void i86_swout(int port, void *data, int count);
 
 void *pj_enorm_pointer(void *p);
 void *long_to_pt(long l);
