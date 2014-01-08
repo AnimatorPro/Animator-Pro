@@ -94,6 +94,4 @@ typedef struct flifile {
 	Jfile fd;      /* file handle for this fli */
 } Flifile;
 
-extern void *pj_enorm_pointer(void *pt);
-
 #endif /* FLILO_H */

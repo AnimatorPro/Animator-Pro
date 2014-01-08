@@ -21,9 +21,6 @@
 
 #ifdef __FOOLISH__
 
-#pragma aux pj_enorm_pointer "*" parm caller [] \
-   value struct float struct routine [eax]	modify [eax];
-
 #pragma aux pj_clock_init "*" parm caller [] \
    value struct float struct routine [eax]	modify [eax];
 #pragma aux _getclock "*" parm caller [] \
@@ -109,8 +106,6 @@
    value struct float struct routine [eax]	modify [eax];
 
 #endif /*  __WATCOMC__ */
-
-void *pj_enorm_pointer(void *p);
 
 Boolean pj_clock_init(void);
 short	pj_set_gs(void);	/* sets GS reg to (and returns) PHAR_REAL_SEG */
