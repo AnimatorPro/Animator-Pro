@@ -255,7 +255,6 @@ extern char *clone_string();
 
 extern long get80hz();
 extern ULONG pj_clock_1000();
-extern void *long_to_pt();
 extern long mem_free, largest_frag();
 
 extern void *sort_list();

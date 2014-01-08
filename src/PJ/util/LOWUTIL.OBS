@@ -6,6 +6,5 @@
 +i86dswap.obj
 +i86swap.obj
 +ptrenorm.obj
-+ptrtoint.obj
 +stackchk.obj
 +setgs.obj

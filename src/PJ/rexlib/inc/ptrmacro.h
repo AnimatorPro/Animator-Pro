@@ -65,10 +65,6 @@
 /* far optr would have a pt_to_long and a long_to_pt() in it for 286 stuff */
 #define FOPTR(base,offset) OPTR(base,offset)
 
-#ifdef SLUFFED
-	#define FOPTR(base,offset) long_to_pt(pt_to_long(base)+(offset))
-#endif
-
 #define Array_els(arr) (sizeof(arr)/sizeof(arr[0]))
 
 #define strempty(s) ((s)[0] == 0)

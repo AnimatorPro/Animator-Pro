@@ -23,10 +23,6 @@
 
 #pragma aux pj_enorm_pointer "*" parm caller [] \
    value struct float struct routine [eax]	modify [eax];
-#pragma aux long_to_pt "*" parm caller [] \
-   value struct float struct routine [eax]	modify [eax];
-#pragma aux pt_to_long "*" parm caller [] \
-   value struct float struct routine [eax]	modify [eax];
 
 #pragma aux pj_clock_init "*" parm caller [] \
    value struct float struct routine [eax]	modify [eax];
@@ -115,8 +111,6 @@
 #endif /*  __WATCOMC__ */
 
 void *pj_enorm_pointer(void *p);
-void *long_to_pt(long l);
-long pt_to_long(void *p);
 
 Boolean pj_clock_init(void);
 short	pj_set_gs(void);	/* sets GS reg to (and returns) PHAR_REAL_SEG */
