@@ -80,3 +80,46 @@ pj_bcontrast(const void *xs, const void *ys, unsigned int n)
 
 	return i;
 }
+
+/* Function: pj_til_next_skip */
+unsigned int
+pj_til_next_skip(const void *xs, const void *ys, unsigned int n,
+		unsigned int mustmatch)
+{
+	const uint8_t *x = xs;
+	const uint8_t *y = ys;
+	unsigned int diffcount = 0;
+
+	for (;;) {
+		unsigned int num_same;
+		unsigned int num_diff;
+
+		num_diff = pj_bcontrast(x, y, n);
+		n -= num_diff;
+		x += num_diff;
+		y += num_diff;
+		diffcount += num_diff;
+
+		/* Check last couple of pixels. */
+		if (n < mustmatch) {
+			num_same = pj_bcompare(x, y, n);
+
+			if (num_same < n)
+				diffcount += n;
+
+			break;
+		}
+
+		num_same = pj_bcompare(x, y, mustmatch);
+
+		if (num_same == mustmatch)
+			break;
+
+		n -= num_same;
+		x += num_same;
+		y += num_same;
+		diffcount += num_same;
+	}
+
+	return diffcount;
+}

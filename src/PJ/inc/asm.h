@@ -100,8 +100,6 @@
 #pragma aux pj_fcuncomp "*" parm caller [] \
    value struct float struct routine [eax]	modify [eax];
 
-#pragma aux pj_tnskip "*" parm caller [] \
-   value struct float struct routine [eax]	modify [eax];
 #pragma aux pj_tnsame "*" parm caller [] \
    value struct float struct routine [eax]	modify [eax];
 
@@ -149,7 +147,6 @@ void dto_table(Raster *sv,Pixel *dtable,int dsize,
 	int x0,int y0,int x1,int y1);
 void pj_fcuncomp(void *csource, Rgb3 *cmap);
 
-int pj_tnskip(Pixel *s1,Pixel *s2,int bcount,int mustmatch);
 int pj_tnsame(Pixel *s2x,int bcount,int mustmatch);
 
 #endif /* ASM_H */
