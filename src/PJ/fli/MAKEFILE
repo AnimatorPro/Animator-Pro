@@ -13,7 +13,6 @@ FLILIBO = \
  comp_ani.obj\
  compbrun.obj\
  complcc.obj\
- compskip.obj\
  compss2.obj\
  create.obj\
  createaa.obj\

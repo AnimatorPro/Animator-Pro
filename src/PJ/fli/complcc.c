@@ -81,7 +81,7 @@ int bcount;
 		{
 			/* figure out how long until the next worthwhile "skip" */
 			/* Have wcount of stuff we can't skip through. */
-			wcount = pj_tnsame(s2,
+			wcount = pj_til_next_same(s2,
 					pj_til_next_skip(s1, s2, bcount, INERTIA-1),
 					INERTIA);
 			/* Say copy positive count as lit copy op, and put bytes to copy

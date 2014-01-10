@@ -57,6 +57,9 @@ extern unsigned int
 pj_til_next_skip(const void *xs, const void *ys, unsigned int n,
 		unsigned int mustmatch);
 
+extern unsigned int
+pj_til_next_same(const void *src, unsigned int n, unsigned int mustmatch);
+
 extern void pj_stuff_bytes(uint8_t data, void *dst, unsigned int n);
 extern void pj_stuff_words(uint16_t data, void *dst, unsigned int n);
 extern void pj_stuff_dwords(uint32_t data, void *dst, unsigned int n);
