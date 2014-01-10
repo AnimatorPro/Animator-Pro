@@ -1,6 +1,35 @@
+#include <string.h>
 #include "rastcall.h"
 #include "fli.h"
 #include "ptrmacro.h"
+
+/* Function: pj_fcuncomp
+ *
+ *  Uncompress colour palette onto a buffer.
+ */
+void
+pj_fcuncomp(const UBYTE *src, Rgb3 *dst)
+{
+	STATIC_ASSERT(uncompl, sizeof(Rgb3) == 3);
+	unsigned int count = ((const uint16_t *)src)[0];
+	src += 2;
+
+	for (; count > 0; count--) {
+		unsigned int nskip = src[0];
+		unsigned int ncopy = src[1];
+
+		if (ncopy == 0)
+			ncopy = 256;
+
+		src += 2;
+		dst += nskip;
+
+		memcpy(dst, src, 3 * ncopy);
+
+		src += 3 * ncopy;
+		dst += ncopy;
+	}
+}
 
 void pj_fli_uncomp_rect(Rcel *f, 
 	             struct fli_frame *frame, Rectangle *rect,
@@ -37,7 +66,7 @@ void *vp;
 					pj_wait_rast_vsync(f);
 					pj_uncc256(f, CHUNK+1);
 				}
-				pj_fcuncomp(CHUNK+1,f->cmap->ctab);
+				pj_fcuncomp((const UBYTE *)(CHUNK+1), f->cmap->ctab);
 				break;
 			case FLI_LC:
 				pj_unlccomp_rect(f,CHUNK+1,1,

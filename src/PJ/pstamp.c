@@ -31,7 +31,7 @@ int type = 0;
 				break;
 			case FLI_COLOR256:
 				if(do_colors)
-					pj_fcuncomp(chunk+1,f->cmap->ctab);
+					pj_fcuncomp((const UBYTE *)(chunk+1), f->cmap->ctab);
 				break;
 	/*		case FPS_BRUN: note value is FPS_BRUN */
 			case FLI_BRUN:

@@ -1,7 +1,6 @@
 #include "errcodes.h"
 #include "fli.h"
 
-extern void pj_fcuncomp(void *buf,Rgb3 *ctab);
 extern void pj_fcuncomp64(void *buf,Rgb3 *ctab);
 
 Errcode fli_read_colors(Flifile *flif, Cmap *cmap)

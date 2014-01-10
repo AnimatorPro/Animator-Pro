@@ -264,6 +264,8 @@ Errcode pj_fli_read_first(char *name, Flifile *flif, Rcel *fscreen,
 Errcode pj_fli_read_next(char *name, Flifile *flif, Rcel *fscreen,
 					  Boolean colors );
 
+extern void pj_fcuncomp(const UBYTE *src, Rgb3 *dst);
+
 /*----------------------------------------------------------------------------
  * This proto is for a temporary kludge to eliminate flilib references to
  * the errline() function.	See comments in FLI\FLIERROR.C for details.

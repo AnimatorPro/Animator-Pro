@@ -97,8 +97,6 @@
    value struct float struct routine [eax]	modify [eax];
 #pragma aux pj_unlccomp "*" parm caller [] \
    value struct float struct routine [eax]	modify [eax];
-#pragma aux pj_fcuncomp "*" parm caller [] \
-   value struct float struct routine [eax]	modify [eax];
 
 #endif /*  __WATCOMC__ */
 
@@ -142,6 +140,5 @@ void wait_novblank(void);
 
 void dto_table(Raster *sv,Pixel *dtable,int dsize,
 	int x0,int y0,int x1,int y1);
-void pj_fcuncomp(void *csource, Rgb3 *cmap);
 
 #endif /* ASM_H */
