@@ -83,7 +83,6 @@ GFXLIBO = \
  cmchksum.obj\
  cmclone.obj\
  cmcloses.obj\
- cmtblend.obj\
  cmclosex.obj\
  cmhlssub.obj\
  cmhlsrgb.obj\

@@ -8,8 +8,6 @@
 #include "memory.h"
 #include "render.h"
 
-void true_blend();
-
 void fitting_ctable();
 
 
@@ -43,9 +41,13 @@ int closest;
 	}
 	return(closest);
 }
+#endif /* CCODE */
 
-// the following routine was moved to gfx\cmtblend.asm
-
+/* Function: true_blend
+ *
+ *  This routine blends the c1 and c2 colours based on the percent,
+ *  yielding a new colour in d.
+ */
 void true_blend(Rgb3 *c1,Rgb3 *c2,UBYTE percent,Rgb3 *d)
 {
 	UBYTE vpercent;
@@ -55,8 +57,6 @@ void true_blend(Rgb3 *c1,Rgb3 *c2,UBYTE percent,Rgb3 *d)
 	d->g = (c1->g * vpercent + c2->g * percent + 50)/100;
 	d->b = (c1->b * vpercent + c2->b * percent + 50)/100;
 }
-#endif /* CCODE */
-
 
 #ifdef SLUFFED
 void true_fades(UBYTE *c1,UBYTE *rgb,int p,int q,UBYTE *d,int count)

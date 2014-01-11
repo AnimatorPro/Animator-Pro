@@ -5,8 +5,6 @@
 #include "options.h"
 #include "inkdot.h"
 
-
-extern void true_blend(Rgb3 *c1,Rgb3 *c2,UBYTE percent,Rgb3 *d);
 extern int closestc(Rgb3 *true_color, Rgb3 *cmap, int ccount);
 extern int bclosest_col(Rgb3 *rgb, int count, SHORT dither);
 

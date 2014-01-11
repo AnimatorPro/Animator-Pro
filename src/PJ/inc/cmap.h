@@ -21,4 +21,6 @@ Errcode pj_cmap_alloc(Cmap **pcmap, LONG num_colors);
 void pj_cmap_free(Cmap *cmap);
 void pj_get_default_cmap(Cmap *cmap);
 
+extern void true_blend(Rgb3 *c1, Rgb3 *c2, UBYTE percent, Rgb3 *d);
+
 #endif /* CMAP_H */
