@@ -90,9 +90,6 @@
 #pragma aux closestc "*" parm caller [] \
    value struct float struct routine [eax]	modify [eax];
 
-#pragma aux dto_table "*" parm caller [] \
-   value struct float struct routine [eax]	modify [eax];
-
 #pragma aux pj_unbrun "*" parm caller [] \
    value struct float struct routine [eax]	modify [eax];
 #pragma aux pj_unlccomp "*" parm caller [] \
@@ -137,8 +134,5 @@ int get_vmode(void);
 void set_vmode(int mode);
 void wait_vblank(void);
 void wait_novblank(void);
-
-void dto_table(Raster *sv,Pixel *dtable,int dsize,
-	int x0,int y0,int x1,int y1);
 
 #endif /* ASM_H */
