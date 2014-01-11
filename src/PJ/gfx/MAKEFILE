@@ -21,7 +21,6 @@ RASTGFXO = \
  rgmcused.obj\
  rgsetlbh.obj\
  rgublit.obj\
- rgshrnkx.obj\
  rgxlatra.obj
 
 PBLITO = \
