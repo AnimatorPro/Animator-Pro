@@ -35,45 +35,7 @@ _DATA	ends
 _TEXT	segment
 	assume cs:CGROUP,ds:DGROUP
 
-	public	color_dif
 	public	closestc
-
-;*****************************************************************************
-;* int color_dif(Rgb3 *pcolor1, Rgb3 *pcolor2)
-;*
-;*  return the sum of the squares of the differences of the rgb components.
-;*****************************************************************************
-
-	align 4
-color_dif proc near
-
-	Entry
-	Args	#pcolor1,#pcolor2
-	Save	esi,edi
-
-	mov	esi,#pcolor1		; load pointer to color 1
-	xor	edx,edx 		; clean out high order of edx.
-	mov	edi,#pcolor2		; load pointer to color 2
-
-	mov	dl,bptr [esi]		; load red byte of color 1
-	movzx	ecx,bptr [edi]		; load red byte of color 2
-	sub	ecx,edx 		; subtract them
-	mov	eax,dptr [ecx*4+sqrtab] ; load the square of the difference
-
-	mov	dl,bptr [esi+1] 	; load green byte of color 1
-	movzx	ecx,bptr [edi+1]	; load green byte of color 2
-	sub	ecx,edx 		; subtract them
-	add	eax,dptr [ecx*4+sqrtab] ; accumulate square of the difference
-
-	mov	dl,bptr [esi+2] 	; load blue byte of color 1
-	movzx	ecx,bptr [edi+2]	; load blue byte of color 2
-	sub	ecx,edx 		; subtract them
-	add	eax,dptr [ecx*4+sqrtab] ; accumulate square of the difference
-
-	Restore esi,edi 		; all done, return the sum of the
-	Exit				; squares of the differences.
-
-color_dif endp
 
 ;*****************************************************************************
 ;* int closestc(Rgb3 *pcolor, Rgb3 *ptab, int tabcount)

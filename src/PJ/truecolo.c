@@ -10,6 +10,20 @@
 
 void fitting_ctable();
 
+/* Function: color_dif
+ *
+ *  Return the sum of the squares of the differences of the rgb
+ *  components.
+ */
+int
+color_dif(const Rgb3 *c1, const Rgb3 *c2)
+{
+	const int dr = c1->r - c2->r;
+	const int dg = c1->g - c2->g;
+	const int db = c1->b - c2->b;
+
+	return dr*dr + dg*dg + db*db;
+}
 
 #ifdef CCODE
 
