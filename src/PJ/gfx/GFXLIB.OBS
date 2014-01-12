@@ -28,7 +28,6 @@
 +cmapswap.obj
 +cmchksum.obj
 +cmclone.obj
-+cmcloses.obj
 +cmclosex.obj
 +cmhlssub.obj
 +cmhlsrgb.obj

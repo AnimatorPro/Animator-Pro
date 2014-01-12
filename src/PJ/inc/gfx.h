@@ -154,7 +154,6 @@ Errcode polygon(void *r,Pixel color,Short_xy *points,int count,Boolean filled);
 
 /* colormap functions */
 
-int closestc(Rgb3 *rgb,Rgb3 *ctab,int count);
 int closestc_excl(Rgb3 *rgb, Rgb3 *ctab, int ccount,
 				  UBYTE *ignore, int icount);
 Boolean inctable(Rgb3 *rgb,Rgb3 *ctab,int count);

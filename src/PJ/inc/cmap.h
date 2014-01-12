@@ -22,6 +22,7 @@ void pj_cmap_free(Cmap *cmap);
 void pj_get_default_cmap(Cmap *cmap);
 
 extern int color_dif(const Rgb3 *c1, const Rgb3 *c2);
+extern int closestc(Rgb3 *rgb, Rgb3 *cmap, int count);
 extern void true_blend(Rgb3 *c1, Rgb3 *c2, UBYTE percent, Rgb3 *d);
 
 #endif /* CMAP_H */

@@ -454,9 +454,6 @@ dest->g = (source1->g * valpha + source2->g * alpha + 127)/255;
 dest->b = (source1->b * valpha + source2->b * alpha + 127)/255;
 }
 
-extern int closestc(Rgb3 *rgb,Rgb3 *ctab,int count);
-
-
 void render_mask_alpha_blit(UBYTE *alpha, int abpr, int dx, int dy, 
 int width, int height, Rcel *r, Pixel oncolor)
 /*****************************************************************************

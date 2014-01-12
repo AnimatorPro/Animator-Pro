@@ -87,8 +87,6 @@
    value struct float struct routine [eax]	modify [eax];
 #pragma aux wait_novblank "*" parm caller [] \
    value struct float struct routine [eax]	modify [eax];
-#pragma aux closestc "*" parm caller [] \
-   value struct float struct routine [eax]	modify [eax];
 
 #pragma aux pj_unbrun "*" parm caller [] \
    value struct float struct routine [eax]	modify [eax];

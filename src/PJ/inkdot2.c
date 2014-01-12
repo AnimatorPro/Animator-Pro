@@ -5,7 +5,6 @@
 #include "options.h"
 #include "inkdot.h"
 
-extern int closestc(Rgb3 *true_color, Rgb3 *cmap, int ccount);
 extern int bclosest_col(Rgb3 *rgb, int count, SHORT dither);
 
 static Pixel rclosest_color(Thash *th, const Rgb3 *oldc,

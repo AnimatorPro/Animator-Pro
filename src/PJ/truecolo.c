@@ -25,37 +25,35 @@ color_dif(const Rgb3 *c1, const Rgb3 *c2)
 	return dr*dr + dg*dg + db*db;
 }
 
-#ifdef CCODE
-
-// the following routine was moved to gfx\cmcloses.asm
-
-closestc(Rgb3 *rgb,Rgb3 *c,int count)
-/* gets closest color to rgb in color table c */
+/* Function: closestc
+ *
+ *  Return the index of the closest match of an Rgb3 colour within an
+ *  arbitrary-length table of Rgb3 colours.  A zero-length table is
+ *  legit (FWIW), and results in a return value of 0.
+ */
+int
+closestc(Rgb3 *rgb, Rgb3 *cmap, int count)
 {
-LONG closest_dif, dif;
-SHORT dc;
-register int i;
-int closest;
+	unsigned int closest_diff2 = 620000;
+	int closest_index = 0;
+	int i;
 
-	closest_dif = 620000L;	/* arbitrary huge number */
-	for (i=0; i<count; i++)
-	{
-		dc = rgb->r-c->r;
-		dif = dc*dc;
-		dc = rgb->g-c->g;
-		dif += dc*dc;
-		dc = rgb->b-c->b;
-		dif += dc*dc;
-		if (dif < closest_dif)
-		{
-			closest_dif = dif;
-			closest = i;
+	for (i = 0; i < count; i++) {
+		const unsigned int diff2 = color_dif(rgb, cmap);
+
+		if (diff2 < closest_diff2) {
+			closest_diff2 = diff2;
+			closest_index = i;
+
+			if (diff2 == 0)
+				break;
 		}
-		c += 1;
+
+		cmap++;
 	}
-	return(closest);
+
+	return closest_index;
 }
-#endif /* CCODE */
 
 /* Function: true_blend
  *

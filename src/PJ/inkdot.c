@@ -17,7 +17,6 @@ static int ink_type;
 static Pixel (*ink_dot)(const Ink *inky,const SHORT x,const SHORT y);
 
 extern Button dithergroup_sel, dtintgroup_sel, tintgroup_sel;
-extern int closestc(Rgb3 *true_color, Rgb3 *cmap, int ccount);
 extern int bclosest_col(Rgb3 *rgb, int count, SHORT dither);
 
 Aa_ink_data ink_aid = {
