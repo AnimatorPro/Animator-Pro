@@ -3,7 +3,6 @@
 
 O = \
  bhash.obj\
- bhashlkp.obj\
  celalloc.obj\
  colload.obj\
  colsave.obj\
