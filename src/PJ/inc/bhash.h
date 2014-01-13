@@ -8,12 +8,14 @@
 	#include "cmap.h"
 #endif
 
+#ifdef SLUFFED
 /* General true-color hash */
-static struct bhash {
+struct bhash {
 	UBYTE valid;
 	Rgb3 rgb;
 	UBYTE closest;
 };
+#endif /* SLUFFED */
 
 Errcode make_bhash(void);
 void free_bhash(void);
