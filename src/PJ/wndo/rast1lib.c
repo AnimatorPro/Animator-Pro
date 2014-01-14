@@ -5,11 +5,6 @@
 #include "wndo.h"
 
 void *get_window_lib();
-extern Pixel wr1_get_dot();
-extern Pixel _wr1_get_dot();
-extern Pixel wr1os_get_dot();
-extern Pixel _wr1os_get_dot();
-
 
 /**************************************************************/
 
@@ -37,6 +32,28 @@ static void _wr1os_put_dot(Wndo *w,Pixel c,Coor x,Coor y)
 Raster *r = w->rasts[w->onerast];
 
 	PUT_DOT(r,c,x + w->behind.x - r->x,y + w->behind.y - r->y);
+}
+
+static Pixel wr1_get_dot(Wndo *w,Coor x,Coor y)
+{
+	return CGET_DOT(w->rasts[w->onerast], x, y);
+}
+
+static Pixel _wr1_get_dot(Wndo *w, Coor x, Coor y)
+{
+	return GET_DOT(w->rasts[w->onerast], x, y);
+}
+
+static Pixel wr1os_get_dot(Wndo *w, Coor x, Coor y)
+{
+	Raster *r = w->rasts[w->onerast];
+	return CGET_DOT(r, x + w->behind.x - r->x, y + w->behind.y - r->y);
+}
+
+static Pixel _wr1os_get_dot(Wndo *w, Coor x, Coor y)
+{
+	Raster *r = w->rasts[w->onerast];
+	return GET_DOT(r, x + w->behind.x - r->x, y + w->behind.y - r->y);
 }
 
 static void _wr1_put_hseg(Wndo *w,void *pbuf,Coor x,Coor y, Ucoor width)
