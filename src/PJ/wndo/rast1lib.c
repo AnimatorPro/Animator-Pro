@@ -5,18 +5,13 @@
 #include "wndo.h"
 
 void *get_window_lib();
-extern void wr1_put_dot();
-extern void _wr1_put_dot();
 extern Pixel wr1_get_dot();
 extern Pixel _wr1_get_dot();
-extern void wr1os_put_dot();
-extern void _wr1os_put_dot();
 extern Pixel wr1os_get_dot();
 extern Pixel _wr1os_get_dot();
 
 
 /**************************************************************/
-#ifdef CCODE  /* see wndodot.asm */
 
 static void wr1_put_dot(Wndo *w,Pixel c,Coor x,Coor y)
 {
@@ -43,7 +38,6 @@ Raster *r = w->rasts[w->onerast];
 
 	PUT_DOT(r,c,x + w->behind.x - r->x,y + w->behind.y - r->y);
 }
-#endif /* CCODE */
 
 static void _wr1_put_hseg(Wndo *w,void *pbuf,Coor x,Coor y, Ucoor width)
 {
