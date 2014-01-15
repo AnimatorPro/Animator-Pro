@@ -24,6 +24,7 @@ char *po_skip_space(char *line)
 }
 #endif /* SLUFFED */
 
+#ifdef SLUFFED
 int po_hashfunc(unsigned char *s)
 /*****************************************************************************
  * typical hashing function.
@@ -39,6 +40,7 @@ while ((c = *s++) != 0)
 return(acc&(HASH_SIZE-1));
 
 }
+#endif /* SLUFFED */
 
 char *po_chop_csym(char *line, char *word, int maxlen, char **wordnext)
 /*****************************************************************************
