@@ -30,8 +30,8 @@ poco.lib:	$(OBJ)\
 	del poco.lib
 	wlib poco.lib @poco.obs
 
-minipoco: token.obj pocoutil.obj
-	wlib /n minipoco.lib token.obj pocoutil.obj
+minipoco: token.obj bcutil.obj
+	wlib /n minipoco.lib token.obj bcutil.obj
 
 #
 # the following dependency *MUST* remain in place!

@@ -689,6 +689,7 @@ extern Errcode builtin_err;
 
 char	*po_skip_space(char *line);
 int 	po_hashfunc(UBYTE *s);
+char	*po_chop_csym(char *line, char *word, int maxlen, char **wordnext);
 char	*po_cmatch_scan(char *line);
 void	poco_copy_bytes(void *s, void *d, int count);
 void	poco_zero_bytes(void *d, int count);

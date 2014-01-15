@@ -61,8 +61,6 @@ _CODE	segment public dword use32 'code'
 	public	poco_zero_bytes
 	public	poco_copy_bytes
 	public	po_eqstrcmp
-	public	po_chop_csym
-	public	__po_chop_csym__
 	public	__poco_zero_bytes__
 	public	__poco_copy_bytes__
 
@@ -316,61 +314,6 @@ po_eqstrcmp proc     near
 	ret				 ; in eax.
 
 po_eqstrcmp endp
-
-;*****************************************************************************
-;* char *po_chop_csym(char *line, char *word, int maxlen, char **wordnext)
-;*   Note:  this function is #pragma'tized to take parms in registers:
-;*	esi = line
-;*	edi = word
-;*	ecx = maxlen
-;*	edx = wordnext
-;*	return value in esi
-;*****************************************************************************
-
-po_chop_csym proc near
-
-	push	ebp
-	mov	ebp,esp
-	push	esi
-	push	edi
-
-	mov	esi,[ebp+8]
-	mov	edi,[ebp+12]
-	mov	ecx,[ebp+16]
-	mov	edx,[ebp+20]
-	call	__po_chop_csym__
-
-	mov	eax,esi
-	pop	edi
-	pop	esi
-	leave
-	ret
-
-po_chop_csym endp
-
-
-__po_chop_csym__ proc near
-
-	push	edi
-	xor	eax,eax
-#loop:
-	lodsb
-	stosb
-	test	byte ptr[eax+istab],ISCSYM
-	loopnz	#loop
-	jz	#return
-#eatem:
-	lodsb
-	test	byte ptr[eax+istab],ISCSYM
-	jnz	#eatem
-#return:
-	dec	esi
-	dec	edi
-	mov	[edx],edi
-	pop	edi
-	ret
-
-__po_chop_csym__ endp
 
 _CODE	ends
 	end
