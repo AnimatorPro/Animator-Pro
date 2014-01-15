@@ -7,6 +7,7 @@
   #define iscsym(c) ( (c) == '_' || isalnum((c)) )
 #endif
 
+#ifdef SLUFFED
 char *po_skip_space(char *line)
 /*****************************************************************************
  * return pointer to next non-white, or NULL if no more non-white on line.
@@ -21,6 +22,7 @@ char *po_skip_space(char *line)
 	return (*line) ? line : NULL;
 
 }
+#endif /* SLUFFED */
 
 int po_hashfunc(unsigned char *s)
 /*****************************************************************************
