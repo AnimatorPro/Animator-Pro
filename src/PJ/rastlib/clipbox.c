@@ -8,7 +8,6 @@
 
 /**************************************************************/
 
-#ifdef CCODE
 static void pj_cbox_put_dot(Clipbox *cb,Pixel c,Coor x,Coor y)
 {
 	if ((Ucoor)x >= cb->width || (Ucoor)y >= cb->height)
@@ -19,13 +18,13 @@ static void pj__cbox_put_dot(Clipbox *cb,Pixel c,Coor x,Coor y)
 {
 	PUT_DOT(cb->root,c,x+cb->x,y+cb->y);
 }
-static Pixel pj_cbox_get_dot(Clipbox *cb,Pixel c,Coor x,Coor y)
+static Pixel pj_cbox_get_dot(Clipbox *cb,Coor x,Coor y)
 {
 	if ((Ucoor)x >= cb->width || (Ucoor)y >= cb->height)
 		return(0);
 	return(GET_DOT(cb->root,x+cb->x,y+cb->y));
 }
-static Pixel pj__cbox_get_dot(Clipbox *cb,Pixel c,Coor x,Coor y)
+static Pixel pj__cbox_get_dot(Clipbox *cb,Coor x,Coor y)
 {
 	return(GET_DOT(cb->root,x+cb->x,y+cb->y));
 }
@@ -57,13 +56,13 @@ static void pj__cbox_set_vline(Clipbox *cb,Pixel color,Coor x,Coor y,Ucoor heigh
 static void pj__cbox_put_rectpix(Clipbox *cb,void *pixbuf,
 							   Coor x,Coor y,Ucoor width,Ucoor height)
 {
-	((VFUNC)(cb->root->lib[_LIB_PUT_RECTPIX]))(cb->root,
+	(cb->root->lib->put_rectpix)(cb->root,
 					(void *)pixbuf,x+cb->x,y+cb->y,width,height);
 }
 static void pj__cbox_get_rectpix(Clipbox *cb,void *pixbuf,
 							   Coor x,Coor y,Ucoor width,Ucoor height)
 {
-	((VFUNC)(cb->root->lib[_LIB_GET_RECTPIX]))(cb->root,
+	(cb->root->lib->get_rectpix)(cb->root,
 					(void *)pixbuf,x+cb->x,y+cb->y,width,height);
 }
 static void pj__cbox_set_rect(Clipbox *cb,Pixel color,Coor x,Coor y,
@@ -91,8 +90,6 @@ static void pj__cbox_mask2blit(UBYTE *mbytes, Coor mbpr, Coor mx, Coor my,
 	MASK2BLIT(mbytes, mbpr,mx,my,cb->root,x+cb->x,y+cb->y,
 			  width,height,oncolor,offcolor);
 }
-
-#endif /* CCODE */
 
 /* decompressors */
 
@@ -216,23 +213,6 @@ static void cbox_wait_vsync(Clipbox *cb)
 }
 
 /* these are in cboxlib.asm */
-
-extern void pj_cbox_put_dot();
-extern void pj__cbox_put_dot();
-extern void pj_cbox_get_dot();
-extern void pj__cbox_get_dot();
-extern void pj__cbox_get_hseg();
-extern void pj__cbox_put_hseg();
-extern void pj__cbox_get_vseg();
-extern void pj__cbox_put_vseg();
-extern void pj__cbox_set_vline();
-extern void pj__cbox_set_hline();
-extern void pj__cbox_get_rectpix();
-extern void pj__cbox_put_rectpix();
-extern void pj__cbox_set_rect();
-extern void pj__cbox_xor_rect();
-extern void pj__cbox_mask1blit();
-extern void pj__cbox_mask2blit();
 
 extern void pj_sclip_put_dot();
 extern Pixel pj_sclip_get_dot();
