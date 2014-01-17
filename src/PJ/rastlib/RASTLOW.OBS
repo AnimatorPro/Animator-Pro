@@ -4,7 +4,6 @@
 +nullinit.obj
 +nullrlib.obj
 +nullrast.obj
-+grctblil.obj
 +grcommon.obj
 +grc_comp.obj
 +grcdcomp.obj

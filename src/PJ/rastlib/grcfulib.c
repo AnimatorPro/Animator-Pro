@@ -15,6 +15,7 @@
 #include "errcodes.h"
 #include "ptrmacro.h"
 #include "memory.h"
+#include "procblit.h"
 #include "rastcall.h"
 #include "rastlib.h"
 #include "libdummy.h"
@@ -313,6 +314,15 @@ LONG get_width;
 	return;
 }
 
+void pj_tbli_line(Pixel *src, Pixel *dst, Ucoor w, const Tcolxldat *tcxl)
+{
+	Ucoor i;
+
+	for (i = 0; i < w; i++) {
+		if (src[i] != tcxl->tcolor)
+			dst[i] = src[i];
+	}
+}
 
 static Errcode grc_tblitrect(const Raster *src,	/* source raster */
 				  Coor src_x, Coor src_y,	/* source Minx and Miny */
