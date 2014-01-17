@@ -12,9 +12,7 @@ RASTLOWO = \
 ## items needed for a bytemap raster 
 
 BYMRASTO = \
- byblirec.obj bymalloc.obj bymblock.obj bymdiagt.obj bym1blit.obj bym2blit.obj\
- bymdot.obj bymhseg.obj bymrast.obj bymtblit.obj bysetras.obj bymvseg.obj\
- byunbrun.obj byulccmp.obj bymunss2.obj
+ bymalloc.obj bymrast.obj
 
 ## independent bytemap raster utilities
 

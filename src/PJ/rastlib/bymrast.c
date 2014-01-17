@@ -4,7 +4,8 @@
 #include "memory.h"
 #include "rastlib.h"
 
-extern void pj_bym_unbrun_rect();
+/* #define USE_OPTIMISED_RASTLIB */
+
 extern void pj_free_bplanes(register PLANEPTR *bp,LONG num_planes);
 extern LONG pj_get_bplanes(PLANEPTR *bp,LONG num_planes,LONG bpize);
 void *pj_get_bytemap_lib();
@@ -66,6 +67,8 @@ Errcode err;
 }
 
 /************** bytemap jump table driver primitives ****************/
+
+#ifdef USE_OPTIMISED_RASTLIB
 
 /* from assembler library *****/
 
@@ -164,6 +167,7 @@ static void bym_mask2blit(UBYTE *mbytes, Coor mbpr,
 /* these are the decompressors that need to be converted to new format and
  * function */
 
+extern void pj_bym_unbrun_rect();
 
 static void bym_unlccomp_rect(Bytemap *r,void *ucbuf, LONG pixsize,
 				   LONG x,LONG y,Ucoor width,Ucoor height)
@@ -234,7 +238,21 @@ static void bym_xor_rast(Bytemap *s, Bytemap *d)
 #define bym_f_xor_rast bym_xor_rast
 #define bym_t_xor_rast bym_xor_rast
 
+#else /* USE_OPTIMISED_RASTLIB */
 
+static void
+pj_bym_put_dot(Bytemap *r, Pixel col, Coor x, Coor y)
+{
+	(r->bm.bp[0])[r->bm.bpr * y + x] = col;
+}
+
+static Pixel
+pj_bym_get_dot(Bytemap *r, Coor x, Coor y)
+{
+	return (r->bm.bp[0])[r->bm.bpr * y + x];
+}
+
+#endif /* USE_OPTIMISED_RASTLIB */
 
 /* library vector tables ****************************************************/
 /* I know it would save code to have these vector tables staticly initialized
@@ -256,6 +274,9 @@ static int loaded = 0;
 		bytemap_lib.close_raster = (rl_type_close_raster)close_bytemap;
 		bytemap_lib.put_dot = (rl_type_put_dot)pj_bym_put_dot;
 		bytemap_lib.get_dot = (rl_type_get_dot)pj_bym_get_dot;
+
+#ifdef USE_OPTIMISED_RASTLIB
+
 		bytemap_lib.cput_dot = (rl_type_cput_dot)pj_bym_cput_dot;
 #ifdef NOTYET
 		bytemap_lib.cget_dot = (rl_type_cget_dot)pj_bym_cget_dot;
@@ -319,6 +340,8 @@ static int loaded = 0;
 		bytemap_lib.diag_to_ptable 
 		=	(rl_type_diag_to_ptable)pj_bym_dto_ptable;
 #endif /* FLILIB_CODE */
+
+#endif /* USE_OPTIMISED_RASTLIB */
 
 		pj_set_grc_calls(&bytemap_lib);
 		loaded = 1;
