@@ -33,7 +33,7 @@ MCGAO = \
 ## clipbox code is called with another raster but only needs low level code
 
 CBOXO = \
- clipbox.obj clipsafe.obj
+ clipbox.obj
 
 ## raster call and clipping glue. really needed for most things since a 
 ## raster is pretty useless without it. Its divided into little modules

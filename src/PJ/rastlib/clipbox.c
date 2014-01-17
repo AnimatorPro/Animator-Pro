@@ -214,8 +214,6 @@ static void cbox_wait_vsync(Clipbox *cb)
 
 /* these are in cboxlib.asm */
 
-extern void pj_sclip_put_dot();
-extern Pixel pj_sclip_get_dot();
 extern void pj_sclip_put_hseg();
 extern void sclip_get_hseg();
 extern void pj_sclip_put_vseg();
@@ -312,6 +310,15 @@ static int loaded = 0;
 	}
 	return(&cbox_lib);
 }
+static void pj_sclip_put_dot(Clipbox *cb,Pixel c,Coor x,Coor y)
+{
+	pj_put_dot(cb->root, c, x + cb->x, y + cb->y);
+}
+static Pixel pj_sclip_get_dot(Clipbox *cb,Coor x,Coor y)
+{
+	return pj_get_dot(cb->root, x + cb->x, y + cb->y);
+}
+
 #ifdef CCODE
 static void pj_sclip_put_hseg(Clipbox *cb,void *pbuf,Coor x,Coor y, Ucoor width)
 {
@@ -419,15 +426,16 @@ static int loaded = 0;
 		safe_cbox_lib.put_dot = (rl_type_put_dot)pj_sclip_put_dot;
 		safe_cbox_lib.cput_dot = (rl_type_cput_dot)pj_sclip_put_dot;
 
-		safe_cbox_lib.put_hseg = (rl_type_put_hseg)pj_sclip_put_hseg;
 		safe_cbox_lib.get_hseg = (rl_type_get_hseg)scbox_get_hseg; /* reads 0s */
-		safe_cbox_lib.put_vseg = (rl_type_put_vseg)pj_sclip_put_vseg;
 		safe_cbox_lib.get_vseg = (rl_type_get_vseg)scbox_get_vseg; /* reads 0s */
 
-#ifdef USE_GENERIC
+#ifdef USE_OPTIMISED_RASTLIB
+
+		safe_cbox_lib.put_hseg = (rl_type_put_hseg)pj_sclip_put_hseg;
+		safe_cbox_lib.put_vseg = (rl_type_put_vseg)pj_sclip_put_vseg;
+
 		safe_cbox_lib.get_rectpix = (rl_type_get_rectpix)sclip_get_rectpix;
 		safe_cbox_lib.put_rectpix = (rl_type_put_rectpix)pj_sclip_put_rectpix;
-#endif
 
 		safe_cbox_lib.set_hline = (rl_type_set_hline)pj_sclip_set_hline;
 		safe_cbox_lib.set_vline = (rl_type_set_vline)pj_sclip_set_vline;
@@ -437,7 +445,6 @@ static int loaded = 0;
 		safe_cbox_lib.mask1blit = (rl_type_mask1blit)pj_sclip_mask1blit;
 		safe_cbox_lib.mask2blit = (rl_type_mask2blit)pj_sclip_mask2blit;
 
-#ifdef USE_GENERIC
 		safe_cbox_lib.blitrect[RL_FROM_BYTEMAP] 
 		=	(rl_type_blitrect)pj_sclip_blitrect;
 		safe_cbox_lib.blitrect[RL_TO_SAME] 
@@ -483,7 +490,8 @@ static int loaded = 0;
 		safe_cbox_lib.zoomblit[RL_TO_OTHER] 
 		=	(rl_type_zoomblit)sclip_zoomblit;
 
-#endif
+#endif /* USE_OPTIMISED_RASTLIB */
+
 		safe_cbox_lib.set_colors = (rl_type_set_colors)cbox_set_colors;
 		safe_cbox_lib.uncc64 = (rl_type_uncc64)cbox_uncc64;
 		safe_cbox_lib.uncc256 = (rl_type_uncc256)cbox_uncc256;
