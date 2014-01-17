@@ -29,7 +29,13 @@ static Errcode setup_bitmap(Rasthdr *spec,Bitmap *bmap)
 	bmap->type = RT_BITMAP;
 	bmap->lib = get_bitmap_lib();
 	bmap->bm.bpr = Bitmap_bpr(bmap->width);
+
+#ifdef USE_OPTIMISED_RASTLIB
 	bmap->bm.segment = pj_get_ds();
+#else /* USE_OPTIMISED_RASTLIB */
+	bmap->bm.segment = 0;
+#endif /* USE_OPTIMISED_RASTLIB */
+
 	bmap->bm.psize = (ULONG)bmap->bm.bpr * bmap->height;
 	bmap->bm.num_planes = bmap->pdepth;
 	return(Success);

@@ -32,7 +32,13 @@ static Errcode setup_bytemap(Rasthdr *spec, Bytemap *bmap)
 	bmap->lib = pj_get_bytemap_lib();
 	bmap->bm.bpr = Bytemap_bpr(bmap->width);
 	bmap->bm.num_planes = (bmap->pdepth+7) >> 3;
+
+#ifdef USE_OPTIMISED_RASTLIB
 	bmap->bm.segment = pj_get_ds();
+#else /* USE_OPTIMISED_RASTLIB */
+	bmap->bm.segment = 0;
+#endif /* USE_OPTIMISED_RASTLIB */
+
 	bmap->bm.psize = (ULONG)bmap->bm.bpr * bmap->height;
 	return(Success);
 }
