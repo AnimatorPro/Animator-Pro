@@ -92,7 +92,7 @@ rem ***** check which version we want to make, default to test version ****
 	if ERRORLEVEL 1 goto error
 	cd ..
 	cd fileio
-	tcmake libs
+	tcmake trdfile.lib
 	if ERRORLEVEL 1 goto error
 	cd ..
 	cd fli
