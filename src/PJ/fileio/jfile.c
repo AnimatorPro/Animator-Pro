@@ -29,6 +29,14 @@
  **
  **/
 
+#if defined(__WATCOMC__)
+#include <dos.h>
+#include <io.h>
+#else /* __WATCOMC__ */
+#include <unistd.h>
+#endif /* __WATCOMC__ */
+
+#include <fcntl.h>
 #include <stdio.h>
 #include "memory.h"
 #include "msfile.h"
@@ -45,60 +53,109 @@ static Errcode get_doserror(void)
 }
 
 static Errcode ddos_open(Jfl *result, char *name, int mode)
-/*
- * Pass open request to MS-DOS
- */
 {
-mode &= MSOPEN_MODES;	/* Mask out any wierd mode requests */
-	return(pj_mserror(pj_dopen(&(result->handle.j),name,mode)));
+	int flags;
+
+	mode &= MSOPEN_MODES;	/* Mask out any wierd mode requests */
+
+	switch (mode) {
+		case JREADONLY:
+			flags = O_RDONLY;
+			break;
+		case JWRITEONLY:
+			flags = O_WRONLY;
+			break;
+		case JREADWRITE:
+			flags = O_RDWR;
+			break;
+		default:
+			return Err_nogood;
+	}
+
+	result->handle.j = open(name, flags);
+
+	if (result->handle.j == -1) {
+		return Err_nogood;
+	}
+	else {
+		return Success;
+	}
 }
 
 static Errcode ddos_create(Jfl *result, char *name, int mode)
-/*
- * Pass create request to MS-DOS
- */
 {
-	return(pj_mserror(pj_dcreate(&result->handle.j,name, mode)));
+	int flags;
+
+	switch (mode) {
+		case JWRITEONLY:
+			flags = O_CREAT|O_WRONLY|O_TRUNC;
+			break;
+		case JREADWRITE:
+			flags = O_CREAT|O_RDWR|O_TRUNC;
+			break;
+		default:
+			return Err_nogood;
+	}
+
+	result->handle.j = open(name, flags);
+
+	if (result->handle.j == -1) {
+		return Err_nogood;
+	}
+	else {
+		return Success;
+	}
 }
 
 static Errcode ddos_close(Jfl *in)
-/*
- * Pass close request to MS-DOS
- */
 {
-return(pj_dclose(in->handle.j));
+	return close(in->handle.j);
 }
 
-static long ddos_write(Jfl *f, void  *buf, long count)
-/*
- * Pass write request through to MS-DOS
- */
+static long ddos_write(Jfl *f, void *buf, long count)
 {
-return(pj_dwrite(f->handle.j,  buf, count));
+#if defined(__WATCOMC__)
+	/* Not sure why watcom read is acting up... */
+	unsigned int size;
+	int err = _dos_write(f->handle.j, buf, count, &size);
+
+	if (err != 0) {
+		return 0;
+	}
+	else {
+		return size;
+	}
+#else /* __WATCOMC__ */
+	return write(f->handle.j, buf, count);
+#endif /* __WATCOMC__ */
 }
 
 static long ddos_read(Jfl *f, void *buf, long count)
-/*
- * Pass read request through to MS-DOS
- */
 {
-return(pj_dread(f->handle.j, buf, count));
+#if defined(__WATCOMC__)
+	/* Not sure why watcom read is acting up... */
+	unsigned int size;
+	int err = _dos_read(f->handle.j, buf, count, &size);
+
+	if (err != 0) {
+		return 0;
+	}
+	else {
+		return size;
+	}
+#else /* __WATCOMC__ */
+	return read(f->handle.j, buf, count);
+#endif /* __WATCOMC__ */
 }
 
 static long ddos_seek(Jfl *f, long offset, int mode)
-/*
- * Pass seek request through to MS-DOS
- */
 {
-return(pj_dseek(f->handle.j,offset,mode));
+	return lseek(f->handle.j, offset, mode);
 }
 
 static long ddos_tell(Jfl *f)
-/*
- * Pass tell (where am I in file) request to MS-DOS 
- */
 {
-return(pj_dtell(f->handle.j));
+	return lseek(f->handle.j, 0, SEEK_CUR);
 }
 
 static Errcode ddos_ddelete(char *name)

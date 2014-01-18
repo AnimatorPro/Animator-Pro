@@ -38,18 +38,6 @@
    value struct float struct routine [eax]	modify [eax];
 #pragma aux dos_key_shift "*" parm caller [] \
    value struct float struct routine [eax]	modify [eax];
-#pragma aux msjcreate "*" parm caller [] \
-   value struct float struct routine [eax]	modify [eax];
-#pragma aux pj_dopen "*" parm caller [] \
-   value struct float struct routine [eax]	modify [eax];
-#pragma aux pj_dclose "*" parm caller [] \
-   value struct float struct routine [eax]	modify [eax];
-#pragma aux pj_dread "*" parm caller [] \
-   value struct float struct routine [eax]	modify [eax];
-#pragma aux pj_dwrite "*" parm caller [] \
-   value struct float struct routine [eax]	modify [eax];
-#pragma aux pj_dseek "*" parm caller [] \
-   value struct float struct routine [eax]	modify [eax];
 #pragma aux pj_dset_dta "*" parm caller [] \
    value struct float struct routine [eax]	modify [eax];
 #pragma aux pj_dfirst "*" parm caller [] \
@@ -103,12 +91,6 @@ void jcomm(union abcd_regs *comm_regs);
 int pj_key_is(void);
 int pj_key_in(void);
 int dos_key_shift(void);
-Jfile pj_dcreate(char *name, int mode); /* sets jioerr on failure */
-Jfile pj_dopen(char *name, int mode);	/* sets jioerr on failure */
-void pj_dclose(Jfile f);
-LONG pj_dread(Jfile f, void *buf, LONG size);	/* sets jioerr on failure */
-LONG pj_dwrite(Jfile f, void *buf, LONG size);	/* sets jioerr on failure */
-LONG pj_dseek(int file, LONG offset, int mode); /* if negative is Errcode */
 void pj_dset_dta(Fndata *dta);
 Boolean pj_dfirst(char *pattern, int attributes);
 Boolean pj_dnext(void);

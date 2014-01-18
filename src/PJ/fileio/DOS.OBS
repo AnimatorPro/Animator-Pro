@@ -1,5 +1,3 @@
-+dosclose.obj
-+doscreat.obj
 +dosctflp.obj
 +dosdfree.obj
 +dosetdir.obj
@@ -10,10 +8,6 @@
 +dosisdev.obj
 +dosmkdir.obj
 +dosnext.obj
-+dosopen.obj
-+dosread.obj
-+dosseek.obj
 +dostell.obj
 +dossetdr.obj
 +dosetdri.obj
-+doswrite.obj

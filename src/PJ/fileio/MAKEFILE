@@ -8,10 +8,10 @@ libs: trdfile.lib doslfile.lib dosfile.lib
 ## dos file io modules ****
 
 DOSO = \
- dosclose.obj doscreat.obj dosctflp.obj dosdfree.obj\
+ dosctflp.obj dosdfree.obj\
  dosetdir.obj dosetdta.obj dosfirst.obj dosgetdr.obj dosgtdir.obj\
- dosisdev.obj dosmkdir.obj dosnext.obj dosopen.obj dosread.obj\
- dosseek.obj dossetdr.obj dostell.obj doswrite.obj dosetdri.obj
+ dosisdev.obj dosmkdir.obj dosnext.obj\
+ dossetdr.obj dostell.obj dosetdri.obj
 
 ## "j" dos device and directory level calls that call dos only 
 
