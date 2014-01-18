@@ -48,8 +48,6 @@
    value struct float struct routine [eax]	modify [eax];
 #pragma aux pj_dwrite "*" parm caller [] \
    value struct float struct routine [eax]	modify [eax];
-#pragma aux pj_drename "*" parm caller [] \
-   value struct float struct routine [eax]	modify [eax];
 #pragma aux pj_dseek "*" parm caller [] \
    value struct float struct routine [eax]	modify [eax];
 #pragma aux pj_dset_dta "*" parm caller [] \
@@ -110,7 +108,6 @@ Jfile pj_dopen(char *name, int mode);	/* sets jioerr on failure */
 void pj_dclose(Jfile f);
 LONG pj_dread(Jfile f, void *buf, LONG size);	/* sets jioerr on failure */
 LONG pj_dwrite(Jfile f, void *buf, LONG size);	/* sets jioerr on failure */
-Errcode pj_drename(char *oldname, char *newname);
 LONG pj_dseek(int file, LONG offset, int mode); /* if negative is Errcode */
 void pj_dset_dta(Fndata *dta);
 Boolean pj_dfirst(char *pattern, int attributes);

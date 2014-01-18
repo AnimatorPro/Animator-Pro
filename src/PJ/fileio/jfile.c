@@ -113,11 +113,14 @@ static Errcode ddos_ddelete(char *name)
 }
 
 static Errcode ddos_rename(char *old, char *new)
-/*
- * Pass rename request to MS-DOS 
- */
 {
-	return(pj_mserror(pj_drename(old, new))); /* Lookup error code in process */
+	if (rename(old, new) != 0) {
+		/* TODO: improve error code. */
+		return Err_nogood;
+	}
+	else {
+		return Success;
+	}
 }
 
 static Tdev msd_dev =

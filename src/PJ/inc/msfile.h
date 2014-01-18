@@ -23,6 +23,5 @@ long pj_dread(int f, void *buf, long count);
 long pj_dwrite(int f, void *buf, long count);
 long pj_dseek(int f, long offset, int mode);
 long pj_dtell(int f);
-Doserr pj_drename(char *oldname, char *newname);
 
 #endif /* MSFILE_H */
