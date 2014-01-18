@@ -1,7 +1,6 @@
 +dosclose.obj
 +doscreat.obj
 +dosctflp.obj
-+dosdelet.obj
 +dosdfree.obj
 +dosetdir.obj
 +dosetdta.obj

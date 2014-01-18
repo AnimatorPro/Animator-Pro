@@ -29,6 +29,7 @@
  **
  **/
 
+#include <stdio.h>
 #include "memory.h"
 #include "msfile.h"
 #include "jfile.ih"
@@ -100,6 +101,16 @@ static long ddos_tell(Jfl *f)
 return(pj_dtell(f->handle.j));
 }
 
+static Errcode ddos_ddelete(char *name)
+{
+	if (unlink(name) != 0) {
+		/* TODO: improve error code. */
+		return Err_nogood;
+	}
+	else {
+		return Success;
+	}
+}
 
 static Errcode ddos_rename(char *old, char *new)
 /*
@@ -121,7 +132,7 @@ static Tdev msd_dev =
 	ddos_write,
 	ddos_seek,
 	ddos_tell,
-	pj_ddelete,
+	ddos_ddelete,
 	NULL,
 	get_doserror,
 	ddos_rename,

@@ -19,7 +19,6 @@ Doserr pj_dget_err(); /* - do MS-DOS extended error query. */
 Doserr pj_dcreate(int *phandle, char *path, int fmode);
 Doserr pj_dopen(int *phandle, char *path, int fmode);
 Errcode pj_dclose(int f);
-Errcode pj_ddelete(char *name);
 long pj_dread(int f, void *buf, long count);
 long pj_dwrite(int f, void *buf, long count);
 long pj_dseek(int f, long offset, int mode);

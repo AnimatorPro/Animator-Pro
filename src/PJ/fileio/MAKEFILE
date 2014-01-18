@@ -8,7 +8,7 @@ libs: trdfile.lib doslfile.lib dosfile.lib
 ## dos file io modules ****
 
 DOSO = \
- dosclose.obj doscreat.obj dosctflp.obj dosdelet.obj dosdfree.obj\
+ dosclose.obj doscreat.obj dosctflp.obj dosdfree.obj\
  dosetdir.obj dosetdta.obj dosfirst.obj dosgetdr.obj dosgtdir.obj\
  dosisdev.obj dosmkdir.obj dosnext.obj dosopen.obj dosread.obj dosrenam.obj\
  dosseek.obj dossetdr.obj dostell.obj doswrite.obj dosetdri.obj
