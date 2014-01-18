@@ -11,7 +11,7 @@ DOSO = \
  dosclose.obj doscreat.obj dosctflp.obj dosdelet.obj dosdfree.obj\
  dosetdir.obj dosetdta.obj dosfirst.obj dosgetdr.obj dosgtdir.obj\
  dosisdev.obj dosmkdir.obj dosnext.obj dosopen.obj dosread.obj dosrenam.obj\
- dosseek.obj dossetdr.obj dostell.obj doswrite.obj dosetdri.obj dostrunc.obj
+ dosseek.obj dossetdr.obj dostell.obj doswrite.obj dosetdri.obj
 
 ## "j" dos device and directory level calls that call dos only 
 
