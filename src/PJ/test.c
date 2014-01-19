@@ -1,3 +1,8 @@
+#ifndef TESTING
+extern void test(void);
+void test(void) {}
+#else /* TESTING */
+
 #include "input.h"
 #include "picdrive.h"
 #include "lstdio.h"
@@ -9,11 +14,6 @@
 #include "serial.h"
 #include "flicel.h"
 #include <math.h>
-
-
-#ifndef TESTING
-void test() {}
-#else /* TESTING */
 
 test()
 {
