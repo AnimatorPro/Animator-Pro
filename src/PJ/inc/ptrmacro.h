@@ -38,11 +38,15 @@
  *		UBYTE pname[1];
  *		UBYTE __pname[3];
  *	};
+ *
+ * TODO: this doesn't work.
  */
-
-
+#if defined(__WATCOMC__)
 #define PADTO(sz,struc,padfld) \
 	UBYTE padfld[1];UBYTE __##padfld[(sz)-OFFSET(struct struc,padfld)-1]
+#else /* __WATCOMC__ */
+#define PADTO(sz,struc,padfld)
+#endif /* __WATCOMC__ */
 
 /* returns pointer to structure given struct name, field name, and
  * pointer to field */
