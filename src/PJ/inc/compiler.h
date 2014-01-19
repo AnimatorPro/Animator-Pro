@@ -133,6 +133,14 @@ extern char *_STACKLOW; 					/* not sure what these are for, */
 #define NOFUNC					((void*)0)
 #define copy_va_list(src,dest)	{dest=src;}
 
+
+/* GCC, Clang. */
+#elif defined(__GNUC__) || defined(__clang__)
+
+#define NOFUNC                  ((void*)0)
+#define copy_va_list(src,dest)  va_copy(dest,src)
+
+
 /*****************************************************************************
  * Unknown compiler, whine and die.
  ****************************************************************************/
