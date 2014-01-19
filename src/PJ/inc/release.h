@@ -1,6 +1,6 @@
 #ifndef RELEASE_H
 #define RELEASE_H
 
-#define TESTING
+/* #define TESTING */
 
 #endif /* RELEASE_H */
