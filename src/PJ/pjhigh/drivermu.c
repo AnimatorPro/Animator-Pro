@@ -22,7 +22,7 @@ static Button drv_pick_sel = MB_INIT1(
 	NOOPT,
 	NOGROUP,0,
 	NOKEY,
-	0,	/* flags */
+	0 /* flags */
 	);
 static Button drv_ok_sel = MB_INIT1(
 	&drv_pick_sel, /* next */
@@ -34,7 +34,7 @@ static Button drv_ok_sel = MB_INIT1(
 	NOOPT,
 	NOGROUP,0,
 	NOKEY,
-	0,	/* flags */
+	0 /* flags */
 	);
 static Button drv_cancel_sel = MB_INIT1(
 	&drv_ok_sel, /* next */
@@ -46,7 +46,7 @@ static Button drv_cancel_sel = MB_INIT1(
 	NOOPT,
 	NOGROUP,0,
 	NOKEY,
-	0,	/* flags */
+	0 /* flags */
 	);
 static Button drv_info_sel = MB_INIT1(
 	&drv_cancel_sel, /* next */
@@ -58,7 +58,7 @@ static Button drv_info_sel = MB_INIT1(
 	NOOPT,
 	NOGROUP,0,
 	NOKEY,
-	0,	/* flags */
+	0 /* flags */
 	);
 static Button drv_swin_sel = MB_INIT1(
 	&drv_info_sel, /* next */
@@ -70,7 +70,7 @@ static Button drv_swin_sel = MB_INIT1(
 	NOOPT,
 	&sscroller,0,
 	NOKEY,
-	0,	/* flags */
+	0 /* flags */
 	);
 static Button drv_incdn_sel = MB_INIT1(
 	&drv_swin_sel, /* next */
@@ -82,7 +82,7 @@ static Button drv_incdn_sel = MB_INIT1(
 	NOOPT,
 	&sscroller,0,
 	DARROW,
-	0,	/* flags */
+	0 /* flags */
 	);
 static Button drv_sbar_sel = MB_INIT1(
 	&drv_incdn_sel, /* next */
@@ -94,7 +94,7 @@ static Button drv_sbar_sel = MB_INIT1(
 	NOOPT,
 	&sscroller,0,
 	NOKEY,
-	0,	/* flags */
+	0 /* flags */
 	);
 static Button drv_incup_sel = MB_INIT1(
 	&drv_sbar_sel, /* next */
@@ -106,7 +106,7 @@ static Button drv_incup_sel = MB_INIT1(
 	NOOPT,
 	&sscroller,0,
 	UARROW,
-	0,	/* flags */
+	0 /* flags */
 	);
 static Button drv_title_sel = MB_INIT1(
 	&drv_incup_sel, /* next */
@@ -118,7 +118,7 @@ static Button drv_title_sel = MB_INIT1(
 	mb_menu_to_bottom,
 	&tbg_moveclose,0,
 	NOKEY,
-	0,	/* flags */
+	0 /* flags */
 	);
 
 static Menuhdr driver_menu = {

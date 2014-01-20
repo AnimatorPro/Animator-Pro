@@ -84,7 +84,7 @@ static Menuhdr cgr_menu = MENU_INIT0(
 	0,				/* flags */
 	NULL,			/* procmouse */
 	NULL, 			/* on_showhide */
-	NULL,			/* cleanup */
+	NULL			/* cleanup */
 );
 
 static int ab_get_color(Wndo *w)

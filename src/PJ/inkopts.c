@@ -39,7 +39,7 @@ static Ink xor_ink_opt = INKINIT(
 	FALSE,
 	NO_MC,
 	NO_FC,
-	INK_NEEDS_COLOR,
+	INK_NEEDS_COLOR
 );
 static Ink vsp_ink_opt = INKINIT(
 	&xor_ink_opt,
@@ -54,7 +54,7 @@ static Ink vsp_ink_opt = INKINIT(
 	TRUE,
 	clear_random_cashe,
 	NO_FC,
-	0,
+	0
 );
 static Ink anti_ink_opt = INKINIT(
 	&vsp_ink_opt,
@@ -69,7 +69,7 @@ static Ink anti_ink_opt = INKINIT(
 	FALSE,
 	make_ink_bhash,
 	free_ink_bhash,
-	INK_NEEDS_UNDO,
+	INK_NEEDS_UNDO
 );
 
 extern Errcode init_celt_ink();
@@ -88,7 +88,7 @@ static Ink celt_ink_opt = INKINIT(
 	FALSE,
 	init_celt_ink,
 	cleanup_celt_ink,
-	INK_NEEDS_CEL,
+	INK_NEEDS_CEL
 );
 static Ink swe_ink_opt = INKINIT(
 	&celt_ink_opt,
@@ -103,7 +103,7 @@ static Ink swe_ink_opt = INKINIT(
 	FALSE,
 	NO_MC,
 	NO_FC,
-	INK_NEEDS_UNDO,
+	INK_NEEDS_UNDO
 );
 static Ink shat_ink_opt = INKINIT(
 	&swe_ink_opt,
@@ -118,7 +118,7 @@ static Ink shat_ink_opt = INKINIT(
 	FALSE,
 	NO_MC,
 	NO_FC,
-	INK_NEEDS_UNDO,
+	INK_NEEDS_UNDO
 );
 extern void cry_hline(const Ink *inky, SHORT x0, const SHORT y, SHORT width);
 static Ink cry_ink_opt = INKINIT(
@@ -134,7 +134,7 @@ static Ink cry_ink_opt = INKINIT(
 	FALSE,
 	NO_MC,
 	NO_FC,
-	INK_NEEDS_UNDO,
+	INK_NEEDS_UNDO
 );
 extern void soft_hline(const Ink *inky, SHORT x0, const SHORT y, SHORT width);
 static Ink soft_ink_opt = INKINIT(
@@ -150,7 +150,7 @@ static Ink soft_ink_opt = INKINIT(
 	FALSE,
 	make_ink_bhash,
 	free_ink_bhash,
-	INK_NEEDS_UNDO,
+	INK_NEEDS_UNDO
 );
 static Ink smea_ink_opt = INKINIT(
 	&soft_ink_opt,
@@ -165,7 +165,7 @@ static Ink smea_ink_opt = INKINIT(
 	FALSE,
 	NO_MC,
 	NO_FC,
-	INK_NEEDS_UNDO,
+	INK_NEEDS_UNDO
 );
 static Ink rvl_ink_opt = INKINIT(
 	&smea_ink_opt,
@@ -180,7 +180,7 @@ static Ink rvl_ink_opt = INKINIT(
 	FALSE,
 	make_ink_thash,
 	free_ink_thash,
-	INK_NEEDS_ALT,
+	INK_NEEDS_ALT
 );
 static Ink rad_ink_opt = INKINIT(
 	&rvl_ink_opt,
@@ -195,7 +195,7 @@ static Ink rad_ink_opt = INKINIT(
 	TRUE,
 	clear_random_cashe,
 	NO_FC,
-	0,
+	0
 );
 static Ink pull_ink_opt = INKINIT(
 	&rad_ink_opt,
@@ -210,7 +210,7 @@ static Ink pull_ink_opt = INKINIT(
 	FALSE,
 	NO_MC,
 	NO_FC,
-	0,
+	0
 );
 static Ink opq_ink_opt = INKINIT(
 	&pull_ink_opt,
@@ -225,7 +225,7 @@ static Ink opq_ink_opt = INKINIT(
 	FALSE,
 	NO_MC,
 	NO_FC,
-	INK_NEEDS_COLOR,
+	INK_NEEDS_COLOR
 );
 static Ink lsp_ink_opt = INKINIT(
 	&opq_ink_opt,
@@ -240,7 +240,7 @@ static Ink lsp_ink_opt = INKINIT(
 	TRUE,
 	clear_random_cashe,
 	NO_FC,
-	0,
+	0
 );
 static Ink jmb_ink_opt = INKINIT(
 	&lsp_ink_opt,
@@ -255,7 +255,7 @@ static Ink jmb_ink_opt = INKINIT(
 	FALSE,
 	NO_MC,
 	NO_FC,
-	INK_NEEDS_UNDO,
+	INK_NEEDS_UNDO
 );
 static Ink out_ink_opt = INKINIT(
 	&jmb_ink_opt,
@@ -270,7 +270,7 @@ static Ink out_ink_opt = INKINIT(
 	FALSE,
 	NO_MC,
 	NO_FC,
-	INK_NEEDS_UNDO,
+	INK_NEEDS_UNDO
 );
 static Ink hsp_ink_opt = INKINIT(
 	&out_ink_opt,
@@ -285,7 +285,7 @@ static Ink hsp_ink_opt = INKINIT(
 	TRUE,
 	clear_random_cashe,
 	NO_FC,
-	0,
+	0
 );
 static Ink des_ink_opt = INKINIT(
 	&hsp_ink_opt,
@@ -300,7 +300,7 @@ static Ink des_ink_opt = INKINIT(
 	FALSE,
 	make_ink_bhash,
 	free_ink_bhash,
-	INK_NEEDS_UNDO,
+	INK_NEEDS_UNDO
 );
 static Ink glr_ink_opt = INKINIT(
 	&des_ink_opt,
@@ -315,7 +315,7 @@ static Ink glr_ink_opt = INKINIT(
 	FALSE,
 	make_glow_cashe,
 	free_glow_cashe,
-	INK_NEEDS_UNDO,
+	INK_NEEDS_UNDO
 );
 static Ink tlc_ink_opt = INKINIT(
 	&glr_ink_opt,
@@ -330,7 +330,7 @@ static Ink tlc_ink_opt = INKINIT(
 	FALSE,
 	make_tsp_cashe,
 	free_ink_thash,
-	INK_NEEDS_COLOR,
+	INK_NEEDS_COLOR
 );
 static Ink tsp_ink_opt = INKINIT(
 	&tlc_ink_opt,
@@ -345,7 +345,7 @@ static Ink tsp_ink_opt = INKINIT(
 	FALSE,
 	make_tsp_cashe,
 	free_ink_thash,
-	INK_NEEDS_UNDO|INK_NEEDS_COLOR,
+	INK_NEEDS_UNDO|INK_NEEDS_COLOR
 );
 static Ink emb_ink_opt = INKINIT(
 	&tsp_ink_opt,
@@ -360,7 +360,7 @@ static Ink emb_ink_opt = INKINIT(
 	FALSE,
 	make_ink_bhash,
 	free_ink_bhash,
-	INK_NEEDS_UNDO,
+	INK_NEEDS_UNDO
 );
 static Ink dar_ink_opt = INKINIT(
 	&emb_ink_opt,
@@ -375,7 +375,7 @@ static Ink dar_ink_opt = INKINIT(
 	FALSE,
 	make_dar_cashe,
 	free_ink_thash,
-	INK_NEEDS_UNDO,
+	INK_NEEDS_UNDO
 );
 static Ink clh_ink_opt = INKINIT(
 	&dar_ink_opt,
@@ -390,7 +390,7 @@ static Ink clh_ink_opt = INKINIT(
 	FALSE,
 	NO_MC,
 	NO_FC,
-	INK_NEEDS_UNDO,
+	INK_NEEDS_UNDO
 );
 static Ink bri_ink_opt = INKINIT(
 	&clh_ink_opt,
@@ -405,7 +405,7 @@ static Ink bri_ink_opt = INKINIT(
 	FALSE,
 	make_ink_bhash,
 	free_ink_bhash,
-	INK_NEEDS_UNDO,
+	INK_NEEDS_UNDO
 );
 Ink add_ink_opt = INKINIT(
 	&bri_ink_opt,
@@ -420,7 +420,7 @@ Ink add_ink_opt = INKINIT(
 	FALSE,
 	NO_MC,
 	NO_FC,
-	INK_NEEDS_UNDO|INK_NEEDS_COLOR,
+	INK_NEEDS_UNDO|INK_NEEDS_COLOR
 );
 
 #define first_option ((Option_tool*)&add_ink_opt)
@@ -651,7 +651,7 @@ static Button dtint_sel = MB_INIT1(
 	NOOPT,
 	NOGROUP,1,
 	NOKEY,
-	MB_GHILITE,	
+	MB_GHILITE
 	);
 Button dtintgroup_sel = MB_INIT1(
 	NONEXT,
@@ -676,7 +676,7 @@ static Button dither_sel = MB_INIT1(
 	NOOPT,
 	NOGROUP,1,
 	NOKEY,
-	MB_GHILITE,
+	MB_GHILITE
 	);
 Button dithergroup_sel = MB_INIT1(
 	NONEXT,
@@ -701,7 +701,7 @@ static Button rdither_sel = MB_INIT1(
 	NOOPT,
 	NOGROUP,1,
 	NOKEY,
-	MB_GHILITE,	
+	MB_GHILITE
 	);
 static Button setrad_sel = MB_INIT1(
 	&rdither_sel,

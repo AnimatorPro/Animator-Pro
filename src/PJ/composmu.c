@@ -75,7 +75,7 @@ static Button seg_rarr_sel = MB_INIT1(
 	NOOPT,
 	NOGROUP,1,
 	NOKEY,
-	0,	/* flags */
+	0 /* flags */
 	);
 static Button seg_abslid_sel = MB_INIT1(
 	&seg_rarr_sel, /* next */
@@ -87,7 +87,7 @@ static Button seg_abslid_sel = MB_INIT1(
 	NOOPT,
 	NOGROUP,0,
 	NOKEY,
-	0,	/* flags */
+	0 /* flags */
 	);
 static Button seg_larr_sel = MB_INIT1(
 	&seg_abslid_sel, /* next */
@@ -99,7 +99,7 @@ static Button seg_larr_sel = MB_INIT1(
 	NOOPT,
 	NOGROUP,-1,
 	NOKEY,
-	0,	/* flags */
+	0 /* flags */
 	);
 
 /* The canned wipe buttons. */
@@ -113,7 +113,7 @@ static Button seg_w14_sel = MB_INIT1(
 	NOOPT,
 	&vs.co_type,COMP_DIAMOND,
 	NOKEY,
-	MB_B_GHILITE,	/* flags */
+	MB_B_GHILITE /* flags */
 	);
 static Button seg_w13_sel = MB_INIT1(
 	&seg_w14_sel, /* next */
@@ -125,7 +125,7 @@ static Button seg_w13_sel = MB_INIT1(
 	NOOPT,
 	&vs.co_type,COMP_DIAGBOT,
 	NOKEY,
-	MB_B_GHILITE,	/* flags */
+	MB_B_GHILITE /* flags */
 	);
 static Button seg_w12_sel = MB_INIT1(
 	&seg_w13_sel, /* next */
@@ -137,7 +137,7 @@ static Button seg_w12_sel = MB_INIT1(
 	NOOPT,
 	&vs.co_type,COMP_DIAGTOP,
 	NOKEY,
-	MB_B_GHILITE,	/* flags */
+	MB_B_GHILITE /* flags */
 	);
 static Button seg_w11_sel = MB_INIT1(
 	&seg_w12_sel, /* next */
@@ -149,7 +149,7 @@ static Button seg_w11_sel = MB_INIT1(
 	opt_blindmask_size,
 	&vs.co_type,COMP_LOUVER,
 	NOKEY,
-	MB_B_GHILITE,	/* flags */
+	MB_B_GHILITE /* flags */
 	);
 static Button seg_w10_sel = MB_INIT1(
 	&seg_w11_sel, /* next */
@@ -161,7 +161,7 @@ static Button seg_w10_sel = MB_INIT1(
 	opt_blindmask_size,
 	&vs.co_type,COMP_VENETIAN,
 	NOKEY,
-	MB_B_GHILITE,	/* flags */
+	MB_B_GHILITE /* flags */
 	);
 static Button seg_w09_sel = MB_INIT1(
 	&seg_w10_sel, /* next */
@@ -173,7 +173,7 @@ static Button seg_w09_sel = MB_INIT1(
 	NOOPT,
 	&vs.co_type,COMP_BOXLBOT,
 	NOKEY,
-	MB_B_GHILITE,	/* flags */
+	MB_B_GHILITE /* flags */
 	);
 static Button seg_w08_sel = MB_INIT1(
 	&seg_w09_sel, /* next */
@@ -185,7 +185,7 @@ static Button seg_w08_sel = MB_INIT1(
 	NOOPT,
 	&vs.co_type,COMP_BOXRBOT,
 	NOKEY,
-	MB_B_GHILITE,	/* flags */
+	MB_B_GHILITE /* flags */
 	);
 static Button seg_w07_sel = MB_INIT1(
 	&seg_w08_sel, /* next */
@@ -197,7 +197,7 @@ static Button seg_w07_sel = MB_INIT1(
 	NOOPT,
 	&vs.co_type,COMP_HORIZW,
 	NOKEY,
-	MB_B_GHILITE,	/* flags */
+	MB_B_GHILITE /* flags */
 	);
 static Button seg_w06_sel = MB_INIT1(
 	&seg_w07_sel, /* next */
@@ -209,7 +209,7 @@ static Button seg_w06_sel = MB_INIT1(
 	NOOPT,
 	&vs.co_type,COMP_VWEDGE,
 	NOKEY,
-	MB_B_GHILITE,	/* flags */
+	MB_B_GHILITE /* flags */
 	);
 static Button seg_w05_sel = MB_INIT1(
 	&seg_w06_sel, /* next */
@@ -221,7 +221,7 @@ static Button seg_w05_sel = MB_INIT1(
 	NOOPT,
 	&vs.co_type,COMP_BOX,
 	NOKEY,
-	MB_B_GHILITE,	/* flags */
+	MB_B_GHILITE /* flags */
 	);
 static Button seg_w04_sel = MB_INIT1(
 	&seg_w05_sel, /* next */
@@ -233,7 +233,7 @@ static Button seg_w04_sel = MB_INIT1(
 	NOOPT,
 	&vs.co_type,COMP_BOXRTOP,
 	NOKEY,
-	MB_B_GHILITE,	/* flags */
+	MB_B_GHILITE /* flags */
 	);
 static Button seg_w03_sel = MB_INIT1(
 	&seg_w04_sel, /* next */
@@ -245,7 +245,7 @@ static Button seg_w03_sel = MB_INIT1(
 	NOOPT,
 	&vs.co_type,COMP_BOXLTOP,
 	NOKEY,
-	MB_B_GHILITE,	/* flags */
+	MB_B_GHILITE /* flags */
 	);
 static Button seg_w02_sel = MB_INIT1(
 	&seg_w03_sel, /* next */
@@ -257,7 +257,7 @@ static Button seg_w02_sel = MB_INIT1(
 	NOOPT,
 	&vs.co_type,COMP_VERTW,
 	NOKEY,
-	MB_B_GHILITE,	/* flags */
+	MB_B_GHILITE /* flags */
 	);
 static Button seg_w01_sel = MB_INIT1(
 	&seg_w02_sel, /* next */
@@ -269,7 +269,7 @@ static Button seg_w01_sel = MB_INIT1(
 	NOOPT,
 	&vs.co_type,COMP_HWEDGE,
 	NOKEY,
-	MB_B_GHILITE,	/* flags */
+	MB_B_GHILITE /* flags */
 	);
 static Button seg_w00_sel = MB_INIT1(
 	&seg_w01_sel, /* next */
@@ -281,7 +281,7 @@ static Button seg_w00_sel = MB_INIT1(
 	NOOPT,
 	&vs.co_type,COMP_CIRCLE,
 	NOKEY,
-	MB_B_GHILITE,	/* flags */
+	MB_B_GHILITE /* flags */
 	);
 static Button seg_boxil_sel = MB_INIT1(
 	&seg_w00_sel, /* next */
@@ -293,7 +293,7 @@ static Button seg_boxil_sel = MB_INIT1(
 	set_boxil_size,
 	&vs.co_type,COMP_BOXIL,
 	NOKEY,
-	MB_B_GHILITE,	/* flags */
+	MB_B_GHILITE /* flags */
 	);
 static Button seg_disol_sel = MB_INIT1(
 	&seg_boxil_sel, /* next */
@@ -305,7 +305,7 @@ static Button seg_disol_sel = MB_INIT1(
 	NOOPT,
 	&vs.co_type,COMP_DISSOLVE,
 	NOKEY,
-	MB_B_GHILITE,	/* flags */
+	MB_B_GHILITE /* flags */
 	);
 
 void optload_mask_cel(Button *b);
@@ -319,7 +319,7 @@ static Button seg_mask_sel = MB_INIT1(
 	optload_mask_cel,
 	&vs.co_type,COMP_MASK,
 	NOKEY,
-	MB_B_GHILITE,	/* flags */
+	MB_B_GHILITE /* flags */
 	);
 static Button seg_cut_sel = MB_INIT1(
 	&seg_mask_sel, /* next */
@@ -331,7 +331,7 @@ static Button seg_cut_sel = MB_INIT1(
 	NOOPT,
 	&vs.co_type,COMP_CUT,
 	NOKEY,
-	MB_B_GHILITE,	/* flags */
+	MB_B_GHILITE /* flags */
 	);
 
 /*** Stuff to handle the column that asks what to do about the colors
@@ -371,7 +371,7 @@ static void see_color_label(Button *b)
 		NOOPT,
 		NOGROUP,0,
 		NOKEY,
-		0,	/* flags */
+		0 /* flags */
 		);
 	static Button seg_colab_sel = MB_INIT1(
 		&seg_clabel_sel, /* next */
@@ -383,7 +383,7 @@ static void see_color_label(Button *b)
 		NOOPT,
 		&vs.co_cfit,FIT_BLEND,
 		NOKEY,
-		MB_B_GHILITE,	/* flags */
+		MB_B_GHILITE /* flags */
 		);
 	static Button seg_colb_sel = MB_INIT1(
 		&seg_colab_sel, /* next */
@@ -395,7 +395,7 @@ static void see_color_label(Button *b)
 		NOOPT,
 		&vs.co_cfit,FIT_TOB,
 		NOKEY,
-		MB_B_GHILITE,	/* flags */
+		MB_B_GHILITE /* flags */
 		);
 static Button seg_cola_sel = MB_INIT1(
 	&seg_cut_sel, /* next */
@@ -407,7 +407,7 @@ static Button seg_cola_sel = MB_INIT1(
 	NOOPT,
 	&vs.co_cfit,FIT_TOA,
 	NOKEY,
-	MB_B_GHILITE,	/* flags */
+	MB_B_GHILITE /* flags */
 	);
 
 static Button seg_rev_sel = MB_INIT1(
@@ -420,7 +420,7 @@ static Button seg_rev_sel = MB_INIT1(
 	NOOPT,
 	&vs.co_reverse,1,
 	NOKEY,
-	MB_B_GHILITE,	/* flags */
+	MB_B_GHILITE /* flags */
 	);
 static Button seg_size_sel = MB_INIT1(
 	&seg_rev_sel, /* next */
@@ -432,7 +432,7 @@ static Button seg_size_sel = MB_INIT1(
 	NOOPT,
 	&vs.co_matchsize,1,
 	NOKEY,
-	MB_B_GHILITE,	/* flags */
+	MB_B_GHILITE /* flags */
 	);
 static Button seg_swap_sel = MB_INIT1(
 	&seg_size_sel, /* next */
@@ -456,7 +456,7 @@ static Button seg_still_sel = MB_INIT1(
 	NOOPT,
 	&vs.co_still,1,
 	NOKEY,
-	MB_B_GHILITE,	/* flags */
+	MB_B_GHILITE /* flags */
 	);
 static Button seg_modeinfo_sel = MB_INIT1(
 	&seg_still_sel, /* next */
@@ -468,7 +468,7 @@ static Button seg_modeinfo_sel = MB_INIT1(
 	qload_mask_cel,
 	NOGROUP,0,
 	NOKEY,
-	MB_DISABOPT,	/* flags */
+	MB_DISABOPT /* flags */
 	);
 static Button seg_nameb_sel = MB_INIT1(
 	&seg_modeinfo_sel, /* next */
@@ -480,7 +480,7 @@ static Button seg_nameb_sel = MB_INIT1(
 	qload_fli_b,
 	NOGROUP,0,
 	NOKEY,
-	0,	/* flags */
+	0 /* flags */
 	);
 static Button seg_namea_sel = MB_INIT1(
 	&seg_nameb_sel, /* next */
@@ -492,7 +492,7 @@ static Button seg_namea_sel = MB_INIT1(
 	NOOPT,
 	NOGROUP,0,
 	NOKEY,
-	0,	/* flags */
+	0 /* flags */
 	);
 
 static SHORT olapf;
@@ -542,7 +542,7 @@ static Button seg_frames_sel = MB_INIT1(
 	opt_olap_frames,
 	NOGROUP,0,
 	NOKEY,
-	0,	/* flags */
+	0 /* flags */
 	);
 static Button seg_frlab_sel = MB_INIT1(
 	&seg_frames_sel, /* next */
@@ -554,7 +554,7 @@ static Button seg_frlab_sel = MB_INIT1(
 	NOOPT,
 	NOGROUP,0,
 	NOKEY,
-	0,	/* flags */
+	0 /* flags */
 	);
 
 static Button seg_preview_sel = MB_INIT1(
@@ -567,7 +567,7 @@ static Button seg_preview_sel = MB_INIT1(
 	NOOPT,
 	NOGROUP,1, /* one for preview */
 	NOKEY,
-	0,	/* flags */
+	0 /* flags */
 	);
 static Button seg_render_sel = MB_INIT1(
 	&seg_preview_sel, /* next */
@@ -579,7 +579,7 @@ static Button seg_render_sel = MB_INIT1(
 	NOOPT,
 	NOGROUP,0,
 	NOKEY,
-	0,	/* flags */
+	0 /* flags */
 	);
 static Button seg_title_sel = MB_INIT1(
 	&seg_render_sel, /* next */
@@ -591,7 +591,7 @@ static Button seg_title_sel = MB_INIT1(
 	mb_menu_to_bottom,
 	&tbg_moveclose,0,
 	'q',
-	0,	/* flags */
+	0 /* flags */
 	);
 
 static Menuhdr seg_menu = MENU_INIT0(
@@ -608,7 +608,7 @@ static Menuhdr seg_menu = MENU_INIT0(
 	0,				/* flags */
 	NULL,			/* procmouse */
 	NULL,			/* on_showhide */
-	NULL,			/* cleanup */
+	NULL			/* cleanup */
 );
 
 

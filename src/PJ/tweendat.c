@@ -24,7 +24,7 @@ static Button twe_grid_sel = MB_INIT1(
 	qgrid_keep_undo,
 	&vs.use_grid,1,
 	NOKEY,
-	MB_B_GHILITE,	/* flags */
+	MB_B_GHILITE /* flags */
 	);
 extern void see_mask_button(Button *b);
 extern void qmask_keep_undo();
@@ -38,7 +38,7 @@ static Button twe_mask_sel = MB_INIT1(
 	qmask_keep_undo, 
 	&vs.use_mask,1,
 	NOKEY,
-	MB_B_GHILITE,	
+	MB_B_GHILITE
 	);
 static Button twe_zpan_sel = MB_INIT1(
 	&twe_mask_sel,
@@ -50,7 +50,7 @@ static Button twe_zpan_sel = MB_INIT1(
 	NOOPT,
 	NULL,0,
 	NOKEY,
-	0,
+	0
 	);
 static Button twe_minipal_sel = MB_INIT1(
 	&twe_zpan_sel,
@@ -74,7 +74,7 @@ Button twe_goinks_sel = MB_INIT1(
 	qinks,
 	&vs.ink_id,opq_INKID,
 	NOKEY,
-	MB_GHILITE,
+	MB_GHILITE
 	);
 static Sgroup1_data twe_sh1dat = {
 	&flxtime_data,
@@ -89,7 +89,7 @@ static Button twe_std1_sel = MB_INIT1(
 	NOOPT,
 	&twe_sh1dat,0,
 	NOKEY,
-	0,	/* flags */
+	0 /* flags */
 	);
 extern void twe_go_tool(Button *b);
 static Button twe_tool_sel = MB_INIT1(
@@ -102,7 +102,7 @@ static Button twe_tool_sel = MB_INIT1(
 	twe_go_tool,
 	NOGROUP,0,
 	NOKEY,
-	0,	/* flags */
+	0 /* flags */
 	);
 static Button twe_title_sel = MB_INIT1(
 	&twe_tool_sel,
@@ -114,7 +114,7 @@ static Button twe_title_sel = MB_INIT1(
 	mb_menu_to_bottom,
 	&tbg_moveclose,0,
 	'q',
-	0,	/* flags */
+	0 /* flags */
 	);
 
 static void twemenu_credraw(void *dat, USHORT why)
@@ -151,7 +151,7 @@ Menuhdr twe_menu = MENU_INIT0(
 	0,				/* flags */
 	NULL,			/* procmouse */
 	twemenu_on_showhide, /* on_showhide */
-	NULL,			/* cleanup */
+	NULL			/* cleanup */
 );
 
 extern Pentool tween_pen_tool;

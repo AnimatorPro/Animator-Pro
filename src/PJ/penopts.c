@@ -48,7 +48,7 @@ extern void zoom_unundo();
 		test_ptfunc,	
 		&plain_ptool_cursor,
 		NOINSTALL,
-		zoom_unundo,
+		zoom_unundo
 	); 
 	#define LAST_TOOL &test_ptool_opt
 #else
@@ -64,7 +64,7 @@ static Pentool text_ptool_opt = PTOOLINIT0(
 	&text_group_sel,
 	&text_cursor,
 	text_tool,	
-	close_static_ptool,
+	close_static_ptool
 ); 
 #undef LAST_TOOL
 static Pentool streak_ptool_opt = PTOOLINIT0(	
@@ -76,7 +76,7 @@ static Pentool streak_ptool_opt = PTOOLINIT0(
 	&pen_brush_group,
 	&pen_cursor,	
 	streak_tool,	
-	close_static_ptool,
+	close_static_ptool
 ); 
 static Pentool starf_ptool_opt = PTOOLINIT0(	
 	&streak_ptool_opt,	
@@ -87,7 +87,7 @@ static Pentool starf_ptool_opt = PTOOLINIT0(
 	&om_sratio_group_sel,
 	&star_cursor,	
 	starf_tool,
-	close_static_ptool,
+	close_static_ptool
 ); 
 static Pentool spray_ptool_opt = PTOOLINIT0(	
 	&starf_ptool_opt,	
@@ -98,7 +98,7 @@ static Pentool spray_ptool_opt = PTOOLINIT0(
 	&om_osped_group_sel,
 	&spray_cursor,	
 	spray_tool,
-	close_static_ptool,
+	close_static_ptool
 ); 
 static Pentool curve_ptool_opt = PTOOLINIT0(	
 	&spray_ptool_opt,	
@@ -109,7 +109,7 @@ static Pentool curve_ptool_opt = PTOOLINIT0(
 	&curve_group_sel,
 	&shape_cursor,	
 	curve_tool,
-	close_static_ptool,
+	close_static_ptool
 ); 
 static Pentool spiral_ptool_opt = PTOOLINIT0(	
 	&curve_ptool_opt,	
@@ -120,7 +120,7 @@ static Pentool spiral_ptool_opt = PTOOLINIT0(
 	NO_SUBOPTS,
 	&pen_cursor,	
 	spiral_tool,
-	close_static_ptool,
+	close_static_ptool
 ); 
 static Pentool shapef_ptool_opt = PTOOLINIT0(	
 	&spiral_ptool_opt,	
@@ -131,7 +131,7 @@ static Pentool shapef_ptool_opt = PTOOLINIT0(
 	&fill2c_group_sel,
 	&shape_cursor,	
 	shapef_tool,
-	close_static_ptool,
+	close_static_ptool
 ); 
 Pentool sep_ptool_opt = PTOOLINIT0(	
 	&shapef_ptool_opt,	
@@ -142,7 +142,7 @@ Pentool sep_ptool_opt = PTOOLINIT0(
 	&sep_group_sel,
 	&sep_cursor,	
 	sep_tool,
-	close_static_ptool,
+	close_static_ptool
 ); 
 static Pentool rpolyf_ptool_opt = PTOOLINIT0(	
 	&sep_ptool_opt,	
@@ -153,7 +153,7 @@ static Pentool rpolyf_ptool_opt = PTOOLINIT0(
 	&om_points_group_sel,
 	&shape_cursor,	
 	rpolyf_tool,
-	close_static_ptool,
+	close_static_ptool
 ); 
 static Pentool polyf_ptool_opt = PTOOLINIT0(	
 	&rpolyf_ptool_opt,	
@@ -164,7 +164,7 @@ static Pentool polyf_ptool_opt = PTOOLINIT0(
 	&freepoly_group_sel,
 	&shape_cursor,	
 	polyf_tool,
-	close_static_ptool,
+	close_static_ptool
 ); 
 static Pentool petlf_ptool_opt = PTOOLINIT0(	
 	&polyf_ptool_opt,	
@@ -175,7 +175,7 @@ static Pentool petlf_ptool_opt = PTOOLINIT0(
 	&om_sratio_group_sel,
 	&shape_cursor,	
 	petlf_tool,
-	close_static_ptool,
+	close_static_ptool
 ); 
 static Pentool ovalf_ptool_opt = PTOOLINIT0(	
 	&petlf_ptool_opt,	
@@ -186,7 +186,7 @@ static Pentool ovalf_ptool_opt = PTOOLINIT0(
 	&fill2c_group_sel,
 	&shape_cursor,
 	ovalf_tool,
-	close_static_ptool,
+	close_static_ptool
 ); 
 static Pentool move_ptool_opt = PTOOLINIT0(	
 	&ovalf_ptool_opt,	
@@ -197,7 +197,7 @@ static Pentool move_ptool_opt = PTOOLINIT0(
 	&move_group_sel,
 	&move_tool_cursor,	
 	move_tool,
-	close_static_ptool,
+	close_static_ptool
 ); 
 static Pentool line_ptool_opt = PTOOLINIT0(	
 	&move_ptool_opt,	
@@ -208,7 +208,7 @@ static Pentool line_ptool_opt = PTOOLINIT0(
 	&pen_brush_group,
 	&pen_cursor,	
 	line_tool,
-	close_static_ptool,
+	close_static_ptool
 ); 
 static Pentool gel_ptool_opt = PTOOLINIT0(	
 	&line_ptool_opt,	
@@ -219,7 +219,7 @@ static Pentool gel_ptool_opt = PTOOLINIT0(
 	&gel_brush_group,
 	&pen_cursor,	
 	gel_tool,
-	close_static_ptool,
+	close_static_ptool
 ); 
 static Pentool flood_ptool_opt = PTOOLINIT0(	
 	&gel_ptool_opt,	
@@ -230,7 +230,7 @@ static Pentool flood_ptool_opt = PTOOLINIT0(
 	NO_SUBOPTS,
 	&pick_cursor,	
 	flood_tool,
-	close_static_ptool,
+	close_static_ptool
 ); 
 static Pentool fill_ptool_opt = PTOOLINIT0(	
 	&flood_ptool_opt,	
@@ -241,7 +241,7 @@ static Pentool fill_ptool_opt = PTOOLINIT0(
 	NO_SUBOPTS,
 	&fill_cursor,	
 	fill_tool,
-	close_static_ptool,
+	close_static_ptool
 ); 
 static Pentool edge_ptool_opt = PTOOLINIT0(	
 	&fill_ptool_opt,	
@@ -252,7 +252,7 @@ static Pentool edge_ptool_opt = PTOOLINIT0(
 	&pen_brush_group,
 	&edge_cursor,	
 	edge_tool,
-	close_static_ptool,
+	close_static_ptool
 ); 
 static Pentool driz_ptool_opt = PTOOLINIT0(	
 	&edge_ptool_opt,	
@@ -263,7 +263,7 @@ static Pentool driz_ptool_opt = PTOOLINIT0(
 	&pen_brush_group,
 	&pen_cursor,
 	drizl_tool,
-	close_static_ptool,
+	close_static_ptool
 ); 
 static Pentool draw_ptool_opt = PTOOLINIT0(	
 	&driz_ptool_opt,	
@@ -274,7 +274,7 @@ static Pentool draw_ptool_opt = PTOOLINIT0(
 	&pen_brush_group,
 	&pen_cursor,
 	draw_tool,
-	close_static_ptool,
+	close_static_ptool
 ); 
 static Pentool copy_ptool_opt = PTOOLINIT0(	
 	&draw_ptool_opt,	
@@ -285,7 +285,7 @@ static Pentool copy_ptool_opt = PTOOLINIT0(
 	&move_group_sel,
 	&move_tool_cursor,	
 	copy_tool,
-	close_static_ptool,
+	close_static_ptool
 ); 
 static Pentool circle_ptool_opt = PTOOLINIT0(	
 	&copy_ptool_opt,	
@@ -296,7 +296,7 @@ static Pentool circle_ptool_opt = PTOOLINIT0(
 	&fill2c_group_sel,
 	&shape_cursor,
 	circle_tool,
-	close_static_ptool,
+	close_static_ptool
 ); 
 Pentool box_ptool_opt = PTOOLINIT0(	
 	&circle_ptool_opt,	
@@ -307,7 +307,7 @@ Pentool box_ptool_opt = PTOOLINIT0(
 	&box_group_sel,
 	&box_cursor,
 	box_tool,
-	close_static_ptool,
+	close_static_ptool
 ); 
 
 

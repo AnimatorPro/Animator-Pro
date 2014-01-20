@@ -27,7 +27,7 @@ static Button tit_fil_sel = MB_INIT1(
 	NOOPT,
 	&vs.tit_just,3,
 	NOKEY,
-	MB_B_GHILITE,
+	MB_B_GHILITE
 	);
 static Button tit_cen_sel = MB_INIT1(
 	&tit_fil_sel,
@@ -39,7 +39,7 @@ static Button tit_cen_sel = MB_INIT1(
 	NOOPT,
 	&vs.tit_just,2,
 	NOKEY,
-	MB_B_GHILITE,
+	MB_B_GHILITE
 	);
 static Button tit_rig_sel = MB_INIT1(
 	&tit_cen_sel,
@@ -51,7 +51,7 @@ static Button tit_rig_sel = MB_INIT1(
 	NOOPT,
 	&vs.tit_just,1,
 	NOKEY,
-	MB_B_GHILITE,
+	MB_B_GHILITE
 	);
 static Button tit_lef_sel = MB_INIT1(
 	&tit_rig_sel,
@@ -63,7 +63,7 @@ static Button tit_lef_sel = MB_INIT1(
 	NOOPT,
 	&vs.tit_just,0,
 	NOKEY,
-	MB_B_GHILITE,
+	MB_B_GHILITE
 	);
 static Button tit_fra_sel = MB_INIT1(
 	&tit_lef_sel,
@@ -87,7 +87,7 @@ static Button tit_byc_sel = MB_INIT1(
 	NOOPT,
 	&vs.tit_scroll,1,
 	NOKEY,
-	MB_B_GHILITE,
+	MB_B_GHILITE
 	);
 static Button tit_byp_sel = MB_INIT1(
 	&tit_byc_sel,
@@ -99,7 +99,7 @@ static Button tit_byp_sel = MB_INIT1(
 	NOOPT,
 	&vs.tit_scroll,0,
 	NOKEY,
-	MB_B_GHILITE,
+	MB_B_GHILITE
 	);
 static Button tit_sti_sel = MB_INIT1(
 	&tit_byp_sel,
@@ -111,7 +111,7 @@ static Button tit_sti_sel = MB_INIT1(
 	NOOPT,
 	&vs.tit_move,3,
 	NOKEY,
-	MB_B_GHILITE,
+	MB_B_GHILITE
 	);
 static Button tit_typ_sel = MB_INIT1(
 	&tit_sti_sel,
@@ -123,7 +123,7 @@ static Button tit_typ_sel = MB_INIT1(
 	NOOPT,
 	&vs.tit_move,2,
 	NOKEY,
-	MB_B_GHILITE,
+	MB_B_GHILITE
 	);
 static Button tit_acr_sel = MB_INIT1(
 	&tit_typ_sel,
@@ -135,7 +135,7 @@ static Button tit_acr_sel = MB_INIT1(
 	NOOPT,
 	&vs.tit_move,1,
 	NOKEY,
-	MB_B_GHILITE,
+	MB_B_GHILITE
 	);
 static Button tit_ups_sel = MB_INIT1(
 	&tit_acr_sel,
@@ -147,7 +147,7 @@ static Button tit_ups_sel = MB_INIT1(
 	NOOPT,
 	&vs.tit_move,0,
 	NOKEY,
-	MB_B_GHILITE,
+	MB_B_GHILITE
 	);
 static Button tit_fon_sel = MB_INIT1(
 	&tit_ups_sel,

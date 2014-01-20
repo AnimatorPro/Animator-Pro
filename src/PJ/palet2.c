@@ -51,7 +51,7 @@ Button pal_pal_sel = MB_INIT1(
 	right_click_pp,
 	NULL,0,
 	NOKEY,
-	MB_SCALE_ABS,
+	MB_SCALE_ABS
 	);
 static Button pal_bsl_sel = MB_INIT1(
 	NONEXT,
@@ -281,7 +281,7 @@ static Button pal_tit_sel = MB_INIT1(
 	mb_menu_to_bottom,
 	&tbg_moveclose,0,
 	'q',
-	0,	/* flags */
+	0 /* flags */
 	);
 static Button pal_most_sel = MB_INIT1(
 	&pal_pal_sel,
@@ -293,7 +293,7 @@ static Button pal_most_sel = MB_INIT1(
 	NOOPT,
 	NOGROUP,0,
 	NOKEY,
-	MB_SCALE_ABS,
+	MB_SCALE_ABS
 	);
 
 static Smu_button_list pal_blist[] = {
@@ -346,7 +346,7 @@ Menuhdr palette_menu = MENU_INIT0(
 	0,				/* flags */
 	NULL,			/* procmouse */
 	pmu_on_showhide, /* on_showhide */
-	NULL,			/* cleanup */
+	NULL			/* cleanup */
 );
 
 static void pal_feel_qslider(Button *m)

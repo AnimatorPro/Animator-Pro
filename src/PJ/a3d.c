@@ -1494,7 +1494,7 @@ static Pentool ado_mouse_ptool = PTOOLINIT1(
 	ado_mouse_ptfunc,
 	&plain_ptool_cursor,
 	NULL, /* on install */
-	NULL,  /* on remove */
+	NULL /* on remove */
 );
 
 

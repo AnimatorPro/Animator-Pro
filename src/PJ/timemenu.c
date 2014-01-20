@@ -222,7 +222,7 @@ static Button tmu_playr_sel = MB_INIT1(
 	go_multi,
 	&vs.multi,1,
 	NOKEY,
-	MB_B_GHILITE,	
+	MB_B_GHILITE
 	);
 static Button tmu_spdsl_sel = MB_INIT1(
 	&tmu_playr_sel,
@@ -258,7 +258,7 @@ static Button tmu_frame_ct_sel = MB_INIT1(
 	set_total_frames,
 	NOGROUP,0,
 	NOKEY,
-	MB_DISABOPT,
+	MB_DISABOPT
 	);
 
 static Button tmu_tslider_sel = MB_INIT1(
@@ -283,7 +283,7 @@ static Button tmu_kill_sel = MB_INIT1(
 	mdelete_frames,
 	NOGROUP,0,
 	NOKEY,
-	MB_DISABOPT,
+	MB_DISABOPT
 	);
 static Button tmu_insert_sel = MB_INIT1(
 	&tmu_kill_sel,
@@ -295,7 +295,7 @@ static Button tmu_insert_sel = MB_INIT1(
 	minsert,
 	NOGROUP,0,
 	NOKEY,
-	MB_DISABOPT,
+	MB_DISABOPT
 	);
 static Button tmu_moveq_sel = MB_INIT1(
 	&tmu_insert_sel,

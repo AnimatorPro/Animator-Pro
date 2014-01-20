@@ -1003,7 +1003,7 @@ Pentool tween_pen_tool = PTOOLINIT1(
 	twe_tool_func,
 	&plain_ptool_cursor,
 	NULL, /* on install */
-	NULL,  /* on remove */
+	NULL /* on remove */
 );
 
 

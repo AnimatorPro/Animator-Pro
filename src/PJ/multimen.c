@@ -43,7 +43,7 @@ static Button mum_toa_sel = MB_INIT1(
 	NOOPT,
 	&vs.time_mode,2,
 	'a',
-	MB_GHILITE,
+	MB_GHILITE
 	);
 
 static Button mum_tos_sel = MB_INIT1(
@@ -56,7 +56,7 @@ static Button mum_tos_sel = MB_INIT1(
 	NOOPT,
 	&vs.time_mode,1,
 	's',
-	MB_GHILITE,
+	MB_GHILITE
 	);
 static Button mum_tof_sel = MB_INIT1(
 	&mum_tos_sel,
@@ -68,7 +68,7 @@ static Button mum_tof_sel = MB_INIT1(
 	NOOPT,
 	&vs.time_mode,0,
 	'f',
-	MB_GHILITE,
+	MB_GHILITE
 	);
 
 static Button mum_cel_sel = MB_INIT1(
@@ -81,7 +81,7 @@ static Button mum_cel_sel = MB_INIT1(
 	go_nodraw_cel_menu,
 	&vs.paste_inc_cel,1,
 	NOKEY,
-	MB_GHILITE,
+	MB_GHILITE
 	);
 
 static Button mum_com_sel = MB_INIT1(
@@ -94,7 +94,7 @@ static Button mum_com_sel = MB_INIT1(
 	NOOPT,
 	&vs.ado_complete,1,
 	NOKEY,
-	MB_B_GHILITE,
+	MB_B_GHILITE
 	);
 static Button mum_out_sel = MB_INIT1(
 	&mum_com_sel,
@@ -106,7 +106,7 @@ static Button mum_out_sel = MB_INIT1(
 	NOOPT,
 	&vs.ado_ease_out,1,
 	NOKEY,
-	MB_B_GHILITE,
+	MB_B_GHILITE
 	);
 static Button mum_ins_sel = MB_INIT1(
 	&mum_out_sel,
@@ -118,7 +118,7 @@ static Button mum_ins_sel = MB_INIT1(
 	NOOPT,
 	&vs.ado_ease,1,
 	NOKEY,
-	MB_B_GHILITE,
+	MB_B_GHILITE
 	);
 static Button mum_rev_sel = MB_INIT1(
 	&mum_ins_sel,
@@ -130,7 +130,7 @@ static Button mum_rev_sel = MB_INIT1(
 	NOOPT,
 	&vs.ado_reverse,1,
 	NOKEY,
-	MB_B_GHILITE,
+	MB_B_GHILITE
 	);
 static Button mum_pin_sel = MB_INIT1(
 	&mum_rev_sel,
@@ -142,7 +142,7 @@ static Button mum_pin_sel = MB_INIT1(
 	NOOPT,
 	&vs.ado_pong,1,
 	NOKEY,
-	MB_B_GHILITE,
+	MB_B_GHILITE
 	);
 static Button mum_sti_sel = MB_INIT1(
 	&mum_pin_sel,
@@ -154,7 +154,7 @@ static Button mum_sti_sel = MB_INIT1(
 	NOOPT,
 	&vs.ado_tween,0,
 	NOKEY,
-	MB_B_GHILITE,
+	MB_B_GHILITE
 	);
 static Button mum_ok_sel = MB_INIT1(
 	&mum_sti_sel,
@@ -238,7 +238,7 @@ static Button mum_kmo_sel = MB_INIT1(
 	go_cel_menu,
 	&vs.zero_clear,1,
 	NOKEY,
-	MB_B_GHILITE,
+	MB_B_GHILITE
 	);
 static Button mum_smo_sel = MB_INIT1(
 	&mum_kmo_sel,
@@ -250,7 +250,7 @@ static Button mum_smo_sel = MB_INIT1(
 	qmask,
 	&vs.use_mask,1,
 	NOKEY,
-	MB_B_GHILITE,
+	MB_B_GHILITE
 	);
 static Button mum_fmo_sel = MB_INIT1(
 	&mum_smo_sel,
@@ -262,7 +262,7 @@ static Button mum_fmo_sel = MB_INIT1(
 	NOOPT,
 	&vs.fillp,1,
 	NOKEY,
-	MB_B_GHILITE,
+	MB_B_GHILITE
 	);
 static Button mum_mmo_sel = MB_INIT1(
 	&mum_fmo_sel,
@@ -274,7 +274,7 @@ static Button mum_mmo_sel = MB_INIT1(
 	NOOPT,
 	&vs.multi,1,
 	NOKEY,
-	MB_B_GHILITE,
+	MB_B_GHILITE
 	);
 static Button mum_ink_sel = MB_INIT1(
 	&mum_mmo_sel,
@@ -286,7 +286,7 @@ static Button mum_ink_sel = MB_INIT1(
 	multi_go_inks,
 	&vs.ink_id,opq_INKID,
 	NOKEY,
-	MB_GHILITE,
+	MB_GHILITE
 	);
 
 extern Minitime_data flxtime_data;

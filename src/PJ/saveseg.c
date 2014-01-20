@@ -38,7 +38,7 @@ static Button ssm_tseg_sel =  MB_INIT1(
 	NOOPT,
 	NOGROUP,0,
 	NOKEY,
-	0,
+	0
 	);
 static Button ssm_tslider_sel = MB_INIT1(
 	&ssm_tseg_sel,
@@ -79,7 +79,7 @@ static Menuhdr saveseg_menu = MENU_INIT0(
 	0,				/* flags */
 	NULL,			/* procmouse */
 	NULL, 			/* on_showhide */
-	NULL,			/* cleanup */
+	NULL			/* cleanup */
 );
 
 static Smu_button_list sseg_smblist[] = {

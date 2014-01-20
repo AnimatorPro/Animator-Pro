@@ -36,7 +36,7 @@ Button sh1_brush_sel = MB_INIT1(
 	set_pbrush,
 	NOGROUP,0,
 	NOKEY,
-	0,	/* flags */
+	0 /* flags */
 	);
 static Button sh1_tco_sel = MB_INIT1(
 	&sh1_brush_sel, /* next */
@@ -48,7 +48,7 @@ static Button sh1_tco_sel = MB_INIT1(
 	go_cel_menu,
 	&vs.zero_clear, 1,
 	NOKEY,
-	MB_B_GHILITE,	/* flags */
+	MB_B_GHILITE /* flags */
 	);
 static Button sh1_filp_sel = MB_INIT1(
 	&sh1_tco_sel, /* next */
@@ -60,7 +60,7 @@ static Button sh1_filp_sel = MB_INIT1(
 	NOOPT,
 	&vs.fillp, 1,
 	NOKEY,
-	MB_B_GHILITE,	/* flags */
+	MB_B_GHILITE /* flags */
 	);
 static Button sh1_tim_sel = MB_INIT1(
 	&sh1_filp_sel, /* next */
@@ -72,7 +72,7 @@ static Button sh1_tim_sel = MB_INIT1(
 	go_multi,
 	&vs.multi, 1,
 	NOKEY,
-	MB_B_GHILITE,	/* flags */
+	MB_B_GHILITE /* flags */
 	);
 static Button sh1_ccolor_sel = MB_INIT1(
 	&sh1_tim_sel, /* next */
@@ -84,7 +84,7 @@ static Button sh1_ccolor_sel = MB_INIT1(
 	ppalette,
 	NOGROUP,-0xAA,
 	NOKEY,
-	0,	/* flags */
+	0 /* flags */
 	);
 Button std_head1_sel = MB_INIT1(
 	&sh1_ccolor_sel, /* next */
@@ -96,7 +96,7 @@ Button std_head1_sel = MB_INIT1(
 	NOOPT,
 	NOGROUP,0,
 	NOKEY,
-	MB_GHANG,	/* flags */
+	MB_GHANG /* flags */
 	);
 
 void redraw_head1_ccolor(Button *hanger)
@@ -140,7 +140,7 @@ static Button mp_ink7_sel = MB_INIT1(
 	fill_inkwell,
 	NOGROUP,7,
 	NOKEY,
-	MB_SCALE_ABSW,
+	MB_SCALE_ABSW
 	);
 static Button mp_ink6_sel = MB_INIT1(
 	&mp_ink7_sel,
@@ -152,7 +152,7 @@ static Button mp_ink6_sel = MB_INIT1(
 	fill_inkwell,
 	NOGROUP,6,
 	NOKEY,
-	MB_SCALE_ABSW,
+	MB_SCALE_ABSW
 	);
 static Button mp_ink5_sel = MB_INIT1(
 	&mp_ink6_sel,
@@ -164,7 +164,7 @@ static Button mp_ink5_sel = MB_INIT1(
 	fill_inkwell,
 	NOGROUP,5,
 	NOKEY,
-	MB_SCALE_ABSW,
+	MB_SCALE_ABSW
 	);
 static Button mp_ink4_sel = MB_INIT1(
 	&mp_ink5_sel,
@@ -176,7 +176,7 @@ static Button mp_ink4_sel = MB_INIT1(
 	fill_inkwell,
 	NOGROUP,4,
 	NOKEY,
-	MB_SCALE_ABSW,
+	MB_SCALE_ABSW
 	);
 static Button mp_ink3_sel = MB_INIT1(
 	&mp_ink4_sel,
@@ -188,7 +188,7 @@ static Button mp_ink3_sel = MB_INIT1(
 	fill_inkwell,
 	NOGROUP,3,
 	NOKEY,
-	MB_SCALE_ABSW,
+	MB_SCALE_ABSW
 	);
 static Button mp_ink2_sel = MB_INIT1(
 	&mp_ink3_sel,
@@ -200,7 +200,7 @@ static Button mp_ink2_sel = MB_INIT1(
 	fill_inkwell,
 	NOGROUP,2,
 	NOKEY,
-	MB_SCALE_ABSW,
+	MB_SCALE_ABSW
 	);
 static Button mp_ink1_sel = MB_INIT1(
 	&mp_ink2_sel,
@@ -212,7 +212,7 @@ static Button mp_ink1_sel = MB_INIT1(
 	fill_inkwell,
 	NOGROUP,1,
 	NOKEY,
-	MB_SCALE_ABSW,	
+	MB_SCALE_ABSW
 	);
 static Button mp_ink0_sel = MB_INIT1(
 	&mp_ink1_sel,
@@ -224,7 +224,7 @@ static Button mp_ink0_sel = MB_INIT1(
 	fill_inkwell,
 	NOGROUP,0,
 	NOKEY,
-	0,
+	0
 	);
 Button minipal_sel = MB_INIT1(
 	NONEXT,
@@ -236,7 +236,7 @@ Button minipal_sel = MB_INIT1(
 	NOOPT,
 	NOGROUP,0,
 	NOKEY,
-	0,
+	0
 	);
 
 void mb_toggle_zclear(Button *b)
@@ -338,7 +338,7 @@ static Button zpg_pan_sel = MB_INIT1(
 	movefli_tool,
 	NOGROUP,0,
 	NOKEY,
-	0,	/* flags */
+	0 /* flags */
 	);
 static Button zpg_cycle_sel = MB_INIT1(
 	&zpg_pan_sel, /* next */
@@ -350,7 +350,7 @@ static Button zpg_cycle_sel = MB_INIT1(
 	shortcut_ccycle,
 	NOGROUP,0,
 	NOKEY,
-	MB_GHANG,	/* flags */
+	MB_GHANG /* flags */
 	);
 static see_zoom(Button *b)
 {
@@ -367,7 +367,7 @@ Button zpan_cycle_group = MB_INIT1(
 	go_zoom_settings,
 	&vs.zoom_open,1,
 	'z',
-	MB_B_GHILITE,
+	MB_B_GHILITE
 	);
 void zpan_ccycle_redraw(Button *hanger)
 {

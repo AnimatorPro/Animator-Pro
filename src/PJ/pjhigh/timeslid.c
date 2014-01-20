@@ -86,7 +86,7 @@ static Button tsl_frame_sl_sel = MB_INIT1(
 	jump_to_frame,
 	NOGROUP,IXSEL_ID,
 	NOKEY,
-	MB_GHANG,
+	MB_GHANG
 	);
 static Button tsl_next_sel = MB_INIT1(
 	&tsl_frame_sl_sel,
@@ -98,7 +98,7 @@ static Button tsl_next_sel = MB_INIT1(
 	NOOPT,
 	NOGROUP,0,
 	RARROW,
-	MB_GHANG,
+	MB_GHANG
 	);
 static Button tsl_prev_sel = MB_INIT1(
 	&tsl_next_sel,
@@ -110,7 +110,7 @@ static Button tsl_prev_sel = MB_INIT1(
 	NOOPT,
 	NOGROUP,0,
 	LARROW,
-	MB_GHANG,
+	MB_GHANG
 	);
 static Button tsl_play_sel = MB_INIT1(
 	&tsl_prev_sel,
@@ -122,7 +122,7 @@ static Button tsl_play_sel = MB_INIT1(
 	NOOPT,
 	NOGROUP,0,
 	DARROW,
-	MB_GHANG,
+	MB_GHANG
 	);
 static Button tsl_down_sel = MB_INIT1(
 	&tsl_play_sel,
@@ -134,7 +134,7 @@ static Button tsl_down_sel = MB_INIT1(
 	NOOPT,
 	NOGROUP,0,
 	NOKEY,
-	MB_GHANG,
+	MB_GHANG
 	);
 Button timeslider_sel = MB_INIT1(
 	&tsl_down_sel,
@@ -146,6 +146,6 @@ Button timeslider_sel = MB_INIT1(
 	opt_tsl_first,
 	NOGROUP,0,
 	UARROW,
-	MB_GHANG,
+	MB_GHANG
 	);
 

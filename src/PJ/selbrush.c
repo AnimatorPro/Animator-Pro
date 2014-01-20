@@ -76,7 +76,7 @@ static Button bmu_circle_sel = MB_INIT1(
 	mb_set_brush_type,
 	&vs.pen_brush_type,CIRCLE_BRUSH,
 	NOKEY,
-	MB_B_GHILITE|MB_SCALE_ABS,
+	MB_B_GHILITE|MB_SCALE_ABS
 	);
 static Button bmu_square_sel = MB_INIT1(
 	&bmu_circle_sel,
@@ -88,7 +88,7 @@ static Button bmu_square_sel = MB_INIT1(
 	mb_set_brush_type,
 	&vs.pen_brush_type,SQUARE_BRUSH,
 	NOKEY,
-	MB_B_GHILITE|MB_SCALE_ABS,
+	MB_B_GHILITE|MB_SCALE_ABS
 	);
 static Button bmu_line_sel = MB_INIT1(
 	&bmu_square_sel,
@@ -100,7 +100,7 @@ static Button bmu_line_sel = MB_INIT1(
 	rclick_line_sel,
 	&vs.pen_brush_type,LINE_BRUSH,
 	NOKEY,
-	MB_B_GHILITE|MB_SCALE_ABS,
+	MB_B_GHILITE|MB_SCALE_ABS
 	);
 
 static Button bmu_langlable_sel = MB_INIT1(
@@ -173,7 +173,7 @@ static Button bmu_sizesl_sel = MB_INIT1(
 	NOOPT,
 	NOGROUP,0,
 	NOKEY,
-	MB_SCALE_ABSW,
+	MB_SCALE_ABSW
 	);
 static Button bmu_sizelab_sel = MB_INIT1(
 	&bmu_sizesl_sel,
@@ -185,7 +185,7 @@ static Button bmu_sizelab_sel = MB_INIT1(
 	NOOPT,
 	NOGROUP,0,
 	NOKEY,
-	MB_SCALE_ABS,
+	MB_SCALE_ABS
 	);
 
 #ifdef NOT_USED /* at present we can't load and save brushes */
@@ -226,7 +226,7 @@ static Button bmu_hanger_sel = MB_INIT1(
 	NOOPT,
 	NOGROUP,0,
 	NOKEY,
-	MB_SCALE_ABS,	/* flags */
+	MB_SCALE_ABS /* flags */
 	);
 
 static Button bmu_title_sel = MB_INIT1(
@@ -239,7 +239,7 @@ static Button bmu_title_sel = MB_INIT1(
 	NOOPT,
 	&tbg_moveclose,0,
 	NOKEY,
-	MB_SCALE_ABS,	/* flags */
+	MB_SCALE_ABS /* flags */
 	);
 
 static Menuhdr pbrush_menu = {
@@ -252,7 +252,7 @@ static Menuhdr pbrush_menu = {
 	seebg_white, 	/* seebg */
 	NULL,			/* dodata */
 	NULL,			/* domenu */
-	(MBPEN|MBRIGHT|KEYHIT), /* ioflags */
+	(MBPEN|MBRIGHT|KEYHIT) /* ioflags */
 };
 
 /* nested alloc because these get used in two places in options and in the 

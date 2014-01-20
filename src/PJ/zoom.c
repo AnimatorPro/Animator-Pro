@@ -28,7 +28,7 @@ static Button zoom_source_sel = MB_INIT1(
 	NOGROUP,				/* group */
 	0,						/* id */
 	NOKEY,					/* key equivalent */
-	0,						/* flags */
+	0						/* flags */
 	);
 static Button zoom_resize_sel = MB_INIT1(
 	&zoom_source_sel,					/* next */
@@ -41,7 +41,7 @@ static Button zoom_resize_sel = MB_INIT1(
 	NOGROUP,				/* group */
 	0,						/* id */
 	NOKEY,					/* key equivalent */
-	0,						/* flags */
+	0						/* flags */
 	);
 static void see_fullsize();
 static Button zoom_fullsize_sel = MB_INIT1(
@@ -55,7 +55,7 @@ static Button zoom_fullsize_sel = MB_INIT1(
 	NOGROUP,				/* group */
 	0,						/* id */
 	NOKEY,					/* key equivalent */
-	0,						/* flags */
+	0						/* flags */
 	);
 
 static Qslider zscale_qslider = 
@@ -72,7 +72,7 @@ static Button zoom_scale_slider = MB_INIT1(
 	NOGROUP,				/* group */
 	0,						/* id */
 	NOKEY,					/* key equivalent */
-	0,						/* flags */
+	0						/* flags */
 	);
 
 static Button zoom_scaletext = MB_INIT1(
@@ -86,7 +86,7 @@ static Button zoom_scaletext = MB_INIT1(
 	NOGROUP,				/* group */
 	0,						/* id */
 	NOKEY,					/* key equivalent */
-	0,						/* flags */
+	0						/* flags */
 	);
 
 static Button zoom_tit_sel = MB_INIT1(
@@ -100,7 +100,7 @@ static Button zoom_tit_sel = MB_INIT1(
 	&tbg_moveclose,			/* group */
 	0,						/* id */
 	'q',					/* key equivalent */
-	0,						/* flags */
+	0						/* flags */
 	);
 
 
@@ -114,7 +114,7 @@ static Menuhdr zoom_menu = {
 	seebg_white, 	/* seebg */
 	NULL,			/* dodata */
 	NULL,			/* domenu */
-	(MBPEN|MBRIGHT|KEYHIT), /* ioflags */
+	(MBPEN|MBRIGHT|KEYHIT) /* ioflags */
 };
 
 void see_zoom_title();
@@ -146,7 +146,7 @@ static Button zoom_dragbar = MB_INIT1(
 	(void *)&z_tbg,    /* group */
 	0,			/* identity */
 	NOKEY,      /* key equivalent */
-	MB_NOHILITE|MB_NORESCALE, /* flags */
+	MB_NOHILITE|MB_NORESCALE /* flags */
 );
 
 void see_zoombox();
@@ -163,7 +163,7 @@ Button zoom_box = MB_INIT1(
 	NOGROUP,    /* group */
 	0,			/* identity */
 	NOKEY,      /* key equivalent */
-	MB_NORESCALE,	/* flags */
+	MB_NORESCALE	/* flags */
 );
 
 static Menuhdr zwinmenu = {
@@ -979,7 +979,7 @@ static Pentool hand_ptool = PTOOLINIT1(
 	hand_ptfunc,
 	&hand_cursor,
 	NULL, /* on install */
-	NULL, /* on remove */
+	NULL /* on remove */
 );
 
 static Smu_button_list zoom_smblist[] = {

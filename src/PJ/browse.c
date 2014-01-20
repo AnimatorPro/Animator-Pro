@@ -68,7 +68,7 @@ static Button brw_list_sel = MB_INIT1(
 	mb_close_cancel,
 	&bscroller,0,
 	NOKEY,
- 	MB_NORESCALE,	
+	MB_NORESCALE
 	);
 static Button brw_downarr = MB_INIT1(
 	&brw_list_sel,
@@ -215,7 +215,7 @@ static Button bro_play_sel = MB_INIT1(
 	mb_close_cancel,
 	&vs.browse_action,BA_VIEW,
 	'v',
-	MB_B_GHILITE,
+	MB_B_GHILITE
 	);
 static Button bro_del_sel = MB_INIT1(
 	&bro_play_sel,
@@ -227,7 +227,7 @@ static Button bro_del_sel = MB_INIT1(
 	mb_close_cancel,
 	&vs.browse_action,BA_KILL,
 	'd',
-	MB_B_GHILITE,
+	MB_B_GHILITE
 	);
 static Button bro_inf_sel = MB_INIT1(
 	&bro_del_sel,
@@ -239,7 +239,7 @@ static Button bro_inf_sel = MB_INIT1(
 	mb_close_cancel,
 	&vs.browse_action,BA_INFO,
 	'i',
-	MB_B_GHILITE,
+	MB_B_GHILITE
 	);
 static Button bro_vie_sel = MB_INIT1(
 	&bro_inf_sel,
@@ -251,7 +251,7 @@ static Button bro_vie_sel = MB_INIT1(
 	mb_close_cancel,
 	&vs.browse_action,BA_PLAY,
 	'p',
-	MB_B_GHILITE,
+	MB_B_GHILITE
 	);
 static Button bro_loa_sel = MB_INIT1(
 	&bro_vie_sel,
@@ -263,7 +263,7 @@ static Button bro_loa_sel = MB_INIT1(
 	mb_close_cancel,
 	&vs.browse_action,BA_LOAD,
 	'l',
-	MB_B_GHILITE,
+	MB_B_GHILITE
 	);
 static Button bro_tit_sel = MB_INIT1(
 	&bro_loa_sel,

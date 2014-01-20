@@ -21,7 +21,7 @@ static Button fmt_ok_sel = MB_INIT1(
 	NOOPT,
 	NOGROUP,0,
 	NOKEY,
-	0,	/* flags */
+	0 /* flags */
 	);
 static Button fmt_format_sel = MB_INIT1(
 	&fmt_ok_sel, /* next */
@@ -33,7 +33,7 @@ static Button fmt_format_sel = MB_INIT1(
 	mb_gclose_identity,
 	NOGROUP,RESET_SCREEN_SIZE,
 	NOKEY,
-	0,	/* flags */
+	0 /* flags */
 	);
 static Button fmt_cancel_sel = MB_INIT1(
 	&fmt_format_sel, /* next */
@@ -45,7 +45,7 @@ static Button fmt_cancel_sel = MB_INIT1(
 	NOOPT,
 	NOGROUP,0,
 	NOKEY,
-	0,	/* flags */
+	0 /* flags */
 	);
 
 static Short_xy savesize;
@@ -60,7 +60,7 @@ static Button fmt_savesize_sel = MB_INIT1(
 	NOOPT,
 	NOGROUP,0,
 	NOKEY,
-	0,	/* flags */
+	0 /* flags */
 	);
 
 void update_slgroup(void *dat,Button *b)
@@ -105,7 +105,7 @@ static Button fmt_height_lab = MB_INIT1(
 	NOOPT,
 	&fmt_hslider_sel,0,
 	NOKEY,
-	0,	/* flags */
+	0 /* flags */
 	);
 static Button fmt_height_sel = MB_INIT1(
 	&fmt_savesize_sel, /* next */
@@ -117,7 +117,7 @@ static Button fmt_height_sel = MB_INIT1(
 	NOOPT,
 	NOGROUP,0,
 	NOKEY,
-	0,	/* flags */
+	0 /* flags */
 	);
 static Button fmt_hslider_sel = MB_INIT1(
 	&fmt_height_sel, /* next */
@@ -129,7 +129,7 @@ static Button fmt_hslider_sel = MB_INIT1(
 	NOOPT,
 	&fmt_height_sel,0,
 	NOKEY,
-	0,	/* flags */
+	0 /* flags */
 	);
 	static Button fmt_width_lab = MB_INIT1(
 		NONEXT,
@@ -141,7 +141,7 @@ static Button fmt_hslider_sel = MB_INIT1(
 		NOOPT,
 		&fmt_wslider_sel,0,
 		NOKEY,
-		0,	/* flags */
+		0 /* flags */
 		);
 static Button fmt_width_sel = MB_INIT1(
 	&fmt_hslider_sel, /* next */
@@ -153,7 +153,7 @@ static Button fmt_width_sel = MB_INIT1(
 	NOOPT,
 	&fmt_height_sel,0,
 	'\t',
-	0,	/* flags */
+	0 /* flags */
 	);
 static Button fmt_wslider_sel = MB_INIT1(
 	&fmt_width_sel, /* next */
@@ -165,7 +165,7 @@ static Button fmt_wslider_sel = MB_INIT1(
 	NOOPT,
 	&fmt_width_sel,0,
 	NOKEY,
-	0,	/* flags */
+	0 /* flags */
 	);
 static Button fmt_title_sel = MB_INIT1(
 	&fmt_wslider_sel, /* next */
@@ -177,7 +177,7 @@ static Button fmt_title_sel = MB_INIT1(
 	NOOPT,
 	&tbg_moveclose,0,
 	NOKEY,
-	0,	/* flags */
+	0 /* flags */
 	);
 
 static Menuhdr format_menu = {
@@ -190,7 +190,7 @@ static Menuhdr format_menu = {
 	seebg_white,	/* seebg */
 	NULL,			/* data */
 	NULL,			/* domenu */
-	(MBPEN|MBRIGHT|KEYHIT),	/* ioflags */
+	(MBPEN|MBRIGHT|KEYHIT) /* ioflags */
 };
 
 static Smu_button_list fmt_smblist[] = {

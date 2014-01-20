@@ -253,7 +253,7 @@ static Button sep_close_sel = MB_INIT1(
 	NOOPT,
 	&vs.sep_rgb,1,
 	NOKEY,
-	MB_B_GHILITE,
+	MB_B_GHILITE
 	);
 static Button sep_range_sel = MB_INIT1(
 	&sep_close_sel,
@@ -265,7 +265,7 @@ static Button sep_range_sel = MB_INIT1(
 	NOOPT,
 	&vs.sep_rgb,2,
 	NOKEY,
-	MB_B_GHILITE,
+	MB_B_GHILITE
 	);
 static Button sep_single_sel = MB_INIT1(
 	&sep_range_sel,
@@ -277,7 +277,7 @@ static Button sep_single_sel = MB_INIT1(
 	NOOPT,
 	&vs.sep_rgb,0,
 	NOKEY,
-	MB_B_GHILITE,
+	MB_B_GHILITE
 	);
 Button sep_group_sel = MB_INIT1(
 	NONEXT,
@@ -858,7 +858,7 @@ static Button omu_zpan_sel = MB_INIT1(
 	NOOPT,
 	NULL,0,
 	NOKEY,
-	0,
+	0
 	);
 static void show_help();
 static Button omu_help_sel = MB_INIT1(
@@ -871,7 +871,7 @@ static Button omu_help_sel = MB_INIT1(
 	NOOPT,
 	&optgroup, 0,
 	NOKEY,
-	0,
+	0
 	);
 Button omu_clus_sel = MB_INIT1(
 	&omu_help_sel,
@@ -919,7 +919,7 @@ static Button omu_sbar_sel = MB_INIT1(
 	NOOPT,
 	&oscroller,0,
 	NOKEY,
-	0,	/* flags */
+	0 /* flags */
 	);
 static Button omu_slist_sel = MB_INIT1(
 	&omu_sbar_sel, /* next */
@@ -931,7 +931,7 @@ static Button omu_slist_sel = MB_INIT1(
 	NOOPT,
 	&oscroller,0,
 	NOKEY,
-	0,	/* flags */
+	0 /* flags */
 	);
 static Button omu_sdown_sel = MB_INIT1(
 	&omu_slist_sel, /* next */
@@ -943,7 +943,7 @@ static Button omu_sdown_sel = MB_INIT1(
 	NOOPT,
 	&oscroller, 0,
 	NOKEY,
-	0,	/* flags */
+	0 /* flags */
 	);
 static Button omu_sup_sel = MB_INIT1(
 	&omu_sdown_sel, /* next */
@@ -955,7 +955,7 @@ static Button omu_sup_sel = MB_INIT1(
 	NOOPT,
 	&oscroller, 0,
 	NOKEY,
-	0,	/* flags */
+	0 /* flags */
 	);
 
 static Button omu_subopts_sel = MB_INIT1(
@@ -968,7 +968,7 @@ static Button omu_subopts_sel = MB_INIT1(
 	NOOPT,
 	&optgroup, 0,
 	NOKEY,
-	MB_SCALE_ABS,	/* flags */
+	MB_SCALE_ABS /* flags */
 	);
 static Button omu_opts_sel = MB_INIT1(
 	&omu_subopts_sel,
@@ -980,7 +980,7 @@ static Button omu_opts_sel = MB_INIT1(
 	NOOPT,
 	NOGROUP,0,
 	NOKEY,
-	0,	/* flags */
+	0 /* flags */
 	);
 
 static Sgroup1_data omu_sh1dat = {
@@ -997,7 +997,7 @@ static Button omu_std1_sel = MB_INIT1(
 	NOOPT,
 	&omu_sh1dat,0,
 	NOKEY,
-	0,	/* flags */
+	0 /* flags */
 	);
 static Button omu_redo_sel = MB_INIT1(
 	&omu_std1_sel, /* next */
@@ -1009,7 +1009,7 @@ static Button omu_redo_sel = MB_INIT1(
 	NOOPT,
 	NOGROUP,0,
 	'r',
-	0,	/* flags */
+	0 /* flags */
 	);
 static Button omu_undo_sel = MB_INIT1(
 	&omu_redo_sel, /* next */
@@ -1021,7 +1021,7 @@ static Button omu_undo_sel = MB_INIT1(
 	NOOPT,
 	NOGROUP,0,
 	'\b',
-	0,	/* flags */
+	0 /* flags */
 	);
 static Button omu_title_sel = MB_INIT1(
 	&omu_undo_sel,
@@ -1033,7 +1033,7 @@ static Button omu_title_sel = MB_INIT1(
 	mb_menu_to_bottom,
 	&tbg_moveclose,0,
 	'q',
-	0,	/* flags */
+	0 /* flags */
 	);
 
 Menuhdr options_menu = {

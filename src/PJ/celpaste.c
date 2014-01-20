@@ -21,7 +21,7 @@ static Button apa_paintopt_sel = MB_INIT1(
 	NOOPT,
 	NOGROUP,0,
 	NOKEY,
-	0,	/* flags */
+	0 /* flags */
 	);
 static Button apa_rendseq_sel = MB_INIT1(
 	&apa_paintopt_sel,
@@ -33,7 +33,7 @@ static Button apa_rendseq_sel = MB_INIT1(
 	NOOPT,
 	NOGROUP,0,
 	NOKEY,
-	0,		/* flags */
+	0 /* flags */
 	);
 static Button apa_kill_sel = MB_INIT1(
 	&apa_rendseq_sel,		/* next */
@@ -45,7 +45,7 @@ static Button apa_kill_sel = MB_INIT1(
 	NOOPT,
 	NOGROUP,0,
 	NOKEY,
-	0,		/* flags */
+	0 /* flags */
 	);
 
 static Button apa_title_sel = MB_INIT1(
@@ -58,7 +58,7 @@ static Button apa_title_sel = MB_INIT1(
 	mb_menu_to_bottom,
 	NOGROUP,0,
 	NOKEY,
-	0,	/* flags */
+	0 /* flags */
 	);
 
 static Menuhdr anipaste_menu = MENU_INIT0(
@@ -75,7 +75,7 @@ static Menuhdr anipaste_menu = MENU_INIT0(
 	0,		/* flags */
 	NULL,	/* procmouse */
 	NULL, 	/* on_showhide */
-	NULL,	/* cleanup */
+	NULL	/* cleanup */
 );
 
 static Smu_button_list apa_smblist[] =  {

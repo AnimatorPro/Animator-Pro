@@ -58,7 +58,7 @@ static Button fmu_can_sel =  MB_INIT1(
 	NOOPT,
 	NOGROUP,0,
 	NOKEY,
-	0,
+	0
 	);
 static Button fmu_ok_sel =  MB_INIT1(
 	&fmu_can_sel,
@@ -70,7 +70,7 @@ static Button fmu_ok_sel =  MB_INIT1(
 	NOOPT,
 	NOGROUP,0,
 	NOKEY,
-	0,
+	0
 	);
 static Button fmu_sam_sel =  MB_INIT1(
 	&fmu_ok_sel,
@@ -82,7 +82,7 @@ static Button fmu_sam_sel =  MB_INIT1(
 	NOOPT,
 	NOGROUP,0,
 	NOKEY,
-	0,
+	0
 	);
 static void see_font_name(Button *b)
 {
@@ -99,7 +99,7 @@ static Button fmu_nam_sel =  MB_INIT1(
 	NOOPT,
 	NOGROUP,0,
 	NOKEY,
-	0,
+	0
 	);
 static Button fmu_tdi_sel =  MB_INIT1(
 	&fmu_nam_sel,
@@ -111,7 +111,7 @@ static Button fmu_tdi_sel =  MB_INIT1(
 	NOOPT,
 	NOGROUP,0,
 	NOKEY,
-	0,
+	0
 	);
 static Button fmu_unz_sel =  MB_INIT1(
 	&fmu_tdi_sel,
@@ -123,7 +123,7 @@ static Button fmu_unz_sel =  MB_INIT1(
 	set_font_unzag,
 	NOGROUP,1,
 	NOKEY,
-	MB_GHILITE,	
+	MB_GHILITE
 	);
 static Button fmu_she_sel =  MB_INIT1(
 	&fmu_unz_sel,
@@ -135,7 +135,7 @@ static Button fmu_she_sel =  MB_INIT1(
 	set_font_height,
 	NOGROUP,0,
 	NOKEY,
-	0,
+	0
 	);
 static Button fmu_hei_sel =  MB_INIT1(
 	&fmu_she_sel,
@@ -147,7 +147,7 @@ static Button fmu_hei_sel =  MB_INIT1(
 	NOOPT,
 	NOGROUP,0,
 	NOKEY,
-	0,
+	0
 	);
 static Button fmu_ssp_sel =  MB_INIT1(
 	&fmu_hei_sel,
@@ -159,7 +159,7 @@ static Button fmu_ssp_sel =  MB_INIT1(
 	set_font_spacing,
 	NOGROUP,0,
 	NOKEY,
-	0,
+	0
 	);
 static Button fmu_spa_sel =  MB_INIT1(
 	&fmu_ssp_sel,
@@ -171,7 +171,7 @@ static Button fmu_spa_sel =  MB_INIT1(
 	NOOPT,
 	NOGROUP,0,
 	NOKEY,
-	0,
+	0
 	);
 static Button fmu_sle_sel =  MB_INIT1(
 	&fmu_spa_sel,
@@ -183,7 +183,7 @@ static Button fmu_sle_sel =  MB_INIT1(
 	set_font_leading,
 	NOGROUP,0,
 	NOKEY,
-	0,
+	0
 	);
 static Button fmu_lea_sel =  MB_INIT1(
 	&fmu_sle_sel,
@@ -195,7 +195,7 @@ static Button fmu_lea_sel =  MB_INIT1(
 	NOOPT,
 	NOGROUP,0,
 	NOKEY,
-	0,
+	0
 	);
 static Button fmu_lis_sel =  MB_INIT1(
 	&fmu_lea_sel,
@@ -207,7 +207,7 @@ static Button fmu_lis_sel =  MB_INIT1(
 	NOOPT,
 	&font_scroller,0,
 	NOKEY,
-	0,
+	0
 	);
 static Button fmu_dow_sel =  MB_INIT1(
 	&fmu_lis_sel,
@@ -219,7 +219,7 @@ static Button fmu_dow_sel =  MB_INIT1(
 	NOOPT,
 	&font_scroller,-1,
 	DARROW,
-	0,
+	0
 	);
 static Button fmu_scr_sel =  MB_INIT1(
 	&fmu_dow_sel,
@@ -231,7 +231,7 @@ static Button fmu_scr_sel =  MB_INIT1(
 	NOOPT,
 	&font_scroller,0,
 	NOKEY,
-	0,
+	0
 	);
 static Button fmu_ups_sel =  MB_INIT1(
 	&fmu_scr_sel,
@@ -243,7 +243,7 @@ static Button fmu_ups_sel =  MB_INIT1(
 	NOOPT,
 	&font_scroller,-1,
 	UARROW,
-	0,
+	0
 	);
 static Button fmu_tit_sel =  MB_INIT1(
 	&fmu_ups_sel,
@@ -255,7 +255,7 @@ static Button fmu_tit_sel =  MB_INIT1(
 	mb_menu_to_bottom,
 	&tbg_moveclose,0,
 	NOKEY,
-	0,
+	0
 	);
 Menuhdr fmu_menu = {
 	{320,97,0,0,},

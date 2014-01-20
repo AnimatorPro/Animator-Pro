@@ -50,7 +50,7 @@ static Button cmu_bluelast_sel = MB_INIT1(
 	NOOPT,
 	&vs.cm_blue_last, 1,
 	NOKEY,
-	MB_B_GHILITE,	/* flags */
+	MB_B_GHILITE /* flags */
 	);
 static void hang_bluelast(Button *b)
 {
@@ -73,7 +73,7 @@ static Button cmu_bluelast_hanger = MB_INIT1(
 	NOOPT,
 	NOGROUP,0,
 	NOKEY,
-	0,	/* flags */
+	0 /* flags */
 	);
 static void toggle_stream(Button *b)
 {
@@ -90,7 +90,7 @@ static Button cmu_stream_sel = MB_INIT1(
 	NOOPT,
 	&vs.cm_streamdraw, 1,
 	NOKEY,
-	MB_B_GHILITE,	/* flags */
+	MB_B_GHILITE /* flags */
 	);
 
 Button cmu_pa_group_sel = MB_INIT1(
@@ -103,7 +103,7 @@ Button cmu_pa_group_sel = MB_INIT1(
 	NOOPT,
 	NOGROUP,0,
 	NOKEY,
-	0,	/* flags */
+	0 /* flags */
 );
 /****** move group sel ******/
 
@@ -117,7 +117,7 @@ static Button cmu_moveto_sel = MB_INIT1(
 	NOOPT,
 	&vs.cm_move_to_cursor, 1,
 	NOKEY,
-	MB_B_GHILITE,	/* flags */
+	MB_B_GHILITE /* flags */
 	);
 static Button cmu_move_group_sel = MB_INIT1(
 	NONEXT,
@@ -129,7 +129,7 @@ static Button cmu_move_group_sel = MB_INIT1(
 	NOOPT,
 	NOGROUP,0,
 	NOKEY,
-	0,	/* flags */
+	0 /* flags */
 );
 
 static Pentool cel_scale_tool = PTOOLINIT1(
@@ -143,7 +143,7 @@ static Pentool cel_scale_tool = PTOOLINIT1(
 	cel_scale_ptfunc,
 	&plain_ptool_cursor,
 	init_marqi_ctool, /* on install */
-	exit_marqi_ctool,  /* on remove */
+	exit_marqi_ctool /* on remove */
 );
 static Pentool cel_rotate_tool = PTOOLINIT1(
 	&cel_scale_tool,
@@ -156,7 +156,7 @@ static Pentool cel_rotate_tool = PTOOLINIT1(
 	cel_rotate_ptfunc,
 	&plain_ptool_cursor,
 	init_marqi_ctool, /* on install */
-	exit_marqi_ctool,  /* on remove */
+	exit_marqi_ctool /* on remove */
 );
 static Pentool cel_move_tool = PTOOLINIT1(
 	&cel_rotate_tool,
@@ -169,7 +169,7 @@ static Pentool cel_move_tool = PTOOLINIT1(
 	cel_move_ptfunc,
 	&plain_ptool_cursor,
 	init_marqi_ctool, /* on install */
-	exit_marqi_ctool,  /* on remove */
+	exit_marqi_ctool /* on remove */
 );
 static Pentool cel_paste_tool = PTOOLINIT1(
 	&cel_move_tool,
@@ -182,7 +182,7 @@ static Pentool cel_paste_tool = PTOOLINIT1(
 	cel_paste_ptfunc,
 	&plain_ptool_cursor,
 	init_paste_ctool, /* on install */
-	exit_paste_ctool,  /* on remove */
+	exit_paste_ctool /* on remove */
 );
 static Pentool cel_paint_tool = PTOOLINIT1(
 	&cel_paste_tool,
@@ -195,7 +195,7 @@ static Pentool cel_paint_tool = PTOOLINIT1(
 	cel_paint_ptfunc,
 	&plain_ptool_cursor,
 	init_paint_ctool, /* on install */
-	exit_paint_ctool,  /* on remove */
+	exit_paint_ctool /* on remove */
 );
 static Pentool cel_tcolor_tool = PTOOLINIT1(
 	&cel_paint_tool,
@@ -208,7 +208,7 @@ static Pentool cel_tcolor_tool = PTOOLINIT1(
 	cel_tcolor_ptfunc,
 	&plain_ptool_cursor,
 	init_tcolor_ptool, /* on install */
-	exit_refresh_cel, /* on remove */
+	exit_refresh_cel /* on remove */
 );
 
 #define FIRST_CEL_TOOL cel_tcolor_tool
@@ -231,7 +231,7 @@ static Button cmu_toolopts_sel = MB_INIT1(
 	NOOPT,
 	&opg,0,
 	NOKEY,
-	0,	/* flags */
+	0 /* flags */
 	);
 
 static void see_celtool_sel(Button *b)
@@ -249,7 +249,7 @@ static Button cmu_tco_sel = MB_INIT1(
 	NOOPT,
 	&vs.cur_cel_tool,CELPT_TCOLOR,
 	NOKEY,
-	MB_GHILITE,	/* flags */
+	MB_GHILITE /* flags */
 	);
 static void see_draw_frames_option(Button *b)
 {
@@ -268,7 +268,7 @@ static Button cmu_pai_sel = MB_INIT1(
 	NOOPT,
 	&vs.cur_cel_tool,CELPT_PAINT,
 	NOKEY,
-	MB_GHILITE,	/* flags */
+	MB_GHILITE /* flags */
 	);
 static void see_draw_option(Button *b)
 {
@@ -285,7 +285,7 @@ static Button cmu_pas_sel = MB_INIT1(
 	NOOPT,
 	&vs.cur_cel_tool,CELPT_PASTE,
 	NOKEY,
-	MB_GHILITE,	/* flags */
+	MB_GHILITE /* flags */
 	);
 static Button cmu_sca_sel = MB_INIT1(
 	&cmu_pas_sel, /* next */
@@ -297,7 +297,7 @@ static Button cmu_sca_sel = MB_INIT1(
 	NOOPT,
 	&vs.cur_cel_tool,CELPT_SCALE,
 	NOKEY,
-	MB_GHILITE,	/* flags */
+	MB_GHILITE /* flags */
 	);
 static Button cmu_rot_sel = MB_INIT1(
 	&cmu_sca_sel, /* next */
@@ -309,7 +309,7 @@ static Button cmu_rot_sel = MB_INIT1(
 	NOOPT,
 	&vs.cur_cel_tool,CELPT_ROTATE,
 	NOKEY,
-	MB_GHILITE,	/* flags */
+	MB_GHILITE /* flags */
 	);
 static Button cmu_mov_sel = MB_INIT1(
 	&cmu_rot_sel, /* next */
@@ -321,7 +321,7 @@ static Button cmu_mov_sel = MB_INIT1(
 	NOOPT,
 	&vs.cur_cel_tool,CELPT_MOVE,
 	NOKEY,
-	MB_GHILITE,	/* flags */
+	MB_GHILITE /* flags */
 	);
 
 
@@ -341,7 +341,7 @@ static Button cmu_grid_sel = MB_INIT1(
 	qgrid_keep_undo, 
 	&vs.use_grid,1,
 	NOKEY,
-	MB_B_GHILITE,	/* flags */
+	MB_B_GHILITE /* flags */
 	);
 extern void see_mask_button(Button *b);
 extern void qmask_keep_undo(Button *b);
@@ -355,7 +355,7 @@ static Button cmu_mask_sel = MB_INIT1(
 	qmask_keep_undo,
 	&vs.use_mask,1,
 	NOKEY,
-	MB_B_GHILITE,	
+	MB_B_GHILITE
 	);
 static Button cmu_zpan_sel = MB_INIT1(
 	&cmu_mask_sel,
@@ -367,7 +367,7 @@ static Button cmu_zpan_sel = MB_INIT1(
 	NOOPT,
 	NULL,0,
 	NOKEY,
-	0,
+	0
 	);
 static void see_cel_frames(Button *b)
 {
@@ -389,7 +389,7 @@ static Button cmu_frames_sel = MB_INIT1(
 	NOOPT,
 	NOGROUP,0,
 	NOKEY,
-	MB_B_GHILITE,	/* flags */
+	MB_B_GHILITE /* flags */
 	);
 
 static Button cmu_minitime_sel =  MB_INIT1(
@@ -402,7 +402,7 @@ static Button cmu_minitime_sel =  MB_INIT1(
 	NOOPT,
 	&celtime_data,0,
 	NOKEY,
-	0,
+	0
 	);
 static Button cmu_minipal_sel = MB_INIT1(
 	&cmu_minitime_sel, 	/* next */
@@ -445,7 +445,7 @@ static Button cmu_goinks_sel = MB_INIT1(
 	qcel_inks,
 	&vs.ink_id,opq_INKID,
 	NOKEY,
-	MB_GHILITE,
+	MB_GHILITE
 	);
 static Button cmu_std1_sel = MB_INIT1(
 	&cmu_goinks_sel,
@@ -457,7 +457,7 @@ static Button cmu_std1_sel = MB_INIT1(
 	NOOPT,
 	&cel_sh1dat,0,
 	NOKEY,
-	0,	/* flags */
+	0 /* flags */
 	);
 Button cmu_common_sels = MB_INIT1(
 	&cmu_std1_sel,
@@ -469,7 +469,7 @@ Button cmu_common_sels = MB_INIT1(
 	NOOPT,
 	NOGROUP,0,
 	NOKEY,
-	0,	/* flags */
+	0 /* flags */
 	);
 
 static Button cmu_undo_sel = MB_INIT1(
@@ -482,7 +482,7 @@ static Button cmu_undo_sel = MB_INIT1(
 	NOOPT,
 	NOGROUP,0,
 	'\b',
-	0,	/* flags */
+	0 /* flags */
 	);
 static Button cmu_title_sel = MB_INIT1(
 	&cmu_undo_sel,
@@ -494,7 +494,7 @@ static Button cmu_title_sel = MB_INIT1(
 	mb_menu_to_bottom,
 	&tbg_moveclose,0,
 	'q',
-	0,	/* flags */
+	0 /* flags */
 	);
 
 
@@ -525,7 +525,7 @@ Menuhdr cel_menu = MENU_INIT0(
 	0,				/* flags */
 	NULL,			/* procmouse */
 	NULL, 			/* on_showhide */
-	NULL,			/* cleanup */
+	NULL			/* cleanup */
 );
 
 static Smu_button_list cel_smblist[] = {

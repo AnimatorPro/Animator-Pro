@@ -47,7 +47,7 @@ static Button mt_frameix_sel =  MB_INIT1(
 	mt_opt_all,
 	NOGROUP,IXSEL_ID,
 	NOKEY,
-	MB_GHANG,
+	MB_GHANG
 	);
 
 static Button mt_bot_sel =  MB_INIT1(
@@ -60,7 +60,7 @@ static Button mt_bot_sel =  MB_INIT1(
 	mt_opt_all,
 	NOGROUP,0,
 	NOKEY,
-	MB_GHANG,
+	MB_GHANG
 	);
 
 static Button mt_play_sel =  MB_INIT1(
@@ -73,7 +73,7 @@ static Button mt_play_sel =  MB_INIT1(
 	mt_opt_all,
 	NOGROUP,0,
 	DARROW,
-	MB_GHANG,
+	MB_GHANG
 	);
 
 static Button mt_fore1_sel =  MB_INIT1(
@@ -86,7 +86,7 @@ static Button mt_fore1_sel =  MB_INIT1(
 	mt_opt_all,
 	NOGROUP,0,
 	RARROW,
-	MB_GHANG,
+	MB_GHANG
 	);
 
 static Button mt_back1_sel =  MB_INIT1(
@@ -99,7 +99,7 @@ static Button mt_back1_sel =  MB_INIT1(
 	mt_opt_all,
 	NOGROUP,0,
 	LARROW,
-	MB_GHANG,
+	MB_GHANG
 	);
 
 static Button mt_top_sel =  MB_INIT1(
@@ -112,7 +112,7 @@ static Button mt_top_sel =  MB_INIT1(
 	mt_opt_all,
 	NOGROUP,0,
 	UARROW,
-	MB_GHANG,
+	MB_GHANG
 	);
 
 Button minitime_sel =  MB_INIT1(
@@ -125,7 +125,7 @@ Button minitime_sel =  MB_INIT1(
 	mt_opt_all,
 	NOGROUP,0,
 	NOKEY,
-	MB_GHANG,
+	MB_GHANG
 	);
 
 

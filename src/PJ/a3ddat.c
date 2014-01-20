@@ -699,7 +699,7 @@ static Button a3d_g4_sel = MB_INIT1(
 						NOOPT,
 						&vs.ado_spin,2,
 						NOKEY,
-						MB_B_GHILITE,
+						MB_B_GHILITE
 						);
 					static Button a3d_sp_axis = MB_INIT1(
 						&a3d_sp_turns,
@@ -711,7 +711,7 @@ static Button a3d_g4_sel = MB_INIT1(
 						NOOPT,
 						&vs.ado_spin,1,
 						NOKEY,
-						MB_B_GHILITE,
+						MB_B_GHILITE
 						);
 					static Button a3d_sp_center = MB_INIT1(
 						&a3d_sp_axis,
@@ -723,7 +723,7 @@ static Button a3d_g4_sel = MB_INIT1(
 						NOOPT,
 						&vs.ado_spin,0,
 						NOKEY,
-						MB_B_GHILITE,
+						MB_B_GHILITE
 						);
 				static Button a3d_spin_group = MB_INIT1(
 					NONEXT,
@@ -1010,7 +1010,7 @@ static Button a3d_path_sel = MB_INIT1(
 	NOOPT,
 	&vs.ado_mode,3,
 	NOKEY,
-	MB_B_GHILITE,
+	MB_B_GHILITE
 	);
 static Button a3d_move_sel = MB_INIT1(
 	&a3d_path_sel,
@@ -1022,7 +1022,7 @@ static Button a3d_move_sel = MB_INIT1(
 	NOOPT,
 	&vs.ado_mode,2,
 	NOKEY,
-	MB_B_GHILITE,
+	MB_B_GHILITE
 	);
 static Button a3d_size_sel = MB_INIT1(
 	&a3d_move_sel,
@@ -1034,7 +1034,7 @@ static Button a3d_size_sel = MB_INIT1(
 	NOOPT,
 	&vs.ado_mode,1,
 	NOKEY,
-	MB_B_GHILITE,
+	MB_B_GHILITE
 	);
 static Button a3d_spin_sel = MB_INIT1(
 	&a3d_size_sel,
@@ -1046,7 +1046,7 @@ static Button a3d_spin_sel = MB_INIT1(
 	NOOPT,
 	&vs.ado_mode,0,
 	NOKEY,
-	MB_B_GHILITE,
+	MB_B_GHILITE
 	);
 static Button a3d_clear_sel = MB_INIT1(
 	&a3d_spin_sel,
@@ -1155,7 +1155,7 @@ static Button a3d_kmo_sel = MB_INIT1(
 	go_cel_menu,
 	&vs.zero_clear,1,
 	NOKEY,
-	MB_B_GHILITE,
+	MB_B_GHILITE
 	);
 static Button a3d_fmo_sel = MB_INIT1(
 	&a3d_kmo_sel,
@@ -1167,7 +1167,7 @@ static Button a3d_fmo_sel = MB_INIT1(
 	NOOPT,
 	&vs.fillp,1,
 	NOKEY,
-	MB_B_GHILITE,
+	MB_B_GHILITE
 	);
 static Button a3d_ink_sel = MB_INIT1(
 	&a3d_fmo_sel,
@@ -1179,7 +1179,7 @@ static Button a3d_ink_sel = MB_INIT1(
 	qinks,
 	&vs.ink_id,opq_INKID,
 	NOKEY,
-	MB_GHILITE,
+	MB_GHILITE
 	);
 
 extern Minitime_data flxtime_data;
@@ -1245,7 +1245,7 @@ static Button a3d_moveq_sel = MB_INIT1(
 	mb_menu_to_bottom,
 	&tbg_moveclose,0,
 	'q',
-	0,	/* flags */
+	0 /* flags */
 	);
 
 void seebg_a3d();

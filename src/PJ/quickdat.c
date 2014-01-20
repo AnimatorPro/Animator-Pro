@@ -106,7 +106,7 @@ static Button ptg_opt7_sel = MB_INIT1(
 	go_dtoolopts,
 	&vs.ptool_id,0,
 	NOKEY,
-	MB_GHILITE,	/* flags */
+	MB_GHILITE /* flags */
 	);
 static Button ptg_opt6_sel = MB_INIT1(
 	&ptg_opt7_sel, /* next */
@@ -118,7 +118,7 @@ static Button ptg_opt6_sel = MB_INIT1(
 	go_dtoolopts,
 	&vs.ptool_id,0,
 	NOKEY,
-	MB_GHILITE,	/* flags */
+	MB_GHILITE /* flags */
 	);
 static Button ptg_opt5_sel = MB_INIT1(
 	&ptg_opt6_sel, /* next */
@@ -130,7 +130,7 @@ static Button ptg_opt5_sel = MB_INIT1(
 	go_dtoolopts,
 	&vs.ptool_id,0,
 	NOKEY,
-	MB_GHILITE,	/* flags */
+	MB_GHILITE /* flags */
 	);
 static Button ptg_opt4_sel = MB_INIT1(
 	&ptg_opt5_sel, /* next */
@@ -142,7 +142,7 @@ static Button ptg_opt4_sel = MB_INIT1(
 	go_dtoolopts,
 	&vs.ptool_id,0,
 	NOKEY,
-	MB_GHILITE,	/* flags */
+	MB_GHILITE /* flags */
 	);
 static Button ptg_opt3_sel = MB_INIT1(
 	&ptg_opt4_sel, /* next */
@@ -154,7 +154,7 @@ static Button ptg_opt3_sel = MB_INIT1(
 	go_dtoolopts,
 	&vs.ptool_id,0,
 	NOKEY,
-	MB_GHILITE,	/* flags */
+	MB_GHILITE /* flags */
 	);
 static Button ptg_opt2_sel = MB_INIT1(
 	&ptg_opt3_sel, /* next */
@@ -166,7 +166,7 @@ static Button ptg_opt2_sel = MB_INIT1(
 	go_dtoolopts,
 	&vs.ptool_id,0,
 	NOKEY,
-	MB_GHILITE,	/* flags */
+	MB_GHILITE /* flags */
 	);
 static Button ptg_opt1_sel = MB_INIT1(
 	&ptg_opt2_sel, /* next */
@@ -178,7 +178,7 @@ static Button ptg_opt1_sel = MB_INIT1(
 	go_dtoolopts,
 	&vs.ptool_id,0,
 	NOKEY,
-	MB_GHILITE,	/* flags */
+	MB_GHILITE /* flags */
 	);
 Button pen_opts_sel = MB_INIT1(
 	&ptg_opt1_sel, /* next */
@@ -190,7 +190,7 @@ Button pen_opts_sel = MB_INIT1(
 	go_dtoolopts,
 	&vs.ptool_id,0,
 	NOKEY,
-	MB_GHILITE,	/* flags */
+	MB_GHILITE /* flags */
 	);
 
 /****** ink group ******/
@@ -205,7 +205,7 @@ static Button ig_ink7_sel = MB_INIT1(
 	go_inkopts,
 	&vs.ink_id,0,
 	NOKEY,
-	MB_GHILITE,	/* flags */
+	MB_GHILITE /* flags */
 	);
 static Button ig_ink6_sel = MB_INIT1(
 	&ig_ink7_sel, /* next */
@@ -217,7 +217,7 @@ static Button ig_ink6_sel = MB_INIT1(
 	go_inkopts,
 	&vs.ink_id,0,
 	NOKEY,
-	MB_GHILITE,	/* flags */
+	MB_GHILITE /* flags */
 	);
 static Button ig_ink5_sel = MB_INIT1(
 	&ig_ink6_sel, /* next */
@@ -229,7 +229,7 @@ static Button ig_ink5_sel = MB_INIT1(
 	go_inkopts,
 	&vs.ink_id,0,
 	NOKEY,
-	MB_GHILITE,	/* flags */
+	MB_GHILITE /* flags */
 	);
 static Button ig_ink4_sel = MB_INIT1(
 	&ig_ink5_sel, /* next */
@@ -241,7 +241,7 @@ static Button ig_ink4_sel = MB_INIT1(
 	go_inkopts,
 	&vs.ink_id,0,
 	NOKEY,
-	MB_GHILITE,	/* flags */
+	MB_GHILITE /* flags */
 	);
 static Button ig_ink3_sel = MB_INIT1(
 	&ig_ink4_sel, /* next */
@@ -253,7 +253,7 @@ static Button ig_ink3_sel = MB_INIT1(
 	go_inkopts,
 	&vs.ink_id,0,
 	NOKEY,
-	MB_GHILITE,	/* flags */
+	MB_GHILITE /* flags */
 	);
 static Button ig_ink2_sel = MB_INIT1(
 	&ig_ink3_sel, /* next */
@@ -265,7 +265,7 @@ static Button ig_ink2_sel = MB_INIT1(
 	go_inkopts,
 	&vs.ink_id,0,
 	NOKEY,
-	MB_GHILITE,	/* flags */
+	MB_GHILITE /* flags */
 	);
 static Button ig_ink1_sel = MB_INIT1(
 	&ig_ink2_sel, /* next */
@@ -277,7 +277,7 @@ static Button ig_ink1_sel = MB_INIT1(
 	go_inkopts,
 	&vs.ink_id,0,
 	NOKEY,
-	MB_GHILITE,	/* flags */
+	MB_GHILITE /* flags */
 	);
 Button ink_opts_sel = MB_INIT1(
 	&ig_ink1_sel, /* next */
@@ -289,7 +289,7 @@ Button ink_opts_sel = MB_INIT1(
 	go_inkopts,
 	&vs.ink_id,0,
 	NOKEY,
-	MB_GHILITE,	/* flags */
+	MB_GHILITE /* flags */
 	);
 
 static Button qmu_grid_sel = MB_INIT1(
@@ -302,7 +302,7 @@ static Button qmu_grid_sel = MB_INIT1(
 	qgrid,
 	&vs.use_grid,1,
 	NOKEY,
-	MB_B_GHILITE,	/* flags */
+	MB_B_GHILITE /* flags */
 	);
 void see_mask_button(Button *b)
 {
@@ -319,7 +319,7 @@ static Button qmu_mask_sel = MB_INIT1(
 	qmask,
 	&vs.use_mask,1,
 	NOKEY,
-	MB_B_GHILITE,	
+	MB_B_GHILITE
 	);
 static Button qmu_penopts_sel = MB_INIT1(
 	&qmu_mask_sel,
@@ -331,7 +331,7 @@ static Button qmu_penopts_sel = MB_INIT1(
 	NOOPT,
 	NOGROUP,0,
 	NOKEY,
-	0,	/* flags */
+	0 /* flags */
 	);
 
 static Button qmu_inkopts_sel = MB_INIT1(
@@ -344,7 +344,7 @@ static Button qmu_inkopts_sel = MB_INIT1(
 	NOOPT,
 	NOGROUP,0,
 	NOKEY,
-	0,	/* flags */
+	0 /* flags */
 	);
 
 static Button qmu_zpan_sel = MB_INIT1(
@@ -357,7 +357,7 @@ static Button qmu_zpan_sel = MB_INIT1(
 	NOOPT,
 	NULL,0,
 	NOKEY,	
-	0,
+	0
 	);
 
 static Button qmu_files_sel = MB_INIT1(
@@ -382,7 +382,7 @@ static Button qmu_std1_sel = MB_INIT1(
 	NOOPT,
 	&qmu_sh1dat,0,
 	NOKEY,
-	0,	/* flags */
+	0 /* flags */
 	);
 static Button qmu_redo_sel = MB_INIT1(
 	&qmu_std1_sel, /* next */
@@ -394,7 +394,7 @@ static Button qmu_redo_sel = MB_INIT1(
 	NOOPT,
 	NOGROUP,0,
 	'r',
-	0,	/* flags */
+	0 /* flags */
 	);
 static Button qmu_undo_sel = MB_INIT1(
 	&qmu_redo_sel, /* next */
@@ -406,7 +406,7 @@ static Button qmu_undo_sel = MB_INIT1(
 	NOOPT,
 	NOGROUP,0,
 	'\b',
-	0,	/* flags */
+	0 /* flags */
 	);
 
 static Button qmu_title_sel = MB_INIT1(
@@ -460,7 +460,7 @@ Menuhdr quick_menu = MENU_INIT0(
 	0,				/* flags */
 	NULL,			/* procmouse */
 	qmu_on_showhide, /* on_showhide */
-	NULL,			/* cleanup */
+	NULL			/* cleanup */
 );
 
 static Smu_button_list home_smblist[] = {
