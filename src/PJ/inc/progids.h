@@ -1,5 +1,5 @@
-#ifndef RELEASE_H
-#define RELEASE_H
+#ifndef PROGIDS_H
+#define PROGIDS_H
 
 #ifndef STDTYPES_H
 	#include "stdtypes.h"
