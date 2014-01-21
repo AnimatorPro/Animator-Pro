@@ -1,11 +1,10 @@
 
 /* status.c - display continue alert box with program info */
 
-#include <time.h>
 #include "jimk.h"
 #include "softmenu.h"
 
-extern long f_free_tflx();
+#ifdef SLUFFED
 extern long add_up_frames();
 
 extern long largest_frag();
@@ -30,7 +29,7 @@ extern int count_rfree_sec();
 				 tot, tot/(flix.hdr.frame_count),
 				 vb.pencel->width,vb.pencel->height);
 }
-
+#endif /* SLUFFED */
 
 void about(void)
 {

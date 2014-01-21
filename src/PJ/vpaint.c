@@ -241,7 +241,7 @@ rfree_dir(&nl);
 extern void flip_range(), flip5(), get_color(), first_frame(),
 	next_frame(), prev_frame(), menu_doredo(), cut_out_cel(), clip_cel(),
 	paste_the_cel(), move_the_cel(), qsave(), qload(), qnew_flx(), qquit(),
-	quse_poco(), status(), test(), go_ado(), insert_a_frame(), kill_a_frame(),
+	quse_poco(), test(), go_ado(), insert_a_frame(), kill_a_frame(),
 	palette(), ktoggle_zoom();
 
 static void flix_first_frame()
@@ -294,7 +294,9 @@ static void toggle_one_color()
 
 static Keyequiv header_keys[] = {
 	{ "ztogl", tog_zoom, KE_NOHIDE, 'z' },
+#ifdef SLUFFED
 	{ "status", status, KE_HIDE, '?' },
+#endif /* SLUFFED */
 	{ "qpal", palette, KE_HIDE, '@' },
 	{ "color", get_color, KE_NOHIDE, FKEY2 },
 	{ "prevf", flix_prev_frame, KE_NOHIDE, LARROW },
@@ -756,7 +758,9 @@ else
 			new_config();
 			break;
 		case EXT_INF_PUL:
+#ifdef SLUFFED
 			status();
+#endif /* SLUFFED */
 			break;
 		case EXT_SCR_PUL:
 			return_to_main(RESET_SCREEN_SIZE);

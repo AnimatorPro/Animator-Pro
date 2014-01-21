@@ -347,7 +347,6 @@ Pull home
 	"Settings...",804
 	"Configure...",805
 	"Screen Size",807,'z'
-	"Info",806,'I','?'
 	}
 }
 
