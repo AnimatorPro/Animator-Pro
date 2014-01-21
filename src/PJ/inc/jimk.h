@@ -105,8 +105,6 @@ enum muids {
 extern Menuhdr quick_menu;
 extern Button ink_group_sel;
 
-LONG get_userid(); /* returns serial number of program */
-
 /*** cursors found in cursor.c ******/
 
 #ifndef CURSOR_C

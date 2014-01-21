@@ -23,11 +23,6 @@ extern Boolean do_pj_hotkey(Global_icb *gicb);
 
 extern void do_auto_redo(), swap_undo();
 
-LONG pj__fii_get_user_id()
-{
-	return(get_userid());
-}
-
 static Errcode init_after_screen()
 /* initializes and allocs every thing that has to be done after the screen
  * and before the dynamic stuff (tempflx) and push/pop stuff is opened */
