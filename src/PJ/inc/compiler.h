@@ -63,7 +63,6 @@
 
 extern char *_STACKTOP; 					/* Watcom stack goodies...		*/
 extern char *_STACKLOW; 					/* not sure what these are for, */
-#define __STACK_R32__						/* suspect only for PJ internals*/
 
 /*----------------------------------------------------------------------------
  * PJ-specific items...
