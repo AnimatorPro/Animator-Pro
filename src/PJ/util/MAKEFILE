@@ -51,7 +51,7 @@ FORMATFO = \
 ## linked list utilities including a shell sort
 
 LINKLISTO = \
- dladhead.obj dladtail.obj dlcirnex.obj dlcirpre.obj dlclone.obj\
+ dladhead.obj dladtail.obj dlclone.obj\
  dlfndhdr.obj dlgethd.obj dlgettl.obj dlinit.obj dlinsaft.obj\
  dlinsbef.obj dlinscmp.obj dlisin.obj dlisort.obj dlistlen.obj\
  dlremnod.obj dlseehd.obj dlseetl.obj dlswap.obj dltohead.obj\

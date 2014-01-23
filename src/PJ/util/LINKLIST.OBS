@@ -1,8 +1,6 @@
 +argparse.obj
 +dladhead.obj
 +dladtail.obj
-+dlcirnex.obj
-+dlcirpre.obj
 +dlclone.obj
 +dlfndhdr.obj
 +dlgethd.obj
