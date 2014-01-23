@@ -55,8 +55,6 @@ typedef struct ftextfarg {
 
 char *ftext_format_type(char **pfmt,va_list *pargs);
 
-Errcode init_ftextfarg(Ftextfarg *fa, char *formats, char *text);
-
 /* this is the same as init_ftextfarg() but, if formats is NULL it will 
  * initialize it the same way as a Formatarg for printf style formatting */
 

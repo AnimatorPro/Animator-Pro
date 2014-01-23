@@ -45,7 +45,7 @@ STRO = \
 
 FORMATFO = \
  folenf.obj fonsprtf.obj forparse.obj formatf.obj formatxt.obj\
- fosprint.obj fovnsptf.obj ftextf.obj ftextfmt.obj ftxtfarg.obj\
+ fosprint.obj fovnsptf.obj ftextf.obj ftextfmt.obj\
  sftextf.obj vsftextf.obj snftextf.obj vnftextf.obj
 
 ## linked list utilities including a shell sort
