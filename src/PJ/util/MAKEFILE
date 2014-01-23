@@ -44,8 +44,8 @@ STRO = \
 ## string formatting utilities sprintf and the like
 
 FORMATFO = \
- focountf.obj folenf.obj fonsprtf.obj forparse.obj formatf.obj formatxt.obj\
- fosprint.obj fovcntf.obj fovnsptf.obj ftextf.obj ftextfmt.obj ftxtfarg.obj\
+ folenf.obj fonsprtf.obj forparse.obj formatf.obj formatxt.obj\
+ fosprint.obj fovnsptf.obj ftextf.obj ftextfmt.obj ftxtfarg.obj\
  sftextf.obj vsftextf.obj snftextf.obj vnftextf.obj
 
 ## linked list utilities including a shell sort
