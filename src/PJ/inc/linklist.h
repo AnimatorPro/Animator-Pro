@@ -92,7 +92,6 @@ void 	insert_after(Dlnode *node, Dlnode *lnode);
 void 	insert_before(Dlnode *node, Dlnode *lnode);
 Dlnode 	*get_head(Dlheader *list);
 Dlnode 	*see_head(Dlheader *list);
-Dlnode 	*get_tail(Dlheader *list);
 Dlnode 	*see_tail(Dlheader *list);
 void 	rem_node(Dlnode *node);
 void 	safe_rem_node(Dlnode *node);
