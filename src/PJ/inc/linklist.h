@@ -99,7 +99,6 @@ void 	list_tohead( Dlheader *fromlist, Dlheader *tolist);
 void 	list_totail(Dlheader *fromlist, Dlheader *tolist);
 LONG 	listlen(Dlheader *list);
 Dlheader *find_header(Dlnode *node);
-Boolean isin_list(Dlnode *testnode,Dlheader *list);
 void 	insert_compare(Dlnode *node, Dlheader *list, FUNC compare);
 void 	isort_list(Dlheader *list, FUNC compare);
 void 	sort_indarray(void **array, LONG count, FUNC cmp,...);

@@ -53,7 +53,7 @@ FORMATFO = \
 LINKLISTO = \
  dladhead.obj dladtail.obj dlclone.obj\
  dlfndhdr.obj dlgethd.obj dlinit.obj dlinsaft.obj\
- dlinsbef.obj dlinscmp.obj dlisin.obj dlisort.obj dlistlen.obj\
+ dlinsbef.obj dlinscmp.obj dlisort.obj dlistlen.obj\
  dlremnod.obj dlseehd.obj dlseetl.obj dlswap.obj dltohead.obj\
  dltotail.obj nalngest.obj namein.obj namesort.obj argparse.obj\
  shelsort.obj slistel.obj slistix.obj slistlen.obj slfree.obj\
