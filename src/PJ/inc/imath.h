@@ -19,7 +19,6 @@
 #define TWOPI 1024
 
 int imax(int a, int b); 			/* maximum of a,b */
-int iabs(int a);					/* integer absolute value */
 int ilcm(int a, int b);				/* least common multiple */
 void calc_sieve(char *sieve, int max);	/* make sieve of primes */
 int sqr_root(long i);				/* square root */
