@@ -1,6 +1,7 @@
 #include "stdtypes.h"
 #include <ctype.h>
 
+#ifdef SLUFFED
 static int match_substr(char *str, char *wild)
 /* assumes wild starts on a normal char and not a '*' 0 or '?' */
 {
@@ -100,6 +101,8 @@ next_wild:
 		continue;
 	}
 }
+#endif /* SLUFFED */
+
 int name_is_wild(char *name)
 {
 	char c;
