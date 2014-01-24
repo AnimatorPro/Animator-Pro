@@ -18,7 +18,6 @@
 /* 360 degrees according to my trig tables */
 #define TWOPI 1024
 
-int imax(int a, int b); 			/* maximum of a,b */
 int ilcm(int a, int b);				/* least common multiple */
 void calc_sieve(char *sieve, int max);	/* make sieve of primes */
 int sqr_root(long i);				/* square root */

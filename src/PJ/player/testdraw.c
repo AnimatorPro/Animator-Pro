@@ -89,7 +89,7 @@ static int color = 0;
 	}
 }
 
-int imax(int a, int b)
+int intmax(int a, int b)
 /* return maximum of a,b */
 {
 return(a>b ? a : b);
@@ -119,7 +119,7 @@ static void circle_test(Rcel *cel)
 {
 SHORT width = cel->width, height = cel->height;
 SHORT xcen = width/2, ycen = height/2;
-SHORT maxdiam = imax(width,height)-2;
+SHORT maxdiam = intmax(width,height)-2;
 SHORT step = maxdiam/10;
 static SHORT color = 0;
 SHORT diam;

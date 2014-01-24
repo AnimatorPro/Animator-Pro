@@ -253,7 +253,7 @@ if ((newt->dcount = end1-end0) < 0)
  * # of points in the source and the destination, or if that would be a
  * big number (greater than 21) then the maximum of the # of points in the
  * source and the destination. */
-max = imax(newt->scount, newt->dcount);
+max = intmax(newt->scount, newt->dcount);
 if ((cm = lcm_zero_ok(newt->scount, newt->dcount)) <= Success)
 	return(cm);
 if (cm <= 21)
