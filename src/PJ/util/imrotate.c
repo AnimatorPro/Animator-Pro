@@ -21,18 +21,3 @@ int c;
 	xy[1] = itmult(isincos(theta,&c),rad);
 	xy[0] = itmult(c,rad);
 }
-
-void rotate_points(int theta,int cx,int cy,short *spt,short *dpt,int count)
-{
-int s,c,x,y;
-
-	s = isincos(theta,&c);
-	while (--count >= 0)
-	{
-		x = *spt++ - cx;
-		y = *spt++ - cy;
-		*dpt++ = itmult(c,x) - itmult(s,y) + cx;
-		*dpt++ = itmult(s,x) + itmult(c,y) + cy;
-	}
-}
-
