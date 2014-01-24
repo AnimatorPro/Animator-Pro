@@ -184,6 +184,7 @@ Memchunk *chunk;
 }
 #endif /* TESTING */
 
+#ifdef SLUFFED
 void print_alloclist()
 {
 #ifdef ALLOCLIST
@@ -207,6 +208,7 @@ int i;
 	}
 #endif /* ALLOCLIST */
 }
+#endif /* SLUFFED */
 
 #ifdef ALLOCLIST 
 #ifdef COOKIES
