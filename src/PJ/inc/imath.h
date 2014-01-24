@@ -19,7 +19,6 @@
 #define TWOPI 1024
 
 int ilcm(int a, int b);				/* least common multiple */
-void calc_sieve(char *sieve, int max);	/* make sieve of primes */
 int sqr_root(long i);				/* square root */
 int calc_distance(short x1,short y1,short x2,short y2);  /* 2D distance */
 void partial_rot(SHORT theta, SHORT *xx, SHORT *yy);

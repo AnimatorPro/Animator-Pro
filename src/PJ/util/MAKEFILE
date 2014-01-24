@@ -63,7 +63,7 @@ LINKLISTO = \
 
 IMATHO = \
  imclcdst.obj imlcmult.obj imptlrot.obj imrotate.obj\
- imrsclby.obj imsieve.obj imsincos.obj imsqroot.obj imssclby.obj\
+ imrsclby.obj imsincos.obj imsqroot.obj imssclby.obj\
  imusclby.obj imintmin.obj imintmax.obj imintabs.obj fixpoint.obj
 
 
