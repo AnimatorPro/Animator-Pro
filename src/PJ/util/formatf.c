@@ -1,12 +1,34 @@
 #define FORMATF_INTERNALS
+#include <assert.h>
 #include <ctype.h>
 #include <math.h>
 #include <stdarg.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "errcodes.h"
 #include "formatf.h"
 
+#ifndef __WATCOMC__
+#define ultoa(VALUE,BUF,RADIX)  pj_ultoa(VALUE,BUF,RADIX)
+
+static char *
+pj_ultoa(unsigned long value, char *buf, int radix)
+{
+	if (radix == 8) {
+		sprintf(buf, "%lo", value);
+	}
+	else if (radix == 16) {
+		sprintf(buf, "%lx", value);
+	}
+	else {
+		assert(radix == 10);
+		sprintf(buf, "%lu", value);
+	}
+
+	return buf;
+}
+#endif /* __WATCOMC__ */
 
 /* #define TESTMAIN */
 
@@ -487,7 +509,7 @@ int len;
 	else
 		*suffix++ = '+';
 
-	itoa(exp,suffix,10);
+	ultoa(exp, suffix, 10);
 	if((len = strlen(suffix)) < 3)
 	{
 		memmove(suffix + (3 - len),suffix,len);
