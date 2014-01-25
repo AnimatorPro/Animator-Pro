@@ -125,7 +125,7 @@ register struct mblock *mb, *nb, *lb;
 printf("alloc(%d)\n", nbytes);
 #endif /* DEBUG */
 
-if (mb = free_list)
+if ((mb = free_list) != NULL)
 	{
 	if (mb->size == nbytes)
 		{

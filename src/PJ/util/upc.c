@@ -5,7 +5,7 @@ void upc(char *s)
 {
 register char c;
 
-while (c = *s)
+while ((c = *s) != '\0')
 	{
 	*s++ = toupper(c);
 	}

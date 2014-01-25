@@ -32,7 +32,7 @@ SHORT offset;
 	init_format_parse(&fa,format);
 	offset = ai->va_oset = 0; /* first one starts at zero */
 
-	while(c = fa_getchar(&fa))
+	while ((c = fa_getchar(&fa)) != '\0')
 	{
 		switch(FT_TYPE(c))
 		{
