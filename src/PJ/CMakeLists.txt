@@ -6,6 +6,8 @@ include_directories("inc")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -W -Wall -Wextra -Wmissing-prototypes")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wold-style-definition")
 
+add_subdirectory(util)
+
 set(PJMAIN_SRC_FILES
 	test.c
 	)
@@ -13,4 +15,5 @@ set(PJMAIN_SRC_FILES
 add_executable(pj WIN32
 	${PJMAIN_SRC_FILES})
 
-target_link_libraries(pj)
+target_link_libraries(pj
+	trdutil)
