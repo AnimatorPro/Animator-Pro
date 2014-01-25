@@ -234,8 +234,6 @@ Errcode smu_lookup(struct softmenu *sm,	/* Find symbol */
 	unsigned class,					/* symbol class */
 	char *name) 					/* symbol name */
 {
-extern Names *name_in_list(char *name, Names *list);
-
 if (class >= sm->class_count)
 	return(Err_no_such_class);
 if ((*psym = (Smu_symbol *)name_in_list(name, 

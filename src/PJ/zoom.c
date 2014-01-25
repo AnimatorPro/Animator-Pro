@@ -1,11 +1,12 @@
 /* zoom.c - help simulate fat-bits.  Position zoom window on screen. */
 
-#include "rastlib.h"
 #include "jimk.h"
+#include "errcodes.h"
+#include "ftextf.h"
+#include "memory.h"
 #include "menus.h"
 #include "ptrmacro.h"
-#include "memory.h"
-#include "errcodes.h"
+#include "rastlib.h"
 #include "softmenu.h"
 
 static char esize_zwin_line[] = "zoom_win";

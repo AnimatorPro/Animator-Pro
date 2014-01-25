@@ -21,10 +21,10 @@
  *	and by changing most all SHORT vars to int (again, allowing optimization).
  */
 
-#include "errcodes.h"
 #include <stdio.h>
+#include "errcodes.h"
 #include "gif.h"
-
+#include "memory.h"
 
 extern FILE *gif_load_file;
 

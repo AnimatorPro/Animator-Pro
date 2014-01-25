@@ -13,11 +13,6 @@
 	#include "filemode.h"
 #endif
 
-#ifdef JFILE_INTERNALS
-	extern void *trd_laskmem(long size);
-	extern void trd_freemem(void *mem);
-/* JFILE_INTERNALS */ #endif
-
 /** basic low level dos file calls found in the syslib **/
 
 Boolean pj_exists(char *path);

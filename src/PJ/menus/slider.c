@@ -1,10 +1,11 @@
 /* slider.c - functions to implement our famous "number on the knob"
    slider buttons */
 
-#include "menus.h"
-#include "rastext.h"
+#include "imath.h"
 #include "input.h"
 #include "memory.h"
+#include "menus.h"
+#include "rastext.h"
 
 int clip_to_slider(int val, Qslider *qs)
 /* Return val clipped to slider */

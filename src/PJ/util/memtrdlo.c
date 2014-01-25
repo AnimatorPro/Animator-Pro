@@ -1,4 +1,5 @@
 /* lo level memory stuff. */
+#include <stdlib.h>
 #include "stdtypes.h"
 #include "errcodes.h"
 #include "memory.h"
@@ -13,13 +14,11 @@ struct mblock	/* structure to keep track of free memory */
 	long size;
 	};
 
-
-extern void *malloc();
 static struct mblock *free_list = NULL;
 long mem_free;
 long init_mem_free;
 
-static long find_dos_free_amount()
+static long find_dos_free_amount(void)
 /*
  * Figure out how much memory to allocate leaving DOS a little room.
  */
@@ -28,7 +27,7 @@ static long find_dos_free_amount()
 return dos_mem_free() - 64*1024;
 }
 
-static long find_free_amount()
+static long find_free_amount(void)
 /*
  * Figure out how much memory to allocate.  Check for DPMI virtual memory
  * manager (aka Windows) and refrain from allocating all virtual memory.
@@ -198,9 +197,10 @@ mem_free -= nbytes;
 return(pt);
 }
 
-long lo_freemem(long *pt)
+long lo_freemem(void *p)
 /* returns size freed (size allocd with) */
 {
+long *pt = p;
 register struct mblock *mb;
 register struct mblock *lb;
 register struct mblock *nb;

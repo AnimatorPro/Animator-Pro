@@ -1,14 +1,16 @@
 /* menu to select a pdr from the resource directory */
 
 #include "errcodes.h"
-#include "memory.h"
+#include "ftextf.h"
 #include "jfile.h"
+#include "memory.h"
 #include "menus.h"
 #include "picdrive.h"
 #include "pjbasics.h"
 #include "resource.h"
 #include "rexlib.h"
 #include "softmenu.h"
+#include "util.h"
 
 typedef struct pdr_entry {
 	Names hdr;

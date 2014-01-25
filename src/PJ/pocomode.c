@@ -1,10 +1,11 @@
 /* pocomode.c - poco library functions that get/set drawing state
    and other variables. */
 
-#include "errcodes.h"
 #include "jimk.h"
+#include "errcodes.h"
 #include "pocoface.h"
 #include "pocolib.h"
+#include "util.h"
 
 extern Errcode builtin_err;
 

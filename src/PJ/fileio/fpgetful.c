@@ -1,6 +1,7 @@
 #include "errcodes.h"
 #include "filepath.h"
 #include "jfile.h"
+#include "msfile.h"
 #include "tfile.h"
 
 int _fp_get_path_devlen(char *path)

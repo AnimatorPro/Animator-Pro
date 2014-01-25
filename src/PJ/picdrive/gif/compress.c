@@ -64,6 +64,7 @@
 #include <stdio.h>
 #include "errcodes.h"
 #include "gif.h"
+#include "memory.h"
 
 #define LARGEST_CODE	4095
 #define TABLE_SIZE	(8*1024)

@@ -1,4 +1,6 @@
+#include <string.h>
 #include "memory.h"
+#include "util.h"
 
 char *clone_string(char *s)
 {

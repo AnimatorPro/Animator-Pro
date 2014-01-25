@@ -7,8 +7,9 @@
 #define INPUT_INTERNALS
 
 #include "errcodes.h"
-#include "input.h"
 #include "idriver.h"
+#include "imath.h"
+#include "input.h"
 #include "raster.h"
 
 

@@ -45,6 +45,7 @@
 #include "memory.h"
 #include "menus.h"
 #include "softmenu.h"
+#include "util.h"
 
 extern Button tseg_group_sel;
 extern void grey_ctext();

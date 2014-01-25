@@ -1,7 +1,9 @@
 #define FORMATF_INTERNALS
 #include <ctype.h>
-#include <stdarg.h>
 #include <math.h>
+#include <stdarg.h>
+#include <stdlib.h>
+#include <string.h>
 #include "errcodes.h"
 #include "formatf.h"
 

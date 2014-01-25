@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include "jimk.h"
-#include "rastext.h"
 #include "errcodes.h"
+#include "rastext.h"
+#include "util.h"
 #include "vsetfile.h"
 
 static Vfont _uvfont;

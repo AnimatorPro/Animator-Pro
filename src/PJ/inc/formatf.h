@@ -68,6 +68,8 @@ extern char fa_getchar(Formatarg *fa);
 
 int fa_lenf(Formatarg *fa);
 int fa_sprintf(char *buf,int maxlen, Formatarg *fa);
+int local_sprintf(char *buf, char *format, ...);
+Errcode vnsprintf(char *buf, int maxlen, char *format, va_list args);
 
 /****************************************************************************/
 /* Parsing format type values desired by a format string */

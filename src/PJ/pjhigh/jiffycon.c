@@ -1,3 +1,4 @@
+#include "imath.h"
 #include "pjbasics.h"
 
 ULONG jiffies_to_millisec(USHORT jiffies)

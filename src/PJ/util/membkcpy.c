@@ -1,4 +1,4 @@
-#include "stdtypes.h"
+#include "memory.h"
 #include "ptrmacro.h"
 
 void back_copy_mem(void *src,void *dst,int count)

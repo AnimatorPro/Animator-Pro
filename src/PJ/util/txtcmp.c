@@ -1,7 +1,7 @@
 #include <ctype.h>
-#include "stdtypes.h"
+#include "util.h"
 
-int txtcmp(register char *as, register char *bs)
+int txtcmp(char *as, char *bs)
 
 /* like strcmp but case insensitive */
 {

@@ -23,7 +23,19 @@ int sqr_root(long i);				/* square root */
 int calc_distance(short x1,short y1,short x2,short y2);  /* 2D distance */
 void partial_rot(SHORT theta, SHORT *xx, SHORT *yy);
 
-/* Give our fixed point multiply routine a better name */
-#define scale_mult(a,scale) itmult(a,scale)		/* 2.14 fixed point multiply */
+extern int intabs(int a);
+extern int intmax(int a, int b);
+extern int intmin(int a, int b);
+
+extern int itmult(SHORT trig, SHORT x);
+extern void polar(short theta, short rad, short *xy);
+
+extern int isin(short t);
+extern int icos(short t);
+extern int isincos(int angle, int *cos);
+
+extern int rscale_by(int x, int p, int q);
+extern int sscale_by(int x, int p, int q);
+extern int pj_uscale_by(USHORT x, USHORT p, USHORT q);
 
 #endif /* IMATH_H */

@@ -1,4 +1,4 @@
-#include "stdtypes.h"
+#include "memory.h"
 
 ULONG mem_crcsum(void *sbuf, LONG size)
 {

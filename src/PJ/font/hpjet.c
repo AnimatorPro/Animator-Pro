@@ -1,12 +1,11 @@
-#include "memory.h"
 #include "errcodes.h"
-#include "lstdio.h"
-#include "rastcall.h"
-#include "rastext.h"
 #include "fontdev.h"
 #include "hpjet.h"
-
-
+#include "lstdio.h"
+#include "memory.h"
+#include "rastcall.h"
+#include "rastext.h"
+#include "util.h"
 
 #define CMAX 256
 

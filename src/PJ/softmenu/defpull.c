@@ -5,9 +5,10 @@
  *
  * This one shouldn't be linked into the final.
  */
-#include "lstdio.h"
 #include "dstring.h"
+#include "lstdio.h"
 #include "menus.h"
+#include "util.h"
 #define CHARS 3
 
 char *skip_to_real(char *s)

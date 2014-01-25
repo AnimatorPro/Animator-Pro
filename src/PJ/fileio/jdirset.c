@@ -1,6 +1,6 @@
-#include "stdtypes.h"
-#include "errcodes.h"
 #include <ctype.h>
+#include "errcodes.h"
+#include "msfile.h"
 
 Errcode change_dir(char *name)
 

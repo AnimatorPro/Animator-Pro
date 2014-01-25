@@ -3,11 +3,12 @@
  * bitmap) picture driver. 
  ***************************************************************************/
 
+#include <stdio.h>
 #define REXLIB_INTERNALS
 #include "errcodes.h"
-#include "stdio.h"
 #include "memory.h"
 #include "picdrive.h"
+#include "util.h"
 
 /*-------------------------BMP STRUCTURE SECTION----------------------------*/
 

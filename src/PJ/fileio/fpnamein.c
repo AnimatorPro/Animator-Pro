@@ -1,4 +1,5 @@
 #include "filepath.h"
+#include "util.h"
 
 Boolean pj_name_in_path(char *path, char *name)
 {

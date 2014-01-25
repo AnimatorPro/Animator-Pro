@@ -2,9 +2,10 @@
    if necessary.  Works on temp_flx - our basic indexed frame/state file. */
 
 #include "errcodes.h"
-#include "ptrmacro.h"
-#include "jimk.h"
 #include "fli.h"
+#include "jimk.h"
+#include "linklist.h"
+#include "ptrmacro.h"
 
 extern LONG flx_data_offset(Flxfile *flx);
 
@@ -71,7 +72,7 @@ long lastend, thisstart, gap, thissize;
 	{
 		*s++ = c++;
 	}
-	sort_indarray(sorted, count, cmp_flx);
+	sort_indarray(sorted, count, cmp_flx, NULL);
 
 	/* Look for gaps in the list big enough to fit */
 	s = sorted;

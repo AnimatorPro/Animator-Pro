@@ -1,3 +1,4 @@
+#include <string.h>
 #include "linklist.h"
 
 Names *name_in_list(char *name, Names *list)

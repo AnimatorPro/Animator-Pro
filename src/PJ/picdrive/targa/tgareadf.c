@@ -2,6 +2,7 @@
  * TGAREADF.C - Routines to read headers and data from a targa file.
  ****************************************************************************/
 
+#include "memory.h"
 #include "targa.h"
 
 static Errcode read_targa_ctab(Targa_file *tf)

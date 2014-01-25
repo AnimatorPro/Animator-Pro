@@ -1,4 +1,4 @@
-
+#include <string.h>
 #include "errcodes.h"
 #include "memory.h"
 #include "linklist.h"

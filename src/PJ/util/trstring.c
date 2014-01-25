@@ -1,3 +1,4 @@
+#include "util.h"
 
 void tr_string( char *string, char in, char out)
 /*

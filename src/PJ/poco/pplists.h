@@ -36,7 +36,6 @@ extern char *malloc();
 extern int *clone_structure();
 extern int *clone_zero();
 
-extern char *clone_string();
 extern char *cat_strings();
 extern char *str_num();
 extern char *lsprintf();

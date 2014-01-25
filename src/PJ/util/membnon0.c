@@ -1,9 +1,9 @@
-#include "stdtypes.h"
+#include "memory.h"
 
-int nonzero_bytes(register UBYTE *c, int array_size)
+int nonzero_bytes(const UBYTE *c, int array_size)
 /* count number of non-zero elements in a byte array */
 {
-register UBYTE *maxc;
+const UBYTE *maxc;
 int acc;
 
 	maxc = c + array_size;

@@ -1,16 +1,14 @@
 #include "pocolib.h"
 #include <stdarg.h>
 #include <string.h>
+#include "errcodes.h"
 #include "poco.h"
 #include "ptrmacro.h"
-#include "errcodes.h"
+#include "util.h"
 
 extern char *getenv(); /* can't use watcom stdlib.h, conflicts with pj hdrs */
 
 extern Errcode builtin_err;
-extern char *clone_string();
-
-extern Errcode vnsprintf(char *buf, int maxlen, char *format, va_list args);
 
 static Popot null_popot = {NULL, NULL, NULL};
 

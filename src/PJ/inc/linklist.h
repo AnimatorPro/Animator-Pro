@@ -71,11 +71,11 @@ typedef struct dl_header {
 
 /* function prototypes */
 
+extern void *slist_el(Slnode *list, int ix);
+extern void *slist_last(Slnode *list);
+extern int slist_ix(Slnode *list, Slnode *el);
+extern int slist_len(Slnode *list);
 
-void 	*slist_el();
-void	*slist_last();
-int 	slist_ix();
-int 	slist_len();
 void 	*join_slists(Slnode *s1, Slnode *s2);
 void 	*remove_el(void *list, void *el);
 void 	*reverse_slist(void *l);
@@ -84,6 +84,7 @@ void 	free_slist(void *l);
 Names *name_in_list(char *name, Names *list);
 Names *text_in_list(char *name, Names *list);
 Errcode new_name(Names **pname, char *s, Names **plist);
+int longest_name(Names *names);
 
 void 	init_list(Dlheader *list);
 void 	add_head(Dlheader *list, Dlnode *node);
@@ -101,8 +102,8 @@ LONG 	listlen(Dlheader *list);
 Dlheader *find_header(Dlnode *node);
 void 	insert_compare(Dlnode *node, Dlheader *list, FUNC compare);
 void 	isort_list(Dlheader *list, FUNC compare);
-void 	sort_indarray(void **array, LONG count, FUNC cmp,...);
-void 	*sort_slist(Slnode *list, FUNC cmp);
+void	sort_indarray(void **array, LONG count, FUNC cmp, void *cmpdat);
+void	*sort_slist(Slnode *list, FUNC cmp, void *cmpdat);
 Names 	*sort_names(Names *list);
 
 void swap_dl_list(Dlheader *a, Dlheader *b);

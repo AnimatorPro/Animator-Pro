@@ -1,12 +1,11 @@
 
 #define RASTCOMP_INTERNALS
+#include "errcodes.h"
+#include "fli.h"
+#include "imath.h"
 #include "memory.h"
 #include "ptrmacro.h"
 #include "rastcomp.h"
-#include "fli.h"
-#include "errcodes.h"
-
-//#include "pjbasics.h"
 
 #define START_SIXCUBE 0
 

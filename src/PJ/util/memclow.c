@@ -1,10 +1,8 @@
+#include <stdlib.h>
+#include "asm.h"
 #include "errcodes.h"
 #include "memory.h"
 #include "ptrmacro.h"
-
-extern void *malloc();
-
-
 
 /* note that size must immediately precede memory !!!! */
 

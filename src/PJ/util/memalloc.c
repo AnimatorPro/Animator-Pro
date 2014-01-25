@@ -12,6 +12,7 @@ and utilities.  There are only 5 external symbols in this file
 
 #endif /* BIG_COMMENT ***********************************/
 
+#include <stdlib.h>
 #include "memory.h"
 #include "ptrmacro.h"
 
@@ -48,8 +49,6 @@ long pj_mem_last_fail;
 
 #ifdef TRD_MEMORY
 	#include "tfile.h"
-	extern void *trd_flush_alloc(long size);
-	extern long trd_freemem(void *pt);
 	#define SYS_ALLOC(sz) trd_flush_alloc(sz)
 	#define SYS_FREE(pt) trd_freemem(pt)
 	#define SYS_SEESIZE(pt)  ((((long *)pt)[-1])-sizeof(long))

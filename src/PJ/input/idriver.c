@@ -1,10 +1,10 @@
-
+#include "commonst.h"
 #include "errcodes.h"
 #include "idriver.h"
-#include "memory.h"
 #include "jfile.h"
-#include "commonst.h"
+#include "memory.h"
 #include "menus.h"
+#include "util.h"
 
 char key_idriver_name[] = "=key.";
 char mouse_idriver_name[] = "=mouse.";

@@ -1,6 +1,8 @@
 /* sqrroot.c - use a bit-wise algorithm Robert Leyland certainly must
    understand better than I. */
 
+#include "imath.h"
+
 /*
 ** Sqr_root() - Return the integer square root the the long integer i
 */

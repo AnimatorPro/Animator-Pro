@@ -1,6 +1,6 @@
 #define JFILE_INTERNALS /* for memory declarations */
 #include "jfile.h"
-
+#include "memory.h"
 
 Errcode pj_cpfile(char *source, char *dest, char **perrfile)
 

@@ -8,7 +8,7 @@
 /* to return number of extra arguments consumed or 0 if only the current 
  * one is consumed. < 0 will cause parser to abort and return the value */
 
-
+struct argparse_list;
 
 typedef int (*Do_aparse)(struct argparse_list *ap, /* what's calling this */
 					int argc,  /* count left including current argument */

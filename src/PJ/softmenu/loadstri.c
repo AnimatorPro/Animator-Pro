@@ -1,12 +1,11 @@
 /* loadstri.c - Parse simply (optional) comma separated lists of strings.
  * Parses class Strings and class Qchoice SoftMenu objects */
 
-#include "softmenu.h"
-#include "memory.h"
-#include "linklist.h"
 #include "errcodes.h"
-
-extern char *clone_string();
+#include "linklist.h"
+#include "memory.h"
+#include "softmenu.h"
+#include "util.h"
 
 static int text_to_dstring(Swork *swork, Dstring *ds, Boolean is_text)
 /* Read in a quoted string from file into Dstring.   If is_text parameter

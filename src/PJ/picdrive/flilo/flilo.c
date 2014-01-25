@@ -2,12 +2,13 @@
  * FLILO.C - Rex and PDR interface routines for low-rez FLI writer.
  ****************************************************************************/
 
+#include <stdio.h>
 #include "errcodes.h"
-#include "stdio.h"
-#include "picdrive.h"
 #include "filepath.h"
 #include "flilo.h"
 #include "jfile.h"
+#include "memory.h"
+#include "picdrive.h"
 
 static Errcode flow_i_flush_head(Flifile *flif)
 /* Updates id and flushes header of a Flifile leaves file offset

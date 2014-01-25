@@ -1,12 +1,13 @@
 #include "linklist.h"
 #include "memory.h"
 
-void free_slist(register Names *lst)
+void free_slist(void *list)
 
 /* frees all nodes in a singly linked list assuming the pointer to the node
  * is an allocated element */
 {
-register Names *next;
+Slnode *lst = list;
+Slnode *next;
 
 while (lst)
 	{

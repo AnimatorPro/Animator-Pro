@@ -7,6 +7,7 @@
 #include "auto.h"
 #include "broadcas.h"
 #include "softmenu.h"
+#include "util.h"
 
 static void render_overlay(), kill_overlay();
 extern Button cmu_common_sels, cmu_pa_group_sel;

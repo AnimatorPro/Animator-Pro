@@ -6,10 +6,10 @@
 
 #ifdef USE_LFILE
 	#include "lstdio.h"
+	#include "formatf.h"
 	extern int boxf();
 	#define fpos_t long
 	#define size_t unsigned int
-	extern int local_sprintf(char *buf,const char *fmt,...);
 #else
 	#include <stdio.h>
 	#include <errno.h>

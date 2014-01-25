@@ -1,6 +1,7 @@
 
 #include <limits.h>
 #include "errcodes.h"
+#include "imath.h"
 #include "memory.h"
 #include "poly.h"
 #include "rectang.h"

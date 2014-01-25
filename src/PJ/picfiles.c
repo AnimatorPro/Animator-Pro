@@ -1,14 +1,15 @@
 /* file to take care of loadable still frame file types */
 
+#include "jimk.h"
 #include "errcodes.h"
-#include "memory.h"
 #include "jfile.h"
+#include "memory.h"
 #include "menus.h"
 #include "picdrive.h"
-#include "jimk.h"
 #include "resource.h"
 #include "rexlib.h"
 #include "softmenu.h"
+#include "util.h"
 
 /* there are two of these one for "picture" files and one for "fli" files
  * so we can have 2 yes 2 codes in one */

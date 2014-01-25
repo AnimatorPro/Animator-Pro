@@ -1,5 +1,5 @@
-#include "stdtypes.h"
 #include "errcodes.h"
+#include "ftextf.h"
 #include "softmenu.h"
 
 int get_errtext(Errcode err, char *buf)

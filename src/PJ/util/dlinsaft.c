@@ -1,10 +1,11 @@
 #include "linklist.h"
 
-/***********************************************************/
-void insert_after(node,lnode)
-
-register Dlnode *node; /* node to insert after */
-register Dlnode *lnode; /* attached node */
+/* Function: insert_after
+ *
+ *  node - node to insert after.
+ *  lnode - attached node.
+ */
+void insert_after(Dlnode *node, Dlnode *lnode)
 {
 	node->prev = lnode;
 	node->next = lnode->next;

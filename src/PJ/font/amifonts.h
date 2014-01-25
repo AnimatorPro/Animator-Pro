@@ -2,6 +2,8 @@
 #ifndef AMIFONTS_H
 #define AMIFONTS_H
 
+#include "stdtypes.h"
+
 #define FPF_PROPORTIONAL (1L<<5)
 
 #define AMIF_TYPE 0x0c

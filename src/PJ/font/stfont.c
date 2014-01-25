@@ -1,11 +1,12 @@
 /* stfont.c - Load and display Atari ST style GEM raster fonts.
  */
 
-#include "rastext.h"
-#include "fontdev.h"
 #include "errcodes.h"
-#include "stfont.h"
+#include "fontdev.h"
 #include "memory.h"
+#include "rastext.h"
+#include "stfont.h"
+#include "util.h"
 
 typedef struct stfcb
 /*

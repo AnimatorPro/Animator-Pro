@@ -1,7 +1,8 @@
-#include "errcodes.h"
 #include "jimk.h"
-#include "menus.h"
 #include "commonst.h"
+#include "errcodes.h"
+#include "ftextf.h"
+#include "menus.h"
 #include "softmenu.h"
 
 static void see_screen_format(), cancel_flisize(), feel_numqdim(),

@@ -102,7 +102,7 @@ long pj_ddfree(int drive);	/* 0 = current.  1 = A:  2 = B: etc. */
 Boolean pj_dmake_dir(char *path);
 Boolean _lodos_set_dir(char *path);
 Boolean pj_dget_dir(int drive, char *dir);	/* 0 = current, 1 = A: for drive */
-long dos_mem_free();
+long dos_mem_free(void);
 
 int get_vmode(void);
 void set_vmode(int mode);

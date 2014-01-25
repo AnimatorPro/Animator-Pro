@@ -5,11 +5,9 @@
 #include "softmenu.h"
 
 #ifdef SLUFFED
+#include "memory.h"
+
 extern long add_up_frames();
-
-extern long largest_frag();
-extern long mem_free;
-
 
 void status(void)
 {

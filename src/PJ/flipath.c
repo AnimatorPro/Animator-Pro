@@ -1,11 +1,11 @@
-#include "memory.h"
+#include "commonst.h"
 #include "errcodes.h"
-#include "ptrmacro.h"
-#include "jfile.h"
 #include "fli.h"
 #include "flipath.h"
-#include "commonst.h"
-
+#include "jfile.h"
+#include "memory.h"
+#include "ptrmacro.h"
+#include "util.h"
 
 Errcode set_flipath(char *fliname, Fli_id *flid, Flipath *fp)
 

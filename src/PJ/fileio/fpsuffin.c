@@ -1,4 +1,5 @@
 #include "filepath.h"
+#include "util.h"
 
 Boolean suffix_in(char *path, char *suff)
 {

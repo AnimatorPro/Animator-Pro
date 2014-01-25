@@ -1,4 +1,4 @@
-#include "stdtypes.h"
+#include "memory.h"
 
 void swap_mem(void *srca, void *srcb, int count)
 {

@@ -1,5 +1,6 @@
 #include "errcodes.h"
 #include "fli.h"
+#include "memory.h"
 
 Errcode fli_read_colors(Flifile *flif, Cmap *cmap)
 

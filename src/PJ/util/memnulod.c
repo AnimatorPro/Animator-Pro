@@ -1,4 +1,4 @@
-#include "stdtypes.h"
+#include "memory.h"
 
 void pj_load_array_nulls(void **source, void **dest, int num_pointers)
 /* sets pointers in dest that are NULL to pointers in source */

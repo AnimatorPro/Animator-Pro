@@ -1,4 +1,5 @@
 #include "cmap.h"
+#include "memory.h"
 
 ULONG cmap_crcsum(Cmap *cmap)
 {

@@ -1,12 +1,12 @@
 /* title.c - The data structures and associated routines for the Titling
    control panel. */
 
-
-#include "errcodes.h"
 #include "jimk.h"
-#include "textedit.h"
-#include "softmenu.h"
 #include "auto.h"
+#include "errcodes.h"
+#include "softmenu.h"
+#include "textedit.h"
+#include "util.h"
 
 extern void mload_font(), qplace_window(), render_mask_blit();
 Errcode check_max_frames(int count);

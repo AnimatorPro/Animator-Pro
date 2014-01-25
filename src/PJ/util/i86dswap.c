@@ -1,4 +1,4 @@
-#include "stdtypes.h"
+#include "util.h"
 
 void intel_dswap(void *v, int count)
 /* swap a 32 bit number from a Motorola style proc */

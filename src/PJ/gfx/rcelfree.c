@@ -1,3 +1,4 @@
+#include "memory.h"
 #include "rcel.h"
 
 void pj_rcel_close(Rcel *rc)

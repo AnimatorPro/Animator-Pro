@@ -1,14 +1,12 @@
 #define REXLIB_INTERNALS
 #define REXLIB_CODE
 #include "errcodes.h"
-#include "ptrmacro.h"
-#include "memory.h"
-#include "jfile.h"
-#include "rexlib.h"
-#include "rexlib.h"
 #include "filepath.h"
-
-extern char *clone_string(char *s);
+#include "jfile.h"
+#include "memory.h"
+#include "ptrmacro.h"
+#include "rexlib.h"
+#include "util.h"
 
 void pj_rexlib_free(Rexlib **prl)
 {

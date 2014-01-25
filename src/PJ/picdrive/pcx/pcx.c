@@ -1,12 +1,13 @@
 
 /* pcx.c - Source to PCX format PJ picture driver. */
 
+#include <stdio.h>
 #define REXLIB_INTERNALS
 #include "errcodes.h"
-#include "stdio.h"
 #include "memory.h"
 #include "pcx.h"
 #include "picdrive.h"
+#include "util.h"
 
 #define PCX_MAX_RUN 63	/* longest run (since hi 2 bits are used elsewhere */
 #define PCX_CMAP_MAGIC 12

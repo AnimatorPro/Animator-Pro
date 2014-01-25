@@ -2,7 +2,7 @@
 #include "linklist.h"
 
 /***********************************************************/
-void *sort_slist(register Slnode *list, FUNC cmp)
+void *sort_slist(register Slnode *list, FUNC cmp, void *cmpdat)
 {
 register void **array, **array_pt;
 register Slnode *pt;
@@ -22,7 +22,7 @@ register int elements, i;
 			*array_pt++ = pt;
 			pt = pt->next;
 		}
-		sort_indarray(array, elements, cmp);
+		sort_indarray(array, elements, cmp, cmpdat);
 		array_pt = array;
 		list = NULL;
 		i = elements;

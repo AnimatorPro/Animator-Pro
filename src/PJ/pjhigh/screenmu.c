@@ -1,11 +1,12 @@
 #define SCRNINIT_CODE
 #include "errcodes.h"
-#include "vdevinfo.h"
 #include "pjbasics.h"
 #include "resource.h"
-#include "wildlist.h"
-#include "softmenu.h"
 #include "rexlib.h"
+#include "softmenu.h"
+#include "util.h"
+#include "vdevinfo.h"
+#include "wildlist.h"
 
 typedef struct mode_entry {
 	void *next;

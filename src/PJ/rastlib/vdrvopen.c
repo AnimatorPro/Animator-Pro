@@ -1,5 +1,7 @@
 #define VDEV_INTERNALS
 #include "errcodes.h"
+#include "filepath.h"
+#include "util.h"
 #include "vdevcall.h"
 
 Errcode pj_open_ddriver(Vdevice **pvd, char *name)

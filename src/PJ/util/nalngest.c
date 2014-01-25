@@ -1,3 +1,4 @@
+#include <string.h>
 #include "linklist.h"
 
 int longest_name(Names *names)

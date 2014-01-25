@@ -4,13 +4,12 @@
 #include <ctype.h>
 #include "jimk.h"
 #include "aaconfig.h"
-#include "fli.h"
 #include "errcodes.h"
-#include "tfile.h"
+#include "fli.h"
 #include "idriver.h"
 #include "softmenu.h"
-
-
+#include "tfile.h"
+#include "util.h"
 
 static Boolean get_serial_port(void)
 {

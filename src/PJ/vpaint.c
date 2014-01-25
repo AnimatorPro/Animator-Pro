@@ -3,17 +3,18 @@
    interpreter switch and main keyboard interpreter switch.  Implementations
    of many of routines called by above.  The first layer under main(). */
 
-#include "errcodes.h"
-#include "input.h"
-#include "picdrive.h"
-#include "menus.h"
-#include "fli.h"
 #include "jimk.h"
-#include "textedit.h"
 #include "broadcas.h"
-#include "homepul.h"
-#include "softmenu.h"
 #include "commonst.h"
+#include "errcodes.h"
+#include "fli.h"
+#include "ftextf.h"
+#include "homepul.h"
+#include "input.h"
+#include "menus.h"
+#include "picdrive.h"
+#include "softmenu.h"
+#include "textedit.h"
 
 static char *unsaved_string(char *buf);
 #define UNSAVE_BUFSIZ 80

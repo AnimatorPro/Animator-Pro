@@ -1,13 +1,11 @@
-
-#include "stdtypes.h"
+#include "amifonts.h"
 #include "errcodes.h"
-#include "memory.h"
+#include "fontdev.h"
 #include "jfile.h"
+#include "memory.h"
 #include "rastcall.h"
 #include "rastext.h"
-#include "fontdev.h"
-#include "amifonts.h"
-
+#include "util.h"
 
 static void free_ami_font(Vfont *vfont)
 {

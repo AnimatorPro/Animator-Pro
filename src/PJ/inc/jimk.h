@@ -249,14 +249,8 @@ void get_penwndo_port(Rectangle *port);
 #define CH_WIDTH 6
 #define CH_HEIGHT 8
 
-extern char *clone_string();
-
 extern long get80hz();
 extern ULONG pj_clock_1000();
-extern long mem_free, largest_frag();
-
-extern void *sort_list();
-extern void *remove_el();
 
 #define free_string(pt) pj_free(pt)
 #define string_width(s) (strlen(s)*CH_WIDTH)

@@ -1,6 +1,7 @@
 #include <ctype.h>
+#include "util.h"
 
-void upc(register char *s)
+void upc(char *s)
 {
 register char c;
 

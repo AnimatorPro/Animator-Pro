@@ -1,10 +1,8 @@
+#include <stdlib.h>
 #include "memory.h"
 #include "tfile.h"
 
-extern void *lo_askmem(long size);
-extern long lo_freemem(void *pt);
-
-void *trd_askmem(unsigned count)
+void *trd_askmem(unsigned int count)
 {
 	return(lo_askmem(count));
 }
@@ -12,9 +10,8 @@ void *trd_laskmem(long count)
 {
 	return(lo_askmem(count));
 }
-void *trd_askcmem(unsigned count)
+void *trd_askcmem(unsigned int count)
 {
-extern void *calloc();
 void *pt;
 
 	if ((pt = lo_askmem(count)) != NULL)

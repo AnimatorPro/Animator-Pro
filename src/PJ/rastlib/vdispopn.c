@@ -1,8 +1,9 @@
 #define VDEV_INTERNALS
+#include "filepath.h"
 #include "rastlib.h"
-#include "vdevcall.h"
 #include "rexlib.h"
-
+#include "util.h"
+#include "vdevcall.h"
 
 static Errcode load_driver(Vdevice **pvd,char *name)
 {

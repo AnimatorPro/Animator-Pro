@@ -8,7 +8,6 @@
 void list_tohead( register Dlheader *fromlist, register Dlheader *tolist)
 {
 Dlnode *fromtail;
-extern Dlnode *see_tail();
 
 	if(NULL == (fromtail = see_tail(fromlist))) /* nothing to move */
 		return;

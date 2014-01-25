@@ -43,7 +43,4 @@ Errcode rget_dir(Rdir **plist);
 Errcode rset_priority(char *name, unsigned pri);
 Errcode rset_dispose_flags(char *name, int dflags);
 
-extern void *trd_askmem(unsigned);
-extern void *trd_laskmem(long);
-extern void *trd_askcmem(unsigned);
 #endif /* RFILE_H */

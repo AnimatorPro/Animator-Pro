@@ -161,7 +161,7 @@ SHORT y;
 		sbuf[i].rgb = sctab[i];
 	}
 
-	sort_indarray(isb, colors, (FUNC)occ_cmp);
+	sort_indarray(isb, colors, (FUNC)occ_cmp, NULL);
 	dcount = 0;
 	for (i=0; i<colors; i++)
 	{

@@ -1,5 +1,4 @@
-#include "stdtypes.h"
-#include <ctype.h>
+#include "wildlist.h"
 
 #ifdef SLUFFED
 static int match_substr(char *str, char *wild)

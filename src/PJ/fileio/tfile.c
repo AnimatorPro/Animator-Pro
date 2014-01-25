@@ -8,19 +8,17 @@
  **
  **/
 
+#include <string.h>
 #define TFILE_C
-
-#include "stdtypes.h"
-#include "filepath.h"
 #include "errcodes.h"
 #include "filepath.h"
+#include "jfile.h"
 #include "linklist.h"
 #include "memory.h"
 #include "ptrmacro.h"
 #include "rfile.h"
 #include "tfile.h"
-#include "jfile.h"
-#include <string.h>
+#include "util.h"
 
 static char temp_path[2*PATH_SIZE] = {TRD_CHAR, ':', 0};
 static int tfile_lockmem = 0;

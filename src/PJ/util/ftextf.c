@@ -1,5 +1,7 @@
-#include <stdio.h>
 #include <stdarg.h>
+#include <stdio.h>
+#include <stdlib.h>
+#define FORMATF_INTERNALS
 #include "errcodes.h"
 #include "ptrmacro.h"
 #include "ftextf.h"

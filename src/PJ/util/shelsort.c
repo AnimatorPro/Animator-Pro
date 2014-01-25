@@ -1,4 +1,4 @@
-#include "stdtypes.h"
+#include "linklist.h"
 
 void sort_indarray(void **array, LONG count, FUNC cmp, void *cmpdat)
 

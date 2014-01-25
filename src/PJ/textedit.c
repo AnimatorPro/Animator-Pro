@@ -4,12 +4,13 @@
    works most of the time!  See also textwind.c wordwrap.c and rastext.c */
 
 #include <stdio.h>
-#include "errcodes.h"
 #include "jimk.h"
 #include "commonst.h"
+#include "errcodes.h"
 #include "memory.h"
 #include "softmenu.h"
 #include "textedit.h"
+#include "util.h"
 
 extern char *strstr(char *s1, char *s2);
 
@@ -65,7 +66,6 @@ SHORT zoomstart, textstart;
 SHORT zoomwid, textwid;
 char *nexts;
 ULONG crcsum;
-extern ULONG str_crcsum();
 Vfont *font = gf->font;
 
 	dy = font_cel_height(font);

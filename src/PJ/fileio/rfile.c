@@ -16,18 +16,14 @@
  **/
 
 #include <stdio.h>
-#include "stdtypes.h"
-#include "ptrmacro.h"
-#include "jfile.h"
-#include "memory.h"
-#include "linklist.h"
 #define RFILE_C
-#include "rfile.h"
 #include "errcodes.h"
-
-void lo_freemem(long *pt);
-void *lo_askmem(long nbytes);
-
+#include "jfile.h"
+#include "linklist.h"
+#include "memory.h"
+#include "ptrmacro.h"
+#include "rfile.h"
+#include "util.h"
 
 /*********** Basic constants, data structures, and static variables **********/
 

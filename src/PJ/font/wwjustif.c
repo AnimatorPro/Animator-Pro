@@ -1,4 +1,5 @@
 #define WORDWRAP_INTERNALS
+#include "imath.h"
 #include "wordwrap.h"
 
 static int just_fill(Raster *screen,

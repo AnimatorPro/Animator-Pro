@@ -1,12 +1,12 @@
-#include "errcodes.h"
-#include "vsetfile.h"
 #include "jimk.h"
 #include "commonst.h"
-#include "softmenu.h"
+#include "errcodes.h"
 #include "memory.h"
-#include "unchunk.h"
 #include "rastext.h"
-
+#include "softmenu.h"
+#include "unchunk.h"
+#include "util.h"
+#include "vsetfile.h"
 
 void rethink_settings(void)
 {

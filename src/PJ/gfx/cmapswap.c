@@ -1,4 +1,5 @@
 #include "cmap.h"
+#include "memory.h"
 
 void swap_cmaps(Cmap *a, Cmap *b)
 

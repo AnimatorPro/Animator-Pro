@@ -221,7 +221,6 @@ static void to_trd_maxmem()
 /* make sure temp file system leaves enough for compression buffer and 
  * extra screen */
 {
-extern void *trd_askmem(unsigned count);
 Slnode *list = NULL;
 void *cbuf;
 void *extra_screen;

@@ -1,6 +1,7 @@
 #define  FLI_1_0 
 #include "errcodes.h"
 #include "fli.h"
+#include "imath.h"
 
 Errcode pj_fli_read_head(char *title, Fli_head *flih, Jfile *pfd,
 						  	  int jmode)

@@ -65,5 +65,6 @@ Errcode get_formatted_ftext(char **pbuf, int max_to_alloc,
 							Boolean force_copy);
 
 int snftextf(char *buf, int maxlen, char *fmt,...);
+int vnsftextf(char *buf, int maxlen, char *formats, char *text, va_list args);
 
 #endif /* FTEXTF_H */

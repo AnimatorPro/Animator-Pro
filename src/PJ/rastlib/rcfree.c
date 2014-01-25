@@ -1,3 +1,4 @@
+#include "memory.h"
 #include "rastcall.ih"
 
 void pj_rast_free(Raster *rp)

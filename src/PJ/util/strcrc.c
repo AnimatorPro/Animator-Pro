@@ -1,6 +1,6 @@
-#include "stdtypes.h"
+#include "util.h"
 
-ULONG str_crcsum(register char *buf)
+ULONG str_crcsum(char *buf)
 {
 register ULONG crcsum;
 register ULONG op;

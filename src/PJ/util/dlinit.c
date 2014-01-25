@@ -1,8 +1,6 @@
 #include "linklist.h"
 
-void init_list(list)
-
-Dlheader *list;
+void init_list(Dlheader *list)
 {
 	list->head = (Dlnode *)&(list->tail);
 	list->tail = NULL;

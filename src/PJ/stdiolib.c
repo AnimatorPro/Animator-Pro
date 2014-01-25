@@ -7,6 +7,7 @@ extern int boxf();
 #define fpos_t long
 #define size_t unsigned int
 
+#include "formatf.h"
 #include "lstdio.h"
 #include "stdiolib.h"
 
@@ -55,9 +56,6 @@ ststic int whences[] = { SEEK_SET, SEEK_CUR, SEEK_END };
 #define fseek fseek_shell
 
 #endif /* ***************** seek modes not same */
-
-extern int local_sprintf(char *buf,const char *fmt,...);
-
 
 Stdiolib aa_stdiolib = {
 	/* header */

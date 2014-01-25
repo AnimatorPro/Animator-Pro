@@ -780,7 +780,6 @@ Boolean check_abort(void *nobody);
 int 	pj_delete(char *name);
 int 	pj_ioerr(void);
 void	upc(char *s);
-char	*clone_string(char *s);
 void	errline(int err, char *fmt, ...);
 int 	get_errtext(Errcode err, char *buf);
 int 	tryme(Popot v);

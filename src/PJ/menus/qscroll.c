@@ -1,13 +1,12 @@
-
-#include "stdtypes.h"
 #include "errcodes.h"
-#include "memory.h"
+#include "imath.h"
+#include "input.h"
 #include "linklist.h"
+#include "memory.h"
+#include "menus.h"
 #include "ptrmacro.h"
 #include "rastext.h"
-#include "menus.h"
 #include "scroller.h"
-#include "input.h"
 
 typedef struct qscrollwork {
 	Menuhdr mh;

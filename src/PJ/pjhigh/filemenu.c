@@ -2,14 +2,16 @@
 
 #include <ctype.h>
 #include <dos.h>
+#include "commonst.h"
 #include "errcodes.h"
-#include "menus.h"
-#include "memory.h"
 #include "filepath.h"
+#include "memory.h"
+#include "menus.h"
 #include "ptrmacro.h"
 #include "scroller.h"
 #include "softmenu.h"
-#include "commonst.h"
+#include "util.h"
+#include "wildlist.h"
 
 static void fq_set_wild(Button *b);
 void accept_file_name(Button *b);
@@ -337,8 +339,6 @@ static char *fq_drawer;
 
 static Names *wild_lst;
 
-void build_wild_list();
-
 static Errcode new_drawer(void)
 {
 Errcode err;
@@ -502,7 +502,6 @@ Stringq *sq = b->datme;
 char *string;
 char file_side[PATH_SIZE];
 char path_side[PATH_SIZE];
-void build_wild_list();
 
 for (;;)
 	{

@@ -2,15 +2,16 @@
    device.  This thing just takes out the indexing.  Doesn't actually
    have to recompress any images.  (That's done in writefli.c). */
 
-#include "errcodes.h"
 #include "jimk.h"
-#include "fli.h"
-#include "menus.h"
-#include "ptrmacro.h"
-#include "unchunk.h"
-#include "picdrive.h"
 #include "commonst.h"
+#include "errcodes.h"
+#include "fli.h"
+#include "ftextf.h"
+#include "menus.h"
+#include "picdrive.h"
+#include "ptrmacro.h"
 #include "softmenu.h"
+#include "unchunk.h"
 
 char dirty_file;
 char dirty_frame;

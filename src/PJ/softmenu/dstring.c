@@ -1,8 +1,7 @@
-
 #include "dstring.h"
-#include "memory.h"
 #include "errcodes.h"
-extern char *clone_string();
+#include "memory.h"
+#include "util.h"
 
 void dstring_init(Dstring *ds)
 {

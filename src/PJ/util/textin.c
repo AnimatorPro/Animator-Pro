@@ -1,4 +1,5 @@
 #include "linklist.h"
+#include "util.h"
 
 Names *text_in_list(char *name, Names *list)
 

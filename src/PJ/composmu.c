@@ -9,6 +9,7 @@
 #include "jimk.h"
 #include "commonst.h"
 #include "composit.h"
+#include "ftextf.h"
 #include "memory.h"
 #include "picdrive.h"
 #include "softmenu.h"

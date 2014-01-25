@@ -1,7 +1,7 @@
-#include "stdtypes.h"
-#include "errcodes.h"
 #include <ctype.h>
+#include "errcodes.h"
 #include "filepath.h"
+#include "msfile.h"
 
 Errcode pj_change_device(char *name)
 

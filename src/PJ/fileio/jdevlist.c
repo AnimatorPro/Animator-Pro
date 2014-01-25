@@ -1,8 +1,8 @@
 #include "errcodes.h"
-#include "wildlist.h"
-#include "memory.h"
 #include "jfile.h"
-
+#include "memory.h"
+#include "util.h"
+#include "wildlist.h"
 
 typedef struct wild_data {
 	Names **plist; 	/* pointer to name list start */
@@ -159,7 +159,6 @@ Names *out = &first;
 Errcode build_wild_list(Names **pwild_list, char *pat, Boolean get_dirs)
 {
 Errcode err;
-extern Names *sort_names();
 
 	if((err = alloc_wild_list(pwild_list,pat,get_dirs,0,
 							  load_wild_name)) >= Success)
