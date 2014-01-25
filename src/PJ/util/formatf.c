@@ -236,7 +236,7 @@ long val;
 #if (!INT_IS_SHORT)
 		if(fa->pflags & FSPEC_SHORT)
 		{
-			val = va_arg(fa->args,unsigned short);
+			val = (unsigned short)va_arg(fa->args,unsigned int);
 			goto got_unsigned;
 		}
 #endif
@@ -259,7 +259,7 @@ got_unsigned:
 #if (!INT_IS_SHORT)
 		if(fa->pflags & FSPEC_SHORT)
 		{
-			val = va_arg(fa->args,short);
+			val = (short)va_arg(fa->args,int);
 			goto got_signed;
 		}
 #endif
