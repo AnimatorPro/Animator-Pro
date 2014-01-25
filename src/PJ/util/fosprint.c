@@ -9,7 +9,7 @@ local_sprintf(char *buf, char *format,...)
 Formatarg fa;
 
 	start_formatarg(fa,format);
-	while((*buf++ = fa_getc(&fa)) != 0);
+	while ((*buf++ = fa_getc(&fa)) != 0) {}
 	end_formatarg(fa);
 	return(fa.count - 1);
 }
