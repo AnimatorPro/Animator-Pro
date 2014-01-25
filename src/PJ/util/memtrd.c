@@ -36,7 +36,7 @@ void *pt;
 
 	if ((pt = lo_askmem(size)) == NULL)
 	{
-		if(trd_compact(size) >= Success);	/* try shrinking ram-disk */
+		if (trd_compact(size) >= Success) /* try shrinking ram-disk */
 			pt = trd_askmem(size);
 	}
 	return(pt);
