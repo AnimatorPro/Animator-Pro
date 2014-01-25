@@ -1,6 +1,7 @@
 /* sqrroot.c - use a bit-wise algorithm Robert Leyland certainly must
    understand better than I. */
 
+#include <assert.h>
 #include "imath.h"
 
 /*
@@ -12,7 +13,8 @@ int sqr_root(long i)
 unsigned long	mask;
 long t;
 unsigned short	result;
-long		lolly;
+unsigned long	lolly;
+assert(i >= 0);
 
 /*
 ** Approximate starting mask value

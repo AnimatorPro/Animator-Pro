@@ -87,7 +87,7 @@ Errcode err;
 
 	if (derr == 83) /* critical error */
 		err = err_trans_table[pj_crit_errval+19];
-	else if (derr >= 0 && derr <= Array_els(err_trans_table))
+	else if (derr >= 0 && (unsigned int)derr <= Array_els(err_trans_table))
 		err = err_trans_table[derr];
 	else if (derr >= 50 &&	derr <= 88)
 		err = err2_trans_table[derr-50];

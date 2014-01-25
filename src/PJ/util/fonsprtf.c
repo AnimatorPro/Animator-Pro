@@ -8,7 +8,7 @@ int fa_sprintf(char *buf,int maxlen, Formatarg *fa)
 {
 	while((*buf++ = fa_getc(fa)) != 0)
 	{
-		if(fa->count >= ((unsigned)maxlen))
+		if (fa->count >= maxlen)
 		{
 			buf[-1] = 0; /* null terminate */
 			break;
