@@ -99,6 +99,7 @@ void cleanup_mem()
 }
 #endif /* SLUFFED */
 
+#ifdef SLUFFED
 long largest_frag()
 {
 register struct mblock *mb= free_list;
@@ -115,6 +116,7 @@ while (mb)
 	}
 return(longest);
 }
+#endif /* SLUFFED */
 
 static long *lalloc(long nbytes)
 {
