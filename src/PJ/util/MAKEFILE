@@ -37,7 +37,7 @@ MEMO = \
 ## string and data oriented utilities
 
 STRO = \
- encrypt.obj newname.obj parsemi.obj strclone.obj strcrc.obj \
+ newname.obj parsemi.obj strclone.obj strcrc.obj \
  trstring.obj txtcmp.obj txtncmp.obj \
  upc.obj wildcmp.obj
 
