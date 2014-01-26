@@ -220,8 +220,6 @@ Errcode pj_fli_add_next(char *name, Flifile *flif, void *cbuf,
 					 Rcel *last_screen, Rcel *this_screen);
 Errcode pj_fli_add_ring(char *name, Flifile *flif, void *cbuf,
 					 Rcel *last_screen, Rcel *first_screen);
-Errcode pj_fli_finish(char *name, Flifile *flif, void *cbuf,
-				   Rcel *last_screen, Rcel *work_screen);
 
 /* empty record handleing */
 

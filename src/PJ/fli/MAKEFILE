@@ -16,7 +16,6 @@ FLILIBO = \
  emptyrec.obj\
  fccomp.obj\
  fiicreat.obj\
- finish.obj\
  fliclose.obj\
  flicomp.obj\
  flicomp1.obj\
