@@ -1,3 +1,4 @@
+#ifdef SLUFFED
 #include "jfile.h"
 #include "fli.h"
 
@@ -19,3 +20,4 @@ LONG oset;
 	if((oset = pj_seek(flif->fd,flif->hdr.frame2_oset,JSEEK_START)) < 0)
 		return((Errcode)oset);
 }
+#endif /* SLUFFED */
