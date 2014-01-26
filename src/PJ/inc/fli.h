@@ -228,7 +228,6 @@ Errcode pj_fli_finish(char *name, Flifile *flif, void *cbuf,
 /* empty record handleing */
 
 Boolean pj_i_is_empty_rec(Fli_frame *frame);
-Errcode pj_i_add_black1(char *name,Flifile *flif,Rcel *screen);
 void pj_i_get_empty_rec(Fli_frame *frame);
 Errcode pj_i_add_empty(char *name,Flifile *flif);
 Errcode pj_i_add_empty_ring(char *name,Flifile *flif);

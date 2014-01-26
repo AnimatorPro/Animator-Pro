@@ -6,7 +6,6 @@ FLILIBO = \
  addnext.obj\
  addring.obj\
  allocbuf.obj\
- blackone.obj\
  brunline.obj\
  bufsize.obj\
  comp_aa.obj\
