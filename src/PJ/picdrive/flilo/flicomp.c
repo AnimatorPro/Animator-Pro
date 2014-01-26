@@ -1,6 +1,7 @@
-#include "rastcomp.h"
-#include "ptrmacro.h"
+#define RASTCOMP_INTERNALS
 #include "flilo.h"
+#include "ptrmacro.h"
+#include "rastcomp.h"
 
 static void shift_copy_cmap(UBYTE *src, UBYTE *dst, int size)
 {

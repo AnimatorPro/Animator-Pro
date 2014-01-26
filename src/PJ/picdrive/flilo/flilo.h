@@ -94,4 +94,10 @@ typedef struct flifile {
 	Jfile fd;      /* file handle for this fli */
 } Flifile;
 
+struct raster;
+
+extern void *
+flow_brun_rect(struct raster *r, void *cbuf,
+		SHORT x, SHORT y, USHORT width, USHORT height);
+
 #endif /* FLILO_H */
