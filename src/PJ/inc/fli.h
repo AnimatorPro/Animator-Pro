@@ -174,7 +174,6 @@ enum {
 typedef struct complib *Flicomp;
 
 extern const Flicomp
-			pj_fli_comp_aa, 	/* low res animator 320 X 200 fli */
 			pj_fli_comp_ani;	/* high res animator variable resolution fli */
 
 
@@ -205,7 +204,6 @@ Errcode pj_fli_is_valid(char *path);
 Errcode pj_fli_open(char *path, Flifile *flif, int jmode);
 
 Errcode pj_fli_create(char *path, Flifile *flif);
-Errcode pj_fli_create_aa(char *path, Flifile *flif);
 
 void pj_fli_close(Flifile *flif);
 

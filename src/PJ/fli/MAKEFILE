@@ -8,13 +8,11 @@ FLILIBO = \
  allocbuf.obj\
  brunline.obj\
  bufsize.obj\
- comp_aa.obj\
  comp_ani.obj\
  compbrun.obj\
  complcc.obj\
  compss2.obj\
  create.obj\
- createaa.obj\
  emptyrec.obj\
  fccomp.obj\
  fiicreat.obj\

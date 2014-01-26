@@ -6,7 +6,6 @@
 +\paa\fli\flushhdr.obj
 +\paa\fli\fiicreat.obj
 +\paa\fli\create.obj
-+\paa\fli\createaa.obj
 +\paa\fli\fliseek1.obj
 +\paa\fli\fliseek2.obj
 +\paa\fli\bufsize.obj
@@ -33,7 +32,6 @@
 +\paa\fli\infosub.obj
 +\paa\fli\info.obj
 +\paa\fli\isvalid.obj
-+\paa\fli\comp_aa.obj
 +\paa\fli\comp_ani.obj
 +\paa\fli\finish.obj
 +\paa\fli\skipbrun.obj
