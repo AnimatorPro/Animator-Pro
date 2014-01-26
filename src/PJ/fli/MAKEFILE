@@ -27,7 +27,6 @@ FLILIBO = \
  info.obj\
  infosub.obj\
  isempty.obj\
- isvalid.obj\
  readfirst.obj\
  readhead.obj\
  readnext.obj\

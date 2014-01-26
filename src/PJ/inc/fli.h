@@ -199,7 +199,6 @@ Errcode pj_fli_cel_alloc_cbuf(Fli_frame **pcbuf, Rcel *cel);
 /* Flifile header checking open and close */
 
 Errcode pj_fli_read_head(char *title, Fli_head *flih, Jfile *pfd,int jmode);
-Errcode pj_fli_is_valid(char *path);
 
 Errcode pj_fli_open(char *path, Flifile *flif, int jmode);
 
