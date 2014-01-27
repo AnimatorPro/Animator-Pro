@@ -34,22 +34,22 @@ typedef struct brun_dat {
 	SHORT last_sy;
 	int sx, sw; 				/* source x offset and width */
 	int dw; 					/* destination width */
-	char *(*comp_line)(BYTE *src,BYTE *dst,int width);
+	void *(*comp_line)(BYTE *src, BYTE *dst, int width);
 } Brundat;
 
 
-static char *copy_line(BYTE *src,BYTE *dst,int width)
+static void *copy_line(BYTE *src, BYTE *dst, int width)
 /* a compression function that just copies */
 {
 	pj_copy_bytes(src,dst,width);
-	return((char *)(dst + width));
+	return (dst + width);
 }
 
 /* external brun compressor */
 
-static void comp_pstamp_line(int sy, int dy, Brundat *brd)
-
+static void comp_pstamp_line(int sy, int dy, void *dat)
 {
+Brundat *brd = dat;
 Pixel *spix;
 Pixel *dpix;
 Pixel *maxdpix;

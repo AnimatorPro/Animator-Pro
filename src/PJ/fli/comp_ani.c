@@ -4,7 +4,7 @@
 #include "flicomp.h"
 #include "rastcomp.h"
 
-static char *full_cmap(Rgb3 *ctab,void *cbuf,int num_colors)
+static void *full_cmap(Rgb3 *ctab, void *cbuf, int num_colors)
 {
 register UBYTE *bbuf = cbuf;
 (void)num_colors;

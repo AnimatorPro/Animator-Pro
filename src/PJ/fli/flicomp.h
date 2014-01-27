@@ -6,7 +6,7 @@ typedef struct complib {
 	SHORT first_color_type;
 
 	void *(*first_comp)(Raster *screen, void *cbuf,
-					   SHORT x, SHORT y, SHORT width, SHORT height);
+					   SHORT x, SHORT y, USHORT width, USHORT height);
 	void *(*first_colors)(Rgb3 *ctab, void *cbuf, int num_colors );
 	LONG (*make_pstamp)(Rcel *screen, void *cbuf,
 					 	   SHORT x,SHORT y,USHORT width,USHORT height);
@@ -15,9 +15,9 @@ typedef struct complib {
 
 	void *(*delta_comp)(Raster *last_screen, void *cbuf, SHORT lx, SHORT ly,
 					   Raster *this_screen,
-					   SHORT tx, SHORT ty, SHORT width, SHORT height);
+					   SHORT tx, SHORT ty, USHORT width, USHORT height);
 	void *(*delta_colors)(Rgb3 *last_ctab, Rgb3 *this_ctab,
-						  void *cbuf, int num_colors );
+						  void *cbuf, unsigned int num_colors);
 } Complib;
 
 #endif /* FLICOMP_H */

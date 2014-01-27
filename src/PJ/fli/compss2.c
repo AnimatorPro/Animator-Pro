@@ -365,7 +365,7 @@ UBYTE *line1;
 UBYTE *line2;
 SHORT bpr1;
 SHORT bpr2;
-LONG bytes_left;
+ULONG bytes_left;
 int did_last = 0;
 
 	bytes_left = width * height;

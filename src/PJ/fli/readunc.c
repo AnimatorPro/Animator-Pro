@@ -35,7 +35,7 @@ long size_left;
 Errcode err;
 
 
-	if (pj_read(flif->fd,ff,sizeof(*ff)) < sizeof(*ff) )
+	if (pj_read(flif->fd, ff, sizeof(*ff)) < (long)sizeof(*ff))
 		goto jio_error;
 
 	if (ff->type != FCID_FRAME)

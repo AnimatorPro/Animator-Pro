@@ -4,24 +4,27 @@
 #include "memory.h"
 #include "rastcomp.h"
 
-int *pj_fccomp(char *s1, char *s2, USHORT *cbuf, USHORT count)
-
+void *
+pj_fccomp(Rgb3 *last_ctab, Rgb3 *this_ctab, void *cbuf, unsigned int count)
 /* fccomp - compress an rgb triples color map just doing 'skip' compression */
 {
+UBYTE *s1 = (UBYTE *)last_ctab;
+UBYTE *s2 = (UBYTE *)this_ctab;
+uint16_t *cbuf16 = cbuf;
 USHORT wcount;
-char *c;
+UBYTE *c;
 USHORT op_count;
 USHORT dif_count;
 USHORT bcount;
 USHORT c3;
 
-c = (char *)(cbuf+1);
+c = (UBYTE *)(cbuf16+1);
 op_count = 0;
 count *= 3;
 wcount = pj_fcompare(s1, s2, count>>1);
 wcount <<= 1;
 if (wcount == count)
-	return((int *)c);	/* stupid way to say got nothing... */
+	return(c); /* stupid way to say got nothing... */
 for (;;)
 	{
 	/* first find out how many words to skip... */
@@ -79,6 +82,6 @@ for (;;)
 		break;
 	}
 OUT:
-*cbuf = op_count;
+*cbuf16 = op_count;
 return(pj_enorm_pointer(c));
 }

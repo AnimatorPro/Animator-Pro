@@ -25,7 +25,7 @@ LONG oset;
 
 	while(ff.chunks-- > 0)	
 	{
-		if(ff.size < sizeof(Chunk_id))
+		if (ff.size < (long)sizeof(Chunk_id))
 			goto corrupted;
 
 		if((err = pj_readoset(flif->fd,chunk,oset,sizeof(Chunk_id))) < 0)
@@ -47,7 +47,7 @@ LONG oset;
 				{
 					goto out;
 				}
-				(*uncomp)(chunk,cmap->ctab);
+				(*uncomp)((const UBYTE *)chunk, cmap->ctab);
 				goto out;
 			default:
 				break;

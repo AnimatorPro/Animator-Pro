@@ -19,7 +19,7 @@ Errcode err;
 		goto jio_error;
 
 	/* read in fli header and check it's magic number */
-	if (pj_read(fd,flih,sizeof(*flih)) < sizeof(*flih) )
+	if (pj_read(fd,flih,sizeof(*flih)) < (long)sizeof(*flih))
 		goto jio_error;
 
 	if(flih->type == FLIH_MAGIC)

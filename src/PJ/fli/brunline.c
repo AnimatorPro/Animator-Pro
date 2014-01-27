@@ -5,13 +5,13 @@
 #include "ptrmacro.h"
 #include "rastcomp.h"
 
-char *pj_brun_comp_line(char *src, char *cbuf, int count)
+void *pj_brun_comp_line(BYTE *src, BYTE *cbuf, int count)
 {
 int wcount;
-register char *c;
+BYTE *c;
 register int bcount;
 int op_count;
-char *start_dif;
+BYTE *start_dif;
 int dif_count;
 
 	c = cbuf+1;

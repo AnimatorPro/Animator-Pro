@@ -29,7 +29,7 @@ Chunk_id fchunk;
 
 	if(flif->hdr.frame_count)
 	{
-		if(pj_read(flif->fd,&fchunk,sizeof(fchunk)) < sizeof(fchunk))
+		if (pj_read(flif->fd, &fchunk, sizeof(fchunk)) < (long)sizeof(fchunk))
 			goto jio_error;
 		if(fchunk.type == FCID_FRAME)
 		{

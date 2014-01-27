@@ -10,9 +10,9 @@ void *pj_brun_rect(Raster *r,void *cbuf,
 /* brun compresses all pixels in a raster rectangle and puts them in cbuf
  * it returns length of buffer used in cbuf 0 if overflow */
 {
-register char *c;
+UBYTE *c;
 register int bpr;
-char *cmax;
+UBYTE *cmax;
 UBYTE *lbuf;
 
 	c = cbuf;
@@ -27,7 +27,7 @@ UBYTE *lbuf;
 	else
 	{
 		bpr = 0;
-		lbuf = (UBYTE *)cmax;
+		lbuf = cmax;
 	}
 
 	while(height--)
@@ -37,7 +37,7 @@ UBYTE *lbuf;
 		else
 			pj_get_hseg(r,lbuf,x,y++,width);
 
-		c = pj_brun_comp_line(lbuf,c,width);
+		c = pj_brun_comp_line((BYTE *)lbuf, (BYTE *)c, width);
 		if(c >= cmax)
 			return(NULL);
 	}

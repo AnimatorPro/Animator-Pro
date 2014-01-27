@@ -8,12 +8,12 @@
 #include "ptrmacro.h"
 #include "rastcomp.h"
 
-static char *sbrc_line(char *s1, char *s2, char *cbuf, int count)
+static UBYTE *sbrc_line(UBYTE *s1, UBYTE *s2, UBYTE *cbuf, int count)
 {
-register int wcount;
-register char *c;
-int op_count;
-int next_match;
+unsigned int wcount;
+UBYTE *c;
+unsigned int op_count;
+unsigned int next_match;
 int bcount;
 
 	op_count = 0;
@@ -35,7 +35,7 @@ int bcount;
 			s2 += 255;
 			wcount -= 255+1;
 			/* make dummy copy 1 op */
-			*c++ = (char)255;
+			*c++ = 255;
 			*c++ = 1;
 			*c++ = *s2++;
 			op_count++;
@@ -108,8 +108,8 @@ void *pj_lccomp_rects(Raster *r1, void *cbuf,
  * two rectangles in rasters note may be out of the same raster */
 {
 SHORT skip_count, j;
-char *c;
-char *oc;
+UBYTE *c;
+UBYTE *oc;
 USHORT acc;
 LONG bytes_left;
 USHORT last_real;

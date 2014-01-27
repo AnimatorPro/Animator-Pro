@@ -31,7 +31,7 @@ pj_unbrun_scale_rect(RASType *dst, void *ucbuf,
 
 void *pj_unbrun_skip_line(BYTE *src, Coor sw);
 
-char *pj_brun_comp_line(char *src, char *cbuf, int count);
+extern void *pj_brun_comp_line(BYTE *src, BYTE *cbuf, int count);
 
 void *pj_brun_rect(RASType *r,void *cbuf,
 				SHORT x,SHORT y,USHORT width,USHORT height);

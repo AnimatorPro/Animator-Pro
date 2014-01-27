@@ -24,7 +24,6 @@ register UBYTE *bbuf = cbuf;
 static void *comp_cmap(Rgb3 *last_ctab, Rgb3 *this_ctab, void *cbuf)
 {
 UBYTE *last, *this;
-extern void *pj_fccomp();
 
 	last = ((UBYTE*)cbuf) + (COLORS*6);
 	this = last + (COLORS*6);
@@ -48,7 +47,6 @@ static LONG flow_comp_rect(void *comp_buf,
 void *vp;
 Fli_frame *frame;
 Chunk_id *chunk;
-extern void *pj_fccomp();
 
 	frame = (Fli_frame *)comp_buf;
 	memset(frame, 0, sizeof(*frame));

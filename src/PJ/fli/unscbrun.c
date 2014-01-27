@@ -21,8 +21,10 @@ typedef struct brun_dat {
 } Brundat;
 
 
-static void scale_ubrun_line(int sy, int dy, Brundat *brd)
+static void scale_ubrun_line(int sy, int dy, void *dat)
 {
+	Brundat *brd = dat;
+
 	if(brd->last_sy != sy)
 	{
 		while(++brd->last_sy < sy)
@@ -33,9 +35,9 @@ static void scale_ubrun_line(int sy, int dy, Brundat *brd)
 	}
 	pj__put_hseg(brd->drast,brd->dline,brd->dx,dy,brd->dw);
 }
-static void to_bym_scale_ubrun_line(int sy, int dy, Brundat *brd)
-
+static void to_bym_scale_ubrun_line(int sy, int dy, void *dat)
 {
+	Brundat *brd = dat;
 	(void)dy;
 
 	if(brd->last_sy != sy)
@@ -60,7 +62,7 @@ void pj_unbrun_scale_rect(Raster *dst,void *ucbuf, USHORT sw, USHORT sh,
 {
 char sbuf[SBUF_SIZE];
 Brundat brd;
-void (*vincfunc)(int sx,int dx,Brundat *brd);
+void (*vincfunc)(int sx, int dx, void *dat);
 
 	/* load up the data, we'll have a few bytes of fun. */
 
