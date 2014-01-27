@@ -17,7 +17,7 @@ Errcode err;
 
 	if(ainfo)
 	{
-		memset(ainfo,0,sizeof(ainfo));
+		memset(ainfo, 0, sizeof(*ainfo));
 		ainfo->width = flif->hdr.width;
 		ainfo->height = flif->hdr.height;
 		ainfo->depth = flif->hdr.bits_a_pixel;
