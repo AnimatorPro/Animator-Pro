@@ -2,6 +2,7 @@
 
 #include "fli.h"
 #include "memory.h"
+#include "rastcomp.h"
 
 int *pj_fccomp(char *s1, char *s2, USHORT *cbuf, USHORT count)
 

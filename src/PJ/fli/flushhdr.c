@@ -1,4 +1,5 @@
 #define FLI_1_0
+#include <time.h>
 #include "jfile.h"
 #include "fli.h"
 

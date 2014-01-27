@@ -1,4 +1,6 @@
 #define RASTCOMP_INTERNALS
+#include "fli.h"
+#include "gfx.h"
 #include "memory.h"
 #include "ptrmacro.h"
 #include "rastcomp.h"
@@ -34,6 +36,8 @@ static void scale_ubrun_line(int sy, int dy, Brundat *brd)
 static void to_bym_scale_ubrun_line(int sy, int dy, Brundat *brd)
 
 {
+	(void)dy;
+
 	if(brd->last_sy != sy)
 	{
 		while(++brd->last_sy < sy)

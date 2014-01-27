@@ -21,7 +21,13 @@
 	#define RASType void /* because many types have same first fields */
 #endif
 
+struct rgb3;
+
 void *pj_unbrun_scale_line(BYTE *src, Coor sw, BYTE *dst, SHORT *xtable);
+
+extern void
+pj_unbrun_scale_rect(RASType *dst, void *ucbuf,
+		USHORT sw, USHORT sh, SHORT dx, SHORT dy, USHORT dw, USHORT dh);
 
 void *pj_unbrun_skip_line(BYTE *src, Coor sw);
 
@@ -29,6 +35,10 @@ char *pj_brun_comp_line(char *src, char *cbuf, int count);
 
 void *pj_brun_rect(RASType *r,void *cbuf,
 				SHORT x,SHORT y,USHORT width,USHORT height);
+
+extern void *
+pj_fccomp(struct rgb3 *last_ctab, struct rgb3 *this_ctab,
+		void *cbuf, unsigned int count);
 
 void *pj_lccomp_rects(RASType *r1, void *cbuf, 
 				   SHORT x1, SHORT y1, 

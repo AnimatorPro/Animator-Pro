@@ -173,6 +173,8 @@ enum {
 
 typedef struct complib *Flicomp;
 
+struct anim_info;
+
 extern const Flicomp
 			pj_fli_comp_ani;	/* high res animator variable resolution fli */
 
@@ -199,10 +201,17 @@ Errcode pj_fli_cel_alloc_cbuf(Fli_frame **pcbuf, Rcel *cel);
 /* Flifile header checking open and close */
 
 Errcode pj_fli_read_head(char *title, Fli_head *flih, Jfile *pfd,int jmode);
+Errcode pj_fli_info(char *path, struct anim_info *ainfo);
+Errcode pj_fli_info_open(Flifile *flif, char *path, struct anim_info *ainfo);
 
 Errcode pj_fli_open(char *path, Flifile *flif, int jmode);
+Errcode squawk_open_flifile(char *path, Flifile *flif, int jmode);
 
 Errcode pj_fli_create(char *path, Flifile *flif);
+
+extern Errcode pj_i_create(char *path, Flifile *flif);
+extern void pj_i_update_id(Flifile *flif);
+extern Errcode pj_i_flush_head(Flifile *flif);
 
 void pj_fli_close(Flifile *flif);
 
@@ -245,10 +254,26 @@ LONG pj_fli_comp_cel(void *comp_buf, Rcel *last_screen,
 
 LONG pj_fli_comp_frame1(void *cbuf,Rcel *this_screen, Flicomp comp_type);
 
+extern Errcode pj_write_one_frame_fli(char *name, Flifile *flif, Rcel *screen);
+
 /* reading and decompression */
+
+extern void pj_fcuncomp(const UBYTE *src, Rgb3 *dst);
+extern void pj_fcuncomp64(const UBYTE *buf, Rgb3 *dst);
+
+extern void
+pj_fli_uncomp_rect(Rcel *f, Fli_frame *frame, Rectangle *rect, int colors);
+
+extern void pj_fli_uncomp_frame(Rcel *screen, Fli_frame *frame, int colors);
 
 Errcode pj_fli_seek_first(Flifile *flif);
 Errcode pj_fli_seek_second(Flifile *flif);
+
+extern Errcode fli_read_colors(Flifile *flif, Cmap *cmap);
+
+extern Errcode
+pj_i_read_uncomp1(char *fname, Flifile *flif, Rcel *fscreen,
+		Fli_frame *ff, Boolean colors);
 
 Errcode pj_fli_read_uncomp(char *name, Flifile *flif, Rcel *fscreen,
 						Fli_frame *ff, int colors);
@@ -258,8 +283,19 @@ Errcode pj_fli_read_first(char *name, Flifile *flif, Rcel *fscreen,
 Errcode pj_fli_read_next(char *name, Flifile *flif, Rcel *fscreen,
 					  Boolean colors );
 
-extern void pj_fcuncomp(const UBYTE *src, Rgb3 *dst);
-extern void pj_fcuncomp64(const UBYTE *src, Rgb3 *dst);
+extern int fli_wrap_frame(Flifile *flif, int frame);
+
+/* Postage stamp */
+
+extern void pj_make_pstamp_xlat(Rgb3 *ctab, UBYTE *xlat, int count);
+
+extern void
+pj_get_stampsize(SHORT maxw, SHORT maxh, SHORT sw, SHORT sh,
+		SHORT *pw, SHORT *ph);
+
+extern LONG
+pj_build_rect_pstamp(Rcel *screen, void *cbuf,
+		SHORT x, SHORT y, USHORT width, USHORT height);
 
 /*----------------------------------------------------------------------------
  * This proto is for a temporary kludge to eliminate flilib references to
@@ -267,5 +303,7 @@ extern void pj_fcuncomp64(const UBYTE *src, Rgb3 *dst);
  *--------------------------------------------------------------------------*/
 
 Errcode pj_fli_error_report(Errcode err, char *msg, char *filename);
+
+extern LONG pj__fii_get_user_id(void);
 
 #endif /* FLI_H */

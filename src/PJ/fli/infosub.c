@@ -1,3 +1,4 @@
+#include <string.h>
 #include "errcodes.h"
 #include "jfile.h"
 #include "fli.h"

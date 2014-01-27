@@ -36,8 +36,6 @@ Errcode err;
 Errcode create_flxfile(char *path, Flxfile *flx)
 /* this will always leave file position at end of header and path record */
 {
-extern Errcode pj_i_create(char *path, Flifile *flif);
-
 	clear_mem(flx,sizeof(*flx));
 	flx->hdr.type = FLIX_MAGIC;
 	flx->comp_type = pj_fli_comp_ani;

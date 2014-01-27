@@ -7,8 +7,7 @@
 #include "fli.h"
 #include "memory.h"
 
-extern long pj_fli_comp_frame1();
-extern long flx_data_offset(Flxfile *flx), flx_file_hi();
+extern long flx_file_hi();
 
 Errcode delete_middle_frames();
 void set_frame_count();

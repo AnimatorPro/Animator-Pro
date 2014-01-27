@@ -2,6 +2,7 @@
 #define RASTCOMP_INTERNALS
 #include "errcodes.h"
 #include "fli.h"
+#include "gfx.h"
 #include "imath.h"
 #include "memory.h"
 #include "ptrmacro.h"
@@ -9,7 +10,7 @@
 
 #define START_SIXCUBE 0
 
-void pj_make_pstamp_xlat(Rgb3 *ctab,register UBYTE *xlat,int count)
+void pj_make_pstamp_xlat(Rgb3 *ctab, UBYTE *xlat, int count)
 {
 	if(count > COLORS)
 		count = COLORS;
@@ -46,9 +47,6 @@ static char *copy_line(BYTE *src,BYTE *dst,int width)
 
 /* external brun compressor */
 
-extern char *pj_brun_comp_line(char *src, char *cbuf, int count);
-
-
 static void comp_pstamp_line(int sy, int dy, Brundat *brd)
 
 {
@@ -56,6 +54,7 @@ Pixel *spix;
 Pixel *dpix;
 Pixel *maxdpix;
 SHORT *xtable;
+(void)dy;
 
 	if(brd->dst)
 	{

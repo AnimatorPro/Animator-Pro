@@ -1,3 +1,4 @@
+#define RASTCOMP_INTERNALS
 #include "memory.h"
 #include "fli.h"
 #include "flicomp.h"
@@ -6,6 +7,7 @@
 static char *full_cmap(Rgb3 *ctab,void *cbuf,int num_colors)
 {
 register UBYTE *bbuf = cbuf;
+(void)num_colors;
 
 	*bbuf++ = 1;
 	*bbuf++ = 0;
@@ -14,11 +16,6 @@ register UBYTE *bbuf = cbuf;
 	pj_copy_bytes(ctab, bbuf, COLORS*3);
 	return(norm_pointer(bbuf+COLORS*3));
 }
-
-extern LONG pj_build_rect_pstamp(Rcel *screen, void *cbuf,
-					 	         SHORT x,SHORT y,USHORT width,USHORT height);
-
-extern void *pj_fccomp();
 
 static struct complib ani_complib = {
 	FLI_BRUN,

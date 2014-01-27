@@ -27,7 +27,6 @@ typedef struct config_pdr_info {
 } Config_pdr;
 
 extern Errcode pic_anim_info(char *ifname,Anim_info *ainfo);
-extern Errcode pj_fli_info(char *ifname,Anim_info *ainfo);
 
 #define PICTYPE 0
 #define FLICTYPE 1

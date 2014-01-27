@@ -19,7 +19,6 @@ LONG pj_fli_comp_rect(void *comp_buf,
 void *vp;
 Fli_frame *frame;
 Chunk_id *chunk;
-extern void *pj_fccomp();
 LONG stamp_size;
 
 

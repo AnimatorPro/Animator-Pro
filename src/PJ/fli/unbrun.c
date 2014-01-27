@@ -12,9 +12,7 @@ void *pj_unbrun_scale_line(BYTE *src, Coor sw, BYTE *dst, SHORT *xtable)
 int x;
 int psize;
 BYTE dchar;
-char *dststart;
 
-	dststart = dst;
 	++src;	/* skip over obsolete opcount byte */
 
 	x = 0;

@@ -4,9 +4,10 @@
    Then do an x dimension shrink by 5 and put result on screen somewhere.
    */
 
-#include "errcodes.h"
 #include "jimk.h"
+#include "errcodes.h"
 #include "fli.h"
+#include "rastcomp.h"
 #include "unchunk.h"
 
 Boolean pj_frame_has_pstamp(Fli_frame *frame)
