@@ -43,6 +43,8 @@ int fspace_width(Vfont *v, char *s)
 		return(v->tab_width);
 	return(v->char_width(v,s));
 }
+
+#if SLUFFED
 int fchar_width(Vfont *f, char *s)
 /* width of char with out spacing */
 {
@@ -50,6 +52,8 @@ int fchar_width(Vfont *f, char *s)
 		return(f->tab_width);
 	return(f->char_width(f,s)-f->spacing);
 }
+#endif /* SLUFFED */
+
 Errcode fset_spacing(Vfont *f, SHORT spacing, SHORT leading)
 /* if either spacing or leading is < 0 they will be ignored */
 {
