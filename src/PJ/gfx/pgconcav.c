@@ -12,7 +12,6 @@
 #define UPDIR 1
 #define DOWNDIR 0
 
-Errcode fill_on_off();
 static void xor_pt();
 static void y_xor_line();
 Errcode fill_on_off(SHORT bpr, SHORT width, SHORT height, 
@@ -101,7 +100,7 @@ return(err);
 
 
 Errcode fill_on_off(SHORT bpr, SHORT width, SHORT height, 
-	SHORT xoff, SHORT yoff, UBYTE *imagept, EFUNC hline, void *hldat)
+	SHORT xoff, SHORT yoff, UBYTE *imagept, hline_func hline, void *hldat)
 {
 UBYTE *linept;
 UBYTE rot;

@@ -110,11 +110,8 @@ void set_leftbehind(RASType *s,Pixel color,Coor sx,Coor sy,
 	#define OPTdata ...
 #endif /* GFX_INTERNALS */
 
-typedef void (*dotout_type)(SHORT x, SHORT y, void *dotdat);
-
 void pj_cline(SHORT x1, SHORT y1, SHORT x2, SHORT y2,
-		   dotout_type dotout,
-		   OPTdata /* void *datdat */);
+		dotout_func dotout, OPTdata /* void *dotdat */);
 
 void pj_do_linscale(int sx, int sw, int dx, int dw,
 					void (*doinc)(int sx, int dx, void *dat), OPTdata );

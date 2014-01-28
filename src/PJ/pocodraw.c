@@ -29,7 +29,7 @@ static void po_ink_dot(int x, int y)
  ****************************************************************************/
 {
 dirties();
-render_dot(x,y);
+render_dot(x, y, NULL);
 }
 
 static int po_get_dot(int x, int y)
@@ -73,8 +73,6 @@ static void po_ink_circle(int cx, int cy, int radius)
  * void Circle(int cx, int cy, int radius);
  ****************************************************************************/
 {
-extern render_dot(), render_brush();
-
 dirties();
 free_render_cashes();
 rend_circ(cx,cy,radius);

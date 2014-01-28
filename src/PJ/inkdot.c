@@ -501,9 +501,10 @@ else
 }
 /************** render dot ************************/
 
-void render_dot(SHORT x,SHORT y)
+void render_dot(SHORT x, SHORT y, void *data)
 {
 Pixel color;
+(void)data;
 
 if (x < rdta.cr.x  || y < rdta.cr.y 
 	 || x >= rdta.cr.MaxX || y >= rdta.cr.MaxY )
@@ -585,7 +586,7 @@ void (*ink_hline)(const Ink *inky, SHORT x0,const SHORT y,SHORT width);
 	if (!render_hlineable)
 	{
 		while(x0 <= x1)
-			render_dot(x0++,y);
+			render_dot(x0++, y, NULL);
 		return(0);
 	}
 	w1 = width = x1-x0+1;

@@ -29,7 +29,7 @@ SHORT x, y;
 	start_abort_atom();
 	for (x=vl.grid.x; x<vb.pencel->width; x+=vl.grid.width)
 	{
-		pj_cline(x,0,x,vb.pencel->height,(dotout_type)render_dot);
+		pj_cline(x, 0, x, vb.pencel->height, render_dot, NULL);
 		if((err = poll_abort()) < Success)
 			goto aborted;
 	}

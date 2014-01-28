@@ -26,7 +26,7 @@
 #define PDMK (PDIV-1)
 #define PINC (TWOPI/PDIV)
 
-extern void render_dot(), render_brush();
+extern void render_brush();
 
 
 static Short_xy ptp1[] = {
@@ -388,7 +388,7 @@ Short_xy ends[2];
 
 	if(!vs.use_brush)
 	{
-		pj_cline(x, y, xx, yy, (dotout_type)render_dot);
+		pj_cline(x, y, xx, yy, render_dot, NULL);
 		return(Success);
 	}
 	ends[0].x = x;

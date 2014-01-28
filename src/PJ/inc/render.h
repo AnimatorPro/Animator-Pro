@@ -46,7 +46,7 @@ void render_mask_blit(UBYTE *mplane, SHORT mbpr,
 Errcode render_transform(Rcel *cel, struct xformspec *xf
 , struct tcolxldat *txd);
 
-void render_dot(SHORT x,SHORT y);
+void render_dot(SHORT x, SHORT y, void *data);
 Errcode transpblit(register Rcel *tcel,int clearcolor,int clear,int tinting);
 
 Errcode render_hline(register SHORT y,register SHORT x0,SHORT x1,Raster *r);

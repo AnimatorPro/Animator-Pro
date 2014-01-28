@@ -121,6 +121,10 @@ typedef SHORT (*SFUNC)();	/* pointer to function returning SHORT */
 typedef LONG  (*LFUNC)();	/* pointer to function returning LONG */
 typedef Errcode (*EFUNC)(); /* pointer to function returning Errcode */
 
+typedef void (*dotout_func)(SHORT x, SHORT y, void *data);
+typedef void (*line_func)(SHORT x1, SHORT y1, SHORT x2, SHORT y2, void *data);
+typedef Errcode (*hline_func)(SHORT y, SHORT x1, SHORT x2, void *data);
+
 /* For now out graphics run with byte-a-pixel cards.  This typedef is
    used to make code that's concerned with pixels stand out from code
    that's concerned with characters or other bytes. */

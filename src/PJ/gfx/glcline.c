@@ -5,9 +5,7 @@
 #include "gfx.h"
 
 void pj_cline(SHORT x1, SHORT y1, SHORT x2, SHORT y2, 
-		   dotout_type dotout,
-		   void *dotdat)
-
+		dotout_func dotout, void *dotdat)
 /* note that if x1 < x2 dots will be output from x1 to x2 and y1 to y2
  * and the reverse if x2 < x1 Some code is dependent on this */
 {

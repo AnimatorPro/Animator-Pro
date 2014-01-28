@@ -176,7 +176,7 @@ int x,y;
 						vs.ccolor = xlat[vs.ccolor];
 					ink_aid.ccolor = vs.ccolor;
 					if ( !vs.zero_clear || vs.ccolor != tcolor)
-						render_dot(x,y);
+						render_dot(x, y, NULL);
 				}
 				else
 				{
@@ -200,7 +200,7 @@ int x,y;
 					vs.ccolor = xlat[vs.ccolor];
 				ink_aid.ccolor = vs.ccolor;
 				if ( !vs.zero_clear || vs.ccolor != tcolor)
-					render_dot(x,y);
+					render_dot(x, y, NULL);
 			}
 		}
 	if ((err = poll_abort()) < Success)
@@ -431,7 +431,7 @@ int x, y, MaxX, MaxY;
 		for(x = rx;x < MaxX;++x)
 		{
 			if(mbits & mbit)
-				render_dot(x,y);
+				render_dot(x, y, NULL);
 
 			if((mbit >>= 1) == 0)
 			{
@@ -483,14 +483,14 @@ while (h--)
 			{
 			if (curalpha == 255) 
 				{
-				render_dot(curx,y);
+				render_dot(curx, y, NULL);
 				} 
 			else 
 				{
 				/* Sample raster before and after render_dot.  Put back a
 				 * mixture of two values. */
 				s1 = &ctab[pj_get_dot(r, curx, y)];
-				render_dot(curx, y);
+				render_dot(curx, y, NULL);
 				s2 = &ctab[pj_get_dot(r, curx, y)];
 				alpha_blend(s1, s2, &dest, curalpha);
 				pj_put_dot(r, closestc(&dest, ctab, cmap->num_colors)
@@ -656,7 +656,7 @@ Rbrush *rb = vl.brush;
 
 	if(!vs.use_brush)
 	{
-		render_dot(x,y);
+		render_dot(x, y, NULL);
 		return;
 	}
 
@@ -684,7 +684,7 @@ Rbrush *rb = vl.brush;
 		for(x = xstart;x < MaxX;++x) 
 		{
 			if(*dot++)
-				render_dot(x,y);
+				render_dot(x, y, NULL);
 		}
 	}
 	enable_lsp_ink();
