@@ -9,19 +9,6 @@
 
 Font_dev *font_dev_list;
 
-Font_dev *find_fdev_for_type(SHORT type)
-{
-Font_dev *f = font_dev_list;
-
-while (f != NULL)
-	{
-	if (f->type == type)
-		break;
-	f = f->next;
-	}
-return(f);
-}
-
 static add_font_dev(Font_dev *f)
 /* makes sure it is not in the list then makes sure it is the first element */
 {

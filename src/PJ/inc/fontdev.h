@@ -23,6 +23,4 @@ typedef struct font_dev
 	} Font_dev;
 extern Font_dev *font_dev_list;
 
-Font_dev *find_fdev_for_type(SHORT type);
-
 #endif /* FONTDEV_H */
