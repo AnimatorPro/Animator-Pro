@@ -341,7 +341,9 @@ int maxx;
 		}
 		if(x > maxx)
 			break;
-		(*blit_for_mode[tmode])(data, wd, sx, 0, rast, x, y, imageWid, ht, color, bcolor);
+		blit_for_mode(tmode,
+				(UBYTE *)data, wd, sx, 0,
+				rast, x, y, imageWid, ht, color, bcolor);
 		switch (font_type)
 		{
 			case STPROP:

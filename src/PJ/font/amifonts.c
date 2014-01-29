@@ -116,7 +116,8 @@ while ((c = oem_to_ansi[*s++]) != 0)
 
 	if(x > maxx)
 		break;
-	(*blit_for_mode[tmode])(fcb->image, fcb->head.h2.tf_modulo, fcb->loc[c].startx, 0,
+	blit_for_mode(tmode,
+		fcb->image, fcb->head.h2.tf_modulo, fcb->loc[c].startx, 0,
 		rast, x1, y,
 		fcb->loc[c].width, fcb->head.h2.tf_ysize, color, bcolor);
 	if (fcb->is_prop)

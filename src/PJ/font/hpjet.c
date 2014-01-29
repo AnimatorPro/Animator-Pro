@@ -368,7 +368,8 @@ int maxx;
 		{
 			if(x > maxx)
 				break;
-			(*blit_for_mode[tmode])((UBYTE *)(let+1), (let->character_width+7)>>3, 0, 0,
+			blit_for_mode(tmode,
+				(UBYTE *)(let+1), (let->character_width+7)>>3, 0, 0,
 				rast, x + let->left_offset, y + let->top_offset,
 				let->character_width, let->character_height, color, bcolor);
 			x += let->delta_x+vfont->spacing;

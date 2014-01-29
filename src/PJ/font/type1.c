@@ -2840,7 +2840,6 @@ static Errcode vfont_gftext(Raster *rast,
 	Type1_bitplane *bits;
 	unsigned char c;
 	unsigned char *def;
-	VFUNC blit = blit_for_mode[tmode];
 	Errcode err;
 
 	if (tcd->scale.unzag_flag)
@@ -2864,7 +2863,8 @@ static Errcode vfont_gftext(Raster *rast,
 			{
 			if ((err = get_bit_image(tcd, c, &bits)) < Success)
 				return err;
-			(*blit)(bits->bits, bits->bpr, 0, 0
+			blit_for_mode(tmode
+			, bits->bits, bits->bpr, 0, 0
 			, rast, x+bits->x, y+bits->y
 			, bits->width, bits->height, color, bcolor);
 			x += tcd->scale.width[c] + v->spacing;

@@ -126,8 +126,11 @@ int font_ycent_oset(Vfont *f,SHORT height);
 int font_xcent_oset(Vfont *f,char *s,SHORT width);
 Boolean in_font(Vfont *f, int c);
 
-extern VFUNC blit_for_mode[];
-
+extern void
+blit_for_mode(int tmode,
+		UBYTE *mbytes, Coor mbpr, Coor mx, Coor my,
+		RASType *r, Coor rx, Coor ry, Ucoor w, Ucoor h,
+		Pixel oncol, Pixel offcol);
 
 Errcode gftext(RASType *rast,
 			Vfont *f,

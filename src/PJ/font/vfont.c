@@ -383,8 +383,22 @@ void render_mask_blit(UBYTE *mplane, SHORT mbpr,
 					  void *drast, /* currently ignored uses vb.pencel */
 					  SHORT rx, SHORT ry, USHORT width, USHORT height, ... );
 
-/* A table of blits that correspond to various font-drawing modes. */
-VFUNC blit_for_mode[] = {pj_mask1blit, pj_mask2blit, render_mask_blit};
+void
+blit_for_mode(int tmode,
+		UBYTE *mbytes, Coor mbpr, Coor mx, Coor my,
+		Raster *r, Coor rx, Coor ry, Ucoor w, Ucoor h,
+		Pixel oncol, Pixel offcol)
+{
+	if (tmode == 0) {
+		pj_mask1blit(mbytes, mbpr, mx, my, r, rx, ry, w, h, oncol);
+	}
+	else if (tmode == 1) {
+		pj_mask2blit(mbytes, mbpr, mx, my, r, rx, ry, w, h, oncol, offcol);
+	}
+	else {
+		render_mask_blit(mbytes, mbpr, mx, my, r, rx, ry, w, h);
+	}
+}
 
 unsigned char oem_to_ansi[] = 
 /*
