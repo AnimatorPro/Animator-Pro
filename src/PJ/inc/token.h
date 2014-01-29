@@ -20,6 +20,11 @@
   #include "stdtypes.h"
 #endif
 
+/* Watcom C's stdlib.h redefines atof, so watch out for that! */
+#ifdef atof
+#error "atof redefined"
+#endif
+
 /* values stored in tok_type will be an ascii char, or one of these... */
 
 typedef enum token_t {
@@ -66,9 +71,11 @@ typedef enum token_t {
 
 /* prototypes... */
 
-long	atol(char *s);
-double	atof(char *s);
-long	htol(char *s);
+extern int atoi(const char *s);
+extern long atol(const char *s);
+extern double atof(const char *s);
+extern long htol(const char *s);
+
 UBYTE	 *tokenize_word(UBYTE *line, UBYTE *oword, UBYTE *qstring,
 						SHORT *plen, SHORT *ttype, Boolean quote);
 

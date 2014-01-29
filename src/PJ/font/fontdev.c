@@ -2,14 +2,14 @@
 /* fontdev.c - 'Device' level functions for fonts.  One device for each
    type of font supported. */
 
-#include "stdtypes.h"
 #include "errcodes.h"
 #include "fontdev.h"
 #include "linklist.h"
+#include "stfont.h"
 
 Font_dev *font_dev_list;
 
-static add_font_dev(Font_dev *f)
+static void add_font_dev(Font_dev *f)
 /* makes sure it is not in the list then makes sure it is the first element */
 {
 	font_dev_list = (Font_dev *)remove_el(font_dev_list, f);
@@ -17,17 +17,15 @@ static add_font_dev(Font_dev *f)
 	font_dev_list = f;
 }
 
-init_font_dev()
+void init_font_dev(void)
 {
-extern Font_dev st_font_dev, ami_font_dev, hpjet_font_dev, type1_font_dev;
-
 add_font_dev(&ami_font_dev);
 add_font_dev(&hpjet_font_dev);
 add_font_dev(&st_font_dev);
 add_font_dev(&type1_font_dev);
 }
 
-Errcode init_menufont_dev()
+Errcode init_menufont_dev(void)
 {
 	init_font_dev();
 	return(Success);
@@ -36,7 +34,6 @@ Errcode init_menufont_dev()
 Errcode load_font(char *title, Vfont *font, SHORT height, SHORT unzag_flag)
 {
 Font_dev *fd;
-extern char sixhi_font_name[];
 
 	if(pj_name_in_path(title,sixhi_font_name))
 	{

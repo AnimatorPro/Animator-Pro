@@ -1,7 +1,7 @@
 #include "stfont.h"
 #include "fontdev.h"
 
-Vfont *get_sys_font()
+Vfont *get_sys_font(void)
 {
 static char init = FALSE;
 static Vfont sysfont;

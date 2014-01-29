@@ -14,10 +14,7 @@ void init_pullwork(Pullwork *pw, Menuhdr *mh)
 	pw->screen = mh->group->screen;
 	pw->port = pw->screen->viscel;     /* default port */
 	if((pw->font = mh->font) == NULL)
-		{
-		extern struct vfont *get_sys_font();
 		pw->font = pw->screen->mufont;
-		}
 	pw->spwidth = fchar_spacing(pw->font," ");
 	pw->cheight = tallest_char(pw->font);
 }

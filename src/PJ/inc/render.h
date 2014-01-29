@@ -23,6 +23,8 @@ typedef struct renderdata {
 	SHORT rwidth,rheight;  /* gradient range width and height */
 } Rendata;
 
+struct xformspec;
+
 extern Rendata rdta;
 
 /* Hash for transparent color */

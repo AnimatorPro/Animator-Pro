@@ -1,5 +1,6 @@
 #include "pjbasics.h"
 #include "errcodes.h"
+#include "fontdev.h"
 #include "resource.h"
 #include "softmenu.h"
 

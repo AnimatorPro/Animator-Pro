@@ -1,3 +1,4 @@
+#define VFONT_C
 #include "amifonts.h"
 #include "errcodes.h"
 #include "fontdev.h"
@@ -57,9 +58,7 @@ pj_close(f);
 return(err);
 }
 
-
-
-static ami_char_width(Vfont *v, UBYTE *s)
+static int ami_char_width(Vfont *v, UBYTE *s)
 {
 Afcb *fcb = v->font;
 UBYTE c = s[0];
@@ -130,15 +129,17 @@ return(Success);
 
 #define AMIF_SEEK_OFF 0x20		/* Sometime they added 20 bytes to the header */
 
-static Errcode load_ami_font(char *title, Vfont *vfont, SHORT height)
+static Errcode
+load_ami_font(char *title, Vfont *vfont, SHORT height, SHORT unzag_flag)
 {
 Jfile f = 0;
 Errcode err;
 Afcb *fcb;
 long image_size;
-char buf[16];
 int char_count;
 long rsz;
+(void)height;
+(void)unzag_flag;
 
 clear_struct(vfont);
 if ((fcb = pj_zalloc(sizeof(*fcb))) == NULL)
@@ -247,4 +248,5 @@ NULL,
 check_ami_font,
 load_ami_font,
 AMIFONT,
+0
 };

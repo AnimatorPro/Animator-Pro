@@ -56,6 +56,8 @@
  * only structure by code outside of the input directory or the 
  * macro code */
 
+struct cursorhdr;
+
 typedef void (*cursorhdr_func)(struct cursorhdr *ch,...); 
  typedef struct cursorhdr {
 	cursorhdr_func showit; /* display mouse cursor */

@@ -1,3 +1,4 @@
+#include <string.h>
 #define WORDWRAP_INTERNALS
 #include "imath.h"
 #include "wordwrap.h"

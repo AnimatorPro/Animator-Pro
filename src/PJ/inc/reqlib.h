@@ -41,6 +41,9 @@ Errcode soft_ttextf(char *key,va_list *pargs);
 
 Errcode soft_continu_box(char *key,...);
 
+extern Errcode
+varg_continu_box(char *formats, char *text, va_list args, char *etext);
+
 Boolean yes_no_box(char *fmt,...);
 Boolean soft_yes_no_box(char *key,...);
 

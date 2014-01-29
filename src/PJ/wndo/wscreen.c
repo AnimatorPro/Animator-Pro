@@ -129,8 +129,6 @@ int allocsize;
 	s->mc_lastalt = 0xFF;  /* this will force menucolors to be found */
 
 	{
-	Vfont *get_sys_font();
-
 		s->mufont = get_sys_font();
 	}
 

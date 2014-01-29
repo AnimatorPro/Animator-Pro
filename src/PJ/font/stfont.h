@@ -48,13 +48,4 @@ typedef struct	font_hdr {
 #define MFIXED 1
 #define MPROP  2
 
-
-extern struct font_hdr sixhi_font; 
-extern struct font_hdr sail_font; 
-
-
-
-
-
-
 #endif /* STFONT_H Leave at end of file */

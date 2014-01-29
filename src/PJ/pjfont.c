@@ -8,7 +8,6 @@
 static Vfont _uvfont;
 Vfont *uvfont = &_uvfont;
 
-extern char sixhi_font_name[];
 static char *system_font_name = sixhi_font_name;
 
 Vfont *get_poco_font()

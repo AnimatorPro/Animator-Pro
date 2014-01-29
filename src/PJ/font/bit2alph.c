@@ -5,7 +5,7 @@
  * bytes represent full opaqueness.
  */
 
-#include "stdtypes.h"
+#include "rastext.h"
 
 /*****************************************************************************
  * code to reduce a bit mask to an alpha channel...

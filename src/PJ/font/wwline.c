@@ -142,8 +142,7 @@ done:
 	return(s);
 }
 
-int ww_line(Wwdata *wd)
-
+static int ww_line(Wwdata *wd)
 /* Copies as many words from s into out as will fit in wd->wid.  Terminates
    out with zero.  sets stream pointer to next line or NULL if this is the
    last line. returns width of line from font */

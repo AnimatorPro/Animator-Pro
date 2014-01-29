@@ -361,8 +361,8 @@ typedef struct Wiostate {
 	Wndo *iowndo;
 } Wiostate;
 
-save_wiostate(Wiostate *ios);
-rest_wiostate(Wiostate *ios);
+extern void save_wiostate(Wiostate *ios);
+extern void rest_wiostate(Wiostate *ios);
 
 /* flags used in icb.wflags */
 

@@ -18,6 +18,10 @@
 	#define RASType void
 #endif
 
+extern int
+just_charstart(Vfont *font, int x, int lwidth,
+		char *linebuf, int charpos, int just);
+
 int justify_line(RASType *r, Vfont *font, char *linebuf, int x,int y,int w,
 				 Pixel color, Text_mode tmode, Pixel color2,int just, SHORT *cposx,
 				 int cpos_idx);
@@ -66,8 +70,6 @@ typedef struct wwdata {
 	int ww;			/* Width of imbedded word */
 	int endw; 		/* Width to last pixel of word (word on end of line) */
 } Wwdata;
-
-int ww_line(Wwdata *wd); /* returns "why" */
 
 #endif
 

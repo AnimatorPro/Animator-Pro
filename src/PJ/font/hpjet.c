@@ -1,3 +1,4 @@
+#define VFONT_C
 #include "errcodes.h"
 #include "fontdev.h"
 #include "hpjet.h"
@@ -126,7 +127,6 @@ static char char_sig[] = {0x1b, '*', 'c'};
 long csig1_num;
 long csig2_num;
 Errcode err;
-char char_desc[16];
 Hpj_letter *let;
 int chars_read = 0;
 
@@ -398,10 +398,13 @@ vfont->tab_width = vfont->widest_char*TABEXP;
 scan_init_vfont(vfont);
 }
 
-Errcode load_hpjet_font(char *title, Vfont *vfont, SHORT height)
+static Errcode
+load_hpjet_font(char *title, Vfont *vfont, SHORT height, SHORT unzag_flag)
 {
 Errcode err;
 Hfcb *hfcb = NULL;
+(void)height;
+(void)unzag_flag;
 
 if ((hfcb = pj_zalloc(sizeof(*hfcb))) == NULL)
 	{
@@ -424,5 +427,6 @@ NULL,
 check_hpjet_font,
 load_hpjet_font,
 HPJET,
+0
 };
 

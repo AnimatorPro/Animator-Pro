@@ -5,6 +5,7 @@
 	or whatever type of font */
 
 #include <stdio.h>
+#include <string.h>
 #include "linklist.h"
 #include "rastext.h"
 #include "errcodes.h"
@@ -318,13 +319,14 @@ while (list != 0)
 return(width);
 }
 
-static mono_width(Vfont *f, char *str)
+static int mono_width(Vfont *f, char *str)
 /* Return width of a char in mono-spaced font. */
 {
+	(void)str;
 	return(f->widest_char);
 }
 
-scan_init_vfont(Vfont *f)
+void scan_init_vfont(Vfont *f)
 /* scans font characters to calculate font constants, and set flags 
  * used in initializing vfonts */
 {

@@ -1,6 +1,7 @@
 /* stfont.c - Load and display Atari ST style GEM raster fonts.
  */
 
+#define VFONT_C
 #include "errcodes.h"
 #include "fontdev.h"
 #include "memory.h"
@@ -183,7 +184,8 @@ pj_close(f);
 return(err);
 }
 
-static Errcode load_st_font(char *title, Vfont *vfont, SHORT height)
+static Errcode
+load_st_font(char *title, Vfont *vfont, SHORT height, SHORT unzag_flag)
 /* 
  * Load up ST style font from disk into memory.
  * Height request parameter is ignored since this not
@@ -195,6 +197,8 @@ Jfile fd;
 Stfcb *fcb = NULL;
 SHORT *cf_offsets;
 UBYTE *cf_data;
+(void)height;
+(void)unzag_flag;
 
 if ((fd = pj_open(title, 0)) == JNONE)
 	{
@@ -268,7 +272,7 @@ else if (((unsigned)fcb->cfont.id) == ((unsigned)0xB000))
 else
 	fcb->cfont.id = STPROP;
 pj_close(fd);
-init_st_vfont(vfont, fcb);
+init_st_vfont(vfont, &fcb->cfont);
 return(Success);
 BADEND:
 _free_st_font(fcb);
@@ -457,7 +461,7 @@ Font_hdr *f = v->font;
 return(c >= f->ADE_lo && c <= f->ADE_hi);
 }
 
-init_st_vfont(Vfont *vfont, Stfcb *stf)
+void init_st_vfont(Vfont *vfont, Font_hdr *stf)
 /*
  * Fill in our virtual font structure (which handles many different
  * font types) with functions and data to display an ST style font.
@@ -472,13 +476,13 @@ vfont->gftext = st_gftext;
 vfont->close_vfont = free_st_font;
 vfont->char_width = st_fchar_spacing;
 vfont->in_font = st_in_font;
-vfont->image_height = stf->cfont.frm_hgt;
-leading = (stf->cfont.frm_hgt+3)>>2;
+vfont->image_height = stf->frm_hgt;
+leading = (stf->frm_hgt+3)>>2;
 vfont->line_spacing = vfont->image_height+leading;
 vfont->default_leading = vfont->leading = leading;
 vfont->widest_image = vfont->widest_char = st_widest_char(vfont);
 vfont->tab_width = TABEXP*vfont->widest_char;
-if (stf->cfont.id == MFIXED)
+if (stf->id == MFIXED)
 	vfont->flags = VFF_MONOSPACE;
 scan_init_vfont(vfont);
 
@@ -496,4 +500,5 @@ NULL,
 check_st_font,
 load_st_font,
 STFONT,
+0
 };

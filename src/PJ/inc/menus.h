@@ -448,10 +448,10 @@ typedef struct titbar_group {
 	void *data;
 } Titbar_group;
 
-see_titlebar(Button *b);
-hang_see_title(Button *b);
-feel_titlebar(Button *b);
-void feel_req_titlebar(Button *b);
+extern void see_titlebar(Button *b);
+extern void hang_see_title(Button *b);
+extern void feel_titlebar(Button *b);
+extern void feel_req_titlebar(Button *b);
 
 extern Titbar_group tbg_moveclose;
 extern Titbar_group tbg_closeonly;

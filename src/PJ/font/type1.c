@@ -24,20 +24,23 @@
 */
 #undef DEBUG
 
+#define VFONT_C
 #include <string.h>
 #include <ctype.h>
 #include <math.h>
 #include <limits.h>
 #include <setjmp.h>
 #include "lstdio.h"
-#include "token.h"
+#include "blockall.h"
+#include "ffile.h"
+#include "fontdev.h"
+#include "linklist.h"
 #include "pjbasics.h"
 #include "rastext.h"
-#include "fontdev.h"
-#include "blockall.h"
 #include "render.h"
+#include "reqlib.h"
 #include "sdot.h"
-#include "linklist.h"
+#include "token.h"
 #include "type1.h"
 
 
@@ -46,7 +49,7 @@
 #define X   0
 #define Y   1
 
-void calc_font_bounds(Type1_font *tcd);
+static void calc_font_bounds(Type1_font *tcd);
 static void free_scale_info(Type1_scale_info *si);
 
 #ifdef DEBUG
@@ -119,7 +122,6 @@ static void type1_load_error(char *fmt, ...)
  * format & output an error message, then longjump to error handler.
  */
 {
-char	sbuf[512];
 va_list args;
 
 va_start(args, fmt);
@@ -579,8 +581,6 @@ static void type1_get_token(Type1_token *token)
  */
 {
 	int ch;
-	int size = 0;
-	T1_token_type retval;
 	Boolean (*get_next)(int ch);
 	int tok_len = sizeof(token->string);
 	char *string = token->string;
@@ -777,8 +777,6 @@ static void type1_parse_public_definition(Type1_font *tcd, Type1_token *tok)
 /* Cope with /XXXX definitions during the public (unencrypted) part of
  * the font.  Right now we ignore everything except /Encoding. */
 {
-	char *string;
-
 	type1_get_token(tok);
 	if (tok->type != TTT_NAME)
 		return;
@@ -835,6 +833,7 @@ static void type1_find_mode(Type1_font *tcd, FILE *fp)
 	char cs[4];
 	long encrypt_start;
 	int i;
+	(void)tcd;
 
 	encrypt_start = ftell(fp);
 	cs[0] = getc(fp);
@@ -947,7 +946,6 @@ static void type1_read_encoded_buffer(Type1_token *token
  * Well, this is only called in contexts where there will be no
  * pushbacks. */
 {
-	int ch;
 	int i;
 
 	cstrinit();	/* Initialize string decryption. */
@@ -1012,7 +1010,6 @@ static void type1_get_char_strings(Type1_font *tcd, Type1_token *tok)
 	char **letter_names;
 	unsigned char **letter_defs;
 	int letter_ix = 0;
-	Boolean is_dot;
 	int binary_size;
 
 	tcd->letter_count = letter_count = type1_get_number(tok);
@@ -1058,14 +1055,11 @@ static void type1_get_char_strings(Type1_font *tcd, Type1_token *tok)
 static void rtype1(Type1_font *tcd, FILE *fp)
 /*  RTYPE1  --  Load a type 1 font into memory.  */
 {
-    char token[256], ltoken[256], stoken[256], ptoken[256];
-    char *tokenp;
-    int i, dc;
+	int i;
 	Errcode err;
 	Type1_token tok;
 
 	section = Header;
-    ptoken[0] = stoken[0] = ltoken[0] = token[0] = EOS;
 
 	if ((err = type1_check_signature(fp)) < Success)
 		type1_load_error("Can't find !%FontType1 in .PFB file.");
@@ -1158,7 +1152,6 @@ static Errcode find_ascii_values(Type1_font *tcd)
  ****************************************************************************/
 {
 	char *name;
-	unsigned char *def;
 	unsigned char *ascii_name;
 	unsigned char **map = tcd->encoding;
 	char **names = tcd->letter_names;
@@ -1501,6 +1494,7 @@ static void othersubr(Type1_output *output, int procno, int nargs, int argp)
 {
     static int flexp;                 /* Flex argument pointer */
     static int flexarg[8][2];
+    (void)nargs;
 
     orp = 0;                          /* Reset othersubr result pointer */
 
@@ -1943,13 +1937,14 @@ static int sf_bezier_points = 8;	/* How many points to put in bezier. */
 #define Y_TO_SCREEN(fo,y) (sf_yoff - (int)((y + ROUNDING_KLUDGE )*sf_scaley))
 */
 
-int Y_TO_SCREEN(Type1_output *fo, double y)
+static int Y_TO_SCREEN(Type1_output *fo, double y)
 {
+(void)fo;
 y = (y + ROUNDING_KLUDGE) * sf_scaley;
 return sf_yoff - (int)y;
 }
 
-static set_sf_pos(double xoff, double yoff, double scalex, double scaley)
+static void set_sf_pos(double xoff, double yoff, double scalex, double scaley)
 /*
  * Set up letter scaling and positioning machinery
  */
@@ -1966,17 +1961,23 @@ static int bounds_points;
 
 static Errcode bounds_letter_open(Type1_output *fo)
 {
+	(void)fo;
+
 	init_bounding_box(&bounds_box);
 	return Success;
 }
 
 static Errcode bounds_close(Type1_output *fo)
 {
+	(void)fo;
+
 	return Success;
 }
 
 static Errcode bounds_add_point(Type1_output *fo, double x, double y)
 {
+	(void)fo;
+
 	point_into_bounding_box(&bounds_box, x, -y);
 	++bounds_points;
 	return Success;
@@ -1989,6 +1990,7 @@ static Type1_output bounds_output =
 	bounds_add_point, 
 	bounds_close, 
 	bounds_add_point,
+	NULL
 	};
 
 static Errcode bounds_interpret(Type1_font *tcd, unsigned char *def
@@ -2088,6 +2090,7 @@ static void type1_bits_outline(Poly *poly, int xoff, int yoff
 {
 	int count = poly->pt_count;
 	LLpoint *this, *next;
+	(void)closed;
 
 	this = poly->clipped_list;
 	while (--count >= 0)
@@ -2156,6 +2159,7 @@ static Errcode fill_shape_close(Type1_output *fo)
  *----------------------------------------------------------------------*/
 {
 	LLpoint *last_point;
+	(void)fo;
 
 	last_point = slist_last(fill_shape_list->points);
 	last_point->next = fill_shape_list->points;
@@ -2167,6 +2171,8 @@ static Errcode fill_letter_open(Type1_output *fo)
  * Start a filled letter.
  *----------------------------------------------------------------------*/
 {
+	(void)fo;
+
 	fill_shape_list = NULL;
 	construct_block_allocator(&fill_ba, 512L, pj_malloc, pj_free);
 	init_bounding_box(&fill_bounds);
@@ -2223,7 +2229,6 @@ static Errcode output_shape_list(Type1_output *fo, Shape_list *shape_list)
 {
 	Poly poly;
 	Type1_box bounds;
-	long size;
 	Type1_bitplane bits, *pbits;
 	Type1_bits_out *bits_out = fo->data;
 	Shape_list *shapes;
@@ -2289,6 +2294,7 @@ static Type1_output fill_output =
 	fill_shape_open, 
 	fill_shape_close,
 	fill_point,
+	NULL
 	};
 
 static int fill_scale_interpret(Type1_font *tcd	/* Font definition */
@@ -2456,7 +2462,6 @@ static void scale_type1_font(Type1_font *tcd, double scalex, double scaley)
  *  Set up font for a particular size.
  *----------------------------------------------------------------------*/
 {
-	unsigned char **ascii_defs = tcd->ascii_defs;
 	int *lwidth = tcd->letter_width;
 	int *pscaled = tcd->scale.width;
 	int i;
@@ -2520,10 +2525,6 @@ static void set_type1_height(Type1_font *tcd, int height)
  *****************************************************************************
  ****************************************************************************/
 
-extern void bitmask_to_alpha_channel(Pixel *dest, int shrinker
-, UBYTE *bitplane, int w, int h, int bpr, int first_shrink_height);
-
-
 static Errcode shrink_bitplane_to_alpha(Block_allocator *ba
 ,  Type1_bitplane *source, int shrink, Type1_alpha **palpha)
 /*****************************************************************************
@@ -2565,7 +2566,7 @@ static Errcode shrink_bitplane_to_alpha(Block_allocator *ba
 }
 
 
-typedef Talpha_blit(UBYTE *alpha, int abpr, int x, int y, int w, int h
+typedef void (*Talpha_blit)(UBYTE *alpha, int abpr, int x, int y, int w, int h
 , Rcel *r, Pixel oncolor);
 
 #ifdef UNUSED
@@ -2670,7 +2671,7 @@ static Errcode soft_gftext(Raster *rast,
 			register unsigned char *s,
 			int x,int y,
 			Pixel color,
-			Talpha_blit *alpha_blit)
+			Talpha_blit alpha_blit)
 /*****************************************************************************
  * Draw a oversampled text string in the font in opaque ink.   
  ****************************************************************************/
@@ -2680,9 +2681,6 @@ static Errcode soft_gftext(Raster *rast,
 	unsigned char c;
 	unsigned char *def;
 	Errcode err;
-	int width, height;
-	int shrink = 4;
-
 
 	while ((c = *s++) != EOS)
 		{
@@ -2842,8 +2840,6 @@ static Errcode vfont_gftext(Raster *rast,
 	unsigned char *def;
 	VFUNC blit = blit_for_mode[tmode];
 	Errcode err;
-	int width, height;
-
 
 	if (tcd->scale.unzag_flag)
 		{
@@ -3067,7 +3063,6 @@ Type1_bits_out output;
 int i;
 unsigned char *def;
 char *name;
-extern Vfont *get_sys_font();
 Errcode err;
 
 output.ba = ba;
@@ -3104,7 +3099,7 @@ void test_font(Raster *rast, Vfont *v)
 
 
 static Errcode load_vfont(char *title, Vfont *vfont, SHORT height
-,  Boolean unzag_flag)
+, SHORT unzag_flag)
 {
 	Type1_font *tcd;
 	Errcode err;
@@ -3131,5 +3126,6 @@ NULL,
 check_type1_font,
 load_vfont,
 TYPE1FONT,
+0
 };
 

@@ -16,6 +16,21 @@
 #define AMIFONT 3
 #define TYPE1FONT 4
 
+#ifdef VFONT_C
+	#define RASType Raster
+	#define BCOLvar Pixel bcolor
+#else
+	#define RASType void
+	#define BCOLvar ...  	/* this is optional */
+#endif
+
+typedef enum text_mode
+	{
+	TM_MASK1 = 0,		/* 1's go to color, 0's are transparent. */
+	TM_MASK2 = 1,		/* 1's go to color, 0's to bcolor. */
+	TM_RENDER = 2,		/* Go draw with ink. */
+	TM_OPAQUE = 3,		/* Go draw with opaque ink. */
+	} Text_mode;
 
 /* Structure to bundle together various types of fonts so system can
    use them uniformly */
@@ -25,7 +40,12 @@ typedef struct vfont
 	{
 	void *font;				/* pointer to font device data */
 	VFUNC close_vfont;		/* unalloc self */
-	EFUNC gftext;			/* draw text function */
+
+	/* draw text function */
+	Errcode (*gftext)(RASType *r,
+			struct vfont *f, unsigned char *s, int x, int y,
+			Pixel col, Text_mode tmode, Pixel bcol);
+
 	FUNC char_width;		/* pass in font and char string. Returns
 							 * width of character imbedded in string 
 							 * returns length as end of line char if 
@@ -54,18 +74,28 @@ typedef struct vfont
 	SHORT pad[3];
 	} Vfont;
 
+struct font_hdr;
+struct names;
+
 /* defines for font flags. */
 #define VFF_SCALEABLE 	0x0001
 #define VFF_MONOSPACE 	0x0002 /* all chars and spaces the same width */
 #define VFF_XINTERLEAVE 0x0004 /* characters in this font overlap in spacing */
 
+extern char sixhi_font_name[];
 extern Vfont *uvfont;
+
+extern void init_sail_vfont(Vfont *vf);
+extern void init_sixhi_vfont(Vfont *vf);
+extern void init_st_vfont(Vfont *vfont, struct font_hdr *stf);
 
 Errcode load_font(char *title, Vfont *font, SHORT height, SHORT unzag_flag);
 Errcode fset_spacing(Vfont *f, SHORT spacing, SHORT leading);
 Errcode fget_spacing(Vfont *f, SHORT *spacing, SHORT *leading);
 Errcode fset_height(Vfont *f, SHORT height);
 Errcode fset_unzag(Vfont *f, Boolean unzag);
+
+extern void scan_init_vfont(Vfont *f);
 
 int fspace_width(Vfont *f,char *s); /* special case of fchar_spacing()
 									 * specificly for space characters
@@ -83,32 +113,18 @@ int fchar_width(Vfont *f,char *s); /* width of char while imbedded in text
 
 int fendchar_width(Vfont *v, char *s); /* width of char on end of line */
 
-
+int vfont_interleave_extra(Vfont *f, char *s, int count);
 long fnstring_width(Vfont *f,char *s,int n);
 long fstring_width(Vfont *f,char *s);
 int widest_char(Vfont *f);
+int widest_name(Vfont *f, struct names *list);
 int tallest_char(Vfont *f);
 long widest_line(Vfont *f,char **lines, int tcount);
 int font_cel_height(Vfont *f);
+long fline_width(Vfont *f, char *s);
 int font_ycent_oset(Vfont *f,SHORT height);
 int font_xcent_oset(Vfont *f,char *s,SHORT width);
 Boolean in_font(Vfont *f, int c);
-
-#ifdef VFONT_C
-	#define RASType Raster
-	#define BCOLvar Pixel bcolor
-#else
-	#define RASType void
-	#define BCOLvar ...  	/* this is optional */
-#endif
-
-typedef enum text_mode
-	{
-	TM_MASK1 = 0,		/* 1's go to color, 0's are transparent. */
-	TM_MASK2 = 1,		/* 1's go to color, 0's to bcolor. */
-	TM_RENDER = 2,		/* Go draw with ink. */
-	TM_OPAQUE = 3,		/* Go draw with opaque ink. */
-	} Text_mode;
 
 extern VFUNC blit_for_mode[];
 
@@ -123,13 +139,6 @@ Errcode gftext(RASType *rast,
 #undef BCOLvar
 
 void close_vfont(Vfont *v);
-int fchar_width(Vfont *v, char *s);
-int tallest_char(Vfont *v);
-int font_cel_height(Vfont *v);
-int widest_char(Vfont *v);
-long fnstring_width(Vfont *f,register char *s,int n);
-long fstring_width(Vfont *f,char *s);
-int font_ycent_oset(Vfont *f,SHORT height);
 Vfont *get_menu_font(void);
 Vfont *get_sys_font(void);
 
@@ -137,5 +146,9 @@ Vfont *get_sys_font(void);
 #define TABEXP 4
 
 extern unsigned char oem_to_ansi[];
+
+extern void
+bitmask_to_alpha_channel(Pixel *dest, int shrinker, UBYTE *bitplane,
+		int w, int h, int bpr, int y_fraction);
 
 #endif /* RASTEXT_H */
