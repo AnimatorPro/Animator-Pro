@@ -72,7 +72,7 @@ int justify_line(Raster *screen,
 {
 int textwid;
 int wleft;
-int ccount;
+unsigned int ccount;
 char *last;
 char savelast;
 
@@ -110,7 +110,7 @@ char savelast;
 			if(pcharx)
 			{
 				/* line truncated and want last char position */
-				if(*last == NULL && ((unsigned int)charx_idx >= ccount))
+				if (*last == NULL && ((unsigned int)charx_idx >= ccount))
 					*pcharx = x + w;
 				else
 					*pcharx = textwid;
@@ -141,7 +141,7 @@ char savelast;
 		}
 		if(charx_idx)
 		{
-			if((unsigned int)charx_idx > ccount)
+			if ((unsigned int)charx_idx > ccount)
 				charx_idx = ccount;
 			x += fnstring_width(font,linebuf,charx_idx) + font->spacing;
 		}

@@ -131,7 +131,7 @@ extern VFUNC blit_for_mode[];
 
 Errcode gftext(RASType *rast,
 			Vfont *f,
-			unsigned char *s,
+			char *s,
 			int x,int y,
 			Pixel color,Text_mode mode, BCOLvar);
 

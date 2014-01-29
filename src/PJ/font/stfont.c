@@ -209,7 +209,7 @@ if ((fcb = pj_zalloc(sizeof(*fcb))) == NULL)
 	err = Err_no_memory;
 	goto BADEND;
 	}
-if (pj_read(fd, &fcb->cfont, (long)sizeof(fcb->cfont)) < sizeof(fcb->cfont))
+if (pj_read(fd, &fcb->cfont, sizeof(fcb->cfont)) < (long)sizeof(fcb->cfont))
 	{
 	err = Err_truncated;
 	goto BADEND;
@@ -252,7 +252,7 @@ if (fcb->cfont.flags & 4)	/* swapped... */
 	intel_swap(cf_data, fcb->cf_data_size/sizeof(SHORT));
 	}
 fcb->cfont.hz_ofst = NULL;
-if ( ((unsigned)fcb->cfont.id)==((unsigned)0x9000))
+if (((uint16_t)fcb->cfont.id) == ((uint16_t)0x9000))
 	{
 	fcb->cfont.id = MPROP;
 	if ((fcb->cfont.hz_ofst = pj_malloc(fcb->cf_offset_size)) == NULL)
@@ -267,7 +267,7 @@ if ( ((unsigned)fcb->cfont.id)==((unsigned)0x9000))
 		goto BADEND;
 		}
 	}
-else if (((unsigned)fcb->cfont.id) == ((unsigned)0xB000))
+else if (((uint16_t)fcb->cfont.id) == ((uint16_t)0xB000))
 	fcb->cfont.id = MFIXED;
 else
 	fcb->cfont.id = STPROP;

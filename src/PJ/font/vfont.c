@@ -116,7 +116,7 @@ Errcode fset_unzag(Vfont *v, Boolean unzag)
 
 Errcode gftext(Raster *rast,
 			Vfont *f,
-			unsigned char *s,
+			char *s,
 			int x,int y,
 			Pixel color,Text_mode tmode,
 			Pixel bcolor)
@@ -126,7 +126,7 @@ Errcode gftext(Raster *rast,
 
 	if( (y + f->image_height) < 0 || y > rast->height)
 		return(Success);
-	return(f->gftext(rast, f, s, x, y, color, tmode, bcolor));
+	return f->gftext(rast, f, (unsigned char *)s, x, y, color, tmode, bcolor);
 }
 
 
@@ -330,8 +330,8 @@ void scan_init_vfont(Vfont *f)
 /* scans font characters to calculate font constants, and set flags 
  * used in initializing vfonts */
 {
-UBYTE str_end[3];
-UBYTE str_imbed[3];
+char str_end[3];
+char str_imbed[3];
 int ewid, iwid;
 int maxiwid, maxewid;
 int maxspace;

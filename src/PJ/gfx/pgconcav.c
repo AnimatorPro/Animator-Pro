@@ -14,8 +14,6 @@
 
 static void xor_pt();
 static void y_xor_line();
-Errcode fill_on_off(SHORT bpr, SHORT width, SHORT height, 
-	SHORT xoff, SHORT yoff, UBYTE *imagept, EFUNC hline, void *hldat);
 
 void fill_add_shape(Poly *poly, UBYTE *on_off_buf
 , 	SHORT bpr, SHORT xoff, SHORT yoff)

@@ -60,5 +60,6 @@ void fill_add_shape(Poly *poly, UBYTE *on_off_buf
 , 	SHORT bpr, SHORT xoff, SHORT yoff);
 Errcode fill_concave(Poly *poly, EFUNC hline, void *hldat);
 Errcode fill_on_off(SHORT bpr, SHORT width, SHORT height, 
-	SHORT xoff, SHORT yoff, UBYTE *imagept, EFUNC hline, void *hldat);
+	SHORT xoff, SHORT yoff, UBYTE *imagept, hline_func hline, void *hldat);
+
 #endif /* POLY_H */

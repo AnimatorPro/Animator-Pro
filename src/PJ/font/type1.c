@@ -922,7 +922,7 @@ static void type1_force_RD(Type1_token *tok)
 /* Make sure that the next bit in the input is either "RD" or "-|" 
  * Also skip the following white space.  */
 {
-	char buf[4];
+	unsigned char buf[4];
 
 	type1_get_token(tok);
 	if (strcmp(tok->string, "RD") == 0)
@@ -1152,8 +1152,8 @@ static Errcode find_ascii_values(Type1_font *tcd)
  ****************************************************************************/
 {
 	char *name;
-	unsigned char *ascii_name;
-	unsigned char **map = tcd->encoding;
+	char *ascii_name;
+	char **map = tcd->encoding;
 	char **names = tcd->letter_names;
 	unsigned char **defs = tcd->letter_defs;
 	int i,ascii_val;
@@ -2069,19 +2069,21 @@ static Type1_bitplane *alloc_type1_bitplane(Block_allocator *ba
 	return bits;
 }
 
-static Errcode type1_bits_hline(int yoff
-, int xstart, int xend, Type1_bitplane *bits)
+static Errcode type1_bits_hline(SHORT yoff, SHORT xstart, SHORT xend, void *data)
 /* Draw a horizontal line on a bitplane. */
 {
+	Type1_bitplane *bits = data;
+
 	set_bit_hline(bits->bits, bits->bpr, yoff, xstart, xend);
 	return Success;
 }
 
-static Errcode type1_bits_dot(int x, int y, Type1_bitplane *bits)
+static void type1_bits_dot(SHORT x, SHORT y, void *data)
 /* Draw a dot on a bitplane. */
 {
+	Type1_bitplane *bits = data;
+
 	bits->bits[y*bits->bpr + (x>>3)] |= bit_masks[x&7];
-	return Success;
 }
 
 static void type1_bits_outline(Poly *poly, int xoff, int yoff
@@ -2161,7 +2163,7 @@ static Errcode fill_shape_close(Type1_output *fo)
 	LLpoint *last_point;
 	(void)fo;
 
-	last_point = slist_last(fill_shape_list->points);
+	last_point = slist_last((Slnode *)(fill_shape_list->points));
 	last_point->next = fill_shape_list->points;
 	return Success;
 }
@@ -2777,7 +2779,7 @@ static void attatch_type1_scale(Vfont *vfont, Type1_font *tcd);
 
 static void vfont_free(Vfont *v)
 {
-	tcd_freez(&v->font);
+	tcd_freez((Type1_font **)&v->font);
 }
 
 #ifdef DEBUG
