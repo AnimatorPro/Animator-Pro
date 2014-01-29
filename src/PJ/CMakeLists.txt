@@ -7,6 +7,7 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -W -Wall -Wextra -Wmissing-prototypes")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wold-style-definition")
 
 add_subdirectory(fli)
+add_subdirectory(font)
 add_subdirectory(util)
 
 set(PJMAIN_SRC_FILES
@@ -18,4 +19,5 @@ add_executable(pj WIN32
 
 target_link_libraries(pj
 	flilib
+	fontlib
 	trdutil)
