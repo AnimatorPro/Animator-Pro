@@ -351,8 +351,8 @@ int maxspace;
 	str_end[1] = 1;
 	str_end[2] = 0;
 
-	str_imbed[2] = ' ';
-	str_imbed[3] = 't';
+	str_imbed[1] = ' ';
+	str_imbed[2] = 0;
 
 	do
 	{
