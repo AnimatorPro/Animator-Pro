@@ -1,6 +1,7 @@
 /* stfont.c - Load and display Atari ST style GEM raster fonts.
  */
 
+#include <assert.h>
 #define VFONT_C
 #include "errcodes.h"
 #include "fontdev.h"
@@ -392,6 +393,7 @@ unsigned char c, lo, tot;
 char *offsets;
 int width;
 int t;
+assert(f->id == STPROP || f->id == MPROP);
 
 	lo = f->ADE_lo;
 	tot = f->ADE_hi - lo;
@@ -423,6 +425,8 @@ int t;
                 return(width + vfont->spacing);
 			}
 		}
+		default:
+			return 0;
 	}
 }
 
