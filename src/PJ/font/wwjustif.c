@@ -110,7 +110,7 @@ char savelast;
 			if(pcharx)
 			{
 				/* line truncated and want last char position */
-				if (*last == NULL && ((unsigned int)charx_idx >= ccount))
+				if (*last == '\0' && ((unsigned int)charx_idx >= ccount))
 					*pcharx = x + w;
 				else
 					*pcharx = textwid;
@@ -134,7 +134,7 @@ char savelast;
 
 	if(pcharx)
 	{
-		if(*last == NULL)
+		if (*last == '\0')
 		{
 			*last = ' ';
 			++ccount;
