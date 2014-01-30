@@ -95,7 +95,7 @@ char *sstart;
 					&& s[1] != ' '        /* followed by a space! wrap! */
 					&& s[1] != '\t'
 					&& s[1] != '\n'
-					&& s[1] != '\c'
+					&& s[1] != '\r'
 					&& s != wd->lstart)   /* not first char of word */
 				{
 					++s; /* Ignore this space on next line */
