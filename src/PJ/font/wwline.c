@@ -148,7 +148,7 @@ static int ww_line(Wwdata *wd)
    last line. returns width of line from font */
 {
 char *ns;
-char *oout;
+char *oout = NULL;
 int end_diff;
 
 	wd->wrap_test = wd->max_wrap_test;
