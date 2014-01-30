@@ -160,7 +160,7 @@ no_text:
 				x += w - fchar_spacing(font," ");
 				break;
 			case JUST_CENTER:
-				x += ((w - fchar_spacing(font," ")>>1));
+				x += ((w - fchar_spacing(font," "))>>1);
 				break;
 			default:
 				break;
