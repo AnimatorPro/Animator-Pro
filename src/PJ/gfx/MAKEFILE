@@ -38,8 +38,6 @@ RCELO = \
  rcgetvd.obj\
  rcmapget.obj\
  rcopenvd.obj\
- rcopmcga.obj\
- rcgetmcg.obj\
  rcopnbym.obj\
  rcopndis.obj\
  rcvrtual.obj\

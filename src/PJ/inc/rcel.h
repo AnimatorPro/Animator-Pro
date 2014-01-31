@@ -59,9 +59,6 @@ Errcode pj_rcel_custom_open(Rasthdr *spec, Rcel *cel,
 Errcode pj_rcel_custom_alloc(Rasthdr *spec, Rcel **cel,
 							 Grctype grc_lib_type, LONG num_colors);
 
-Errcode pj_open_mcga_rcel(Rcel *cel);
-Errcode pj_alloc_mcga_rcel(Rcel **pcel);
-
 #ifndef VDEVICE_H
 	#include "vdevice.h"
 #endif
