@@ -16,7 +16,6 @@ RASTGFXO = \
  rgclrast.obj\
  rgdolbh.obj\
  rgfndclp.obj\
- rghsuncp.obj\
  rgmcused.obj\
  rgsetlbh.obj\
  rgublit.obj\
