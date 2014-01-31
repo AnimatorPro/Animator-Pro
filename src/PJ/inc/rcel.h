@@ -54,11 +54,6 @@ Boolean pj_rcel_make_virtual(Rcel *rc, Rcel *root, Rectangle *toclip);
 
 #ifndef REXLIB_CODE /* host side only */ 
 
-Errcode pj_rcel_custom_open(Rasthdr *spec, Rcel *cel,
-							Grctype grc_lib_type, LONG num_colors);
-Errcode pj_rcel_custom_alloc(Rasthdr *spec, Rcel **cel,
-							 Grctype grc_lib_type, LONG num_colors);
-
 #ifndef VDEVICE_H
 	#include "vdevice.h"
 #endif

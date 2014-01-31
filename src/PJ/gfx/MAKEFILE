@@ -40,9 +40,7 @@ RCELO = \
  rcopenvd.obj\
  rcopnbym.obj\
  rcopndis.obj\
- rcvrtual.obj\
- rcustopn.obj\
- rcustget.obj
+ rcvrtual.obj
 
 ## low level rectangle manipulation
 
