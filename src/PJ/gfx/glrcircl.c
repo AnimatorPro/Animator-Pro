@@ -1,3 +1,4 @@
+#ifdef SLUFFED
 #include "gfx.h"
 
 Errcode rcircle(SHORT xcen, SHORT ycen, SHORT rad, 
@@ -8,3 +9,4 @@ Errcode rcircle(SHORT xcen, SHORT ycen, SHORT rad,
 	return(dcircle(xcen,ycen,(rad<<1)+1,dotout,dotdat,
 				   hlineout,hlinedat,filled));
 }
+#endif /* SLUFFED */
