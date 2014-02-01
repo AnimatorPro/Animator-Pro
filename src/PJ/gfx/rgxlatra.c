@@ -10,6 +10,7 @@ LONG x,y;
 LONG get_width, width_left;
 LONG numpix;
 UBYTE lbuf[SBUF_SIZE];
+(void)pixsize;
 
 	if(r->type == RT_BYTEMAP)
 	{

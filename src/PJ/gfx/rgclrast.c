@@ -1,3 +1,4 @@
+#define RASTCALL_INTERNALS
 #include "rastgfx.ih"
 
 void pj_clear_rast(Raster *r)

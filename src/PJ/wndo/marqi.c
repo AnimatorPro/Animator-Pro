@@ -4,12 +4,12 @@
 
 #define MARQI_C
 #include "errcodes.h"
-#include "memory.h"
+#include "gfx.h"
 #include "input.h"
-#include "wndo.h"
-#include "ptrmacro.h"
 #include "marqi.h"
-
+#include "memory.h"
+#include "ptrmacro.h"
+#include "wndo.h"
 
 static void marqidot(SHORT x,SHORT y,register Marqihdr *mh)
 /* dotout for creepy marqi users */

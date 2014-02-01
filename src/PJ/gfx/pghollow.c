@@ -3,8 +3,10 @@
 #include "poly.h"
 #include "errcodes.h"
 
-void hollow_polygon(Poly *poly, VFUNC lineout, 
-	void *linedat, Boolean closed)
+void
+hollow_polygon(Poly *poly,
+		line_func lineout, void *linedat,
+		Boolean closed)
 {
 register LLpoint *this, *next;
 int i;

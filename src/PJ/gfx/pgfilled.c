@@ -4,7 +4,8 @@
 #include "errcodes.h"
 
 Errcode filled_polygon(Poly *poly,
-	EFUNC hline, void *hldat, VFUNC line, void *ldat)
+		hline_func hline, void *hldat,
+		line_func line, void *ldat)
 {
 Errcode err;
 	if((err = fill_poly_inside(poly,hline,hldat)) >= Success)

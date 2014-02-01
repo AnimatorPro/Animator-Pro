@@ -68,8 +68,7 @@ v->y = ly/count;
 v->z = lz/count;
 }
 
-int calc_zpoly( register Short_xyz *s,
-			           register Short_xy *d,
+int calc_zpoly(Short_xyz *s, Short_xy *d,
 			           int count, int xcen, int ycen, int ground_z)
 
 /* Transform 3-d pointlist into 2-d pointlist doing perspective

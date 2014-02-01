@@ -1,9 +1,6 @@
 #include "rastgfx.ih"
 
-Errcode find_clip(void *rast,
-			  register Rectangle *rect, 
-			  Pixel tcolor)
-
+Errcode find_clip(void *rast, Rectangle *rect, Pixel tcolor)
 /* place minimum boundaries of rast containing all that is not tcolor 
  * into rectangle if nothing is in the rectangle the output width will
  * be zero. */

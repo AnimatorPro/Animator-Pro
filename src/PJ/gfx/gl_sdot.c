@@ -1,6 +1,7 @@
 #include "gfx.ih"
 
-void gl_sdot(SHORT x, SHORT y, Sdat *sd)
+void gl_sdot(SHORT x, SHORT y, void *data)
 {
-	pj_put_dot(sd->rast, sd->color, x,y);
+	Sdat *sd = data;
+	pj_put_dot(sd->rast, sd->color, x, y);
 }

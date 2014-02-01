@@ -2,9 +2,7 @@
 
 void do_leftbehind(Coor sx,Coor sy,
 				   Coor dx,Coor dy,Coor width,Coor height,
-				   void (*func)(Coor x, Coor y, Coor w, Coor h,void *dat),
-				   void *dat)
-
+				   do_leftbehind_func func, void *dat)
 /* processes area left behind if rect moved from sx,sy to dx,dy */
 {
 Coor xdif, ydif;

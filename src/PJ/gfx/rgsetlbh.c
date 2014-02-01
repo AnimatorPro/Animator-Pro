@@ -4,8 +4,9 @@ struct setitdat {
 	Raster *r;
 	Pixel c;
 };
-static void setit(Coor x,Coor y, Coor w, Coor h, struct setitdat *sd)
+static void setit(Coor x,Coor y, Coor w, Coor h, void *data)
 {
+	struct setitdat *sd = data;
 	pj_set_rect(sd->r,sd->c,x,y,w,h);
 }
 void set_leftbehind(Raster *s,Pixel color,Coor sx,Coor sy,

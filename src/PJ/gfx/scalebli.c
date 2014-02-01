@@ -1,3 +1,4 @@
+#define RASTGFX_INTERNALS
 #include "ptrmacro.h"
 #include "memory.h"
 #include "gfx.h"
@@ -19,8 +20,9 @@ typedef struct sblit_dat {
 
 #define SBD_TCXL 1
 
-static void line_inc(int sy, int dy, Sblit_dat *sbd)
+static void line_inc(int sy, int dy, void *data)
 {
+Sblit_dat *sbd = data;
 Pixel *spix;
 Pixel *dpix;
 Pixel *maxpix;

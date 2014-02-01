@@ -1,9 +1,6 @@
 #include "gfx.h"
 
-void max_line(Raster *r, Short_xy *ends, 
-		   	  void (*dotout)(SHORT x,SHORT y,void *dotdat),
-		   	  void *dotdat)
-
+void max_line(Raster *r, Short_xy *ends, dotout_func dotout, void *dotdat)
 /* given two end points draws a line that spans whole screen going through the
  * end points assuming points are within screen */
 {

@@ -4,8 +4,9 @@
 
 #define RASTRANS_C
 #include "errcodes.h"
-#include "rastrans.h"
+#include "gfx.h"
 #include "memory.h"
+#include "rastrans.h"
 
 /* a structure used to essentially hold food for diag_to_table */
 

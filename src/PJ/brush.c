@@ -4,6 +4,7 @@
 #include "errcodes.h"
 #include "jimk.h"
 #include "brush.h"
+#include "floatgfx.h"
 #include "fpmath.h"
 #include "inks.h"
 #include "memory.h"

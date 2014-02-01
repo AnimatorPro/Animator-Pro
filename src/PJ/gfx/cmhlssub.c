@@ -1,4 +1,4 @@
-#include "imath.h"
+#include "cmap.h"
 
 LONG _h_lsrgb_value(LONG n1, LONG n2, SHORT hue)
 {

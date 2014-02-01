@@ -77,6 +77,7 @@ typedef struct fullrect {  /* really just a Cliprect merged with a Rectangle */
 
 Boolean ptin_rect(Rectangle *r,SHORT x,SHORT y);
 Boolean ptin_crect(Cliprect *r, SHORT x,SHORT y);
+Boolean ptinside_rect(Rectangle *b, SHORT x, SHORT y, SHORT inside);
 
 Boolean crects_overlap(Cliprect *a,Cliprect *b);
 Boolean and_cliprects(Cliprect *a,Cliprect *b,Cliprect *out);
@@ -99,6 +100,8 @@ void crect_tofrect(Cliprect *cr,Fullrect *fr);
 void frame_tocrect(SHORT x0, SHORT y0, SHORT x1, SHORT y1, Cliprect *cr);
 void frame_torect(SHORT x0, SHORT y0, SHORT x1, SHORT y1, Rectangle *r);
 void frame_tofrect(SHORT x0, SHORT y0, SHORT x1, SHORT y1, Fullrect *fr);
+
+extern int quad9(SHORT px, SHORT py, SHORT x, SHORT y, SHORT w, SHORT h);
 
 /* clipcode returns the codes below or 0 */
 int clipcode_crects(Cliprect *a,Cliprect *b);

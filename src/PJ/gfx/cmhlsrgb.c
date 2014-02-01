@@ -3,16 +3,15 @@
    of colors.  RGB coordinates are assumed 0 - 255.  HLS
    coordinates are 0-255. */
 
-#include "imath.h"
+#include "cmap.h"
 
 /****
 These rgb to hls routines work with rgbhls all in [0,255]
 ****/
 
-extern LONG _h_lsrgb_value(LONG n1, LONG n2, SHORT hue);
 #define value(n1,n2,hue) _h_lsrgb_value(n1,n2,hue)
 
-void hls_to_rgb(SHORT *r, SHORT *g, SHORT *b, SHORT	h, SHORT l, SHORT s)
+void hls_to_rgb(SHORT *r, SHORT *g, SHORT *b, SHORT h, SHORT l, SHORT s)
 {
 long	m1, m2;
 SHORT rv, gv, bv;

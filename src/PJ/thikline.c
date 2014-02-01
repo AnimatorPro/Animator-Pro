@@ -157,7 +157,7 @@ Short_xy max;
 		blp[3].y = y1 + min.y;
 
 		err = (filled_polygon(&bl_poly,render_hline,
-							  vb.pencel,pj_cline,render_dot));
+							  vb.pencel, poly_cline_with_render_dot, NULL));
 		goto done;
 	}
 
@@ -371,7 +371,7 @@ Short_xy max;
 	if(vs.cycle_draw && vl.ink->needs & INK_NEEDS_COLOR)
 		render_brush(x0,y0);
 	if((err = filled_polygon(&bl_poly,render_hline,vb.pencel,
-							 pj_cline,render_dot)) >= Success)
+							 poly_cline_with_render_dot, NULL)) >= Success)
 	{
 		render_brush(x1,y1);
 	}

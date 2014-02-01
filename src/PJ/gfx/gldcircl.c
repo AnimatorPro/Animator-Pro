@@ -69,10 +69,9 @@ static BYTE c13tab[] = {
 };
 
 Errcode dcircle(SHORT xcen, SHORT ycen, SHORT diam, 
-	VFUNC dotout, void *dotdat, EFUNC hlineout, void *hlinedat, Boolean filled)
-
-
-
+		dotout_func dotout, void *dotdat,
+		hline_func hlineout, void *hlinedat,
+		Boolean filled)
 /* Note this function doesn't draw the same dot or same horizontal line
    twice so that the marqi and gel respectively will work */
 {

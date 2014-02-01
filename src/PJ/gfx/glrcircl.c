@@ -2,8 +2,9 @@
 #include "gfx.h"
 
 Errcode rcircle(SHORT xcen, SHORT ycen, SHORT rad, 
-	VFUNC dotout, void *dotdat, EFUNC hlineout, void *hlinedat, Boolean filled)
-
+		dotout_func dotout, void *dotdat,
+		hline_func hlineout, void *hlinedat,
+		Boolean filled)
 /* radius circle */
 {
 	return(dcircle(xcen,ycen,(rad<<1)+1,dotout,dotdat,

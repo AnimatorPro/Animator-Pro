@@ -22,6 +22,12 @@ char curveflag;
 
 /************* polygon and spline marqi and dotout drawing routines ***********/
 
+void
+poly_cline_with_render_dot(SHORT x1, SHORT y1, SHORT x2, SHORT y2, void *data)
+{
+	pj_cline(x1, y1, x2, y2, render_dot, data);
+}
+
 static void dot_poly(register Poly *poly, VFUNC dotout, void *dotdat)
 {
 register LLpoint *this;
@@ -253,7 +259,7 @@ Errcode render_fill_poly(Poly *p)
 {
 	start_abort_atom();
 	return(errend_abort_atom(filled_polygon(p,poll_render_hline,
-										 vb.pencel,pj_cline,render_dot)));
+					vb.pencel, poly_cline_with_render_dot, NULL)));
 }
 
 

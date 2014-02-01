@@ -1,12 +1,12 @@
 #define WNDO_INTERNALS
 #include <limits.h>  /* for SHRT_MAX etc */
 #include "errcodes.h"
-#include "memory.h"
+#include "gfx.h"
 #include "input.h"
-#include "wndo.h"
 #include "marqi.h"
+#include "memory.h"
 #include "ptrmacro.h"
-
+#include "wndo.h"
 
 static void blit_saveonly(Raster *behind,Coor x,Coor y,
 						  Raster *rast,Coor rx, Coor ry,

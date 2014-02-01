@@ -5,17 +5,17 @@
    it uses a horizontal line oriented polygon fill contained here.
    Otherwise it passes the buck to fill_concave() */
 
-#include "stdtypes.h"
+#include "errcodes.h"
+#include "gfx.h"
 #include "memory.h"
 #include "poly.h"
-#include "errcodes.h"
 
 static Errcode blast_hlines(
 SHORT *ebuf1, 		/* 1st list of x points.  Ordered from lo y to high */
 SHORT *ebuf2, 		/* other list of x points.  Ordered from high y to lo */
 SHORT highy, 			/* y value of 1st hline */
 SHORT count,			/* height (# of hlines to draw */
-EFUNC hline,			/* function to take horizontal lines */
+hline_func hline,	/* function to take horizontal lines */
 void *hldat)			/* and some data for that function */
 {
 register SHORT x1, x2;
@@ -124,7 +124,7 @@ return(ebuf+1);
 }
 
 
-Errcode fill_poly_inside(Poly *pl, EFUNC hline, void *hldat)
+Errcode fill_poly_inside(Poly *pl, hline_func hline, void *hldat)
 {
 Errcode err;
 register LLpoint *p;

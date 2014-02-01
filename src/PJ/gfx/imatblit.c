@@ -1,3 +1,4 @@
+#define RASTGFX_INTERNALS
 #include "gfx.h"
 
 void tblit_image(Image *i,Pixel *colors, Raster *rast, Coor x,Coor y)

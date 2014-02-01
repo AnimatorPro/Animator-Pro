@@ -780,8 +780,9 @@ typedef struct lasso_dat {
 	SHORT yoff;
 } Lasso_dat;
 
-static Errcode lasso_line(Coor y, Coor xmin, Coor xmax, Lasso_dat *ld)
+static Errcode lasso_line(SHORT y, SHORT xmin, SHORT xmax, void *data)
 {
+Lasso_dat *ld = (Lasso_dat *)data;
 Coor width;
 Pixel *lbuf;
 

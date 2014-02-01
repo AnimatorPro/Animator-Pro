@@ -12,8 +12,10 @@
 #define UPDIR 1
 #define DOWNDIR 0
 
-static void xor_pt();
-static void y_xor_line();
+static void xor_pt(UBYTE *buf, SHORT bpr, SHORT x, SHORT y);
+
+static void
+y_xor_line(UBYTE *imagept, SHORT bpr, int x1, int y1, int x2, int y2);
 
 void fill_add_shape(Poly *poly, UBYTE *on_off_buf
 , 	SHORT bpr, SHORT xoff, SHORT yoff)
@@ -68,7 +70,7 @@ while (--i >= 0)
    }
 }
 
-Errcode fill_concave(Poly *poly, EFUNC hline, void *hldat)
+Errcode fill_concave(Poly *poly, hline_func hline, void *hldat)
 {
 SHORT bpr;
 long size;
@@ -190,8 +192,7 @@ DONE:
 	return(err);
 }
 
-
-static void xor_pt(UBYTE *buf, SHORT bpr,register SHORT x,SHORT y)
+static void xor_pt(UBYTE *buf, SHORT bpr, SHORT x, SHORT y)
 {
 register UBYTE rot;
 
@@ -199,8 +200,8 @@ rot = ((unsigned)0x80) >> (x&7);
 buf[ bpr*y + (x>>3) ] ^= rot;
 }
 
-
-static void y_xor_line(UBYTE *imagept, SHORT bpr,int x1,int y1,int x2,int y2)
+static void
+y_xor_line(UBYTE *imagept, SHORT bpr, int x1, int y1, int x2, int y2)
 {
 register UBYTE rot;
 register SHORT   duty_cycle;

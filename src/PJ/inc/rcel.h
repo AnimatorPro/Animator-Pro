@@ -88,6 +88,7 @@ void cfit_rcel(Rcel *c, Cmap *dcmap);
 void refit_rcel(Rcel *c, Cmap *ncmap, Cmap *ocmap);
 Rcel *clone_rcel(Rcel *s);
 Rcel *clone_any_rcel(Rcel *in);
+void pj_rcel_copy(Rcel *s, Rcel *d);
 Errcode valloc_ramcel(Rcel **pcel,SHORT w,USHORT h);
 Errcode valloc_anycel(Rcel **pcel,SHORT w,USHORT h);
 void see_a_cel(register Rcel *cl_cel);

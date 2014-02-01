@@ -1,13 +1,14 @@
 /* textbox.c - Stuff for continue alerts and yes/no dialogs. */
 
 #include <stdarg.h>
-#include "lstdio.h"
 #include "errcodes.h"
-#include "memory.h"
-#include "wndo.h"
-#include "rastext.h"
-#include "input.h"
 #include "ftextf.h"
+#include "gfx.h"
+#include "input.h"
+#include "lstdio.h"
+#include "memory.h"
+#include "rastext.h"
+#include "wndo.h"
 #include "wordwrap.h"
 
 extern char *any_continue;

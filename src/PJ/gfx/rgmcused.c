@@ -1,3 +1,4 @@
+#include <string.h>
 #include "rastgfx.ih"
 
 Errcode make_cused(Raster *r, UBYTE *c, int max_colors)

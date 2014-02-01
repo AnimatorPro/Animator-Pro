@@ -91,6 +91,8 @@ void ublitrect(const RASType *s, Coor sx, Coor sy,
 void blitmove_rect(RASType *s,Coor sx, Coor sy, RASType *d,
 				   Coor dx, Coor dy, Coor width, Coor height);
 
+extern int pixsame(void *pixbuf, USHORT numpix, Pixel first_color);
+extern Errcode find_clip(void *rast, Rectangle *rect, Pixel tcolor);
 
 typedef void (*do_leftbehind_func)(Coor x,Coor y,Coor w,Coor h,OPTdata);
 void do_leftbehind(Coor sx,Coor sy,
@@ -110,6 +112,8 @@ void set_leftbehind(RASType *s,Pixel color,Coor sx,Coor sy,
 	#define OPTdata ...
 #endif /* GFX_INTERNALS */
 
+void max_line(Raster *r, Short_xy *ends, dotout_func dotout, void *dotdat);
+
 void pj_cline(SHORT x1, SHORT y1, SHORT x2, SHORT y2,
 		dotout_func dotout, OPTdata /* void *dotdat */);
 
@@ -118,26 +122,28 @@ void pj_do_linscale(int sx, int sw, int dx, int dw,
 
 void pj_make_scale_table(int ssize,int dsize,SHORT *stable);
 
-void cvect(Short_xy *ends, VFUNC dotout, OPTdata /* void *dotdat */ );
+void cvect(Short_xy *ends, dotout_func dotout, OPTdata /* void *dotdat */ );
 
 void cline_frame(SHORT x0,SHORT y0,SHORT x1,SHORT y1,
-		   void (*dotout)(SHORT x,SHORT y,void *dotdat),
-		   OPTdata /* void *dotdat */ );
+		dotout_func dotout, OPTdata /* void *dotdat */ );
 
-Errcode rcircle(SHORT xcen, SHORT ycen, SHORT rad,
-			 void (*dotout)(SHORT x,SHORT y,void *dotdat), void *dotdat,
-			 Errcode (*hlineout)(SHORT y, SHORT x1, SHORT x2), void *hlinedat,
-			 Boolean filled);
+extern void
+draw_quad(Raster *r, Pixel col, SHORT x, SHORT y, USHORT w, USHORT h);
 
-Errcode dcircle(SHORT xcen, SHORT ycen, SHORT diam,
-			 void (*dotout)(SHORT x,SHORT y,void *dotdat), void *dotdat,
-			 Errcode (*hlineout)(SHORT y, SHORT x1, SHORT x2), void *hlinedat,
-			 Boolean filled);
-Errcode doval(SHORT xcen, SHORT ycen, SHORT xdiam,
-			 SHORT xaspect, SHORT yaspect,
-			 void (*dotout)(SHORT x,SHORT y,void *dotdat), void *dotdat,
-			 Errcode (*hlineout)(SHORT y, SHORT x1, SHORT x2), void *hlinedat,
-			 Boolean filled);
+extern Errcode
+rcircle(SHORT xcen, SHORT ycen, SHORT rad,
+		dotout_func dotout, void *dotdat,
+		hline_func hline, void *hldat, Boolean filled);
+
+extern Errcode
+dcircle(SHORT xcen, SHORT ycen, SHORT diam,
+		dotout_func dotout, void *dotdat,
+		hline_func hline, void *hldat, Boolean filled);
+
+extern Errcode
+doval(SHORT xcen, SHORT ycen, SHORT xdiam, SHORT xaspect, SHORT yaspect,
+		dotout_func dotout, void *dotdat,
+		hline_func hline, void *hldat, Boolean filled);
 
 void sq_poly(SHORT w, SHORT h, SHORT x, SHORT y, Short_xy *points);
 void rect_to_xyz(Rectangle *r, Short_xyz *dest);
@@ -149,24 +155,7 @@ Errcode polygon(void *r,Pixel color,Short_xy *points,int count,Boolean filled);
 
 #undef OPTdata
 
-/* colormap functions */
-
-int closestc_excl(Rgb3 *rgb, Rgb3 *ctab, int ccount,
-				  UBYTE *ignore, int icount);
-Boolean inctable(Rgb3 *rgb,Rgb3 *ctab,int count);
-
-Cmap *clone_cmap(Cmap *toclone);
-void swap_cmaps(Cmap *a, Cmap *b);
-int cmaps_same(Cmap *s1, Cmap *s2);
-ULONG cmap_crcsum(Cmap *cmap);
-void set_color_rgb(Rgb3 *rgb, USHORT cnum, Cmap *cmap);
-void get_color_rgb(USHORT cnum, Cmap *cmap, Rgb3 *rgb);
-void stuff_cmap(Cmap *cmap, Rgb3 *color);
-
 /* REXLIB_CODE */ #endif
-
-void pj_cmap_load(void *rast, Cmap *cmap);
-void pj_cmap_copy(Cmap *s,Cmap *d);
 
 /* Set a horizontal line on a bitplane.  No clipping, and x1 better
  * be less than or equal to x2! */

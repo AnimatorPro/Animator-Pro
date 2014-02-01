@@ -1,4 +1,5 @@
 #include "gfx.h"
+#include "poly.h"
 
 void find_pminmax(Poly *poly, Rectangle *r)
 {

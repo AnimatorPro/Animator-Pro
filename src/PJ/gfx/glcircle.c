@@ -9,5 +9,5 @@ Sdat sd;
 
 	sd.rast = r;
 	sd.color = color;
-	dcircle(centx, centy, diameter, sdot, &sd, (EFUNC)shline, &sd, filled);
+	dcircle(centx, centy, diameter, sdot, &sd, shline, &sd, filled);
 }

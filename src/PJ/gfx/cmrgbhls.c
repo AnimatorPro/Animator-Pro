@@ -4,14 +4,11 @@
    coordinates are 0-255. */
 
 #include "imath.h"
+#include "cmap.h"
 
 /****
 These rgb to hls routines work with rgbhls all in [0,255]
 ****/
-
-extern LONG _h_lsrgb_value(LONG n1, LONG n2, SHORT hue);
-#define value(n1,n2,hue) _h_lsrgb_value(n1,n2,hue)
-
 
 void rgb_to_hls(SHORT r,SHORT g,SHORT b,SHORT *h,SHORT *l,SHORT *s)
 
