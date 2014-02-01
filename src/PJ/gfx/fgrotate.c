@@ -14,8 +14,10 @@ double fx,fy;
 
 	if(cent)
 		c = *cent;
-	else
-		*((LONG *)&c) = 0;
+	else {
+		c.x = 0;
+		c.y = 0;
+	}
 
 	sint = sin(theta);
 	cost = cos(theta);
