@@ -1,3 +1,4 @@
+#include <assert.h>
 #include "cmap.h"
 #include "memory.h"
 
@@ -10,7 +11,7 @@ UBYTE checktab[256];      /* only good in byte a pixel world */
 LONG closest_dif, dif;
 SHORT dc;
 register int i;
-int closest;
+int closest = -1;
 
 	clear_mem(checktab,ccount); /* all zeros */
 	for(i =0;i<icount;++i)
@@ -36,5 +37,7 @@ int closest;
 		}
 		++ctab;
 	}
+
+	assert(closest >= 0);
 	return(closest);
 }

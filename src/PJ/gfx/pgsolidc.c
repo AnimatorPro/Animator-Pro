@@ -36,6 +36,8 @@ Sdat sd;
 
 	if(filled)
 		err = fill_poly_inside(pg,shline,&sd);
+	else
+		err = Success;
 	hollow_polygon(pg,scline,&sd,TRUE); 
 	pj_free(pg);
 	return(err);
