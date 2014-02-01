@@ -22,7 +22,7 @@ extern Errcode errdo_nutin(void); /* returns Err_unimpl */
 
 Coor pj_lclipdim(Coor *val,Coor length, Coor maxval);
 Coor pj_lclipdim2(Coor *sval,Coor *dval,Coor length, Coor maxval);
-Coor pj_lclip2rects(Coor *aval, Coor *bval, Coor length, Coor amax, Coor bmax);
+Ucoor pj_lclip2rects(Coor *aval, Coor *bval, Ucoor length, Ucoor amax, Ucoor bmax);
 
 #define SBUF_SIZE 1024	/* size of allowable stack buffer used in
 						 * raster calls */

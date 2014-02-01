@@ -7,7 +7,7 @@ Errcode find_clip(void *rast, Rectangle *rect, Pixel tcolor)
 {
 register Raster *r = rast; 
 register LONG count;
-SHORT bufsize;
+USHORT bufsize;
 UBYTE *pixbuf;
 Pixel sbuf[SBUF_SIZE/sizeof(Pixel)];
 

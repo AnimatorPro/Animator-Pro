@@ -16,12 +16,12 @@ Pixel stack_buf[SBUF_SIZE];
 Coor diff;
 
 	diff = src_x;
-	if((Coor)(width = pj_lclip2rects(&src_x,&dest_x,width,
+	if((width = pj_lclip2rects(&src_x,&dest_x,width,
 											src->width,dest->width)) <= 0)
 		return(Err_clipped);
 	alt_x += src_x - diff;
 	diff  = src_y;
-	if((Coor)(height = pj_lclip2rects(&src_y,&dest_y,height,
+	if((height = pj_lclip2rects(&src_y,&dest_y,height,
 											src->height,dest->height)) <= 0)
 		return(Err_clipped);
 	alt_y += src_y - diff;

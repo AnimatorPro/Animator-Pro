@@ -13,10 +13,10 @@ Errcode procblit(Raster *src,  /* doesn't really need to be a ramrast. */
 Pixel *src_buf, *dest_buf;
 Pixel stack_buf[512];
 
-	if((Coor)(width = pj_lclip2rects(&src_x,&dest_x,width,
+	if((width = pj_lclip2rects(&src_x,&dest_x,width,
 											src->width,dest->width)) <= 0)
 		return(Err_clipped);
-	if((Coor)(height = pj_lclip2rects(&src_y,&dest_y,height,
+	if((height = pj_lclip2rects(&src_y,&dest_y,height,
 											src->height,dest->height)) <= 0)
 		return(Err_clipped);
 

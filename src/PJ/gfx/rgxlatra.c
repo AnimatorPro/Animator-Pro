@@ -7,8 +7,8 @@ void xlat_rast(Raster *r, UBYTE *ttable, LONG pixsize)
 {
 #define BM ((Bytemap*)r) 
 LONG x,y;
-LONG get_width, width_left;
-LONG numpix;
+ULONG get_width, width_left;
+ULONG numpix;
 UBYTE lbuf[SBUF_SIZE];
 (void)pixsize;
 

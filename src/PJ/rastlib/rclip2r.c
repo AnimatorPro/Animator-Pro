@@ -1,10 +1,9 @@
 #include "rastcall.h"
 
-Coor pj_lclip2rects(Coor *aval, Coor *bval,
-				 Coor length, Coor amax, Coor bmax)
-
-/* clips a dimention to two maximums this assumes both mins are 0 */
+Ucoor pj_lclip2rects(Coor *aval, Coor *bval,
+		Ucoor orig_length, Ucoor amax, Ucoor bmax)
 {
+Coor length = orig_length;
 Coor dif;
 
 	if(*aval< *bval) /* biggest difference wins */
@@ -22,5 +21,6 @@ Coor dif;
 		length -= dif;
 	if((dif = *bval+ length - bmax) > 0)
 		length -= dif;
-	return(length);
+
+	return (length >= 0) ? length : 0;
 }

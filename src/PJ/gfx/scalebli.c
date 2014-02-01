@@ -66,7 +66,7 @@ void pj_scale_blit(Raster *src,Coor sx, Coor sy, Ucoor sw, Ucoor sh,
 {
 Sblit_dat sbd;
 Pixel sbuf[SBUF_SIZE];
-int bsize;
+unsigned int bsize;
 
 
 	bsize = (sw+dw)*sizeof(Pixel)+dw*sizeof(SHORT);

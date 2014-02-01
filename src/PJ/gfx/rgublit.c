@@ -4,7 +4,7 @@ void ublitrect(const Raster *src,	/* source raster */
 			  Coor src_x, Coor src_y,	/* source Minx and Miny */
 			  const Raster *dest,		/* destination raster */
 			  Coor dest_x, Coor dest_y, /* destination minx and miny */
-			  Coor width, Coor height,  /* blit size */  
+			  Ucoor width, Ucoor height, /* blit size */
 			  const Pixel tcolor)		/* transparent color */
 
 /* Copys rectangle from src to dest where dest is transparent color */

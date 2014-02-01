@@ -1,7 +1,7 @@
 #include "rastgfx.ih"
 
 void blitmove_rect(Raster *s,Coor sx, Coor sy, Raster *d,
-				   Coor dx, Coor dy, Coor width, Coor height )
+				   Coor dx, Coor dy, Ucoor width, Ucoor height)
 
 /* like a pj_blitrect but will blit to another position in same raster 
  * without overwriting itself */
@@ -25,14 +25,14 @@ Pixel sbuf[SBUF_SIZE/sizeof(Pixel)];
 	if(!xdif && !ydif)
 		return;
 
-	if( xdif >= width
-	    || -xdif >= width)
+	if ((xdif >= 0 && (Ucoor)xdif >= width)
+		|| (xdif < 0 && (Ucoor)(-xdif) >= width))
 	{
 		goto blitit;
 	}
 
-	if( ydif >= height
-	    || -ydif >= height)
+	if ((ydif >= 0 && (Ucoor)ydif >= height)
+	    || (ydif < 0 && (Ucoor)(-ydif) >= height))
 	{
 		goto blitit;
 	}

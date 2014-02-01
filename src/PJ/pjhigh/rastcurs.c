@@ -44,7 +44,7 @@ void move_rastcursor(Rastcursor *rc)
 Cursorcel *r = rc->cel;
 Cursorsave *save = rc->save;
 Coor cx, cy, ox, oy;
-Coor w, h;
+Ucoor w, h;
 
 	cx = icb.cx - r->x;
 	cy = icb.cy - r->y;

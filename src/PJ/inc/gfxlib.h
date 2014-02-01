@@ -35,10 +35,10 @@ typedef struct gfxlib
 	void (*close_raster)(RASType *r);
 	void (*pj_rast_free)(RASType *r);
 
-	void (*put_hseg)(RASType *r,void *pixbuf,Coor x,Ucoor y,Ucoor w);
-	void (*get_hseg)(RASType *r,void *pixbuf,Coor x,Ucoor y,Ucoor w);
-	void (*put_vseg)(RASType *r,void *pixbuf,Ucoor x,Coor y,Ucoor h);
-	void (*get_vseg)(RASType *r,void *pixbuf,Ucoor x,Coor y,Ucoor h);
+	void (*put_hseg)(RASType *r, void *pixbuf, Coor x, Coor y, Ucoor w);
+	void (*get_hseg)(RASType *r, void *pixbuf, Coor x, Coor y, Ucoor w);
+	void (*put_vseg)(RASType *r, void *pixbuf, Coor x, Coor y, Ucoor h);
+	void (*get_vseg)(RASType *r, void *pixbuf, Coor x, Coor y, Ucoor h);
 
 	void (*put_rectpix)(RASType *r,void *pixbuf,Coor x,Coor y,Ucoor w,Ucoor h);
 	void (*get_rectpix)(RASType *r,void *pixbuf,Coor x,Coor y,Ucoor w,Ucoor h);

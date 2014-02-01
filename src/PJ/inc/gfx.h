@@ -84,12 +84,12 @@ void xlat_rast(RASType *r, UBYTE *ttable, LONG pixsize);
 Errcode make_cused(RASType *r, UBYTE *c, int max_colors);
 
 void ublitrect(const RASType *s, Coor sx, Coor sy,
-		  const RASType *d, Coor dx, Coor dy, Coor width, Coor height,
+		  const RASType *d, Coor dx, Coor dy, Ucoor width, Ucoor height,
 		  const Pixel tcolor );
 
 
 void blitmove_rect(RASType *s,Coor sx, Coor sy, RASType *d,
-				   Coor dx, Coor dy, Coor width, Coor height);
+				   Coor dx, Coor dy, Ucoor width, Ucoor height);
 
 extern int pixsame(void *pixbuf, USHORT numpix, Pixel first_color);
 extern Errcode find_clip(void *rast, Rectangle *rect, Pixel tcolor);
