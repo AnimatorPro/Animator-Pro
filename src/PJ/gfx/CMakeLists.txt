@@ -1,0 +1,116 @@
+set(IMAGE_SRC_FILES
+	imagrast.c
+	imatblit.c
+	imsctbli.c
+	)
+
+set(RASTGFX_SRC_FILES
+	rgblitmv.c
+	rgclrast.c
+	rgdolbh.c
+	rgfndclp.c
+	rgmcused.c
+	rgsetlbh.c
+	rgublit.c
+	rgxlatra.c
+	)
+
+set(PBLIT_SRC_FILES
+	pbabblit.c
+	pbblit.c
+	pbtblxll.c
+	pbubliln.c
+	pbublxln.c
+	pbxlatbl.c
+	)
+
+set(RCEL_SRC_FILES
+	rcelcopy.c
+	rcelfree.c
+	rcenvirt.c
+	rcgetbym.c
+	rcgetdis.c
+	rcgetvd.c
+	rcmapget.c
+	rcopenvd.c
+	rcopnbym.c
+	rcopndis.c
+	rcvrtual.c
+	)
+
+## low level rectangle manipulation
+set(RECTANG_SRC_FILES
+	rebclip0.c
+	rebclipd.c
+	recandcr.c
+	recbclip.c
+	recpinsi.c
+	recquad9.c
+	recrcode.c
+	recrolap.c
+	recrtofr.c
+	recrtor.c
+	recsclip.c
+	rectand.c
+	rectptin.c
+	recttocr.c
+	recttofr.c
+	refratcr.c
+	refrator.c
+	reswaclp.c
+	)
+
+## graphics library routine to draw lines, circles etc, etc
+set(GFXLIB_SRC_FILES
+	bithline.c
+	cmapcopy.c
+	cmapload.c
+	cmapsame.c
+	cmapstuf.c
+	cmapswap.c
+	cmchksum.c
+	cmclone.c
+	cmclosex.c
+	cmgetcol.c
+	cmhlsrgb.c
+	cmhlssub.c
+	cminctab.c
+	cmrgbhls.c
+	cmsetcol.c
+	fgftiang.c
+	fgitfang.c
+	fgpiclip.c
+	fgrotate.c
+	gl_sclin.c
+	gl_sdot.c
+	gl_sline.c
+	glcframe.c
+	glcircle.c
+	glcline.c
+	glcvect.c
+	gldcircl.c
+	gldoval.c
+	gldrquad.c
+	glline.c
+	glmaxlin.c
+	glrtoxyz.c
+	glsqpoly.c
+	linscale.c
+	pgconcav.c
+	pgconvex.c
+	pgfilled.c
+	pghollow.c
+	pgminmax.c
+	pgsolidc.c
+	rastrans.c
+	scalebli.c
+	scaletab.c
+	)
+
+add_library(gfxlib
+	${GFXLIB_SRC_FILES}
+	${IMAGE_SRC_FILES}
+	${PBLIT_SRC_FILES}
+	${RASTGFX_SRC_FILES}
+	${RCEL_SRC_FILES}
+	${RECTANG_SRC_FILES})
