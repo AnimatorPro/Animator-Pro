@@ -200,24 +200,22 @@ Pdr *pd = ifile->pd;
 								seek_data, work_screen ));
 }
 
+#ifdef SLUFFED
 Errcode pdr_rgb_seekstart(Image_file *ifile)
-/*****************************************************************************
- *
- ****************************************************************************/
 {
 	if (ifile->pd->rgb_seekstart == NULL)
 		return Err_unimpl;
 
 	return(ifile->pd->rgb_seekstart(ifile));
 }
+#endif /* SLUFFED */
 
+#ifdef SLUFFED
 Errcode pdr_rgb_readline(Image_file *ifile, Rgb3 *linebuf)
-/*****************************************************************************
- *
- ****************************************************************************/
 {
 	if (ifile->pd->rgb_readline == NULL)
 		return Err_unimpl;
 
 	return(ifile->pd->rgb_readline(ifile, linebuf));
 }
+#endif /* SLUFFED */
