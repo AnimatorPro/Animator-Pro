@@ -2,6 +2,8 @@
  * TARGA.C - Main module for targa picture driver.
  ****************************************************************************/
 
+#include <stdio.h>
+#include "ffile.h"
 #include "memory.h"
 #include "targa.h"
 
@@ -118,6 +120,7 @@ static Errcode open_file(Pdr *pd, char *path, Image_file **pif, Anim_info *ainfo
 {
 	Errcode 	err;
 	Targa_file	*tf;
+	(void)pd;
 
 	*pif = NULL;	/* in case of error */
 
@@ -161,6 +164,7 @@ static Errcode create_file(Pdr			*pd,
 {
 	Errcode 	err;
 	Targa_file	*tf;
+	(void)pd;
 
 	tf	 = NULL;
 	*pif = NULL;
@@ -221,6 +225,10 @@ static Errcode save_frames(Image_file	*ifile,
 {
 	Errcode 	err;
 	Targa_file	*tf = (Targa_file *)ifile;
+	(void)num_frames;
+	(void)seek_frame;
+	(void)seek_data;
+	(void)work_screen;
 
 	if (save_options.options_valid == FALSE)
 		{

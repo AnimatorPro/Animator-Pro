@@ -22,11 +22,10 @@
  */
 
 #include <stdio.h>
+#include <string.h>
 #include "errcodes.h"
 #include "gif.h"
 #include "memory.h"
-
-extern FILE *gif_load_file;
 
 #define gif_get_byte() getc(gif_load_file)
 
@@ -50,7 +49,6 @@ extern FILE *gif_load_file;
  * occurs in an odd place in the GIF file...  In any case, linelen will be
  * equal to the number of pixels passed...
  */
-extern int gif_out_line();
 
 /* extern int bad_code_count;
  *
@@ -60,7 +58,7 @@ extern int gif_out_line();
  * corrupt in some way...
  */
 
-extern int bad_code_count;
+static int bad_code_count;
 
 #define MAX_CODES	4095
 

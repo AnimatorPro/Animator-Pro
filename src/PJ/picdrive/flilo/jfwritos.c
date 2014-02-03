@@ -1,6 +1,4 @@
-
-#include "errcodes.h"
-#include "jfile.h"
+#include "flilo.h"
 
 Errcode flow_jwriteoset(Jfile f,void *buf, LONG oset,LONG size)
 

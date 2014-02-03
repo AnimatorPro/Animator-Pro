@@ -1,3 +1,6 @@
+#ifndef TARGA_H
+#define TARGA_H
+
 /*****************************************************************************
  * TARGA.H - Header file for Targa PDR.
  ****************************************************************************/
@@ -111,3 +114,4 @@ Errcode read_seekstart(Targa_file *tf);
 Errcode read_cmapped_image(Targa_file *tf);
 Errcode read_targa_header(Targa_file *tf);
 
+#endif /* TARGA_H */

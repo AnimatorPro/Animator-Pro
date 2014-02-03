@@ -20,5 +20,6 @@ LONG fftell(FILE *fp);
 Errcode ffseek(FILE *fp,LONG oset,int how);
 #define ffgetc(fp) fgetc(fp)
 
+extern Errcode pj_errno_errcode(void);
 
 #endif /* FFILE_H */

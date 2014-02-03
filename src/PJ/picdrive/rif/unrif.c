@@ -3,6 +3,7 @@
    Amiga/Zoetrope rif format file.  (and ANIM op 5) */
 
 #include "stdtypes.h"
+#include "rif.h"
 
 static UBYTE *decode_vcolumn(UBYTE *comp, UBYTE *plane, int BytesPerRow)
 {

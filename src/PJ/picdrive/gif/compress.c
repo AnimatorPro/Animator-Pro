@@ -62,18 +62,14 @@
  */
 
 #include <stdio.h>
+#include <string.h>
 #include "errcodes.h"
+#include "ffile.h"
 #include "gif.h"
 #include "memory.h"
 
 #define LARGEST_CODE	4095
 #define TABLE_SIZE	(8*1024)
-
-extern UBYTE gif_byte_buff[256+3];				 /* Current block */
-extern FILE *gif_save_file;
-
-extern int	 gif_get_pixel();
-
 
 typedef struct lzchain
 	{
@@ -82,9 +78,9 @@ typedef struct lzchain
 	short added_char;
 	short code_id;
 	} Lzchain;
-Lzchain **hash_table;
-Lzchain *chain_buf;			/* This holds preallocated lzchains. */
-Lzchain *free_chain;		/* Next free lzchain. */
+static Lzchain **hash_table;
+static Lzchain *chain_buf;      /* This holds preallocated lzchains. */
+static Lzchain *free_chain;     /* Next free lzchain. */
 
 static int code_size;
 static int clear_code;

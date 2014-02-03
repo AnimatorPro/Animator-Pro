@@ -2,6 +2,9 @@
  * TGAREADF.C - Routines to read headers and data from a targa file.
  ****************************************************************************/
 
+#include <stdio.h>
+#include <string.h>
+#include "ffile.h"
 #include "memory.h"
 #include "targa.h"
 

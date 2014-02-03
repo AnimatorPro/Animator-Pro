@@ -307,7 +307,6 @@ extern Local_pdr pic_local_pdr;
 extern	Local_pdr *local_pdrs;
 
 void	add_local_pdr(Local_pdr *lpd); /* make a locally linked in pdr available */
-void	remove_local_pdr(Local_pdr *lpd); /* make local pdr un-available */
 
 Errcode load_pdr(char *path, Pdr **ppdr);
 void	free_pdr(Pdr **ppdr);

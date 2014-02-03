@@ -1,4 +1,5 @@
-
+#ifndef RIF_H
+#define RIF_H
 
 struct sriff_head
 	{
@@ -67,4 +68,16 @@ struct vcomp_head
 	};
 typedef struct vcomp_head Vcomp_head;
 
+struct rcel;
 
+extern Errcode
+conv_bitmaps(UBYTE *planes[], int pcount, int bpr, int width, int height,
+		struct rcel *screen);
+
+extern UBYTE *
+decode_vplane(UBYTE *comp, UBYTE *plane, int BytesPerRow);
+
+extern UBYTE *
+decode_vkplane(UBYTE *comp, UBYTE *plane, int BytesPerRow, int *ytable);
+
+#endif /* RIF_H */

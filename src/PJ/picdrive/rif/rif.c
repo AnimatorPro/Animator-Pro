@@ -2,18 +2,14 @@
 /* rif.c - source code to the Amiga Live! & Zoetrope .RIF format
  * driver */
 
+#include <string.h>
 #include "errcodes.h"
 #include "stdtypes.h"
 #include "stdio.h"
+#include "ffile.h"
 #include "memory.h"
 #include "picdrive.h"
 #include "rif.h"
-
-Errcode conv_bitmaps(UBYTE *planes[], int pcount,
-					 int bpr, int width, int height, Rcel *screen);
-UBYTE *decode_vplane(UBYTE *comp, UBYTE *plane, int BytesPerRow);
-UBYTE *decode_vkplane(UBYTE *comp, UBYTE *plane,
-					  int BytesPerRow, int *ytable);
 
 #define ISUFFI ".RIF"
 
@@ -30,6 +26,8 @@ typedef struct ifile {
 	long psize;
 	int *ytable;
 } Ifile;
+
+static void close_file(Ifile **pgf);
 
 static void intel_swaps(void *p, int length)
 /*****************************************************************************
@@ -108,6 +106,7 @@ Errcode err = Success;
 UBYTE *sbuf;
 Riff_head rif;
 int i;
+(void)pd;
 
 *pif = NULL;	/* for better error recovery */
 
@@ -181,7 +180,7 @@ close_file(&gf);
 return(err);
 }
 
-static close_file(Ifile **pgf)
+static void close_file(Ifile **pgf)
 /*****************************************************************************
  * Clean up resources used by picture driver in loading (saving) a file.
  ****************************************************************************/

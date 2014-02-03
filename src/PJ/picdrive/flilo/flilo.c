@@ -3,12 +3,14 @@
  ****************************************************************************/
 
 #include <stdio.h>
+#include <string.h>
 #include "errcodes.h"
 #include "filepath.h"
 #include "flilo.h"
 #include "jfile.h"
 #include "memory.h"
 #include "picdrive.h"
+#include "rastcomp.h"
 
 static Errcode flow_i_flush_head(Flifile *flif)
 /* Updates id and flushes header of a Flifile leaves file offset
@@ -117,7 +119,7 @@ static Boolean flow_spec_best_fit(Anim_info *ainfo)
 
 static int files_open;
 
-static close_flow_file(Image_file **pifile)
+static void close_flow_file(Image_file **pifile)
 {
 Flifile *flif;
 
@@ -135,6 +137,7 @@ static Errcode create_flow_file(Pdr *pd, char *path, Image_file **pif,
 {
 Flifile *flif;
 Errcode err;
+(void)pd;
 
 	if(files_open)
 		return(Err_too_many_files);

@@ -2,9 +2,11 @@
 /* gif.c - High level gif routines.  Take care of the file packaging but
    not the compression/decompression.  */
 
+#include <string.h>
 #define REXLIB_INTERNALS
 #include "errcodes.h"
 #include "stdio.h"
+#include "ffile.h"
 #include "gif.h"
 #include "memory.h"
 #include "picdrive.h"
@@ -20,7 +22,6 @@ static struct gif_image gim;
 static char gifsig[] = "GIF87a";    /* signature for output files */
 
 static int	gif_files_open = 0;
-int 		bad_code_count;
 static int	gif_line;
 FILE		*gif_save_file;
 FILE		*gif_load_file;
@@ -200,7 +201,7 @@ Boolean nofit;
 	ainfo->num_frames = 1;
 	return(nofit);
 }
-static close_gif_file(Gif_file **gifile)
+static void close_gif_file(Gif_file **gifile)
 {
 Gif_file *gf;
 
@@ -241,6 +242,7 @@ Errcode err;
 Gif_file **pgif;
 struct gif_header ghdr;
 struct gif_image gimg;
+(void)pd;
 
 	pgif = (Gif_file **)pif;
 
@@ -265,6 +267,7 @@ static Errcode create_gif_file(Pdr *pd, char *path, Image_file **pif,
 {
 Errcode err;
 Gif_file **pgif;
+(void)pd;
 
 	pgif = (Gif_file **)pif;
 
@@ -301,6 +304,8 @@ Gif_file *gf;
 }
 static Errcode gif_read_next(Image_file *ifile,Rcel *screen)
 {
+	(void)ifile;
+	(void)screen;
 	return(Success);
 }
 
@@ -312,7 +317,7 @@ static Pixel *pixbuf, *pixb;
 static int pixw;
 static int pixleft;
 
-int gif_get_pixel()
+int gif_get_pixel(void)
 {
 	if (--pixleft < 0)
 	{
@@ -330,6 +335,10 @@ Gif_file *gf;
 Errcode err;
 UBYTE *cbyte;
 long gif_wcount;
+(void)num_frames;
+(void)seek_frame;
+(void)seek_data;
+(void)work_screen;
 
 	gf = (Gif_file *)ifile;
 

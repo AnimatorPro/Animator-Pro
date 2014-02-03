@@ -47,7 +47,7 @@ static int ferror_shell(FILE *fp)
 #undef ferror
 #define ferror ferror_shell
 }
-Errcode pj_errno_errcode()
+Errcode pj_errno_errcode(void)
 {
 	return(errno);
 }

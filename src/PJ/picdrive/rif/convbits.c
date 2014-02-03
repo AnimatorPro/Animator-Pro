@@ -1,7 +1,8 @@
-
+#include <string.h>
 #include "errcodes.h"
 #include "memory.h"
 #include "picdrive.h"
+#include "rif.h"
 
 static void bits_to_bytes(UBYTE *in, UBYTE *out, int w, UBYTE out_mask)
 /*****************************************************************************

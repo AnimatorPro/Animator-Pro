@@ -95,9 +95,16 @@ typedef struct flifile {
 } Flifile;
 
 struct raster;
+struct rcel;
 
 extern void *
 flow_brun_rect(struct raster *r, void *cbuf,
 		SHORT x, SHORT y, USHORT width, USHORT height);
+
+extern LONG
+flow_comp_cel(void *comp_buf,
+		struct rcel *last_screen, struct rcel *this_screen, SHORT type);
+
+extern Errcode flow_jwriteoset(Jfile f, void *buf, LONG oset, LONG size);
 
 #endif /* FLILO_H */

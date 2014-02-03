@@ -1,5 +1,6 @@
 /* file to take care of loadable image file types */
 
+#include <stdio.h>
 #include "errcodes.h"
 #include "picdrive.h"
 #include "linklist.h"
@@ -8,7 +9,7 @@
 
 Local_pdr *local_pdrs;
 
-void remove_local_pdr(Local_pdr *lpd)
+static void remove_local_pdr(Local_pdr *lpd)
 /*****************************************************************************
  *
  ****************************************************************************/
@@ -82,7 +83,7 @@ void pdr_free_info(char *info)
  *
  ****************************************************************************/
 {
-	return;
+	(void)info;
 }
 int pdr_get_suffi(Pdr *pd, char *buf)
 /*****************************************************************************

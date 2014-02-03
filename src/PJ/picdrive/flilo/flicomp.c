@@ -1,3 +1,4 @@
+#include <string.h>
 #define RASTCOMP_INTERNALS
 #include "flilo.h"
 #include "ptrmacro.h"

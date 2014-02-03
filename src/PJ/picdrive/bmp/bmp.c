@@ -4,8 +4,10 @@
  ***************************************************************************/
 
 #include <stdio.h>
+#include <string.h>
 #define REXLIB_INTERNALS
 #include "errcodes.h"
+#include "ffile.h"
 #include "memory.h"
 #include "picdrive.h"
 #include "util.h"
@@ -748,6 +750,7 @@ static Errcode write_after_header(FILE *f
 /* Write out everything after the file header and info - colors and pixels. */
 {
 	Errcode err;
+	(void)head;
 
 	if ((err = write_colors(f, screen->cmap)) < Success)
 		return err;
@@ -787,7 +790,7 @@ static Boolean spec_best_fit(Anim_info *ainfo)
 	return(nofit);	/* return whether fit was exact */
 }
 
-static close_file(Bmp_image_file **pf)
+static void close_file(Bmp_image_file **pf)
 /* Clean up resources used by BMP reader/writer */
 {
 	Bmp_image_file *f;
@@ -837,6 +840,7 @@ static Errcode open_file(Pdr *pd, char *path, Image_file **pif,
 {
 	Errcode err;
 	Bmp_image_file **pf,*f;
+	(void)pd;
 
 	pf = (Bmp_image_file **)pif;
 
@@ -876,6 +880,7 @@ static Errcode create_file(Pdr *pd, char *path, Image_file **pif,
 {
 	Errcode err;
 	Bmp_image_file **pf,*f;
+	(void)pd;
 
 	pf = (Bmp_image_file **)pif;
 	if((err = open_helper(pf, path, "wb")) < Success)
@@ -906,6 +911,8 @@ static Errcode read_next(Image_file *ifile,Rcel *screen)
 /* Read in subsequent frames of image.  Since we only have one  this
  * routine is pretty trivial. */
 {
+	(void)ifile;
+	(void)screen;
 	return(Success);
 }
 
@@ -918,6 +925,11 @@ static Errcode save_frame(Image_file *ifile, Rcel *screen, int num_frames,
  * in screen to the open ifile. */
 {
 	Bmp_image_file *f = (Bmp_image_file *)ifile;
+	(void)num_frames;
+	(void)seek_frame;
+	(void)seek_data;
+	(void)work_screen;
+
 	return(write_after_header(f->file, &f->bh, &f->bi, screen));
 }
 

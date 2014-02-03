@@ -2,8 +2,10 @@
 /* pcx.c - Source to PCX format PJ picture driver. */
 
 #include <stdio.h>
+#include <string.h>
 #define REXLIB_INTERNALS
 #include "errcodes.h"
+#include "ffile.h"
 #include "memory.h"
 #include "pcx.h"
 #include "picdrive.h"
@@ -109,7 +111,7 @@ while (w > 0)
 	}
 }
 
-static bits2_to_bytes(UBYTE *in, UBYTE *out, int w)
+static void bits2_to_bytes(UBYTE *in, UBYTE *out, int w)
 /* Convert from CGA 2-bit-a-pixel format to byte-a-pixel format */
 {
 int k;
@@ -310,12 +312,11 @@ OUT:
 
 /**** Routines having more to do with PJ than PCX ******/
 
-static pcx_files_open = 0;						/* lock data structures
+static int pcx_files_open = 0;					/* lock data structures
 											     * to prevent open without
 											     * close */
 
-static Boolean suffix_in(string, suff)
-char *string, *suff;
+static Boolean suffix_in(char *string, char *suff)
 {
 string += strlen(string) - strlen(suff);
 return( txtcmp(string, suff) == 0);
@@ -410,7 +411,7 @@ ainfo->num_frames = 1;
 return(nofit);	/* return whether fit was exact */
 }
 
-static close_pcx_file(Pcx_file **pcxile)
+static void close_pcx_file(Pcx_file **pcxile)
 /* Clean up resources used by PCX reader/writer */
 {
 Pcx_file *gf;
@@ -459,6 +460,7 @@ Errcode err;
 Pcx_file **ppcx;
 struct pcx_header hdr;
 Boolean got_cmap;
+(void)pd;
 
 ppcx = (Pcx_file **)pif;
 
@@ -484,6 +486,7 @@ static Errcode create_pcx_file(Pdr *pd, char *path, Image_file **pif,
 {
 Errcode err;
 Pcx_file **ppcx;
+(void)pd;
 
 ppcx = (Pcx_file **)pif;
 
@@ -570,6 +573,8 @@ static Errcode pcx_read_next(Image_file *ifile,Rcel *screen)
 /* Read in subsequent frames of image.  Since we only have one  this
  * routine is pretty trivial. */
 {
+	(void)ifile;
+	(void)screen;
 	return(Success);
 }
 
@@ -579,6 +584,10 @@ static Errcode pcx_save_frame(Image_file *ifile, Rcel *screen, int num_frames,
 						      void *seek_data, Rcel *work_screen ) 
 {
 Pcx_file *gf;
+(void)num_frames;
+(void)seek_frame;
+(void)seek_data;
+(void)work_screen;
 
 gf = (Pcx_file *)ifile;
 
