@@ -790,9 +790,10 @@ static Boolean spec_best_fit(Anim_info *ainfo)
 	return(nofit);	/* return whether fit was exact */
 }
 
-static void close_file(Bmp_image_file **pf)
+static void close_file(Image_file **pif)
 /* Clean up resources used by BMP reader/writer */
 {
+	Bmp_image_file **pf = (Bmp_image_file **)pif;
 	Bmp_image_file *f;
 
 	if(pf == NULL || (f = *pf) == NULL)
@@ -869,7 +870,7 @@ static Errcode open_file(Pdr *pd, char *path, Image_file **pif,
 	return(Success);
 
 ERROR:
-	close_file(pf);
+	close_file(pif);
 	return(err);
 }
 
@@ -894,7 +895,7 @@ static Errcode create_file(Pdr *pd, char *path, Image_file **pif,
 	return(Success);
 
 ERROR:
-	close_file(pf);
+	close_file(pif);
 	return(err);
 }
 
@@ -933,7 +934,7 @@ static Errcode save_frame(Image_file *ifile, Rcel *screen, int num_frames,
 	return(write_after_header(f->file, &f->bh, &f->bi, screen));
 }
 
-static Errcode rgb_read_nextline(Image_file *ifile, void *outbuf)
+static Errcode rgb_read_nextline(Image_file *ifile, Rgb3 *outbuf)
 /* Read in next line of RGB data. */
 {
 	Bmp_image_file *f = (Bmp_image_file *)ifile;

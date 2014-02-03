@@ -201,8 +201,9 @@ Boolean nofit;
 	ainfo->num_frames = 1;
 	return(nofit);
 }
-static void close_gif_file(Gif_file **gifile)
+static void close_gif_file(Image_file **pif)
 {
+Gif_file **gifile = (Gif_file **)pif;
 Gif_file *gf;
 
 	if(gifile == NULL || (gf = *gifile) == NULL)
@@ -259,7 +260,7 @@ struct gif_image gimg;
 		*ainfo = (*pgif)->ainfo;
 	return(Success);
 error:
-	close_gif_file(pgif);
+	close_gif_file(pif);
 	return(err);
 }
 static Errcode create_gif_file(Pdr *pd, char *path, Image_file **pif,
@@ -277,7 +278,7 @@ Gif_file **pgif;
 	(*pgif)->ainfo = *ainfo;
 	return(Success);
 error:
-	close_gif_file(pgif);
+	close_gif_file(pif);
 	return(err);
 }
 static Errcode gif_read_picframe(Image_file *ifile, Rcel *screen)

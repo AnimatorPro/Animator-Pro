@@ -177,12 +177,13 @@ Errcode read_targa_header(Targa_file *tf)
 	return Success;
 }
 
-Errcode read_nextline(Targa_file *tf, void *outbuf)
+Errcode read_nextline(Image_file *ifile, Rgb3 *rgbbuf)
 /*****************************************************************************
  * Read next line from file into tf->rgb_bufs[]  (where it'll be stored
  * as 8 bit color components.)
  ****************************************************************************/
 {
+	Targa_file *tf = (Targa_file *)ifile;
 	int 	i, lpos;
 	USHORT	*w;
 	SHORT	ww;
@@ -190,8 +191,6 @@ Errcode read_nextline(Targa_file *tf, void *outbuf)
 	UBYTE	pbuf[4];		  /* 4 is max possible bytes per pixel */
 	int 	bpp = tf->bpp;
 	int 	bpr = tf->bpr;
-	Rgb3	*rgbbuf = outbuf;	/* same pointer,	*/
-	Pixel	*pixbuf = outbuf;	/* different types. */
 
 	if (tf->cury >= tf->height) 	/* oops, out of data   */
 		return Err_truncated;		/* should never happen */
@@ -280,7 +279,7 @@ Errcode read_nextline(Targa_file *tf, void *outbuf)
 				}
 			break;
 		case 8:
-			memcpy(pixbuf, p, tf->width);
+			memcpy((Pixel *)rgbbuf, p, tf->width);
 			break;
 		default:
 			return Err_driver_protocol;
@@ -290,11 +289,13 @@ Errcode read_nextline(Targa_file *tf, void *outbuf)
 	return Success;
 }
 
-Errcode read_seekstart(Targa_file *tf)
+Errcode read_seekstart(Image_file *ifile)
 /*****************************************************************************
  *
  ****************************************************************************/
 {
+	Targa_file *tf = (Targa_file *)ifile;
+
 	tf->over_count = 0;
 	tf->cury = 0;
 	fseek(tf->file, tf->data_offset, SEEK_SET);
@@ -315,7 +316,7 @@ Errcode read_cmapped_image(Targa_file *tf)
 	if ((err = read_targa_ctab(tf)) < Success)
 			return err;
 
-	if (Success > (err = read_seekstart(tf)))
+	if (Success > (err = read_seekstart((Image_file *)tf)))
 		{
 		return err;
 		}
@@ -332,7 +333,7 @@ Errcode read_cmapped_image(Targa_file *tf)
 
 	while (--h >= 0)
 		{
-		if (Success != (err = read_nextline(tf, tf->lbuf)))
+		if (Success != (err = read_nextline((Image_file *)tf, (Rgb3 *)tf->lbuf)))
 			return err;
 		pj_put_hseg(tf->screen_rcel, tf->lbuf, 0, y, w);
 		y += dy;

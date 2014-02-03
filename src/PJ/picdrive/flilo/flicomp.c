@@ -4,12 +4,15 @@
 #include "ptrmacro.h"
 #include "rastcomp.h"
 
-static void shift_copy_cmap(UBYTE *src, UBYTE *dst, int size)
+static void shift_copy_cmap(const Rgb3 *src, Rgb3 *dst, unsigned int size)
 {
-UBYTE *max_dst = dst + size;
+	unsigned int i;
 
-	while(dst < max_dst)
-		*dst++ = *src++ >> 2; 
+	for (i = 0; i < size; i++) {
+		dst[i].r = (src[i].r >> 2);
+		dst[i].g = (src[i].g >> 2);
+		dst[i].b = (src[i].b >> 2);
+	}
 }
 static char *full_cmap(void *cbuf,Rgb3 *ctab)
 {
@@ -19,8 +22,8 @@ register UBYTE *bbuf = cbuf;
 	*bbuf++ = 0;
 	*bbuf++ = 0;
 	*bbuf++ = 0;
-	shift_copy_cmap((UBYTE *)ctab,(UBYTE *)bbuf,COLORS*3);
-	return(norm_pointer(bbuf+COLORS*3));
+	shift_copy_cmap(ctab, (Rgb3 *)bbuf, COLORS);
+	return(norm_pointer(bbuf+COLORS));
 }
 static void *comp_cmap(Rgb3 *last_ctab, Rgb3 *this_ctab, void *cbuf)
 {
@@ -28,9 +31,9 @@ UBYTE *last, *this;
 
 	last = ((UBYTE*)cbuf) + (COLORS*6);
 	this = last + (COLORS*6);
-	shift_copy_cmap((UBYTE *)last_ctab,last,COLORS*3);
-	shift_copy_cmap((UBYTE *)this_ctab,this,COLORS*3);
-	return(pj_fccomp(last,this,cbuf,COLORS));
+	shift_copy_cmap(last_ctab, (Rgb3 *)last, COLORS);
+	shift_copy_cmap(this_ctab, (Rgb3 *)this, COLORS);
+	return(pj_fccomp((Rgb3 *)last, (Rgb3 *)this, cbuf, COLORS));
 }
 
 static LONG flow_comp_rect(void *comp_buf,
@@ -87,12 +90,13 @@ Chunk_id *chunk;
 	switch(type)
 	{
 		case FLI_LC:
-			vp = pj_lccomp_rects(last_screen, chunk+1, rect->x,rect->y,
-							  this_screen, 
-					  	      rect->x,rect->y,rect->width,rect->height);
+			vp = pj_lccomp_rects(
+					(Raster *)last_screen, chunk+1, rect->x, rect->y,
+					(Raster *)this_screen, rect->x, rect->y,
+					rect->width, rect->height);
 			break;
 		case FLI_BRUN:
-			vp = flow_brun_rect(this_screen, chunk+1,
+			vp = flow_brun_rect((Raster *)this_screen, chunk+1,
 					  	   rect->x,rect->y,rect->width,rect->height);
 			break;
 	}

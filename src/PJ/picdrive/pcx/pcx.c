@@ -411,9 +411,10 @@ ainfo->num_frames = 1;
 return(nofit);	/* return whether fit was exact */
 }
 
-static void close_pcx_file(Pcx_file **pcxile)
+static void close_pcx_file(Image_file **pif)
 /* Clean up resources used by PCX reader/writer */
 {
+Pcx_file **pcxile = (Pcx_file **)pif;
 Pcx_file *gf;
 
 if(pcxile == NULL || (gf = *pcxile) == NULL)
@@ -475,7 +476,7 @@ if(ainfo)
 return(Success);
 
 error:
-close_pcx_file(ppcx);
+close_pcx_file(pif);
 return(err);
 }
 
@@ -497,7 +498,7 @@ if((err = pcx_open_ifsub(ppcx, path, "wb")) < Success)
 return(Success);
 
 error:
-close_pcx_file(ppcx);
+close_pcx_file(pif);
 return(err);
 }
 

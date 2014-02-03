@@ -27,7 +27,7 @@ typedef struct ifile {
 	int *ytable;
 } Ifile;
 
-static void close_file(Ifile **pgf);
+static void close_file(Image_file **pif);
 
 static void intel_swaps(void *p, int length)
 /*****************************************************************************
@@ -176,15 +176,16 @@ if (ainfo != NULL)		/* fill in ainfo structure if any */
 return(Success);
 
 ERROR:
-close_file(&gf);
+close_file(pif);
 return(err);
 }
 
-static void close_file(Ifile **pgf)
+static void close_file(Image_file **pif)
 /*****************************************************************************
  * Clean up resources used by picture driver in loading (saving) a file.
  ****************************************************************************/
 {
+Ifile **pgf = (Ifile **)pif;
 Ifile *gf;
 
 if(pgf == NULL || (gf = *pgf) == NULL)
