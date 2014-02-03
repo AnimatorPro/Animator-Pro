@@ -393,7 +393,7 @@ done:
 }
 /**** driver header declaration ******/
 
-static char gif_pdr_name[] = "GIF.PDR";
+static char s_gif_pdr_name[] = "GIF.PDR";
 static char gif_title_info[] = "GIF standard picture format.";
 
 static Pdr gif_pdr_header = {
@@ -413,6 +413,6 @@ static Pdr gif_pdr_header = {
 
 Local_pdr gif_local_pdr = {
 	NULL,
-	gif_pdr_name,
+	s_gif_pdr_name,
 	&gif_pdr_header,
 };
