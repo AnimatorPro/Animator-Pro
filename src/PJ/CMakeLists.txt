@@ -9,6 +9,7 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wold-style-definition")
 add_subdirectory(fli)
 add_subdirectory(font)
 add_subdirectory(gfx)
+add_subdirectory(picdrive)
 add_subdirectory(util)
 
 set(PJMAIN_SRC_FILES
@@ -22,4 +23,5 @@ target_link_libraries(pj
 	flilib
 	fontlib
 	gfxlib
+	picdrive
 	trdutil)
