@@ -35,7 +35,7 @@ Pdr *pd;
 
 	if((pd = *ppdr) != NULL)
 	{
-		if(pd->hdr.version == ~(PDR_VERSION))
+		if (pd->hdr.version == (USHORT)~(PDR_VERSION))
 			*ppdr = NULL;
 	}
 }
