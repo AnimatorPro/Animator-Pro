@@ -403,7 +403,7 @@ static Errcode read_uncompressed(FILE *f, BITMAPINFOHEADER *info, Rcel *screen)
 	int bpr = bytes_per_row(width,bits);
 	int32_t i = info->biHeight;
 	void *data_buf = NULL;
-	void *pixel_buf;
+	void *pixel_buf = NULL;
 	Errcode err = Success;
 
 	if ((err = ealloc(&data_buf, bpr)) < Success)
