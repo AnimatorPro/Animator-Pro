@@ -182,7 +182,7 @@ Errcode pdr_read_next(Image_file *ifile,Rcel *screen)
 
 Errcode pdr_save_frames(Image_file *ifile,
 						Rcel *screen,
-						int num_frames,
+						ULONG num_frames,
 						Errcode (*seek_frame)(int ix,void *seek_data),
 						void *seek_data,
 						Rcel *work_screen )

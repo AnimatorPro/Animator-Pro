@@ -918,7 +918,7 @@ static Errcode read_next(Image_file *ifile,Rcel *screen)
 }
 
 
-static Errcode save_frame(Image_file *ifile, Rcel *screen, int num_frames,
+static Errcode save_frame(Image_file *ifile, Rcel *screen, ULONG num_frames,
 						      Errcode (*seek_frame)(int ix,void *seek_data),
 						      void *seek_data, Rcel *work_screen ) 
 /* Save file.   If this were a multi-frame file format it could get

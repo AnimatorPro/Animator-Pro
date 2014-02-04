@@ -170,13 +170,13 @@ error:
 
 static Errcode flow_save_frames(Image_file *ifile,
 								Rcel *screen,
-								int num_frames,
+								ULONG num_frames,
 								Errcode (*seek_frame)(int ix,void *seek_data),
 								void *seek_data,
 								Rcel *work_screen )
 {
 Errcode err = Success;
-int i;
+ULONG i;
 Fli_frame *cbuf;
 Flifile *flif = ((Flifile *)ifile);
 

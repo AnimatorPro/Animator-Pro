@@ -328,7 +328,7 @@ int gif_get_pixel(void)
 	return(*pixb++);
 }
 
-static Errcode gif_save_frame(Image_file *ifile, Rcel *screen, int num_frames,
+static Errcode gif_save_frame(Image_file *ifile, Rcel *screen, ULONG num_frames,
 							  Errcode (*seek_frame)(int ix,void *seek_data),
 							  void *seek_data, Rcel *work_screen )
 {
