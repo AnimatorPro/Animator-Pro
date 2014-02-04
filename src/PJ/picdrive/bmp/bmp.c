@@ -353,14 +353,15 @@ ERROR:
 	return err;
 }
 
-static Errcode read_new_colors(FILE *f,  Cmap *c, int count)
+static Errcode read_new_colors(FILE *f, Cmap *c, unsigned int count)
 /* Read a bunch of colors in BGRA format from file into color map. */
 {
 	Rgb3 *out = c->ctab;
 	BGRA in;
-	Errcode err;
+	Errcode err = Err_bad_input;
+	assert(count > 0);
 
-	while (--count >= 0)
+	while (count-- > 0)
 	{
 		if ((err = read_var(f, in)) < Success)
 			break;
@@ -372,14 +373,15 @@ static Errcode read_new_colors(FILE *f,  Cmap *c, int count)
 	return err;
 }
 
-static Errcode read_old_colors(FILE *f,  Cmap *c, int count)
-/* Read a bunch of colors in BGRA format from file into color map. */
+static Errcode read_old_colors(FILE *f, Cmap *c, unsigned int count)
+/* Read a bunch of colors in BGR format from file into color map. */
 {
 	Rgb3 *out = c->ctab;
 	BGR in;
-	Errcode err;
+	Errcode err = Err_bad_input;
+	assert(count > 0);
 
-	while (--count >= 0)
+	while (count-- > 0)
 	{
 		if ((err = read_var(f, in)) < Success)
 			break;
