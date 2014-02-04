@@ -90,7 +90,8 @@ int pdr_get_suffi(Pdr *pd, char *buf)
  *
  ****************************************************************************/
 {
-	return(sprintf(buf,"%.*s",sizeof(pd->default_suffi)-1, pd->default_suffi));
+	return sprintf(buf, "%.*s",
+			(int)sizeof(pd->default_suffi)-1, pd->default_suffi);
 }
 Boolean pdr_best_fit(Pdr *pd, Anim_info *spec)
 /*****************************************************************************

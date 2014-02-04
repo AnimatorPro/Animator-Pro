@@ -55,15 +55,16 @@
  ***************************************************************************/
 
 
-typedef struct
+typedef struct GCC_PACKED
 /* The first thing in a bitmap file... */
 {
-	short bfType;		/* Always BM_MAGIC. */
-	long bfSize;		/* File size.  Includes this header. */
-	short bfReserved1;	/* Always 0 at the moment. */
-	short bfReserved2;	/* Always 0 at the moment. */
-	long bfOffBits;		/* Where the pixels start. (Right after color map.)*/
+	uint16_t bfType;        /* Always BM_MAGIC. */
+	uint32_t bfSize;        /* File size.  Includes this header. */
+	uint16_t bfReserved1;   /* Always 0 at the moment. */
+	uint16_t bfReserved2;   /* Always 0 at the moment. */
+	uint32_t bfOffBits;     /* Where the pixels start. (Right after color map.) */
 } BITMAPFILEHEADER;	
+STATIC_ASSERT(bmp, sizeof(BITMAPFILEHEADER) == 14);
 
 	/* Value in bfType field.  It's 'BM' ascii.... */
 #define BM_MAGIC 0x4D42
@@ -73,28 +74,30 @@ typedef struct
 /* This guy tells us the dimensions of the file and other interesting
  * goodies. */
 {
-	long biSize;		/* Info header size.  Always 0x28 in Windows 3.0. */
-	long biWidth;		/* Width of bitmap in pixels. */
-	long biHeight;		/* Height of bitmap in pixels. */
-	short biPlanes;		/* Number of planes. Always 1, at least in 1991. */
-	short biBitCount;	/* Bits per plane.  1, 4, 8, or 24 in 1991.		 */
-	long biCompression; /* Compression type.  See #defines below for values. */
-	long biSizeImage;	/* Size in bytes of the pixel parts. */
-	long biXPelsPerMeter;  /* Pixels per meter of image's target device. */
-	long biYPelsPerMeter;  
-	long biClrUsed;		/* # of colors used in image or 0 if all are. */
-	long biClrImportant; /* Number of "Important" colors, or 0 if all are. */
+	uint32_t biSize;        /* Info header size.  Always 0x28 in Windows 3.0. */
+	 int32_t biWidth;       /* Width of bitmap in pixels. */
+	 int32_t biHeight;      /* Height of bitmap in pixels. */
+	uint16_t biPlanes;      /* Number of planes. Always 1, at least in 1991. */
+	uint16_t biBitCount;    /* Bits per plane.  1, 4, 8, or 24 in 1991. */
+	uint32_t biCompression; /* Compression type.  See #defines below for values. */
+	uint32_t biSizeImage;   /* Size in bytes of the pixel parts. */
+	 int32_t biXPelsPerMeter; /* Pixels per meter of image's target device. */
+	 int32_t biYPelsPerMeter;
+	uint32_t biClrUsed;     /* # of colors used in image or 0 if all are. */
+	uint32_t biClrImportant;/* Number of "Important" colors, or 0 if all are. */
 } BITMAPINFOHEADER;
+STATIC_ASSERT(bmp, sizeof(BITMAPINFOHEADER) == 40);
 
 typedef struct
 /* Earlier version of info-header. */
 {
-	long biSize;		/* Info header size.  Always 0x0C. */
-	short biWidth;		/* Width of bitmap in pixels. */
-	short biHeight;		/* Height of bitmap in pixels. */
-	short biPlanes;		/* Number of planes. Always 1, at least in 1991. */
-	short biBitCount;	/* Bits per plane.  1, 4, 8, or 24 in 1991.		 */
+	uint32_t biSize;        /* Info header size.  Always 0x0C. */
+	uint16_t biWidth;       /* Width of bitmap in pixels. */
+	uint16_t biHeight;      /* Height of bitmap in pixels. */
+	uint16_t biPlanes;      /* Number of planes.  Always 1, at least in 1991. */
+	uint16_t biBitCount;    /* Bits per plane.  1, 4, 8, or 24 in 1991. */
 } OLDBITMAPINFOHEADER;
+STATIC_ASSERT(bmp, sizeof(OLDBITMAPINFOHEADER) == 12);
 
 /* Is it new or old type of info? */
 enum Info_type 
@@ -164,7 +167,7 @@ static Boolean suffix_in(char *string, char *suff)
 	/* Find next number greater than or equal to input but divisible by 4. */
 #define NEXT_QUAD(x) (((x)+3)&0xfffffffc)
 
-static int bytes_per_row(int width, int bits_per_pixel)
+static int bytes_per_row(int32_t width, uint16_t bits_per_pixel)
 /* Figure out how many bytes in a line of the picture.  Round to
  * nearest byte boundary, and then to nearest long-word boundary.
  * That is the result will always be a multiple of 4. */
@@ -269,7 +272,7 @@ static Errcode read_head(FILE *f
 {
 	Errcode err;
 	enum Info_type itype;
-	int bits;
+	uint16_t bits;
 
 	if ((err = read_var(f, *head)) < Success)
 		goto ERROR;
@@ -389,10 +392,10 @@ static Errcode read_uncompressed(FILE *f, BITMAPINFOHEADER *info, Rcel *screen)
  * screen.  Adjust for long-word line padding. Unpack bit-a-pixel or
  * nibble-a-pixel representation to byte-a-pixel. */
 {
-	int width = info->biWidth;
-	int bits = info->biBitCount;
+	int32_t width = info->biWidth;
+	uint16_t bits = info->biBitCount;
 	int bpr = bytes_per_row(width,bits);
-	int i = info->biHeight;
+	int32_t i = info->biHeight;
 	void *data_buf = NULL;
 	void *pixel_buf;
 	Errcode err = Success;
@@ -478,9 +481,9 @@ static Errcode read_rle(FILE *f, BITMAPINFOHEADER *info, Rcel *screen)
 		unsigned char first,second; 
 	} pair; 	/* Read file pair at a time. */
 	Boolean is_nibbled = (info->biCompression == BI_RLE4);
-	int height = info->biHeight;
-	int width = info->biWidth;
-	int even_width = NEXT_EVEN(width);	/* Width rounded up to next even #. */
+	int32_t height = info->biHeight;
+	int32_t width = info->biWidth;
+	int32_t even_width = NEXT_EVEN(width); /* Width rounded up to next even #. */
 	int curx, cury;						/* Current screen position. */
 	void *data_buf = NULL;				/* Read literal data into here. */
 	void *pixel_buf = NULL;				/* Convert to pixel data here. */
@@ -601,7 +604,7 @@ static Errcode read_after_header(FILE *f
  * compressed and calls appropriate pixel reader. */
 {
 	long err;	/* This is long since could be returned from fseek. */
-	int bits;	/* Bits per pixel. */
+	uint16_t bits; /* Bits per pixel. */
 
 	/* Read colors if not in true-color mode. */
 	bits = info->biBitCount;
@@ -651,7 +654,7 @@ static Errcode bmp_read_rgb_line(FILE *f, BITMAPINFOHEADER *info, Rgb3 *out)
  * from BGR to RGB format. */
 {
 	BGR a;
-	int width = info->biWidth;
+	int32_t width = info->biWidth;
 	int read_width;
 	Errcode err;
 
@@ -672,7 +675,7 @@ static Errcode bmp_read_rgb_line(FILE *f, BITMAPINFOHEADER *info, Rgb3 *out)
 }
 
 /*-------------------------BMP WRITE SECTION--------------------------------*/
-static void init_header(int width, int height
+static void init_header(int32_t width, int32_t height
 , 	BITMAPFILEHEADER *head, BITMAPINFOHEADER *info)
 /* Set up the headers with proper values for this width and height
  * (and 256 colors.) */
@@ -724,10 +727,10 @@ static Errcode write_pixels(FILE *f, BITMAPINFOHEADER *info, Rcel *screen)
  * pad each line with zeroes as necessary. */
 {
 	void *buf = NULL;
-	int width = info->biWidth;
+	int32_t width = info->biWidth;
 	int bpr = bytes_per_row(width,8);
 	Errcode err = Success;
-	int i = info->biHeight;
+	int32_t i = info->biHeight;
 
 	if ((buf = pj_zalloc(bpr)) == NULL)
 	{

@@ -76,11 +76,11 @@ void *flow_brun_rect(Raster *r,void *cbuf,
 {
 register char *c;
 char *cmax;
-UBYTE *lbuf;
+char *lbuf;
 
 	c = cbuf;
 	cmax = c + (width * height);
-	lbuf = (UBYTE *)cmax;
+	lbuf = cmax;
 
 	while(height--)
 	{

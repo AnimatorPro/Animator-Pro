@@ -23,6 +23,7 @@ typedef struct pcx_header
 	SHORT bpl;	/* bytes per line of piccie */
 	UBYTE pad[60];
 	} Pcx_header;
+STATIC_ASSERT(pcx, sizeof(Pcx_header) == 128);
 
 typedef struct pcx_image_file {
 	Image_file hdr;

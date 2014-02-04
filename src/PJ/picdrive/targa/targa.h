@@ -44,13 +44,15 @@ typedef struct bgr3
 	UBYTE	g;
 	UBYTE	r;
 } Bgr3;
+STATIC_ASSERT(targa, sizeof(Bgr3) == 3);
 
-typedef struct tcmap
+typedef struct GCC_PACKED tcmap
 {
 	SHORT	 mapidx;		 /*index of first map entry in LUT*/
 	SHORT	 mapcnt;		 /*num of elements to be loaded*/
 	UBYTE	 mapbits;		 /*number of bits in each element*/
 } Tcmap;
+STATIC_ASSERT(targa, sizeof(Tcmap) == 5);
 
 typedef struct imgspec
 {
@@ -61,6 +63,7 @@ typedef struct imgspec
 	UBYTE	 pixsiz;		 /*num of bits per pixel*/
 	UBYTE	 imgdesc;		 /*contains bit fields of descriptor info*/
 } Imgspec;
+STATIC_ASSERT(targa, sizeof(Imgspec) == 10);
 
 typedef struct tgaheader
 {
@@ -70,6 +73,7 @@ typedef struct tgaheader
 	Tcmap	tcmdata;		/*color map info  */
 	Imgspec imgdata;		/*image info*/
 } Tgaheader;
+STATIC_ASSERT(targa, sizeof(Tgaheader) == 18);
 
 /*----------------------------------------------------------------------------
  * typedef for our main control structure...

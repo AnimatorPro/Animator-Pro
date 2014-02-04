@@ -61,6 +61,7 @@
  *
  */
 
+#include <assert.h>
 #include <stdio.h>
 #include <string.h>
 #include "errcodes.h"
@@ -106,11 +107,12 @@ static void init_table(int min_code_size)
 	memset(hash_table,0,TABLE_SIZE*sizeof(*hash_table));
 }
 
-static Boolean flush(int n)
+static Boolean flush(unsigned int n)
 /*****************************************************************************
  * 0 if ok 1 if error in static global err_status
  *****************************************************************************/
 {
+	assert(n < 256);
 	putc(n,gif_save_file);
 	if(fwrite(gif_byte_buff, 1, n, gif_save_file) < n)
 	{

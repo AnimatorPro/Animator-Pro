@@ -37,7 +37,7 @@ typedef struct chunk_id {
 #define FCID_FRAME 0xf1fa
 
 typedef struct fli_head {
-	long size;
+	int32_t size;
 	USHORT type;  /* = FLIH_MAGIC or FLIX_MAGIC */
 	USHORT frame_count;
 	USHORT width;
@@ -47,17 +47,18 @@ typedef struct fli_head {
 	SHORT speed;
 	char reserved[110];
 } Fli_head;
+STATIC_ASSERT(flilo, sizeof(Fli_head) == 128);
 
 #define FLI_FINISHED 1
 #define FLI_LOOPED	2
 
 typedef struct fli_frame {
-	long size;
+	int32_t size;
 	USHORT type;		/* = 0xf1fa FLIF_MAGIC */
 	SHORT chunks;
 	char pad[8];
 } Fli_frame;
-
+STATIC_ASSERT(flilo, sizeof(Fli_frame) == 16);
 
 #define FLI_COL 0
 #define FLI_WRUN 1
@@ -77,12 +78,11 @@ typedef struct fli_frame {
 #define FLI_BRUN 15
 #define FLI_COPY 16
 
-
-typedef struct fli_chunk {
-	long size;
+typedef struct GCC_PACKED fli_chunk {
+	int32_t size;
 	SHORT type;
 } Fli_chunk;
-
+STATIC_ASSERT(flilo, sizeof(Fli_chunk) == 6);
 
 #define EMPTY_DCOMP 8  /* sizeof of a FLI_SKIP chunk with no change */
 
