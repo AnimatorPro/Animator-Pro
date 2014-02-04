@@ -3,6 +3,7 @@
  * bitmap) picture driver. 
  ***************************************************************************/
 
+#include <assert.h>
 #include <stdio.h>
 #include <string.h>
 #define REXLIB_INTERNALS
@@ -199,6 +200,9 @@ static int bytes_per_row(int32_t width, uint16_t bits_per_pixel)
 		case 32:
 			bpr = width<<2;
 			break;
+		default:
+			assert(0);
+			return 0;
 	}
 	return (bpr+3)&0xfffc;		/* Round up to longword boundary. */
 }
