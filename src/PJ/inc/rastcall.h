@@ -79,16 +79,6 @@ void pj_grc_load_dcompcalls(struct rastlib *lib);
 void pj_grc_load_compcalls(struct rastlib *lib);
 void pj_grc_load_rwcalls(struct rastlib *lib);
 
-/* type of argument to open custom raster */
-typedef void *Grctype;
-
-#define GRC_FULL ((Grctype)pj_grc_load_fullcalls)
-#define GRC_FLIREAD ((Grctype)pj_grc_load_dcompcalls)
-#define GRC_FLIWRITE ((Grctype)pj_grc_load_compcalls)
-#define GRC_FLIREADWRITE ((Grctype)pj_grc_load_rwcalls)
-
-Errcode pj_rast_custom_open(Rasthdr *spec, Raster *cr, Grctype grc_lib_type);
-
 /* temporary raster buffer allocator */
 
 Errcode pj_get_rectbuf(Coor bytes_per_row, long *pheight, UBYTE **lbuf);

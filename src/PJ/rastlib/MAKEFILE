@@ -5,7 +5,7 @@
 ## any raster in it
 
 RASTLOWO = \
- cmapshif.obj custrast.obj getplane.obj grcommon.obj grc_comp.obj grcdcomp.obj\
+ cmapshif.obj getplane.obj grcommon.obj grc_comp.obj grcdcomp.obj\
  grcfulib.obj grclib.obj grcset.obj grcrwcal.obj libdummy.obj\
  nullinit.obj nullrast.obj nullrlib.obj 
 
