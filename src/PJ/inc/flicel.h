@@ -41,6 +41,7 @@
 typedef struct fcelpos {
 	CDAT_POS_FIELDS;
 } Fcelpos;
+STATIC_ASSERT(flicel, sizeof(Fcelpos) == 14);
 
 #ifdef COMMENT
 
@@ -59,7 +60,7 @@ typedef struct fcelpos {
 
 #define CELDATA_VERS 0
 
-typedef struct celdata {
+typedef struct GCC_PACKED celdata {
 	Fat_chunk id;	  /* type = FC_CELDATA */
 	CDAT_POS_FIELDS;
 	SHORT cur_frame;	  /* current frame in cel fli */
@@ -67,9 +68,9 @@ typedef struct celdata {
 
 	SHORT tcolor;		  /* pre translation tcolor for this cel */
 
-	/* total size 66 bytes */
-	UBYTE cdpad[64 - POSTOSET(struct celdata,next_frame_oset)];
+	char padding[36];
 } Celdata;
+STATIC_ASSERT(flicel, sizeof(Celdata) == 66);
 
 typedef struct celcfit {
 	ULONG src_cksum;	/* checkcum of last cel cmap */

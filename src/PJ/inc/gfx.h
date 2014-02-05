@@ -27,13 +27,9 @@
 	#include "procblit.h"
 #endif
 
-#ifdef FLILIB_CODE			/* IF building the FLI library... */
-  typedef void Short_xy;		/* the flilib needs some protos below, but */
-  typedef void Short_xyz;		/* none of the ones that use these types.  */
-#else						/* ELSE */
-  #ifndef VERTICES_H			/* if not flilib code, we need the full    */
-	  #include "vertices.h"     /* definitions and types provided by       */
-  #endif						/* these header files.					   */
+#include "vertices.h"
+
+#ifndef FLILIB_CODE
   #ifndef POLY_H
 	  #include "poly.h"
   #endif

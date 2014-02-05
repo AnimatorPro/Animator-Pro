@@ -21,18 +21,15 @@
 	#include "vertices.h"
 #endif
 
-typedef struct flx_head {
+typedef struct GCC_PACKED flx_head {
 	FHEAD_COMMON;
 	LONG frames_in_table; /* size of index */
 	LONG index_oset;	/* offset to index */
 	LONG path_oset;     /* offset to flipath record chunk */
 
-/* this will insure that a Flx_head is the same size as a fli_head but won't
- * work if there is < 2 bytes left (value <= 0) */
-
-	PADTO(sizeof(Fli_head),flx_head,flxpad);
+	char padding[36];
 } Flx_head;
-
+STATIC_ASSERT(flx, sizeof(Flx_head) == sizeof(Fli_head));
 
 /* struct flx MUST be the same size or smaller than struct fli_frame
    for the 'add frames to sequence' routines to work. */
@@ -84,11 +81,8 @@ extern Flxfile flix;
 LONG write_tflx();
 
 /* make sure fd and comp_type fields are in the same position as in a flifile */
-
-struct _flx_error_check_ {
-	char x0[OFFSET(Flifile,fd) == OFFSET(Flxfile,fd)];
-	char x1[OFFSET(Flifile,comp_type) == OFFSET(Flxfile,comp_type)];
-};
+STATIC_ASSERT(flx, OFFSET(Flifile, fd) == OFFSET(Flxfile, fd));
+STATIC_ASSERT(flx, OFFSET(Flifile, comp_type) == OFFSET(Flxfile, comp_type));
 
 
 /***** Flxfile functions ****/

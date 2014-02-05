@@ -27,6 +27,7 @@ typedef struct fli_id {
 	LONG update_time;	 /* time of last update */
 	LONG update_user;	 /* user id of last update */
 } Fli_id;
+STATIC_ASSERT(fli, sizeof(Fli_id) == 16);
 
 /* fli top level chunk ids */
 
@@ -62,7 +63,7 @@ typedef struct fli_id {
 
 #ifdef FLI_1_0
 
-typedef struct fhead_1_0 {
+typedef struct GCC_PACKED fhead_1_0 {
 	CHUNKID_FIELDS;
 	USHORT frame_count;
 	USHORT width;
@@ -72,6 +73,7 @@ typedef struct fhead_1_0 {
 	SHORT jiffy_speed;
 	UBYTE pad[110]; 	/* should be total of 128 bytes */
 } Fhead_1_0;
+STATIC_ASSERT(fli, sizeof(Fhead_1_0) == 128);
 
 #endif /* FLI_1_0 */
 
@@ -92,19 +94,13 @@ typedef struct fhead_1_0 {
 /* size of common fields */
 #define FLIH_COMMONSIZE (POSTOSET(Fli_head,commonpad))
 
-typedef struct fli_head {
+typedef struct GCC_PACKED fli_head {
 	FHEAD_COMMON;
 	LONG frame1_oset;
 	LONG frame2_oset;
 	UBYTE padfill[40];
 } Fli_head;
-
-struct _fli_h_error_check_ {
-	char x0[sizeof(Fli_head) == 128];
-#ifdef FLI_1_0
-	char x1[sizeof(Fhead_1_0) == 128];
-#endif /* FLI_1_0 */
-};
+STATIC_ASSERT(fli, sizeof(Fli_head) == 128);
 
 /* Fli_head flags values */
 
@@ -116,6 +112,7 @@ typedef struct fli_frame {
 	SHORT chunks;
 	char pad[8];
 } Fli_frame;
+STATIC_ASSERT(fli, sizeof(Fli_frame) == 16);
 
 /* fli frame sub chunk types and ids */
 
@@ -142,13 +139,14 @@ enum {
 };
 
 
-typedef struct pstamp_chunk {
+typedef struct GCC_PACKED pstamp_chunk {
 	CHUNKID_FIELDS;
 	SHORT height;
 	SHORT width;
 	SHORT xlat_type;
 	Chunk_id data; /* this is a fli chunk either copy or brun */
 } Pstamp_chunk;
+STATIC_ASSERT(fli, sizeof(Pstamp_chunk) == 18);
 
 #define PSTAMP_NOXLAT	0
 #define PSTAMP_SIXCUBE	1

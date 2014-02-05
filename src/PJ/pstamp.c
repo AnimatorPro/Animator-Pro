@@ -10,6 +10,12 @@
 #include "rastcomp.h"
 #include "unchunk.h"
 
+typedef struct GCC_PACKED frame_rec {
+	Fli_frame ff;
+	Pstamp_chunk ps;
+} Frame_rec;
+STATIC_ASSERT(pstamp, sizeof(Frame_rec) == 34);
+
 Boolean pj_frame_has_pstamp(Fli_frame *frame)
 {
 	return(frame[1].type == FLI_PSTAMP);
@@ -81,12 +87,8 @@ Boolean not_a_pstamp;
 int ctype;
 
 /* first chunck struct for fli frame record */
-
-struct frame_rec {
-	Fli_frame ff;
-	Pstamp_chunk ps;
-} frec, *psframe;
-
+Frame_rec frec;
+Frame_rec *psframe;
 
 	psframe = &frec;
 

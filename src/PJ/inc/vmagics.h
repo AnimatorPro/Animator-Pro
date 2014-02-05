@@ -32,15 +32,16 @@
 	LONG size;\
 	USHORT type
 
-typedef struct chunk_id {
+typedef struct GCC_PACKED chunk_id {
 	CHUNKID_FIELDS;
 } Chunk_id;
+STATIC_ASSERT(vmagics, sizeof(Chunk_id) == 6);
 
 typedef struct fat_chunk {
 	CHUNKID_FIELDS;
 	USHORT version;
 } Fat_chunk;
-
+STATIC_ASSERT(vmagics, sizeof(Fat_chunk) == 8);
 
 /* This oddball is a byte at location 7 of a poly file */
 #define POLYMAGIC 0x99
