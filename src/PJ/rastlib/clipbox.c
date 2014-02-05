@@ -561,10 +561,6 @@ clipout:
 	cb->lib = pj_get_null_lib();
 	return(0);
 }
-Boolean pj_clipbox_to_rect(Clipbox *cb, Raster *r, Rectangle *rect)
-{
-	return(pj_clipbox_make(cb,r,rect->x,rect->y,rect->width,rect->height));
-}
 
 #ifdef NEVER
 Boolean pj_clipbox_make(Clipbox *cb, Raster *r,
