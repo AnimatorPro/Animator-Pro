@@ -77,7 +77,6 @@ Errcode pj_open_nullrast(RASType *r);
 void pj_grc_load_fullcalls(struct rastlib *lib);
 void pj_grc_load_dcompcalls(struct rastlib *lib);
 void pj_grc_load_compcalls(struct rastlib *lib);
-void pj_grc_load_rwcalls(struct rastlib *lib);
 
 /* temporary raster buffer allocator */
 
