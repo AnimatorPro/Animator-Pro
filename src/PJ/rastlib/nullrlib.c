@@ -1,7 +1,7 @@
 #include "libdummy.h"
 #include "rastlib.h"
 
-void *pj_get_null_lib(void)
+Rastlib *pj_get_null_lib(void)
 {
 static Rastlib null_lib;
 static UBYTE loaded = FALSE;

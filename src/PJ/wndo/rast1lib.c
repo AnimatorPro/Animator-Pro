@@ -4,8 +4,6 @@
 #define WNDO_INTERNALS
 #include "wndo.h"
 
-void *get_window_lib();
-
 /**************************************************************/
 
 static void wr1_put_dot(Wndo *w,Pixel c,Coor x,Coor y)
@@ -300,7 +298,7 @@ register Raster *r = w->rasts[w->onerast];
 
 
 
-void *get_wndo_r1oslib()
+Rastlib *get_wndo_r1oslib(void)
 {
 static int loaded = 0;
 static Rastlib oslib;
@@ -371,7 +369,7 @@ static Rastlib oslib;
 	return(&oslib);
 }
 
-void *get_wndo_r1lib()
+Rastlib *get_wndo_r1lib(void)
 {
 static int loaded = 0;
 static Rastlib r1lib;

@@ -607,7 +607,7 @@ static void win_wait_vsync(Wndo *w)
 	if(!(w->flags & (WNDO_HIDDEN)))
 		WAIT_VSYNC(w->W_screen->viscel);
 }
-void *get_window_lib()
+Rastlib *get_window_lib(void)
 {
 static int loaded = 0;
 static Rastlib winlib;

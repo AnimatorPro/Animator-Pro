@@ -259,7 +259,7 @@ pj_bym_get_dot(Bytemap *r, Coor x, Coor y)
  * but it is difficult to maintain the order of the entries so this is much
  * more convenient and less prone to error during developement */
 
-void *pj_get_bytemap_lib(void)
+Rastlib *pj_get_bytemap_lib(void)
 {
 static Rastlib bytemap_lib;
 static int loaded = 0;

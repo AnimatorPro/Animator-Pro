@@ -15,7 +15,7 @@
 #include "rastcall.h"
 #include "rastlib.h"
 
-void *pj_get_grc_lib(void)
+Rastlib *pj_get_grc_lib(void)
 {
 static Boolean loaded = FALSE;
 static Rastlib grc_lib;

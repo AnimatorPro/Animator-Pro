@@ -2,7 +2,7 @@
 #include "errcodes.h"
 #include "memory.h"
 
-static void *get_bitmap_lib(void);
+static Rastlib *get_bitmap_lib(void);
 
 static Errcode close_bitmap(Bitmap *rr)
 /* frees parts but does not free Bitmap */
@@ -200,7 +200,7 @@ SHORT rowcount;
 	}
 }
 
-static void *get_bitmap_lib(void)
+static Rastlib *get_bitmap_lib(void)
 {
 static Rastlib bitmap_lib;
 static int loaded = 0;

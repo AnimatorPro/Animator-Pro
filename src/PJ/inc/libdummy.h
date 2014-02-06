@@ -16,6 +16,6 @@ Errcode pj_errdo_unimpl(void);
 Errcode pj_errdo_success(void);
 
 extern void pj_init_null_rastlib(struct rastlib *lib);
-extern void *pj_get_null_lib(void);
+extern struct rastlib *pj_get_null_lib(void);
 
 #endif /* LIBDUMMY_H */

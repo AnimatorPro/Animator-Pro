@@ -12,7 +12,7 @@ struct rastlib;
 /* functions used by raster library code */
 
 extern void pj_set_grc_calls(void *lib);
-extern void *pj_get_grc_lib(void);
+extern struct rastlib *pj_get_grc_lib(void);
 
 /* clipping subroutines ***/
 
@@ -49,7 +49,7 @@ Errcode pj_open_bytemap(Rasthdr *spec,Bytemap *bm);
 /* allocates and opens bytemap raster use free_raster() to free */
 Errcode pj_alloc_bytemap(Rasthdr *spec,Bytemap **pbm);
 
-extern void *pj_get_bytemap_lib(void);
+extern struct rastlib *pj_get_bytemap_lib(void);
 
 #ifndef REXLIB_CODE /**** host side only ****/
 

@@ -377,9 +377,12 @@ void get_requestor_position(Wscreen *ws, SHORT width, SHORT height,
 #define NULL_RASTID   1
 #define FIRST_OPENRASTID 2
 
-void *get_window_lib(void); /* multi clip lib */
-void *get_wndo_r1lib(void); /* one raster lib */
-void *get_wndo_r1oslib(void); /* one raster offset lib */
+struct rastlib;
+
+extern struct rastlib *get_window_lib(void); /* multi clip lib */
+extern struct rastlib *get_wndo_r1lib(void); /* one raster lib */
+extern struct rastlib *get_wndo_r1oslib(void); /* one raster offset lib */
+
 void build_all_clips(Wscreen *ws,USHORT full_update);
 
 #endif /* WNDO_INTERNALS */
