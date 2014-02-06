@@ -1,10 +1,5 @@
-#define RASTCALL_INTERNALS
-
-#include "rastlib.h"
-#include "ptrmacro.h"
+#include "rastcall.ih"
 #include "memory.h"
-
-
 
 /**************************************************************/
 

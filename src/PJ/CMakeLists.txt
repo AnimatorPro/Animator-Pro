@@ -10,6 +10,7 @@ add_subdirectory(fli)
 add_subdirectory(font)
 add_subdirectory(gfx)
 add_subdirectory(picdrive)
+add_subdirectory(rastlib)
 add_subdirectory(util)
 
 set(PJMAIN_SRC_FILES
@@ -24,4 +25,5 @@ target_link_libraries(pj
 	fontlib
 	gfxlib
 	picdrive
+	raster
 	trdutil)
