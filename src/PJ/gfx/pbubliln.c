@@ -2,7 +2,7 @@
 #include "gfx.h"
 
 void ubli_line(Pixel *source_buf, Pixel *dest_buf, 
-			   Coor width, const Tcolxldat *tcx)
+		Ucoor width, const Tcolxldat *tcx)
 /* (Private to grc_driver.) */
 {
 Pixel *maxdest;

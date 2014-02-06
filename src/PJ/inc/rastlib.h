@@ -49,18 +49,19 @@ typedef void (*rl_type_cput_dot)(LibRast *r,Pixel color,Coor x,Coor y);
 typedef void (*rl_type_put_dot)(LibRast *r,Pixel color,Coor x,Coor y);
 typedef Pixel (*rl_type_cget_dot)(LibRast *r,Coor x,Coor y);
 typedef Pixel (*rl_type_get_dot)(LibRast *r,Coor x,Coor y);
+
 typedef void (*rl_type_put_hseg)(LibRast *r
-,	void *pixbuf,Ucoor x,Ucoor y,Ucoor w);
+,	Pixel *pixbuf, Ucoor x, Ucoor y, Ucoor w);
 typedef void (*rl_type_get_hseg)(LibRast *r
-,	void *pixbuf,Ucoor x,Ucoor y,Ucoor w);
+,	Pixel *pixbuf, Ucoor x, Ucoor y, Ucoor w);
 typedef void (*rl_type_put_vseg)(LibRast *r
-,	void *pixbuf,Ucoor x,Ucoor y,Ucoor h);
+,	Pixel *pixbuf, Ucoor x, Ucoor y, Ucoor h);
 typedef void (*rl_type_get_vseg)(LibRast *r
-,	void *pixbuf,Ucoor x,Ucoor y,Ucoor h);
+,	Pixel *pixbuf, Ucoor x, Ucoor y, Ucoor h);
 typedef void (*rl_type_put_rectpix)(LibRast *r
-,	void *pixbuf,Coor x,Coor y,Ucoor w,Ucoor h);
+,	Pixel *pixbuf, Coor x, Coor y, Ucoor w, Ucoor h);
 typedef void (*rl_type_get_rectpix)(LibRast *r
-,	void *pixbuf,Coor x,Coor y,Ucoor w,Ucoor h);
+,	Pixel *pixbuf, Coor x, Coor y, Ucoor w, Ucoor h);
 typedef void (*rl_type_set_hline)(LibRast *r
 ,	Pixel color,Coor x,Coor y,Ucoor w);
 typedef void (*rl_type_set_vline)(LibRast *r

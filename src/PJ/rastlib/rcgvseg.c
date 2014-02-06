@@ -1,6 +1,6 @@
 #include "rastcall.ih"
 
-void pj_get_vseg(Raster *v,void *pixbuf, Coor x,Coor y,Ucoor height)
+void pj_get_vseg(Raster *v, Pixel *pixbuf, Coor x, Coor y, Ucoor height)
 /* Move pixels from a vertical line of source raster to memory buffer. */
 /* (Clipped will only get pixels where buffer overlaps source and 
  * will leave other parts of buffer unaffected) */

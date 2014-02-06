@@ -101,17 +101,20 @@ void pj__put_dot(RASType *r,Pixel color,Coor x,Coor y);
 Pixel pj_get_dot(RASType *r,Coor x,Coor y);
 Pixel pj__get_dot(RASType *r,Coor x,Coor y);
 
-void pj_put_hseg(RASType *r,void *pixbuf,Coor x,Coor y,Ucoor w);
-void pj__put_hseg(RASType *r,void *pixbuf,Coor x,Coor y,Ucoor w);
-void pj_get_hseg(RASType *r,void *pixbuf,Coor x,Coor y,Ucoor w);
-void pj__get_hseg(RASType *r,void *pixbuf,Coor x,Coor y,Ucoor w);
-void pj_put_vseg(RASType *r,void *pixbuf,Coor x,Coor y,Ucoor h);
-void pj__put_vseg(RASType *r,void *pixbuf,Coor x,Coor y,Ucoor h);
-void pj_get_vseg(RASType *r,void *pixbuf,Coor x,Coor y,Ucoor h);
-void pj__get_vseg(RASType *r,void *pixbuf,Coor x,Coor y,Ucoor h);
+extern void pj_put_hseg (RASType *r, Pixel *pixbuf, Coor x, Coor y, Ucoor w);
+extern void pj__put_hseg(RASType *r, Pixel *pixbuf, Coor x, Coor y, Ucoor w);
+extern void pj_get_hseg (RASType *r, Pixel *pixbuf, Coor x, Coor y, Ucoor w);
+extern void pj__get_hseg(RASType *r, Pixel *pixbuf, Coor x, Coor y, Ucoor w);
+extern void pj_put_vseg (RASType *r, Pixel *pixbuf, Coor x, Coor y, Ucoor h);
+extern void pj__put_vseg(RASType *r, Pixel *pixbuf, Coor x, Coor y, Ucoor h);
+extern void pj_get_vseg (RASType *r, Pixel *pixbuf, Coor x, Coor y, Ucoor h);
+extern void pj__get_vseg(RASType *r, Pixel *pixbuf, Coor x, Coor y, Ucoor h);
 
-void _pj_put_rectpix(RASType *r,void *pixbuf,Coor x,Coor y,Ucoor w,Ucoor h);
-void pj_get_rectpix(RASType *r,void *pixbuf,Coor x,Coor y,Ucoor w,Ucoor h);
+extern void
+_pj_put_rectpix(RASType *r, Pixel *pixbuf, Coor x, Coor y, Ucoor w, Ucoor h);
+
+extern void
+pj_get_rectpix(RASType *r, Pixel *pixbuf, Coor x, Coor y, Ucoor w, Ucoor h);
 
 void pj__set_hline(RASType *r,Pixel color,Coor x,Coor y,Ucoor w);
 void pj_set_hline(RASType *r,Pixel color,Coor x,Coor y,Ucoor w);

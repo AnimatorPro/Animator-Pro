@@ -4,7 +4,7 @@
 
 #include "rastcall.ih"
 
-void pj_get_hseg(Raster *v, void *pixbuf, Coor x, Coor y, Ucoor width)
+void pj_get_hseg(Raster *v, Pixel *pixbuf, Coor x, Coor y, Ucoor width)
 /* Move pixels from a horizontal line of source raster to memory buffer.
  * this will clip and put pixels in from parts of buffer that overlap
  * destination buffer */

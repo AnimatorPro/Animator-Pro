@@ -45,10 +45,10 @@ pj__get_dot(Raster *r, Coor x, Coor y)
  *  See rcphseg.c.
  */
 void
-pj_put_hseg(Raster *r, void *pixbuf, Ucoor x, Ucoor y, Ucoor w);
+pj_put_hseg(Raster *r, Pixel *pixbuf, Coor x, Coor y, Ucoor w);
 
 void
-pj__put_hseg(Raster *r, void *pixbuf, Ucoor x, Ucoor y, Ucoor w)
+pj__put_hseg(Raster *r, Pixel *pixbuf, Coor x, Coor y, Ucoor w)
 {
 	PUT_HSEG(r, pixbuf, x, y, w);
 }
@@ -62,10 +62,10 @@ pj__put_hseg(Raster *r, void *pixbuf, Ucoor x, Ucoor y, Ucoor w)
  *  See rcghseg.c.
  */
 void
-pj_get_hseg(Raster *r, void *pixbuf, Ucoor x, Ucoor y, Ucoor w);
+pj_get_hseg(Raster *r, Pixel *pixbuf, Coor x, Coor y, Ucoor w);
 
 void
-pj__get_hseg(Raster *r, void *pixbuf, Ucoor x, Ucoor y, Ucoor w)
+pj__get_hseg(Raster *r, Pixel *pixbuf, Coor x, Coor y, Ucoor w)
 {
 	GET_HSEG(r, pixbuf, x, y, w);
 }
@@ -78,11 +78,11 @@ pj__get_hseg(Raster *r, void *pixbuf, Ucoor x, Ucoor y, Ucoor w)
  *  See rcpvseg.c.
  */
 void
-pj_put_vseg(Raster *r, void *pixbuf, Ucoor x, Ucoor y, Ucoor h);
+pj_put_vseg(Raster *r, Pixel *pixbuf, Coor x, Coor y, Ucoor h);
 
 #ifdef SLUFFED
 void
-pj__put_vseg(Raster *r, void *pixbuf, Ucoor x, Ucoor y, Ucoor h)
+pj__put_vseg(Raster *r, Pixel *pixbuf, Coor x, Coor y, Ucoor h)
 {
 	PUT_VSEG(r, pixbuf, x, y, h);
 }
@@ -95,11 +95,11 @@ pj__put_vseg(Raster *r, void *pixbuf, Ucoor x, Ucoor y, Ucoor h)
  *  will leave other parts of buffer unaffected.)
  */
 void
-pj_get_vseg(Raster *r, void *pixbuf, Ucoor x, Ucoor y, Ucoor h);
+pj_get_vseg(Raster *r, Pixel *pixbuf, Coor x, Coor y, Ucoor h);
 
 #ifdef SLUFFED
 void
-pj__get_vseg(Raster *r, void *pixbuf, Ucoor x, Ucoor y, Ucoor h)
+pj__get_vseg(Raster *r, Pixel *pixbuf, Coor x, Coor y, Ucoor h)
 {
 	GET_VSEG(r, pixbuf, x, y, h);
 }
@@ -112,7 +112,7 @@ pj__get_vseg(Raster *r, void *pixbuf, Ucoor x, Ucoor y, Ucoor h)
  *  See rcprpix.c.
  */
 void
-_pj_put_rectpix(Raster *r, void *pixbuf, Coor x, Coor y, Ucoor w, Ucoor h);
+_pj_put_rectpix(Raster *r, Pixel *pixbuf, Coor x, Coor y, Ucoor w, Ucoor h);
 
 /* Function: pj_get_rectpix
  *
@@ -124,7 +124,7 @@ _pj_put_rectpix(Raster *r, void *pixbuf, Coor x, Coor y, Ucoor w, Ucoor h);
  *  See rcgrpix.c.
  */
 void
-pj_get_rectpix(Raster *r, void *pixbuf, Coor x, Coor y, Ucoor w, Ucoor h);
+pj_get_rectpix(Raster *r, Pixel *pixbuf, Coor x, Coor y, Ucoor w, Ucoor h);
 
 /* Function: pj_set_hline
  *

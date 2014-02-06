@@ -28,17 +28,17 @@ typedef struct tcolxldat {  /* structure of data for procline functions used
 
 /****** line processing functions and those that use them ****/
 
-typedef void (*Procline)(Pixel *s,Pixel *d,Coor w,void *data);
+typedef void (*Procline)(Pixel *s, Pixel *d, Ucoor w, const Tcolxldat *data);
 
 void ubli_line(Pixel *source_buf, Pixel *dest_buf, 
-					   Coor width, const Tcolxldat *tcx);
+		Ucoor width, const Tcolxldat *tcx);
 void pj_tbli_line(Pixel *source_buf, Pixel *dest_buf, 
-					   Coor width, const Tcolxldat *tcx);
+		Ucoor width, const Tcolxldat *tcx);
 
 void ubli_xlatline(Pixel *source_buf, Pixel *dest_buf, 
-					   Coor width, const Tcolxldat *tcx);
+		Ucoor width, const Tcolxldat *tcx);
 void tbli_xlatline(Pixel *source_buf, Pixel *dest_buf, 
-					   Coor width, const Tcolxldat *tcx);
+		Ucoor width, const Tcolxldat *tcx);
 
 Errcode procblit(RASType *src, Coor src_x, Coor src_y,
 			RASType *dest, Coor dest_x, Coor dest_y, Ucoor width, Ucoor height,

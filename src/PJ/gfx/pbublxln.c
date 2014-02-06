@@ -3,7 +3,7 @@
 
 
 void ubli_xlatline(Pixel *source_buf, Pixel *dest_buf, 
-				   Coor width, const Tcolxldat *tcx)
+		Ucoor width, const Tcolxldat *tcx)
 {
 Pixel *maxdest;
 Pixel tcolor = tcx->tcolor;
