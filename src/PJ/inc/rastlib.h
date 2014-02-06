@@ -33,9 +33,12 @@ enum {
 	RL_TO_OTHER = 3,
 };
 
-#define NUM_LIB_CALLS		100		/* So don't have to recompile when add 
-										a new one.  Should be 57 or so. */
+enum {
+	NUM_LIB_CALLS = 47,
 
+	/* So don't have to recompile when add a new one. */
+	MAX_LIB_CALLS = 100
+};
 
 /*** typedefs of all the elements of struct rastlib - because more than
  *** occassionally we'll have to cast a function pointer with slightly
@@ -125,9 +128,9 @@ typedef struct rastlib {
 	rl_type_unss2_rect unss2_rect;
 #ifdef PRIVATE_CODE
 	rl_type_diag_to_ptable diag_to_ptable;
-	void *reserved[1];
+	VFUNC reserved[1];
 #else
-	void *reserved[2];
+	VFUNC reserved[2];
 #endif
 	rl_type_blitrect blitrect[4];
 	rl_type_swaprect swaprect[4];
@@ -138,16 +141,11 @@ typedef struct rastlib {
 	rl_type_uncc64 uncc64;
 	rl_type_uncc256 uncc256;
 	rl_type_wait_vsync wait_vsync;
-	char libpad[NUM_LIB_CALLS*sizeof(VFUNC)-188]; /* enough for 100 entries */
+#ifdef SLUFFED
+	VFUNC libpad[MAX_LIB_CALLS - NUM_LIB_CALLS];
+#endif /* SLUFFED */
 } Rastlib;
-
-#ifdef PRIVATE_CODE
-
-struct _rastlib_h_errcheck_ {
-	char xx[sizeof(Rastlib) == NUM_LIB_CALLS*sizeof(VFUNC)];
-};
-
-#endif
+STATIC_ASSERT(rastlib, sizeof(Rastlib) == NUM_LIB_CALLS * sizeof(VFUNC));
 
 /* some macroized library calls */
 
