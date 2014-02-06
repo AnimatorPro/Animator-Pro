@@ -4,9 +4,10 @@
 
 /* #define USE_OPTIMISED_RASTLIB */
 
-static Errcode close_bytemap(Bytemap *rr)
+static Errcode close_bytemap(Raster *bytemap)
 /* frees parts but does not free Bytemap */
 {
+	Bytemap *rr = (Bytemap *)bytemap;
 	if(rr->type != RT_BYTEMAP)
 		return(Err_rast_type);
 	pj_free_bplanes(&(rr->bm.bp[0]),rr->bm.num_planes);
@@ -241,14 +242,16 @@ static void bym_xor_rast(Bytemap *s, Bytemap *d)
 #else /* USE_OPTIMISED_RASTLIB */
 
 static void
-pj_bym_put_dot(Bytemap *r, Pixel col, Coor x, Coor y)
+pj_bym_put_dot(Raster *bytemap, Pixel col, Coor x, Coor y)
 {
+	Bytemap *r = (Bytemap *)bytemap;
 	(r->bm.bp[0])[r->bm.bpr * y + x] = col;
 }
 
 static Pixel
-pj_bym_get_dot(Bytemap *r, Coor x, Coor y)
+pj_bym_get_dot(Raster *bytemap, Coor x, Coor y)
 {
+	Bytemap *r = (Bytemap *)bytemap;
 	return (r->bm.bp[0])[r->bm.bpr * y + x];
 }
 
@@ -271,9 +274,9 @@ static int loaded = 0;
 		clear_mem(&bytemap_lib,sizeof(bytemap_lib)); 
 
 		/* Fill in functions that exist. */
-		bytemap_lib.close_raster = (rl_type_close_raster)close_bytemap;
-		bytemap_lib.put_dot = (rl_type_put_dot)pj_bym_put_dot;
-		bytemap_lib.get_dot = (rl_type_get_dot)pj_bym_get_dot;
+		bytemap_lib.close_raster = close_bytemap;
+		bytemap_lib.put_dot = pj_bym_put_dot;
+		bytemap_lib.get_dot = pj_bym_get_dot;
 
 #ifdef USE_OPTIMISED_RASTLIB
 

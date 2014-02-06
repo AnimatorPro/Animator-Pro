@@ -4,7 +4,7 @@ void pj__swaprect(Raster *rasta,			 /* source raster */
 			  Coor rasta_x, Coor rasta_y,    /* source Minx and Miny */
 			  Raster *rastb,   		    /* destination raster */
 			  Coor rastb_x, Coor rastb_y, /* destination minx and miny */
-			  Coor width, Coor height)  /* blit size */  
+			  Ucoor width, Ucoor height) /* blit size */
 
 /* unclipped swaps rectangles between raster a and raster b */ 
 {

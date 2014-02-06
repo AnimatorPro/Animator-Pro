@@ -51,13 +51,13 @@ typedef Pixel (*rl_type_cget_dot)(LibRast *r,Coor x,Coor y);
 typedef Pixel (*rl_type_get_dot)(LibRast *r,Coor x,Coor y);
 
 typedef void (*rl_type_put_hseg)(LibRast *r
-,	Pixel *pixbuf, Ucoor x, Ucoor y, Ucoor w);
+,	Pixel *pixbuf, Coor x, Coor y, Ucoor w);
 typedef void (*rl_type_get_hseg)(LibRast *r
-,	Pixel *pixbuf, Ucoor x, Ucoor y, Ucoor w);
+,	Pixel *pixbuf, Coor x, Coor y, Ucoor w);
 typedef void (*rl_type_put_vseg)(LibRast *r
-,	Pixel *pixbuf, Ucoor x, Ucoor y, Ucoor h);
+,	Pixel *pixbuf, Coor x, Coor y, Ucoor h);
 typedef void (*rl_type_get_vseg)(LibRast *r
-,	Pixel *pixbuf, Ucoor x, Ucoor y, Ucoor h);
+,	Pixel *pixbuf, Coor x, Coor y, Ucoor h);
 typedef void (*rl_type_put_rectpix)(LibRast *r
 ,	Pixel *pixbuf, Coor x, Coor y, Ucoor w, Ucoor h);
 typedef void (*rl_type_get_rectpix)(LibRast *r
@@ -71,37 +71,39 @@ typedef void (*rl_type_set_rect)(LibRast *r
 typedef void (*rl_type_set_rast)(LibRast *r,Pixel color);
 typedef void (*rl_type_xor_rect)(LibRast *r
 ,	Pixel color,Coor x,Coor y,Ucoor w,Ucoor h);
-typedef void (*rl_type_mask1blit)(UBYTE *mbytes, Coor mbpr, Coor mx, Coor my
+typedef void (*rl_type_mask1blit)(UBYTE *mbytes, unsigned int mbpr
+,	Coor mx, Coor my
 ,	LibRast *r, Coor rx, Coor ry, Ucoor width, Ucoor height
 ,	Pixel oncolor );
-typedef void (*rl_type_mask2blit)(UBYTE *mbytes, Coor mbpr, Coor mx, Coor my
+typedef void (*rl_type_mask2blit)(UBYTE *mbytes, unsigned int mbpr
+,	Coor mx, Coor my
 ,	LibRast *r, Coor rx, Coor ry, Ucoor width, Ucoor height
 ,	Pixel oncolor, Pixel offcolor );
 typedef void (*rl_type_unbrun_rect)(LibRast *r,void *ucbuf, LONG pixsize
 ,	Coor x,Coor y,Ucoor width,Ucoor height);
 typedef void (*rl_type_unlccomp_rect)(LibRast *r,void *ucbuf, LONG pixsize
 ,	Coor x,Coor y,Ucoor width,Ucoor height);
-typedef void (*rl_type_unss2_rect)(LibRast *r,void *ucbuf, LONG pixsize
+typedef Errcode (*rl_type_unss2_rect)(LibRast *r, void *ucbuf, LONG pixsize
 ,	Coor x,Coor y,Ucoor width,Ucoor height);
 typedef void (*rl_type_diag_to_ptable)(LibRast *sr
 ,	Pixel *ptable, Ucoor ptsize
 ,	Coor x0, Coor y0, Coor x1, Coor y1);
-typedef void (*rl_type_blitrect)(LibRast *source, Coor src_x, Coor src_y
+typedef Errcode (*rl_type_blitrect)(LibRast *source, Coor src_x, Coor src_y
 ,	LibRast *dest, Coor dest_x, Coor dest_y
-,	Coor width, Coor height);
+,	Ucoor width, Ucoor height);
 typedef void (*rl_type_swaprect)(LibRast *ra, Coor ax, Coor ay
-,	LibRast *rb, Coor bx, Coor by, Coor width, Coor height);
-typedef void (*rl_type_tblitrect)(LibRast *s, Coor sx, Coor sy
-,	LibRast *d, Coor dx, Coor dy, Coor width, Coor height
+,	LibRast *rb, Coor bx, Coor by, Ucoor width, Ucoor height);
+typedef Errcode (*rl_type_tblitrect)(LibRast *s, Coor sx, Coor sy
+,	LibRast *d, Coor dx, Coor dy, Ucoor width, Ucoor height
 ,	Pixel tcolor );
-typedef void (*rl_type_xor_rast)(LibRast *s, LibRast *d);
-typedef void (*rl_type_zoomblit)( LibRast *source, Coor src_x, Coor src_y
+typedef Errcode (*rl_type_xor_rast)(LibRast *s, LibRast *d);
+typedef Errcode (*rl_type_zoomblit)( LibRast *source, Coor src_x, Coor src_y
 ,	LibRast *dest, Coor dest_x, Coor dest_y
 ,	Ucoor width, Ucoor height, LONG zoom_x, LONG zoom_y );
 typedef void (*rl_type_set_colors)(LibRast *r
 ,	LONG start, LONG count, void *cbuf);
-typedef void (*rl_type_uncc64)(LibRast *r, void *cbuf);
-typedef void (*rl_type_uncc256)(LibRast *r, void *cbuf);
+typedef void (*rl_type_uncc64)(LibRast *r, UBYTE *cbuf);
+typedef void (*rl_type_uncc256)(LibRast *r, UBYTE *cbuf);
 typedef void (*rl_type_wait_vsync)(LibRast *r); 
 
 

@@ -157,14 +157,17 @@ void pj_unss2_rect(RASType *r,void *ucbuf, LONG pixsize,
 
 void pj_xor_rast(RASType *s, RASType *d);
 
-void pj__blitrect(RASType *source, Coor src_x, Coor src_y,
-			 RASType *dest, Coor dest_x, Coor dest_y,Coor width, Coor height);
+extern Errcode
+pj__blitrect(RASType *source, Coor src_x, Coor src_y,
+			 RASType *dest, Coor dest_x, Coor dest_y,
+			 Ucoor width, Ucoor height);
 
 void pj_blitrect(RASType *source, Coor src_x, Coor src_y,
 			 RASType *dest, Coor dest_x, Coor dest_y,Coor width, Coor height);
 
-void pj__tblitrect(RASType *s, Coor sx, Coor sy,
-		  RASType *d, Coor dx, Coor dy, Coor width, Coor height,
+extern Errcode
+pj__tblitrect(RASType *s, Coor sx, Coor sy,
+		  RASType *d, Coor dx, Coor dy, Ucoor width, Ucoor height,
 		  Pixel tcolor);
 
 void pj_tblitrect(RASType *s, Coor sx, Coor sy,
@@ -173,13 +176,14 @@ void pj_tblitrect(RASType *s, Coor sx, Coor sy,
 
 
 void pj__swaprect(RASType *ra, Coor ax, Coor ay,
-			  RASType *rb, Coor bx, Coor by, Coor width, Coor height);
+			  RASType *rb, Coor bx, Coor by, Ucoor width, Ucoor height);
 
 void pj_swaprect(RASType *ra, Coor ax, Coor ay,
 			  RASType *rb, Coor bx, Coor by, Coor width, Coor height);
 
 
-void pj_zoomblit( RASType *source, Coor src_x, Coor src_y,
+extern Errcode
+pj_zoomblit(RASType *source, Coor src_x, Coor src_y,
 			   RASType *dest, Coor dest_x, Coor dest_y,
 			   Ucoor width, Ucoor height, LONG zoom_x, LONG zoom_y);
 

@@ -4,9 +4,11 @@
 
 static Rastlib *get_bitmap_lib(void);
 
-static Errcode close_bitmap(Bitmap *rr)
+static Errcode close_bitmap(Raster *bitmap)
 /* frees parts but does not free Bitmap */
 {
+	Bitmap *rr = (Bitmap *)bitmap;
+
 	if(rr->type != RT_BITMAP)
 		return(Err_rast_type);
 	pj_free_bplanes(&(rr->bm.bp[0]),rr->bm.num_planes);
@@ -64,28 +66,32 @@ Errcode err;
 /************** bitmap jump table driver primitives ****************/
 
 
-static void _bim_put_dot(Bitmap *bm, Pixel color, Coor x, Coor y)
+static void _bim_put_dot(Raster *bitmap, Pixel color, Coor x, Coor y)
 /* set dot to color only one plane for now */
 {
+	Bitmap *bm = (Bitmap *)bitmap;
+
 	if(color & 0x01)
 	   (bm->bm.bp[0])[y*bm->bm.bpr+(x>>3)] |= (0x80>>(x&7));
 	else
 	   (bm->bm.bp[0])[y*bm->bm.bpr+(x>>3)] &= ~(0x80>>(x&7));
 }
 
-static Pixel _bim_get_dot(Bitmap *bm, Coor x, Coor y) /* get color of dot */
+static Pixel _bim_get_dot(Raster *bitmap, Coor x, Coor y) /* get color of dot */
 /* only one plane for now */
 {
+Bitmap *bm = (Bitmap *)bitmap;
 int ander;
 
 	ander = 0x80>>(x&7);
 	return(((bm->bm.bp[0])[y*bm->bm.bpr+(x>>3)]&ander)/ander);
 }
-static void _bim_get_hseg(Bitmap *r, Pixel *pixbuf,
-						  Ucoor x, Ucoor y, Ucoor width)
+static void _bim_get_hseg(Raster *bitmap, Pixel *pixbuf,
+						  Coor x, Coor y, Ucoor width)
 /* Move pixels from a horizontal line of source Bitmap to memory buffer. */
 /* (Unclipped) */
 {
+Bitmap *r = (Bitmap *)bitmap;
 UBYTE byte;
 UBYTE *mbytes;
 UBYTE bit1;
@@ -108,19 +114,25 @@ UBYTE bit1;
 		}
 	}
 }
-static void _bim_blitrect(Bitmap *src,			 /* source raster */
+static Errcode _bim_blitrect(Raster *source_bitmap, /* source raster */
 						  Coor src_x, Coor src_y,  /* source Minx and Miny */
 						  Raster *dest, 			 /* destination raster */
 						  Coor dest_x, Coor dest_y,
-						  Coor width, Coor height)	/* blit size */
+						  Ucoor width, Ucoor height) /* blit size */
 {
+	Bitmap *src = (Bitmap *)source_bitmap;
+
 	pj_mask2blit(src->bm.bp[0],src->bm.bpr,src_x,src_y,dest,dest_x,dest_y,width,
 			  height,1,0);
+
+	return Success;
 }
-static void bim_set_rast(Bytemap *r,Pixel color)
+static void bim_set_rast(Raster *bitmap, Pixel color)
 
 /* sets entire raster to a color fast only for one plane now */
 {
+	Bitmap *r = (Bitmap *)bitmap;
+
 	if(color & 0x01)
 	{
 		pj_stuff_words((USHORT)(~0),r->bm.bp[0],
@@ -135,11 +147,12 @@ static void bim_set_rast(Bytemap *r,Pixel color)
 			r->bm.bp[0][r->bm.psize - 1] = (UBYTE)0;
 	}
 }
-static void _bim_xor_rect(Bitmap *bm,
+static void _bim_xor_rect(Raster *bitmap,
 						 Pixel color,
 						 Coor x, Coor y,
 						 Ucoor width, Ucoor height)
 {
+Bitmap *bm = (Bitmap *)bitmap;
 register UBYTE *pbyte;
 register SHORT bnum;
 UBYTE startmask;
@@ -211,17 +224,17 @@ static int loaded = 0;
 		 * data isn't set to zero. */
 		clear_mem(&bitmap_lib,sizeof(bitmap_lib)); 
 
-		bitmap_lib.close_raster = (rl_type_close_raster)close_bitmap;
-		bitmap_lib.put_dot = (rl_type_put_dot)_bim_put_dot;
-		bitmap_lib.get_dot = (rl_type_get_dot)_bim_get_dot;
-		bitmap_lib.get_hseg = (rl_type_get_hseg)_bim_get_hseg;
-		bitmap_lib.xor_rect = (rl_type_xor_rect)_bim_xor_rect;
-		bitmap_lib.set_rast = (rl_type_set_rast)bim_set_rast;
+		bitmap_lib.close_raster = close_bitmap;
+		bitmap_lib.put_dot = _bim_put_dot;
+		bitmap_lib.get_dot = _bim_get_dot;
+		bitmap_lib.get_hseg = _bim_get_hseg;
+		bitmap_lib.xor_rect = _bim_xor_rect;
+		bitmap_lib.set_rast = bim_set_rast;
 
 		/* bitmap_lib.blitrect[RL_TO_SAME] */
-		bitmap_lib.blitrect[RL_TO_BYTEMAP] = (rl_type_blitrect)_bim_blitrect;
+		bitmap_lib.blitrect[RL_TO_BYTEMAP] = _bim_blitrect;
 		/* bitmap_lib.blitrect[RL_FROM_BYTEMAP] */
-		bitmap_lib.blitrect[RL_TO_OTHER] = (rl_type_blitrect)_bim_blitrect;
+		bitmap_lib.blitrect[RL_TO_OTHER] = _bim_blitrect;
 
 		pj_set_grc_calls(&bitmap_lib);
 		loaded = 1;

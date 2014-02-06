@@ -11,6 +11,7 @@
    implemented as higher level functions such as the blits go through
    these. */
 
+#include <assert.h>
 #define GRCLIB_C
 #include "errcodes.h"
 #include "ptrmacro.h"
@@ -21,8 +22,8 @@
 #include "libdummy.h"
 
 
-static void _grc_put_vseg(const Raster *v,Pixel *pixbuf,
-	Ucoor x,Ucoor y,Ucoor height)
+static void _grc_put_vseg(Raster *v, Pixel *pixbuf,
+		Coor x, Coor y, Ucoor height)
 /* Move pixels from memory to a vertical line of destination raster. */
 /* (Unclipped) */
 {
@@ -30,8 +31,8 @@ while (height-- > 0)
 	PUT_DOT(v, *pixbuf++, x, y++);
 }
 
-static void _grc_get_vseg(const Raster *v,Pixel *pixbuf,
-	Ucoor x,Ucoor y,Ucoor height)
+static void _grc_get_vseg(Raster *v, Pixel *pixbuf,
+		Coor x, Coor y, Ucoor height)
 /* Move pixels from a vertical line of source raster to memory buffer. */
 /* (Unclipped) */
 {
@@ -39,21 +40,21 @@ while (height-- > 0)
 	*pixbuf++ = GET_DOT(v, x, y++);
 }
 
-static void _grc_set_vline(const Raster *v, Pixel color, 
-	Ucoor x, Ucoor y, Ucoor height)
+static void _grc_set_vline(Raster *v, Pixel color,
+		Coor x, Coor y, Ucoor height)
 /* Draw a solid vertical line. */
 /* (Unclipped) */
 {
+assert(x >= 0 && y >= 0);
 while (height-- > 0)
 	PUT_DOT(v, color, x, y++);
 }
 
-static void _grc_xor_rect(const Raster *v, Pixel color, 
-	Ucoor x, Ucoor y, Ucoor width, Ucoor height)
+static void _grc_xor_rect(Raster *v, Pixel color,
+		Coor x, Coor y, Ucoor width, Ucoor height)
 /* Xor a rectangular piece of the raster with color. */
 /* (Unclipped) */
 {
-Ucoor x1, w1;
 Pixel sbuf[SBUF_SIZE/sizeof(Pixel)];
 Pixel *lbuf;
 
@@ -76,8 +77,8 @@ return;
 SLOW:
 while (height-- > 0)
 	{
-	x1 = x;
-	w1 = width;
+	Coor x1 = x;
+	Ucoor w1 = width;
 	while (w1-- > 0)
 		{
 		PUT_DOT(v, color^GET_DOT(v,x1,y), x1, y);
@@ -148,7 +149,7 @@ UBYTE bit1;
 }
 #endif /* UNTESTED */
 
-static void mask1line(UBYTE *mbytes, UBYTE bit1, Coor width,
+static void mask1line(UBYTE *mbytes, UBYTE bit1, Ucoor width,
 	const Raster *dest, Coor dest_x, const Coor dest_y, 
 	const Pixel oncolor)
 /* Expand an array of bits in memory into dest raster.  Where there are
@@ -159,7 +160,7 @@ static void mask1line(UBYTE *mbytes, UBYTE bit1, Coor width,
 UBYTE byte;
 
 byte = *mbytes++;
-while (--width >= 0)
+while (width-- > 0)
 	{
 	if (bit1 & byte)
 		PUT_DOT(dest, oncolor, dest_x, dest_y);
@@ -172,12 +173,12 @@ while (--width >= 0)
 	}
 }
 
-static void _grc_mask1blit(UBYTE *mbytes, const unsigned mbpr, 
+static void _grc_mask1blit(UBYTE *mbytes, unsigned int mbpr,
  	Coor src_x, Coor src_y, 
-	const Raster *dest, 
+	Raster *dest,
 	Coor dest_x, Coor dest_y,
-	Coor width, Coor height, 
-	const Pixel oncolor)
+	Ucoor width, Ucoor height,
+	Pixel oncolor)
 /* Expand a memory buffer arranged as a bit-plane into a rectangular
    area of dest raster.  Used to implement graphics text and icons.
    1's in bit-plane are set to oncolor in dest.  
@@ -188,7 +189,7 @@ UBYTE bit1;
 
 bit1 = (0x80>>(src_x&7));
 mbytes += (src_x>>3) + src_y*mbpr;
-while (--height >= 0)
+while (height-- > 0)
 	{
 	mask1line(mbytes, bit1, width, dest, dest_x, dest_y, oncolor);
 	mbytes += mbpr;
@@ -198,7 +199,7 @@ while (--height >= 0)
 }
 
 
-static void mask2line(UBYTE *mbytes, UBYTE bit1, Pixel *lbuf, Coor width,
+static void mask2line(UBYTE *mbytes, UBYTE bit1, Pixel *lbuf, Ucoor width,
 					 const Pixel oncolor, const Pixel offcolor)
 
 /* Expand an array of bits in memory into pixel buffer.  Where there are
@@ -209,7 +210,7 @@ static void mask2line(UBYTE *mbytes, UBYTE bit1, Pixel *lbuf, Coor width,
 UBYTE byte;
 
 	byte = *mbytes++;
-	while(--width >= 0)
+	while (width-- > 0)
 	{
 		if(bit1 & byte)
 			*lbuf++ = oncolor;
@@ -224,12 +225,12 @@ UBYTE byte;
 	}
 }
 
-static void _grc_mask2blit(UBYTE *mbytes, const unsigned mbpr, 
+static void _grc_mask2blit(UBYTE *mbytes, unsigned int mbpr,
 	Coor src_x, Coor src_y, 
-	const Raster *dest, 
+	Raster *dest,
 	Coor dest_x, Coor dest_y,
-	Coor width, Coor height, 
-	const Pixel oncolor, const Pixel offcolor)
+	Ucoor width, Ucoor height,
+	Pixel oncolor, Pixel offcolor)
 
 /* Expand a memory buffer arranged as a bit-plane into a rectangular
    area of dest raster.  Used to implement graphics text and icons.
@@ -252,7 +253,7 @@ UBYTE bit1;
 	bit1 = (0x80>>(src_x&7));
 	mbytes += (src_x>>3) + src_y*mbpr;
 
-	while(--height >= 0)
+	while (height-- > 0)
 	{
 		mask2line(mbytes,bit1,lbuf,width,oncolor,offcolor);
 		mbytes += mbpr;
@@ -263,12 +264,10 @@ UBYTE bit1;
 }
 
 static void grc_swaprect(Raster *ra,			 	 /* raster a */
-			  LONG ax, LONG ay,  		 /* ra Minx and Miny */
+			  Coor ax, Coor ay,  		 /* ra Minx and Miny */
 			  Raster *rb,   		     /* raster b */
-			  LONG bx, LONG by, 		 /* rb minx and miny */
-			  LONG width, LONG height) /* blit size */  
-
-
+			  Coor bx, Coor by, 		 /* rb minx and miny */
+			  Ucoor width, Ucoor height) /* blit size */
 /* unclipped swap rectangles in a and b this is NOT clipped */
 {
 UBYTE la[150], lb[150];
@@ -324,12 +323,12 @@ void pj_tbli_line(Pixel *src, Pixel *dst, Ucoor w, const Tcolxldat *tcxl)
 	}
 }
 
-static Errcode grc_tblitrect(const Raster *src,	/* source raster */
+static Errcode grc_tblitrect(Raster *src,	/* source raster */
 				  Coor src_x, Coor src_y,	/* source Minx and Miny */
-				  const Raster *dest,		/* destination raster */
+				  Raster *dest,				/* destination raster */
 				  Coor dest_x, Coor dest_y, /* destination minx and miny */
-				  Coor width, Coor height,  /* blit size */  
-				  const Pixel tcolor)		/* transparent color */
+				  Ucoor width, Ucoor height, /* blit size */
+				  Pixel tcolor)				/* transparent color */
 /* Copys rectangle from src to dest except for transparent color in
    source. */
 {
@@ -371,7 +370,7 @@ static Errcode grc_xor_rast(Raster *source, Raster *dest)
 /* Xor source raster into dest.  Assumes source and dest are same size */
 {
 Pixel *source_buf, *dest_buf;
-Coor width, height;
+Ucoor width, height;
 Pixel sbuf[SBUF_SIZE/sizeof(Pixel)];
 int y;
 
@@ -387,7 +386,7 @@ int y;
 	}
 
 	dest_buf = source_buf + width;
-	while (--height >= 0)
+	while (height-- > 0)
 	{
 		GET_HSEG(source,source_buf,0,y,width);
 		GET_HSEG(dest,dest_buf,0,y,width);
@@ -619,8 +618,8 @@ void pj_grc_load_fullcalls(struct rastlib *lib)
 	lib->set_vline = _grc_set_vline;
 
 	lib->xor_rect = _grc_xor_rect;
-	lib->mask1blit = (rl_type_mask1blit)_grc_mask1blit;
-	lib->mask2blit = (rl_type_mask2blit)_grc_mask2blit;
+	lib->mask1blit = _grc_mask1blit;
+	lib->mask2blit = _grc_mask2blit;
 
 	lib->swaprect[RL_TO_SAME] = grc_swaprect;
 	lib->swaprect[RL_TO_BYTEMAP] = grc_swaprect;

@@ -84,7 +84,7 @@ char *lbuf;
 
 	while(height--)
 	{
-		pj_get_hseg(r,lbuf,x,y++,width);
+		pj_get_hseg(r, (Pixel *)lbuf, x, y++, width);
 		c = flow_brun_comp_line(lbuf,c,width);
 		if(c >= cmax)
 			return(NULL);

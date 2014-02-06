@@ -115,7 +115,7 @@ void *vp;
 							rect->x,rect->y,rect->width,rect->height);
 				break;
 			case FLI_COPY:
-				_pj_put_rectpix(f,CHUNK+1,
+				_pj_put_rectpix(f, (Pixel *)(CHUNK+1),
 							   rect->x,rect->y,rect->width,rect->height);
 				break;
 		}

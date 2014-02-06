@@ -19,7 +19,7 @@
 #include "rastlib.h"
 
 
-static void _grc_cput_dot(const Raster *r,Pixel color,Coor x,Coor y)
+static void _grc_cput_dot(Raster *r, Pixel color, Coor x, Coor y)
 /* Set a single pixel. */
 /* (Clipped) */
 {
@@ -28,7 +28,7 @@ static void _grc_cput_dot(const Raster *r,Pixel color,Coor x,Coor y)
 	PUT_DOT(r,color,x,y);
 }
 
-static Pixel _grc_cget_dot(const Raster *v, Coor x, Coor y)
+static Pixel _grc_cget_dot(Raster *v, Coor x, Coor y)
 /* Get the value of a single pixel. */
 /* (Clipped) */
 {
@@ -41,7 +41,7 @@ static Errcode grc_blitrect(Raster *src,			 /* source raster */
 				  Coor src_x, Coor src_y,  /* source Minx and Miny */
 				  Raster *dest,   		     /* destination raster */
 				  Coor dest_x, Coor dest_y, /* destination minx and miny */
-				  Coor width, Coor height)  /* blit size */  
+				  Ucoor width, Ucoor height) /* blit size */
 /* Copy rectangular area from src raster to dest raster where src
    and dest may be any type of raster. */
 /* (Private to grc_driver (though exported).) */
@@ -67,13 +67,14 @@ Pixel sbuf[SBUF_SIZE/sizeof(Pixel)];
 	return(Success);
 }
 
-static void grc_f_blitrect(Bytemap *src,			 /* source raster */
+static Errcode grc_f_blitrect(Raster *source, /* source raster */
 				  Coor src_x, Coor src_y,  /* source Minx and Miny */
 				  Raster *dest,   		     /* destination raster */
 				  Coor dest_x, Coor dest_y, /* destination minx and miny */
-				  Coor width, Coor height)  /* blit size */  
+				  Ucoor width, Ucoor height) /* blit size */
 /* Copies from bytemap source to generic destination */
 {
+Bytemap *src = (Bytemap *)source;
 Pixel *lbuf;
 
 	lbuf = src->bm.bp[0] + (src->bm.bpr*src_y) + src_x;
@@ -82,16 +83,19 @@ Pixel *lbuf;
 		PUT_HSEG(dest,lbuf,dest_x,dest_y++,width);
 		lbuf += src->bm.bpr;
 	}
+
+	return Success;
 }
 
-static void grc_t_blitrect(Raster *src,			 /* source raster */
+static Errcode grc_t_blitrect(Raster *src, /* source raster */
 				  Coor src_x, Coor src_y,  /* source Minx and Miny */
-				  Bytemap *dest,   		     /* destination raster */
+				  Raster *dst, /* destination raster */
 				  Coor dest_x, Coor dest_y, /* destination minx and miny */
-				  Coor width, Coor height)  /* blit size */  
+				  Ucoor width, Ucoor height) /* blit size */
 /* Copies rectangle to bytemap destination from driver-type source. */
 /* (Clips to make sure rectangle lies inside destination.) */
 {
+Bytemap *dest = (Bytemap *)dst;
 Pixel *lbuf;
 
 	lbuf = dest->bm.bp[0] + (dest->bm.bpr*dest_y) + dest_x;
@@ -100,6 +104,8 @@ Pixel *lbuf;
 		GET_HSEG(src,lbuf,src_x,src_y++,width);
 		lbuf += dest->bm.bpr;
 	}
+
+	return Success;
 }
 
 void pj_grc_load_commcalls(struct rastlib *lib)
@@ -108,8 +114,8 @@ void pj_grc_load_commcalls(struct rastlib *lib)
 	lib->cput_dot = _grc_cput_dot;
 	lib->cget_dot = _grc_cget_dot;
 
-	lib->blitrect[RL_TO_SAME] = (rl_type_blitrect)grc_blitrect;
-	lib->blitrect[RL_TO_BYTEMAP] = (rl_type_blitrect)grc_t_blitrect;
-	lib->blitrect[RL_FROM_BYTEMAP] = (rl_type_blitrect)grc_f_blitrect;
-	lib->blitrect[RL_TO_OTHER] = (rl_type_blitrect)grc_blitrect;
+	lib->blitrect[RL_TO_SAME] = grc_blitrect;
+	lib->blitrect[RL_TO_BYTEMAP] = grc_t_blitrect;
+	lib->blitrect[RL_FROM_BYTEMAP] = grc_f_blitrect;
+	lib->blitrect[RL_TO_OTHER] = grc_blitrect;
 }

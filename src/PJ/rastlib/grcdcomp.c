@@ -1,6 +1,7 @@
 /* grcflird.c - Generic lib calls for fli decompressing only and a call to
  * load them into a library */
 
+#include <assert.h>
 #include "cmap.h"
 #include "errcodes.h"
 #include "memory.h"
@@ -8,8 +9,8 @@
 #include "rastcall.h"
 #include "rastlib.h"
 
-static void _grc_put_hseg(const Raster *v, Pixel *pixbuf,
-	Ucoor x, Ucoor y, Ucoor width)
+static void _grc_put_hseg(Raster *v, Pixel *pixbuf,
+	Coor x, Coor y, Ucoor width)
 /* Move pixels from memory to a horizontal line of destination raster. */
 /* (Unclipped) */
 {
@@ -17,13 +18,14 @@ while (width-- > 0)
 	PUT_DOT(v, *pixbuf++, x++, y);
 }
 
-static void grc_put_rectpix(const Raster *v,Pixel *pixbuf,
-	Ucoor x,Ucoor y,Ucoor width,Ucoor height)
+static void grc_put_rectpix(Raster *v, Pixel *pixbuf,
+	Coor x, Coor y, Ucoor width, Ucoor height)
 /* Move pixels from a memory buffer into a rectangular area of the
    destination raster. (Much like a blit, but assumes source is in
    memory, and all of source is used.) */
 /* (Clipped.) */
 {
+assert(x >= 0 && y >= 0);
 while(height--)
 	{
 	pj_put_hseg(v,pixbuf,x,y++,width);
@@ -31,34 +33,36 @@ while(height--)
 	}
 }
 
-static void _grc_set_hline(const Raster *v, Pixel color,
-	Ucoor x, Ucoor y, Ucoor width)
+static void _grc_set_hline(Raster *v, Pixel color,
+	Coor x, Coor y, Ucoor width)
 /* Draw a solid horizontal line. */
 /* (Unclipped) */
 {
+assert(x >= 0 && y >= 0);
 while (width-- > 0)
 	PUT_DOT(v, color, x++, y);
 }
 
-static void _grc_set_rect(const Raster *v, Pixel color,
-	Ucoor x, Ucoor y, Ucoor width, Ucoor height)
+static void _grc_set_rect(Raster *v, Pixel color,
+	Coor x, Coor y, Ucoor width, Ucoor height)
 /* Set a rectangular piece of the raster to a solid color. */
 /* (Unclipped) */
 {
+assert(x >= 0 && y >= 0);
 while (height-- > 0)
 	{
 	SET_HLINE(v, color, x, y++, width);
 	}
 }
 
-static void grc_set_rast(const Raster *v, Pixel color)
+static void grc_set_rast(Raster *v, Pixel color)
 /* Set entire raster to a solid color. */
 {
 	SET_RECT(v,color,0,0,v->width,v->height);
 }
 
-static void grc_unbrun_rect(const Raster *v, void *ucbuf, const LONG pixsize,
-	Coor xorg, Coor yorg, Coor width, Coor height)
+static void grc_unbrun_rect(Raster *v, void *ucbuf, LONG pixsize,
+	Coor xorg, Coor yorg, Ucoor width, Ucoor height)
 /* Uncompress data into a rectangular area inside raster using
    byte-run-length compression scheme used in Autodesk Animator 1.0
    for the first frame of a FLI. */
@@ -75,7 +79,7 @@ Coor end;
 	y = yorg;
 	cpt = ucbuf;
 	end = xorg + width;
-	while (--height >= 0)
+	while (height-- > 0)
 	{
 		x = xorg;
 		cpt += 1;	/* skip over obsolete opcount byte */
@@ -90,7 +94,7 @@ Coor end;
 			else
 			{
 				psize = -psize;
-				PUT_HSEG(v, cpt, x, y, psize);
+				PUT_HSEG(v, (Pixel *)cpt, x, y, psize);
 				cpt += psize;
 			}
 		}
@@ -98,8 +102,8 @@ Coor end;
 	}
 }
 
-static void grc_unlccomp_rect(const Raster *v, void *ucbuf, LONG pixsize,
-	Coor xorg, Coor yorg, Coor width, Coor height)
+static void grc_unlccomp_rect(Raster *v, void *ucbuf, LONG pixsize,
+	Coor xorg, Coor yorg, Ucoor width, Ucoor height)
 /* Uncompress data into a rectangular area inside raster using
    byte-run-length/delta compression scheme used in Autodesk Animator 1.0
    for most frames except the first. */
@@ -146,8 +150,8 @@ while (--lines >= 0)
 	}
 }
 
-static Errcode grc_unss2_rect(const Raster *v, void *ucbuf, LONG pixsize,
-	Coor xorg, Coor yorg, Coor width, Coor height)
+static Errcode grc_unss2_rect(Raster *v, void *ucbuf, LONG pixsize,
+	Coor xorg, Coor yorg, Ucoor width, Ucoor height)
 /* Uncompress data into a rectangular area inside raster using
    word-run-length/delta compression scheme used in Autodesk Animator 386
    for most frames except the first. */

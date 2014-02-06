@@ -5,9 +5,9 @@
 /**** some routines to get temporary buffers of whatever size is available
  **** for processing rasters *****/
 
-static Coor lines_in32k(Coor bpr, Ucoor height)
+static Ucoor lines_in32k(Coor bpr, Ucoor height)
 {
-Coor lines;
+	Ucoor lines;
 
 	/* try to allocate about 32K worth of buffer */
 	lines = ((LONG)(32*1024))/bpr; 
@@ -22,7 +22,7 @@ Errcode pj_get_rectbuf(Coor bpr, long *pheight, UBYTE **lbuf)
 /* gets buffers for use with get/put rectpix, pheight initialized to 
  * max height needed */
 {
-Coor lines;
+	Ucoor lines;
 
 	lines = lines_in32k(bpr,*pheight);
 	for(;;)
@@ -45,18 +45,18 @@ Errcode pj_open_temprast(Bytemap *rr,SHORT width,SHORT height,
 Errcode err;
 Rasthdr spec;
 long bpr;
-Errcode (*open_bmap)(Rasthdr *spec,void *bmap);
+Boolean is_bitmap;
 
 	if(pdepth == 1)
 	{
 		bpr = Bitmap_bpr(width);
-		open_bmap = pj_open_bitmap;
+		is_bitmap = TRUE;
 	}
 	else
 	{
 		pdepth = 8;
 		bpr = Bytemap_bpr(width);
-		open_bmap = pj_open_bytemap;
+		is_bitmap = FALSE;
 	}
 
 	spec.pdepth = pdepth;
@@ -67,8 +67,16 @@ Errcode (*open_bmap)(Rasthdr *spec,void *bmap);
 	/* if height <= 0 will error */
 	for(;;)
 	{
-		if((err = open_bmap(&spec,rr)) >= 0) 
+		if (is_bitmap) {
+			err = pj_open_bitmap(&spec, (Bitmap *)rr);
+		}
+		else {
+			err = pj_open_bytemap(&spec, rr);
+		}
+
+		if (err >= Success)
 			break;
+
 		spec.height = (spec.height+1) >> 1; /* try half as much */
 	}
 	return(err);
