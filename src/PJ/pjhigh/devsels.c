@@ -3,13 +3,12 @@
 
 #include <ctype.h>
 #include "errcodes.h"
-#include "menus.h"
-#include "memory.h"
 #include "jfile.h"
-#include "ptrmacro.h"
+#include "libdummy.h"
+#include "memory.h"
+#include "menus.h"
 #include "pjbasics.h"
-
-extern void pj_vdo_nutin();
+#include "ptrmacro.h"
 
 typedef struct dsel_group {
 	SHORT devnum;

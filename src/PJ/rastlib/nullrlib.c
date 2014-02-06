@@ -1,3 +1,4 @@
+#include "libdummy.h"
 #include "rastlib.h"
 
 void *pj_get_null_lib(void)

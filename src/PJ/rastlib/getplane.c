@@ -2,15 +2,12 @@
 #include "raster.h"
 #include "errcodes.h"
 
-extern void *pj_get_bytemap_lib();
-extern void *get_bitmap_lib();
-
 /******* subroutines for RamRast open and close routines ******/
 
 #define get_bplane(sz) pj_malloc(sz)
 #define free_bplane(pt) pj_free(pt)
 
-void pj_free_bplanes(register PLANEPTR *bp,LONG num_planes)
+void pj_free_bplanes(PLANEPTR *bp, LONG num_planes)
 
 /* frees bp in plane array, will set pointers to NULL when freed 
  * will not atempt to free NULL bp **/

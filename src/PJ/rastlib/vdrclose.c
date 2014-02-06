@@ -1,11 +1,9 @@
 #define VDEV_INTERNALS
+#include "rastcall.ih"
 #include "memory.h"
 #include "errcodes.h"
-#include "stdtypes.h"
 #include "vdevcall.h"
 #include "memory.h"
-
-extern void *pj_get_grc_lib(void);
 
 /* next rtype for type assigning */
 static SHORT next_rtype = RT_FIRST_VDRIVER;

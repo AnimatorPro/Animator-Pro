@@ -1,8 +1,7 @@
 #define VDEV_INTERNALS
 #include "errcodes.h"
+#include "rastcall.h"
 #include "vdevcall.h"
-
-extern void pj_set_grc_calls(struct rastlib *lib);
 
 Errcode pj_vd_open_raster(Vdevice *vd, Rasthdr *spec, Raster *r,UBYTE displayable)
 

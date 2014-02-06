@@ -94,6 +94,9 @@ typedef struct bmap {
 	PLANEPTR bp[1];        /* at least one plane, the pixelated data */
 } Bmap;
 
+extern LONG pj_get_bplanes(PLANEPTR *bp, LONG num_planes, LONG bpize);
+extern void pj_free_bplanes(PLANEPTR *bp, LONG num_planes);
+
 /* segments for vga and for the rest of our world... */
 #define VGA_SCREEN ((void *)0xa0000)
 #define VGA_SEG 0x34

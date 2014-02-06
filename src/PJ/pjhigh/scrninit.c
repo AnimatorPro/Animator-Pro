@@ -7,6 +7,7 @@
 #include "rastext.h"
 #include "rastcurs.h"
 #include "resource.h"
+#include "vdevcall.h"
 #include "vdevinfo.h"
 
 extern char key_idriver_name[], mouse_idriver_name[], summa_idriver_name[];

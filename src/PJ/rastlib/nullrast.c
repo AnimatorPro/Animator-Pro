@@ -1,9 +1,6 @@
-#define RASTCALL_INTERNALS
+#include "rastcall.ih"
 #include "errcodes.h"
-#include "rastcall.h"
-#include "rastlib.h"
-
-extern void *pj_get_null_lib(void);
+#include "libdummy.h"
 
 Errcode pj_open_nullrast(Raster *r) /* opens a "null" raster that dumps
 									* input and performs no action */
@@ -12,5 +9,6 @@ Errcode pj_open_nullrast(Raster *r) /* opens a "null" raster that dumps
 		return(Err_bad_input);
 	r->lib = pj_get_null_lib();
 	r->type = RT_NULL;
+	return Success;
 }
 

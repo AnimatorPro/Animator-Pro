@@ -141,8 +141,8 @@ Errcode alloc_fcel(Flicel **pfc);
 void free_fcel(Flicel **pfc);
 void free_fcel_raster(Flicel *fc);
 Errcode alloc_fcel_raster(Flicel *fc);
-load_temp_fcel(char *tempname,Flicel **fc);
-save_fcel_temp(Flicel *fc);
+Errcode load_temp_fcel(char *tempname, Flicel **fc);
+Errcode save_fcel_temp(Flicel *fc);
 Errcode load_fli_fcel(char *flipath,char *tempname,char *celfli_name,
 					  Flicel **pfc);
 

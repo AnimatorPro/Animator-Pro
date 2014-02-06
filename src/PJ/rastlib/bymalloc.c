@@ -1,5 +1,5 @@
+#include "rastcall.ih"
 #include "errcodes.h"
-#include "raster.h"
 #include "memory.h"
 
 Errcode pj_alloc_bytemap(Rasthdr *spec, Bytemap **prr)

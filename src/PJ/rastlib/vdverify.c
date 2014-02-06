@@ -1,6 +1,6 @@
 #define VDEV_INTERNALS
 #include "errcodes.h"
-#include "vdevice.h"
+#include "vdevcall.h"
 
 Errcode pj_vd_verify_hardware(Vdevice *vd)
 /* verifys driver hardware exists */

@@ -1,12 +1,8 @@
+#include "rastcall.ih"
 #include "errcodes.h"
-#include "ptrmacro.h"
 #include "memory.h"
-#include "rastlib.h"
 
-
-extern void pj_free_bplanes(register PLANEPTR *bp,LONG num_planes);
-extern LONG pj_get_bplanes(PLANEPTR *bp,LONG num_planes,LONG bpize);
-static void *get_bitmap_lib();
+static void *get_bitmap_lib(void);
 
 static Errcode close_bitmap(Bitmap *rr)
 /* frees parts but does not free Bitmap */
@@ -153,6 +149,7 @@ SHORT endbyte;
 SHORT num_planes;
 SHORT num_rows;
 SHORT rowcount;
+(void)color;
 
 	endbyte = startbyte = x;
 	startmask = (0xFF)>>(startbyte & 0x07);

@@ -11,12 +11,9 @@
    implemented as higher level functions such as the blits go through
    these. */
 
-#include "errcodes.h"
-#include "ptrmacro.h"
-#include "memory.h"
+#include "libdummy.h"
 #include "rastcall.h"
 #include "rastlib.h"
-
 
 void *pj_get_grc_lib(void)
 {

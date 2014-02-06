@@ -148,7 +148,7 @@ UBYTE bit1;
 }
 #endif /* UNTESTED */
 
-static mask1line(UBYTE *mbytes, UBYTE bit1, Coor width,
+static void mask1line(UBYTE *mbytes, UBYTE bit1, Coor width,
 	const Raster *dest, Coor dest_x, const Coor dest_y, 
 	const Pixel oncolor)
 /* Expand an array of bits in memory into dest raster.  Where there are
@@ -399,10 +399,7 @@ int y;
 	return(Success);
 }
 
-
-/* this isn't static because bytemap lib uses it */
-
-Errcode pj_grc_zoomblit( Raster *source,		/* source raster */
+static Errcode pj_grc_zoomblit(Raster *source, /* source raster */
 	           Coor src_x, Coor src_y,  /* source Minx and Miny */
 	           Raster *dest,   		/* destination raster */
 	           Coor dest_x, Coor dest_y,   /* destination minx and miny */

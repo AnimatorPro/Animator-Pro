@@ -1,9 +1,10 @@
 /* grcflird.c - Generic lib calls for fli decompressing only and a call to
  * load them into a library */
 
+#include "cmap.h"
 #include "errcodes.h"
-#include "ptrmacro.h"
 #include "memory.h"
+#include "ptrmacro.h"
 #include "rastcall.h"
 #include "rastlib.h"
 
@@ -69,6 +70,7 @@ Coor x,y;
 BYTE psize;
 BYTE *cpt;
 Coor end;
+(void)pixsize;
 
 	y = yorg;
 	cpt = ucbuf;
@@ -109,6 +111,9 @@ UBYTE opcount;
 BYTE psize;
 UBYTE *cpt;
 SHORT *wpt;
+(void)pixsize;
+(void)width;
+(void)height;
 
 wpt = ucbuf;
 cpt = (UBYTE *)(wpt+2); /* Data starts with 2 16 bit quantities then bytes */
@@ -156,6 +161,8 @@ union {SHORT *w; UBYTE *ub; BYTE *b;} wpt;
 Coor lastx;
 Pixel sbuf[SBUF_SIZE/sizeof(Pixel)];
 Pixel *linebuf;
+(void)pixsize;
+(void)height;
 
 	if(width > Array_els(sbuf))
 	{

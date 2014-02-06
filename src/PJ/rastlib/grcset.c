@@ -1,7 +1,6 @@
+#include "rastcall.ih"
 #include "errcodes.h"
-#include "ptrmacro.h"
 #include "memory.h"
-#include "rastlib.h"
 
 void pj_set_grc_calls(void *inlib)
 

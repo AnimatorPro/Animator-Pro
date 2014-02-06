@@ -1,14 +1,8 @@
-
+#include "rastcall.ih"
 #include "errcodes.h"
-#include "ptrmacro.h"
 #include "memory.h"
-#include "rastlib.h"
 
 /* #define USE_OPTIMISED_RASTLIB */
-
-extern void pj_free_bplanes(register PLANEPTR *bp,LONG num_planes);
-extern LONG pj_get_bplanes(PLANEPTR *bp,LONG num_planes,LONG bpize);
-void *pj_get_bytemap_lib();
 
 static Errcode close_bytemap(Bytemap *rr)
 /* frees parts but does not free Bytemap */

@@ -7,16 +7,12 @@
 
 #ifdef PRIVATE_CODE
 
+struct rastlib;
+
 /* functions used by raster library code */
 
 extern void pj_set_grc_calls(void *lib);
 extern void *pj_get_grc_lib(void);
-
-/* some functions that do nothing for bits of library not implemented */
-extern void pj_vdo_nutin(void);
-extern SHORT pj_sdo_nutin(void);
-extern Pixel pj_rcdo_nutin(void);
-extern Errcode errdo_nutin(void); /* returns Err_unimpl */
 
 /* clipping subroutines ***/
 
@@ -53,6 +49,8 @@ Errcode pj_open_bytemap(Rasthdr *spec,Bytemap *bm);
 /* allocates and opens bytemap raster use free_raster() to free */
 Errcode pj_alloc_bytemap(Rasthdr *spec,Bytemap **pbm);
 
+extern void *pj_get_bytemap_lib(void);
+
 #ifndef REXLIB_CODE /**** host side only ****/
 
 Errcode pj_build_bytemap(Rasthdr *spec,Raster *r, UBYTE *pixels);
@@ -75,6 +73,7 @@ Errcode pj_open_nullrast(RASType *r);
 /****** custom raster building *******/
 
 void pj_grc_load_fullcalls(struct rastlib *lib);
+void pj_grc_load_commcalls(struct rastlib *lib);
 void pj_grc_load_dcompcalls(struct rastlib *lib);
 void pj_grc_load_compcalls(struct rastlib *lib);
 

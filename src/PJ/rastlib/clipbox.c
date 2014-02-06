@@ -1,4 +1,5 @@
 #include "rastcall.ih"
+#include "libdummy.h"
 #include "memory.h"
 
 /**************************************************************/
@@ -505,7 +506,6 @@ Boolean pj_clipbox_make(Clipbox *cb, Raster *r,
  * is on the raster puts a null lib in cbox if clipped out may be called
  * repeatedly for moving the box */
 {
-extern void *pj_get_null_lib();
 Boolean outside = FALSE;
 
 	*((Rasthdr *)cb) = *((Rasthdr *)r);
@@ -565,7 +565,6 @@ Boolean pj_clipbox_make(Clipbox *cb, Raster *r,
  * is on the raster puts a null lib in cbox if clipped out may be called
  * repeatedly for moving the box */
 {
-extern void *pj_get_null_lib();
 Boolean outside = FALSE;
 
 	*((Rasthdr *)cb) = *((Rasthdr *)r);

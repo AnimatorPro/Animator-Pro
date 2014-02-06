@@ -15,10 +15,6 @@ static Errcode mcga_close_rast(McgaRast *r)
 	return(Success);
 }
 
-extern void *pj_get_bytemap_lib();
-extern void *pj_get_grc_lib();
-
-
 extern void pj_mcga_put_dot(Bytemap *v, Pixel color, Coor x, Coor y);
 extern void pj__mcga_put_dot(Bytemap *v, Pixel color, Coor x, Coor y);
 extern void pj_mcga_get_dot(Bytemap *v, Pixel color, Coor x, Coor y);

@@ -6,6 +6,8 @@
 	#include "rcel.h"
 #endif
 
+struct ink;
+
 /* structure hung onto ink for run-time support of inks */
 typedef struct aa_ink_data {
 	Pixel ccolor;

@@ -1,8 +1,8 @@
+#include "rastcall.ih"
 #include "errcodes.h"
-#include "raster.h"
 #include "memory.h"
 
-Errcode pj_alloc_bitmap(Rasthdr *spec, Bytemap **prr)
+Errcode pj_alloc_bitmap(Rasthdr *spec, Bitmap **prr)
 
 /* this will allocate and initialize an entire Bitmap using the input Bitmap
  * as a specification for what size etc to open up. It must be supplied with

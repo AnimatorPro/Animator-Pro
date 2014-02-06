@@ -3,9 +3,6 @@
 #include "rastlib.h"
 #include "cmap.h"
 
-
-extern void *pj_get_bytemap_lib();
-
 extern void pj_mcga_put_dot(Bytemap *v, Pixel color, Coor x, Coor y);
 extern void pj_mcga_get_dot(Bytemap *v, Pixel color, Coor x, Coor y);
 extern void pj_mcga_cput_dot(Bytemap *v, Pixel color, Coor x, Coor y);
