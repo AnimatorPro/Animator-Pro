@@ -10,6 +10,7 @@ add_subdirectory(fli)
 add_subdirectory(font)
 add_subdirectory(gfx)
 add_subdirectory(picdrive)
+add_subdirectory(poco)
 add_subdirectory(rastlib)
 add_subdirectory(util)
 
@@ -25,5 +26,6 @@ target_link_libraries(pj
 	fontlib
 	gfxlib
 	picdrive
+	poco
 	raster
 	trdutil)
