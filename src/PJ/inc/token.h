@@ -76,6 +76,8 @@ extern long atol(const char *s);
 extern double atof(const char *s);
 extern long htol(const char *s);
 
+extern char *po_chop_csym(char *line, char *word, int maxlen, char **wordnext);
+
 extern char *tokenize_word(char *line, char *oword, char *qstring,
 						SHORT *plen, SHORT *ttype, Boolean quote);
 

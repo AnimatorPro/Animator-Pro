@@ -1,7 +1,5 @@
-#include "poco.h"
-#include <stddef.h>
 #include <ctype.h>
-#include <string.h>
+#include "token.h"
 
 #ifndef iscsym
   #define iscsym(c) ( (c) == '_' || isalnum((c)) )

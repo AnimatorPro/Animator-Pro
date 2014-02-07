@@ -51,11 +51,7 @@
  *				needs to allocate a 4 byte array, not 2 bytes.
  ****************************************************************************/
 
-#include <string.h>
 #include <ctype.h>
-#include "stdtypes.h"
-#include "errcodes.h"
-#include "poco.h"
 #include "token.h"
 
 #define SZTOKE			512 	/* max line length, token length */
