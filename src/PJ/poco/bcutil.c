@@ -47,8 +47,6 @@ char *po_chop_csym(char *line, char *word, int maxlen, char **wordnext)
  * chop the next C symbol into the word buffer, up to maxlen chars.
  ****************************************************************************/
 {
-	char *rv = word;
-
 	while (--maxlen && iscsym(*line)) {
 		*word++ = *line++;
 	}

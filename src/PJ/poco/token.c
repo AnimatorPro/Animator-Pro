@@ -238,8 +238,8 @@ for (;;)
 			}
 		}
 
-	else if ((numtype != HEX) && !isdigit(c) || /* Terminate loop if char is */
-			 (numtype == HEX) && !isxdigit(c))	/* non of the above, & is not*/
+	else if ((numtype != HEX && !isdigit(c)) || /* Terminate loop if char is */
+			 (numtype == HEX && !isxdigit(c)))	/* non of the above, & is not*/
 			break;								/* in charset for its type.  */
 
 	*word++ = c;								/* Copy char to word buffer.*/
@@ -287,16 +287,16 @@ return(count);
  *	word buffer (eg, you won't get a word and a NULL return on the same call).
  ****************************************************************************/
 
-UBYTE *tokenize_word(register UBYTE  *line,/* (in)	-> current line position   */
-					 register UBYTE  *word,/* (in)	-> output token buffer	   */
-					 UBYTE	*qstring,	   /* (in)	-> quoted string o/p buffer*/
+char *tokenize_word(char *line,    /* (in) -> current line position */
+					 char *word,    /* (in) -> output token buffer */
+					 char *qstring, /* (in) -> quoted string o/p buffer */
 					 SHORT	*plen,		   /* (out) # of bytes put in word buf */
 					 SHORT	*ttype, 	   /* (out) token type				   */
 					 Boolean quote		   /* (in)	preserve quotes on string? */
 				   )
 {
-UBYTE	*wrkptr;
-UBYTE	*sword = word;
+char	*wrkptr;
+char	*sword = word;
 int 	toklen;
 SHORT	toktype;
 register unsigned int c;
@@ -312,6 +312,7 @@ UBYTE	c2;
 
 	if ('\0' == (c = *line))
 		{
+		toktype = TOK_EOF;
 		line = NULL;
 		goto OUT;
 		}

@@ -76,8 +76,7 @@ extern long atol(const char *s);
 extern double atof(const char *s);
 extern long htol(const char *s);
 
-UBYTE	 *tokenize_word(UBYTE *line, UBYTE *oword, UBYTE *qstring,
+extern char *tokenize_word(char *line, char *oword, char *qstring,
 						SHORT *plen, SHORT *ttype, Boolean quote);
-
 
 #endif /* TOKEN_H */
