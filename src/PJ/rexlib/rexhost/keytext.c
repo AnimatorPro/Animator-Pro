@@ -1,3 +1,4 @@
+#include <string.h>
 #include "rexlib.h"
 
 char *rex_key_or_text(char *key_or_text, char **name)
