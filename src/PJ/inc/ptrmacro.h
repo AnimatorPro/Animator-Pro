@@ -15,8 +15,12 @@
 /* returns offset of field within a given struct name,
  * and field name ie: OFFSET(struct sname,fieldname) */
 
+#if defined(__GNUC__) || defined(__clang__)
+#define OFFSET(st,m) __builtin_offsetof(st,m)
+#else
 #define OFFSET(struc,field) \
 	(USHORT)((ULONG)((PTR)&MEMBER(struc,field)-(PTR)NULL))
+#endif
 
 /* offset to first byte after a field */
 
