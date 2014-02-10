@@ -204,15 +204,14 @@ typedef struct global_icb {
 
 } Global_icb;
 
-typedef struct icb_savebuf {
-	UBYTE buf[102];
-} Icb_savebuf;
+typedef struct icb_savebuf Icb_savebuf;
 
 #ifdef INPUT_INTERNALS
 
-struct _input_h_errcheck_ {
-	char xx[ICB_PUSH_SIZE == sizeof(struct icb_savebuf)];
+struct icb_savebuf {
+	UBYTE buf[ICB_PUSH_SIZE];
 };
+
 #undef ICB_PUSH_SIZE
 
 /* macro_modes values recording or playing if > MACRO_OK */

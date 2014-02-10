@@ -1,3 +1,4 @@
+#define INPUT_INTERNALS
 #include "errcodes.h"
 #include "jimk.h"
 
