@@ -53,7 +53,6 @@ Errcode multi_box(char **choices, char *fmt,...);
  * unless cleanup is called explicitly */
 
 void cleanup_wait_box();
-Errcode put_wait_box(char *fmt,...);
 Errcode soft_put_wait_box(char *key,...);
 
 /*** canned special purpose requestor menus ******/
