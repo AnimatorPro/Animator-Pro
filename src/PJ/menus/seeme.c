@@ -357,12 +357,6 @@ void wbg_ncorner_ltext(Button *b)
 	wbg_ncorner_back(b);
 	mb_leftext(b,wbg_textcolor(b),b->datme);
 }
-void nframe_text(Button *b)
-/* no frame text */
-{
-	a_block(b,mb_backcolor(b));
-	mb_centext(b,mb_textcolor(b),b->datme);
-}
 
 static void centshort(register Button *b,Pixel fore,SHORT offset)
 {

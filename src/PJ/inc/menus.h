@@ -391,7 +391,6 @@ void wbg_ncorner_back(Button *b);
 void black_ltext(Button *b);
 void grey_ctext(Button *b);
 void black_ctext(Button *b);
-void nframe_text(Button *b);
 void ncorner_text(Button *b);
 void wbg_ncorner_text(Button *b);
 void wbg_ncorner_ltext(Button *b);
