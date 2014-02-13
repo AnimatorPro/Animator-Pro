@@ -31,27 +31,6 @@ Dlnode *next;
 	return(0);
 }
 
-static int anim_check_menus(Wndo **ciwin)
-{
-Menuhdr *mh;
-Dlnode *next;
-
-	*ciwin = NULL;
-	for(mh = (Menuhdr *)(icb.input_screen->gstack.head);
-	    NULL != (next = ((Dlnode *)mh)->next);
-		mh = (Menuhdr *)next )
-	{
-		mh = TOSTRUCT(Menuhdr,node,mh);
-		if(cursin_menu(mh))
-		{
-			*ciwin = &(mh->mw->w);
-			break;
-		}
-	}
-	load_wndo_iostate(*ciwin);
-	return(0);
-}
-
 Wndo *wait_wndo_input(ULONG ioflags)
 
 /* this is like wait input but loads cursors and io state as it passes 
@@ -99,26 +78,6 @@ Wadat wd;
 
 }
 
-Wndo *wait_menu_input(ULONG ioflags)
-
-/* this is like wait wndo input but only looks at current group if it is
- * a requestor group */
-{
-Mugroup *mg;
-FUNC afunc;
-Wndo *iowndo = NULL;
-
-	display_cursor();
-	mg = (Mugroup *)see_head(&(icb.input_screen->gstack));
-	if(mg != NULL && mg->flags & MUG_REQUESTOR)
-		afunc = anim_check_menus;
-	else
-		afunc = anim_check_wndos;
-
-	anim_wait_input(ioflags,ANY_INPUT,-1,afunc,&iowndo);
-	undisplay_cursor();
-	return(iowndo);
-}
 /***************** menu opener processor loops ******************/
 
 static Errcode startloop_open(Mugroup *mg, 

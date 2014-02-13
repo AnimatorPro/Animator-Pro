@@ -282,7 +282,6 @@ Boolean feel_numq(Button *b);
  * passes over windows or menus work same way as routines in input.c */
 
 Wndo *wait_wndo_input(ULONG ioflags);
-Wndo *wait_menu_input(ULONG ioflags);
 int anim_wndo_input(ULONG waitflags, ULONG forceflags, 
 				    int maxfields, FUNC func, void *funcdata);
 
