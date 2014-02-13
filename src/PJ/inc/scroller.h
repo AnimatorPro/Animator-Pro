@@ -89,10 +89,6 @@ void slow_feel_scrollbar(Button *b); /* realtime == FALSE */
 /* This function will call the feel_1_cel() and hiliters */
 void feel_scroll_cels(Button *b);
 
-/* these do not call the feelme but do call the highliter */
-void *which_sel(Button *b);
-void *why_which_sel(Button *b, Boolean *pwhy);
-
 /* will get root window relative x and y for a scroller cel given index 
  * of cel relative to top name */
 

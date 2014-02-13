@@ -190,14 +190,6 @@ OUT:
 	return(name);
 }
 
-void *which_sel(Button *b)
-{
-	return(the_big_feelme(b,NULL,NULL));
-}
-void *why_which_sel(Button *b, int *pwhy)
-{
-	return(the_big_feelme(b,pwhy,NULL));
-}
 void feel_scroll_cels(Button *b)
 {
 	the_big_feelme(b,NULL,((Name_scroller *)(b->group))->feel_1_cel);
