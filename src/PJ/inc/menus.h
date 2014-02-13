@@ -453,7 +453,6 @@ extern void feel_titlebar(Button *b);
 extern void feel_req_titlebar(Button *b);
 
 extern Titbar_group tbg_moveclose;
-extern Titbar_group tbg_closeonly;
 
 /* gets stack head */
 #define curr_group(ws) ((Mugroup *)see_head(&((ws)->gstack))) 
