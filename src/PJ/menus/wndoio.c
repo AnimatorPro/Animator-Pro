@@ -52,16 +52,6 @@ Dlnode *next;
 	return(0);
 }
 
-Wndo *set_input_wndo()
-
-/* sets input window to window under cursor */
-{
-Wndo *iowndo = NULL;
-
-	anim_check_wndos(&iowndo);
-	return(iowndo);
-}
-
 Wndo *wait_wndo_input(ULONG ioflags)
 
 /* this is like wait input but loads cursors and io state as it passes 
