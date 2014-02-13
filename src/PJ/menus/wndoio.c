@@ -6,14 +6,6 @@
 #include "menus.h"
 #include "marqi.h"
 
-
-Boolean menu_in_active_group(Menuhdr *mh)
-{
-	if(mh->group == NULL)
-		return(FALSE);
-	return(mh->group ==	(Mugroup *)see_head(&mh->group->screen->gstack));
-}
-
 /***************** input waits while scanning windows ***************/
 
 static int anim_check_wndos(Wndo **ciwin)
