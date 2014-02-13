@@ -90,17 +90,6 @@ Menuwndo *get_button_wndo(Button *b)
 		return(b->root);
 	return(((Menuhdr *)(b->root))->mw);
 }
-Button *get_button_parent(Button *b)
-
-/* returns button button is a child of NULL if on top level or not attached 
- * to a menu */
-{
-Menuhdr *mh;
-
-	if(NULL == (mh = get_button_hdr(b)))
-		return(NULL);
-/* int slist_ix(register Slnode *list, Slnode *el) */
-}
 static int wndo_domenu(Menuwndo *w)
 /* function called from window io loop in do_xxxloop */
 {
