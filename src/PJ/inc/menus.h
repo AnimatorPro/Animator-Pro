@@ -539,7 +539,6 @@ void set_pultab_disable(Menuhdr *mh,
 void set_leaf_disable(Menuhdr *mh, SHORT leafid, Boolean disable);
 void pul_xflag(Menuhdr *mh, SHORT id, Boolean xflag);
 void pultab_xoff(Menuhdr *mh, SHORT *ids, int id_count);
-void leaf_xoff(Menuhdr *mh, SHORT leafid);
 
 void scale_pull(Menuhdr *mh, int subspace);
 /* scale pulldown to vb.screen... */

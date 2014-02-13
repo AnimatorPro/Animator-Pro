@@ -77,15 +77,3 @@ void pultab_xoff(Menuhdr *mh, SHORT *ids, int id_count)
 while (--id_count >= 0)
 	pul_xflag(mh, *ids++, FALSE);
 }
-
-void leaf_xoff(Menuhdr *mh, SHORT leafid)
-{
-Pull *p = id_to_pull(mh,leafid)->children->children;
-
-while (p != NULL)
-	{
-	((char *)(p->data))[0] = ' ';
-	p = p->next;
-	}
-}
-
