@@ -570,7 +570,6 @@ void pull_centext();
 
 
 /*some functions to put into pull->see */
-extern void pull_block();
 extern void pull_color();
 extern void pull_oblock();
 extern void pull_midline();

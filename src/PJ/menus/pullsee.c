@@ -144,11 +144,6 @@ void pull_oblock( int x, int y, register Pull *p, Pullwork *pw)
 	pj_set_rect(pw->port,pw->screen->SWHITE,x+1,y+1,p->width-2,p->height-2);
 	draw_quad(pw->port,pw->screen->SGREY,x,y,p->width,p->height);
 }
-void pull_block(int x, int y, register Pull *p, Pullwork *pw)
-{
-	pj_set_rect(pw->port,pw->screen->SWHITE,x,y,p->width-1,p->height-1);
-	pj_set_hline(pw->port,pw->screen->SGREY,x,y+p->height-1,p->width);
-}
 void pull_midline(int x, int y, register Pull *p, Pullwork *pw)
 {
 	pj_set_hline(pw->port,pw->screen->SGREY,x,y+(p->height>>1),p->width);
