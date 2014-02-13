@@ -260,10 +260,6 @@ void close_menu(Menuhdr *mh)
 {
 	close_menu_code(mh,0);
 }
-Errcode open_pull(Wscreen *screen, Menuhdr *mh,Mugroup *group)
-{
-	return(0);
-}
 void scale_button_list(Button *b, Rscale *scale)
 {
 	while(b)
