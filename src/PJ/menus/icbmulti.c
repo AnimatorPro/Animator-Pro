@@ -1,3 +1,4 @@
+#ifdef SLUFFED
 #include <stdarg.h>
 #include "ptrmacro.h"
 #include "input.h"
@@ -18,3 +19,4 @@ Errcode ret;
 	va_end(args);
 	return(ret);
 }
+#endif /* SLUFFED */
