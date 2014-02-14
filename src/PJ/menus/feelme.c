@@ -57,6 +57,8 @@ void mb_hide_menu(Button *b)
 {
 	hide_menu(get_button_hdr(b));
 }
+
+#ifdef SLUFFED
 void mb_hide_group(Button *b)
 /* hide menus group from button */
 {
@@ -65,6 +67,9 @@ Menuhdr *mh;
 	if(NULL != (mh = get_button_hdr(b)))
 		hide_group(mh->group);
 }
+#endif /* SLUFFED */
+
+#ifdef SLUFFED
 void mb_show_group(Button *b)
 /* show the rest of menus group from button */
 {
@@ -73,4 +78,4 @@ Menuhdr *mh;
 	if(NULL != (mh = get_button_hdr(b)))
 		show_group(mh->group);
 }
-
+#endif /* SLUFFED */
