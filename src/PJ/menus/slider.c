@@ -7,6 +7,7 @@
 #include "menus.h"
 #include "rastext.h"
 
+#ifdef SLUFFED
 int clip_to_slider(int val, Qslider *qs)
 /* Return val clipped to slider */
 {
@@ -16,6 +17,7 @@ else if (val > qs->max)
 	val = qs->max;
 return(val);
 }
+#endif /* SLUFFED */
 
 static void format_shortp1(short *val,char *buf)
 {
