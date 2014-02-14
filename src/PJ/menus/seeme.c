@@ -387,12 +387,16 @@ void ncorner_short(Button *b)
 {
 	ncnum(b, 0);
 }
+
+#ifdef SLUFFED
 void ccorner_short(Button *b)
 {
 	mb_isquare(b,mb_backcolor(b));
 	mb_ccorner(b,MC_GREY);
 	centshort(b,mb_textcolor(b),0);
 }
+#endif /* SLUFFED */
+
 void wbg_ncorner_image(Button *b)
 {
 	mc_frame(b,MC_GREY);
