@@ -42,12 +42,15 @@ void mb_close_cancel(Button *b)
 
 /**** draw hide and show feelmes ****/
 
+#ifdef SLUFFED
 void mb_draw_menu(Button *b) 
 /* redraws whole menu button is attached to can be a feelme or optme 
  * does not draw a hidden menu */
 {
 	draw_menu(get_button_hdr(b));
 }
+#endif /* SLUFFED */
+
 void mb_hide_menu(Button *b)
 /* hide menu from button we dont have a feelme show menu cause you can't
  * hit it !! */
