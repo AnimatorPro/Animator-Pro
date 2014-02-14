@@ -1,3 +1,4 @@
+#ifdef SLUFFED
 #include "ptrmacro.h"
 #include "input.h"
 #include "commonst.h"
@@ -16,3 +17,4 @@ char *formats;
 	va_end(args);
 	return(ret);
 }
+#endif /* SLUFFED */
