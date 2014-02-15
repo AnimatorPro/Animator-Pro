@@ -1,7 +1,7 @@
 #include "errcodes.h"
 #include "input.h"
 
-void repeat_on_pdn(FUNC v,void *data)
+void repeat_on_pdn(void (*v)(void *data), void *data)
 {
 int i;
 ULONG tout;

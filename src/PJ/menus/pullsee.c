@@ -1,6 +1,9 @@
 #include <ctype.h>
+#include <string.h>
 #include "memory.h"
 #include "menus.h"
+
+static void see_pullist(int x, int y, Pull *p, Pullwork *pw);
 
 void draw_menupull(Menuhdr *mh)
 /* used only for drawing top level in pull menu window called by draw_menu()
@@ -139,16 +142,16 @@ void *oport;
 	pw->port = oport;
 }
 
-void pull_oblock( int x, int y, register Pull *p, Pullwork *pw)
+void pull_oblock(int x, int y, Pull *p, Pullwork *pw)
 {
 	pj_set_rect(pw->port,pw->screen->SWHITE,x+1,y+1,p->width-2,p->height-2);
 	draw_quad(pw->port,pw->screen->SGREY,x,y,p->width,p->height);
 }
-void pull_midline(int x, int y, register Pull *p, Pullwork *pw)
+void pull_midline(int x, int y, Pull *p, Pullwork *pw)
 {
 	pj_set_hline(pw->port,pw->screen->SGREY,x,y+(p->height>>1),p->width);
 }
-void see_pull(register int x,register int y,register Pull *p,Pullwork *pw)
+void see_pull(int x, int y, Pull *p, Pullwork *pw)
 {
 	(*p->see)(x, y, p, pw);
 	p = p->children;

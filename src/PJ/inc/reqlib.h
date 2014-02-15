@@ -39,21 +39,24 @@ Errcode boxf(char *fmt,...);
 Errcode ttextf(char *fmt,va_list argptr, char *formats);
 Errcode soft_ttextf(char *key,va_list *pargs);
 
-Errcode soft_continu_box(char *key,...);
+extern Errcode continu_box(char *fmt, ...);
+extern Errcode soft_continu_box(char *key, ...);
 
 extern Errcode
 varg_continu_box(char *formats, char *text, va_list args, char *etext);
 
 Boolean yes_no_box(char *fmt,...);
 Boolean soft_yes_no_box(char *key,...);
+extern Boolean varg_yes_no_box(char *formats, char *text, va_list args);
 
 Errcode multi_box(char **choices, char *fmt,...);
 
 /* plase wait window that self removes next time input is waited on
  * unless cleanup is called explicitly */
 
-void cleanup_wait_box();
-Errcode soft_put_wait_box(char *key,...);
+extern void cleanup_wait_box(void);
+extern Errcode soft_put_wait_box(char *key, ...);
+extern Errcode varg_put_wait_box(char *formats, char *text, va_list args);
 
 /*** canned special purpose requestor menus ******/
 

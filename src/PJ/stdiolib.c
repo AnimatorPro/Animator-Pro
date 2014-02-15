@@ -2,8 +2,6 @@
 #include "stdtypes.h"
 #include <stdarg.h>
 
-extern int boxf();
-
 #define fpos_t long
 #define size_t unsigned int
 

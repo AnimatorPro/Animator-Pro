@@ -18,7 +18,6 @@ extern int qcolor();
 extern builtin_err;
 extern void disp_line_alot(Short_xy *v);
 void cleanup_toptext();
-void cleanup_wait_box();
 Errcode po_poly_to_arrays(Poly *p, Popot *x, Popot *y);
 Errcode po_arrays_to_poly(Poly *p, int ptcount, Popot *px, Popot *py);
 extern Boolean po_UdSlider(long vargcount, long vargsize, 

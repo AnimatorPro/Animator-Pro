@@ -187,7 +187,12 @@ typedef struct menuwndo {
 /*** abort key checker ***/
 
 extern SHORT menu_abortkeys[2];
-extern Boolean is_abortkey();	/* checks icb.inkey against abortkeys */
+
+extern int button_keyhit(Menuhdr *mh, Button *mbs, VFUNC prehit);
+extern Boolean is_abortkey(void); /* checks icb.inkey against abortkeys */
+extern int check_reqabort(Menuhdr *hdr);
+
+extern Button *hit_button(Button *b, SHORT x, SHORT y);
 
 /* data refers to data in qslider */
 
@@ -296,9 +301,17 @@ Errcode open_menu(Wscreen *screen, Menuhdr *mh,Mugroup *group, Wndo *over);
 void close_menu_code(Menuhdr *md, LONG code);
 void close_menu(Menuhdr *md);
 
+extern void hide_menu(Menuhdr *m);
+extern Errcode show_menu(Menuhdr *m);
+extern void draw_menu(Menuhdr *mh);
+extern void draw_menupull(Menuhdr *mh);
+
+extern void scale_button(Button *b, Rscale *scale);
+extern void scale_button_list(Button *b, Rscale *scale);
+
 /* set explicit button to hit on next tab key */
 
-void menu_set_tabnext(Menuhdr *mh, Button *b);
+extern void mb_set_tabnext(Button *b, Button *next);
 
 /* positioner functions for closed menus */
 
@@ -323,6 +336,7 @@ void mh_gclose_code(Menuhdr *mh, LONG code);
 
 void hide_group(Mugroup *mg);
 Errcode show_group(Mugroup *mg);
+Boolean cgroup_hidden(Wscreen *ws);
 void stack_hide_cgroup(Wscreen *ws);
 Boolean stack_show_cgroup(Wscreen *ws);
 
@@ -343,6 +357,9 @@ void seebg_none(Menuwndo *m);
 void seebg_white(Menuwndo *m);
 void seebg_bblack(Menuwndo *m);
 void seebg_ulwhite(Menuwndo *m);
+
+extern void mb_make_clip(Button *b, Clipbox *cb);
+extern void mb_make_iclip(Button *b, Clipbox *cb);
 
 /* some domenu functions return TRUE if ate a key 0 if not */
 
@@ -375,6 +392,15 @@ Button *find_button(Button *m, SHORT id);
 void free_buttonlist(Button **pb);
 Errcode clone_buttonlist(Button *toclone,Button **pb);
 
+/* functions to get gui colours */
+
+extern int wbg_textcolor(Button *b);
+extern int mc_bright(Button *b);
+extern int mc_white(Button *b);
+extern int mc_red(Button *b);
+extern int mc_grey(Button *b);
+extern int mc_black(Button *b);
+
 /* functions to call the seemes */
 
 void draw_buttonlist(Button *first);
@@ -383,10 +409,22 @@ void draw_buttontop(Button *b);
 
 /**** some seeme drawing functions and sub functions ****/
 
-void white_block(Button *b);
-void black_block(Button *b);
-void grey_block(Button *b);
-void wbg_ncorner_back(Button *b);
+extern void color_block1(Button *m, SHORT color);
+extern void m2color_block(Button *m, SHORT fcolor, SHORT bcolor);
+extern void a_block(Button *b, Pixel color);
+extern void mc_block(Button *b, int mc_color);
+extern void a_frame(Button *b, Pixel color);
+extern void mc_frame(Button *b, int mc_color);
+extern void safe_mc_frame(Button *b, int mc_color);
+extern void white_block(Button *b);
+extern void black_block(Button *b);
+extern void grey_block(Button *b);
+extern void mb_isquare(Button *b, int color);
+extern void mb_dcorner(Button *b, int color);
+extern void mb_dinside(Button *b, int color);
+extern void wbg_ncorner_back(Button *b);
+
+int mb_centext(Button *b, Pixel color, char *string);
 void black_ltext(Button *b);
 void grey_ctext(Button *b);
 void black_ctext(Button *b);
@@ -403,15 +441,18 @@ void black_label(Button *b);
 void black_leftlabel(Button *b);
 void black_pathlabel(Button *b);
 
+void mb_centimage(Button *b, int color, Image *image);
 void see_centimage(Button *b);
 void wbg_ncorner_image(Button *b);
 void ncorner_image(Button *b);
 void ccorner_image(Button *b);
 
-void change_mode(Button *b);
-void hang_children(Button *b);
-void group_hang_children(Button *b);
-
+extern void change_mode(Button *b);
+extern void hilight(Button *m);
+extern void mb_set_hilite(Button *b, Boolean hilite);
+extern void mb_hang_chiles_oset(Button *m,SHORT xoset, SHORT yoset);
+extern void hang_children(Button *b);
+extern void bg_hang_children(Button *b);
 
 /**** some feelme optme functions and sub functions ****/
 
@@ -426,16 +467,18 @@ void mb_close_cancel(Button *b);
 /* close groups from menus */
 void mb_gclose_code(Button *b,LONG code);
 void mb_gclose_ok(Button *b);
-void mb_gclose_cancel(Button *b);
+void mb_gclose_cancel(Button *b, void *dat);
 void mb_gclose_identity(Button *b);
 
 void mb_draw_menu(Button *b);
 void mb_hide_menu(Button *b);
 void mb_hide_group(Button *b);
 void mb_show_group(Button *b);
-Boolean marqmove_menu(Menuhdr *m, int clipit); /* marqi'ed menu mover */
 void mb_move_menu(Button *b); /* marqui move menu will allow move off screen */
-void mb_clipmove_menu(Button *b); /* same but clips to screen bounds */
+
+/* same but clips to screen bounds */
+extern void mb_clipmove_menu(Button *b, void *dat);
+
 void mb_menu_to_bottom(Button *b); /* move menu to bottom of screen */
 
 /* special titlebar button stuff */
@@ -458,8 +501,11 @@ extern Titbar_group tbg_moveclose;
 
 /* button group highlighting functions */
 
-void toggle_bgroup(Button *b);
-void mb_draw_ghi_group(Button *b);
+extern void toggle_bgroup(Button *b);
+extern void mb_unhi_group(Button *b);
+extern void mb_hi_group(Button *b);
+extern void mb_draw_ghi_group(Button *b);
+extern void mh_draw_group(Menuhdr *mh, void *group);
 
 /*** stock menu builders ***/
 
@@ -477,17 +523,23 @@ void cleanup_qchoice(Menuhdr *qc);
 Errcode build_qnumreq(Wscreen *s, Menuhdr **pmh, char *hailing,
 					  char **ok_cancel, Image **arrows,
 					  SHORT initial, SHORT min, SHORT max,
-					  void (*update)(void *uddat,SHORT val), void *uddat );
+					  Errcode (*update)(void *uddat, SHORT val), void *uddat);
 
 SHORT get_qnumval(Menuhdr *mh);
 void cleanup_qnumreq(Menuhdr *mh);
 
 /* stringq functions */
 
+extern Errcode
+build_qstrreq(Wscreen *s, Menuhdr **pmh,
+		char *hailing, char **ok_cancel, char *strbuf, int strlength);
+
+void cleanup_qstrreq(Menuhdr *mh);
 int feel_string_req(Button *sqb);
 void stringq_revert_to_undo(Stringq *stq);
 void init_stq_string(Stringq *stq);
 void undo_stringq(Button *m,Button *stq_item);
+void set_stq_string(Stringq *stq, char *buf);
 void setf_stringq(Button *sqb,int drawit,char *fmt,...);
 
 /* return value flags for feel_string_req() */
@@ -497,8 +549,7 @@ void setf_stringq(Button *sqb,int drawit,char *fmt,...);
 #define STQ_ESCAPE	0x0008
 
 void see_string_req(Button *sqb);
-void setf_stringq(Button *sqb,int drawit,char *fmt,...);
-
+void see_hailing(Button *b);
 
 void offset_button_list(Button *b, SHORT x, SHORT y);
 
@@ -561,18 +612,14 @@ typedef struct pullwork {
 
 /* functions for (*pull->see)(inx x,int y,Pull *p,Pullwork *pw);  */
 
-void pull_leftext();
-void pull_toptext();
-void pull_centext();
-
+extern void init_pullwork(Pullwork *pw, Menuhdr *mh);
+extern void pull_leftext(int x, int y, Pull *p, Pullwork *pw);
+extern void pull_toptext(int x, int y, Pull *p, Pullwork *pw);
 
 /*some functions to put into pull->see */
-extern void pull_color();
-extern void pull_oblock();
-extern void pull_midline();
-extern void	spull_text();
-extern void	pull_text();
-extern void	pull_brush();
+extern void pull_oblock(int x, int y, Pull *p, Pullwork *pw);
+extern void pull_midline(int x, int y, Pull *p, Pullwork *pw);
+extern void see_pull(int x, int y, Pull *p, Pullwork *pw);
 
 	/* border width around string buttons */
 #define MB_IBORDER 1

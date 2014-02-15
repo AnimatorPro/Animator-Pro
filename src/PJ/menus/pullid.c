@@ -1,8 +1,9 @@
 /* pullid.c - routines to find a pull given it's ID.  Also routines for
  * enabling and disabling pulls from their ID's */
 
-#include "menus.h"
+#include "jimk.h"
 #include "errcodes.h"
+#include "menus.h"
 
 Pull *id_to_pull(Menuhdr *mh, SHORT id)
 /* find a pull with the appropriate id */

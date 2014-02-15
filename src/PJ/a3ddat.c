@@ -48,8 +48,6 @@
 #include "util.h"
 
 extern Button tseg_group_sel;
-extern void grey_ctext();
-extern void go_nodraw_cel_menu();
 
 void qinks(), go_multi(), arrange_a3d_menu(), go_cel_menu(),
 	ado_xyz_slider(), xyz_zero_sl(), iscale_theta(), mview_path(),

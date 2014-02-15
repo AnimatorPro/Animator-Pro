@@ -2,6 +2,7 @@
 /* choices.c - build up simple list of selections type menus out of
    a list of strings.  */
 
+#include <stdio.h>
 #include <string.h>
 #include "errcodes.h"
 #include "menus.h"
@@ -17,20 +18,16 @@ typedef struct choicer {
 	Button buttons[1];
 } Choicer;
 
-void hide_on_choice(Button *b)
+static void hide_on_choice(Button *b)
 {
 	if(b->identity != 0)
 		mb_hide_menu(b);
 }
 
-extern void black_ltext();
-
 /* This module builds up a menu from a 'header' and a list of choices, all
    of which are simple ascii text strings */
 
 #define CMAX 10
-
-extern Button *hit_button(Button *b,SHORT x,SHORT y);
 
 static int do_choicemenu(Menuhdr *hdr)
 /* function for the domenu function choice requestor */
@@ -71,7 +68,7 @@ Button *last_hilit = NULL;
 		wait_input(hdr->ioflags);
 	}
 }
-static see_choice_title(Button *b)
+static void see_choice_title(Button *b)
 /* see titlebar, but stop at a newline or null */
 {
 char *send;

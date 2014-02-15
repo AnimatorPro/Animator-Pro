@@ -20,7 +20,7 @@ static Autoarg *mum_autoarg;
 extern void  ccolor_box(), ppalette(), see_pen(), toggle_pen(), set_pbrush(),
 	see_cur_ink(), go_color_grid(Button *b),
 	go_cel_menu(),  
-	dcorner_text(), qmask(), change_time_mode(),
+	qmask(), change_time_mode(),
 	multi_preview(), multi_use();
 
 static multi_go_inks();

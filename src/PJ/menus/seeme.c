@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "menus.h"
 #include "rastext.h"
 
@@ -9,7 +10,7 @@ static void mw_setmc(Menuwndo *m,int menucolor)
 }
 void seebg_none(Menuwndo *m)
 {
-	return;
+	(void)m;
 }
 void seebg_white(Menuwndo *m)
 /* default menu background drawer white box with grey border box */
@@ -67,7 +68,7 @@ void mb_make_iclip(Button *b,Clipbox *cb)
 	pj_clipbox_make(cb, (Raster *)(b->root), b->x+MB_IBORDER, b->y+MB_IBORDER, 
 				 b->width-2*MB_IBORDER, b->height-2*MB_IBORDER);
 }
-Boolean is_hilit(Button *b)
+static Boolean is_hilit(Button *b)
 {
 	switch(b->flags & (MB_HILITE_TYPES | MB_HILIT))
 	{
@@ -88,8 +89,7 @@ void mb_set_hilite(Button *b,Boolean hilite)
 	else
 		b->flags &= ~MB_HILIT;
 }
-int wbg_backcolor(Button *b)
-
+static int wbg_backcolor(Button *b)
 /* returns current "bright" color for button */
 {
 Wscreen *s = b->root->w.W_screen;
@@ -99,7 +99,6 @@ Wscreen *s = b->root->w.W_screen;
 	return(s->SWHITE);
 }
 static int mb_backcolor(Button *b)
-
 /* returns current background color for button */
 {
 Wscreen *s = b->root->w.W_screen;
@@ -108,8 +107,7 @@ Wscreen *s = b->root->w.W_screen;
 		return(s->SBRIGHT);
 	return(s->SBLACK);
 }
-int mb_textcolor(Button *b)
-
+static int mb_textcolor(Button *b)
 /* returns "Text" color number for button */
 {
 Wscreen *s = b->root->w.W_screen;
@@ -121,7 +119,6 @@ Wscreen *s = b->root->w.W_screen;
 	return(s->SWHITE);
 }
 int wbg_textcolor(Button *b)
-
 /* returns highlight color number for button */
 {
 Wscreen *s = b->root->w.W_screen;
@@ -215,7 +212,7 @@ static void ccorner_inside(void *rast,int x,int y,int w,int h,int color)
 {
 	pj_set_rect(rast,color,x+1, y+1, w-2, h-2);
 }
-void mb_ccorner(Button *b,int color)
+static void mb_ccorner(Button *b,int color)
 {
 	box_cut_corner(b->root,b->x,b->y,b->width,b->height,color);
 }
@@ -233,7 +230,7 @@ void mb_dinside(Button *b,int color)
 	diag_inside(b->root,b->x,b->y,b->width,b->height,color,
 		b->root->w.W_screen->bbevel);
 }
-void ncorner_back(Button *b)
+static void ncorner_back(Button *b)
 {
 	m2color_block(b, mc_grey(b), mb_backcolor(b));
 }
@@ -303,7 +300,13 @@ void grey_ctext(Button *b) /* grey centered text */
 {
 	mb_centext(b,mc_grey(b),b->datme);
 }
-void mb_leftext(Button *b,Pixel color, char *string) /* left justified text */
+
+/* Function: mb_leftext
+ *
+ *  Left justified text.
+ */
+static void
+mb_leftext(Button *b, Pixel color, char *string)
 {
 Vfont *f = b->root->font;
 
@@ -460,7 +463,7 @@ static void uh_group(Button *b,struct uhdata *uhd)
 	}
 }
 
-void unhi_group(Button *mbs,SHORT *mgroup)
+static void unhi_group(Button *mbs, SHORT *mgroup)
 {
 struct uhdata uhd;
 
@@ -468,7 +471,7 @@ struct uhdata uhd;
 	uhd.change = 1;
 	uh_group(mbs,&uhd);
 }
-void hi_group(Button *mbs,SHORT *mgroup)
+static void hi_group(Button *mbs, SHORT *mgroup)
 {
 struct uhdata uhd;
 
@@ -476,11 +479,11 @@ struct uhdata uhd;
 	uhd.change = 0;
 	uh_group(mbs,&uhd);
 }
-mb_unhi_group(Button *b)
+void mb_unhi_group(Button *b)
 {
 	unhi_group(b->root->hdr->mbs,b->group);
 }
-mb_hi_group(Button *b)
+void mb_hi_group(Button *b)
 {
 	hi_group(b->root->hdr->mbs,b->group);
 }
@@ -494,7 +497,6 @@ static void draw_ghi_group(Button *b,void *g)
 		draw_buttontop(b);
 }
 void mb_draw_ghi_group(Button *b)
-
 /* draws all buttons in same group with a group hilite flag on */
 {
 	if(get_button_wndo(b))
@@ -569,7 +571,7 @@ struct hchiledat {
 	Rscale menu_scale;
 };
 
-static move_link_children(Button *b,struct hchiledat *hcd)
+static void move_link_children(Button *b, struct hchiledat *hcd)
 {
 	while(b)
 	{
@@ -606,7 +608,6 @@ void hang_children(Button *b)
 	mb_hang_chiles_oset(b,0,0);
 }
 void bg_hang_children(Button *b)
-
 /* draws 2color background then hangs children */
 {
 	wbg_ncorner_back(b);

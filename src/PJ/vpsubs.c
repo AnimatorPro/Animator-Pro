@@ -371,7 +371,7 @@ void mb_move_quickmenu(Button *b)
 Qkmove sqk;
 
 	init_qkmove(&sqk, b);
-	mb_clipmove_menu(b);
+	mb_clipmove_menu(b, NULL);
 	finish_qkmove(&sqk);
 }
 void menu_to_quickcent(Menuhdr *mh)

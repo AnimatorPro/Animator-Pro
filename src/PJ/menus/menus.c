@@ -1,3 +1,5 @@
+#include <string.h>
+#include <ctype.h>
 #include "errcodes.h"
 #include "menus.h"
 #include "input.h"
@@ -5,8 +7,10 @@
 #include "ptrmacro.h"
 #include "marqi.h"
 
-
-void draw_menuwndo(Menuwndo *mw);
+static void init_group(Wscreen *ws, Mugroup *mg);
+static void addto_group(Mugroup *mg, Menuhdr *mh, Menuhdr *over);
+static void remfrom_group(Menuhdr *mh);
+static void draw_menuwndo(Menuwndo *mw);
 
 Errcode init_muscreen(Wscreen *s)
 
@@ -90,20 +94,20 @@ Menuwndo *get_button_wndo(Button *b)
 		return(b->root);
 	return(((Menuhdr *)(b->root))->mw);
 }
-static int wndo_domenu(Menuwndo *w)
+static int wndo_domenu(void *w)
 /* function called from window io loop in do_xxxloop */
 {
-Menuhdr *mh = w->hdr;
+	Menuhdr *mh = ((Menuwndo *)w)->hdr;
 
 	if(mh->domenu != NULL)
 		return((*(mh->domenu))(mh));
 	do_menubuttons(mh);
 	return(1);
 }
-static int wndo_dopull(Menuwndo *w)
+static int wndo_dopull(void *w)
 /* function called from window io loop in do_xxxloop */
 {
-Menuhdr *mh = w->hdr;
+	Menuhdr *mh = ((Menuwndo *)w)->hdr;
 
 	if(mh->domenu != NULL)
 		return((*(mh->domenu))(mh));
@@ -643,8 +647,9 @@ void mb_move_menu(Button *b)
 {
 	marqmove_menu(get_button_hdr(b),0);
 }
-void mb_clipmove_menu(Button *b)
+void mb_clipmove_menu(Button *b, void *dat)
 {
+	(void)dat;
 	marqmove_menu(get_button_hdr(b),1);
 }
 /*************************************************************************/
@@ -795,8 +800,7 @@ Button *gotone;
 	}
 	return(NULL);
 }
-Button *key_button(Button *first,SHORT iokey)
-
+static Button *key_button(Button *first, SHORT iokey)
 /* returns button in list with key equivalent equal to key */
 {
 unsigned char c;
@@ -821,7 +825,7 @@ Menuwndo *mw = mh->mw;
 		cancel_reqpos(mw->w.W_screen);
 	}
 }
-void menu_set_tabnext(Menuhdr *mh, Button *b)
+static void menu_set_tabnext(Menuhdr *mh, Button *b)
 {
 	if(mh && mh->group)
 		mh->group->tabnext = b;
@@ -916,7 +920,7 @@ do_hit:
 	}
 	return(ret);
 }
-Boolean is_abortkey()
+Boolean is_abortkey(void)
 {
 	return(((UBYTE)icb.inkey) == ' ' || ((UBYTE)icb.inkey) == ESCKEY);
 }

@@ -8,10 +8,6 @@
 #include "wordwrap.h"
 #include "menus.h"
 
-
-extern void wbg_ncorner_back(), menu_text_box(), dcorner_text();
-
-
 typedef struct qstrwork {
 	Menuhdr mh;
 	Stringq sq;
@@ -20,8 +16,6 @@ typedef struct qstrwork {
 	Button okb;
 	Button canb;
 } Qstrwork;
-
-extern see_hailing(Button *b);
 
 static void string_close(Button *b)
 {

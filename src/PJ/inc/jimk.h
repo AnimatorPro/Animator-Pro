@@ -214,8 +214,6 @@ void zpan_ccycle_redraw(Button *hanger);
 
 extern void mb_move_quickmenu();
 extern void mb_quickmenu_to_bottom();
-extern void see_titlebar();
-extern void feel_titlebar();
 extern void see_cur_ink();
 
 extern void mb_toggle_zclear();

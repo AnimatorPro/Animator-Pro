@@ -75,9 +75,12 @@ typedef struct name_scroller {
 #define SCR_MDHIT	0x02 /* mouse pen double hit */
 #define SCR_ENTER	0x04 /* enter key hit during key mode */
 
-extern void scroll_pick_opt();
+extern Errcode
+build_qscroller(char *result, Wscreen *s, Menuhdr **pmh, char *hailing,
+		Names *items, SHORT lines, char *ok, char *cancel, SHORT *ipos);
 
 void init_scroller(Name_scroller *scr,Wscreen *s);
+void cleanup_qscroller(Menuhdr *qc, SHORT *ipos);
 void draw_scroll_cels(Button *b);
 void scroll_incdown(Button *b);
 void scroll_incup(Button *b);
@@ -85,6 +88,7 @@ void see_scrollbar(Button *b);
 void feel_scrollbar(Button *b, Boolean realtime);
 void rt_feel_scrollbar(Button *b);  /* realtime == TRUE */
 void slow_feel_scrollbar(Button *b); /* realtime == FALSE */
+void redraw_scroller(Name_scroller *scr);
 
 /* This function will call the feel_1_cel() and hiliters */
 void feel_scroll_cels(Button *b);
@@ -102,5 +106,7 @@ void get_scroll_cel_pos(Name_scroller *s, int ix, Short_xy *ppos);
 
 void init_name_scroller(Name_scroller *scr,Wscreen *s);
 void see_scroll_names(Button *b); /* seeme for list_sel button */
+int scroll_name_xoff(Vfont *f);
+int scroll_names_ysize(Vfont *f, int lines);
 
 #endif /* SCROLLER_H */

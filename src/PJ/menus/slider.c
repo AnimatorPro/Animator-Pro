@@ -1,6 +1,7 @@
 /* slider.c - functions to implement our famous "number on the knob"
    slider buttons */
 
+#include <stdio.h>
 #include "imath.h"
 #include "input.h"
 #include "memory.h"
@@ -19,13 +20,15 @@ return(val);
 }
 #endif /* SLUFFED */
 
-static void format_shortp1(short *val,char *buf)
+static void format_shortp1(void *val, char *buf, void *data)
 {
-	sprintf(buf,"%d", *val + 1);
+	(void)data;
+	sprintf(buf, "%d", *(short *)val + 1);
 }
-static void format_short(short *val,char *buf)
+static void format_short(void *val, char *buf, void *data)
 {
-	sprintf(buf,"%d", *val);
+	(void)data;
+	sprintf(buf, "%d", *(short *)val);
 }
 
 Qslfmt qsfmt_short = {
@@ -240,13 +243,13 @@ SHORT val;
 	}
 	resee_knob(qw);
 }
-static void inc_qsl(Qslwork *qw)
+static void inc_qsl(void *qw)
 {
-	delta_qsl(qw,1);
+	delta_qsl((Qslwork *)qw, 1);
 }
-static void dec_qsl(Qslwork *qw)
+static void dec_qsl(void *qw)
 {
-	delta_qsl(qw,-1);
+	delta_qsl((Qslwork *)qw, -1);
 }
 
 Boolean in_left_arrow(Button *slb)

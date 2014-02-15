@@ -1,13 +1,7 @@
-#include "errcodes.h"
-#include "ptrmacro.h"
-#include "ftextf.h"
-#include "input.h"
-#include "wordwrap.h"
 #include "commonst.h"
+#include "reqlib.h"
 
-
-
-void cleanup_wait_box()
+void cleanup_wait_box(void)
 {
 	cleanup_wait_wndo(icb.input_screen);
 }

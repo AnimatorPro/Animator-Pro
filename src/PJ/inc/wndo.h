@@ -325,6 +325,16 @@ void set_input_screen(Wscreen *s);
 void set_ext_cel(Wscreen *s,Rcel **ext_cel);
 Boolean find_mucolors(Wscreen *ws);
 
+extern void set_refresh(Wscreen *ws);
+extern void disable_wrefresh(Wscreen *ws);
+extern void enable_wrefresh(Wscreen *ws);
+
+extern void
+box_diag_corner(void *rast, int x, int y, int w, int h, int color, int bevel);
+
+extern void
+diag_inside(void *rast, int x, int y, int w, int h, int color, int bevel);
+
 /* textbox "takeover" requestor things */
 
 #define TBOX_MAXCHOICES	5
@@ -352,7 +362,9 @@ void init_wrefresh(Wscreen *s);
 
 /* set, save and restore icb input state for a window */
 
-void load_wndo_mouset(Wndo *w); 
+extern void load_wndo_mouset(Wndo *w);
+extern void load_wndo_iostate(Wndo *w);
+extern Boolean marqmove_wndo(Wndo *w, Rectangle *bclip);
 
 typedef struct Wiostate {
 	Mouset mset;
@@ -370,6 +382,7 @@ extern void rest_wiostate(Wiostate *ios);
 
 void get_requestor_position(Wscreen *ws, SHORT width, SHORT height, 
 						    Rectangle *pos);
+extern void cancel_reqpos(Wscreen *screen);
 
 #ifdef WNDO_INTERNALS
 

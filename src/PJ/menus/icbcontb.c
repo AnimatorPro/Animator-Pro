@@ -1,6 +1,4 @@
-#include "ptrmacro.h"
-#include "input.h"
-#include "commonst.h"
+#include "reqlib.h"
 #include "ftextf.h"
 
 Errcode continu_box(char *fmt,...)

@@ -11,8 +11,9 @@ void mb_gclose_ok(Button *b)
 {
 	mb_gclose_code(b,0);
 }
-void mb_gclose_cancel(Button *b)
+void mb_gclose_cancel(Button *b, void *data)
 {
+	(void)data;
 	mb_gclose_code(b,Err_abort);
 }
 void mb_gclose_identity(Button *b)

@@ -1,8 +1,5 @@
-#include <stdarg.h>
-#include "ptrmacro.h"
-#include "input.h"
 #include "commonst.h"
-
+#include "reqlib.h"
 
 Boolean varg_yes_no_box(char *formats,char *text,va_list args)
 {

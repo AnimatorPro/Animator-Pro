@@ -25,7 +25,6 @@ typedef struct qfont_cb
 Qfont_cb *qfcb;
 
 /*** Display Functions ***/
-extern void ccorner_text(), ncorner_text();
 static void font_sample_text(Button *m);
 static void see_point_size(Button *m);
 static void see_font_spacing(Button *m);

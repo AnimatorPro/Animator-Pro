@@ -1,4 +1,5 @@
 #include <ctype.h>
+#include <stdio.h>
 #include "errcodes.h"
 #include "menus.h"
 #include "memory.h"

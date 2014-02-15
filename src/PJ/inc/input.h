@@ -331,6 +331,8 @@ Errcode init_idriver(char *name, UBYTE *modes, SHORT comm_port);
 void cleanup_idriver(void);
 Errcode reset_input(void);
 
+void reuse_input(void);
+
 Boolean check_input(ULONG checkflags);
 void wait_input(ULONG waitflags);
 void mac_wait_input(ULONG waitflags,ULONG recflags);
@@ -338,11 +340,15 @@ Errcode vsync_wait_input(ULONG waitflags, SHORT fields);
 Errcode mac_vsync_wait_input(ULONG waitflags, ULONG recflags, SHORT fields);
 Errcode timed_wait_input(ULONG waitflags, ULONG timeout_millis);
 
+void wait_a_jiffy(int j);
+void wait_any_input(void);
 void wait_click(void); /* wait_input(ANY_CLICK); synonym */
 void wait_penup(void);
 void wait_rightup(void);
 void wait_mbup(ULONG flags);
-void repeat_on_pdn(FUNC v,void *data); /* repeat function while pen is down */
+
+/* repeat function while pen is down */
+extern void repeat_on_pdn(void (*v)(void *data), void *data);
 
 /* sets preemptive function for processing keys */
 FUNC set_hotkey_func(Boolean (*do_hot_key)(Global_icb *gicb));

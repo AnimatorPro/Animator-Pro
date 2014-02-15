@@ -17,8 +17,6 @@ typedef struct qscrollwork {
 
 static Qscrollwork *gqsw;	
 
-extern void type_file_name(Button *m);
-extern void fincup(), fincdown();
 extern Image ctriup, ctridown;
 
 
@@ -38,7 +36,7 @@ extern Image ctriup, ctridown;
 #define IWD 4		/* space between list box and ok/cancel... */
 #define IBD 2		/* Space between buttons and outside of window */
 
-void accept_name(Button *b)
+static void accept_name(Button *b)
 {
 	if(feel_string_req(b) & STQ_ENTER)
 		mb_gclose_ok(b);
@@ -46,6 +44,10 @@ void accept_name(Button *b)
 static void feel_1_scroll(Button *list_sel,void *rast,int x,int y,
 						  Names *entry, int why)
 {
+	(void)rast;
+	(void)x;
+	(void)y;
+
 	setf_stringq(&gqsw->cursel, 1, "%s", entry->name);
 	if(why & (SCR_MDHIT|SCR_ENTER))
 		mb_gclose_ok(list_sel);
@@ -54,9 +56,8 @@ static void feel_1_scroll(Button *list_sel,void *rast,int x,int y,
 
 #define MINLINES 5		/* smallest # of lines in scroll list area */
 
-
-build_qscroller(
-	char *result,		/* string we fill in (and start out with */
+Errcode build_qscroller(
+	char *result,		/* string we fill in, and start out with */
 	Wscreen *s,			/* Screen to put it on */
 	Menuhdr **pmh,		/* Menu header to store result of build */
 	char *hailing,  	/* Character string for move/title area */
@@ -218,7 +219,7 @@ menu_to_reqpos(s,&(qsw->mh));
 return(Success);
 }
 
-cleanup_qscroller(Menuhdr *qc, SHORT *ipos)
+void cleanup_qscroller(Menuhdr *qc, SHORT *ipos)
 {
 Qscrollwork *qsw = (Qscrollwork *)qc;
 

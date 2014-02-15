@@ -1,7 +1,5 @@
-#include <stdarg.h>
-#include "ptrmacro.h"
-#include "input.h"
 #include "commonst.h"
+#include "reqlib.h"
 
 Errcode varg_continu_box(char *formats,char *text,va_list args,char *etext)
 {

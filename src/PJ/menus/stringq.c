@@ -1,6 +1,8 @@
 /* stringq.c - Implement a button that lets user edit a single line
    of text */
 
+#include <stdlib.h>
+#include <string.h>
 #include "formatf.h"
 #include "memory.h"
 #include "menus.h"
@@ -9,8 +11,6 @@
 
 #define SDETAIL	SBLACK
 #define SBLOCK	SWHITE
-
-void init_stq_string();
 
 typedef struct sqwork {
 	Button *sqb;         /* the button */
@@ -45,7 +45,6 @@ static void erase_tail(Sqwork *qw)
 /* erases last part or drawn part of stringq should handle proportional text */
 {
 register Stringq *sq = qw->sq;
-Button *sqb = qw->sqb;
 register SHORT len;
 char *strend;
 SHORT tailwidth, textend;
@@ -80,7 +79,6 @@ register Stringq *sq = qw->sq;
 static void inactive_cursor(Sqwork *qw,Pixel color)
 {
 register Stringq *sq = qw->sq;
-register Button *m = qw->sqb;
 
 	pj_set_vline(&qw->cb, color, 
 			qw->textx + fnstring_width(qw->f,sq->string + sq->dpos,
@@ -112,7 +110,7 @@ SHORT cwidth;
 	qw->curson = !(qw->curson);
 	return(0);
 }
-static stringq_cursor_off(Sqwork *qw)
+static void stringq_cursor_off(Sqwork *qw)
 {
 	if(qw->curson)
 		stringq_xor_cursor(qw);
@@ -438,6 +436,8 @@ register Stringq *stq = sqb->datme;
 
 static void init_numq_stq(Numq *nq, Stringq *sq)
 {
+	(void)nq;
+
 	clear_struct(sq);
 	sq->dcount = 6;
 	sq->bcount = 30;

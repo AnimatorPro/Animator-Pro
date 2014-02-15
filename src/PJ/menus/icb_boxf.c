@@ -1,7 +1,4 @@
-#include "errcodes.h"
-#include "ptrmacro.h"
-#include "ftextf.h"
-#include "input.h"
+#include "reqlib.h"
 
 Errcode boxf(char *fmt,...)
 /* this puts up a formated textbox for debugging etc bypassing input calls 

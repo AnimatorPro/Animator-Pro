@@ -2,11 +2,13 @@
    browse menu a bit too.  Other scroller users are the draw tools and
    ink types menus.  */
 
-#include "stdtypes.h"
+#include "jimk.h"
 #include "scroller.h"
 
 #define GET_CEL_X(s,ix) (((ix)%s->cels_per_row)*(s->cel_width))
 #define GET_CEL_Y(s,ix) (((ix)/s->cels_per_row)*(s->cel_height))
+
+static int clip_scroll(Name_scroller *scroll, int newtop);
 
 void get_scroll_cel_pos(Name_scroller *s, int ix, Short_xy *pos)
 
@@ -30,8 +32,7 @@ Button *b = scroll->list_sel;
 					 b->width - scroll->xoset - scroll->border, 
 					 b->height - scroll->yoset - scroll->border) ;
 }
-void calc_scroll_pos(register Name_scroller *scroll,
-				     register Button *scroll_sel)
+static void calc_scroll_pos(Name_scroller *scroll, Button *scroll_sel)
 {
 SHORT temp;
 SHORT spare_height;
@@ -447,16 +448,19 @@ Clipbox cbox;
 			x += scroll->cel_width;
 	}
 }
-static void bpagedown(Name_scroller *scroll)
+static void bpagedown(void *name_scroller)
 {
+	Name_scroller *scroll = name_scroller;
+
 	scroll->top_name = clip_scroll(scroll, 
 								scroll->top_name + scroll->dcount);
 	scroll->top_name -= (scroll->top_name%scroll->cels_per_row);
 	draw_scroll_cels(scroll->list_sel);
 	rescroll(scroll);
 }
-static void bpageup(Name_scroller *scroll)
+static void bpageup(void *name_scroller)
 {
+Name_scroller *scroll = name_scroller;
 int nt;
 
 	nt = scroll->top_name - scroll->dcount;
@@ -563,6 +567,8 @@ static void xor_1_name(Button *b, void *rast, int x, int y, Names *name,
 					   Boolean hilite)
 {
 Name_scroller *scroll = (Name_scroller *)(b->group);
+(void)name;
+(void)hilite;
 
 	pj_xor_rect(rast,mc_white(b)^mc_black(b),x,y,
 			 scroll->cel_width,scroll->cel_height);

@@ -2,15 +2,12 @@
 /* qnumber.c - This module is for popping up little requestor to 
 	get a single number or a single numeric string */
 
+#include <stdlib.h>
 #include "errcodes.h"
 #include "memory.h"
 #include "ptrmacro.h"
 #include "wordwrap.h"
 #include "menus.h"
-
-
-extern void wbg_ncorner_back(), menu_text_box(), dcorner_text();
-
 
 typedef struct qnumwork {
 	Menuhdr mh;
@@ -27,7 +24,9 @@ typedef struct qnumwork {
 	void *uddat;
 } Qnumwork;
 
-see_hailing(Button *b)
+static void set_qnumstring(Qnumwork *qw, int drawit);
+
+void see_hailing(Button *b)
 {
 	wwtext(b->root, b->root->font, 
 		b->datme, b->x, b->y, b->width, b->height, 0, JUST_LEFT, 
@@ -57,8 +56,11 @@ static void set_qnumstring(Qnumwork *qw, int drawit)
 {
 	setf_stringq(&(qw->stqb),drawit,"%d",qw->val);
 }
-static void update_qnumstring(Qnumwork *qw, Button *b)
+static void update_qnumstring(void *qnumwork, Button *b)
 {
+	Qnumwork *qw = qnumwork;
+	(void)b;
+
 	set_qnumstring(qw,1);
 	if(qw->update != NULL)
 	{

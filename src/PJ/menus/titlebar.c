@@ -8,7 +8,7 @@ Titbar_group tbg_moveclose = {
 	NULL,
 };
 
-static draw_closer(Button *b,int txtwid)
+static void draw_closer(Button *b, int txtwid)
 {
 int x,y,width,height;
 Pixel black;
@@ -99,7 +99,7 @@ SHORT tstx;
 	else if(tbg->moveit)
 		(*(tbg->moveit))(b,tbg->data);
 	else
-		mb_clipmove_menu(b);
+		mb_clipmove_menu(b, NULL);
 
 	return;
 }
