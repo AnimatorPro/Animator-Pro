@@ -156,7 +156,7 @@ Rectangle rect;
 
 	if(b->flags & MB_NORESCALE)
 		return;
-	if(!(b->flags & MB_SCALE_ABSW|MB_SCALE_ABSH))
+	if (!(b->flags & (MB_SCALE_ABSW|MB_SCALE_ABSH)))
 		scale_rect(scale,&b->orig_rect,(Rectangle *)(&b->RECTSTART));
 	else
 	{
