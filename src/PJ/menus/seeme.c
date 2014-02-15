@@ -264,7 +264,7 @@ Rscale *sc;
 	h *= image->height;
 	w *= image->width;
 
-	image_scale_tblit(image,&colors,b->root,
+	image_scale_tblit(image, colors, b->root,
 			  			b->x + (b->width - w)/2,
 			  			b->y + (b->height - h)/2,
 						w,h );

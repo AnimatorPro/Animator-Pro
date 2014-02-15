@@ -158,7 +158,7 @@ int i;
 
 	qw->sq.pxoff = spwidth/3;
 	qw->sq.pyoff = font_ycent_oset(f,bheight);
-	qw->sq.string = &(qw->qstring);
+	qw->sq.string = qw->qstring;
 	qw->sq.dcount = 6;
 	qw->sq.bcount = sizeof(qw->qstring)-1;
 
