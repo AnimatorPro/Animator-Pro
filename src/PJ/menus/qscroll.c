@@ -74,7 +74,7 @@ Qscrollwork *qsw;
 SHORT rightwid;		/* width of right side */
 SHORT rightoff;
 SHORT okcanmax;		/* max width of ok/cancel strings in pixels */
-int i;
+unsigned int i;
 
 /* some error checking */
 if (items == NULL)
