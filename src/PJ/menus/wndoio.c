@@ -15,7 +15,7 @@ Dlnode *next;
 
 	*ciwin = NULL;
 	for(w = (Wndo *)(icb.input_screen->wilist.head);
-		next = ((Dlnode *)w)->next;
+		(next = ((Dlnode *)w)->next) != NULL;
 		w = (Wndo *)next )
 	{
 		w = TOSTRUCT(Wndo,W_node,w);
@@ -133,7 +133,7 @@ register Dlnode *next;
 register Wndo *w;
 
 	for(w = (Wndo *)(screen->wilist.head);
-		next = ((Dlnode *)w)->next;
+		(next = ((Dlnode *)w)->next) != NULL;
 		w = (Wndo *)next )
 	{
 		w = TOSTRUCT(Wndo,W_node,w);
@@ -199,7 +199,7 @@ register Wndo *w, *hitwndo;
 		}
 
 		for(w = (Wndo *)(screen->wilist.head);
-			next = ((Dlnode *)w)->next;
+			(next = ((Dlnode *)w)->next) != NULL;
 			w = (Wndo *)next )
 		{
 			w = TOSTRUCT(Wndo,W_node,w);
