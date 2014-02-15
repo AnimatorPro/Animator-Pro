@@ -54,7 +54,7 @@ void init_scroller(Name_scroller *scr,Wscreen *screen)
 int remain;
 
 	scale_button(scr->list_sel,&screen->menu_scale);
-	scr->name_count = slist_len(scr->names);
+	scr->name_count = slist_len((Slnode *)scr->names);
 
 	scr->xoset = scr->col_xoset + scr->border;
 	scr->yoset = scr->row_yoset + scr->border;
@@ -146,7 +146,7 @@ int why;
 	x -= x%scroll->cel_width;
 	y -= y%scroll->cel_height;
 
-	name = slist_el(scroll->names, scroll->top_name + ix);
+	name = slist_el((Slnode *)scroll->names, scroll->top_name + ix);
 
 	if(!name)
 		goto kill_dhit;
@@ -250,12 +250,12 @@ Names *name;
 	 * always the same direction */
 
 	b = scroll->list_sel;
-	name = slist_el(scroll->names, scroll->top_name);
+	name = slist_el((Slnode *)scroll->names, scroll->top_name);
 	while(--obot >= 0)
 	{
 		(*scroll->draw_1_cel)(b,&cbox,GET_CEL_X(scroll,obot),
 					    	    	  GET_CEL_Y(scroll,obot),
-									  slist_el(name,obot));
+									  slist_el((Slnode *)name, obot));
 	}
 	rescroll(scroll);
 }
@@ -296,7 +296,7 @@ Names *name;
 	while(ntop < obot)
 		blit_scroll_cel(scroll,&cbox,ntop++,otop++);
 
-	name = slist_el(scroll->names, scroll->top_name + otop);
+	name = slist_el((Slnode *)scroll->names, scroll->top_name + otop);
 	b = scroll->list_sel;
 	while(otop < scroll->dcount)
 	{
@@ -356,7 +356,7 @@ SHORT x,y,ix;
 		else if(scr->key_name >= end_name)
 			scr->key_name = end_name-1;
 
-		name = slist_el(scr->names, scr->key_name);
+		name = slist_el((Slnode *)scr->names, scr->key_name);
 		ix = scr->key_name - scr->top_name;
 
 		x = GET_CEL_X(scr,ix);
@@ -431,7 +431,7 @@ Clipbox cbox;
 	b = scroll->list_sel;
 	x = 0;
 	y = 0;
-	name = slist_el(scroll->names,scroll->top_name);
+	name = slist_el((Slnode *)scroll->names, scroll->top_name);
 	scroll_make_clip(scroll,&cbox);
 	xix = 0;
 	for(ix = 0;ix < scroll->dcount;++ix)

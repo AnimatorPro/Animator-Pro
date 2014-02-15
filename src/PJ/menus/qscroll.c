@@ -79,7 +79,7 @@ unsigned int i;
 /* some error checking */
 if (items == NULL)
 	return(Err_not_found);
-if ((slist_el(items, *ipos)) == NULL)
+if ((slist_el((Slnode *)items, *ipos)) == NULL)
 	*ipos = 0;
 if (lines < MINLINES)
 	lines = MINLINES;

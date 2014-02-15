@@ -318,8 +318,9 @@ Pull *p0,*p1;
 							goto cleanup;
 						}
 						if (!(child->flags & PULL_DISABLED))
-							draw_quad(pw.screen->viscel,pw.screen->SRED,cx,cy,
-									  child->width,child->height);
+							draw_quad((Raster *)pw.screen->viscel,
+									pw.screen->SRED, cx, cy,
+									child->width, child->height);
 					}
 					if(JSTHIT(MBPEN))
 					{

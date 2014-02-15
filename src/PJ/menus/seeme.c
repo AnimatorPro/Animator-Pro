@@ -16,7 +16,7 @@ void seebg_white(Menuwndo *m)
 /* default menu background drawer white box with grey border box */
 {
 	mw_setmc(m,MC_WHITE);
-	draw_quad(m,m->w.W_screen->SGREY,0,0,m->w.width,m->w.height); 
+	draw_quad((Raster *)m, m->w.W_screen->SGREY, 0, 0, m->w.width, m->w.height);
 }
 void seebg_bblack(Menuwndo *m)
 /* default menu background drawer black box */
@@ -173,7 +173,7 @@ void mc_block(Button *b,int mc_color)
 }
 void a_frame(Button *b,Pixel color)
 {
-	draw_quad(b->root,color,b->x,b->y,b->width,b->height);
+	draw_quad((Raster *)b->root, color, b->x, b->y, b->width, b->height);
 }
 void mc_frame(Button *b,int mc_color)
 {

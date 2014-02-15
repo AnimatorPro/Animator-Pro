@@ -95,7 +95,7 @@ Pixel color;
 	x = b->x + (fchar_spacing(f," ")>>1) + 1,
 	y = b->y + font_ycent_oset(f,b->height),
 
-	sprintf(buff, "%c %s", b->key_equiv, b->group);
+	sprintf(buff, "%c %s", b->key_equiv, (const char *)b->group);
 	color = wbg_textcolor(b);
 	gftext(b->root,f,buff,x,y,color,TM_MASK1 );
 	x += fstring_width(f,"9 *");

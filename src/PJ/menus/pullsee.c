@@ -145,7 +145,7 @@ void *oport;
 void pull_oblock(int x, int y, Pull *p, Pullwork *pw)
 {
 	pj_set_rect(pw->port,pw->screen->SWHITE,x+1,y+1,p->width-2,p->height-2);
-	draw_quad(pw->port,pw->screen->SGREY,x,y,p->width,p->height);
+	draw_quad((Raster *)pw->port, pw->screen->SGREY, x, y, p->width, p->height);
 }
 void pull_midline(int x, int y, Pull *p, Pullwork *pw)
 {

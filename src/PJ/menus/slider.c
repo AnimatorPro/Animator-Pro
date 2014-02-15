@@ -181,7 +181,7 @@ SHORT x,width;
 		x += qw.arrwidth - 1;
 		width -= ((qw.arrwidth-1)<<1);
 	}
-	draw_quad(b->root, s->SGREY, x, b->y, width, b->height); 
+	draw_quad((Raster *)b->root, s->SGREY, x, b->y, width, b->height);
 	see_qsleft(&qw,s->SBLACK);
 	see_qsright(&qw,s->SBLACK);
 	resee_knob(&qw);
