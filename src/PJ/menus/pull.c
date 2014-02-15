@@ -365,7 +365,7 @@ cleanup:
 int menu_dopull(Menuhdr *mh)
 /* "feels" a pull initiated as (*menuhdr->domenu) in input loop */
 {
-SHORT selid;
+SHORT selid = -1;
 int ret;
 
 	if(JSTHIT(KEYHIT))
