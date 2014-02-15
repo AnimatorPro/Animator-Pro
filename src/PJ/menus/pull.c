@@ -206,6 +206,8 @@ Pull *p0,*p1;
 	init_pullwork(&pw,mh);
 	x = mh->x;
 	y = mh->y;
+	ccx = x;
+	ccy = y;
 	cchild = NULL;
 	p0 = NULL; 
 	/* note that here pw.level = 0 */
