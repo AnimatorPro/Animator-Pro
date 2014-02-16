@@ -2,7 +2,7 @@
 
 O = softmenu.obj loadstri.obj loadpull.obj dstring.obj \
 	dstrgets.obj keyequiv.obj pullfmt.obj softok.obj \
-	defpull.obj serrtext.obj namestri.obj snamestr.obj sofpanel.obj
+	serrtext.obj namestri.obj snamestr.obj sofpanel.obj
 
 objlib: softmenu.lib
 	@cd
