@@ -191,11 +191,6 @@ error:
 	return(err);
 }
 
-char *smu_clone_string(char *s)
-/* this will alloc so smu_free_text() can be used */
-{
-	return(clone_string(s));
-}
 void smu_free_text(char **ptext)
 /* Free text string */
 {

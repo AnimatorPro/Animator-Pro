@@ -114,9 +114,6 @@
 	/* Allocates and reads in a string from resource file */
 	Errcode smu_load_text(struct softmenu *sm, char *key, char **ptext);
 
-	/* this can be freed with smu_free_text() */
-	char *smu_clone_string(char *s);
-
 	void smu_free_text(char **ptext);
 
 	/* Reads in string from resource file into fixed sized buffer. */
