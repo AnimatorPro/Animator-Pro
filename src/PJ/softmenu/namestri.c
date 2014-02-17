@@ -365,7 +365,7 @@ error: /* note success gets you here too */
 
 	if(err < Success)
 	{
-		if(flags && SCT_STRINIT)
+		if (flags & SCT_STRINIT)
 			default_common_str();
 
 		err = softerr(err, "!%s%s%s", "no_smu_class_item", 
