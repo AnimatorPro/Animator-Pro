@@ -14,6 +14,7 @@ add_subdirectory(picdrive)
 add_subdirectory(poco)
 add_subdirectory(rastlib)
 add_subdirectory(rexlib)
+add_subdirectory(softmenu)
 add_subdirectory(util)
 
 set(PJMAIN_SRC_FILES
@@ -32,4 +33,5 @@ target_link_libraries(pj
 	poco
 	raster
 	minirex
+	softmenu
 	trdutil)
