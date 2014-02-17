@@ -19,6 +19,7 @@ static int longest_pdata(Pull *p)
 int acc, len;
 
 acc = 0;
+len = 0;
 while (p != NULL)
 	{
 	if (p->data != NULL)
