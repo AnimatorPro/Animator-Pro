@@ -169,12 +169,12 @@ return(err);
 
 static Errcode smu_init_classes(struct softmenu *smu,	/* constructor */
 	char **class_names,				/* names of all classes */
-	int class_count,				/* total # of classes */
+	unsigned int class_count,		/* total # of classes */
 	char *resource_file)			/* resource file name */
 /* initialize softmenu with a class-list */
 {
 Errcode err = Success;
-int i;
+unsigned int i;
 
 clear_struct(smu);
 if ((smu->classes = pj_zalloc(class_count*sizeof(*smu->classes))) == NULL)

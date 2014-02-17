@@ -65,7 +65,7 @@ return(err = soft_menu_err(err, SMU_STRINGS_CLASS, symname));
 #endif /* SLUFFED */
 
 Errcode soft_name_scatters(char *symname, Smu_name_scats *nscats,
-			  			   int num_scats, void **allocd, USHORT flags)
+		unsigned int num_scats, void **allocd, USHORT flags)
 /* If fill all is true it will abort error if all the symbols are not found */
 {
 	return(smu_name_scatters(&smu_sm,symname,nscats,num_scats,

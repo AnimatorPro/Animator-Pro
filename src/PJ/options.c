@@ -1603,7 +1603,7 @@ Errcode load_option_names(Option_tool *list, char *symname,
 /* loads names from softmenu namestring text from keys in the tools
  * returns Success if loaded and puts text in *ptext to be freed later */
 {
-int count;
+unsigned int count;
 Smu_name_scats scts[151];
 Smu_name_scats *sc = scts;
 

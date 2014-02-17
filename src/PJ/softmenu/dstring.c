@@ -19,7 +19,7 @@ if (ds->is_dynamic)
 	pj_freez(&ds->buf);
 }
 
-Errcode dstring_newbuf(Dstring *ds,int newsize, Boolean copy_old)
+Errcode dstring_newbuf(Dstring *ds, unsigned int newsize, Boolean copy_old)
 /* Allocate dynamic string buffer for Stok. Re-allocs even if size 
  * desired is equal to current buffer size */
 {

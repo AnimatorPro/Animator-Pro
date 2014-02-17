@@ -35,7 +35,7 @@ struct lfile;
 	Errcode dstring_strcat(Dstring *ds, /* Splice zero terminated dstrings */
 		Dstring *ss);	/* Dstring to add at end */
 	Errcode dstring_newbuf(Dstring *ds,   /* get buffer for dstring */
-		int newsize, 				/* size of buffer */
+		unsigned int newsize, 		/* size of buffer */
 		Boolean copy_old);			/* copy old contents? */
 
 	/* get clone at expense of dstring buffer */

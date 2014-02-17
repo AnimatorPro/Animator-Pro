@@ -7,7 +7,7 @@
 
 int soft_buttons(char *listsym, 
 				 Smu_button_list *blist,
-				 int bcount,
+				 unsigned int bcount,
 				 void **allocd )
 
 /* this takes a list like smu_name_scatters but it is a list of pointers to 

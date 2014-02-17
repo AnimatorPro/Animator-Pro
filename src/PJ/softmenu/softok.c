@@ -74,7 +74,7 @@ do	{
 		{
 		smt->tpos = swork->lastfpos + swork->line_pos - swork->line.buf;
 		}
-	if (swork->line.blen > sizeof(buf))
+	if (swork->line.blen > (int)sizeof(buf))
 		{
 		if ((pt = pj_malloc(swork->line.blen)) == NULL)
 			{

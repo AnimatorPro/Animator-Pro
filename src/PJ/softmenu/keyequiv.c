@@ -2,9 +2,7 @@
 #include "pjbasics.h"
 #include "softmenu.h"
 
-
-
-Errcode load_key_equivs(char *symname, Keyequiv *kfin, int count)
+Errcode load_key_equivs(char *symname, Keyequiv *kfin, unsigned int count)
 /* currently limited to 150 items, does not require freeing  */
 {
 Errcode err;
@@ -47,7 +45,7 @@ void *ss;
 	smu_free_scatters(&ss);
 	return(Success);
 }
-Boolean do_keyequiv(SHORT key, Keyequiv *kf, int count)
+Boolean do_keyequiv(SHORT key, Keyequiv *kf, unsigned int count)
 {
 Keyequiv *max;
 

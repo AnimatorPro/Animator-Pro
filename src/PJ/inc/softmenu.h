@@ -30,7 +30,7 @@
 		{
 		void *sf;	/* a FILE but don't want to force <stdio.h> */
 		struct smu_class *classes;
-		int class_count;
+		unsigned int class_count;
 		long err_line;	/* where error has occured if any */
 		} Softmenu;
 #define smu_is_open(sm) ((sm)->sf != NULL)
@@ -177,13 +177,13 @@ int smu_name_scatters(struct softmenu *sm,	/* read in a named string */
 				char *symname,	/* name of symbol in resource file */
 			  	Smu_name_scats *nscats,	/* names and where to put
 			  						 	 * results */
-			  	int num_scats, /* size of scts array */
+				unsigned int num_scats, /* size of scts array */
 			  	void **allocd,   /* pointer to what one needs to free.
 			  					   * with smu_free_scatters() */
 			 	USHORT flags );  /* see defines above */
 
 Errcode soft_name_scatters(char *symname, Smu_name_scats *scts,
-			  int num_scatters, void **allocd, USHORT flags);
+		unsigned int num_scatters, void **allocd, USHORT flags);
 
 typedef struct smu_button_list {
 	char *name;
@@ -194,7 +194,7 @@ typedef struct smu_button_list {
 } Smu_button_list;
 
 int soft_buttons(char *listsym, Smu_button_list *blist, 
-				 int bcount, void **allocd );
+		unsigned int bcount, void **allocd);
 
 Errcode soft_qchoice_err(Errcode err, char *symname);
 Errcode soft_strings(char *symname, Smu_strings *s);
@@ -227,8 +227,8 @@ typedef struct keyequiv {
 #define KE_NOHIDE 0
 #define KE_LOADED 0x0002
 
-Errcode load_key_equivs(char *symname, Keyequiv *kfin, int count);
-Boolean do_keyequiv(SHORT key, Keyequiv *kf, int count);
+Errcode load_key_equivs(char *symname, Keyequiv *kfin, unsigned int count);
+Boolean do_keyequiv(SHORT key, Keyequiv *kf, unsigned int count);
 Boolean hit_keyequiv(Keyequiv *ke, SHORT key);
 
 #endif /* SOFTMENU_H */

@@ -273,7 +273,7 @@ int smu_name_scatters(struct softmenu *sm,	/* read in a named string */
 				  char *symname,	/* name of symbol in resource file */
 			  Smu_name_scats *scts,	/* keys and where to put
 			  							 * results */
-			  int num_scatters, /* how many of them we want to load */
+			  unsigned int num_scatters, /* how many of them we want to load */
 			  void **allocd,    /* pointer to what one needs to free.
 			  				     * To get rid of them use smu_free_scatters()
 								 * this should not be accessed otherwise */

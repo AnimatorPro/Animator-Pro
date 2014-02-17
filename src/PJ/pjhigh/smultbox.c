@@ -20,7 +20,7 @@ char *formats;
 char *choices[TBOX_MAXCHOICES+2];
 Smu_name_scats scts[TBOX_MAXCHOICES+1];
 void *ss;
-int count;
+unsigned int count;
 
 	for(count = 0;count < (TBOX_MAXCHOICES+1);++count)
 	{
