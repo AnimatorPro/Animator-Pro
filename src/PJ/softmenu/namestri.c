@@ -78,8 +78,9 @@ struct dsload {
 	Dstring ds;
 	char *name;
 };
-static Errcode found_string_to_dstring(Swork *swork,struct dsload *dsl)
+static Errcode found_string_to_dstring(Swork *swork, void *data)
 {
+struct dsload *dsl = data;
 Errcode err;
 Stok *t;
 Boolean match;
@@ -128,8 +129,9 @@ struct bufload {
 	int size;
 };
 
-static Errcode found_string_to_buf(Swork *swork,struct bufload *bl)
+static Errcode found_string_to_buf(Swork *swork, void *data)
 {
+struct bufload *bl = data;
 Stok *t;
 Boolean match;
 int len_copy;
@@ -214,8 +216,9 @@ struct sctlist *prev;
 	return(lst);
 }
 
-static Errcode load_name_scatter(Swork *swork,struct sctload *sl)
+static Errcode load_name_scatter(Swork *swork, void *data)
 {
+struct sctload *sl = data;
 Errcode err;
 Stok *t;
 struct sctlist *prev;
@@ -339,7 +342,7 @@ char **toload;
 	}
 
 	/* allocate cloned text buffer */
-	err = dstring_get_clone(&sl.ds,allocd);
+	err = dstring_get_clone(&sl.ds, (char **)allocd);
 
 error: /* note success gets you here too */
 

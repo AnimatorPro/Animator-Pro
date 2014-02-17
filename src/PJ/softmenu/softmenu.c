@@ -185,7 +185,7 @@ if ((smu->classes = pj_zalloc(class_count*sizeof(*smu->classes))) == NULL)
 smu->class_count = class_count;
 for (i=0; i<class_count; i++)
 	smu->classes[i].name = class_names[i];
-if ((err = ffopen(resource_file, &smu->sf, rb_str)) < Success)
+if ((err = ffopen(resource_file, (FILE **)&smu->sf, rb_str)) < Success)
 	goto OUT;
 if ((err = smu_parse(smu)) < Success)
 	goto OUT;
@@ -219,7 +219,7 @@ void smu_cleanup(struct softmenu *sm)	/* destructor */
 int i;
 Smu_class *cl = sm->classes;
 
-ffclose(&sm->sf);
+ffclose((FILE **)&sm->sf);
 i = sm->class_count;
 while (--i >=0)
 	{
