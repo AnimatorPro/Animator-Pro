@@ -1,6 +1,7 @@
 /* loadstri.c - Parse simply (optional) comma separated lists of strings.
  * Parses class Strings and class Qchoice SoftMenu objects */
 
+#include <string.h>
 #include "errcodes.h"
 #include "linklist.h"
 #include "memory.h"

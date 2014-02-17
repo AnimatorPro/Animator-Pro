@@ -23,8 +23,6 @@
 		long tpos;		/* file byte position */
 		long tline;		/* file line position */
 		} Stok;
-void stok_init(Stok *smt);
-void stok_cleanup(Stok *smt);
 
 #define SWORKLOOK 3
 typedef struct

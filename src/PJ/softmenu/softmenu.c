@@ -29,13 +29,15 @@
  *
  */
 
-#include "softmenu.h"
-#include "memory.h"
-#include "linklist.h"
-#include "jfile.h"
-#include "errcodes.h"
+#include <stdio.h>
+#include <string.h>
 #include "commonst.h"
-
+#include "errcodes.h"
+#include "ffile.h"
+#include "jfile.h"
+#include "linklist.h"
+#include "memory.h"
+#include "softmenu.h"
 
 static Errcode new_smu_symbol(Smu_symbol **psym, Smu_class *class, 
 	char *name)

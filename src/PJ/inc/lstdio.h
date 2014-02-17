@@ -31,7 +31,7 @@
 #define BFL_CONTZ		0x0020		/* have gotten a control z */
 #define BFL_RW			(BFL_READ|BFL_WRITE)
 
-typedef	struct			/* LFILE structure */
+typedef struct lfile	/* LFILE structure */
 	{
 	UBYTE *pt;			/* next character pointer */
 	UBYTE *start;		/* start address of buffer */

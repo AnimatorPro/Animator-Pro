@@ -1,7 +1,8 @@
 /* pullfmt.c - calculate the xy positioning of a pulldown that has
    already been allocated, loaded, and has strings. */
 
-#include "menus.h"
+#include <string.h>
+#include "softmenu.h"
 
 typedef struct pullf_cb
 /* control block - variable space */

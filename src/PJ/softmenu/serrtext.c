@@ -1,6 +1,7 @@
 /* serrtext.c - search resource file for text string describing
  * Errcode. */
 
+#include <string.h>
 #include "errcodes.h"
 #include "softmenu.h"
 

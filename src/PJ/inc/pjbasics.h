@@ -110,6 +110,9 @@ void fliborder_on();
 void erase_flibord();
 void draw_flibord();
 
+extern void hide_mp(void);
+extern void show_mp(void);
+
 /* arrow images for sliders etc in images.c */
 
 extern Image *leftright_arrs[2];

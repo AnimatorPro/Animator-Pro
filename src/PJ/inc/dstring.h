@@ -8,6 +8,8 @@
 	#include "stdtypes.h"
 #endif 
 
+struct lfile;
+
 /* The main data structure is */
 	#define DST_SMALL 80
 	typedef struct dstring
@@ -38,5 +40,7 @@
 
 	/* get clone at expense of dstring buffer */
 	Errcode dstring_get_clone(Dstring *ds,char **ptext);
+
+extern Errcode dstring_get_line(Dstring *ds, struct lfile *f);
 
 #endif /* DSTRING_H */

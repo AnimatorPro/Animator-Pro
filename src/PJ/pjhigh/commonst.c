@@ -41,7 +41,7 @@ static Smu_name_scats common_keys[] = {
 };
 static void *common_ss;
 
-void default_common_str()
+void default_common_str(void)
 /* make 'ok', 'continue', etc same as they're symbol names so will
  * appear in English ok at least in error conditions */
 {

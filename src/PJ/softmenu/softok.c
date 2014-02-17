@@ -4,7 +4,7 @@
 #include "memory.h"
 #include <string.h>
 
-void stok_init(Stok *smt)
+static void stok_init(Stok *smt)
 /* constructor for a Stok */
 {
 dstring_init(&smt->d);
@@ -13,7 +13,7 @@ smt->tpos = 0;
 smt->longval = 0;
 }
 
-void stok_cleanup(Stok *smt)
+static void stok_cleanup(Stok *smt)
 /* Destroy an Stok */
 {
 dstring_cleanup(&smt->d);

@@ -1,3 +1,5 @@
+#include <ctype.h>
+#include "pjbasics.h"
 #include "softmenu.h"
 
 

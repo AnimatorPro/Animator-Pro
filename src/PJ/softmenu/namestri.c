@@ -9,12 +9,13 @@
    We use these to group together messages where we don't want to
    put a million of them in individual text things.
  */
-#include "softmenu.h"
+#include <string.h>
+#include "jimk.h"
+#include "commonst.h"
 #include "errcodes.h"
-#include "ptrmacro.h"
 #include "memory.h"
-
-
+#include "ptrmacro.h"
+#include "softmenu.h"
 
 static Errcode smu_do_name_things(struct softmenu *sm, 
 						   char *symname,
@@ -175,7 +176,7 @@ error:
 	return(nametext_err(err, symname, strname));
 }
 
-typedef struct sctlist {
+struct sctlist {
 	struct sctlist *next;
 	Smu_name_scats *sct;
 };

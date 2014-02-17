@@ -85,6 +85,8 @@
 	Errcode smu_load_pull(struct softmenu *sm,		/* read in a pulldown */
 		char *symname,					/* name of symbol */
 		struct menuhdr *pullhdr);		/* place to put loaded pulldown */
+	void pullfmt(struct menuhdr *mp, int subspace,
+		int charw, int charh, Rectangle *screen_rect);
 	/* Free pullhdr gotten from smu_load_pull */
 	void smu_free_pull(struct menuhdr *pullhdr);
 
@@ -227,5 +229,6 @@ typedef struct keyequiv {
 
 Errcode load_key_equivs(char *symname, Keyequiv *kfin, int count);
 Boolean do_keyequiv(SHORT key, Keyequiv *kf, int count);
+Boolean hit_keyequiv(Keyequiv *ke, SHORT key);
 
 #endif /* SOFTMENU_H */

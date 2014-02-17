@@ -22,6 +22,7 @@
  * replaced with white space with the same result.
  */
 
+#include <string.h>
 #include "menus.h"
 #include "softmenu.h"
 #include "ptrmacro.h"

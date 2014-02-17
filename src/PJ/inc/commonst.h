@@ -22,4 +22,6 @@ extern char w_str[];
 extern char rb_str[];
 extern char wb_str[];
 
+extern void default_common_str(void);
+
 #endif /* COMMONST_H */

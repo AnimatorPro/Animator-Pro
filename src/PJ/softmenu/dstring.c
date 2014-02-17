@@ -1,3 +1,4 @@
+#include <string.h>
 #include "dstring.h"
 #include "errcodes.h"
 #include "memory.h"
