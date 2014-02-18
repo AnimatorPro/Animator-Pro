@@ -21,16 +21,6 @@ static Pixel default_mc_colors[NUM_MUCOLORS] = {
 	FIRST_MUCOLOR + 4,
 };
 
-void close_all_wndos(Wscreen *s)
-
-/* will not close root window */
-{
-Wndo *w;
-
-	cleanup_wait_wndo(s);
-	while((w = (Wndo *)get_head(&s->wilist)) != NULL)
-		close_wndo(TOSTRUCT(Wndo,W_node,w));
-}
 void close_wscreen(Wscreen *s)
 {
 Wndo *w;
