@@ -286,18 +286,6 @@ Rectangle newpos;
 	build_all_clips(ws,1); /* this makes the screen wndo drawable */
 	return(0);
 }
-void move_wndo(Wndo *w, SHORT dx, SHORT dy)
-{
-Rectangle newpos;
-
-	if(!dx && !dy)
-		return;
-
-	copy_rectfields(w,&newpos);
-	newpos.x += dx;
-	newpos.y += dy;
-	reposit_wndo(w,&newpos,NULL);
-}
 
 static void wndohide(Wndo *w,USHORT full_update)
 /* makes window invisible but maintains position in list */

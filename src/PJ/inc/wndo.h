@@ -352,7 +352,6 @@ Errcode open_wndo(Wndo **pw, WndoInit *wi);
 void close_wndo(Wndo *w);
 void get_wndo_oset(Wndo *w, Short_xy *oset);
 Boolean reposit_wndo(Wndo *w,Rectangle *newpos,Short_xy *oset);
-void move_wndo(Wndo *w, SHORT dx, SHORT dy);
 Boolean ptin_wndo(Wndo *w,SHORT x,SHORT y);
 Boolean wndo_dot_visible(Wndo *w,Coor x,Coor y);
 Boolean curson_wndo(Wndo *w);
