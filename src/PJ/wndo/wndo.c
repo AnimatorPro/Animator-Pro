@@ -318,10 +318,6 @@ Wscreen *ws;
 	w->flags |= WNDO_HIDDEN;
 	build_all_clips(ws,full_update);
 }
-void show_wndo(Wndo *w)
-{
-	wndoshow(w,1);
-}
 static void wndoshow(Wndo *w,USHORT full_update)
 /* restores a hidden window to visibility */
 {
