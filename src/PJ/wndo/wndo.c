@@ -298,10 +298,6 @@ Rectangle newpos;
 	newpos.y += dy;
 	reposit_wndo(w,&newpos,NULL);
 }
-void hide_wndo(Wndo *w)
-{
-	wndohide(w,1);
-}
 
 static void wndohide(Wndo *w,USHORT full_update)
 /* makes window invisible but maintains position in list */
