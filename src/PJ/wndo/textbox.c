@@ -311,7 +311,7 @@ SHORT txbord;	/* textblock border width */
 SHORT clickoset = 0; /* clicker border x offset width */
 SHORT txtwidth;
 Wscreen *tbs;
-LONG extray;
+LONG extray = 0;
 char sbuf[256];
 char *tbuf;
 char *text;
