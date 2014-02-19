@@ -112,7 +112,7 @@ Boolean reposit_wndo(Wndo *w,Rectangle *newpos,Short_xy *newoset)
 Fullrect pos;
 Short_xy oset;
 Short_xy woset;
-int wasin;
+int wasin = 0;
 Wscreen *ws;
 
 	if(w->type != RT_WINDOW) /* can't move non windows */
