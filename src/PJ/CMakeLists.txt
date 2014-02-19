@@ -16,6 +16,7 @@ add_subdirectory(rastlib)
 add_subdirectory(rexlib)
 add_subdirectory(softmenu)
 add_subdirectory(util)
+add_subdirectory(wndo)
 
 set(PJMAIN_SRC_FILES
 	test.c
@@ -34,4 +35,5 @@ target_link_libraries(pj
 	raster
 	minirex
 	softmenu
-	trdutil)
+	trdutil
+	wndolib)
