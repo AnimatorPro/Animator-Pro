@@ -308,7 +308,7 @@ SHORT cheight;
 SHORT cwidth;
 SHORT vbord;    /* vertical border height */
 SHORT txbord;	/* textblock border width */
-SHORT clickoset;	/* clicker border x offset width */
+SHORT clickoset = 0; /* clicker border x offset width */
 SHORT txtwidth;
 Wscreen *tbs;
 LONG extray;
