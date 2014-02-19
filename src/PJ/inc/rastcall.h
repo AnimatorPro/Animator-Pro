@@ -163,7 +163,7 @@ pj__blitrect(RASType *source, Coor src_x, Coor src_y,
 			 Ucoor width, Ucoor height);
 
 void pj_blitrect(RASType *source, Coor src_x, Coor src_y,
-			 RASType *dest, Coor dest_x, Coor dest_y,Coor width, Coor height);
+		RASType *dest, Coor dest_x, Coor dest_y, Ucoor width, Ucoor height);
 
 extern Errcode
 pj__tblitrect(RASType *s, Coor sx, Coor sy,

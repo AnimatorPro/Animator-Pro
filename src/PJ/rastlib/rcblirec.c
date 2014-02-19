@@ -4,7 +4,7 @@ void pj_blitrect(Raster *source,			 /* source raster */
 			 Coor src_x, Coor src_y,  /* source Minx and Miny */
 			 Raster *dest,   		    /* destination raster */
 			 Coor dest_x, Coor dest_y, /* destination minx and miny */
-			 Coor width, Coor height)  /* blit size */  
+			 Ucoor width, Ucoor height) /* blit size */
 
 
 /* (should) copys rectangle from source to destination these should handle

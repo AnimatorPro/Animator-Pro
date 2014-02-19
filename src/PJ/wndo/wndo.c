@@ -10,16 +10,17 @@
 #include "reqlib.h"
 #include "wndo.h"
 
+typedef void (*Bhblit)(Raster *behind,Coor x,Coor y,
+		Raster *rast, Coor rx,  Coor ry, Ucoor width, Ucoor height);
+
 static void blit_saveonly(Raster *behind,Coor x,Coor y,
 						  Raster *rast,Coor rx, Coor ry,
-						  Coor width, Coor height)
+						  Ucoor width, Ucoor height)
 {
 	/* simply move raster to behind no need to copy in rast to its areas */
 	pj_blitrect(rast,rx,ry,behind,x,y,width,height);
 }
 
-typedef void (*Bhblit)(Raster *behind,Coor x,Coor y,
-					   Raster *rast,Coor rx, Coor ry,Coor width,Coor height);
 
 static void blit_behind(Wndo *w,Bhblit blit)
 
