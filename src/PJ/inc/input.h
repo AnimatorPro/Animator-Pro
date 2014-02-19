@@ -69,6 +69,7 @@ typedef void (*cursorhdr_func)(struct cursorhdr *ch,...);
 extern Cursorhdr null_cursor; /* a do nothing invisible cursor */
 /* generic move cursor function calls hideit then showit */
 extern void gen_move_cursor(Cursorhdr *ch); 
+extern void set_cursor(Cursorhdr *cd);
 
 typedef struct mouset
 {

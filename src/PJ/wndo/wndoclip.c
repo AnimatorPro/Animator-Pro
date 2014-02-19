@@ -1,3 +1,4 @@
+#include <string.h>
 #include "errcodes.h"
 #include "memory.h"
 #define WNDO_INTERNALS
@@ -179,7 +180,7 @@ UBYTE rastid;
 	pj_stuff_pointers(ydots,w->ydots,w->behind.width,4);
 }
 
-void load_root_backdots(Wndo *root, Wndo *w, Cliprect *Union)
+static void load_root_backdots(Wndo *root, Wndo *w, Cliprect *Union)
 
 /* copys ydots buffers from root into window that are in "Union" area around
  * Union is pointed to windows own backup area */

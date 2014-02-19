@@ -1,18 +1,20 @@
 /* textbox.c - Stuff for continue alerts and yes/no dialogs. */
 
+#include <ctype.h>
 #include <stdarg.h>
+#include "lstdio.h"
+#include "commonst.h"
 #include "errcodes.h"
 #include "ftextf.h"
 #include "gfx.h"
 #include "input.h"
-#include "lstdio.h"
 #include "memory.h"
 #include "rastext.h"
 #include "wndo.h"
 #include "wordwrap.h"
 
-extern char *any_continue;
-extern char *enter_choice;
+/* Note: lstdio #defines away a bunch of stdio stuff. */
+extern int getchar(void);
 
 /***** text boxes: these are at a lower level than windows so are used for
  	   error alerts and the like. they disable all input "wtasks" while they
@@ -42,11 +44,11 @@ typedef struct tbox {
 	UBYTE mouse_was_up;
 } Tbox;
 
-void enable_textboxes()
+void enable_textboxes(void)
 {
 	icb.wflags |= IWF_TBOXES_OK;
 }
-int disable_textboxes()
+int disable_textboxes(void)
 {
 int ret;
 
@@ -82,7 +84,6 @@ int x1 = x+w-1;
 int y1 = y+h-1;
 int b2 = bevel*2;
 int bm = bevel-1;
-int bp = bevel+1;
 
 	x1 = x+w-1;
 	y1 = y+h-1;
@@ -281,7 +282,7 @@ SHORT x,y;
 
 	}
 }
-static remclose_tbox(Tbox *tbox)
+static void remclose_tbox(Tbox *tbox)
 {
 	if(tbox->rastopen)
 	{
@@ -444,7 +445,7 @@ done:
 	return(err);
 }
 #define LBORD "\n\xB3 "  /* string for bios for vertical line formation */
-static void print_topbord()
+static void print_topbord(void)
 {
 int i;
 
@@ -491,7 +492,7 @@ char c, *txt;
 	}
 	return(Success);
 }
-static int stdout_wait_any()
+static int stdout_wait_any(void)
 {
 	fprintf(stderr, LBORD LBORD "%s", any_continue );
 	fflush(stderr);

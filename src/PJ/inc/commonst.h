@@ -4,6 +4,8 @@
 /* commonst.h - place where common strings like "ok", "cancel", "load",
  * "save", etc. are defined */
 
+extern char *any_continue;
+extern char *enter_choice;
 extern char *continue_str;
 extern char *yes_str;
 extern char *no_str;

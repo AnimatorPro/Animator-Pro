@@ -1,3 +1,4 @@
+#include <string.h>
 #include "memory.h"
 #include "ptrmacro.h"
 #include "input.h"
@@ -216,7 +217,6 @@ Dlnode *next;
 		if(w->mc_csetid != ws->mc_csetid)
 			redraw_wndo(w);
 	}
-done:
 	ws->flags &= ~WS_REFRESH_SET;
 	return(1); /* done with it */
 }

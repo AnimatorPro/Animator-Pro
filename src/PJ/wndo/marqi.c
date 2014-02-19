@@ -2,6 +2,7 @@
 /* Also some "Dotout" family functions that take x/y parameters and act
    on render_form.  Dotout's are used by line drawers, circle drawers etc. */
 
+#define RASTCALL_INTERNALS
 #define MARQI_C
 #include "errcodes.h"
 #include "gfx.h"
@@ -9,20 +10,23 @@
 #include "marqi.h"
 #include "memory.h"
 #include "ptrmacro.h"
+#include "rastlib.h"
 #include "wndo.h"
 
-static void marqidot(SHORT x,SHORT y,register Marqihdr *mh)
+static void marqidot(SHORT x, SHORT y, void *data)
 /* dotout for creepy marqi users */
 {
+Marqihdr *mh = data;
 Pixel color;
 
 	color = ((--(mh->dmod)&7) < 4 ? mh->oncolor : mh->offcolor);
-	(*(mh->putdot))(mh->w,color,x,y);
+	(*(mh->putdot))((Raster *)mh->w, color, x, y);
 }
-static void oncolordot(SHORT x,SHORT y,Marqihdr *mh)
+static void oncolordot(SHORT x, SHORT y, void *data)
 /* set dot to oncolor */
 {
-	(*(mh->putdot))(mh->w,mh->oncolor,x,y);
+	Marqihdr *mh = data;
+	(*(mh->putdot))((Raster*)mh->w, mh->oncolor, x, y);
 }
 
 void init_marqihdr(Marqihdr *mh,Wndo *w,Rectangle *port,
@@ -84,7 +88,7 @@ typedef struct rectdata {
 	SHORT saved;
 } Rectdata;
 
-static saverest_frame(Marqihdr *mh, Boolean save)
+static void saverest_frame(Marqihdr *mh, Boolean save)
 
 /* saves a frame (clips for safety) and has inverse restore */
 {
@@ -218,8 +222,7 @@ Rectangle newrect;
 	marqi_mhframe(mh);
 	return(0);
 }
-Errcode marqrub_rect(Marqihdr *mh, Rectangle *rect, Rectangle *sclip)
-
+static Errcode marqrub_rect(Marqihdr *mh, Rectangle *rect, Rectangle *sclip)
 /* marqmove_rect.  Will display marqi-ing rubber rect following cursor 
  * until next click if clipit the clipit function is called after each delta
  * and before redisplay will clip to maximum width and height in sclip */
@@ -266,9 +269,8 @@ void marqi_cut(Marqihdr *mh,Coor x,Coor y)
 static void saverest_cut(Marqihdr *mh, int save)
 {
 Rectdata *rd = mh->adata;
-void (*hseg)(void *r,void *buf,Coor x,Coor y,Coor w);
-void (*vseg)(void *r,void *buf,Coor x,Coor y,Coor h);
-
+rl_type_get_hseg hseg;
+rl_type_get_vseg vseg;
 
 	if(save)
 	{
@@ -281,8 +283,12 @@ void (*vseg)(void *r,void *buf,Coor x,Coor y,Coor h);
 		hseg = pj_put_hseg;
 		vseg = pj_put_vseg;
 	}
-	hseg(mh->w,rd->save,0,rd->lasty,mh->port.width);
-	vseg(mh->w,rd->save + mh->port.width,rd->lastx,0,mh->port.height);
+
+	hseg((Raster *)mh->w, rd->save,
+			0, rd->lasty, mh->port.width);
+
+	vseg((Raster *)mh->w, rd->save + mh->port.width,
+			rd->lastx, 0, mh->port.height);
 }
 
 static int anim_cut(Marqihdr *mh)

@@ -321,9 +321,15 @@ typedef struct wscrinit {
 
 Errcode open_wscreen(Wscreen **ps, WscrInit *si);
 void close_wscreen(Wscreen *s);
-void set_input_screen(Wscreen *s);
 void set_ext_cel(Wscreen *s,Rcel **ext_cel);
-Boolean find_mucolors(Wscreen *ws);
+
+extern Boolean visible_mucolors(Cmap *cmap, Pixel *mucolors);
+extern Boolean has_menu_colors(Cmap *cmap, Wscreen *s);
+extern void uncheck_mucmap(Wscreen *s);
+extern Boolean lastmuc_changed(Wscreen *s);
+extern Boolean find_mucolors(Wscreen *ws);
+extern void try_mucolors(Wscreen *s);
+extern void set_new_mucolors(Rgb3 *new_ideals, Wscreen *s);
 
 extern void set_refresh(Wscreen *ws);
 extern void disable_wrefresh(Wscreen *ws);
@@ -338,6 +344,9 @@ diag_inside(void *rast, int x, int y, int w, int h, int color, int bevel);
 /* textbox "takeover" requestor things */
 
 #define TBOX_MAXCHOICES	5
+extern void enable_textboxes(void);
+extern int disable_textboxes(void);
+
 Errcode tboxf(Wscreen *s,char *fmt,va_list args);
 Errcode tboxf_choice(Wscreen *s,char *formats,char *text,va_list args,
 					 char **choices, char *extratext);
@@ -349,9 +358,10 @@ void cleanup_wait_wndo(Wscreen *s);
 /* layer window things */
 
 Errcode open_wndo(Wndo **pw, WndoInit *wi);
+void _close_wndo(Wndo *w);
 void close_wndo(Wndo *w);
-void get_wndo_oset(Wndo *w, Short_xy *oset);
 Boolean reposit_wndo(Wndo *w,Rectangle *newpos,Short_xy *oset);
+Errcode move_rear_wndo(Wndo *w, void (*clipit)(Rectangle *r));
 Boolean ptin_wndo(Wndo *w,SHORT x,SHORT y);
 Boolean wndo_dot_visible(Wndo *w,Coor x,Coor y);
 Boolean curson_wndo(Wndo *w);
@@ -361,6 +371,7 @@ void init_wrefresh(Wscreen *s);
 
 /* set, save and restore icb input state for a window */
 
+extern void set_wndo_cursor(Wndo *w, Cursorhdr *ch);
 extern void load_wndo_mouset(Wndo *w);
 extern void load_wndo_iostate(Wndo *w);
 extern Boolean marqmove_wndo(Wndo *w, Rectangle *bclip);
@@ -395,6 +406,7 @@ extern struct rastlib *get_window_lib(void); /* multi clip lib */
 extern struct rastlib *get_wndo_r1lib(void); /* one raster lib */
 extern struct rastlib *get_wndo_r1oslib(void); /* one raster offset lib */
 
+void free_init_ydots(Wndo *w);
 void build_all_clips(Wscreen *ws,USHORT full_update);
 
 #endif /* WNDO_INTERNALS */

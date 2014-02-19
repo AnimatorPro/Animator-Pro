@@ -1,3 +1,4 @@
+#include <string.h>
 #include "errcodes.h"
 #include "memory.h"
 #include "ptrmacro.h"
@@ -20,6 +21,8 @@ static Pixel default_mc_colors[NUM_MUCOLORS] = {
 	FIRST_MUCOLOR + 3,
 	FIRST_MUCOLOR + 4,
 };
+
+static void set_input_screen(Wscreen *ws);
 
 void close_wscreen(Wscreen *s)
 {
@@ -135,7 +138,7 @@ error:
 	*ps = NULL;
 	return(err);
 }
-void set_input_screen(Wscreen *ws)
+static void set_input_screen(Wscreen *ws)
 {
 	icb.input_screen = ws;
 }

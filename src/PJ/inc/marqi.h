@@ -22,11 +22,11 @@ typedef struct marqihdr {
 	Fullrect port;	/* clip port for drawing and saving within Raster w */
 	Pixel oncolor, offcolor; /* loaded by init on and off colors */
 		/* raster put dot function set by init to "put_dot" */ 	
-	void (*putdot)(void *r,Pixel c,Coor x, Coor y); 
+	void (*putdot)(Raster *r, Pixel c, Coor x, Coor y);
 
 	SHORT smod;     /* set by init to 0 the start "mod" */
 	SHORT dmod;		/* set by init to 0 the current dot mod */
-	VFUNC pdot;		/* loaded by init: dotout function */
+	dotout_func pdot; /* loaded by init: dotout function */
 	void *adata;	/* animation subroutine specific data */
 	UBYTE *dotbuf;	/* current dot in save buffer for save and restore
 					 * dot calls set to NULL by init calls */
@@ -34,8 +34,18 @@ typedef struct marqihdr {
 	SHORT unused[7]; /* for future */
 } Marqihdr;
 
-void marqi_cut(Marqihdr *mh,Coor x,Coor y);
-Errcode screen_cut_rect(struct wscreen *s,Rectangle *rect,Rectangle *sclip);
+struct wndo;
+
+extern void
+init_marqihdr(Marqihdr *mh, struct wndo *w, Rectangle *port,
+		Pixel oncolor, Pixel offcolor);
+
+extern Errcode marqmove_rect(Marqihdr *mh, Rectangle *rect, Rectangle *bclip);
+extern void marqi_cut(Marqihdr *mh, Coor x, Coor y);
+extern Errcode mh_cut_rect(Marqihdr *mh, Rectangle *rect, Rectangle *sclip);
+
+extern Errcode
+screen_cut_rect(struct wscreen *s, Rectangle *rect, Rectangle *sclip);
 
 typedef struct marqi_circdat {
 	Marqihdr mh;

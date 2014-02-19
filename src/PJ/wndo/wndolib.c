@@ -1,10 +1,12 @@
+#include <assert.h>
 #include "rastlib.h"
 #include "memory.h"
 #define WNDO_INTERNALS
 #include "wndo.h"
 
-static void win_put_dot(Wndo *w, Pixel color, Coor x, Coor y)
+static void win_put_dot(Raster *wndo, Pixel color, Coor x, Coor y)
 {
+Wndo *w = (Wndo *)wndo;
 Raster *rast;
 
 	if((Ucoor)x >= w->width) /* window raster coords are always 0,0 minimum */
@@ -14,8 +16,9 @@ Raster *rast;
 	rast = w->rasts[*(w->ydots[x] + y)];
 	PUT_DOT(rast,color,x + w->behind.x - rast->x, y + w->behind.y - rast->y);
 }
-static void _win_put_dot(Wndo *w, Pixel color, Coor x, Coor y)
+static void _win_put_dot(Raster *wndo, Pixel color, Coor x, Coor y)
 {
+Wndo *w = (Wndo *)wndo;
 Raster *rast;
 
 #ifdef FOR_CLIP_TEST
@@ -29,8 +32,9 @@ Raster *rast;
 	rast = w->rasts[*(w->ydots[x] + y)];
 	PUT_DOT(rast,color,x + w->behind.x - rast->x, y + w->behind.y - rast->y);
 }
-static Pixel win_get_dot(Wndo *w, LONG x, LONG y)
+static Pixel win_get_dot(Raster *wndo, Coor x, Coor y)
 {
+Wndo *w = (Wndo *)wndo;
 Raster *rast;
 
 	/* window coords are always 0,0 minimum */
@@ -43,28 +47,30 @@ Raster *rast;
 	rast = w->rasts[*(w->ydots[x] + y)];
 	return(GET_DOT(rast,x + w->behind.x - rast->x, y + w->behind.y - rast->y));
 }
-static Pixel _win_get_dot(Wndo *w, LONG x, LONG y)
+static Pixel _win_get_dot(Raster *wndo, Coor x, Coor y)
 {
+Wndo *w = (Wndo *)wndo;
 Raster *rast;
 
 	rast = w->rasts[*(w->ydots[x] + y)];
 	return(GET_DOT(rast,x + w->behind.x - rast->x, y + w->behind.y - rast->y));
 }
-static void _win_put_hseg(Wndo *w,UBYTE *pixbuf,ULONG x,ULONG y,ULONG width)
+static void
+_win_put_hseg(Raster *wndo, Pixel *pixbuf, Coor x, Coor y, Ucoor width)
 {
+Wndo *w = (Wndo *)wndo;
 SHORT rastid;
 UBYTE *ydots;
 SHORT nextx;
-LONG firstx;
 SHORT xmax;
 SHORT wdif;
 Raster *rast;
 SHORT osy;
+assert(x >= 0 && y >= 0);
 
 	xmax = width + x;
 	osy = y + w->behind.y;
 	ydots = w->ydots[x];
-	firstx = x;
 	rastid = ydots[y];
 
 	for(;;)
@@ -88,22 +94,23 @@ SHORT osy;
 		x = nextx;
 	}
 }
-static void _win_get_hseg(Wndo *w,UBYTE *pixbuf,ULONG x,ULONG y,ULONG width)
+static void
+_win_get_hseg(Raster *wndo, Pixel *pixbuf, Coor x, Coor y, Ucoor width)
 {
+Wndo *w = (Wndo *)wndo;
 SHORT rastid;
 UBYTE *ydots;
 SHORT nextx;
-LONG firstx;
 SHORT xmax;
 SHORT wdif;
 Raster *rast;
 SHORT osy;
+assert(x >= 0 && y >= 0);
 
 	xmax = width + x;
 	osy = y + w->behind.y;
 	ydots = w->ydots[x];
 	rastid = ydots[y];
-	firstx = x;
 
 	for(;;)
 	{
@@ -126,19 +133,20 @@ SHORT osy;
 		x = nextx;
 	}
 }
-static void _win_put_vseg(Wndo *w,UBYTE *pixbuf,ULONG x,ULONG y,ULONG height)
+static void
+_win_put_vseg(Raster *wndo, Pixel *pixbuf, Coor x, Coor y, Ucoor height)
 {
+Wndo *w = (Wndo *)wndo;
 SHORT rastid;
 UBYTE *ydots;
 SHORT nexty;
-LONG firsty;
 SHORT ymax;
 SHORT hdif;
 Raster *rast;
 SHORT osx;
+assert(x >= 0 && y >= 0);
 
 	ymax = y + height;
-	firsty = y;
 	osx = x + w->behind.x;
 	ydots = w->ydots[x];
 	rastid = ydots[y];
@@ -166,19 +174,20 @@ SHORT osx;
 		nexty = w->vchanges[nexty];
 	}
 }
-static void _win_get_vseg(Wndo *w,UBYTE *pixbuf,ULONG x,ULONG y,ULONG height)
+static void
+_win_get_vseg(Raster *wndo, Pixel *pixbuf, Coor x, Coor y, Ucoor height)
 {
+Wndo *w = (Wndo *)wndo;
 SHORT rastid;
 UBYTE *ydots;
 SHORT nexty;
-LONG firsty;
 SHORT ymax;
 SHORT hdif;
 Raster *rast;
 SHORT osx;
+assert(x >= 0 && y >= 0);
 
 	ymax = y + height;
-	firsty = y;
 	osx = x + w->behind.x;
 	ydots = w->ydots[x];
 	rastid = ydots[y];
@@ -206,14 +215,17 @@ SHORT osx;
 		nexty = w->vchanges[nexty];
 	}
 }
-static void _win_set_hline(Wndo *w,Pixel color,LONG x,LONG y,ULONG width)
+static void
+_win_set_hline(Raster *wndo, Pixel color, Coor x, Coor y, Ucoor width)
 {
+Wndo *w = (Wndo *)wndo;
 SHORT rastid;
 UBYTE *ydots;
 SHORT nextx;
 SHORT xmax;
 Raster *rast;
 SHORT osy;
+assert(x >= 0 && y >= 0);
 
 	xmax = x + width;
 	osy = y + w->behind.y;
@@ -239,14 +251,17 @@ SHORT osy;
 		x = nextx;
 	}
 }
-static _win_set_vline(Wndo *w,Pixel color,LONG x,LONG y,ULONG height)
+static void
+_win_set_vline(Raster *wndo, Pixel color, Coor x, Coor y, Ucoor height)
 {
+Wndo *w = (Wndo *)wndo;
 SHORT rastid;
 UBYTE *ydots;
 SHORT nexty;
 SHORT ymax;
 Raster *rast;
 SHORT osx;
+assert(x >= 0 && y >= 0);
 
 	ymax = y + height;
 	osx = x + w->behind.x;
@@ -274,10 +289,12 @@ SHORT osx;
 		nexty = w->vchanges[nexty];
 	}
 }
-static void _win_set_rect(Wndo *w, Pixel color,
-			  			 LONG x, LONG y, ULONG width, ULONG height )
+static void
+_win_set_rect(Raster *wndo, Pixel color,
+		Coor x, Coor y, Ucoor width, Ucoor height)
 /* set a rectangle to a color */
 {
+Wndo *w = (Wndo *)wndo;
 SHORT xmax, ymax;
 SHORT nextx, nexty;
 LONG firstx;
@@ -286,6 +303,7 @@ SHORT osy;
 UBYTE *ydots;
 int rastid;
 Raster *rast;
+assert(x >= 0 && y >= 0);
 
 	xmax = x + width;
 	ymax = y + height;
@@ -328,10 +346,12 @@ Raster *rast;
 		y = nexty;
 	}
 }
-static void _win_xor_rect(Wndo *w, Pixel color,
-			  			 LONG x, LONG y, ULONG width, ULONG height )
+static void
+_win_xor_rect(Raster *wndo, Pixel color,
+		Coor x, Coor y, Ucoor width, Ucoor height)
 /* xors a rectangle with a color */
 {
+Wndo *w = (Wndo *)wndo;
 SHORT xmax, ymax;
 SHORT nextx, nexty;
 LONG firstx;
@@ -340,6 +360,7 @@ SHORT osy;
 UBYTE *ydots;
 int rastid;
 Raster *rast;
+assert(x >= 0 && y >= 0);
 
 	xmax = x + width;
 	ymax = y + height;
@@ -382,10 +403,12 @@ Raster *rast;
 		y = nexty;
 	}
 }
-void _win_mask1blit(UBYTE *mbytes, LONG mbpr, LONG mx, LONG my,
-			   		Wndo *w, LONG x, LONG y, ULONG width, ULONG height,
-			   		Pixel oncolor )
+static void
+_win_mask1blit(UBYTE *mbytes, unsigned int mbpr, Coor mx, Coor my,
+		Raster *wndo, Coor x, Coor y, Ucoor width, Ucoor height,
+		Pixel oncolor)
 {
+Wndo *w = (Wndo *)wndo;
 SHORT xmax, ymax;
 SHORT nextx, nexty;
 LONG firstx;
@@ -444,12 +467,13 @@ Raster *rast;
 
 }
 
-void _win_mask2blit(UBYTE *mbytes, LONG mbpr, LONG mx, LONG my, 
-			   		Wndo *w, LONG x, LONG y, ULONG width, ULONG height,
-			   		Pixel oncolor, Pixel offcolor )
+static void
+_win_mask2blit(UBYTE *mbytes, unsigned int mbpr, Coor mx, Coor my,
+		Raster *wndo, Coor x, Coor y, Ucoor width, Ucoor height,
+		Pixel oncolor, Pixel offcolor)
 {
+Wndo *w = (Wndo *)wndo;
 SHORT xmax, ymax;
-
 SHORT nextx, nexty;
 LONG firstx;
 LONG firstmx;
@@ -544,8 +568,9 @@ UBYTE mask;
 	}
 }
 #endif /* SLUFFED */
-void win_set_colors(Wndo *w, LONG start, LONG count, Rgb3 *ctab)
+static void win_set_colors(Raster *wndo, LONG start, LONG count, void *ctab)
 {
+Wndo *w = (Wndo *)wndo;
 Wscreen *s = w->W_screen;
 
 	SET_COLORS(s->viscel,start,count,ctab);
@@ -586,24 +611,28 @@ UBYTE mask;
 	}
 }
 #endif /* SLUFFED */
-static void win_uncc64(Wndo *w, Rgb3 *ctab)
+static void win_uncc64(Raster *wndo, UBYTE *ctab)
 {
+Wndo *w = (Wndo *)wndo;
 Wscreen *s = w->W_screen;
 
 	UNCC64(s->viscel,ctab);
 	if(s->flags & WS_MUCOLORS_UP)
 		set_refresh(s);
 }
-static void win_uncc256(Wndo *w, Rgb3 *ctab)
+static void win_uncc256(Raster *wndo, UBYTE *ctab)
 {
+Wndo *w = (Wndo *)wndo;
 Wscreen *s = w->W_screen;
 
 	UNCC256(s->viscel,ctab);
 	if(s->flags & WS_MUCOLORS_UP)
 		set_refresh(s);
 }
-static void win_wait_vsync(Wndo *w)
+static void win_wait_vsync(Raster *wndo)
 {
+	Wndo *w = (Wndo *)wndo;
+
 	if(!(w->flags & (WNDO_HIDDEN)))
 		WAIT_VSYNC(w->W_screen->viscel);
 }
@@ -615,28 +644,28 @@ static Rastlib winlib;
 	if(!loaded)
 	{
 		loaded = 1;
-		winlib.cput_dot   = (rl_type_cput_dot)win_put_dot;
-		winlib.put_dot = (rl_type_put_dot)_win_put_dot;
-		winlib.cget_dot = (rl_type_cget_dot)win_get_dot;
-		winlib.get_dot = (rl_type_get_dot)_win_get_dot;
-		winlib.put_hseg = (rl_type_put_hseg)_win_put_hseg;
-		winlib.get_hseg = (rl_type_get_hseg)_win_get_hseg;
-		winlib.put_vseg = (rl_type_put_vseg)_win_put_vseg;
-		winlib.get_vseg = (rl_type_get_vseg)_win_get_vseg;
-		winlib.set_hline = (rl_type_set_hline)_win_set_hline;
-		winlib.set_vline = (rl_type_set_vline)_win_set_vline;
-		winlib.set_rect = (rl_type_set_rect)_win_set_rect;
+		winlib.cput_dot = win_put_dot;
+		winlib.put_dot = _win_put_dot;
+		winlib.cget_dot = win_get_dot;
+		winlib.get_dot = _win_get_dot;
+		winlib.put_hseg = _win_put_hseg;
+		winlib.get_hseg = _win_get_hseg;
+		winlib.put_vseg = _win_put_vseg;
+		winlib.get_vseg = _win_get_vseg;
+		winlib.set_hline = _win_set_hline;
+		winlib.set_vline = _win_set_vline;
+		winlib.set_rect = _win_set_rect;
 
 		/* winlib.set_rast = NULL; let go through set rect since a wndo
 		 * is a rect */
 
-		winlib.xor_rect = (rl_type_xor_rect)_win_xor_rect;
-		winlib.mask1blit = (rl_type_mask1blit)_win_mask1blit;
-		winlib.mask2blit = (rl_type_mask2blit)_win_mask2blit;
-		winlib.set_colors = (rl_type_set_colors)win_set_colors;
-		winlib.uncc64 = (rl_type_uncc64)win_uncc64;
-		winlib.uncc256 = (rl_type_uncc256)win_uncc256;
-		winlib.wait_vsync = (rl_type_wait_vsync)win_wait_vsync;
+		winlib.xor_rect = _win_xor_rect;
+		winlib.mask1blit = _win_mask1blit;
+		winlib.mask2blit = _win_mask2blit;
+		winlib.set_colors = win_set_colors;
+		winlib.uncc64 = win_uncc64;
+		winlib.uncc256 = win_uncc256;
+		winlib.wait_vsync = win_wait_vsync;
 		pj_set_grc_calls(&winlib);
 	}
 	return(&winlib);

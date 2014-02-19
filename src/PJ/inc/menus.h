@@ -348,7 +348,6 @@ LONG do_reqloop(Wscreen *screen,Menuhdr *menu,Button *initb,
 
 /* these are for determining hits in buttons for menu relative x and y **/
 #define ptin_button(b,x,y) ptin_rect((Rectangle*)&((b)->RECTSTART),(x),(y))
-#define ptin_menuwndo(m,x,y) ptin_wndo(&((m)->w),(x),(y))
 
 Boolean cursin_menu(Menuhdr *m); /* is screen cursor in visible menu? */
 

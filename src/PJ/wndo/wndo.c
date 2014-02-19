@@ -1,3 +1,4 @@
+#define RASTCALL_INTERNALS
 #define WNDO_INTERNALS
 #include <limits.h>  /* for SHRT_MAX etc */
 #include "errcodes.h"
@@ -6,6 +7,7 @@
 #include "marqi.h"
 #include "memory.h"
 #include "ptrmacro.h"
+#include "reqlib.h"
 #include "wndo.h"
 
 static void blit_saveonly(Raster *behind,Coor x,Coor y,
@@ -90,7 +92,7 @@ int id;
 		if(rasts[id] == NULL) /* allways left NULL by close window */
 			return(id);
 }
-void get_wndo_oset(Wndo *w, Short_xy *oset)
+static void get_wndo_oset(Wndo *w, Short_xy *oset)
 {
 	oset->x = w->x - w->behind.x;
 	oset->y = w->y - w->behind.y;
