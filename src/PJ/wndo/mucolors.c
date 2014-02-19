@@ -200,7 +200,7 @@ Dlnode *next;
 	/* redraw all windows that need it */
 
 	for(w = (Wndo *)(ws->wilist.head);
-		next = ((Dlnode *)w)->next;
+		(next = ((Dlnode *)w)->next) != NULL;
 		w = (Wndo *)next )
 	{
 		w = TOSTRUCT(Wndo,W_node,w);

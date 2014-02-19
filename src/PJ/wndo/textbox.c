@@ -471,7 +471,7 @@ char c, *txt;
 	}
 	copy_va_list(tbox->args,fa.fa.args);
 
-	while(c = fa_getc(&fa.fa))
+	while ((c = fa_getc(&fa.fa)) != '\0')
 	{
 		if(c == '\n')
 			fprintf(stderr, LBORD);
