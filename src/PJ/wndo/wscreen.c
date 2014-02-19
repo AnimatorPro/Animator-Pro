@@ -12,7 +12,7 @@ static Rgb3 default_mc_ideals[NUM_MUCOLORS] = {
 	{RGB_MAX/3, RGB_MAX/3, RGB_MAX/3}, 	/* menu grey */
 	{RGB_MAX/3+RGB_MAX/5,RGB_MAX/3+RGB_MAX/5,RGB_MAX/3+RGB_MAX/5}, /* white */
 	{RGB_MAX-RGB_MAX/5,RGB_MAX-RGB_MAX/5,RGB_MAX-RGB_MAX/5}, /* menu bright */
-	{RGB_MAX, 0, 0}, /* menu red */
+	{RGB_MAX-1, 0, 0}, /* menu red */
 };
 static Pixel default_mc_colors[NUM_MUCOLORS] = {
 	FIRST_MUCOLOR,
