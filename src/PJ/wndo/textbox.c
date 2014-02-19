@@ -409,7 +409,7 @@ char *text;
 
 	/* draw border around whole box */
 
-	draw_quad(tbs->viscel,tbs->SGREY, tbox->r.x, tbox->r.y, 
+	draw_quad((Raster *)tbs->viscel, tbs->SGREY, tbox->r.x, tbox->r.y,
 						     tbox->r.width, tbox->r.height);
 
 	/* draw textblock with border offsets */

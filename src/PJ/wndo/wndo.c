@@ -270,7 +270,8 @@ Rectangle newpos;
 		/* blit port onto screen (clips) */
 
 		pj_blitrect(&(w->behind),w->x - w->behind.x,w->y - w->behind.y,
-				 &(ws->wndo),w->x,w->y,w->W_xmax - w->x,w->W_ymax - w->y);
+				 (Raster *)&(ws->wndo), w->x, w->y,
+				 w->W_xmax - w->x, w->W_ymax - w->y);
 
 
 		/* if window not obscureing screen an edge is showing */
@@ -401,7 +402,7 @@ Wiostate ios;
 		wndohide(w,0);
 
 	copy_rectfields(w,&newpos);
-	init_marqihdr(&md,ws->viscel,NULL,ws->SWHITE,ws->SBLACK);
+	init_marqihdr(&md, (Wndo *)ws->viscel, NULL, ws->SWHITE, ws->SBLACK);
 	if(marqmove_rect(&md, &newpos, bclip) < 0)
 		ret = 0;
 	else
@@ -441,7 +442,7 @@ Boolean was_mouse;
 		if(!(w->flags & WNDO_HIDDEN))
 		{
 			if(w->flags & WNDO_BACKDROP)
-				pj_set_rast(w,0);			/* clear the area left behind */
+				pj_set_rast((Raster *)w, 0); /* clear the area left behind */
 			else
 				blit_behind(w,pj_blitrect); /* blit back and
 										  * restore window behind */
@@ -715,7 +716,7 @@ SHORT max_wins;
 		}
 		build_all_clips(ws,1);
 		if(!(wi->flags & WNDO_NOCLEAR))
-			pj_set_rast(w,0);	/* clear window */
+			pj_set_rast((Raster *)w, 0); /* clear window */
 	}
 	else
 	{

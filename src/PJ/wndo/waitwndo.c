@@ -92,7 +92,8 @@ Vfont *f;
 		goto error;
 
 	pj_set_rast(screen->wait_box,screen->SWHITE);
-	draw_quad(screen->wait_box,screen->SGREY,0,0,box.width,box.height);
+	draw_quad((Raster *)screen->wait_box, screen->SGREY,
+			0, 0, box.width, box.height);
 
 	box.x = cwid;
 	box.width -= (cwid<<1);
