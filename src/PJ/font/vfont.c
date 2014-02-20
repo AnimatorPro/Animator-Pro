@@ -45,7 +45,7 @@ int fspace_width(Vfont *v, char *s)
 	return(v->char_width(v,s));
 }
 
-#if SLUFFED
+#ifdef SLUFFED
 int fchar_width(Vfont *f, char *s)
 /* width of char with out spacing */
 {
