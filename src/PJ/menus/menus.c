@@ -281,6 +281,17 @@ static void scale_menu_size(Menuhdr *mh,Rscale *scale)
 	mh->width = rscale_x(scale,(mh->orig_rect.width - 1)) + 1;
 	mh->height = rscale_y(scale,(mh->orig_rect.height - 1)) + 1;
 }
+
+static Boolean
+is_rect_and_menu_rect_same(const Rectangle *r, const Menuhdr *m)
+{
+	/* TODO: Menuhdr.RECT_FIELDS should be a Rectangle.  Don't assume
+	 * the spacing between x/y/w/h will be the same due to padding.
+	 */
+	return (r->x == m->x) && (r->y == m->y)
+		&& (r->width == m->width) && (r->height == m->height);
+}
+
 Errcode open_menu(Wscreen *screen, Menuhdr *mh,Mugroup *group, Wndo *over)
 
 /* dont open a menu thats already open if group is null open menu over 
@@ -337,8 +348,7 @@ Wndo *overwndo;
 		overwndo = NULL;
 	}
 
-	if(!overwndo && !rects_same(&screen->last_req_pos,
-								(Rectangle *)&mh->RECTSTART))
+	if (!overwndo && !is_rect_and_menu_rect_same(&screen->last_req_pos, mh))
 	{
 		cancel_reqpos(screen);
 	}
@@ -819,8 +829,7 @@ static void check_reqpos_cancel(Menuhdr *mh)
 Menuwndo *mw = mh->mw;
 
 	if(	mw != NULL &&
-		!rects_same((Rectangle *)&(mh->RECTSTART),
-					&(mw->w.W_screen->last_req_pos)))
+		!is_rect_and_menu_rect_same(&(mw->w.W_screen->last_req_pos), mh))
 	{
 		cancel_reqpos(mw->w.W_screen);
 	}

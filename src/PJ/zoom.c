@@ -651,7 +651,10 @@ Rectangle zbox;
 
 	draw_buttontop(&zoom_dragbar);
 	draw_buttontop(&zoom_fullsize_sel);
-	if(!rects_same(&zbox,&(zoom_box.RECTSTART)))
+	if (!(zbox.x == zoom_box.x
+				&& zbox.y == zoom_box.y
+				&& zbox.width == zoom_box.width
+				&& zbox.height == zoom_box.height))
 	{
 		pj_set_rect(&zwinmenu.mw->w,0,zoom_box.x,zoom_box.y,zoom_box.width,
 				 zoom_box.height);

@@ -65,14 +65,6 @@ typedef struct fullrect {  /* really just a Cliprect merged with a Rectangle */
 #define copy_crectfields(src,dst) {*((Cliprect *)&((dst)->CRECTSTART))\
  =*((Cliprect *)&((src)->CRECTSTART));}
 
-/* fast boolean to compare rectangles */
-
-#define rects_same(a,b) \
-(((LONG *)(a))[0]==((LONG *)(b))[0] && ((LONG *)(a))[1]==((LONG *)(b))[1])
-
-#define crects_same(a,b) rects_same(a,b)
-#define frects_same(a,b) rects_same(a,b)
-
 /* rectangle and point clip things */
 
 Boolean ptin_rect(Rectangle *r,SHORT x,SHORT y);

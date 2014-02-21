@@ -669,8 +669,10 @@ SHORT clipx, clipy;
 					   (Cliprect *)&(newrect.CRECTSTART),
 					   (Cliprect *)&(newrect.CRECTSTART));
 
-		if( !crects_same((Cliprect *)&(newrect.CRECTSTART),
-						 (Cliprect *)&(rd->fr.CRECTSTART))
+		if (!(newrect.x == rd->fr.x
+					&& newrect.y == rd->fr.y
+					&& newrect.MaxX == rd->fr.MaxX
+					&& newrect.MaxY == rd->fr.MaxY)
 			|| !(rd->saved)) /* will force first time */
 		{
 			if(icb.mx == newrect.x)
