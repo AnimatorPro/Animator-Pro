@@ -227,8 +227,9 @@ Errcode put_macro(Boolean ishit)
 Errcode err;
 char buf[36];
 USHORT *oflags;
+USHORT *buf16 = (USHORT *)buf;
 void *macbuf;
-#define Flags (*((USHORT *)buf))
+#define Flags (*buf16)
 
 	if(!ishit) /* just checking increment check count */
 	{
@@ -480,7 +481,10 @@ USHORT oflags;
 		/* get last short in buffer, this is head of next rec or garbage if
 		 * end of file (previous short before buffer) */
 
-		Mcb.next.flags = *(USHORT *)&(Mcb.mbuf[readsize-sizeof(USHORT)]);
+		{
+			USHORT *flags = (USHORT *)&(Mcb.mbuf[readsize-sizeof(USHORT)]);
+			Mcb.next.flags = *flags;
+		}
 
 		Mcb.macbuf = Mcb.mbuf; /* flag record present, at start of buffer */
 
