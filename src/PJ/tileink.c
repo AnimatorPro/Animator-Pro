@@ -231,7 +231,7 @@ SHORT cely;
 
 	if(thecel->cd.rotang.z)
 	{
-		if(*(LONG *)&dot != *(LONG *)&(thecel->cd.cent))
+		if (dot.x != thecel->cd.cent.x || dot.y != thecel->cd.cent.y)
 		{
 #ifdef TOOSLOW
 			/* float */

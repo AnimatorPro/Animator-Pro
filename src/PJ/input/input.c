@@ -427,7 +427,7 @@ got_inkey:
 
 got_input:
 
-	if(*((LONG *)&icb.sx) != *((LONG *)&icb.lastsx))
+	if (icb.sx != icb.lastsx || icb.sy != icb.lastsy)
 	{
 		icb.state |= MMOVE;
 
@@ -444,7 +444,7 @@ mouse_moved:
 		/* load values and apply offset */
 		get_menucursorxy();
 
-		if(do_cursor && (*((LONG *)&icb.cx) != *((LONG *)&icb.lastcx)))
+		if (do_cursor && (icb.cx != icb.lastcx || icb.cy != icb.lastcy))
 			MOVECURSOR();
 	}
 
@@ -587,9 +587,11 @@ Errcode mac_vsync_wait_input(ULONG waitflags, ULONG recflags, SHORT fields)
 {
 Errcode err;
 Boolean do_cursor;
-ULONG ompos;
+SHORT omposx;
+SHORT omposy;
 
-	ompos = *((LONG *)&icb.sx);
+	omposx = icb.sx;
+	omposy = icb.sy;
 
 	if(WANTDRAWCURS)
 	{
@@ -605,10 +607,12 @@ ULONG ompos;
 		mwaits();
 		if(--fields < 1)
 		{
-			*((LONG *)&icb.sx) = ompos; /* set mouse position to old mouse
-								      * mouse position, this will force the
-									* poller to set the MMOVE flag and
-									* record a macro if that is in recflags */
+			/* set mouse position to old mouse mouse position, this
+			 * will force the poller to set the MMOVE flag and record
+			 * a macro if that is in recflags.
+			 */
+			icb.sx = omposx;
+			icb.sy = omposy;
 
 			icb.waithit |= recflags;
 			_poll_input(do_cursor);

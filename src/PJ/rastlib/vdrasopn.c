@@ -46,14 +46,17 @@ Rasthdr sspec;
 
 	if(displayable)
 	{
-		if(*((LONG *)&r->aspect_dx) != *((LONG *)&spec->aspect_dx)) 
+		if (r->aspect_dx != spec->aspect_dx || r->aspect_dy != spec->aspect_dy)
 		{
 			err = Err_aspect_not_disp;
 			goto error;
 		}
 	}
 	else
-		*((LONG *)&r->aspect_dx) = *((LONG *)&spec->aspect_dx);
+	{
+		r->aspect_dx = spec->aspect_dx;
+		r->aspect_dy = spec->aspect_dy;
+	}
 
 	goto done;
 error:
