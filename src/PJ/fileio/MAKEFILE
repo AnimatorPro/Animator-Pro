@@ -106,8 +106,9 @@ flstdiol.obj: ffstdiol.c\
 ## around stdio.h io fopen etc ******
 
 FFILEO = \
+ fferrno.obj \
  ffopen.obj ffread.obj ffreados.obj ffseek.obj fftell.obj\
- ffwrite.obj ffwriteo.obj ffstdiol.obj
+ ffwrite.obj ffwriteo.obj
 
 
 #** library with temp and ram file handling file system and all utilities *

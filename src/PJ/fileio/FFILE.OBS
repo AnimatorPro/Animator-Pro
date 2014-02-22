@@ -1,3 +1,4 @@
++fferrno.obj
 +ffopen.obj
 +ffread.obj
 +ffreados.obj
@@ -5,4 +6,3 @@
 +ffwriteo.obj
 +ffseek.obj
 +fftell.obj
-+ffstdiol.obj
