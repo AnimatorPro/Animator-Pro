@@ -1,3 +1,4 @@
+#ifdef WITH_POCO
 /**** host side declaration of aa_syslib vector table ****/
 
 #define REXLIB_INTERNALS
@@ -59,3 +60,4 @@ Syslib aa_syslib = {
 /* debugging printer */
 	boxf,
 };
+#endif /* WITH_POCO */
