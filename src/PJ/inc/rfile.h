@@ -1,4 +1,3 @@
-
 #ifndef RFILE_H
 #define RFILE_H
 
@@ -12,7 +11,7 @@ typedef struct temp_file *Rfile;
 typedef void  *Rfile;
 #endif /* RFILE_C */
 
-long set_rmax(long rmax); /* Set maximum size of ram-disk. Returns rmax 
+long set_rmax(long rmax); /* Set maximum size of ram-disk. Returns rmax
 							clipped to internal limits. */
 Errcode tcompact(); /* Defrag ram-disk and release blocks of ram not in use */
 long rdos_dfree();	/* Amount ram-disk has to go */
