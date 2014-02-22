@@ -45,6 +45,7 @@ Errcode change_dir(char *name);
 long pj_file_size(char *path);
 Errcode pj_is_fixed(char *device);
 Errcode pj_pathdev_is_fixed(char *path);
+Boolean is_directory(const char *path);
 
 int get_jmode(Jfile fd);
 

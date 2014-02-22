@@ -1,7 +1,6 @@
 /* Filemenu.c - code for the famous PJ file requestor with scrolling list */
 
 #include <ctype.h>
-#include <dos.h>
 #include "commonst.h"
 #include "errcodes.h"
 #include "filepath.h"
@@ -483,16 +482,6 @@ static void inc_file(void)
 {
 	pj_inc_filename(file_stringq.string);
 	*fscroller_top_name = fscroller.top_name;
-}
-
-Boolean is_directory(char *path)
-{
-	unsigned attributes;
-
-	if (_dos_getfileattr(path, &attributes) == Success)
-		return ((attributes & _A_SUBDIR) != 0);
-	else
-		return FALSE;
 }
 
 void accept_file_name(Button *b)

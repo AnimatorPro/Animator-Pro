@@ -33,6 +33,7 @@
 #include <dos.h>
 #include <io.h>
 #else /* __WATCOMC__ */
+#include <sys/stat.h>
 #include <unistd.h>
 #endif /* __WATCOMC__ */
 
@@ -635,6 +636,25 @@ char dc;
 	if(dc == 'A' || dc == 'B')
 		return(0);
 	return(1);
+}
+
+Boolean is_directory(const char *path)
+{
+#if defined(__WATCOMC__)
+	unsigned attributes;
+
+	if (_dos_getfileattr(path, &attributes) == Success)
+		return ((attributes & _A_SUBDIR) != 0);
+	else
+		return FALSE;
+#else
+	struct stat s;
+
+	if (stat(path, &s) == 0)
+		return S_ISDIR(s.st_mode);
+	else
+		return FALSE;
+#endif
 }
 
 static struct jfl _jstdout = 
