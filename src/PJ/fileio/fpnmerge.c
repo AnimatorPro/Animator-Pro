@@ -1,3 +1,4 @@
+#ifdef SLUFFED
 #include "errcodes.h"
 #include "filepath.h"
 
@@ -12,3 +13,4 @@ strcat(path,file);
 strcat(path,suffix);
 return(Success);
 }
+#endif /* SLUFFED */
