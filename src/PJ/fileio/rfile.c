@@ -437,6 +437,7 @@ rerr = Err_no_file;
 return(NULL);
 }
 
+#ifdef SLUFFED
 Errcode rexists(char *name)
 /* Return Success if a file is on the ram-disk. */
 {
@@ -444,6 +445,7 @@ if (find_named(name) == NULL)
 	return(rerr);
 return(Success);
 }
+#endif /* SLUFFED */
 
 static int flags_for_mode(int mode)
 /* Calculate the temp_file.flags value for a given msdos/jfile file open/create
