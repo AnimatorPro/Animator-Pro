@@ -6,6 +6,7 @@ include_directories("inc")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -W -Wall -Wextra -Wmissing-prototypes")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wold-style-definition")
 
+add_subdirectory(fileio)
 add_subdirectory(fli)
 add_subdirectory(font)
 add_subdirectory(gfx)
@@ -26,6 +27,7 @@ add_executable(pj WIN32
 	${PJMAIN_SRC_FILES})
 
 target_link_libraries(pj
+	trdfile
 	flilib
 	fontlib
 	gfxlib
