@@ -17,8 +17,8 @@
 
 typedef union tjr 
 	{
-	Tfile t;
 	int j;
+	Tfile t;
 	Rfile r;
 	} Tjr;
 

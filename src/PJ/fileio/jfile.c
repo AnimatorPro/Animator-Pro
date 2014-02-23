@@ -663,14 +663,14 @@ static struct jfl _jstdout =
 	JFL_MAGIC,
 	JWRITEONLY,
 	&msd_dev,
-	0,
+	{ 0 },
 	};
 static struct jfl _jstderr = 
 	{
 	JFL_MAGIC,
 	JWRITEONLY,
 	&msd_dev,
-	2,
+	{ 2 },
 	};
 
 void *get_jstdout(void)
