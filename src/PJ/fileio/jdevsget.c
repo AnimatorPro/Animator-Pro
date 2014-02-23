@@ -1,3 +1,4 @@
+#include "jfile.h"
 #include "msfile.h"
 
 int pj_get_devices(UBYTE *devices)

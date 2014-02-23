@@ -3,7 +3,6 @@
 
 int lfprintf(LFILE *f, char *fmt, ...)
 {
-va_list varg;
 Formatarg fa;
 char c;
 

@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "errcodes.h"
 #include "filepath.h"
 

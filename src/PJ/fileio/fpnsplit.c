@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include <string.h>
 #include "errcodes.h"
 #include "filepath.h"
 

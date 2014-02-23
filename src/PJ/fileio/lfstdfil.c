@@ -23,14 +23,12 @@ LFILE _lstderr =
 	FALSE,		/* is_dirty */
 	FALSE,		/* can_buf_seek */
 	};
-init_stdfiles()
+void init_stdfiles(void)
 {
-extern void *get_jstderr(), *get_jstdout();
 	_lstderr.lfile = get_jstderr();
 	_lstdout.lfile = get_jstdout();
-	return;
 }
-cleanup_lfiles()
+void cleanup_lfiles(void)
 {
 	lfflush(lstdout);
 	lfflush(lstderr);

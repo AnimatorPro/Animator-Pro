@@ -1,6 +1,7 @@
+#include <string.h>
 #define LFILE_C
-#include "stdtypes.h"
 #include "lfile.ih"
+#include "stdtypes.h"
 #include "memory.h"
 #include "ptrmacro.h"
 #include "formatf.h"
@@ -21,7 +22,6 @@ int i, flags;
 Boolean append = FALSE,  creat = FALSE;
 int jmode;
 Lfile h;
-void *pj_malloc();
 
 flags = BFL_TEXT;		/* by default open in text mode */
 while(*mode)
@@ -132,7 +132,6 @@ static long untext(LFILE *f, char *buf, long count)
    control-z make file appear at end-of-file.  Filter out '\r' chars. */
 {
 #define CONT_Z 0x1a
-int ccount = 0;
 char *out;
 char *in;
 char c;
@@ -205,7 +204,7 @@ while (--count >= 0)
 return(ccount);
 }
 
-long _lf_uwrite(LFILE *f, char *buf, long count)
+static long _lf_uwrite(LFILE *f, char *buf, long count)
 /* write out count.   If in text mode do <cr/lf>  translation */
 {
 char cr = '\r';

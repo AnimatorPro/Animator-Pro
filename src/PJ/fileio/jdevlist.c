@@ -1,6 +1,9 @@
+#include <stdio.h>
+#include <string.h>
 #include "errcodes.h"
 #include "jfile.h"
 #include "memory.h"
+#include "reqlib.h"
 #include "util.h"
 #include "wildlist.h"
 
@@ -72,7 +75,7 @@ Errcode err;
 	}
 	return(Success);
 }
-Errcode alloc_wild_list(Names **pwild_list, char *pat,Boolean get_dirs,
+static Errcode alloc_wild_list(Names **pwild_list, char *pat,Boolean get_dirs,
 							   int min_name_size, 
 							   Nameload load_name )
 
@@ -168,7 +171,7 @@ Errcode err;
 	return(err);
 }
 
-void unslash_dir(char *dir, char *unslash)
+static void unslash_dir(char *dir, char *unslash)
 /* Pass in pointer to directory that might have an extra slash at the end and
  * pointer to where to put unslashed version. */
 {

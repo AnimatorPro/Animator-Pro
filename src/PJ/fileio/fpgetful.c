@@ -1,3 +1,5 @@
+#include <ctype.h>
+#include <string.h>
 #include "errcodes.h"
 #include "filepath.h"
 #include "jfile.h"

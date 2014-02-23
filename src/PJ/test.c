@@ -5,7 +5,6 @@ void test(void) {}
 
 #include "input.h"
 #include "picdrive.h"
-#include "lstdio.h"
 #include "vertices.h"
 #include "softmenu.h"
 #include "aaconfig.h"

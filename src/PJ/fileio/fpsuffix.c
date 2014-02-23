@@ -1,3 +1,4 @@
+#include <string.h>
 #include "filepath.h"
 
 char *fix_suffix(char *path)

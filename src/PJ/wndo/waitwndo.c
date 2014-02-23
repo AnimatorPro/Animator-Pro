@@ -5,7 +5,6 @@
 #include "ftextf.h"
 #include "gfx.h"
 #include "input.h"
-#include "lstdio.h"
 #include "memory.h"
 #include "rastext.h"
 #include "wndo.h"

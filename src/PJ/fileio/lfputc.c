@@ -1,6 +1,6 @@
 #include "lfile.ih"
 
-lfputc(int c, LFILE *f)
+int lfputc(int c, LFILE *f)
 {
 if (f->pt >= f->end) 
 	{

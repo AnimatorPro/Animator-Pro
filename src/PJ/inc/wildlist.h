@@ -27,9 +27,6 @@ typedef void (*Nameload)(Wild_entry *dst,char *name);
 
 void free_wild_list(Names **pwild_list);
 
-Errcode alloc_wild_list(Names **pwild_list, char *pat,Boolean get_dirs,
-						int min_alloc_size, Nameload load_name );
-
 Errcode build_wild_list(Names **pwild_list, char *pat, Boolean get_dirs);
 
 Errcode build_dir_list(Names **pwild_list, char *pat, 

@@ -1,5 +1,5 @@
-#include "stdtypes.h"
 #include <string.h>
+#include "filepath.h"
 
 Boolean pj_valid_suffix(char *suff)
 /* if it is a valid file suffix containing valid characters may or may not

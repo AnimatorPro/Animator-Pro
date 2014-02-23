@@ -16,6 +16,8 @@
  **/
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #define RFILE_C
 #include "errcodes.h"
 #include "jfile.h"
@@ -155,7 +157,7 @@ Block_list *blist, *bl;
 	return(bcount);
 }
 
-void rdisk_set_max_to_avail()
+void rdisk_set_max_to_avail(void)
 /* set to max ram available for disk */
 {
 	tmax_blocks = tblock_count + new_blocks_avail(MAXUSE-tblock_count);
@@ -170,7 +172,7 @@ if (p%q != 0)
 return(result);
 }
 
-long rdos_dfree()
+long rdos_dfree(void)
 /* Hopefully returns amount of ram disk available for a new file. */
 {
 long sectors_avail;
@@ -188,13 +190,13 @@ long sectors_avail;
 
 /***************** Ramdisk read/write/open/close routines ******************/
 
-Errcode rerror()
+Errcode rerror(void)
 /* Return the last ram-disk error */
 {
 return(rerr);
 }
 
-static tfree_sector(void *v)
+static void tfree_sector(void *v)
 /* Add a sector to the free list */
 {
 Sector_list *sl;
@@ -205,7 +207,7 @@ sl->next = tfree_list;
 tfree_list = sl;
 }
 
-static Boolean tmore_sectors()
+static Boolean tmore_sectors(void)
 /* Allocate a block of memory,  divide it into sectors, and put the
  * sectors on the free list.   
  */
@@ -235,7 +237,7 @@ outta_space:
 	return(rerr = Err_no_memory);
 }
 
-static void *tget_sector()
+static void *tget_sector(void)
 /* Return an unused sector.   Search free list first.  If empty allocate
  * another block.   If block alloc fails return NULL */
 {
@@ -254,7 +256,7 @@ else
 return(sl);
 }
 
-static void *tget_clear()
+static void *tget_clear(void)
 /* Return an unused sector initialized to all zeroes. */
 {
 void *pt;
@@ -275,7 +277,6 @@ int ssize, so;
 int flags;
 long filept;
 long  written;
-long new_size;
 
 flags = tpf->flags;
 if (!(flags&TF_OPEN))
@@ -294,7 +295,6 @@ if (count <= 0)
 	data = buf;
 	written = 0;
 	filept = tpf->filep;
-	new_size = filept + count;
 	platter = tpf->platters + get_platter(filept);
 
 	for (;;)
@@ -398,7 +398,7 @@ for (;;)
 	}
 }
 
-static Rfile find_empty_slot()
+static Rfile find_empty_slot(void)
 /* Find an empty directory slot. */
 {
 int tf;
@@ -438,7 +438,7 @@ return(NULL);
 }
 
 #ifdef SLUFFED
-Errcode rexists(char *name)
+Errcode rexists(const char *name)
 /* Return Success if a file is on the ram-disk. */
 {
 if (find_named(name) == NULL)
@@ -559,7 +559,7 @@ tpf->omode = mode;
 return(tpf);
 }
 
-rclose(Rfile tpf)
+Errcode rclose(Rfile tpf)
 /* Close an open ram-disk file */
 {
 if (!(tpf->flags&TF_OPEN))
@@ -568,7 +568,7 @@ tpf->flags &= ~(TF_OPEN|TF_READ|TF_WRITE);
 return(Success);
 }
 
-rdelete(char *name)
+Errcode rdelete(char *name)
 /* Delete a (closed) file from ram-disk. */
 {
 Temp_file *tpf;
@@ -622,10 +622,12 @@ typedef struct tcs_block
 	Sector_list *frees;
 	} Tcs_block;
 
-static int tcs_cmp(Tcs_block *a, Tcs_block *b)
+static int tcs_cmp(const void *tcsa, const void *tcsb)
 /* See if the block pointer is lower or higher in memory than
  * the other block pointer.  Used in compacting ramdisk. */
 {
+const Tcs_block *a = tcsa;
+const Tcs_block *b = tcsb;
 long diff;
 
 diff = pt_to_long(a->block) - pt_to_long(b->block);
@@ -739,6 +741,7 @@ static void tsq_one(
 char ***platter;
 char **track;
 int i;
+(void)bcount;
 
 move_sec(tcs, (void **)(&tpf->platters), cut_at);
 platter = tpf->platters;
@@ -784,7 +787,7 @@ while (--tpf_count >= 0)		/* Loop though all the files in dir */
 	}
 }
 
-Errcode rcompact()
+Errcode rcompact(void)
 /* Master routine to compact the ram-disk.  This will move files into
  * the lower blocks in memory,  and free unused blocks in high memory. */
 {
@@ -905,10 +908,10 @@ for (i=0; i<MAX_TEMPS; i++)
 return(Success);
 }
 
-void rfree_dir(Names **pdir)
+void rfree_dir(Rdir **pdir)
 /* Free up directory returned by rget_dir() */
 {
-Names *l, *n;
+Rdir *l, *n;
 
 l = *pdir;
 while (l != NULL)

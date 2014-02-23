@@ -1,3 +1,4 @@
+#include <string.h>
 #include "lfile.ih"
 #include "ptrmacro.h"
 

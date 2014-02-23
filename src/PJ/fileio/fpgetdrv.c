@@ -1,6 +1,8 @@
 #include <ctype.h>
 #include "errcodes.h"
 #include "filepath.h"
+#include "msfile.h"
+#include "tfile.h"
 
 Errcode get_path_device(char *path,char *device)
 /* for ms dos: returns device for a path < 0 if error */

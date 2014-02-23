@@ -1,4 +1,5 @@
 #include "errcodes.h"
+#include "jimk.h"
 #include "jfile.h"
 
 Errcode pj_copyfile(char *source, char *dest)

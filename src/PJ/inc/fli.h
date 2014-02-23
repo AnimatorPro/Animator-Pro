@@ -253,6 +253,7 @@ LONG pj_fli_comp_cel(void *comp_buf, Rcel *last_screen,
 LONG pj_fli_comp_frame1(void *cbuf,Rcel *this_screen, Flicomp comp_type);
 
 extern Errcode pj_write_one_frame_fli(char *name, Flifile *flif, Rcel *screen);
+extern Errcode jwrite_chunk(Jfile f, void *data, LONG size, SHORT type);
 
 /* reading and decompression */
 

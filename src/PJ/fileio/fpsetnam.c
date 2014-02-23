@@ -1,3 +1,4 @@
+#include <string.h>
 #include "filepath.h"
 
 void pj_set_path_name(char *path, char *name)

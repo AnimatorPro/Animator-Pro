@@ -1,6 +1,7 @@
+#include <string.h>
 #include "filepath.h"
 
-Boolean has_dir_chars(char *path)
+static Boolean has_dir_chars(char *path)
 /* Returns TRUE if there is a directory in the path name. */
 {
 	char c;

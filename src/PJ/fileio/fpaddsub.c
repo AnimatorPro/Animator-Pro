@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include <string.h>
 #include "errcodes.h"
 #include "filepath.h"
 
@@ -7,8 +9,6 @@ Errcode add_subpath(char *drawer, char *subpath, char *outpath)
  * path may be the same buffer */
 {
 int len;
-char *opstart = outpath;
-
 
 	if(drawer == outpath)
 		len = strlen(drawer);

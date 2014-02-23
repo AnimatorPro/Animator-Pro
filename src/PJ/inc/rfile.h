@@ -13,8 +13,8 @@ typedef void  *Rfile;
 
 long set_rmax(long rmax); /* Set maximum size of ram-disk. Returns rmax
 							clipped to internal limits. */
-Errcode tcompact(); /* Defrag ram-disk and release blocks of ram not in use */
-long rdos_dfree();	/* Amount ram-disk has to go */
+Errcode rcompact(void); /* Defrag ram-disk and release blocks not in use */
+long rdos_dfree(void); /* Amount ram-disk has to go */
 
 typedef struct rdir
 	{
@@ -34,12 +34,12 @@ long rseek(Rfile t, long offset, int mode);
 long rtell(Rfile t);
 Errcode rdelete(char *name);
 void rstats(long *alloc, long *free);
-Errcode rerror();
+Errcode rerror(void);
 Errcode rexists(char *name);
 Errcode rrename(char *old, char *new);
 Errcode rget_dir(Rdir **plist);
+void rfree_dir(Rdir **pdir);
 
-Errcode rset_priority(char *name, unsigned pri);
-Errcode rset_dispose_flags(char *name, int dflags);
+extern void rdisk_set_max_to_avail(void);
 
 #endif /* RFILE_H */

@@ -1,10 +1,9 @@
 #include "errcodes.h"
 #include "lfile.ih"
 
-lfseek(LFILE *f, long offset, int whence)
+Errcode lfseek(LFILE *f, long offset, int whence)
 {
 Errcode err = Success;
-UBYTE flags;
 static int mode_to_mode[] =  {JSEEK_START, JSEEK_REL, JSEEK_END};
 UBYTE *newp;
 long boff;			/* user buffered file position */
@@ -12,7 +11,7 @@ long boff;			/* user buffered file position */
 /* convert from C file seek mode to MS-DOS seek mode */
 whence = mode_to_mode[whence];
 /* remove eof flag */
-flags = (f->flags &= ~(BFL_EOF));
+f->flags &= ~(BFL_EOF);
 /* Deal with write files (don't be very smart about seeking in buffer) */
 if (f->is_dirty)
 	{

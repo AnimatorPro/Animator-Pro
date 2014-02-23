@@ -8,22 +8,25 @@
  **
  **/
 
+#include <stdio.h>
 #include <string.h>
 #define TFILE_C
+#include "jimk.h"
 #include "errcodes.h"
-#include "filepath.h"
 #include "jfile.h"
 #include "linklist.h"
 #include "memory.h"
+#include "msfile.h"
 #include "ptrmacro.h"
 #include "rfile.h"
 #include "tfile.h"
 #include "util.h"
+#include "wildlist.h"
 
 static char temp_path[2*PATH_SIZE] = {TRD_CHAR, ':', 0};
 static int tfile_lockmem = 0;
 
-char *get_temp_path()
+char *get_temp_path(void)
 {
 return(temp_path+3);
 }
@@ -116,7 +119,7 @@ while ((node = get_head(pparts)) != NULL)
 	trd_freemem(node);
 }
 
-static letter_to_device(char letter)
+static int letter_to_device(char letter)
 /*
  * Convert from ascii to numerical representation of device
  */
@@ -417,9 +420,7 @@ if ((serr = pj_seek(*phandle, pos, JSEEK_START)) < Success)
 return(Success);
 }
 
-extern long pj_ddfree();
-
-long tfree(int dev)
+static long tfree(int dev)
 /*
  * Return the amount of memory left on a device.
  */
@@ -573,7 +574,7 @@ if ((err = pj_delete(pbuf)) < Success)
 return(err);
 }
 
-Errcode terror()
+Errcode terror(void)
 /*
  * Return last temporary file error.
  */
@@ -765,7 +766,7 @@ pop_recurs:
 	return(err);
 }
 
-Errcode trd_ram_to_files()
+Errcode trd_ram_to_files(void)
 /* 
  * force ram-located temp files onto ms-dos 
  */

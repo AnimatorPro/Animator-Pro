@@ -49,6 +49,7 @@ char *pj_get_path_suffix(char *path);
 
 /* gets pointer to last name in a path. */
 char *pj_get_path_name(char *path);
+void remove_path_name(char *path);
 
 
 #ifdef BIG_COMMENT /*************************************/
@@ -92,6 +93,7 @@ void remove_suffix(char *path);
 Boolean suffix_in(char *path, char *suff);
 int parse_to_semi(char **in, char *out,int maxlen);
 
+Boolean pj_valid_suffix(char *suff);
 Boolean has_a_suffix(char *path);
 char *fix_suffix(char *path);
 
@@ -100,17 +102,22 @@ Boolean pj_name_in_path(char *path, char *name); /* true if path has name */
 
 Errcode get_path_device(char *path,char *device);
 Errcode get_full_path(char *path, char *fullpath);
+Errcode get_dir(char *path);
 Errcode add_subpath(char *drawer, char *subpath, char *outpath);
 Errcode full_path_name(char *drawer,char *subpath,char *fullpath);
 Errcode make_file_path(char *drawer, char *name, char *outpath);
 Errcode full_file_path(char *drawer, char *name, char *fullpath);
 
-
+Errcode fnsplit(char *path, char *device, char *dir, char *file, char *suffix);
 Errcode split_path(char *p1, char *device, char *dir);
 Errcode dice_file_name(char *path, char *device, char *dir, char *file,
 	char *suffix);
 Errcode split_copy_path(char *path,char *drawer,char *name);
 int pj_inc_filename(char *path);
+
+extern int _fp_get_path_devlen(char *path);
+extern int _fp_parse_device(char **pfn, char *device);
+extern Errcode _fp_parse_dir(char **pfn, char *dir);
 
 /* PRIVATE_CODE */ #endif
 

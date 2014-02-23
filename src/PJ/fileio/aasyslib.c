@@ -8,15 +8,6 @@
 #include "aasyslib.h"
 #include "filepath.h"
 
-extern void *memset(void *d,int c,unsigned len);
-extern void *memcpy(void *d,const void *s,unsigned len);
-extern int	*memcmp(void *s1,const void *s2,int len);
-extern char *strcpy(char *d,const char *s);
-extern int strlen(char *s);
-extern int strcmp(char *s1,char *s2);
-extern long pj_clock_1000();
-extern int boxf(char *fmt,...);
-
 Syslib aa_syslib = {
 	/* header */
 	{

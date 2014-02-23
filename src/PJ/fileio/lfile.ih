@@ -4,8 +4,6 @@
 #define LFILE_INTERNALS
 #include "lstdio.h"
 
-long _lf_uread(LFILE *f, char *buf, long count);
-long _lf_uwrite(LFILE *f, char *buf, long count);
 Errcode _lf_wflush(LFILE *f);
 Errcode _lf_rflush(LFILE *f);
 

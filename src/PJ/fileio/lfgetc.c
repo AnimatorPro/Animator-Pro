@@ -1,6 +1,6 @@
 #include "lfile.ih"
 
-lfgetc(LFILE *f)
+Errcode lfgetc(LFILE *f)
 {
 if (f->pt >= f->end) 
 	{

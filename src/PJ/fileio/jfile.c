@@ -37,11 +37,12 @@
 #include <unistd.h>
 #endif /* __WATCOMC__ */
 
+#include <ctype.h>
 #include <fcntl.h>
 #include <stdio.h>
+#include "jfile.ih"
 #include "memory.h"
 #include "msfile.h"
-#include "jfile.ih"
 
 /********** Glue from ms-dos files to jfile *****************/
 
@@ -283,7 +284,7 @@ static Tdev trd_dev =
 	rrename,
 	};
 
-Boolean is_ram_file(Jfl *fd)
+Boolean is_ram_file(Jfile fd)
 /*
  * Determine if a file is on ramdisk device.  (A file may be on 
  * tempfile device presently residing on ramdisk.  This test will
@@ -568,7 +569,7 @@ if ((err = dev->ddelete(name)) < Success)
 return(err);
 }
 
-Errcode pj_ioerr()
+Errcode pj_ioerr(void)
 /*
  * Return last i/o error code.
  */
@@ -672,7 +673,7 @@ static struct jfl _jstderr =
 	2,
 	};
 
-void *get_jstdout()
+void *get_jstdout(void)
 /*
  * Return pointer to standard output.
  */
@@ -680,7 +681,7 @@ void *get_jstdout()
 return(&_jstdout);
 }
 
-void *get_jstderr()
+void *get_jstderr(void)
 /*
  * Return pointer to standard input.
  */

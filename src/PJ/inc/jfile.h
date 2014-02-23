@@ -22,6 +22,8 @@ Errcode pj_close(Jfile f); 	/* this will check for JNONE (zeros) in f */
 Errcode pj_closez(Jfile *jf); /* will check for and set JNONE */
 Errcode pj_ioerr(void);
 
+extern Boolean is_ram_file(Jfile fd);
+
 long pj_seek(Jfile f,long offset,int mode);
 long pj_tell(Jfile f);
 long pj_read(Jfile f, void *buf, long size);
@@ -38,8 +40,6 @@ int pj_get_devices(UBYTE *devids);
 /* device level calls */
 
 Errcode get_dir(char *dir);		/* get current directory */
-Errcode current_device(char *devstr);
-Errcode pj_change_device(char *device);
 Errcode change_dir(char *name);
 
 long pj_file_size(char *path);
@@ -98,6 +98,11 @@ Boolean pj_dfirst(char *pattern, int attributes);
 Boolean pj_dnext(void);
 
 /* PRIVATE_CODE */ #endif
+
+extern void init_stdfiles(void);
+extern void cleanup_lfiles(void);
+extern void *get_jstdout(void);
+extern void *get_jstderr(void);
 
 #endif /* JFILE_H */
 
