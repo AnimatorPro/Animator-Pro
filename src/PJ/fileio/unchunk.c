@@ -1,7 +1,6 @@
 #ifdef COMMENT
 /******************* chunk parsing functions ********************/
 
-/*
 These functions are used to parse data files organized as sets of "chunks"
 preceded by Chunk_id fields. These chunks may have optional "header data"
 followed by subordinate chunks. It is most efficient when parsing "Fat_chunks"
@@ -23,7 +22,6 @@ Fat_chunk file_id;	/* type for file size of whole file inclusive of id */
 	Fat_chunk;	/* sub chunk */
 		chunk_data;
 EOF
-*/
 
 #endif /* BIG_COMMENT */
 
