@@ -43,7 +43,7 @@ char *up = upath;
 if (strlen(path) >= PATH_SIZE)
 	return(Err_dir_too_long);
 strcpy(upath, path);
-strupr(upath);
+/* strupr(upath); */
 if ((err  = _fp_parse_device(&up,device)) < Success)
 	return(err);
 if ((err = _fp_parse_dir(&up, dir)) < Success)

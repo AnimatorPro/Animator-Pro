@@ -11,7 +11,7 @@ char suffix[12];
 char bbuff[16];
 Errcode err;
 
-strupr(p1);
+/* strupr(p1); */
 if ((err = fnsplit(p1, device,dir,file,suffix)) < Success)
 	return(err);
 if (device[0] == 0)

@@ -7,7 +7,7 @@ Errcode split_copy_path(char *file_name, char *path_side, char *file_side)
 {
 Errcode err;
 
-strupr(file_name);
+/* strupr(file_name); */
 if ((err = _fp_parse_device(&file_name, path_side)) < Success)
 	return(err);
 path_side += err;
