@@ -1,17 +1,7 @@
 #ifndef FILEMODE_H
 #define FILEMODE_H
 
-
-#ifdef JFILE_INTERNALS
-
-/*  We do this to hide file structure from clients while allowing
-    jfile code to compile with same prototypes... */
-
 typedef struct jfl *Jfile;
-
-#else
-typedef void *Jfile;
-#endif /* JFILE_INTERNALS */
 
 #define JNONE NULL  /* if open fails this is it */
 

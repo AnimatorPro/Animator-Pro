@@ -1,4 +1,3 @@
-#define JFILE_INTERNALS /* for memory declarations */
 #include "jfile.h"
 #include "memory.h"
 

@@ -9,7 +9,6 @@
 	#include "msfile.h"
 #endif 
 
-#define JFILE_INTERNALS
 #include "jfile.h"
 
 typedef union tjr  {

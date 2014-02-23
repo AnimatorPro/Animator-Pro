@@ -5,7 +5,6 @@
 	#include "errcodes.h"
 #endif
 
-#define JFILE_INTERNALS
 #include "jfile.h"
 
 #ifndef RFILE_H
