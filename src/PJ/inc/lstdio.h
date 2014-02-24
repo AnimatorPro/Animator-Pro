@@ -1,6 +1,8 @@
 #ifndef LSTDIO_H
 #define	LSTDIO_H
 
+#include <stdarg.h>
+
 #ifndef STDTYPES_H
 	#include "stdtypes.h"
 #endif 
@@ -60,21 +62,22 @@ typedef struct lfile	/* LFILE structure */
  (((f)->pt<(f)->end)?(*(f)->pt++=(c),(f)->is_dirty=TRUE):lfputc(c,f))
 
 
-LFILE *lfopen(char *name, char *mode);
+LFILE *lfopen(const char *name, const char *mode);
 Errcode lfclose(LFILE *f);
 Errcode lfgetc(LFILE *f);
 Errcode lfputc(int c, LFILE *f);
 Errcode lungetc(int c, LFILE *f);
 Errcode lfflush(LFILE *f);
 unsigned lfread(void *buf, unsigned size, unsigned count, LFILE *f);
-unsigned lfwrite(void *buf, unsigned size, unsigned count, LFILE *f);
+unsigned lfwrite(const void *buf, unsigned size, unsigned count, LFILE *f);
 Errcode lfseek(LFILE *f, long offset, int whence);
 void lrewind(LFILE *f);
 long lftell(LFILE *f);
 char *lfgets(char *s,int max, LFILE *f);
-Errcode lfputs(char *s, LFILE *f);
-int lprintf(char *fmt,...);
-int lfprintf(LFILE *f,char *fmt,...);
+Errcode lfputs(const char *s, LFILE *f);
+int lprintf(const char *fmt, ...);
+int lfprintf(LFILE *f, const char *fmt, ...);
+int lvfprintf(LFILE *f, const char *fmt, va_list args);
 
 /* defines for whence parameter to lfseek */
 #define LSEEK_SET 0

@@ -110,7 +110,7 @@ f->lfile = h;
 return(f);
 }
 
-LFILE *lfopen(char *name, char *mode)
+LFILE *lfopen(const char *name, const char *mode)
 {
 LFILE *f;
 

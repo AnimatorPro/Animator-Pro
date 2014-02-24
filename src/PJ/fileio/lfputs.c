@@ -1,7 +1,7 @@
 #include "errcodes.h"
 #include "lfile.ih"
 
-lfputs(char *s,LFILE *f)
+Errcode lfputs(const char *s, LFILE *f)
 {
 int c;
 

@@ -1,7 +1,7 @@
 #include "lfile.ih"
 #include "formatf.h"
 
-int lprintf(char *format,...)
+int lprintf(const char *format, ...)
 {
 Formatarg fa;
 int c;

@@ -110,6 +110,8 @@ FFILEO = \
  ffopen.obj ffread.obj ffreados.obj ffseek.obj fftell.obj\
  ffwrite.obj ffwriteo.obj
 
+## XFILE
+XFILEO = xfile.obj
 
 #** library with temp and ram file handling file system and all utilities *
 
@@ -120,10 +122,11 @@ trdfile.lib: makefile\
 			 $(JFILETRO) jfiletrd.obs\
 			 $(JFUTILSO) jfutils.obs\
 			 $(LFILEO) lfile.obs\
-			 $(FLFILEO) flfile.obs
+			 $(FLFILEO) flfile.obs\
+			 $(XFILEO) xfile.obs
  wlib /n trdfile.lib \
 	@dos.obs @jdevice.obs @fparse.obs @jfiletrd.obs \
-	@jfutils.obs @lfile.obs @flfile.obs
+	@jfutils.obs @lfile.obs @flfile.obs @xfile.obs
 
 #** library with dos and lstdio file system and all utilities *
 

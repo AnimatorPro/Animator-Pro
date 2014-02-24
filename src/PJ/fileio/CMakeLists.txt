@@ -106,6 +106,10 @@ set(FLFILE_SRC_FILES
 	ffwriteo.c
 	)
 
+set(XFILE_SRC_FILES
+	xfile.c
+	)
+
 ## library with temp and ram file handling file system and all utilities
 add_library(trdfile
 	${JFDEV_SRC_FILES}
@@ -113,4 +117,5 @@ add_library(trdfile
 	${JFILETR_SRC_FILES}
 	${JFUTILS_SRC_FILES}
 	${LFILE_SRC_FILES}
-	${FLFILE_SRC_FILES})
+	${FLFILE_SRC_FILES}
+	${XFILE_SRC_FILES})
