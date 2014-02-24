@@ -30,9 +30,8 @@
 #include <math.h>
 #include <limits.h>
 #include <setjmp.h>
-#include "lstdio.h"
 #include "blockall.h"
-#include "ffile.h"
+#include "errcodes.h"
 #include "fontdev.h"
 #include "linklist.h"
 #include "pjbasics.h"
@@ -42,7 +41,7 @@
 #include "sdot.h"
 #include "token.h"
 #include "type1.h"
-
+#include "xfile.h"
 
 #define EOS     '\0'
 
@@ -429,10 +428,10 @@ static char *loader_strdup(Type1_font *tcd, char *s)
  * File input.
  ****************************************************************************/
 
-static int (*byte_in)(FILE *fp);	/* Call indirect to read a byte.
+static int (*byte_in)(XFILE *fp);	/* Call indirect to read a byte.
 									 * Will be fgetc() or hex_byte_in() */
 
-static int hex_byte_in(FILE *fp)
+static int hex_byte_in(XFILE *fp)
 /* Read a byte from file in hexadecimal format.  This skips white space,
  * and reads in two hex digits. */
 {
@@ -440,7 +439,7 @@ static int hex_byte_in(FILE *fp)
 
     for (i = 0; i < 2; i++) {
 		for (;;) {
-			if ((c = getc(fp)) == EOF)
+			if ((c = xfgetc(fp)) == EOF)
                 return c;
             if (isspace(c))
                 continue;
@@ -483,7 +482,7 @@ static unsigned int decrypt(unsigned int cipher)
 	return plain;
 }
 
-static int decrypt_byte_in(FILE *fp)
+static int decrypt_byte_in(XFILE *fp)
 {
 	int ch;
 
@@ -525,12 +524,12 @@ typedef struct
 	T1_token_type type;
 	char string[256];
 	int pushback;
-	FILE *file;
-	int (*source)(FILE *f);
+	XFILE *file;
+	int (*source)(XFILE *f);
 	} Type1_token;
 
 static void type1_token_init(Type1_token *tok
-, FILE *file, int (*source)(FILE *f))
+, XFILE *file, int (*source)(XFILE *f))
 {
 	clear_struct(tok);
 	tok->file = file;
@@ -661,8 +660,7 @@ static void debug_type1_get_token(Type1_token *tok)
 }
 #endif /* DEBUG */
 
-
-static Errcode type1_check_signature(FILE *fp)
+static Errcode type1_check_signature(XFILE *fp)
 /* This just verifies that the font begins with %!FontType1 or
  * %!PS-AdobeFont-1.0.  We expect this in the first 128 bytes or so. */
 {
@@ -674,17 +672,17 @@ static Errcode type1_check_signature(FILE *fp)
 
 	for (i=0; i<128; ++i)
 		{
-		ch = getc(fp);
+		ch = xfgetc(fp);
 		if (ch == EOF)
 			break;
 		if (ch == '%') 
 			{
-			ch = getc(fp);
+			ch = xfgetc(fp);
             if (ch == EOF)
 				break;
             if (ch == '!')
 				{
-				if (fgets(buf, sizeof(buf), fp) == NULL)
+				if (xfgets(buf, sizeof(buf), fp) == NULL)
 					break;
 				if (strncmp(buf, magic1, sizeof(magic1)) == 0
 				||	strncmp(buf, magic2, sizeof(magic2)) == 0)
@@ -810,7 +808,7 @@ static void type1_parse_to_eexec(Type1_font *tcd, Type1_token *tok)
 		}
 }
 
-static void type1_find_mode(Type1_font *tcd, FILE *fp)
+static void type1_find_mode(Type1_font *tcd, XFILE *fp)
 /* 
    (John Walker's comment on how to tell hex from binary.)
    "Adobe Type 1 Font Format Version 1.1", ISBN 0-201-57044-0 states
@@ -835,8 +833,8 @@ static void type1_find_mode(Type1_font *tcd, FILE *fp)
 	int i;
 	(void)tcd;
 
-	encrypt_start = ftell(fp);
-	cs[0] = getc(fp);
+	encrypt_start = xftell(fp);
+	cs[0] = xfgetc(fp);
 
 
 	if (cs[0] == ' ' || cs[0] == '\t' ||
@@ -849,7 +847,7 @@ static void type1_find_mode(Type1_font *tcd, FILE *fp)
 		{
 		for (i = 1; i < 4; i++) 
 			{
-			cs[i] = getc(fp);
+			cs[i] = xfgetc(fp);
             }
 		byte_in = hex_byte_in;
 		for (i = 0; i < 4; i++) 
@@ -858,31 +856,31 @@ static void type1_find_mode(Type1_font *tcd, FILE *fp)
 				  (cs[i] >= 'A' && cs[0] <= 'F') ||
 				  (cs[i] >= 'a' && cs[0] <= 'f'))) 
 				{
-				byte_in = fgetc;
+				byte_in = xfgetc;
 				break;
                 }
             }
         }
 
-	fseek(fp, encrypt_start, SEEK_SET);	/* Reread encrypted random bytes as
+	xfseek(fp, encrypt_start, XSEEK_SET);/* Reread encrypted random bytes as
 										 * the decrypter depends on everything
 										 * from encrypt_start on going through
 										 * byte_in(). */
 }
 
 #ifdef DEBUG
-static void dump_encrypted_part(Type1_font *tcd, FILE *fp)
+static void dump_encrypted_part(Type1_font *tcd, XFILE *fp)
 /* Run file through decryptor and write it to a debugging file. */
 {
-	FILE *out = fopen("H:decrypt", "wb");
-	long encrypt_start = ftell(fp);
+	XFILE *out = xfopen("H:decrypt", "wb");
+	long encrypt_start = xftell(fp);
 	int ch;
 
     crypt_init(55665);
 	while ((ch = decrypt_byte_in(fp)) != EOF)
-		putc(ch, out);
-	fclose(out);
-	fseek(fp, encrypt_start, SEEK_SET);
+		xfputc(ch, out);
+	xfclose(out);
+	xfseek(fp, encrypt_start, XSEEK_SET);
 }
 #endif /* DEBUG */
 
@@ -1052,7 +1050,7 @@ static void type1_get_char_strings(Type1_font *tcd, Type1_token *tok)
 		}
 }
 
-static void rtype1(Type1_font *tcd, FILE *fp)
+static void rtype1(Type1_font *tcd, XFILE *fp)
 /*  RTYPE1  --  Load a type 1 font into memory.  */
 {
 	int i;
@@ -1063,12 +1061,12 @@ static void rtype1(Type1_font *tcd, FILE *fp)
 
 	if ((err = type1_check_signature(fp)) < Success)
 		type1_load_error("Can't find !%FontType1 in .PFB file.");
-	type1_token_init(&tok, fp, fgetc);
+	type1_token_init(&tok, fp, xfgetc);
 	type1_parse_to_eexec(tcd, &tok);
 	if (tcd->encoding == NULL)
 		type1_load_error("No /Encoding array.");
     for (i = 0; i < 6; i++) 
-        (void) getc(fp);              /* Beats me, but there's 6 trash bytes */
+		xfgetc(fp); /* Beats me, but there's 6 trash bytes */
 	type1_find_mode(tcd, fp);
 #ifdef DEBUG
 	dump_encrypted_part(tcd, fp);
@@ -1123,7 +1121,7 @@ if (ptcd != NULL && (tcd = *ptcd) != NULL)
 	}
 }
 
-static Errcode read_font(FILE *fp, Type1_font **ptcd)
+static Errcode read_font(XFILE *fp, Type1_font **ptcd)
 {
 Errcode err = Success;
 Type1_font *tcd;
@@ -1202,15 +1200,15 @@ static Errcode type1_load_font(char *file_name, Type1_font **ptcd)
  * prepare it for display.
  ****************************************************************************/
 {
-FILE *file;
+XFILE *file;
 Errcode err;
 
-if ((file = fopen(file_name, "rb")) == NULL)
-	return(errno);
+if ((file = xfopen(file_name, "rb")) == NULL)
+	return xerrno();
 if ((err = read_font(file, ptcd)) >= Success)
 	if ((err = find_ascii_values(*ptcd)) >= Success)
 		calc_font_bounds(*ptcd);
-fclose(file);
+xfclose(file);
 return err;
 }
 
@@ -2910,16 +2908,16 @@ static Errcode check_type1_font(char *name)
 /* Verify it's a Post-script font by looking for the !% signature in the
  * first 128 bytes, and making sure the file suffix starts with a 'p' */
 {
-FILE *f;
+XFILE *f;
 char *suff = pj_get_path_suffix(name);
 Errcode err;
 
 if (!(suff[1] == 'p' || suff[1] == 'P'))
 	return Err_suffix;
-if ((err = ffopen(name, &f, "rb")) < Success)
+if ((err = xffopen(name, &f, "rb")) < Success)
 	return err;
 err = type1_check_signature(f);
-ffclose(&f);
+xffclose(&f);
 return err;
 }
 
