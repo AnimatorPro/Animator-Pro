@@ -3,6 +3,7 @@
 
 #include <stdarg.h>
 #include <stddef.h>
+#include "stdtypes.h"
 
 #ifndef EOF
 enum { EOF = -1 };
@@ -38,5 +39,14 @@ extern int xvfprintf(XFILE *xf, const char *format, va_list ap);
 extern char *xfgets(char *s, int size, XFILE *xf);
 extern int xfputs(const char *s, XFILE *xf);
 extern int xerrno(void);
+
+extern Errcode xffopen(const char *path, XFILE **pfp, const char *fmode);
+extern void xffclose(XFILE **pfp);
+extern Errcode xffread(XFILE *xf, void *buf, size_t size);
+extern Errcode xffwrite(XFILE *xf, void *buf, size_t size);
+extern Errcode xffwriteoset(XFILE *xf, void *buf, long offset, size_t size);
+extern Errcode xffseek(XFILE *xf, long offset, enum XSEEK_WHENCE whence);
+extern long xfftell(XFILE *xf);
+extern Errcode xffile_error(void);
 
 #endif

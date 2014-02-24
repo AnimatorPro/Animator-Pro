@@ -230,3 +230,77 @@ xerrno(void)
 {
 	return real_errno;
 }
+
+/*--------------------------------------------------------------*/
+
+Errcode
+xffopen(const char *path, XFILE **pfp, const char *fmode)
+{
+	if ((*pfp = xfopen(path, fmode)) == NULL)
+		return xffile_error();
+	return Success;
+}
+
+void
+xffclose(XFILE **pfp)
+{
+	if (*pfp)
+		xfclose(*pfp);
+	*pfp = NULL;
+}
+
+Errcode
+xffread(XFILE *xf, void *buf, size_t size)
+{
+	if (real_fread(buf, 1, size, xf->rf) != size)
+		return xffile_error();
+	return Success;
+}
+
+Errcode
+xffwrite(XFILE *xf, void *buf, size_t size)
+{
+	if (real_fwrite(buf, 1, size, xf->rf) != size)
+		return xffile_error();
+	return Success;
+}
+
+Errcode
+xffwriteoset(XFILE *xf, void *buf, long offset, size_t size)
+{
+	if (xfseek(xf, offset, XSEEK_SET) != 0)
+		goto error;
+	if (real_fwrite(buf, 1, size, xf->rf) != size)
+		goto error;
+	return Success;
+error:
+	return xffile_error();
+}
+
+Errcode
+xffseek(XFILE *xf, long offset, enum XSEEK_WHENCE whence)
+{
+	if (xfseek(xf, offset, whence))
+		return xffile_error();
+	return Success;
+}
+
+long
+xfftell(XFILE *xf)
+{
+	const long offset = real_ftell(xf->rf);
+
+	if (offset < 0)
+		return xffile_error();
+	return offset;
+}
+
+Errcode
+xffile_error(void)
+{
+#ifdef USE_LFILE
+	return lerrno;
+#else
+	return Err_stdio;
+#endif
+}
