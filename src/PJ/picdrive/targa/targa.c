@@ -2,8 +2,6 @@
  * TARGA.C - Main module for targa picture driver.
  ****************************************************************************/
 
-#include <stdio.h>
-#include "ffile.h"
 #include "memory.h"
 #include "targa.h"
 
@@ -89,7 +87,7 @@ static void close_file(Image_file **ptf)
 		pj_free(tf->lbuf);
 
 	if(tf->file != NULL)
-		fclose(tf->file);
+		xfclose(tf->file);
 
 	pj_free(tf);
 	*ptf = NULL;
@@ -107,8 +105,8 @@ static Errcode alloc_and_open(Targa_file **ptf, char *path, char *openmode)
 		return Err_no_memory;
 	*ptf = tf;
 
-	if (NULL == (tf->file = fopen(path, openmode)))
-		return pj_errno_errcode();
+	if (NULL == (tf->file = xfopen(path, openmode)))
+		return xerrno();
 
 	return Success;
 }

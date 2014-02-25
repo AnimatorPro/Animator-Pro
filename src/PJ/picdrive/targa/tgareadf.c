@@ -2,9 +2,7 @@
  * TGAREADF.C - Routines to read headers and data from a targa file.
  ****************************************************************************/
 
-#include <stdio.h>
 #include <string.h>
-#include "ffile.h"
 #include "memory.h"
 #include "targa.h"
 
@@ -44,14 +42,14 @@ static Errcode read_targa_ctab(Targa_file *tf)
 
 	memset(pcmap->ctab, 0, sizeof(pcmap->ctab));
 
-	fseek(tf->file, tf->tgahdr.idlength+sizeof(tf->tgahdr), SEEK_SET);
+	xfseek(tf->file, tf->tgahdr.idlength+sizeof(tf->tgahdr), XSEEK_SET);
 
 	ctab = pcmap->ctab + tf->tgahdr.tcmdata.mapidx;
 	while (--len >= 0)
 		{
-		ctab->b = getc(tf->file);
-		ctab->g = getc(tf->file);
-		ctab->r = getc(tf->file);
+		ctab->b = xfgetc(tf->file);
+		ctab->g = xfgetc(tf->file);
+		ctab->r = xfgetc(tf->file);
 		++ctab;
 		}
 
@@ -71,8 +69,8 @@ Errcode read_targa_header(Targa_file *tf)
 	Tgaheader	*th = &tf->tgahdr;
 	Imgspec 	*im = &tf->tgahdr.imgdata;
 
-	if (1 != fread(th, sizeof(*th), 1, tf->file))
-		return pj_errno_errcode();
+	if (1 != xfread(th, sizeof(*th), 1, tf->file))
+		return xerrno();
 
 	/*------------------------------------------------------------------------
 	 *
@@ -207,13 +205,14 @@ Errcode read_nextline(Image_file *ifile, Rgb3 *rgbbuf)
 		p = tf->lbuf + tf->over_count;
 		while (lpos > 0)
 			{
-			if (1 != fread(&pbuf[0], sizeof(pbuf[0]), 1, tf->file))
+			if (1 != xfread(&pbuf[0], sizeof(pbuf[0]), 1, tf->file))
 				return Err_truncated;
 			ww = pbuf[0];
 			if (ww&0x0080)	  /* it's a run dude */
 				{
 				ww = (ww&0x007F)+1;   /* length of run - 1*/
-				if (1 != fread(pbuf, bpp, 1, tf->file)) /* get data to repeat */
+				/* get data to repeat */
+				if (1 != xfread(pbuf, bpp, 1, tf->file))
 					return Err_truncated;
 				while (--ww >= 0)
 					{
@@ -225,7 +224,7 @@ Errcode read_nextline(Image_file *ifile, Rgb3 *rgbbuf)
 			else		   /* This bit is just raw data */
 				{
 				i = (ww+1)*bpp; /* length in bytes */
-				if (1 != fread(p, i, 1, tf->file))
+				if (1 != xfread(p, i, 1, tf->file))
 					return Err_truncated;
 				p += i;
 				lpos -= i;
@@ -235,7 +234,7 @@ Errcode read_nextline(Image_file *ifile, Rgb3 *rgbbuf)
 		}
 	else /* not compressed, just read in a line of data */
 		{
-		if (1 != fread(tf->lbuf, bpr, 1, tf->file))
+		if (1 != xfread(tf->lbuf, bpr, 1, tf->file))
 			return Err_truncated;
 		}
 
@@ -298,7 +297,7 @@ Errcode read_seekstart(Image_file *ifile)
 
 	tf->over_count = 0;
 	tf->cury = 0;
-	fseek(tf->file, tf->data_offset, SEEK_SET);
+	xfseek(tf->file, tf->data_offset, XSEEK_SET);
 	return tf->is_flipped;
 }
 

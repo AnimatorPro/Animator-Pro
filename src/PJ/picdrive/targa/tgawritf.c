@@ -2,8 +2,6 @@
  * TGAGWRIT.C - Routines to write headers and data to a targa file.
  ****************************************************************************/
 
-#include <stdio.h>
-#include "ffile.h"
 #include "memory.h"
 #include "targa.h"
 
@@ -50,8 +48,8 @@ Errcode write_targa_header(Targa_file *tf)
 			th->imgtype = MAPPED_IMAGE;
 		}
 
-	if (1 != fwrite(th, sizeof(*th), 1, tf->file))
-		return pj_errno_errcode();
+	if (1 != xfwrite(th, sizeof(*th), 1, tf->file))
+		return xerrno();
 
 	if (!tf->is_rgb)	/* write color map if not rgb file */
 		{
@@ -61,8 +59,8 @@ Errcode write_targa_header(Targa_file *tf)
 			outcolor.r = incolor->r;
 			outcolor.g = incolor->g;
 			outcolor.b = incolor->b;
-			if (1 != fwrite(&outcolor, sizeof(outcolor), 1, tf->file))
-				return pj_errno_errcode();
+			if (1 != xfwrite(&outcolor, sizeof(outcolor), 1, tf->file))
+				return xerrno();
 			}
 		}
 
@@ -138,8 +136,8 @@ static Errcode dump_run(Targa_file *tf, Pixel color, int runlength)
 			rundata.length = (runlength-1) | 0x80;
 			runlength = 0;
 			}
-		if (1 != fwrite(&rundata, output_size, 1, tf->file))
-			return pj_errno_errcode();
+		if (1 != xfwrite(&rundata, output_size, 1, tf->file))
+			return xerrno();
 		}
 
 	return Success;
@@ -171,8 +169,8 @@ static Errcode dump_literal(Targa_file *tf, Pixel *pbuf, int runlength)
 
 	if (tf->is_compressed)
 		{
-		if (1 != fwrite(&rlen, sizeof(rlen), 1, tf->file))
-			return pj_errno_errcode();
+		if (1 != xfwrite(&rlen, sizeof(rlen), 1, tf->file))
+			return xerrno();
 		}
 
 	if (tf->is_rgb)
@@ -184,14 +182,14 @@ static Errcode dump_literal(Targa_file *tf, Pixel *pbuf, int runlength)
 			outdata.g = rgbcolor->g;
 			outdata.b = rgbcolor->b;
 
-			if (1 != fwrite(&outdata, sizeof(outdata), 1, tf->file))
-				return pj_errno_errcode();
+			if (1 != xfwrite(&outdata, sizeof(outdata), 1, tf->file))
+				return xerrno();
 			}
 		}
 	else
 		{
-		if (1 != fwrite(pbuf, runlength, 1, tf->file))
-			return pj_errno_errcode();
+		if (1 != xfwrite(pbuf, runlength, 1, tf->file))
+			return xerrno();
 		}
 
 	return Success;

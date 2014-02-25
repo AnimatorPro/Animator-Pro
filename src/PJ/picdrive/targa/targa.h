@@ -5,10 +5,10 @@
  * TARGA.H - Header file for Targa PDR.
  ****************************************************************************/
 
-#include "picdrive.h"
 #include "errcodes.h"
-#include "stdio.h"
 #include "gfx.h"
+#include "picdrive.h"
+#include "xfile.h"
 
 /*----------------------------------------------------------------------------
  * constants for targa-defined values...
@@ -94,7 +94,7 @@ typedef struct targa_file { 	/* the main juju; gets passed to everyone...*/
 	int 		pdepth; 		/* pixel depth */
 	int 		bpp;			/* bytes per pixel */
 	int 		bpr;			/* bytes per row */
-	FILE		*file;			/* file */
+	XFILE		*file;			/* file */
 	Rcel		*screen_rcel;	/* PJ screen raster */
 	int 		curx;			/* screen column we're currently working on */
 	int 		cury;			/* screen row we're currently working on */
