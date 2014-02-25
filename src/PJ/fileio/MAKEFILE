@@ -113,6 +113,9 @@ FFILEO = \
 ## XFILE
 XFILEO = xfile.obj
 
+xfile.obj: xfile.c
+	 $(CC) xfile.c $(CPF) -dUSE_LFILE -fo=$*.obj
+
 #** library with temp and ram file handling file system and all utilities *
 
 trdfile.lib: makefile\
