@@ -38,6 +38,7 @@ extern int xprintf(const char *format, ...);
 extern int xvfprintf(XFILE *xf, const char *format, va_list ap);
 extern char *xfgets(char *s, int size, XFILE *xf);
 extern int xfputs(const char *s, XFILE *xf);
+extern int xferror(XFILE *xf);
 extern int xerrno(void);
 
 extern Errcode xffopen(const char *path, XFILE **pfp, const char *fmode);

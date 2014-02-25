@@ -30,6 +30,7 @@
 	#define real_vfprintf lvfprintf
 	#define real_fgets lfgets
 	#define real_fputs lfputs
+	#define real_ferror lferror
 	#define real_errno lerrno
 #else
 	#include <stdio.h>
@@ -54,6 +55,7 @@
 	#define real_vfprintf vfprintf
 	#define real_fgets fgets
 	#define real_fputs fputs
+	#define real_ferror ferror
 	#define real_errno errno
 #endif /* USE_LFILE */
 
@@ -223,6 +225,12 @@ int
 xfputs(const char *s, XFILE *xf)
 {
 	return real_fputs(s, xf->rf);
+}
+
+int
+xferror(XFILE *xf)
+{
+	return real_ferror(xf->rf);
 }
 
 int
