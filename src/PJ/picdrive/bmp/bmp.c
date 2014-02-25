@@ -4,14 +4,13 @@
  ***************************************************************************/
 
 #include <assert.h>
-#include <stdio.h>
 #include <string.h>
 #define REXLIB_INTERNALS
 #include "errcodes.h"
-#include "ffile.h"
 #include "memory.h"
 #include "picdrive.h"
 #include "util.h"
+#include "xfile.h"
 
 /*-------------------------BMP STRUCTURE SECTION----------------------------*/
 
@@ -128,19 +127,19 @@ typedef struct
 
 /*-------------------------UTILITY SECTION---------------------------------*/
 
-static Errcode read_buf(FILE *f, void *buf, int size)
+static Errcode read_buf(XFILE *f, void *buf, int size)
 /* Read a buffer of a certain size */
 {
-	if (fread(buf, size, 1, f) != 1)
+	if (xfread(buf, size, 1, f) != 1)
 		return(Err_truncated);
 	else
 		return(Success);
 }
 
-static Errcode write_buf(FILE *f, void *buf, int size)
+static Errcode write_buf(XFILE *f, void *buf, int size)
 /* Write a buffer of a certain size */
 {
-	if (fwrite(buf, size, 1, f) != 1)
+	if (xfwrite(buf, size, 1, f) != 1)
 		return(Err_write);
 	else
 		return(Success);
@@ -269,7 +268,7 @@ static enum Info_type upgrade_old_info(BITMAPINFOHEADER *h)
 	}
 }
 
-static Errcode read_head(FILE *f
+static Errcode read_head(XFILE *f
 , 	BITMAPFILEHEADER *head, BITMAPINFOHEADER *info)
 /* Read in the file header and info.  Verify the type fields and
  * generally make sure the values look reasonable. */
@@ -353,7 +352,7 @@ ERROR:
 	return err;
 }
 
-static Errcode read_new_colors(FILE *f, Cmap *c, unsigned int count)
+static Errcode read_new_colors(XFILE *f, Cmap *c, unsigned int count)
 /* Read a bunch of colors in BGRA format from file into color map. */
 {
 	Rgb3 *out = c->ctab;
@@ -373,7 +372,7 @@ static Errcode read_new_colors(FILE *f, Cmap *c, unsigned int count)
 	return err;
 }
 
-static Errcode read_old_colors(FILE *f, Cmap *c, unsigned int count)
+static Errcode read_old_colors(XFILE *f, Cmap *c, unsigned int count)
 /* Read a bunch of colors in BGR format from file into color map. */
 {
 	Rgb3 *out = c->ctab;
@@ -393,7 +392,7 @@ static Errcode read_old_colors(FILE *f, Cmap *c, unsigned int count)
 	return err;
 }
 
-static Errcode read_uncompressed(FILE *f, BITMAPINFOHEADER *info, Rcel *screen)
+static Errcode read_uncompressed(XFILE *f, BITMAPINFOHEADER *info, Rcel *screen)
 /* Read in uncompressed pixels a line at a time from upside-down file to
  * screen.  Adjust for long-word line padding. Unpack bit-a-pixel or
  * nibble-a-pixel representation to byte-a-pixel. */
@@ -449,7 +448,7 @@ ERROR:
 	return err;
 }
 
-static Errcode read_rle(FILE *f, BITMAPINFOHEADER *info, Rcel *screen)
+static Errcode read_rle(XFILE *f, BITMAPINFOHEADER *info, Rcel *screen)
 /* Read in a BI_RLE4 and BI_RLE8 compressed image.  Like all BMP's this will be
  * stored from bottom to top.  We know this one will by byte-a-pixel.
  * The compression scheme is rather complex and actually not that
@@ -598,7 +597,7 @@ ERROR:
 	return err;
 }
 
-static Errcode read_after_header(FILE *f
+static Errcode read_after_header(XFILE *f
 ,	BITMAPFILEHEADER *head, BITMAPINFOHEADER *info, enum Info_type itype
 ,	Rcel *screen)
 /* Read everything after the file header and info - colors and pixels. 
@@ -619,8 +618,8 @@ static Errcode read_after_header(FILE *f
 						 * jump from 8 bits a pixel to 24, so this is safe. */
 	{
 		/* Seek to color start. */
-		if ((err = fseek(f
-		,	sizeof(*head) + info->biSize, SEEK_SET)) < Success)
+		if ((err = xfseek(f
+		,	sizeof(*head) + info->biSize, XSEEK_SET)) < Success)
 			return err;
 		if (itype == INFO_TYPE_NEW)
 		{
@@ -637,7 +636,7 @@ static Errcode read_after_header(FILE *f
 	}
 	pj_cmap_load(screen,screen->cmap); /* update hardware cmap if needed */
 	/* Seek to pixel start. */
-	if ((err = fseek(f, head->bfOffBits, SEEK_SET)) < Success)
+	if ((err = xfseek(f, head->bfOffBits, XSEEK_SET)) < Success)
 		return err;
 	/* Read pixels. */
 	switch (info->biCompression)
@@ -655,7 +654,7 @@ static Errcode read_after_header(FILE *f
 
 /*-------------------------BMP READ RGB SECTION------------------------------*/
 
-static Errcode bmp_read_rgb_line(FILE *f, BITMAPINFOHEADER *info, Rgb3 *out)
+static Errcode bmp_read_rgb_line(XFILE *f, BITMAPINFOHEADER *info, Rgb3 *out)
 /* Read in a single line of RGB data from a 24 bit BMP and convert it
  * from BGR to RGB format. */
 {
@@ -676,7 +675,7 @@ static Errcode bmp_read_rgb_line(FILE *f, BITMAPINFOHEADER *info, Rgb3 *out)
 	/* Skip a few bytes possibly to round to next longword boundary. */
 	read_width = info->biWidth*3;
 	if ((width = NEXT_QUAD(read_width) - read_width) != 0)
-		fseek(f, width, SEEK_CUR);
+		xfseek(f, width, XSEEK_CUR);
 	return Success;
 }
 
@@ -706,7 +705,7 @@ static void init_header(int32_t width, int32_t height
 	info->biClrImportant = COLORS;
 }
 
-static Errcode write_colors(FILE *f, Cmap *c)
+static Errcode write_colors(XFILE *f, Cmap *c)
 /* Write out all the colors in bgr order. */
 {
 	Rgb3 *in = c->ctab;
@@ -728,7 +727,7 @@ static Errcode write_colors(FILE *f, Cmap *c)
 	return err;
 }
 
-static Errcode write_pixels(FILE *f, BITMAPINFOHEADER *info, Rcel *screen)
+static Errcode write_pixels(XFILE *f, BITMAPINFOHEADER *info, Rcel *screen)
 /* Write out the pixels from screen.  Write from bottom to top, and
  * pad each line with zeroes as necessary. */
 {
@@ -754,7 +753,7 @@ ERROR:
 	return err;
 }
 
-static Errcode write_after_header(FILE *f
+static Errcode write_after_header(XFILE *f
 ,	BITMAPFILEHEADER *head, BITMAPINFOHEADER *info, Rcel *screen)
 /* Write out everything after the file header and info - colors and pixels. */
 {
@@ -774,7 +773,7 @@ typedef struct bmp_image_file
  * the PDR client. */
 {
 	Image_file hdr;				/* It better start with and Image_file. */
-	FILE *file;
+	XFILE *file;
 	BITMAPFILEHEADER bh;
 	BITMAPINFOHEADER bi;
 	enum Info_type info_type;
@@ -808,7 +807,7 @@ static void close_file(Image_file **pif)
 	if(pf == NULL || (f = *pf) == NULL)
 		return;
 	if(f->file)
-		fclose(f->file);
+		xfclose(f->file);
 	pj_free(f);
 	*pf = NULL;
 	is_open = FALSE;
@@ -834,8 +833,8 @@ static Errcode open_helper(Bmp_image_file **pf, char *path, char *rwmode)
 	if((f = pj_zalloc(sizeof(*f))) == NULL)
 		return(Err_no_memory);
 
-	if((f->file = fopen(path, rwmode)) == NULL)
-		err = pj_errno_errcode();
+	if ((f->file = xfopen(path, rwmode)) == NULL)
+		err = xerrno();
 
 	is_open = TRUE;
 	*pf = f;
@@ -956,7 +955,7 @@ static Errcode rgb_read_seekstart(Image_file *ifile)
 	Bmp_image_file *f = (Bmp_image_file *)ifile;
 	long fpos;
 
-	if ((fpos = fseek(f->file, f->bh.bfOffBits, SEEK_SET)) < Success)
+	if ((fpos = xfseek(f->file, f->bh.bfOffBits, XSEEK_SET)) < Success)
 		return fpos;
 	return 1;		/* It's flipped. */
 }
