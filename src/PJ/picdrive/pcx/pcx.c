@@ -1,14 +1,11 @@
 
 /* pcx.c - Source to PCX format PJ picture driver. */
 
-#include <stdio.h>
 #include <string.h>
 #define REXLIB_INTERNALS
 #include "errcodes.h"
-#include "ffile.h"
 #include "memory.h"
 #include "pcx.h"
-#include "picdrive.h"
 #include "util.h"
 
 #define PCX_MAX_RUN 63	/* longest run (since hi 2 bits are used elsewhere */
@@ -24,13 +21,13 @@ typedef struct unpcx_obj
 	UBYTE *over;
 	int over_count;
 	int bpl;
-	FILE *file;
+	XFILE *file;
 	} Unpcx_obj;
 
 static Errcode unpcx_init(
 	Unpcx_obj *upo, 	/* line unpacker object */
 	int bpl, 			/* bytes-per-line */
-	FILE *file)			/* source file */
+	XFILE *file)		/* source file */
 /* Initialize object and allocate buffer big enough for bpl bytes plus
  * overflow.  */
 {
@@ -56,7 +53,7 @@ int bytes_left;
 UBYTE *p;
 register int count;
 UBYTE data;
-FILE *file = upo->file;
+XFILE *file = upo->file;
 
 						/* first deal with any overflow from last line */
 pj_copy_bytes(upo->over, upo->buf, upo->over_count);
@@ -65,12 +62,12 @@ p = upo->buf + upo->over_count;
 						/* loop while haven't decoded at least a line */
 while (bytes_left > 0)
 	{
-	if ((count = getc(file)) < 0)		/* fetch next byte */
+	if ((count = xfgetc(file)) < 0)		/* fetch next byte */
 		return(Err_truncated);
 	if ((count & 0xc0) == 0xc0)			/* if hi two bits set it's a run  */
 		{
 		count &= 0x3f;
-		data = getc(file);
+		data = xfgetc(file);
 		bytes_left -= count;
 		while (--count >= 0)
 			*p++ = data;
@@ -141,7 +138,7 @@ while (w > 0)
 	}
 }
 
-static Errcode unpack_pcx(Rcel *screen, Pcx_header *hdr, FILE *f)
+static Errcode unpack_pcx(Rcel *screen, Pcx_header *hdr, XFILE *f)
 {
 Errcode err;
 Unpcx_obj rupo;
@@ -217,7 +214,7 @@ return(err);
 
 /**** Compression code ****/
 
-static void pcx_comp_buf(FILE *out, UBYTE *buf, int count)
+static void pcx_comp_buf(XFILE *out, UBYTE *buf, int count)
 /* Do PCX compression of buf into file out */
 {
 int same_count, lcount;
@@ -230,8 +227,8 @@ while ((count -= same_count) > 0)
 		lcount = PCX_MAX_RUN;
 	if ((same_count = pj_bsame(buf,  lcount)) > 1)
 		{
-		putc(same_count|0xc0, out);
-		putc(*buf, out);
+		xfputc(same_count|0xc0, out);
+		xfputc(*buf, out);
 		buf += same_count;
 		}
 	else
@@ -239,20 +236,20 @@ while ((count -= same_count) > 0)
 		c = *buf;
 		if ((c&0xc0) == 0xc0)
 			{
-			putc(0xc1, out);
-			putc(c, out);
+			xfputc(0xc1, out);
+			xfputc(c, out);
 			buf += 1;
 			}
 		else
 			{
-			putc(c, out);
+			xfputc(c, out);
 			buf += 1;
 			}
 		}
 	}
 }
 
-static Errcode pcx_save_screen(FILE *out, Rcel *screen)
+static Errcode pcx_save_screen(XFILE *out, Rcel *screen)
 /* Save out header, pixel, and color map corresponding to screen.  Assumes
  * file open and at start of  file. */
 {
@@ -275,7 +272,7 @@ rhdr.cardw = screen->width;
 rhdr.cardh = screen->height;
 rhdr.nplanes = 1;
 rhdr.bpl = screen->width;
-if (fwrite(&rhdr, sizeof(rhdr), 1, out) < 1)	/* Write header */
+if (xfwrite(&rhdr, sizeof(rhdr), 1, out) < 1) /* Write header */
 	goto IOERR;
 if ((buf = pj_malloc(screen->width)) == NULL)		/* Get line buffer */
 	{
@@ -286,17 +283,17 @@ for (i=0; i<height; i++)						/* Write out each line */
 	{
 	pj_get_hseg(screen, buf, 0, i, width);
 	pcx_comp_buf(out, buf, width);
-	if (ferror(out) != 0)
+	if (xferror(out) != 0)
 		goto IOERR;
 	}
-putc(PCX_CMAP_MAGIC,out);						/* Write out color map */
-fwrite(screen->cmap->ctab,  sizeof(screen->cmap->ctab[0]),  
+xfputc(PCX_CMAP_MAGIC, out);					/* Write out color map */
+xfwrite(screen->cmap->ctab,  sizeof(screen->cmap->ctab[0]),
 	screen->cmap->num_colors, out);
-if (ferror(out) != 0)
+if (xferror(out) != 0)
 	goto IOERR;
 goto OUT;
 IOERR:
-	err = pj_errno_errcode();
+	err = xerrno();
 	goto OUT;
 OUT:
 	pj_freez(&buf);
@@ -355,11 +352,11 @@ static Errcode read_pcx_start(Pcx_file *gf,
  *  Move appropriate fields from hdr to ainfo */
 {
 Errcode err;
-FILE *f;
+XFILE *f;
 
 f = gf->file;
 
-if(fread(hdr, 1, sizeof(*hdr), f) < sizeof(*hdr))
+if (xfread(hdr, 1, sizeof(*hdr), f) < sizeof(*hdr))
 	goto io_error;
 
 if (hdr->encode != 1)		/* all PCX files use compression type 1 */
@@ -391,7 +388,7 @@ ainfo->depth = 8;		/* we'll always convert it to 8 bits */
 return(Success);
 
 io_error:
-err = pj_errno_errcode();
+err = xerrno();
 
 error:
 return(err);
@@ -420,7 +417,7 @@ Pcx_file *gf;
 if(pcxile == NULL || (gf = *pcxile) == NULL)
 	return;
 if(gf->file)
-	fclose(gf->file);
+	xfclose(gf->file);
 pj_free(gf);
 *pcxile = NULL;
 pcx_files_open = FALSE;
@@ -444,8 +441,8 @@ if (!suffix_in(path, ".PCX"))
 if((gf = pj_zalloc(sizeof(Pcx_file))) == NULL)
 	return(Err_no_memory);
 
-if((gf->file = fopen(path, rwmode)) == NULL)
-	err = pj_errno_errcode();
+if ((gf->file = xfopen(path, rwmode)) == NULL)
+	err = xerrno();
 
 pcx_files_open = TRUE;
 *pcxile = gf;
@@ -531,7 +528,7 @@ static Errcode pcx_read_picframe(Image_file *ifile, Rcel *screen)
 {
 Errcode err;
 Pcx_file *gf;
-FILE *pcx_load_file;
+XFILE *pcx_load_file;
 Anim_info info;
 Pcx_header hdr;
 Boolean got_cmap;
@@ -540,7 +537,7 @@ Rgb3  *ctab  = cmap->ctab;
 
 	gf = (Pcx_file *)ifile;		/* ifile has more data past the Image_file */
 	pcx_load_file = gf->file; 	/* Grab the FILE handle */
-	rewind(pcx_load_file);		/* Go back to beginning of file */
+	xrewind(pcx_load_file);		/* Go back to beginning of file */
 
 								/* Load and verify header. */
 	if((err = read_pcx_start(gf, &hdr, &info, &got_cmap)) < Success)
@@ -562,9 +559,9 @@ Rgb3  *ctab  = cmap->ctab;
 
 	if (hdr.bitpx == 8 && got_cmap)
 		{
-		if (getc(pcx_load_file) != PCX_CMAP_MAGIC)  
+		if (xfgetc(pcx_load_file) != PCX_CMAP_MAGIC)
 			return(Err_bad_magic);
-		fread(ctab,  sizeof(ctab[0]),  cmap->num_colors, pcx_load_file);
+		xfread(ctab, sizeof(ctab[0]), cmap->num_colors, pcx_load_file);
 		pj_cmap_load(screen,cmap); /* update hardware cmap if needed */
 		}
 	return(err);

@@ -5,13 +5,11 @@
 	#include "stdtypes.h"
 #endif
 
-#ifndef STDIO_H
-	#include <stdio.h>
-#endif
-
 #ifndef PICDRIVE_H
 	#include "picdrive.h"
 #endif
+
+#include "xfile.h"
 
 typedef struct pcx_header
 	{
@@ -27,7 +25,7 @@ STATIC_ASSERT(pcx, sizeof(Pcx_header) == 128);
 
 typedef struct pcx_image_file {
 	Image_file hdr;
-	FILE *file;
+	XFILE *file;
 	Anim_info ainfo; /* info created with or opened with */
 } Pcx_file;
 
