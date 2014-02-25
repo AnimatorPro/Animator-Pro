@@ -4,12 +4,10 @@
 
 #include <string.h>
 #include "errcodes.h"
-#include "stdtypes.h"
-#include "stdio.h"
-#include "ffile.h"
 #include "memory.h"
 #include "picdrive.h"
 #include "rif.h"
+#include "xfile.h"
 
 #define ISUFFI ".RIF"
 
@@ -18,7 +16,7 @@ typedef struct ifile {
  ** local to the PDR.
  **/
 	Image_file hdr;
-	FILE *file;
+	XFILE *file;
 	struct riff_head rif;
 	UBYTE *sbuf;
 	UBYTE *planes[8];
@@ -101,7 +99,7 @@ static Errcode open_file(Pdr *pd, char *path, Image_file **pif,
  ****************************************************************************/
 {
 Ifile *gf;
-FILE *f;
+XFILE *f;
 Errcode err = Success;
 UBYTE *sbuf;
 Riff_head rif;
@@ -113,12 +111,12 @@ int i;
 if((gf = pj_zalloc(sizeof(*gf))) == NULL)
 	return(Err_no_memory);
 
-if((f = gf->file = fopen(path, "rb")) == NULL)
+if ((f = gf->file = xfopen(path, "rb")) == NULL)
 	{
-	err = pj_errno_errcode();
+	err = xerrno();
 	goto ERROR;
 	}
-if (fread(&rif, sizeof(rif), 1, f) != 1)
+if (xfread(&rif, sizeof(rif), 1, f) != 1)
 	{
 	err = Err_truncated;
 	goto ERROR;
@@ -191,7 +189,7 @@ Ifile *gf;
 if(pgf == NULL || (gf = *pgf) == NULL)
 	return;
 if(gf->file)
-	fclose(gf->file);
+	xfclose(gf->file);
 if (gf->sbuf != NULL)
 	pj_free(gf->sbuf);
 if (gf->ytable != NULL)
@@ -224,7 +222,7 @@ static Errcode unrif_comp(Ifile *gf, UBYTE *plane, struct comp_size *comp)
  ****************************************************************************/
 {
 UBYTE *comp_buf = NULL;
-FILE *f = gf->file;
+XFILE *f = gf->file;
 unsigned size;
 short type;
 Errcode err = Success;
@@ -241,7 +239,7 @@ if ((size = comp->size) != 0)
 							 **/
 	if ((type = comp->comp) == VCOMP_NONE)
 		{
-		if (fread(plane, size, 1, f) != 1)
+		if (xfread(plane, size, 1, f) != 1)
 			{
 			err = Err_truncated;
 			goto ERROR;
@@ -252,7 +250,7 @@ if ((size = comp->size) != 0)
 							/** Else read in the compressed data
 							 ** and unpack it.
 							 **/
-		if (fread(comp_buf, size, 1, f) != 1)
+		if (xfread(comp_buf, size, 1, f) != 1)
 			{
 			err = Err_truncated;
 			goto ERROR;
@@ -280,7 +278,7 @@ static Errcode read_next(Image_file *ifile,Rcel *screen)
  ****************************************************************************/
 {
 Ifile *gf = (Ifile *)ifile; 	/* There's a bit of data past ifile header */
-FILE *f = gf->file;
+XFILE *f = gf->file;
 struct vcomp_iff vc_h;
 Errcode err = Success;
 int i;
@@ -290,7 +288,7 @@ int i;
 						 ** necessary Intel/Motorola swapping,
 						 ** and verify the header id bits.
 						 **/
-if ( fread(&vc_h, sizeof(vc_h), 1, f) != 1)
+if (xfread(&vc_h, sizeof(vc_h), 1, f) != 1)
 	{
 	err = Err_truncated;
 	goto ERROR;
@@ -332,9 +330,9 @@ Ifile *gf = (Ifile *)ifile; 	/* There's a bit of data past ifile header */
 Errcode err;
 
 				/* skip past header & offset list */
-if ((err = fseek(gf->file,
+if ((err = xfseek(gf->file,
 				 gf->rif.frame_count * sizeof(long) + sizeof(Riff_head),
-				 SEEK_SET)) < Success)
+				 XSEEK_SET)) < Success)
 	return(err);
 return(read_next(ifile, screen));
 }
