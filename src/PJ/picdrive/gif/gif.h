@@ -1,17 +1,11 @@
 #ifndef GIF_H
 #define GIF_H
 
-#ifndef STDTYPES_H
-	#include "stdtypes.h"
-#endif
-
-#ifndef STDIO_H
-	#include <stdio.h>
-#endif
-
 #ifndef PICDRIVE_H
 	#include "picdrive.h"
 #endif
+
+#include "xfile.h"
 
 struct GCC_PACKED gif_header
 	{
@@ -41,12 +35,12 @@ STATIC_ASSERT(gif, sizeof(struct gif_image) == 9);
 
 typedef struct gif_image_file {
 	Image_file hdr;
-	FILE *file;
+	XFILE *file;
 	Anim_info ainfo; /* info created with or opened with */
 } Gif_file;
 
-extern FILE *gif_load_file;
-extern FILE *gif_save_file;
+extern XFILE *gif_load_file;
+extern XFILE *gif_save_file;
 extern UBYTE gif_byte_buff[256+3]; /* Current block */
 
 int gif_compress_data(int min_code_size, long pixel_count);

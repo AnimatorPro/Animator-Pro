@@ -5,8 +5,6 @@
 #include <string.h>
 #define REXLIB_INTERNALS
 #include "errcodes.h"
-#include "stdio.h"
-#include "ffile.h"
 #include "gif.h"
 #include "memory.h"
 #include "picdrive.h"
@@ -23,8 +21,8 @@ static char gifsig[] = "GIF87a";    /* signature for output files */
 
 static int	gif_files_open = 0;
 static int	gif_line;
-FILE		*gif_save_file;
-FILE		*gif_load_file;
+XFILE		*gif_save_file;
+XFILE		*gif_load_file;
 static char iphase;
 static int	iy;
 
@@ -84,11 +82,11 @@ Errcode err;
 ULONG colors;
 LONG oset;
 int c;
-FILE *f;
+XFILE *f;
 
 	f = gf->file;
 
-	if(fread(ghdr, 1, sizeof(*ghdr), f) < sizeof(*ghdr))
+	if (xfread(ghdr, 1, sizeof(*ghdr), f) < sizeof(*ghdr))
 		goto io_error;
 
 	/*
@@ -115,10 +113,10 @@ FILE *f;
 	{
 		if(out_cmap != NULL)
 		{
-			if (fread(out_cmap->ctab, 1, colors*3, f) < colors*3)
+			if (xfread(out_cmap->ctab, 1, colors*3, f) < colors*3)
 				goto io_error;
 		}
-		else if((oset = fseek(f,colors*3L,SEEK_CUR)) < 0)
+		else if ((oset = xfseek(f, colors*3L, XSEEK_CUR)) < 0)
 		{
 			err = oset;
 			goto error;
@@ -127,7 +125,7 @@ FILE *f;
 
 	for (;;)	/* skip over extension blocks and other junk til get ',' */
 	{
-		if ((c = fgetc(f)) < 0)
+		if ((c = xfgetc(f)) < 0)
 			goto trunc_error;
 		if (c == ',')
 			break;
@@ -137,15 +135,15 @@ FILE *f;
 		}
 		if (c == '!')   /* extension block */
 		{
-			if ((c = fgetc(f)) < 0) /* skip extension type */
+			if ((c = xfgetc(f)) < 0) /* skip extension type */
 				goto trunc_error;
 			for (;;)
 			{
-				if ((c = fgetc(f)) < 0)
+				if ((c = xfgetc(f)) < 0)
 					goto trunc_error;
 				if (c == 0) /* zero 'count' means end of extension */
 					break;
-				if((oset = fseek(f,c,SEEK_CUR)) < 0)
+				if ((oset = xfseek(f, c, XSEEK_CUR)) < 0)
 				   {
 					   err = oset;
 					   goto error;
@@ -153,7 +151,7 @@ FILE *f;
 			}
 		}
 	}
-	if (fread(gimg, 1, sizeof(*gimg), f) < sizeof(*gimg) )
+	if (xfread(gimg, 1, sizeof(*gimg), f) < sizeof(*gimg))
 		goto io_error;
 
 	if((ainfo || out_cmap) && gimg->flags&COLTAB)
@@ -161,7 +159,7 @@ FILE *f;
 		colors = (1<<((gimg->flags&PIXMASK)+1));
 		if(out_cmap)
 		{
-			if (fread(out_cmap->ctab, 1, colors*3, f) < colors*3)
+			if (xfread(out_cmap->ctab, 1, colors*3, f) < colors*3)
 				goto io_error;
 		}
 	}
@@ -182,7 +180,7 @@ FILE *f;
 
 	return(Success);
 io_error:
-	if((err = pj_errno_errcode()) < Success)
+	if ((err = xerrno()) < Success)
 		goto error;
 trunc_error:
 	err = Err_truncated;
@@ -209,7 +207,7 @@ Gif_file *gf;
 	if(gifile == NULL || (gf = *gifile) == NULL)
 		return;
 	if(gf->file)
-		fclose(gf->file);
+		xfclose(gf->file);
 	pj_free(gf);
 	*gifile = NULL;
 	gif_files_open = FALSE;
@@ -229,8 +227,8 @@ Gif_file *gf;
 
 	/* gf->hdr.needs_work_cel = FALSE */
 
-	if((gf->file = fopen(path, rwmode)) == NULL)
-		err = pj_errno_errcode();
+	if ((gf->file = xfopen(path, rwmode)) == NULL)
+		err = xerrno();
 
 	gif_files_open = TRUE;
 	*gifile = gf;
@@ -292,7 +290,7 @@ Gif_file *gf;
 	gf = (Gif_file *)ifile;
 
 	gif_load_file = gf->file;
-	rewind(gif_load_file);
+	xrewind(gif_load_file);
 
 	if((err = read_gif_start(gf, &gif, &gim,screen->cmap,NULL)) < 0)
 		return(err);
@@ -366,32 +364,32 @@ long gif_wcount;
 	gif.h = gim.h = screen->height;
 	gim.x = gim.y = gim.flags = 0;
 	gif.colpix = COLPIXVGA13;
-	if (fwrite(&gif, 1, sizeof(gif), gif_save_file) < sizeof(gif))
+	if (xfwrite(&gif, 1, sizeof(gif), gif_save_file) < sizeof(gif))
 		goto io_error;
 
 	/* write global color map */
 	cbyte = (UBYTE *)(screen->cmap->ctab);
-	if (fwrite(cbyte, 1, COLORS*3, gif_save_file) < COLORS*3)
+	if (xfwrite(cbyte, 1, COLORS*3, gif_save_file) < COLORS*3)
 		goto io_error;
-	if((err = fputc(',', gif_save_file)) < 0)   /* comma to start image */
+	if ((err = xfputc(',', gif_save_file)) < 0) /* comma to start image */
 		goto error;
 
-	if (fwrite(&gim, 1, sizeof(gim), gif_save_file) < sizeof(gim))
+	if (xfwrite(&gim, 1, sizeof(gim), gif_save_file) < sizeof(gim))
 		goto io_error;
 
-	if((err = fputc(8, gif_save_file)) < 0)
+	if ((err = xfputc(8, gif_save_file)) < 0)
 		goto error;
 
-	fflush(gif_save_file);
+	xfflush(gif_save_file);
 	if((err = gif_compress_data(8, gif_wcount)) < Success)
 		goto error;
-	fputc(';', gif_save_file);
-	if ((err = fflush(gif_save_file)) < Success)
+	xfputc(';', gif_save_file);
+	if ((err = xfflush(gif_save_file)) < Success)
 		goto error;
 	goto done;
 
 io_error:
-	err = pj_errno_errcode();
+	err = xerrno();
 error:
 done:
 	if (pixbuf != NULL)

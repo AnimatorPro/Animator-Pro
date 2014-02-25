@@ -21,13 +21,13 @@
  *	and by changing most all SHORT vars to int (again, allowing optimization).
  */
 
-#include <stdio.h>
 #include <string.h>
 #include "errcodes.h"
 #include "gif.h"
 #include "memory.h"
+#include "xfile.h"
 
-#define gif_get_byte() getc(gif_load_file)
+#define gif_get_byte() xfgetc(gif_load_file)
 
 /* extern int gif_get_byte(void)
  *
@@ -92,11 +92,11 @@ static int gif_get_block(UBYTE *buffer)
 {
 	int count;
 
-	if (0 >= (count = getc(gif_load_file)))
+	if (0 >= (count = xfgetc(gif_load_file)))
 		{
 		return count;
 		}
-	if (1 != fread(buffer, count, 1, gif_load_file))
+	if (1 != xfread(buffer, count, 1, gif_load_file))
 		{
 		return Err_truncated;
 		}

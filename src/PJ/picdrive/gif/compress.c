@@ -62,10 +62,8 @@
  */
 
 #include <assert.h>
-#include <stdio.h>
 #include <string.h>
 #include "errcodes.h"
-#include "ffile.h"
 #include "gif.h"
 #include "memory.h"
 
@@ -113,10 +111,10 @@ static Boolean flush(unsigned int n)
  *****************************************************************************/
 {
 	assert(n < 256);
-	putc(n,gif_save_file);
-	if(fwrite(gif_byte_buff, 1, n, gif_save_file) < n)
+	xfputc(n, gif_save_file);
+	if (xfwrite(gif_byte_buff, 1, n, gif_save_file) < n)
 	{
-		err_status = pj_errno_errcode();
+		err_status = xerrno();
 		return(1);
 	}
 	return(0);
