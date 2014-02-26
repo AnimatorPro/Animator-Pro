@@ -4,17 +4,15 @@
 
 #define INPUT_INTERNALS
 #include <stdarg.h>
-#include "ptrmacro.h"
-#include "errcodes.h"
-#include "input.h"
-#include "idriver.h"
-#include "vmagics.h"
-#include "jfile.h"
-#include "lstdio.h"
-#include "ffile.h"
 #include "jimk.h"
 #include "commonst.h"
+#include "errcodes.h"
+#include "idriver.h"
+#include "input.h"
+#include "ptrmacro.h"
 #include "softmenu.h"
+#include "vmagics.h"
+#include "xfile.h"
 
 #define POLL_INTERVAL 100 /* abort polling interval 1/10th second */
 
@@ -67,7 +65,7 @@ typedef struct abrec {
 typedef struct maccb {
 	Machead mh;     /* macro file header record */
 
-	FILE *fp;       /* macro file pointer */
+	XFILE *xf;      /* macro file pointer */
 	LONG sizeleft;  /* count down to end of file */
 	SHORT repeats;  /* number of repeat plays of macro */
 
@@ -164,15 +162,15 @@ void close_macro(void)
 BYTE olevel;
 static UBYTE eoflags[2] = {(MACRO_REC|MR_EOF),(MACRO_REC|MR_EOF)};
 
-	if(Mcb.fp != NULL)
+	if (Mcb.xf != NULL)
 	{
 		if(icb.macro_mode == MAKE_MACRO)
 		{
-			Mcb.mh.id.size = fftell(Mcb.fp);
-			ffwrite(Mcb.fp,&eoflags,sizeof(eoflags)); /* two bytes of eof */
-			ffwriteoset(Mcb.fp,&Mcb.mh,0,sizeof(Mcb.mh));
+			Mcb.mh.id.size = xfftell(Mcb.xf);
+			xffwrite(Mcb.xf, &eoflags, sizeof(eoflags)); /* two bytes of eof */
+			xffwriteoset(Mcb.xf, &Mcb.mh, 0, sizeof(Mcb.mh));
 		}
-		ffclose(&Mcb.fp);
+		xffclose(&Mcb.xf);
 	}
 
 	/* clear all but abort nesting level count */
@@ -189,12 +187,12 @@ Errcode err;
 
 	close_macro(); /* will re-initialize everything to zeros */
 
-	if((err = ffopen(path,&Mcb.fp,"wb+")) < Success)
+	if ((err = xffopen(path, &Mcb.xf, "wb+")) < Success)
 		goto error;
 
 	Mcb.mh.id.type = MAC_MAGIC;
 
-	if((err = ffwrite(Mcb.fp,&Mcb.mh,sizeof(Mcb.mh))) < Success)
+	if ((err = xffwrite(Mcb.xf, &Mcb.mh, sizeof(Mcb.mh))) < Success)
 		goto error;
 
 	icb.macro_clocked = Mcb.mh.realtime = realtime;
@@ -308,7 +306,7 @@ void *macbuf;
 		Flags |= HAS_HISTATE;
 	}
 
-	if((err = ffwrite(Mcb.fp,buf,SIZE(buf,macbuf))) < Success)
+	if ((err = xffwrite(Mcb.xf, buf, SIZE(buf,macbuf))) < Success)
 		macro_write_error(err);
 
 	return(err);
@@ -321,10 +319,10 @@ static Errcode play_macro(int repeats)
 Errcode err;
 
 	close_macro();
-	if((err = ffopen(macro_name,&Mcb.fp,rb_str)) < Success)
+	if ((err = xffopen(macro_name, &Mcb.xf, rb_str)) < Success)
 		goto error;
 
-	if((err = ffread(Mcb.fp,&Mcb.mh,sizeof(Mcb.mh))) < Success)
+	if ((err = xffread(Mcb.xf, &Mcb.mh, sizeof(Mcb.mh))) < Success)
 		goto error;
 
 	if(Mcb.mh.id.type != MAC_MAGIC || Mcb.mh.id.size < sizeof(Machead))
@@ -335,7 +333,7 @@ Errcode err;
 
 	/* pre-fetch next record header flags */
 
-	if((err = ffread(Mcb.fp,&Mcb.next,sizeof(Twobytes))) < Success)
+	if ((err = xffread(Mcb.xf, &Mcb.next, sizeof(Twobytes))) < Success)
 		goto error;
 
 	Mcb.sizeleft = Mcb.mh.id.size - (sizeof(Machead)+sizeof(USHORT));
@@ -438,7 +436,7 @@ USHORT oflags;
 
 		if(Mcb.ioflags & HAS_CCOUNT) /* get previous io state and count */
 		{
-			if((err = ffread(Mcb.fp,&oflags,sizeof(USHORT))) < Success)
+			if ((err = xffread(Mcb.xf, &oflags, sizeof(USHORT))) < Success)
 				goto error;
 
 			Mcb.sizeleft -= sizeof(USHORT);
@@ -473,7 +471,7 @@ USHORT oflags;
 			readsize -= sizeof(USHORT);	/* end of file, NO next record */
 
 		if( readsize != 0 
-			&& (err = ffread(Mcb.fp,Mcb.mbuf,readsize)) < Success)
+			&& (err = xffread(Mcb.xf, Mcb.mbuf, readsize)) < Success)
 		{
 			goto error;
 		}
@@ -720,7 +718,7 @@ Abortnest *pan;
 			pan = (void *)(pan->pop);
 		}
 	}
-	if((err = ffwrite(Mcb.fp,&buf,SIZE(buf,abuf))) < Success)
+	if ((err = xffwrite(Mcb.xf, &buf, SIZE(buf,abuf))) < Success)
 		return(macro_write_error(err));
 	return(Success);
 }
@@ -739,7 +737,7 @@ int readsize;
 		Mcb.mab_level = (readsize /= ABORTLEVEL_1) - 1;
 		readsize = (readsize * sizeof(USHORT)) - 1 + sizeof(USHORT);
 
-		if((err = ffread(Mcb.fp,OPTR(Mcb.ar.counts,1),readsize)) < Success)
+		if ((err = xffread(Mcb.xf, OPTR(Mcb.ar.counts,1), readsize)) < Success)
 			return(macro_write_error(err));
 
 		Mcb.sizeleft -= readsize;
@@ -750,7 +748,7 @@ int readsize;
 		  * to first and fetch next byte in file */
 	{
 		Mcb.next.b[0] = Mcb.next.b[1];
-		Mcb.next.b[1] = ffgetc(Mcb.fp);
+		Mcb.next.b[1] = xfgetc(Mcb.xf);
 		--Mcb.sizeleft; 
 	}
 	return(Success);
@@ -941,9 +939,9 @@ Abortnest *an;
 
 		if(macro_mode == MAKE_MACRO && abort.nest > 0)
 		{
-		LONG foffset;
+			long foffset;
 
-			if((foffset = fftell(Mcb.fp)) < 0)
+			if ((foffset = xfftell(Mcb.xf)) < 0)
 			{
 				macro_read_error((Errcode)foffset);
 				goto error;
@@ -962,7 +960,7 @@ Abortnest *an;
 			 * unflag abort done */
 
 			Mcb.ar.flags &= ~AR_ABORTLEVEL; 
-			if((foffset = ffseek(Mcb.fp,foffset,SEEK_SET)) < 0)
+			if ((foffset = xffseek(Mcb.xf, foffset, XSEEK_SET)) < 0)
 			{
 				macro_read_error(foffset);
 				goto aborted;
