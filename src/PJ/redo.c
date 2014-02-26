@@ -1,22 +1,21 @@
-#include "errcodes.h"
 #include "jimk.h"
-#include "lstdio.h"
 #include "auto.h"
 #include "commonst.h"
-#include "jfile.h"
+#include "errcodes.h"
 #include "memory.h"
 #include "rastcall.h"
 #include "redo.h"
+#include "xfile.h"
 
 /* stuff to deal with redo-draw */
-static FILE *rbf;
+static XFILE *rbf;
 extern char rbf_name[];
 extern char text_name[];
 
 Errcode start_save_redo_points()
 {
-	if ((rbf = fopen(rbf_name, wb_str)) == NULL)
-		return(softerr(errno, "redo_save"));
+	if ((rbf = xfopen(rbf_name, wb_str)) == NULL)
+		return softerr(xerrno(), "redo_save");
 	return(Success);
 }
 
@@ -24,27 +23,27 @@ void end_save_redo_points()
 {
 	if(rbf != NULL)
 	{
-		fclose(rbf);
+		xfclose(rbf);
 		rbf = NULL;
 	}
 }
 
 Errcode save_redo_point(Pos_p *p)
 {
-if (fwrite(p, 1, sizeof(*p), rbf) < sizeof(*p))
-	return(softerr(errno, "redo_points"));
+if (xfwrite(p, 1, sizeof(*p), rbf) < sizeof(*p))
+	return softerr(xerrno(), "redo_points");
 return(Success);
 }
 
 Errcode save_spray_redo(Spray_redo *sr)
 {
-if (fwrite(sr, 1, sizeof(*sr), rbf) < sizeof(*sr))
-	return(softerr(errno, "redo_points"));
+if (xfwrite(sr, 1, sizeof(*sr), rbf) < sizeof(*sr))
+	return softerr(xerrno(), "redo_points");
 return(Success);
 }
 Boolean get_spray_redo(Spray_redo *sr)
 {
-	return(fread(sr, 1, sizeof(*sr), rbf) == sizeof(*sr));
+	return (xfread(sr, 1, sizeof(*sr), rbf) == sizeof(*sr));
 }
 
 Errcode save_redo_draw(mode)
@@ -66,13 +65,13 @@ Errcode save_redo_spray()
 	return(Success);
 }
 
-static Errcode redo_draw_get_pos(Pos_p *p, FILE *f, int mode)
+static Errcode redo_draw_get_pos(Pos_p *p, XFILE *f, int mode)
 {
 Errcode err;
 
 	if((err = poll_abort()) < Success)
 		return(err);
-	if(fread(p, 1, sizeof(*p), f) == sizeof(*p))
+	if (xfread(p, 1, sizeof(*p), f) == sizeof(*p))
 		return(Success); 
 	return(Success + 1); /* no more left, but not error */
 }
@@ -81,13 +80,13 @@ static Errcode redo_draw(Redo_rec *r)
 {
 Errcode err;
 
-	if ((rbf = fopen(rbf_name, rb_str)) == NULL)
+	if ((rbf = xfopen(rbf_name, rb_str)) == NULL)
 		return(Err_abort);
 
 	/* line fill ink would look funky here */
 	disable_lsp_ink();
 	err = dtool_loop(redo_draw_get_pos, rbf, r->p.draw_p);
-	fclose(rbf);
+	xfclose(rbf);
 	enable_lsp_ink();
 	return(err);
 }
@@ -96,10 +95,10 @@ static Errcode redo_gel(Redo_rec *r)
 {
 Errcode err;
 
-	if((rbf = fopen(rbf_name, rb_str)) == NULL)
+	if ((rbf = xfopen(rbf_name, rb_str)) == NULL)
 		return(Err_abort);
 	err = gel_tool_loop(redo_draw_get_pos, rbf);
-	fclose(rbf);
+	xfclose(rbf);
 	return(err);
 }
 
@@ -107,10 +106,10 @@ static Errcode redo_spray(Redo_rec *r)
 {
 Errcode err;
 
-	if((rbf = fopen(rbf_name, rb_str)) == NULL)
+	if ((rbf = xfopen(rbf_name, rb_str)) == NULL)
 		return(Err_abort);
 	err = spray_loop(redo_draw_get_pos, rbf, TRUE);
-	fclose(rbf);
+	xfclose(rbf);
 	return(err);
 }
 
