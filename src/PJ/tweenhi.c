@@ -1,16 +1,18 @@
 /* tweenhi.c  - hi level tween functions callable outside the
    tween menu.  Load/save/wire-frame tween. */
 
-#include "errcodes.h"
-#include "memory.h"
-#include "lstdio.h"
-#include "tween.h"
-#include "imath.h"
-#include "marqi.h"
-#include "vmagics.h"
-#include "input.h"
 #include "jimk.h"
 #include "commonst.h"
+#include "errcodes.h"
+#include "imath.h"
+#include "input.h"
+#include "marqi.h"
+#include "memory.h"
+#include "tween.h"
+#include "vmagics.h"
+#include "xfile.h"
+
+extern int ld_poly(XFILE *f, Poly *poly);
 
 void a_wireframe_tween(Tween_state *tween,
 	int frames, int speed, 
@@ -67,25 +69,25 @@ softerr(err, NULL);
 
 Errcode save_tween(char *name, Tween_state *ts)
 {
-FILE *f;
+XFILE *f;
 Errcode err, cerr;
 Tween_file_header tfh;
 Tween_link *link, *next;
 
-if ((f = fopen(name, wb_str)) == NULL)
-	return(errno);
+if ((f = xfopen(name, wb_str)) == NULL)
+	return(xerrno());
 
 clear_struct(&tfh);
 tfh.magic = TWEEN_MAGIC;
 tfh.tcount = 2;
 tfh.link_count = listlen(&ts->links);
-if (fwrite(&tfh, 1, sizeof(tfh), f) < sizeof(tfh))
+if (xfwrite(&tfh, 1, sizeof(tfh), f) < sizeof(tfh))
 	goto IOERR;
 for (link = (Tween_link *)(ts->links.head);
 	NULL  != (next = (Tween_link *)(link->node.next));
 	link = next)
 	{
-	if (fwrite(&link->start, 1, 2*sizeof(link->start), f) <
+	if (xfwrite(&link->start, 1, 2*sizeof(link->start), f) <
 		2*sizeof(link->start))
 		goto IOERR;
 	}
@@ -96,9 +98,9 @@ if ((err = s_poly(f, &ts->p1)) <  Success)
 
 goto CLOSEOUT;
 IOERR:
-	err = errno;
+	err = xerrno();
 CLOSEOUT:
-	cerr = fclose(f);
+	cerr = xfclose(f);
 	if (cerr < Success)		/* return primary error, not close error */
 		{
 		if (err >= Success)	/* but if close is 1st error return it... */
@@ -111,17 +113,15 @@ CLOSEOUT:
 
 static Errcode ld_tween(char *name, Tween_state *ts)
 {
-extern int ld_poly(FILE *f, Poly *poly);
-FILE *f;
+XFILE *f;
 Errcode err;
 Tween_file_header tfh;
 Tween_link *newl;
 long i;
 
-
-if ((f = fopen(name, rb_str)) == NULL)
-	return(errno);
-if ((fread(&tfh, 1, sizeof(tfh), f)) < sizeof(tfh))
+if ((f = xfopen(name, rb_str)) == NULL)
+	return(xerrno());
+if ((xfread(&tfh, 1, sizeof(tfh), f)) < sizeof(tfh))
 	goto IOERR;
 if (tfh.magic != TWEEN_MAGIC)
 	{
@@ -132,7 +132,7 @@ for (i=0; i<tfh.link_count; i++)
 	{
 	if ((err = news(newl)) < Success)
 		goto CLOSEOUT;
-	if (fread(&newl->start, 1, 2*sizeof(newl->start), f)
+	if (xfread(&newl->start, 1, 2*sizeof(newl->start), f)
 		< 2*sizeof(newl->start))
 		goto IOERR;
 	add_tail(&ts->links,&newl->node);
@@ -143,10 +143,10 @@ if ((err = ld_poly(f, &ts->p1)) <  Success)
 	goto CLOSEOUT;
 goto CLOSEOUT;
 IOERR:
-err = errno;
+err = xerrno();
 
 CLOSEOUT:
-fclose(f);
+xfclose(f);
 return(err);
 }
 
