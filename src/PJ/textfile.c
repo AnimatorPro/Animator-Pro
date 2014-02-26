@@ -1,13 +1,9 @@
-
-#include "stdtypes.h"
-#include "lstdio.h"
+#include "jimk.h"
+#include "commonst.h"
 #include "errcodes.h"
 #include "memory.h"
-#include "jfile.h"
 #include "textedit.h"
-#include "commonst.h"
-#include "ffile.h"
-#include "jimk.h"
+#include "xfile.h"
 
 static long strip_zeros(register char *buf,long size)
 /* Strip out 0 characters. */
@@ -29,46 +25,46 @@ char *max;
 Errcode load_text_file(Text_file *gf, char *name)
 {
 Errcode err;
-FILE *f;
+XFILE *f;
 LONG oldsize;
 
 	gf->text_name = name;
 	if ((oldsize = pj_file_size(name)) < Success)
 		return oldsize;
-	if((err = ffopen(name, &f, r_str)) < Success)
+	if ((err = xffopen(name, &f, r_str)) < Success)
 		return(err);
 	free_text_file(gf);
 	gf->text_alloc = oldsize + DTSIZE;
 
 	if ((gf->text_buf = pj_malloc((long)gf->text_alloc)) == NULL)
 	{
-		pj_close(f);
+		xfclose(f);
 		return(Err_no_memory);
 	}
 
-	gf->text_size = fread(gf->text_buf,1,gf->text_alloc-1,f);
+	gf->text_size = xfread(gf->text_buf, 1, gf->text_alloc-1, f);
 	gf->text_size = strip_zeros(gf->text_buf, gf->text_size);
 	gf->text_buf[gf->text_size] = 0;
-	ffclose(&f);
+	xffclose(&f);
 	return(Success);
 }
 
 static Errcode sv_text_file(Text_file *gf, char *name)
 {
 Errcode err;
-FILE *f;
+XFILE *f;
 
 	if (!gf->text_buf)
 		return(Success);
-	if((err = ffopen(name, &f, w_str)) < Success)
+	if ((err = xffopen(name, &f, w_str)) < Success)
 		goto error;
-	if(fwrite(gf->text_buf, 1, (long)gf->text_size, f) < gf->text_size)
+	if (xfwrite(gf->text_buf, 1, gf->text_size, f) < (size_t)gf->text_size)
 	{
-		err = ffile_error(f);
+		err = xffile_error();
 		goto error;
 	}
 error:
-	ffclose(&f);
+	xffclose(&f);
 	return(err);
 }
 Errcode save_text_file(Text_file *gf)
