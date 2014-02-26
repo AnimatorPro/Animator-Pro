@@ -5,17 +5,16 @@
    to/from working_poly here.  Also routines to move individual points
    in a polygon.  */
 
-#include "errcodes.h"
-#include "lstdio.h"
-#include "ffile.h"
 #include "jimk.h"
 #include "commonst.h"
+#include "errcodes.h"
 #include "inks.h"
 #include "marqi.h"
 #include "memory.h"
 #include "poly.h"
 #include "rectang.h"
 #include "render.h"
+#include "xfile.h"
 
 Poly working_poly;
 char curveflag;
@@ -673,7 +672,7 @@ if (poly.polymagic != POLYMAGIC)
 return Success;
 }
 
-int ld_poly(FILE *f, Poly *poly)
+int ld_poly(XFILE *f, Poly *poly)
 {
 Errcode err;
 int i;
@@ -681,7 +680,7 @@ int count;
 LLpoint *this;
 
 	free_polypoints(poly);
-	if((err = ffread(f, poly, sizeof(*poly))) < Success)
+	if ((err = xffread(f, poly, sizeof(*poly))) < Success)
 		goto head_error;
 	if(poly->polymagic != POLYMAGIC)
 	{
@@ -695,7 +694,7 @@ LLpoint *this;
 	{
 		if ((this = new_poly_point(poly)) != NULL)
 		{
-			if((err = ffread(f, &this->x, 3*sizeof(SHORT))) < Success)
+			if ((err = xffread(f, &this->x, 3*sizeof(SHORT))) < Success)
 				goto error;
 		}
 		else
@@ -715,15 +714,15 @@ head_error:
 Errcode load_a_poly(char *name, Poly *poly)
 {
 Errcode err;
-FILE *f;
+XFILE *f;
 
-	if((err = ffopen(name, &f, rb_str)) >= Success)
+	if ((err = xffopen(name, &f, rb_str)) >= Success)
 		err = ld_poly(f, poly);
-	ffclose(&f);
+	xffclose(&f);
 	return(err);
 }
 
-Errcode s_poly(FILE *f, Poly *poly)
+Errcode s_poly(XFILE *f, Poly *poly)
 {
 Errcode err;
 int i;
@@ -732,14 +731,14 @@ LLpoint *pt;
 	poly->polymagic = POLYMAGIC;
 	pt = poly->clipped_list;
 	poly->clipped_list = NULL;
-	err = ffwrite(f, poly, sizeof(Poly));
+	err = xffwrite(f, poly, sizeof(Poly));
 	poly->clipped_list = pt;
 	if(err < Success)
 		goto error;
 	i = poly->pt_count;
 	while(--i >= 0)
 	{
-		if((err = ffwrite(f, &pt->x, 3*sizeof(SHORT))) < Success)
+		if ((err = xffwrite(f, &pt->x, 3*sizeof(SHORT))) < Success)
 			goto error;
 		pt = pt->next;
 	}
@@ -751,13 +750,13 @@ error:
 int save_poly(char *name, Poly *poly)
 {
 Errcode err;
-FILE *f;
+XFILE *f;
 
-	if((err = ffopen(name, &f, wb_str)) < Success)
+	if ((err = xffopen(name, &f, wb_str)) < Success)
 		goto error;
 	err = s_poly(f, poly);
 error:
-	ffclose(&f);
+	xffclose(&f);
 	if(err < Success)
 		pj_delete(name);
 	return(err);
