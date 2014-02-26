@@ -2,7 +2,7 @@
 
 #include <ctype.h>
 #include <stdarg.h>
-#include "lstdio.h"
+#include <stdio.h>
 #include "commonst.h"
 #include "errcodes.h"
 #include "ftextf.h"
@@ -12,9 +12,7 @@
 #include "rastext.h"
 #include "wndo.h"
 #include "wordwrap.h"
-
-/* Note: lstdio #defines away a bunch of stdio stuff. */
-extern int getchar(void);
+#include "xfile.h"
 
 /***** text boxes: these are at a lower level than windows so are used for
  	   error alerts and the like. they disable all input "wtasks" while they
@@ -449,10 +447,10 @@ static void print_topbord(void)
 {
 int i;
 
-	fprintf(stderr, "\n\xda");
+	xfprintf(xstderr, "\n\xda");
 	i = 35;
 	while(i-- > 0)
-		fputc( 0xc4 ,stderr);
+		xfputc(0xc4, xstderr);
 }
 static Errcode stdout_tbox_start(Tbox *tbox)
 {
@@ -461,11 +459,11 @@ Ftextfarg fa;
 char c, *txt;
 
 	print_topbord();
-	fprintf(stderr, LBORD);
+	xfprintf(xstderr, LBORD);
 
 	if((err = init_eitherfarg(&fa,tbox->formats,tbox->text)) < Success)
 	{
-		printf("error %d loading |%s|\n|%s|\n",err,tbox->formats,tbox->text);
+		xprintf("error %d loading |%s|\n|%s|\n", err, tbox->formats, tbox->text);
 		getchar();
 		return(err);
 	}
@@ -474,9 +472,9 @@ char c, *txt;
 	while ((c = fa_getc(&fa.fa)) != '\0')
 	{
 		if(c == '\n')
-			fprintf(stderr, LBORD);
+			xfprintf(xstderr, LBORD);
 		else
-			fputc(c,stderr);
+			xfputc(c, xstderr);
 	}
 	if((txt = tbox->extratext) != NULL)
 	{
@@ -484,9 +482,9 @@ char c, *txt;
 		while(c != 0)
 		{
 			if(c == '\n')
-				fprintf(stderr, LBORD);
+				xfprintf(xstderr, LBORD);
 			else
-				fputc(c,stderr);
+				xfputc(c, xstderr);
 			c = *txt++;
 		}
 	}
@@ -494,10 +492,10 @@ char c, *txt;
 }
 static int stdout_wait_any(void)
 {
-	fprintf(stderr, LBORD LBORD "%s", any_continue );
-	fflush(stderr);
+	xfprintf(xstderr, LBORD LBORD "%s", any_continue);
+	xfflush(xstderr);
 	dos_wait_key();
-	fputc('\n', stderr);
+	xfputc('\n', xstderr);
 	return(0);
 }
 Errcode tboxf(Wscreen *s,char *text,va_list args)
@@ -551,19 +549,19 @@ char in_c;
 			if(i < 2)
 				return(stdout_wait_any());
 
-			fprintf(stderr, LBORD);
+			xfprintf(xstderr, LBORD);
 			for(i = 0;((choice = choices[i]) != NULL); ++i)
-				fprintf(stderr, LBORD "'%c' - %s", choice[0], choice);
+				xfprintf(xstderr, LBORD "'%c' - %s", choice[0], choice);
 
-			fprintf(stderr, LBORD LBORD "%s", enter_choice );
-			fflush(stderr);
+			xfprintf(xstderr, LBORD LBORD "%s", enter_choice);
+			xfflush(xstderr);
 			in_c = toupper((UBYTE)dos_wait_key());
 			for(i = 0;((choice = choices[i]) != NULL);)
 			{
 				++i;
 				if(in_c == toupper(choice[0]))
 				{
-					fputc('\n', stderr);
+					xfputc('\n', xstderr);
 					return(i);
 				}
 			}
