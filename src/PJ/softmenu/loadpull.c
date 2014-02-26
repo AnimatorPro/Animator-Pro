@@ -188,7 +188,7 @@ Smu_symbol *sym;
 
 if ((err = smu_lookup(sm,&sym,SMU_PULL_CLASS,symname)) < Success)
 	return(err);
-swork_init(&rswork, sm->sf, sym->foff, sym->fline);
+swork_init(&rswork, sm->xf, sym->foff, sym->fline);
 clear_struct(pullhdr);
 if ((err = sp_parse(&rswork, (Pull **)&pullhdr->mbs)) < Success)
 	goto OUT;

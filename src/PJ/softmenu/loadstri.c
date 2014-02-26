@@ -111,7 +111,7 @@ Swork rswork;
 clear_struct(s);
 if ((err = smu_lookup(sm,&sym,class,symname)) < Success)
 	goto OUT;
-swork_init(&rswork, sm->sf, sym->foff, sym->fline);
+swork_init(&rswork, sm->xf, sym->foff, sym->fline);
 err = s->count = smu_parse_strings(&rswork, &s->strings);
 swork_end(&rswork,sm);
 OUT:
@@ -144,7 +144,7 @@ Smu_symbol *sym;
 		return(err);
 		}
 	dstring_init(&ds);
-	swork_init(&rswork, sm->sf, sym->foff, sym->fline);
+	swork_init(&rswork, sm->xf, sym->foff, sym->fline);
 	if ((err = text_to_dstring(&rswork, &ds, TRUE)) >= Success)
 		{
 		if (ds.blen > len)		/* Too big for buffer, copy most of it
@@ -182,7 +182,7 @@ Smu_symbol *sym;
 	if ((err = smu_lookup(sm,&sym,SMU_TEXT_CLASS,symname)) < Success)
 		return(err);
 	dstring_init(&ds);
-	swork_init(&rswork, sm->sf, sym->foff, sym->fline);
+	swork_init(&rswork, sm->xf, sym->foff, sym->fline);
 	if ((err = text_to_dstring(&rswork, &ds, TRUE)) < Success)
 		goto error;
 	err = dstring_get_clone(&ds,ptext);
@@ -217,7 +217,7 @@ Smu_symbol *sym;
 	if ((err = smu_lookup(sm,&sym,SMU_QCHOICE_CLASS,key)) < Success)
 		return(err);
 	dstring_init(&ds);
-	swork_init(&rswork, sm->sf, sym->foff, sym->fline);
+	swork_init(&rswork, sm->xf, sym->foff, sym->fline);
 	if ((err = text_to_dstring(&rswork, &ds, FALSE)) < Success)
 		goto error;
 

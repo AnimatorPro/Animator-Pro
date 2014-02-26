@@ -33,7 +33,7 @@ Smu_symbol *sym;
 
 	if ((err = smu_lookup(sm,&sym,SMU_NAMESTRING_CLASS,symname)) < Success)
 		goto OUT;
-	swork_init(&rswork, sm->sf, sym->foff, sym->fline);
+	swork_init(&rswork, sm->xf, sym->foff, sym->fline);
 
 	for(;;)
 	{

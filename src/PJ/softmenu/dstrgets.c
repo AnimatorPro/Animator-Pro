@@ -1,14 +1,15 @@
 #include "dstring.h"
-#include "lstdio.h"
+#include "errcodes.h"
+#include "xfile.h"
 
 #ifdef SLOW
-Errcode dstring_get_line(Dstring *ds, FILE *f)
+Errcode dstring_get_line(Dstring *ds, XFILE *f)
 {
 int c;
 Errcode err;
 
 ds->blen = 0;
-if ((c = fgetc(f)) < Success)
+if ((c = xfgetc(f)) < Success)
 	return(Err_eof);
 for (;;)
 	{
@@ -16,14 +17,14 @@ for (;;)
 		return(err);
 	if (c == '\n')
 		break;
-	if ((c = getc(f)) < Success)
+	if ((c = xfgetc(f)) < Success)
 		break;
 	}
 return(dstring_addc(ds,0));
 }
 #endif /* SLOW */
 
-Errcode dstring_get_line(Dstring *ds, FILE *f)
+Errcode dstring_get_line(Dstring *ds, XFILE *f)
 {
 int c;
 Errcode err;
@@ -32,7 +33,7 @@ int bmax = ds->bmax;
 char *buf = ds->buf;
 
 ds->blen = 0;
-if ((c = getc(f)) < Success)
+if ((c = xfgetc(f)) < Success)
 	return(Err_eof);
 for (;;)
 	{
@@ -46,7 +47,7 @@ for (;;)
 	buf[blen++] = c;
 	if (c == '\n')
 		break;
-	if ((c = getc(f)) < Success)
+	if ((c = xfgetc(f)) < Success)
 		break;
 	}
 if (blen >= bmax)

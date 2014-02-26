@@ -1,8 +1,7 @@
-
-#include "softok.h"
-#include "lstdio.h"
-#include "memory.h"
 #include <string.h>
+#include "errcodes.h"
+#include "memory.h"
+#include "softok.h"
 
 static void stok_init(Stok *smt)
 /* constructor for a Stok */
@@ -19,16 +18,15 @@ static void stok_cleanup(Stok *smt)
 dstring_cleanup(&smt->d);
 }
 
-
-void swork_init(Swork *swork, void *sf, long ipos, long iline)
+void swork_init(Swork *swork, XFILE *xf, long ipos, long iline)
 {
 int i;
 
 swork->lastfpos = swork->fpos = ipos;
 swork->line_pos = NULL;
-swork->sf = sf;
+swork->xf = xf;
 swork->fline = iline;
-fseek(sf, ipos, SEEK_SET);
+xfseek(xf, ipos, XSEEK_SET);
 for (i=0; i<SWORKLOOK; i++)
 	{
 	swork->look[i] = &swork->rtoks[i];
@@ -60,7 +58,7 @@ do	{
 	if (swork->line_pos == NULL)
 		{
 		smt->tpos = swork->lastfpos = swork->fpos;
-		if ((err = dstring_get_line(&swork->line, swork->sf)) < Success)
+		if ((err = dstring_get_line(&swork->line, swork->xf)) < Success)
 			{
 			goto OUT;
 			}

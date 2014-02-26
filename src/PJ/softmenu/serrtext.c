@@ -76,7 +76,7 @@ Errcode err;
 buf[0] = 0;		/* in case we don't find anything... */
 if ((err = smu_lookup(sm,&sym,SMU_NUMSTRING_CLASS,symname)) < Success)
 	return(err);
-swork_init(&rswork, sm->sf, sym->foff, sym->fline);
+swork_init(&rswork, sm->xf, sym->foff, sym->fline);
 err = smu_str_for_num(&rswork, err_to_find, buf, ERRTEXT_SIZE);
 swork_end(&rswork,sm);
 return(err);

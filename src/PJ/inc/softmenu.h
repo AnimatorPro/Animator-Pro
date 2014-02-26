@@ -25,15 +25,17 @@
 	#include "menus.h"
 #endif
 
+#include "xfile.h"
+
 /* The major structure for Softmenu is */
 	typedef struct softmenu
 		{
-		void *sf;	/* a FILE but don't want to force <stdio.h> */
+		XFILE *xf; /* a FILE but don't want to force <stdio.h> */
 		struct smu_class *classes;
 		unsigned int class_count;
 		long err_line;	/* where error has occured if any */
 		} Softmenu;
-#define smu_is_open(sm) ((sm)->sf != NULL)
+#define smu_is_open(sm) ((sm)->xf != NULL)
 
 /* Substructures of a Softmenu are */
 	typedef struct smu_class
