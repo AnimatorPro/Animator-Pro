@@ -125,11 +125,10 @@ trdfile.lib: makefile\
 			 $(JFILETRO) jfiletrd.obs\
 			 $(JFUTILSO) jfutils.obs\
 			 $(LFILEO) lfile.obs\
-			 $(FLFILEO) flfile.obs\
 			 $(XFILEO) xfile.obs
  wlib /n trdfile.lib \
 	@dos.obs @jdevice.obs @fparse.obs @jfiletrd.obs \
-	@jfutils.obs @lfile.obs @flfile.obs @xfile.obs
+	@jfutils.obs @lfile.obs @xfile.obs
 
 #** library with dos and lstdio file system and all utilities *
 

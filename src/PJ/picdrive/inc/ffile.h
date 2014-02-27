@@ -1,1 +1,1 @@
-#include "../../rexlib/inc/ffile.h"
+#error "deprecated, convert to xfile"

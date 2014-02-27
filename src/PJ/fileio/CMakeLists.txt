@@ -1,5 +1,3 @@
-add_definitions(-DUSE_LFILE)
-
 ## "j" dos device and directory level calls that call dos only
 set(JFDEV_SRC_FILES
 	jdevget.c
@@ -73,39 +71,6 @@ set(JFUTILS_SRC_FILES
 	wrtchunk.c
 	)
 
-## ansi spec standard io file system that calls jfile low level routines
-set(LFILE_SRC_FILES
-	lfgetc.c
-	lfgets.c
-	lfile.c
-	lflush.c
-	lfprintf.c
-	lfputc.c
-	lfputs.c
-	lfread.c
-	lfrewind.c
-	lfseek.c
-	lfsoprtf.c
-	lfstdfil.c
-	lftell.c
-	lfungetc.c
-	lfvprtf.c
-	lfwrite.c
-	)
-
-## ffile shells around ansi file routines that handle errors and have
-## other niceties we like in pj.  shells around lstdio.h
-set(FLFILE_SRC_FILES
-	fferrno.c
-	ffopen.c
-	ffread.c
-	ffreados.c
-	ffseek.c
-	fftell.c
-	ffwrite.c
-	ffwriteo.c
-	)
-
 set(XFILE_SRC_FILES
 	xfile.c
 	)
@@ -116,6 +81,4 @@ add_library(trdfile
 	${FPARSE_SRC_FILES}
 	${JFILETR_SRC_FILES}
 	${JFUTILS_SRC_FILES}
-	${LFILE_SRC_FILES}
-	${FLFILE_SRC_FILES}
 	${XFILE_SRC_FILES})

@@ -92,36 +92,4 @@ extern Errcode lerrno;
 #define lstdout (&_lstdout)
 #define lstderr (&_lstderr)
 
-#ifndef LFILE_INTERNALS  /* to be used only by lfile */
-
-/********** defines to make LFILE's seem like FILES ******************/
-#define EOF LEOF
-#define stdin	 _stdin_not_supported_yet_ 
-#define stdout lstdout
-#define stderr lstderr
-#define FILE LFILE
-#define fopen lfopen
-#define fclose lfclose
-#define fgetc lfgetc
-#define getc lgetc
-#define fputc lfputc
-#define putc lputc
-#define ungetc lungetc
-#define fflush lfflush
-#define fread lfread
-#define fwrite lfwrite
-#define fseek lfseek
-#define rewind lrewind
-#define ftell lftell
-#define fprintf lfprintf
-#define printf lprintf
-#define vfprintf lvfprintf
-#define fgets lfgets
-#define fputs lfputs
-#define errno lerrno
-#define SEEK_SET LSEEK_SET
-#define SEEK_CUR LSEEK_CUR
-#define SEEK_END LSEEK_END
-#endif /* LFILE_INTERNALS */
-
 #endif /* LSTDIO_H */

@@ -1,7 +1,6 @@
 #ifndef LFILE_IH
 #define LFILE_IH
 
-#define LFILE_INTERNALS
 #include "lstdio.h"
 
 Errcode _lf_wflush(LFILE *f);

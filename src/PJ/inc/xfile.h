@@ -50,4 +50,13 @@ extern Errcode xffseek(XFILE *xf, long offset, enum XSEEK_WHENCE whence);
 extern long xfftell(XFILE *xf);
 extern Errcode xffile_error(void);
 
+/* Check inclusion of deprecated file wrappers. */
+#ifdef FFILE_H
+#error "xfile and ffile"
+#endif
+
+#ifdef LSTDIO_H
+#error "xfile and lstdio"
+#endif
+
 #endif
