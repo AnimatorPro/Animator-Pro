@@ -30,6 +30,7 @@ int len;
 	if (strchr(file, '.') != NULL)
 		return(Err_file_name_err);
 	*pfn = fn;
+	return Success;
 }
 
 Errcode fnsplit(char *path, char *device, char *dir, char *file,
