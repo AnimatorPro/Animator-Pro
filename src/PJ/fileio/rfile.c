@@ -578,7 +578,7 @@ char *sectors;
 int i;
 
 if ((tpf = find_named(name)) == NULL)
-	return(NULL);
+	return Err_no_file;
 if (tpf->flags & TF_OPEN)
 	{
 	return(rerr = Err_in_use);
