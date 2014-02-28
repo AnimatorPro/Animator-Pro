@@ -17,7 +17,7 @@ static LFILE *_lfopen(const char *filename, const char *mode, LFILE *f)
  *  further info is stored in lerrno;
  */
 {
-char *p = NULL;
+UBYTE *p = NULL;
 int i, flags;
 Boolean append = FALSE,  creat = FALSE;
 int jmode;
@@ -127,14 +127,14 @@ if (_lfopen(name, mode, f) == NULL)
 return(f);
 }
 
-static long untext(LFILE *f, char *buf, long count)
+static long untext(LFILE *f, UBYTE *buf, long count)
 /* Translate text from ms-dos to unix representation.  If encounter
    control-z make file appear at end-of-file.  Filter out '\r' chars. */
 {
 #define CONT_Z 0x1a
-char *out;
-char *in;
-char c;
+	UBYTE *out;
+	UBYTE *in;
+	UBYTE c;
 
 	out = in = buf;
 
@@ -157,11 +157,11 @@ OUT:
 #undef CONT_Z
 }
 
-static void retext(char *in, char *out, long count)
+static void retext(UBYTE *in, UBYTE *out, long count)
 /* move count bytes of in to out, expanding <lf>'s in in to
    <cr><lf>'s in out */
 {
-char c;
+	UBYTE c;
 
 	while (--count >= 0)
 	{
@@ -171,7 +171,7 @@ char c;
 	}
 }
 
-static long _lf_uread(LFILE *f, char *buf, long count)
+static long _lf_uread(LFILE *f, UBYTE *buf, long count)
 /* Read in count.   If in text mode do <cr/lf>  translation.
  * Beware that return may be less than count even before end of
  * file because of stripped <cr>'s */
@@ -193,7 +193,7 @@ long ur1;
 	}
 }
 
-static long count_lf(char *buf, long count)
+static long count_lf(UBYTE *buf, long count)
 /* cont the number of <lf>'s in buf */
 {
 long ccount = 0;
@@ -204,13 +204,13 @@ while (--count >= 0)
 return(ccount);
 }
 
-static long _lf_uwrite(LFILE *f, char *buf, long count)
+static long _lf_uwrite(LFILE *f, UBYTE *buf, long count)
 /* write out count.   If in text mode do <cr/lf>  translation */
 {
 char cr = '\r';
 long i;
 Lfile lf = f->lfile;
-char *trbuf;
+UBYTE *trbuf;
 long trcount, wcount, cct;
 
 if (f->flags&BFL_TEXT)

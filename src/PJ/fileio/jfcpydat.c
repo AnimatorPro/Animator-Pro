@@ -3,7 +3,7 @@
 #include "memory.h"
 #include "jfile.h"
 
-Errcode pj_copydata(Jfile src, Jfile dest, LONG size)
+Errcode pj_copydata(Jfile src, Jfile dest, ULONG size)
 
 /* copys data between two files reading from one writing to the other 
  * at current position for both files */
@@ -11,7 +11,7 @@ Errcode pj_copydata(Jfile src, Jfile dest, LONG size)
 Errcode err;
 char sbuf[256];	/* stack buffer */
 char *buf;
-LONG blocksize;
+ULONG blocksize;
 
 	blocksize = 32L*1024;	
 	if(size < blocksize)

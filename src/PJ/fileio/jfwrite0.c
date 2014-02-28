@@ -2,12 +2,12 @@
 #include "errcodes.h"
 #include "memory.h"
 
-Errcode pj_write_zeros(Jfile file,LONG oset, LONG bytes)
+Errcode pj_write_zeros(Jfile file, LONG oset, ULONG bytes)
 {
 Errcode err;
 char sbuf[256];	/* static buffer */
 char *buf;
-LONG blocksize;
+ULONG blocksize;
 
 	if(bytes <= sizeof(sbuf))
 	{

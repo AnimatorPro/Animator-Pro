@@ -304,7 +304,7 @@ if (count <= 0)
 				goto OUT;
 		i = get_track(filept);
 		track += i;
-		for ( ; i< TRD_TRACK; i++)
+		for ( ; i < (int)TRD_TRACK; i++)
 		{
 			if (*track == NULL)
 				if ((*track = tget_sector()) == NULL)
@@ -375,7 +375,7 @@ for (;;)
 	{
 	i = get_track(filept);
 	track = *platter  +  i;
-	for ( ; i< TRD_TRACK; i++)
+	for ( ; i < (int)TRD_TRACK; i++)
 		{
 		so = get_sector(filept);
 		ssize = TRD_SECTOR - so;

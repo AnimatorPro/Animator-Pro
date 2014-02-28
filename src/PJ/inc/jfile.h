@@ -49,9 +49,9 @@ Boolean is_directory(const char *path);
 
 int get_jmode(Jfile fd);
 
-Errcode pj_write_zeros(Jfile f,LONG oset,LONG bytes);
+Errcode pj_write_zeros(Jfile f, LONG oset, ULONG bytes);
 Errcode copy_in_file(Jfile file,LONG bytes,LONG soff,LONG doff);
-Errcode pj_copydata(Jfile src, Jfile dest, LONG size);
+Errcode pj_copydata(Jfile src, Jfile dest, ULONG size);
 
 /* pj_copyfile copies source to dest file and reports any error except
     for source not existing. */
@@ -64,7 +64,9 @@ Errcode pj_copyfile(char*source,char*dest);
    to either source or dest (depending where error was). */
 Errcode pj_cpfile(char *source, char *dest, char **perrfile);
 
-Errcode pj_copydata_oset(Jfile src,Jfile dest,LONG soset,LONG doset,LONG size);
+extern Errcode
+pj_copydata_oset(Jfile src, Jfile dest, LONG soset, LONG doset, ULONG size);
+
 Errcode pj_insert_space(Jfile f,LONG offset, LONG gapsize);
 
 Errcode pj_readoset(Jfile f,void *buf, LONG oset,LONG size);

@@ -4,12 +4,12 @@
 unsigned lfwrite(const void *buf, unsigned size, unsigned count, LFILE *f)
 /* This one isn't optimized yet.   Just in terms of lputc */
 {
-int icount, isize;
+unsigned int icount, isize;
 const char *pt = buf;
 
 for (icount = 0;  icount<count; icount++)
 	{
-	for (isize=size; --isize>=0; )
+	for (isize = size; isize > 0; isize--)
 		{
 		if (lputc(*pt++,f) < Success)
 			goto OUT;

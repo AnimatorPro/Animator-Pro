@@ -3,7 +3,7 @@
 #include "jfile.h"
 
 Errcode pj_copydata_oset(Jfile src, Jfile dest, 
-						LONG soset, LONG doset, LONG size)
+						LONG soset, LONG doset, ULONG size)
 {
 long lerr;
 

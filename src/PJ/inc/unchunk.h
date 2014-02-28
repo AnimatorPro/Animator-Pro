@@ -37,7 +37,7 @@ typedef struct chunkparse_data {
 
 void init_chunkparse(Chunkparse_data *pd, Jfile fd, 
 					 LONG root_type, LONG root_oset, 
-					 LONG head_size, LONG root_size);
+					 ULONG head_size, LONG root_size);
 
 #define DONT_SEEK_ROOT -1   /* argument for root offest of init_chunkparse 
 							 * that asks to start parse at current file

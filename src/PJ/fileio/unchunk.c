@@ -38,7 +38,7 @@ EOF
 
 void init_chunkparse(Chunkparse_data *pd, Jfile fd, 
 					 LONG root_type, LONG root_oset, 
-					 LONG head_size, LONG root_size)
+					 ULONG head_size, LONG root_size)
 /*********************************************************************
  * Initializes a control structure for parsing chunks subordinate to
  * a Chunk_id containing sub chunks.
