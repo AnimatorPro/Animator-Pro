@@ -49,22 +49,14 @@ pj_ultoa(unsigned long value, char *buf, int radix)
 #define FSPEC_DLONG	  0x4000 /* arg is treated as a double long */
 
 static int get_fmtint(Formatarg *fa)
-
 /* gets an int from the format string */
 {
-char *digit;
-char digend;
-int ret;
+	const int ret = atoi(fa->fmt);
 
-	digit = fa->fmt;
-	while(isdigit(*digit))
-		++digit;
-	digend = *digit;
-	*digit = 0;
-	ret = atoi(fa->fmt);
-	*digit = digend;
-	fa->fmt = digit;
-	return(ret);
+	while (isdigit(*fa->fmt))
+		fa->fmt++;
+
+	return ret;
 }
 static char trail_spaces(Formatarg *fa)
 {
@@ -225,8 +217,9 @@ static char do_int(Formatarg *fa,int base)
 /* if base < 0 treat as unsigned */
 {
 long val;
+char *str;
 
-	fa->str = fa->prefix = fa->strbuf;
+	str = fa->prefix = fa->strbuf;
 
 	/* get arg of right size */
 
@@ -277,16 +270,16 @@ got_signed:
 
 		if(val < 0)
 		{
-			*fa->str++ = '-';
+			*str++ = '-';
 			val = -val;
 			goto sign_done;
 		}
 	}
 
 	if(fa->pflags & FSPEC_PLUS)
-		*fa->str++ = '+';
+		*str++ = '+';
 	else if(fa->pflags & FSPEC_SPACE)
-		*fa->str++ = ' ';
+		*str++ = ' ';
 
 sign_done:
 
@@ -295,28 +288,28 @@ sign_done:
 		switch(base)
 		{
 			case 8:
-				*fa->str++ = '0';
+				*str++ = '0';
 				--fa->precis;   /* a zero used */
 				break;
 			case 16:
-				*fa->str++ = '0';
+				*str++ = '0';
 				if(*fa->fmt == 'X')
-					*fa->str++ = 'X';
+					*str++ = 'X';
 				else
-					*fa->str++ = 'x';
+					*str++ = 'x';
 				fa->precis -= 2;  /* 2 "zeros" used */
 			default:
 				break;
 		}
 	}
-	*fa->str++ = 0;  /* terminate prefix */
+	*str++ = '\0'; /* terminate prefix */
 
-	ultoa(val,fa->str,base); /* Val positive at this point. Get digits */
+	ultoa(val, str, base); /* Val positive at this point. Get digits */
 
 	if(*fa->fmt == 'X') /* fudge but works */
-		fa->strlen = upper_str(fa->str);
+		fa->strlen = upper_str(str);
 	else
-		fa->strlen = strlen(fa->str); /* length of digits */
+		fa->strlen = strlen(str); /* length of digits */
 
 	fa->zeropad = 0; /* start with no zeros */
 
@@ -329,26 +322,30 @@ sign_done:
 		}
 	}
 	fa->strlen += strlen(fa->prefix);
+	fa->str = str;
 	return(finish_num_string(fa));
 }
 static void start_double(Formatarg *fa)
 {
-	fa->str = fa->prefix = fa->strbuf;
+	char *str;
+
+	str = fa->prefix = fa->strbuf;
 	if(fa->darg < 0.0)
 	{
-		*fa->str++ = '-';
+		*str++ = '-';
 		fa->darg = -fa->darg;
 	}
 	else
 	{
 		if(fa->pflags & FSPEC_PLUS)
-			*fa->str++ = '+';
+			*str++ = '+';
 		else if(fa->pflags & FSPEC_SPACE)
-			*fa->str++ = ' ';
+			*str++ = ' ';
 	}
 
-	fa->strlen = fa->str - fa->strbuf;
-	*fa->str++ = 0; /* terminate prefix */
+	fa->strlen = str - fa->strbuf;
+	*str++ = '\0'; /* terminate prefix */
+	fa->str = str;
 }
 static double pcismult[] = {
 	1.0,
@@ -383,8 +380,9 @@ ULONG lval;
 int sigdig;
 int len;
 char *suffix;
+assert(fa->strbuf <= fa->str && fa->str < fa->strbuf + sizeof(fa->strbuf));
 
-	suffix = fa->str;
+	suffix = (char *)fa->str;
 	fa->zeropad = 0;
 
 	if((sigdig = fa->precis) == 0)
@@ -822,7 +820,7 @@ error:
 	}
 	return('%');
 }
-void init_formatarg(Formatarg *fa, char *fmt)
+void init_formatarg(Formatarg *fa, const char *fmt)
 {
 	fa->mflags = 0;
 	fa->fmt = fmt;

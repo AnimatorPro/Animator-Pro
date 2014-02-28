@@ -10,7 +10,7 @@
 #endif
 
 typedef struct formatarg {
-	char *fmt;         /* this will contain pointer to next char in format 
+	const char *fmt;   /* this will contain pointer to next char in format
 						* string after any fa_getc() call */
 	va_list args; 	   /* arguments to be formatted */
 
@@ -24,7 +24,7 @@ typedef struct formatarg {
 	SHORT zeropad;
 	SHORT precis;
 	SHORT strlen;
-	char *str;         /* this will contain pointer to '%' that starts this
+	const char *str;   /* this will contain pointer to '%' that starts this
 					    * format desriptor when in format parse mode used for
 						* local data in formatting mode */
 	char *prefix;
@@ -55,7 +55,7 @@ char geta_fmtchar(struct formatarg *fa);
 								 * discovered put error code in fa->error */
 
 /*** to be used like va_start() and va_end() for a formatarg ***/
-extern void init_formatarg(Formatarg *fa, char *fmt);
+extern void init_formatarg(Formatarg *fa, const char *fmt);
 
 #define start_formatarg(fa,fmt) \
  {va_start(fa.args,fmt);init_formatarg(&fa,fmt);}

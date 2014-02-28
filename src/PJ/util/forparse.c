@@ -8,7 +8,7 @@ static char do_parsechar(Formatarg *fa)
 
 /* ignore all chars and arguments, returning the format type chars only */
 {
-char *fmt = fa->fmt;
+	const char *fmt = fa->fmt;
 
 	while(*fmt)
 	{
