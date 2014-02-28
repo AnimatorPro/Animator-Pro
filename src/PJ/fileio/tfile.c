@@ -248,8 +248,7 @@ parse_to_semi(&path, head, PATH_SIZE);
 }
 #endif /* SLUFFED */
 
-
-static void make_tname(char *result, char *name, char *ppref)
+static void make_tname(char *result, const char *name, const char *ppref)
 /*
  * Input temp name including device (eg >:aatemp.flx) and
  * path prefix (eg c:\paat\).
@@ -259,8 +258,7 @@ static void make_tname(char *result, char *name, char *ppref)
 sprintf(result, "%s%s", ppref, name+2);
 }
 
-
-static Errcode tfind(char *name, char *pname)
+static Errcode tfind(const char *name, char *pname)
 /*
  * Find a file that's somewhere on the temp-path.  
  * Return ms-dos file-name in pname[]
@@ -288,7 +286,7 @@ free_parts(&pp);
 return(err);
 }
 
-static Tfile alloc_tfile(char *name, char *ppref)
+static Tfile alloc_tfile(const char *name, const char *ppref)
 /*
  * Allocate and initialize a temporary file structure.
  */
@@ -306,8 +304,7 @@ add_head(&tlist, &tfl->tnod);
 return(tfl);
 }
 
-
-Tfile tcreate(char *name,int mode)
+Tfile tcreate(const char *name, int mode)
 /*
  * Create a new temporary file.   If it's a =: file most likely it'll
  * end up in internal ram-disk unless real tight for memory.  Otherwise
@@ -346,7 +343,7 @@ free_parts(&pp);
 return(result);
 }
 
-Tfile topen(char *name, int mode)
+Tfile topen(const char *name, int mode)
 /*
  * Open a file on the temp device.  This will loop through the temp path
  * checking each directory for the file. 
@@ -555,7 +552,7 @@ long ttell(Tfile t)
 return(pj_tell(t->jhandle));
 }
 
-Errcode tdelete(char *name)
+Errcode tdelete(const char *name)
 /*
  * Delete a temporary file.
  */
@@ -582,7 +579,7 @@ Errcode terror(void)
 return(terr);
 }
 
-Errcode trename(char *old, char *new)
+Errcode trename(const char *old, const char *new)
 /*
  * Rename a temporary file.
  */

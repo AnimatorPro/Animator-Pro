@@ -25,18 +25,18 @@ typedef struct rdir
 	Boolean open;
 	} Rdir;
 
-Rfile ropen(char *name, int mode);
-Rfile rcreate(char *name, int mode);
+Rfile ropen(const char *name, int mode);
+Rfile rcreate(const char *name, int mode);
 Errcode rclose(Rfile t);
 long rread(Rfile t, void *buf, long count);
 long rwrite(Rfile t,  void *buf, long count);
 long rseek(Rfile t, long offset, int mode);
 long rtell(Rfile t);
-Errcode rdelete(char *name);
+Errcode rdelete(const char *name);
 void rstats(long *alloc, long *free);
 Errcode rerror(void);
-Errcode rexists(char *name);
-Errcode rrename(char *old, char *new);
+Errcode rexists(const char *name);
+Errcode rrename(const char *old, const char *new);
 Errcode rget_dir(Rdir **plist);
 void rfree_dir(Rdir **pdir);
 

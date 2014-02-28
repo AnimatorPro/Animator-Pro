@@ -1,12 +1,11 @@
 #include <ctype.h>
 #include "util.h"
 
-int txtncmp(char *as, char *bs, int len)
-
+int txtncmp(const char *as, const char *bs, int len)
 /* like strcmp but case insensitive */
 {
 register UBYTE a, b;
-char *maxas;
+const char *maxas;
 
 	maxas = as + len;
 

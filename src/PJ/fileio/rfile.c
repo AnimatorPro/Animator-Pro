@@ -418,7 +418,7 @@ rerr = Err_too_many_files;
 return(NULL);
 }
 
-static Rfile find_named(char *name)
+static Rfile find_named(const char *name)
 /* Return directory entry of a named file if it exists, NULL otherwise. */
 {
 int tf;
@@ -469,7 +469,7 @@ switch (mode&MSOPEN_MODES)
 return(flags);
 }
 
-Rfile ropen(char *name, int mode)
+Rfile ropen(const char *name, int mode)
 /* Open a file on ram-disk */
 {
 Temp_file *tpf;
@@ -540,7 +540,7 @@ if (filep < 0 || filep > tpf->size)
 return(tpf->filep = filep);
 }
 
-Rfile rcreate(char *name,int mode)
+Rfile rcreate(const char *name, int mode)
 /* Create a file on ram-disk. */
 {
 Temp_file *tpf;
@@ -568,7 +568,7 @@ tpf->flags &= ~(TF_OPEN|TF_READ|TF_WRITE);
 return(Success);
 }
 
-Errcode rdelete(char *name)
+Errcode rdelete(const char *name)
 /* Delete a (closed) file from ram-disk. */
 {
 Temp_file *tpf;
@@ -596,7 +596,7 @@ tpf->flags = 0;
 return(Success);
 }
 
-Errcode rrename(char *old, char *new)
+Errcode rrename(const char *old, const char *new)
 /* Rename a file on ram-disk */
 {
 Temp_file *tpf;

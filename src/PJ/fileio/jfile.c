@@ -54,7 +54,7 @@ static Errcode get_doserror(void)
 	return(pj_mserror(pj_dget_err()));
 }
 
-static Errcode ddos_open(Jfl *result, char *name, int mode)
+static Errcode ddos_open(Jfl *result, const char *name, int mode)
 {
 	int flags;
 
@@ -84,7 +84,7 @@ static Errcode ddos_open(Jfl *result, char *name, int mode)
 	}
 }
 
-static Errcode ddos_create(Jfl *result, char *name, int mode)
+static Errcode ddos_create(Jfl *result, const char *name, int mode)
 {
 	int flags;
 
@@ -160,7 +160,7 @@ static long ddos_tell(Jfl *f)
 	return lseek(f->handle.j, 0, SEEK_CUR);
 }
 
-static Errcode ddos_ddelete(char *name)
+static Errcode ddos_ddelete(const char *name)
 {
 	if (unlink(name) != 0) {
 		/* TODO: improve error code. */
@@ -171,7 +171,7 @@ static Errcode ddos_ddelete(char *name)
 	}
 }
 
-static Errcode ddos_rename(char *old, char *new)
+static Errcode ddos_rename(const char *old, const char *new)
 {
 	if (rename(old, new) != 0) {
 		/* TODO: improve error code. */
@@ -203,7 +203,7 @@ static Tdev msd_dev =
 
 /****** Glue from internal resizable ramdisk to jfile ********/
 
-static Errcode dropen(Jfl *result, char *name, int mode)
+static Errcode dropen(Jfl *result, const char *name, int mode)
 /*
  * Pass open request through to internal ramdisk and store result
  * in handle.
@@ -214,7 +214,7 @@ if ((result->handle.r = ropen(name, mode)) == NULL)
 return(Success);
 }
 
-static Errcode drcreate(Jfl *result, char *name, int mode)
+static Errcode drcreate(Jfl *result, const char *name, int mode)
 /*
  * Pass create request through to internal ramdisk and store result
  * in handle.
@@ -297,7 +297,7 @@ Boolean is_ram_file(Jfile fd)
 /****** Glue from temp file manager (which will swap from device to
   device as necessary using all storage in temp path) to jfile ********/
 
-static Errcode dtopen(Jfl *result, char *name, int mode)
+static Errcode dtopen(Jfl *result, const char *name, int mode)
 /*
  * Pass open request to temp-file-device and store result in handle.
  */
@@ -307,7 +307,7 @@ if ((result->handle.t = topen(name, mode)) == NULL)
 return(Success);
 }
 
-static Errcode dtcreate(Jfl *result, char *name, int mode)
+static Errcode dtcreate(Jfl *result, const char *name, int mode)
 /*
  * Pass create request to temp-file-device and store result in handle.
  */
@@ -385,7 +385,7 @@ static Tdev tdev_dev =
 
 static Errcode jerr;
 
-static Tdev *dev_for_name(char *name)
+static Tdev *dev_for_name(const char *name)
 /*
  * Given the device name, figure out from it's first character which
  * device it belongs to.
@@ -430,9 +430,7 @@ new->jfl_magic = JFL_MAGIC;
 return(new);
 }
 
-
-
-static Jfl *pj_open_or_create(Boolean do_create, char *name, int mode)
+static Jfl *pj_open_or_create(Boolean do_create, const char *name, int mode)
 /*
  * Open or create a jfile.  (which one depends on do_create passed
  * in.)   Since open are identical except for whether the device
@@ -443,7 +441,7 @@ static Jfl *pj_open_or_create(Boolean do_create, char *name, int mode)
 Tdev *dev;
 Errcode err;
 Jfl *tf;
-Errcode (*o_or_c)(Jfl *tf, char *name, int mode);
+Errcode (*o_or_c)(Jfl *tf, const char *name, int mode);
 
 dev = dev_for_name(name);	/* Name says which device to put file on. */
 o_or_c = (do_create ? dev->dcreate : dev->dopen);
@@ -459,7 +457,7 @@ tf->rwmode = mode;	/* Store open mode for later use. */
 return(tf);
 }
 
-Jfl *pj_open(char *name, int mode)
+Jfl *pj_open(const char *name, int mode)
 /*
  * Open a previously existing file.  Mode indicates whether it's
  * read or write or both.  (See filemode.h for definitions of
@@ -469,7 +467,7 @@ Jfl *pj_open(char *name, int mode)
  return(pj_open_or_create(FALSE,name,mode));
  }
 
-Jfl *pj_create(char *name, int mode)
+Jfl *pj_create(const char *name, int mode)
 /*
  * Create a new file.  Can be write or read/write as determined by the
  * mode parameter (see filemode.h for acceptible mode values).  
@@ -555,7 +553,7 @@ if ((pos = f->dev->dtell(f)) < Success)
 return(pos);
 }
 
-Errcode pj_delete(char *name)
+Errcode pj_delete(const char *name)
 /*
  * Delete a file.
  */
@@ -587,7 +585,7 @@ int get_jmode(Jfl *t)
 	return(JUNDEFINED);
 }
 
-Errcode pj_rename(char *old, char *new)
+Errcode pj_rename(const char *old, const char *new)
 /*
  * Rename a file.  Generally will only work if both old and new name are
  * on the same device.
@@ -602,7 +600,7 @@ if ((err = dev->drename(old,new)) < Success)
 return(err);
 }
 
-Boolean pj_exists(char *title)
+Boolean pj_exists(const char *title)
 /* Does file exist? Boolean does not handle errors now */
 {
 Jfile f;
@@ -613,7 +611,7 @@ Jfile f;
 	return(1);
 }
 
-long pj_file_size(char *title)
+long pj_file_size(const char *title)
 /*
  * Return size of a (closed) file.
  */
@@ -628,7 +626,7 @@ pj_close(f);
 return(size);
 }
 
-Errcode pj_is_fixed(char *device)
+Errcode pj_is_fixed(const char *device)
 /* returns 1 if device is fixed 0 if not < 0 if error */
 {
 char dc;

@@ -1,7 +1,7 @@
 #include "errcodes.h"
 #include "jfile.h"
 
-Errcode read_gulp(char *name, void *buf, long size)
+Errcode read_gulp(const char *name, void *buf, long size)
 /* Read in a file of known size all at once. */
 {	
 Jfile f;

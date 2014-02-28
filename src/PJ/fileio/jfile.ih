@@ -26,17 +26,17 @@ typedef union tjr
 
 typedef struct tdev
 	{
-	Errcode (*dopen)(Jfl *result, char *name, int mode);
-	Errcode (*dcreate)(Jfl *result, char *name, int mode);
+	Errcode (*dopen)(Jfl *result, const char *name, int mode);
+	Errcode (*dcreate)(Jfl *result, const char *name, int mode);
 	Errcode (*dclose)(Jfl *s);
 	long (*dread)(Jfl *s, void *buf, long count);
 	long (*dwrite)(Jfl *s, void *buf, long count);
 	long (*dseek)(Jfl *s, long offset, int mode);
 	long (*dtell)(Jfl *s);
-	Errcode (*ddelete)(char *name);
+	Errcode (*ddelete)(const char *name);
 	int (*ddir)(char **buf, int maxcount);
 	Errcode (*derror)();
-	Errcode (*drename)(char *old, char *new);
+	Errcode (*drename)(const char *old, const char *new);
 	} Tdev;
 
 #endif /* JFILE_IH */

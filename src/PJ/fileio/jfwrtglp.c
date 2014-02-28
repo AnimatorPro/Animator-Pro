@@ -1,6 +1,6 @@
 #include "jfile.h"
 
-Errcode write_gulp(char *name, void *buf, long size)
+Errcode write_gulp(const char *name, void *buf, long size)
 /* Write out a file of known size all at once returns Ecode */
 {
 Jfile f;

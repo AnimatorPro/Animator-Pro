@@ -15,9 +15,9 @@
 
 /** basic low level dos file calls found in the syslib **/
 
-Boolean pj_exists(char *path);
-Jfile pj_create(char *path,int mode);
-Jfile pj_open(char *path,int mode);
+Boolean pj_exists(const char *path);
+Jfile pj_create(const char *path, int mode);
+Jfile pj_open(const char *path, int mode);
 Errcode pj_close(Jfile f); 	/* this will check for JNONE (zeros) in f */
 Errcode pj_closez(Jfile *jf); /* will check for and set JNONE */
 Errcode pj_ioerr(void);
@@ -29,8 +29,8 @@ long pj_tell(Jfile f);
 long pj_read(Jfile f, void *buf, long size);
 long pj_write(Jfile f, void *buf, long size);
 
-Errcode pj_delete(char *path);
-Errcode pj_rename(char *oldname, char *newname);
+Errcode pj_delete(const char *path);
+Errcode pj_rename(const char *oldname, const char *newname);
 
 #ifdef PRIVATE_CODE
 
@@ -42,8 +42,8 @@ int pj_get_devices(UBYTE *devids);
 Errcode get_dir(char *dir);		/* get current directory */
 Errcode change_dir(char *name);
 
-long pj_file_size(char *path);
-Errcode pj_is_fixed(char *device);
+long pj_file_size(const char *path);
+Errcode pj_is_fixed(const char *device);
 Errcode pj_pathdev_is_fixed(char *path);
 Boolean is_directory(const char *path);
 
@@ -73,10 +73,8 @@ Errcode pj_writeoset(Jfile f,void *buf, LONG oset,LONG size);
 Errcode pj_read_ecode(Jfile f, void *buf, LONG size);
 Errcode pj_write_ecode(Jfile f, void *buf, LONG size);
 
-
-Errcode read_gulp(char*name,void*buf,long size);
-Errcode write_gulp(char*name,void*buf,long size);
-
+Errcode read_gulp(const char*name, void*buf, long size);
+Errcode write_gulp(const char*name, void*buf, long size);
 
 /* this is the data structure used by pj_dfirst() pj_dnext() in searching
    directories */

@@ -9,7 +9,7 @@
 
 Errcode lerrno;
 
-static LFILE *_lfopen(char *filename, char *mode, LFILE *f)
+static LFILE *_lfopen(const char *filename, const char *mode, LFILE *f)
 /*
  *	Attempt to open <filename> in the given
  *	<mode> and attach it to the stream <f>
