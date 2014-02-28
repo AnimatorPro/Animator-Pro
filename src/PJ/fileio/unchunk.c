@@ -122,7 +122,7 @@ Boolean get_next_chunk(Chunkparse_data *pd)
 		/* If the input root size < head size chunk_left will be < 0 and
 		 * DONT_READ_ROOT will be true */
 
-		if(pd->type == DONT_READ_ROOT)
+		if (pd->type == (USHORT)DONT_READ_ROOT)
 		{
 			pd->error = Err_corrupted;
 			goto error;
