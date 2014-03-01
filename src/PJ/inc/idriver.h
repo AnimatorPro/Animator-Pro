@@ -70,7 +70,6 @@ typedef struct idr_library
 	Errcode (*inquire)(struct idriver *);
 	Errcode (*input)(struct idriver *);
 	Errcode	(*setclip)(struct idriver *idr,short channel,long clipmax);
-	Errcode (*verify_options)(struct idriver *idr);
 	} Idr_library;
 
 
