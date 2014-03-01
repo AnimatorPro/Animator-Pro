@@ -18,7 +18,6 @@ INPUTHIO = \
  inwclick.obj\
  inwaitup.obj\
  inwpenup.obj\
- inwrgtup.obj\
  inwtany.obj\
  idriver.obj\
  idrivcfg.obj\

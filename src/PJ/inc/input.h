@@ -345,7 +345,6 @@ void wait_a_jiffy(int j);
 void wait_any_input(void);
 void wait_click(void); /* wait_input(ANY_CLICK); synonym */
 void wait_penup(void);
-void wait_rightup(void);
 void wait_mbup(ULONG flags);
 
 /* repeat function while pen is down */
