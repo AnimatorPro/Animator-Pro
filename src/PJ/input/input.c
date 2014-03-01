@@ -204,15 +204,6 @@ void undisplay_cursor()
 {
 	HIDECURSOR();
 }
-void redraw_cursor()
-{
-	if(icb.mcurs_up > 0 && icb.mset.on)
-	{
-		(*(icb.curs->hideit))(icb.curs);
-		(*(icb.curs->showit))(icb.curs);
-	}
-}
-
 
 Boolean hide_mouse(void)
 {
