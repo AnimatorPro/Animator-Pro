@@ -376,7 +376,6 @@ void load_mouset(Mouset *mset);
 void set_procmouse(VFUNC procmouse);
 void set_mouse_oset(SHORT mosetx, SHORT mosety);
 void reset_icb(void);
-Boolean set_mouse_on(Boolean on1off0);
 Boolean hide_mouse(void);
 Boolean show_mouse(void);
 void display_cursor();

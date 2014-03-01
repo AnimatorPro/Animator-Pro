@@ -221,14 +221,6 @@ Boolean was_on = icb.mset.on;
 		DRAWCURSOR();
 	return(was_on);
 }
-Boolean set_mouse_on(Boolean on1off0)
-/* if onoroff is 1 its set to on if 0 set to off */
-{
-	if(on1off0)
-		return(show_mouse());
-	else
-		return(hide_mouse());
-}
 void get_menucursorxy(void)
 
 /* apply Mouset settings to sx and sy to get cursor position and
