@@ -1,3 +1,4 @@
+#ifdef SLUFFED
 #include "formatf.h"
 
 int
@@ -13,3 +14,4 @@ Formatarg fa;
 	end_formatarg(fa);
 	return(fa.count - 1);
 }
+#endif /* SLUFFED */
