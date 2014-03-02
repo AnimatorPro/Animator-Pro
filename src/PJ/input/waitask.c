@@ -10,7 +10,7 @@ typedef struct wtaskcb {
 	SHORT disables;
 } Wtaskcb;
 
-Wtaskcb wtasks = {
+static Wtaskcb wtasks = {
 	DLHEADER_INIT(wtasks.list),
 	0,
 };
@@ -32,16 +32,16 @@ void rem_waitask(Waitask *wt)
 	safe_rem_node(&(wt->node));
 	wt->flags &= ~WT_ATTACHED;
 }
-void disable_wtasks()
+void disable_wtasks(void)
 {
 	++wtasks.disables;
 }
-void enable_wtasks()
+void enable_wtasks(void)
 {
 	--wtasks.disables;
 }
 
-void check_waitasks()
+void check_waitasks(void)
 {
 Waitask *wt;
 Icb_savebuf *pushed;

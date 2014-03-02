@@ -1,10 +1,12 @@
+#include "jimk.h"
+#include "commonst.h"
 #include "errcodes.h"
 #include "idriver.h"
-#include "memory.h"
 #include "jfile.h"
-#include "commonst.h"
+#include "memory.h"
 #include "menus.h"
 #include "ptrmacro.h"
+#include "resource.h"
 #include "softmenu.h"
 
 Errcode config_idriver(char *name, UBYTE *modes, Boolean use_modes, SHORT port)

@@ -81,4 +81,10 @@ extern char key_idriver_name[];
 extern char mouse_idriver_name[];
 extern char summa_idriver_name[];
 
+extern Errcode init_key_idriver(Idriver *idr);
+extern Errcode init_mouse_idriver(Idriver *idr);
+
+extern Errcode
+config_idriver(char *name, UBYTE *modes, Boolean use_modes, SHORT port);
+
 #endif /* IDRIVER_H */

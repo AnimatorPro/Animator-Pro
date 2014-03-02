@@ -65,8 +65,6 @@ typedef void (*cursorhdr_func)(struct cursorhdr *ch,...);
  	cursorhdr_func moveit; /* move displayed cursor */
  } Cursorhdr;
 
-
-extern Cursorhdr null_cursor; /* a do nothing invisible cursor */
 /* generic move cursor function calls hideit then showit */
 extern void gen_move_cursor(Cursorhdr *ch); 
 extern void set_cursor(Cursorhdr *cd);
@@ -221,6 +219,8 @@ struct icb_savebuf {
 #define MAKE_MACRO	(1|MACRO_OK) 
 #define USE_MACRO   (2|MACRO_OK) 
 
+extern void _pop_icb(Icb_savebuf *pushed);
+
 #endif /* INPUT_INTERNALS */
 
 #define PRESSURE_MAX 0xFFU	/* highest pressure value possible */ 
@@ -334,6 +334,8 @@ Errcode reset_input(void);
 
 void reuse_input(void);
 
+Boolean is_pressure(void);
+
 Boolean check_input(ULONG checkflags);
 void wait_input(ULONG waitflags);
 void mac_wait_input(ULONG waitflags,ULONG recflags);
@@ -357,7 +359,7 @@ FUNC set_hotkey_func(Boolean (*do_hot_key)(Global_icb *gicb));
 
 void save_icb_state(Icb_savebuf *save_area);
 void restore_icb_state(Icb_savebuf *saved);
-Icb_savebuf *check_push_icb();
+Icb_savebuf *check_push_icb(void);
 
 #ifdef INPUT_INTERNALS
 	#define FDAT void *funcdata
@@ -377,8 +379,10 @@ void set_mouse_oset(SHORT mosetx, SHORT mosety);
 void reset_icb(void);
 Boolean hide_mouse(void);
 Boolean show_mouse(void);
-void display_cursor();
-void undisplay_cursor();
+void get_menucursorxy(void);
+void set_cursor(Cursorhdr *cd);
+void display_cursor(void);
+void undisplay_cursor(void);
 SHORT toupper_inkey(); /* returns the icb.inkey with the ascii part
 						* toupper()ed */
 
@@ -416,10 +420,18 @@ typedef struct waitask {
 void init_waitask(Waitask *wt, FUNC func, void *data, USHORT flags);
 void add_waitask(Waitask *wt);
 void rem_waitask(Waitask *wt);
-void disable_wtasks();
-void enable_wtasks();
+void disable_wtasks(void);
+void enable_wtasks(void);
+void check_waitasks(void);
 int wdisable_dofunc(FUNC func, void *dat);
 
 #endif /* REXLIB_CODE */
+
+extern int pj_key_is(void);
+extern int pj_key_in(void);
+extern int dos_key_shift(void);
+
+extern Errcode get_macro_input(void);
+extern Errcode put_macro(Boolean ishit);
 
 #endif /* INPUT_H */

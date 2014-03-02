@@ -10,9 +10,6 @@ char key_idriver_name[] = "=key.";
 char mouse_idriver_name[] = "=mouse.";
 char summa_idriver_name[] = "summa.idr";
 
-extern Errcode init_key_idriver(Idriver *idr);
-extern Errcode init_mouse_idriver(Idriver *idr);
-
 static Errcode do_init_idriver(Idriver *idr)
 {
 	if (idr->hdr.init == NULL)
@@ -79,7 +76,6 @@ char *local_name;
 	return(Success);
 error:
 	close_idriver(pidr);
-done:
 	return(err);
 }
 

@@ -189,6 +189,8 @@ pj_zoomblit(RASType *source, Coor src_x, Coor src_y,
 
 /* these calls do nothing unless the raster is representing a video display */
 
+void wait_sync(void);
+void pj_wait_vsync(void);
 void pj_wait_rast_vsync(RASType *r); /* waits until bottom of frame
 								   * or vertical blanking start */
 

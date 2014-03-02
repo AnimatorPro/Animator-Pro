@@ -13,8 +13,7 @@ void free_undof()
 	undof = NULL;
 }
 
-static void penwin_procmouse()
-
+static void penwin_procmouse(void)
 /* procmouse function for the fli drawing window it handles grid for now */
 {
 	if(!vs.use_grid)

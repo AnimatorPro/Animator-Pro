@@ -2,7 +2,6 @@
 #include "idriver.h"
 #include "input.h"
 
-
 static LONG key_min[2], key_max[2] = {64,64}, 
 	key_clip[2] = {64,64},
 	key_aspect[2] = {1,1}, key_pos[2] = {25,25};
@@ -10,6 +9,7 @@ static UBYTE key_flags[2] = {RELATIVE,RELATIVE};
 
 static Errcode key_detect(Idriver *idr)
 {
+	(void)idr;
 	return(Success);
 }
 
@@ -37,6 +37,7 @@ return(Success);
 
 static Errcode key_close(Idriver *idr)
 {
+(void)idr;
 return(Success);
 }
 

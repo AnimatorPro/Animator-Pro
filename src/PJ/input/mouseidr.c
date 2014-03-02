@@ -3,6 +3,8 @@
 #include "idriver.h"
 #include "regs.h"
 
+extern Boolean jgot_mouse(void);
+extern void jmousey(struct wabcd_regs *mouse_regs);
 
 static LONG mou_min[2], mou_max[2] = {2048,2048}, 
 	mou_clip[2] = {2048,2048},
@@ -11,6 +13,8 @@ static UBYTE mou_flags[2] = {RELATIVE,RELATIVE};
 
 static Errcode mou_detect(Idriver *idr)
 {
+(void)idr;
+
 if (jgot_mouse())
 	return(Success);
 else
@@ -44,6 +48,7 @@ return(Success);
 
 static Errcode mou_close(Idriver *idr)
 {
+	(void)idr;
 	return(Success);
 }
 

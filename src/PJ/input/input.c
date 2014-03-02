@@ -6,6 +6,7 @@
 
 #define INPUT_INTERNALS
 
+#include "jimk.h"
 #include "errcodes.h"
 #include "idriver.h"
 #include "imath.h"
@@ -53,11 +54,11 @@ void wait_a_jiffy(int j)
 	wait_millis(pj_uscale_by(j,1000,70));
 }
 
-Boolean is_pressure()
+Boolean is_pressure(void)
 {
 	return(icb.reads_pressure);
 }
-void cleanup_idriver()
+void cleanup_idriver(void)
 {
 	close_idriver(&icb.idriver);
 }
@@ -155,9 +156,12 @@ FUNC ohot;
 
 /***** functions to load and alter mouse settings control in the icb *******/
 
-static do_nocursor(Cursorhdr *ch) {};
+static void do_nocursor(Cursorhdr *ch)
+{
+	(void)ch;
+}
 
-Cursorhdr null_cursor = {
+static Cursorhdr null_cursor = {
 	do_nocursor,
 	do_nocursor,
 	do_nocursor,
@@ -165,6 +169,8 @@ Cursorhdr null_cursor = {
 
 void gen_move_cursor(Cursorhdr *ch)
 {
+	(void)ch;
+
 	(*(icb.curs->hideit))(icb.curs);
 	(*(icb.curs->showit))(icb.curs);
 }
@@ -191,14 +197,14 @@ void set_cursor(Cursorhdr *cd)
 		icb.curs = cd;
 }
 
-void display_cursor()
+void display_cursor(void)
 /* this will actually draw the cursor on the screen if it is not and will
  * increment the cursor on count will actually make it visible only if the
  * cursor is in the "on" state */
 {
 	SHOWCURSOR();
 }
-void undisplay_cursor()
+void undisplay_cursor(void)
 
 /* inverse of display cursor */
 {
@@ -306,7 +312,7 @@ void restore_icb_state(Icb_savebuf *saved)
 	if(icb.mcurs_up > 0 && icb.mset.on)
 		DRAWCURSOR();
 }
-Icb_savebuf *check_push_icb()
+Icb_savebuf *check_push_icb(void)
 /* checks if we are a level down and "pushes" the icb state guarantees
  * that new state is with cursor count off in "virgin" condition 
  * returns pointer to buffer if it did push the global_icb 

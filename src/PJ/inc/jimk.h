@@ -128,6 +128,11 @@ Cursorhdr *set_pen_cursor(Cursorhdr *ch);
 Errcode errline(Errcode err,char *fmt,...);
 Errcode softerr(Errcode err,char *fmt,...);
 
+extern void cant_find(char *name);
+extern Errcode cant_load(Errcode err, char *name);
+extern Errcode cant_query_driver(Errcode err, char *name);
+extern Errcode cant_use_module(Errcode err, char *modname);
+
 Errcode qchoicef(USHORT *qc_flags,char *fmt,...);
 Errcode qchoice(USHORT *qc_flags,char *header, char **choices, int ccount);
 int soft_qchoice(USHORT *qc_flags, char *key,...);
@@ -247,8 +252,9 @@ void get_penwndo_port(Rectangle *port);
 #define CH_WIDTH 6
 #define CH_HEIGHT 8
 
-extern long get80hz();
-extern ULONG pj_clock_1000();
+extern ULONG pj_clock_1000(void);
+extern void wait_millis(int millis);
+extern Errcode wait_til(ULONG clock_1000);
 
 #define free_string(pt) pj_free(pt)
 #define string_width(s) (strlen(s)*CH_WIDTH)
