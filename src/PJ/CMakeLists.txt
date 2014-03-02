@@ -10,6 +10,7 @@ add_subdirectory(fileio)
 add_subdirectory(fli)
 add_subdirectory(font)
 add_subdirectory(gfx)
+add_subdirectory(input)
 add_subdirectory(menus)
 add_subdirectory(picdrive)
 add_subdirectory(poco)
@@ -31,6 +32,7 @@ target_link_libraries(pj
 	flilib
 	fontlib
 	gfxlib
+	macinput
 	menulib
 	picdrive
 	poco
