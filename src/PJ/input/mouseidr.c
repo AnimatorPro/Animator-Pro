@@ -72,7 +72,7 @@ static Errcode mou_setclip(Idriver *idr,SHORT channel,long clipmax)
 	if((USHORT)channel > idr->channel_count)
 		return(Err_bad_input);
 
-	if(((ULONG)clipmax) > mou_max[channel])
+	if ((ULONG)clipmax > (ULONG)mou_max[channel])
 		clipmax = mou_max[channel];
 	mou_clip[channel] = clipmax;
 	return(0);

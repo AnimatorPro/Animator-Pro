@@ -80,7 +80,7 @@ static Errcode key_setclip(Idriver *idr,SHORT channel,long clipmax)
 	if((USHORT)channel > idr->channel_count)
 		return(Err_bad_input);
 
-	if(((ULONG)clipmax) > key_max[channel])
+	if ((ULONG)clipmax > (ULONG)key_max[channel])
 		clipmax = key_max[channel];
 	key_clip[channel] = clipmax;
 	return(0);

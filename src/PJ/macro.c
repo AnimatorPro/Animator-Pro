@@ -188,8 +188,8 @@ Errcode err;
 
 	/* these values should force recording of data the first time */
 	Mcb.lastmouse.x = Mcb.lastmouse.y = -30000; /* values highly unlikely */ 
-	Mcb.last_histate = ~0U; /* value that won't exist */
-	Mcb.last_pressure = ~0; /* valure that won't exist */
+	Mcb.last_histate = ~0; /* value that won't exist */
+	Mcb.last_pressure = ~0; /* value that won't exist */
 
 	return(Success);
 error:
