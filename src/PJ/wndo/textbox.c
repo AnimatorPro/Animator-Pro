@@ -498,6 +498,8 @@ static int stdout_wait_any(void)
 	xfputc('\n', xstderr);
 	return(0);
 }
+
+#ifdef SLUFFED
 Errcode tboxf(Wscreen *s,char *text,va_list args)
 
 /* puts up a textbox and waits on an input key hit bypassing input routines 
@@ -519,6 +521,8 @@ Tbox tbox;
 	}
 	return(err);
 }
+#endif /* SLUFFED */
+
 Errcode tboxf_choice(Wscreen *s,char *formats,char *text,va_list args,
 					 char **choices, char *extratext)
 

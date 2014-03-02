@@ -1,7 +1,6 @@
 set(MENU_SRC_FILES
 	choices.c
 	feelme.c
-	icb_boxf.c
 	icbcontb.c
 	icbvbool.c
 	icbvcont.c

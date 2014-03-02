@@ -1,3 +1,4 @@
+#ifdef SLUFFED
 #include "reqlib.h"
 
 Errcode boxf(char *fmt,...)
@@ -12,3 +13,4 @@ va_list args;
 	va_end(args);
 	return(err);
 }
+#endif /* SLUFFED */

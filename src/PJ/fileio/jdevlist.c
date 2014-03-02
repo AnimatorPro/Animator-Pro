@@ -93,7 +93,9 @@ Wild_data wd;
 
 	if (pat[0] == '#' && pat[1] == ':')
 	{
+#ifdef TESTING
 boxf("Oooops this could crash! see \\paa\\fileio\\jdevlist.c");
+#endif
 #ifdef WONT_LINK
 		rget_dir(pwild_list);
 #endif

@@ -1,6 +1,7 @@
 #define RASTCALL_INTERNALS
 #define WNDO_INTERNALS
 #include <limits.h>  /* for SHRT_MAX etc */
+#include <stdio.h>
 #include "errcodes.h"
 #include "gfx.h"
 #include "input.h"
@@ -502,7 +503,8 @@ Cliphead *free;
 
 	if((free = *freeclips) == NULL)
 	{
-		boxf("out of free ydots !!!");
+		/* boxf("out of free ydots !!!"); */
+		fprintf(stderr, "out of free ydots !!!");
 		return(NULL);
 	}
 	*freeclips = free->nextfree;
