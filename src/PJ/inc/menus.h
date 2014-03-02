@@ -141,7 +141,7 @@ typedef struct menuhdr {
 
 	Mugroup *group; /* group node attached to */
 	Dlnode node;	/* node for attachment to group menuhdr list */
-	VFUNC procmouse;   /* mouse processor function */
+	procmouse_func procmouse; /* mouse processor function */
 	void (*on_showhide)(struct menuhdr *m, Boolean showing); 
 						/* function to call when menu being shown or hidden */
 	void (*cleanup)(struct menuhdr *mh); /* called on close_menu() */

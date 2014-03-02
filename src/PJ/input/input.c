@@ -264,7 +264,7 @@ void set_mouse_oset(SHORT osetx, SHORT osety)
 	icb.mset.oset.y = osety;
 	reset_icb();
 }
-void set_procmouse(VFUNC procmouse)
+void set_procmouse(procmouse_func procmouse)
 {
 	icb.procmouse = procmouse;
 	reset_icb();

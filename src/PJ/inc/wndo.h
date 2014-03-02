@@ -134,7 +134,7 @@ typedef struct wndo {
 	wndo_redraw_func redraw; 		/* function to redraw the menucolor
 									 * items in a window */
 	Cursorhdr *cursor;
-	VFUNC procmouse; 	/* function to process mouse input within c_input() */
+	procmouse_func procmouse; /* process mouse within c_input() */
 	void *doit_data;	/* data pointer for doit function */
 	LONG for_the_futcha[1];
 } Wndo;
@@ -378,7 +378,7 @@ extern Boolean marqmove_wndo(Wndo *w, Rectangle *bclip);
 
 typedef struct Wiostate {
 	Mouset mset;
-	VFUNC procmouse;
+	procmouse_func procmouse;
 	Cursorhdr *cursor;
 	Wndo *iowndo;
 } Wiostate;

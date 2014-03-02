@@ -150,7 +150,7 @@ typedef struct global_icb {
 	ULONG hitstate;		/* xorstate & state indicates "transit to on" */
 	SHORT inkey;        /* the current input key */
 	Cursorhdr *curs;    /* current cursor */
-	VFUNC procmouse;	/* function to process mouse inside _poll_input() */
+	procmouse_func procmouse; /* process mouse inside _poll_input() */
 
 	struct wscreen *input_screen;	/* set by window system */
 	struct wndo *iowndo;			/* set by window system */
