@@ -20,9 +20,9 @@
 typedef struct machead  {
 	Chunk_id id;
 	BYTE realtime;
-	PADTO(32,machead,padfill);
+	char pad[32 - 7];
 } Machead;
-
+STATIC_ASSERT(macro, sizeof(Machead) == 32);
 
 /* the macro record types ALL macro records start with a USHORT if
  * the sign bit is off the record is an input event record if on it is 
@@ -53,7 +53,7 @@ typedef union twobytes {
 	USHORT flags;
 	UBYTE b[2];
 } Twobytes;
-
+STATIC_ASSERT(macro, sizeof(Twobytes) == 2);
 
 typedef struct abrec {
     UBYTE flags;	 /* flags for current abort record */
@@ -93,18 +93,6 @@ typedef struct maccb {
 static Maccb Mcb;
 
 /**** abort poll recursive structure ***/
-
-typedef struct abnest {
-	SHORT count;
-	SHORT nest;
-	struct abnest *push;
-	struct abnest *pop;
-} Abortnest;
-
-struct _error_checker_ {
-	char ec0[sizeof(Abortbuf) == sizeof(Abortnest)]; /* will error if != */
-	char ec1[PRESSURE_MAX == (UBYTE)PRESSURE_MAX]; /* must fit in a byte! */
-};
 
 static Abortnest s_abort;
 

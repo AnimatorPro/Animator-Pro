@@ -384,7 +384,14 @@ SHORT toupper_inkey(); /* returns the icb.inkey with the ascii part
 
 /******* macro synchronized user abort polling stuff ******/
 
-typedef UBYTE Abortbuf[12];  /* see macro.c */
+typedef struct abnest {
+	SHORT count;
+	SHORT nest;
+	struct abnest *push;
+	struct abnest *pop;
+} Abortnest;
+
+typedef UBYTE Abortbuf[sizeof(Abortnest)];
 Errcode poll_abort(void);
 void pstart_abort_atom(Abortbuf *ab);
 void start_abort_atom(void);
