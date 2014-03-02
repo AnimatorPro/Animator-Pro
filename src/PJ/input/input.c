@@ -705,7 +705,7 @@ Boolean do_cursor;
 		{
 			/* busy wait on 62nd of a sec not synced to beam */
 			t &= ~(0x0f);
-			while(t == ~(0xf)&pj_clock_1000());		
+			while (t == (~(0xf)&pj_clock_1000()));
 		}
 	}
 
