@@ -53,7 +53,6 @@ set(FORMATF_SRC_FILES
 	formatxt.c
 	forparse.c
 	fosprint.c
-	fovnsptf.c
 	ftextf.c
 	ftextfmt.c
 	snftextf.c

@@ -93,9 +93,6 @@ Errcode err;
 		return(err);
 
 	spwid = fchar_spacing(f,"m");
-#ifdef OLD_WAY
-	vnsprintf(buff,sizeof(buff),fmt,argptr);
-#endif
 	vnsftextf(buff,sizeof(buff),formats,fmt,argptr);
     yoset = font_ycent_oset(f,topwin->height);
 	pj_set_rast(topwin,swhite);
