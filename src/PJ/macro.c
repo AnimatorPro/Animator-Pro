@@ -106,7 +106,7 @@ struct _error_checker_ {
 	char ec1[PRESSURE_MAX == (UBYTE)PRESSURE_MAX]; /* must fit in a byte! */
 };
 
-static Abortnest abort;
+static Abortnest s_abort;
 
 /***************************/
 /* If the input (not a MACRO_REC) record is a hybred of input flags and 
@@ -710,7 +710,7 @@ Abortnest *pan;
 
 	if(Mcb.ar.flags & AR_ABORTLEVEL) /* we are aborting from here */
 	{
-		pan = &abort;
+		pan = &s_abort;
 		while(pan != NULL)
 		{
 			VPUTVAL(abuf,SHORT,pan->count);
@@ -763,19 +763,19 @@ void pstart_abort_atom(Abortbuf *sbuf)
  * and the number of input polls within the nested sequence must be 
  * invariant between record and playback of a macro file */
 {
-	if(abort.push)
+	if (s_abort.push)
 	{
-		*abort.push = abort;
-		abort.pop = abort.push;
-		abort.nest = 0;
+		*s_abort.push = s_abort;
+		s_abort.pop = s_abort.push;
+		s_abort.nest = 0;
 		++Mcb.ab_level;
 	}
-	abort.push = (void *)sbuf;
-	if(abort.nest++ > 0)
+	s_abort.push = (void *)sbuf;
+	if (s_abort.nest++ > 0)
 		return;
-	if(!abort.pop) /* we are at top level of nesting */
+	if (!s_abort.pop) /* we are at top level of nesting */
 		Mcb.ar.flags = 0; /* re init to empty record */
-	abort.count = 0; /* start count over */
+	s_abort.count = 0; /* start count over */
 }
 void start_abort_atom(void)
 /* saves putting NULLs all over */
@@ -789,13 +789,13 @@ SHORT *pcount;
 Errcode err;
 Abortnest *an;
 
-	if(--abort.nest != 0)
+	if (--s_abort.nest != 0)
 		return(Success);
 
 	err = Success;
 	if(icb.macro_mode == MAKE_MACRO)
 	{
-		if(!abort.pop && !(Mcb.ar.flags & AR_ABORTLEVEL))
+		if (!s_abort.pop && !(Mcb.ar.flags & AR_ABORTLEVEL))
 		{
 			/* this nested abort was not aborted and record 
 			 * not written by poll abort 
@@ -814,7 +814,7 @@ Abortnest *an;
 				if(read_abort_rec() < Success)
 					goto abort_error;
 			}
-			else if(!abort.pop) /* back to top level and didn't find it yet */
+			else if (!s_abort.pop) /* back to top level and didn't find it yet */
 			{
 				macro_read_error(Err_macrosync);
 				goto abort_error;
@@ -827,7 +827,7 @@ Abortnest *an;
 			&& Mcb.ab_level <= Mcb.mab_level)  
 		{
 			pcount = &Mcb.ar.counts[Mcb.mab_level - Mcb.ab_level];
-			for(an = abort.pop;an != NULL;an = an->pop)
+			for (an = s_abort.pop; an != NULL; an = an->pop)
 			{
 				if(*pcount++ > an->count)
 					goto not_aborted;
@@ -842,13 +842,13 @@ abort_error:
 		err = Err_abort;
 not_aborted:
 
-	if(abort.pop) /* if pushed pop it */
+	if (s_abort.pop) /* if pushed pop it */
 	{
-		abort = *abort.pop;
+		s_abort = *s_abort.pop;
 		--Mcb.ab_level;
 	}
 	else
-		abort.push = NULL; /* terminate nest if not popped */
+		s_abort.push = NULL; /* terminate nest if not popped */
 
 	return(err); /* for program macro error will be an abort hit */
 }
@@ -878,7 +878,7 @@ Abortnest *an;
 	macro_mode = icb.macro_mode;
 	ret = Success; /* non abort most common case */
 
-	if(abort.nest > 0)
+	if (s_abort.nest > 0)
 	{
 		switch(macro_mode)
 		{
@@ -887,14 +887,14 @@ Abortnest *an;
 				if(Mcb.ar.flags & AR_ABORTLEVEL) /* only one abort per atom */
 					goto done;
 				icb.macro_mode &= ~MACRO_OK; /* dont record polling input */ 
-				++abort.count;       /* one more poll */
+				++s_abort.count; /* one more poll */
 			}
 			case USE_MACRO:
 			{
 				if(poll_macro_abort() < Success)
 					goto error;
 
-				++abort.count;
+				++s_abort.count;
 				if(!Mcb.ar.flags) /* havnt read abort rec yet */
 				{
 					if(!IS_MRTYPE(Mcb.next.b[0],MR_POLLABORT))
@@ -912,7 +912,7 @@ Abortnest *an;
 
 				/* if all counts match counts on all levels ABORT! */
 				pcount = Mcb.ar.counts;
-				for(an = &abort;an != NULL;an = an->pop)
+				for (an = &s_abort; an != NULL; an = an->pop)
 				{
 					if(*pcount++ != an->count) /* no match */
 						goto done; 
@@ -937,7 +937,7 @@ Abortnest *an;
 			goto done;
 		icb.waithit = 0;
 
-		if(macro_mode == MAKE_MACRO && abort.nest > 0)
+		if (macro_mode == MAKE_MACRO && s_abort.nest > 0)
 		{
 			long foffset;
 
