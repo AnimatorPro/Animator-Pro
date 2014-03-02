@@ -22,8 +22,10 @@ SHORT cx, cy;
 	procblit(r,0,0,vb.screen->viscel,cx,cy,r->width,r->height,tbli_xlatline,
 			 get_cursor_xlat());
 }
-void hide_rastcursor(Rastcursor *rc)
+void hide_rastcursor(Cursorhdr *rastcursor)
 {
+	Rastcursor *rc = (Rastcursor *)rastcursor;
+
 	pj_blitrect(rc->save,0,0,
 	         vb.screen->viscel,rc->save->r.x,rc->save->r.y,
 			 rc->cel->width,rc->cel->height); 
@@ -39,8 +41,9 @@ static save_newcurs(Coor x, Coor y, Coor w, Coor h,Rastcursor *rc)
 Cursorsave *save = rc->save;
 	pj_blitrect(vb.screen->viscel,x,y,save,x - save->r.x,y - save->r.y,w,h);
 }
-void move_rastcursor(Rastcursor *rc)
+void move_rastcursor(Cursorhdr *rastcursor)
 {
+Rastcursor *rc = (Rastcursor *)rastcursor;
 Cursorcel *r = rc->cel;
 Cursorsave *save = rc->save;
 Coor cx, cy, ox, oy;

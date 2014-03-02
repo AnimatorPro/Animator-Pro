@@ -112,13 +112,16 @@ Short_xy cpos;
 	pj_blitrect(vb.pencel,cpos.x,cpos.y,rc->save,0,0,r->width,r->height); 
 	zoom_txlatblit(r,0,0,r->width,r->height,cpos.x,cpos.y,get_cursor_xlat()); 
 }
-static void zhide_rastcursor(Rastcursor *rc)
+static void zhide_rastcursor(Cursorhdr *rastcursor)
 {
+	Rastcursor *rc = (Rastcursor *)rastcursor;
+
 	zoom_blitrect(rc->save,0,0,
 				  rc->save->r.x,rc->save->r.y,rc->cel->width,rc->cel->height);
 }
-static void zmove_rastcursor(Rastcursor *rc)
+static void zmove_rastcursor(Cursorhdr *rastcursor)
 {
+Rastcursor *rc = (Rastcursor *)rastcursor;
 Cursorcel *r = rc->cel;
 Cursorsave *save = rc->save;
 Short_xy cpos;
@@ -174,14 +177,14 @@ static void show_either_rcursor(Rastcursor *ch)
 	if(zoomcursor)
 	{
 		zshow_rastcursor(ch);
-		ch->hdr.hideit = (cursorhdr_func)zhide_rastcursor;
-		ch->hdr.moveit = (cursorhdr_func)zmove_rastcursor;
+		ch->hdr.hideit = zhide_rastcursor;
+		ch->hdr.moveit = zmove_rastcursor;
 	}
 	else
 	{
 		show_rastcursor(ch);
-		ch->hdr.hideit = (cursorhdr_func)hide_rastcursor;
-		ch->hdr.moveit = (cursorhdr_func)move_rastcursor;
+		ch->hdr.hideit = hide_rastcursor;
+		ch->hdr.moveit = move_rastcursor;
 	}
 }
 static save_under_brushcurs(void *screen, Rastcursor *rc, 
@@ -244,8 +247,9 @@ SHORT width, height;
 	}
 	save_ubrush(rb,screen,cpos->x,cpos->y); 
 }
-static void zhide_brushcurs(Rastcursor *rc)
+static void zhide_brushcurs(Cursorhdr *rastcursor)
 {
+Rastcursor *rc = (Rastcursor *)rastcursor;
 Cursorsave *save = rc->save;
 
 	rest_ubrush(vl.brush,vb.pencel); /* only brush in pencel, both in zoom */
@@ -280,8 +284,9 @@ Short_xy cpos, bpos;
 	else
 		pj_put_dot(vb.pencel,vs.ccolor,bpos.x,bpos.y);
 }
-static void hide_brushcurs(Rastcursor *rc)
+static void hide_brushcurs(Cursorhdr *rastcursor)
 {
+Rastcursor *rc = (Rastcursor *)rastcursor;
 Cursorsave *save = rc->save;
 
 	if(save->h & 0x8000) /* if brush outside of cursor we have to do it too */
@@ -337,14 +342,14 @@ static void show_brush_cursor(Rastcursor *ch)
 		if(zoomcursor)
 		{
 			zshow_rastcursor(ch);
-			ch->hdr.hideit = (cursorhdr_func)zhide_rastcursor;
-			ch->hdr.moveit = (cursorhdr_func)zmove_rastcursor;
+			ch->hdr.hideit = zhide_rastcursor;
+			ch->hdr.moveit = zmove_rastcursor;
 		}
 		else
 		{
 			show_rastcursor(ch);
-			ch->hdr.hideit = (cursorhdr_func)hide_rastcursor;
-			ch->hdr.moveit = (cursorhdr_func)move_rastcursor; 
+			ch->hdr.hideit = hide_rastcursor;
+			ch->hdr.moveit = move_rastcursor;
 		}
 	}
 	else
@@ -352,14 +357,14 @@ static void show_brush_cursor(Rastcursor *ch)
 		if(zoomcursor)
 		{
 			zshow_brushcurs(ch);
-			ch->hdr.hideit = (cursorhdr_func)zhide_brushcurs;
+			ch->hdr.hideit = zhide_brushcurs;
 		}
 		else
 		{
 			show_brushcurs(ch);
-			ch->hdr.hideit = (cursorhdr_func)hide_brushcurs;
+			ch->hdr.hideit = hide_brushcurs;
 		}
-		ch->hdr.moveit = (cursorhdr_func)gen_move_cursor; 
+		ch->hdr.moveit = gen_move_cursor;
 	}
 }
 static void show_shape_cursor(Rastcursor *ch)
@@ -596,7 +601,7 @@ Cursorcel *default_cel;
 	/* load cursors with same cels */
 	plain_ptool_cursor.cel = shape_cursor.cel = pen_cursor.cel;
 
-	set_cursor(&menu_cursor);
+	set_cursor(&menu_cursor.hdr);
 	show_mouse();	
 	return(0);
 error:

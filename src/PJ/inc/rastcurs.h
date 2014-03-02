@@ -40,8 +40,8 @@ typedef struct curslist {
 
 void set_cursor_ccolor(Pixel *pccolor);
 void show_rastcursor(Rastcursor *rc);
-void hide_rastcursor(Rastcursor *rc);
-void move_rastcursor(Rastcursor *rc);
+void hide_rastcursor(Cursorhdr *rc);
+void move_rastcursor(Cursorhdr *rc);
 Tcolxldat *get_cursor_xlat(void);
 Rastcursor *get_default_cursor(void);
 

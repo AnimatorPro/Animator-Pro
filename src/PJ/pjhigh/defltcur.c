@@ -42,7 +42,7 @@ static Short_xy spos;
 #define XHOT 9
 #define YHOT 9
 
-static show_default_cursor(Rastcursor *ch)
+static void show_default_cursor(Cursorhdr *ch)
 {
 SHORT cx, cy;
 Rcel *screen;
@@ -55,7 +55,7 @@ Rcel *screen;
 	procblit(&_default_cursor,0,0,screen,cx,cy,DFLT_CURS_HT,DFLT_CURS_WID,
 			 tbli_xlatline,get_cursor_xlat());
 }
-static hide_default_cursor(Rastcursor *ch)
+static void hide_default_cursor(Cursorhdr *ch)
 {
 Rcel *screen;
 	screen = icb.input_screen->viscel;

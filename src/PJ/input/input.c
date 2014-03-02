@@ -180,10 +180,10 @@ void set_cursor(Cursorhdr *cd)
 	if(!cd || !cd->showit)
 		cd = &null_cursor;
 	if(!cd->hideit)
-		cd->hideit = (cursorhdr_func)do_nocursor;
+		cd->hideit = do_nocursor;
 
 	if(cd->moveit == NULL)
-		cd->moveit = (cursorhdr_func)gen_move_cursor;
+		cd->moveit = gen_move_cursor;
 
 	if(icb.mset.on 
 		&& cd != icb.curs 

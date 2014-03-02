@@ -58,7 +58,7 @@
 
 struct cursorhdr;
 
-typedef void (*cursorhdr_func)(struct cursorhdr *ch,...); 
+typedef void (*cursorhdr_func)(struct cursorhdr *ch);
  typedef struct cursorhdr {
 	cursorhdr_func showit; /* display mouse cursor */
 	cursorhdr_func hideit; /* un-display mouse cursor */
