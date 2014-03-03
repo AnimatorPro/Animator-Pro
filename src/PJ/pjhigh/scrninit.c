@@ -49,11 +49,6 @@ void free_menu_font(void)
 	close_vfont(&menufont);
 }
 
-Vfont *get_menu_font()
-{
-	return &menufont;
-}
-
 static Errcode load_menu_font(Wscreen *s)
 {
 extern char *lrmenu_font_name;

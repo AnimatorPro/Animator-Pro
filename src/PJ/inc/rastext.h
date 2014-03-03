@@ -142,7 +142,6 @@ Errcode gftext(RASType *rast,
 #undef BCOLvar
 
 void close_vfont(Vfont *v);
-Vfont *get_menu_font(void);
 Vfont *get_sys_font(void);
 
 /* what to expand tabs to */
