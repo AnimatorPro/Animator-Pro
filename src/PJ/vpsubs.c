@@ -528,14 +528,6 @@ void show_mp(void)
 		fliborder_off();
 }
 
-void toggle_menu(void)
-{
-	if(curr_group(vb.screen)->non_hidden)
-		hide_mp();
-	else
-		show_mp();
-}
-
 #ifdef SLUFFED
 void defrag(void)
 {
