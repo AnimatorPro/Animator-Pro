@@ -35,13 +35,6 @@ AA_config vconfg = {  /* Ram image of v.cfg containing default values
 	},
 	/* all else is zeros and set by program */
 };					
-void pj_insure_suffix(char *path,char *suff)
-/* if no suffix is on the path copys in the one input. input suff must have 
- * leading '.' */
-{
-	if( *(path = pj_get_path_suffix(path)) == 0)
-		strcpy(path,suff);
-}
 static Errcode open_config(Jfile *pjf,Boolean create)
 /* re opens config file for readwrite with global name. The path is assumed
  * to be full or is relative to the startup drawer */
