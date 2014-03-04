@@ -38,12 +38,16 @@ int ret;
 	cleanup_qchoice(qc);
 	return(ret);
 }
+
+#ifdef WITH_POCO
 int qchoice(USHORT *qc_flags, char *header, char **choices, int ccount)
 /* Does not format and takes an array of strings returns 0 to 8 for choices
  * Err_abort if canceled other error code if error */
 {
 	return(makedo_qchoice(header,choices,ccount,NULL,TRUE,qc_flags));
 }
+#endif /* WITH_POCO */
+
 static Errcode va_qchoicef(USHORT *qc_flags,char *formats, 
 						   char *text,va_list args)
 
