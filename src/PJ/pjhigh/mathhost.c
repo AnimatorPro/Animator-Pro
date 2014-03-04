@@ -2,13 +2,14 @@
 #include "mathhost.h"
 #include <math.h>
 
-
+#ifdef SLUFFED
 double _f_o_rce_reference(double in)
 /* needed to force at least one reference to the emulator and cause it to
  * initialize the library properly so the rex library will have it all */
 {
 	return(sin(in));
 }
+#endif /* SLUFFED */
 
 Mathhost_lib aa_mathlib = {
 	/* header */
