@@ -1,3 +1,4 @@
+#ifdef SLUFFED
 #include "ftextf.h"
 #include "pjbasics.h"
 #include "commonst.h"
@@ -15,3 +16,4 @@ char *formats;
 	va_end(args);
 	return(ret);
 }
+#endif /* SLUFFED */
