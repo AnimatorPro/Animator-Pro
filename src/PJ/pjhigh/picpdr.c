@@ -1,11 +1,11 @@
 /* this is a local pdr s that are set up for linking in to the code
  * and used by the pdr managing routines */
 
+#include "animinfo.h"
 #include "errcodes.h"
-#include "picfile.h"
 #include "picdrive.h"
+#include "picfile.h"
 #include "pjbasics.h"
-
 
 typedef struct picfile {
 	Image_file ifile;

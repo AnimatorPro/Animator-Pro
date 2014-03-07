@@ -4,11 +4,12 @@
    has a few simple time-oriented utility routines.  Stuff for stepping
    back and forth a single frame.  */
 
-#include "errcodes.h"
-#include "ptrmacro.h"
 #include "jimk.h"
+#include "animinfo.h"
+#include "errcodes.h"
 #include "fli.h"
 #include "picdrive.h"
+#include "ptrmacro.h"
 #include "unchunk.h"
 
 

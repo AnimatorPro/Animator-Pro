@@ -33,4 +33,4 @@ typedef struct anim_info {
 	UBYTE reserved[44];  /* total of 64 bytes */
 } Anim_info;
 
-#endif /* ANIMINFO_H */
+#endif

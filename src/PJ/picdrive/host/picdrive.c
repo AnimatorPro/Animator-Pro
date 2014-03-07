@@ -1,6 +1,7 @@
 /* file to take care of loadable image file types */
 
 #include <stdio.h>
+#include "animinfo.h"
 #include "errcodes.h"
 #include "picdrive.h"
 #include "linklist.h"

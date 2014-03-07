@@ -2,6 +2,7 @@
  * TARGA.C - Main module for targa picture driver.
  ****************************************************************************/
 
+#include "animinfo.h"
 #include "memory.h"
 #include "targa.h"
 

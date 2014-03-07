@@ -5,6 +5,7 @@
 	#include "picdrive.h"
 #endif
 
+#include "animinfo.h"
 #include "xfile.h"
 
 struct GCC_PACKED gif_header

@@ -9,13 +9,11 @@
 	#include "rcel.h"
 #endif
 
-#ifndef ANIMINFO_H
-	#include "animinfo.h"
-#endif
-
 #ifndef CMAP_H
 	#include "cmap.h"
 #endif
+
+struct anim_info;
 
 #define PDR_VERSION 0
 #define PDR_SUFFI_SIZE 15
@@ -101,7 +99,7 @@ struct pdr {
 
 	/********************/
 
-	Boolean (*spec_best_fit)(Anim_info *spec);
+	Boolean (*spec_best_fit)(struct anim_info *spec);
 	/**************************************************************************
 	 * this is called before trying to write an image file to verify whether
 	 * or not the images can be saved exactly as specified.
@@ -115,7 +113,7 @@ struct pdr {
 	 *************************************************************************/
 
 	Errcode (*create_image_file)(struct pdr *pd, char *path, Image_file **pif,
-								 Anim_info *spec );
+			struct anim_info *spec);
 	/**************************************************************************
 	 * create_image_file() does all preparatory work to open things up
 	 * to recieve picture data for a new image file it will overwrite existing
@@ -127,7 +125,7 @@ struct pdr {
 	 *************************************************************************/
 
 	Errcode (*open_image_file)(struct pdr *pd, char *path, Image_file **pif,
-							   Anim_info *ainfo );
+			struct anim_info *ainfo);
 	/**************************************************************************
 	 * open_image_file() will open and verify the file type of
 	 * an existing image file and return info about the contents of the file.
@@ -317,11 +315,11 @@ int 	pdr_get_suffi(Pdr *pd, char *buf);
 char	*pdr_alloc_info(Pdr *pd);
 void	pdr_free_info(char *info);
 
-Boolean pdr_best_fit(Pdr *pd, Anim_info *spec);
+Boolean pdr_best_fit(Pdr *pd, struct anim_info *spec);
 Errcode pdr_create_ifile(Pdr *pd, char *path, Image_file **pifile,
-						 Anim_info *spec );
+		struct anim_info *spec);
 Errcode pdr_open_ifile(Pdr *pd, char *path, Image_file **pifile,
-					   Anim_info *ainfo );
+		struct anim_info *ainfo);
 void	pdr_close_ifile(Image_file **pifile);
 Errcode pdr_read_first(Image_file *ifile, Rcel *screen);
 Errcode pdr_read_next(Image_file *ifile,Rcel *screen);

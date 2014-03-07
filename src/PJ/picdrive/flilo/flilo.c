@@ -4,6 +4,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include "animinfo.h"
 #include "errcodes.h"
 #include "filepath.h"
 #include "flilo.h"

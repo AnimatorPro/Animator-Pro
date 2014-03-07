@@ -3,6 +3,7 @@
    have to recompress any images.  (That's done in writefli.c). */
 
 #include "jimk.h"
+#include "animinfo.h"
 #include "commonst.h"
 #include "errcodes.h"
 #include "fli.h"

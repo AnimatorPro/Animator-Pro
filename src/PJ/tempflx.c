@@ -2,12 +2,13 @@
 /* tempflx.c - stuff that helps manage our main scratch file. */
 
 #include <time.h>
+#include "jimk.h"
+#include "animinfo.h"
 #include "errcodes.h"
 #include "fli.h"
 #include "menus.h"
-#include "jimk.h"
-#include "unchunk.h"
 #include "picdrive.h"
+#include "unchunk.h"
 
 /* This module copies a single .FLI file to our TEMP.FLX file.
 	A FLX file is just a FLI file with frame offsets and configuration

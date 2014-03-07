@@ -1,12 +1,11 @@
 /* this is a local pdr s that are set up for linking in to the code
  * and used by the pdr managing routines */
 
+#include "animinfo.h"
 #include "errcodes.h"
 #include "fli.h"
 #include "picdrive.h"
 #include "pjbasics.h"
-
-
 
 typedef struct fliif {
 	Image_file ifile;

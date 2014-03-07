@@ -3,6 +3,7 @@
  * driver */
 
 #include <string.h>
+#include "animinfo.h"
 #include "errcodes.h"
 #include "memory.h"
 #include "picdrive.h"

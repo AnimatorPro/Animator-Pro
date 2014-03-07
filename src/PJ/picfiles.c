@@ -2,6 +2,7 @@
 
 #include "jimk.h"
 #include "aaconfig.h"
+#include "animinfo.h"
 #include "errcodes.h"
 #include "jfile.h"
 #include "memory.h"

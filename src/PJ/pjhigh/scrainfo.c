@@ -1,6 +1,6 @@
-#include "pjbasics.h"
+#include "animinfo.h"
 #include "picdrive.h"
-
+#include "pjbasics.h"
 
 void get_screen_ainfo(Rcel *screen,Anim_info *spec)
 

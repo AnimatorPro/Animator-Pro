@@ -9,6 +9,7 @@
 	#include "picdrive.h"
 #endif
 
+#include "animinfo.h"
 #include "xfile.h"
 
 typedef struct pcx_header

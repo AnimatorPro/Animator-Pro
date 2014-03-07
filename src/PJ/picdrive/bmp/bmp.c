@@ -6,6 +6,7 @@
 #include <assert.h>
 #include <string.h>
 #define REXLIB_INTERNALS
+#include "animinfo.h"
 #include "errcodes.h"
 #include "memory.h"
 #include "picdrive.h"
