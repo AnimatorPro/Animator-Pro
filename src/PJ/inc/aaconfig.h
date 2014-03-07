@@ -47,5 +47,4 @@ typedef struct aa_config {
 
 extern AA_config vconfg;		/* in pjhigh.lib(config.c) */
 
-
-#endif /* AACONFIG_H */
+#endif

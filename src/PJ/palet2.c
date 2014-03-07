@@ -2,10 +2,11 @@
    of related code in cluster.c and palpull.c.  This file starts with
    the Button button declarations for the palette editor control panel. */
 
-#include "errcodes.h"
 #include "jimk.h"
+#include "aaconfig.h"
 #include "broadcas.h"
 #include "commonst.h"
+#include "errcodes.h"
 #include "inks.h"
 #include "memory.h"
 #include "menus.h"

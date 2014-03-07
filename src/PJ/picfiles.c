@@ -1,6 +1,7 @@
 /* file to take care of loadable still frame file types */
 
 #include "jimk.h"
+#include "aaconfig.h"
 #include "errcodes.h"
 #include "jfile.h"
 #include "memory.h"

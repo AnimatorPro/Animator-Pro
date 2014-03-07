@@ -1,4 +1,5 @@
 #define SCRNINIT_CODE
+#include "aaconfig.h"
 #include "errcodes.h"
 #include "pjbasics.h"
 #include "resource.h"

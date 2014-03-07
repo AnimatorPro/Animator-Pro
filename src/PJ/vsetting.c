@@ -1,4 +1,5 @@
 #include "jimk.h"
+#include "aaconfig.h"
 #include "commonst.h"
 #include "errcodes.h"
 #include "memory.h"

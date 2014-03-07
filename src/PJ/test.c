@@ -7,7 +7,6 @@ void test(void) {}
 #include "picdrive.h"
 #include "vertices.h"
 #include "softmenu.h"
-#include "aaconfig.h"
 #include "rastcall.h"
 #include "jimk.h"
 #include "serial.h"

@@ -6,6 +6,7 @@
 #include <signal.h>
 #include <math.h>
 #include <ctype.h>
+#include "aaconfig.h"
 #include "errcodes.h"
 #include "pjbasics.h"
 #include "resource.h"

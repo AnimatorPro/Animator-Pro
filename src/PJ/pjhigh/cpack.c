@@ -5,11 +5,8 @@
    (So filter out duplicate colors before calling pack_ctable... ) */
 
 #include "memory.h"
-#include "aaconfig.h"
 #include "wndo.h"
 #include "cmap.h"
-
-
 
 static int usedc;
 

@@ -25,10 +25,6 @@
 	#include "filepath.h"
 #endif
 
-#ifndef AACONFIG_H
-	#include "aaconfig.h"
-#endif
-
 #ifndef WNDO_H
 	#include "wndo.h"
 #endif
@@ -45,6 +41,7 @@
 	#include "progids.h"
 #endif
 
+struct screen_mode;
 
 typedef struct vbasics_cb {
 	SHORT ivmode;	    /* initial Video mode program started from */
@@ -94,7 +91,7 @@ Errcode init_menu_resource(char *menu_file);
 Errcode open_pj_startup_screen(Errcode (*init_with_screen)(void *iwdat),
 					OPTdata);
 
-Errcode init_screen(Screen_mode *smode,Screen_mode *altmode,
+Errcode init_screen(struct screen_mode *smode, struct screen_mode *altmode,
 					Errcode (*init_with_screen)(void *iwdat),OPTdata );
 
 Errcode go_resize_screen(Errcode (*reinit)(void *dat),

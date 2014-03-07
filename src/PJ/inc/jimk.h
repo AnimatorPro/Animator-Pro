@@ -348,10 +348,6 @@ extern SHORT tr_frames;
 
 /**** screen init call *****/
 
-Errcode go_screen_menu(Screen_mode *sm);
-
-extern AA_config vconfg;
-
 typedef struct bundle {
 	SHORT bun_count;
 	UBYTE bundle[256];

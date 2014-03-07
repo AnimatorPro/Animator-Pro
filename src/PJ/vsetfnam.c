@@ -1,5 +1,4 @@
 #include "errcodes.h"
-#include "aaconfig.h"
 #include "reqlib.h"
 #include "vsetfile.h"
 

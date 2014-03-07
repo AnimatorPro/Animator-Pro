@@ -4,9 +4,6 @@
 #include "memory.h"
 #include "errcodes.h"
 #include "flx.h"
-#include "aaconfig.h"
-
-extern AA_config vconfg;
 
 void copy_fhead_common(Fli_head *sh, Fli_head *dh)
 {
