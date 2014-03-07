@@ -1,10 +1,6 @@
 #ifndef BROADCAS_H
 #define BROADCAS_H
 
-#ifndef STDTYPES_H
-	#include "stdtypes.h"
-#endif
-
 #ifndef LINKLIST_H
 	#include "linklist.h"
 #endif
@@ -36,7 +32,6 @@ void do_rmode_redraw(USHORT why);
 #define NEW_CEL_TCOLOR 0x0020
 #define NEW_MINIPAL_INK 0x0040
 
-
 /* flags for do_rmode_redraw() and rmode nodes */
 
 #define RSTAT_ZCLEAR	0x0001
@@ -45,4 +40,4 @@ void do_rmode_redraw(USHORT why);
 #define RSTAT_MASK		0x0008
 #define RSTAT_CFIT		0x0010
 
-#endif /* BROADCAS_H */
+#endif
