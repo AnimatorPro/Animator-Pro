@@ -2,8 +2,9 @@
    color arrange by spectrums or gradients.  Lo level routine for
    the sort. */
 
-#include "errcodes.h"
 #include "jimk.h"
+#include "auto.h"
+#include "errcodes.h"
 #include "memory.h"
 #include "menus.h"
 

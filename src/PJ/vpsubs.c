@@ -9,7 +9,6 @@
 #include "ptrmacro.h"
 #include "errcodes.h"
 #include "options.h"
-#include "auto.h"
 #include "softmenu.h"
 #include "broadcas.h"
 

@@ -60,4 +60,4 @@ enum automodes {
 	DOAUTO_ALL = 2,
 };
 
-#endif /* AUTO_H */
+#endif

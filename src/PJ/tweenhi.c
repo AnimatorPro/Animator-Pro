@@ -2,6 +2,7 @@
    tween menu.  Load/save/wire-frame tween. */
 
 #include "jimk.h"
+#include "auto.h"
 #include "commonst.h"
 #include "errcodes.h"
 #include "imath.h"
