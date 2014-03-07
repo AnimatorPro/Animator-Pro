@@ -1,10 +1,5 @@
-
 #ifndef RENDER_H
 #define RENDER_H
-
-#ifndef BHASH_H
-	#include "bhash.h"
-#endif
 
 #ifndef RCEL_H
 	#include "rcel.h"

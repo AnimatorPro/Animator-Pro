@@ -1,11 +1,10 @@
-#include "errcodes.h"
-#include "rastlib.h"
 #include "jimk.h"
-#include "render.h"
-#include "options.h"
+#include "bhash.h"
+#include "errcodes.h"
 #include "inkdot.h"
-
-extern int bclosest_col(Rgb3 *rgb, int count, SHORT dither);
+#include "options.h"
+#include "rastlib.h"
+#include "render.h"
 
 static Pixel rclosest_color(Thash *th, const Rgb3 *oldc,
 							const SHORT underc, const SHORT dither)

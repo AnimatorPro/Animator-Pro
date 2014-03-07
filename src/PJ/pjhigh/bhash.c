@@ -198,7 +198,7 @@ Boolean is_bhash(void)	/* used by GEL tool to see if bhash already in place */
 	return (bhashctl.cachedata != NULL);
 }
 
-int bclosest_col(register Rgb3 *rgb,int count,SHORT dither)
+int bclosest_col(Rgb3 *rgb, int count, SHORT dither)
 /*****************************************************************************
  * find closest color in color map to a true color value,
  * using a cache.  This for speed will truncate the RGB values

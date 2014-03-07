@@ -1,4 +1,5 @@
 #include "jimk.h"
+#include "bhash.h"
 #include "inkdot.h"
 #include "inks.h"
 #include "memory.h"
@@ -17,7 +18,6 @@ static int ink_type;
 static Pixel (*ink_dot)(const Ink *inky,const SHORT x,const SHORT y);
 
 extern Button dithergroup_sel, dtintgroup_sel, tintgroup_sel;
-extern int bclosest_col(Rgb3 *rgb, int count, SHORT dither);
 
 Aa_ink_data ink_aid = {
 	0, 0, NULL, NULL, NULL, NULL, 

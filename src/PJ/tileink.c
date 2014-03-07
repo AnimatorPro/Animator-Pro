@@ -1,5 +1,6 @@
-#include "errcodes.h"
 #include "jimk.h"
+#include "bhash.h"
+#include "errcodes.h"
 #include "floatgfx.h"
 #include "inkdot.h"
 #include "memory.h"

@@ -3,16 +3,16 @@
    current ink.  Most of them eventually funnel through render_dot, but
    the blits for speed and other reasons are implemented separately. */
 
-#include "errcodes.h"
 #include "jimk.h"
-#include "poly.h"
-#include "inks.h"
-#include "rastcall.h"
-#include "gfx.h"
-#include "render.h"
-#include "inkaid.h"
+#include "bhash.h"
 #include "brush.h"
-
+#include "errcodes.h"
+#include "gfx.h"
+#include "inkaid.h"
+#include "inks.h"
+#include "poly.h"
+#include "rastcall.h"
+#include "render.h"
 
 extern void a1bdot(), rbdot(), rbbrush();
 

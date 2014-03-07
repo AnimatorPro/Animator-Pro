@@ -4,10 +4,11 @@
   circles with the wider ones thinner. */
 
 #include "jimk.h"
-#include "redo.h"
+#include "bhash.h"
+#include "broadcas.h"
 #include "errcodes.h"
 #include "inks.h"
-#include "broadcas.h"
+#include "redo.h"
 
 extern void render_hline();
 

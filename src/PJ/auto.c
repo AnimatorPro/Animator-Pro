@@ -25,12 +25,12 @@
 
    all rvec functions return 0 if all is well (Ecode < 0) if not */
 
-
-#include "errcodes.h"
 #include "jimk.h"
+#include "auto.h"
+#include "bhash.h"
+#include "errcodes.h"
 #include "fli.h"
 #include "inks.h"
-#include "auto.h"
 
 Boolean auto_abort_verify(Autoarg *aa)
 /* verify they'd like to call rendering off... */

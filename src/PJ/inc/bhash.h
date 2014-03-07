@@ -4,22 +4,15 @@
 #ifndef BHASH_H
 #define BHASH_H
 
-#ifndef CMAP_H
-	#include "cmap.h"
+#ifndef STDTYPES_H
+#include "stdtypes.h"
 #endif
 
-#ifdef SLUFFED
-/* General true-color hash */
-struct bhash {
-	UBYTE valid;
-	Rgb3 rgb;
-	UBYTE closest;
-};
-#endif /* SLUFFED */
+struct rgb3;
 
 Errcode make_bhash(void);
 void free_bhash(void);
 Boolean is_bhash(void);
-int bclosest_col(register Rgb3 *rgb,int count,SHORT dither);
+int bclosest_col(struct rgb3 *rgb, int count, SHORT dither);
 
-#endif /* BHASH_H */
+#endif
