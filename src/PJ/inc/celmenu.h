@@ -1,18 +1,26 @@
 #ifndef CELMENU_H
 #define CELMENU_H
 
-#ifndef STDTYPES_H
-	#include "stdtypes.h"
+#ifndef FLICEL_H
+#include "flicel.h"
 #endif
 
-#ifndef TIMESELS_H
-	#include "timesels.h"
+#ifndef INPUT_H
+#include "input.h"
 #endif
+
+#ifndef MENUS_H
+#include "menus.h"
+#endif
+
+struct pentool;
+struct raster;
+struct rcel;
 
 /* local stuff for cel menu */
 typedef struct celmu_cb {
-	Raster *crast1;         /* baclup raster for paint tool */
-	Raster *crast2;         /* backup raster for paint tool */
+	struct raster *crast1;  /* backup raster for paint tool */
+	struct raster *crast2;  /* backup raster for paint tool */
 	LONG olay_buf_size;		/* buffer size for making overlay */
 	LONG finish_buf_size;	/* buffer size for finishing overlay */
 	SHORT undo_corrupted;   /* undo buffer is corrupted */
@@ -24,7 +32,7 @@ typedef struct celmu_cb {
 	SHORT dummy_olays;		/* overlays have been freed and there is only
 							 * a path and flags left */
 	SHORT outta_mem;		/* paint tool has run out! */
-	Rcel *paste_undo;       /* the cel paste operation undo buffer */
+	struct rcel *paste_undo;/* the cel paste operation undo buffer */
 	Menuhdr tpull;			/* The pulldown structures */
 	void *marqi_save;		/* buffer with saved marqi background */
 	void *marqi_save_buf;	/* allocated buffer for saving */
@@ -44,7 +52,7 @@ enum cel_ptool_ids {
 	CELPT_TCOLOR,
 };
 
-Errcode init_marqi_ctool();
-void exit_marqi_ctool();
+extern Errcode init_marqi_ctool(struct pentool *pt);
+extern void exit_marqi_ctool(struct pentool *pt);
 
-#endif /* CELMENU_H */
+#endif
