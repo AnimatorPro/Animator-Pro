@@ -100,8 +100,6 @@ Errcode err;
 	return(err);
 }
 
-#undef set_penwndo_size
-
 Errcode set_penwndo_size(SHORT width, SHORT height)
 /* This will set the penwndo to a size or reset it to a new size.
  * If it fails it will leave things at the old size and back out.

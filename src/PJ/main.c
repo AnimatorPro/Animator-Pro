@@ -3,6 +3,7 @@
   system. */
 
 #include <stdio.h>
+#include "jimk.h"
 #include "picdrive.h"
 #include "errcodes.h"
 #include "fli.h"
@@ -10,11 +11,7 @@
 #include "ptrmacro.h"
 #include "argparse.h"
 
-/* this is put here so it is defined before the macro in jimk.h */
 static Errcode resize_pencel(Boolean err_on_abort,Boolean reset);
-
-#include "jimk.h"
-
 
 USHORT program_id = 0;
 USHORT program_version = 0;
