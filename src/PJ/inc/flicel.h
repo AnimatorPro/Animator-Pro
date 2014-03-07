@@ -9,10 +9,6 @@
 	#include "ptrmacro.h"
 #endif
 
-#ifndef A3D_H
-	#include "a3d.h"
-#endif
-
 #ifndef FLI_H
 	#include "fli.h"
 #endif
