@@ -8,7 +8,9 @@
 	#include "stdtypes.h"
 #endif 
 
+#ifndef XFILE_H
 #include "xfile.h"
+#endif
 
 /* The main data structure is */
 	#define DST_SMALL 80

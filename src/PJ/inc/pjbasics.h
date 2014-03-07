@@ -41,7 +41,7 @@
 	#include "vdevice.h"
 #endif
 
-#ifdef PROGIDS_H
+#ifndef PROGIDS_H
 	#include "progids.h"
 #endif
 

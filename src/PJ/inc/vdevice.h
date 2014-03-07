@@ -60,8 +60,9 @@ struct local_vdevice {
 	struct vdevice		 *device;
 	};
 
-
+#ifndef VDEVINFO_H
 #include "vdevinfo.h"
+#endif
 
 typedef struct vdevice_lib {
 /* Is our hardware attatched? may or may not be called before any

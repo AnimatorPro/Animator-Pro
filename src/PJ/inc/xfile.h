@@ -1,9 +1,13 @@
 #ifndef XFILE_H
 #define XFILE_H
 
+#ifndef _STDARG_H_INCLUDED
 #include <stdarg.h>
-#include <stddef.h>
+#endif
+
+#ifndef STDTYPES_H
 #include "stdtypes.h"
+#endif
 
 #ifndef EOF
 enum { EOF = -1 };

@@ -76,7 +76,9 @@ extern char *_STACKLOW; 					/* not sure what these are for, */
 #define NOFUNC					((void*)0)
 #define copy_va_list(src,dest)	{dest[0]=src[0];}
 
+#ifndef PJINLINE_H
 #include "pjinline.h" /* we can write better inlines than Watcom, include them */
+#endif
 
 /*****************************************************************************
  * Metaware High C v1.6

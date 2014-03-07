@@ -13,7 +13,9 @@
 		#include "token.h"
 	#endif
 
+#ifndef XFILE_H
 #include "xfile.h"
+#endif
 
 /* Tokenizer data structures */
 	typedef struct stok

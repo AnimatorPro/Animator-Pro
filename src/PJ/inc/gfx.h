@@ -27,7 +27,9 @@
 	#include "procblit.h"
 #endif
 
+#ifndef VERTICES_H
 #include "vertices.h"
+#endif
 
 #ifndef FLILIB_CODE
   #ifndef POLY_H

@@ -25,7 +25,9 @@
 	#include "menus.h"
 #endif
 
+#ifndef XFILE_H
 #include "xfile.h"
+#endif
 
 /* The major structure for Softmenu is */
 	typedef struct softmenu

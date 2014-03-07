@@ -1,7 +1,9 @@
 #ifndef UTIL_H
 #define UTIL_H
 
+#ifndef STDTYPES_H
 #include "stdtypes.h"
+#endif
 
 extern void intel_swap(void *v, int count);
 extern void intel_dswap(void *v, int count);

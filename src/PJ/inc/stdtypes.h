@@ -1,7 +1,9 @@
 #ifndef STDTYPES_H
 #define STDTYPES_H
 
+#ifndef COMPILER_H
 #include "compiler.h" /* compiler dependent pragmas etc */
+#endif
 
 #ifndef REXLIB_CODE
 #include "release.h"  /* specific defines for program versions and releases */
@@ -40,7 +42,9 @@
 	#define DPBOX
 #endif /* TESTING */
 
+#ifndef _STDDEF_H_INCLUDED
 #include <stddef.h> /* system standard definitions */
+#endif
 
 #ifndef REXLIB_CODE /***************/
 
@@ -139,6 +143,4 @@ typedef UBYTE Pixel; /* type used in pixel buffers by get_hseg etc */
 #define Max(a,b) ((a)>(b)?(a):(b))
 #define Absval(x) ((x)<0?(-(x)):(x))
 
-
-
-#endif /* STDTYPES_H -- leave at end of file */
+#endif

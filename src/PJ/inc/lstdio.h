@@ -1,7 +1,9 @@
 #ifndef LSTDIO_H
 #define	LSTDIO_H
 
+#ifndef _STDARG_H_INCLUDED
 #include <stdarg.h>
+#endif
 
 #ifndef STDTYPES_H
 	#include "stdtypes.h"
@@ -15,7 +17,10 @@
 	#include "errcodes.h"
 #endif 
 
+#ifndef JFILE_H
 #include "jfile.h"
+#endif
+
 #define Lfile Jfile
 #define lopen pj_open
 #define lcreate pj_create
