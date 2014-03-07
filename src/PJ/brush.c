@@ -296,7 +296,7 @@ Rbrush *rb = &thebrush;
 		size = rb->rast->width - 1;
 
 	if(rb->type == CIRCLE_BRUSH
-		&& rb->bcirc.size == size)
+		&& rb->b.circ.size == size)
 	{
 		return(Success);
 	}
@@ -308,7 +308,7 @@ Rbrush *rb = &thebrush;
 	rb->tcxl.xlat[0] = 0;
 	rb->tcxl.tcolor = 0;
 	rb->width = rb->height = size;
-	rb->bcirc.size = --size;
+	rb->b.circ.size = --size;
 
 	vs.pen_brush_type = CIRCLE_BRUSH;
 	vs.circle_brush_size = size;
@@ -327,7 +327,7 @@ Rbrush *rb = &thebrush;
 		size = rb->rast->width-1;
 
 	if(rb->type == SQUARE_BRUSH
-		&& rb->bsquare.size == size)
+		&& rb->b.square.size == size)
 	{
 		return(Success);
 	}
@@ -339,7 +339,7 @@ Rbrush *rb = &thebrush;
 	rb->tcxl.xlat[0] = 0;
 	rb->tcxl.tcolor = 0;
 	rb->width = rb->height = size;
-	rb->bsquare.size = --size;
+	rb->b.square.size = --size;
 
 	rb->type = vs.pen_brush_type = SQUARE_BRUSH;
 	vs.square_brush_size = size;
@@ -397,8 +397,8 @@ Short_xy pt;
 		size = rb->rast->width;
 
 	if(rb->type == LINE_BRUSH
-		&& rb->bline.size == size
-		&& rb->bline.angle == degrees)
+		&& rb->b.line.size == size
+		&& rb->b.line.angle == degrees)
 	{
 		return(Success);
 	}
@@ -416,10 +416,10 @@ Short_xy pt;
 	line(rb->rast, 1, rb->cent.x - pt.x, rb->cent.y - pt.y,
 					  rb->cent.x + pt.x, rb->cent.y + pt.y );
 
-	rb->bline.endoff = pt;
+	rb->b.line.endoff = pt;
 	vs.pen_brush_type = rb->type = LINE_BRUSH;
-	vs.line_brush_size = rb->bline.size = size;
-	vs.line_brush_angle = rb->bline.angle = degrees;
+	vs.line_brush_size = rb->b.line.size = size;
+	vs.line_brush_angle = rb->b.line.angle = degrees;
 
 	return(Success);
 }

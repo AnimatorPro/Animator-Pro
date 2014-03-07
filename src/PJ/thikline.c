@@ -142,7 +142,7 @@ Short_xy max;
 	disable_lsp_ink();
 	if(rb->type == LINE_BRUSH)
 	{
-		min = rb->bline.endoff;
+		min = rb->b.line.endoff;
 
 		blp[0].x = x0 + min.x;	
 		blp[0].y = y0 + min.y;

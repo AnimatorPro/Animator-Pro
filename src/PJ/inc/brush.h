@@ -1,8 +1,8 @@
 #ifndef BRUSH_H
 #define BRUSH_H
 
-#ifndef RASTCALL_H
-	#include "rastcall.h"
+#ifndef PROCBLIT_H
+#include "procblit.h"
 #endif
 
 #ifndef VERTICES_H
@@ -44,14 +44,10 @@ typedef struct rast_brush {
 	Tcolxldat tcxl; /* translation for raster colors */
 	Pixel xlat_ccolor; /* ccolor of last translation */
 	union brush_data {
-		struct circleb_data cd;
-		struct squareb_data sd;
-		struct lineb_data ld;
-	} d;
+		struct circleb_data circ;
+		struct squareb_data square;
+		struct lineb_data line;
+	} b;
 } Rbrush;
 
-#define bcirc d.cd 
-#define bsquare d.sd 
-#define bline d.ld 
-
-#endif /* BRUSH_H */
+#endif
