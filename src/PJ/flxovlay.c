@@ -1,5 +1,6 @@
-#include "errcodes.h"
 #include "jimk.h"
+#include "errcodes.h"
+#include "flx.h"
 
 static Flx_overlay **flx_olaytail(int frame)
 

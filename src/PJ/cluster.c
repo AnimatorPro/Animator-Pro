@@ -2,8 +2,9 @@
 /* Cluster.c - most of the routines dealing with color cluster one
    way or another.  Some connections to palet2.c and cpack.c */
 
-#include "errcodes.h"
 #include "jimk.h"
+#include "errcodes.h"
+#include "flx.h"
 #include "memory.h"
 #include "menus.h"
 

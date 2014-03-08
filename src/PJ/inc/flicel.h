@@ -1,10 +1,6 @@
 #ifndef FLICEL_H
 #define FLICEL_H
 
-#ifndef STDTYPES_H
-	#include "stdtypes.h"
-#endif
-
 #ifndef PTRMACRO_H
 	#include "ptrmacro.h"
 #endif
@@ -17,9 +13,7 @@
 	#include "rastrans.h"
 #endif
 
-#ifndef FLIPATH_H
-	#include "flipath.h"
-#endif
+struct flipath;
 
 /* the celdata fli chunk */
 
@@ -81,11 +75,11 @@ typedef struct celcfit {
 #define CCFIT_NULL	0x0001	/* cfit was made and no fitting required */
 
 typedef struct flicel {
-	Rcel *rc;		/* optional image cel needed for seeking etc. */
+	struct rcel *rc;    /* optional image cel needed for seeking etc. */
 	Celdata cd; 	/* where position lives: celdata chunk for this cel */
 	Flifile flif;	/* fli file for this cel when open */
 	char *tpath;	/* allocated temp file path */
-	Flipath *cpath; /* name and id of cel fli file */
+	struct flipath *cpath; /* name and id of cel fli file */
 	SHORT frame_loaded; /* frame currently loaded in cel <0 = unloaded */
 	ULONG flags;		/* some flags */
 	ULONG pos_cksum;	/* last refresh position crcsum */
@@ -95,6 +89,8 @@ typedef struct flicel {
 	Celcfit *cfit;		/* cfit table to use for this cel */
 	struct flicel_lib *lib;  /* function library for this flicel */
 } Flicel;
+
+extern Flicel *thecel;
 
 #define FCEL_XFORMED	0x0001	/* cel is transformed */
 #define FCEL_DOCFIT 	0x0002	/* cfit table is set by make_celcfit */
@@ -177,5 +173,4 @@ Errcode gb_abseek_fcel_frame(Flicel *fc, SHORT frame,Fli_frame *cbuf);
 
 Errcode seek_fcel_frame(Flicel *fc, SHORT frame);
 
-
-#endif /* FLICEL_H */
+#endif

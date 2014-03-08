@@ -1,7 +1,7 @@
 #include "fli.h"
 #include "memory.h"
 
-Errcode pj_write_one_frame_fli(char *name, Flifile *flif,Rcel *screen)
+Errcode pj_write_one_frame_fli(char *name, Flifile *flif, struct rcel *screen)
 /* writes out first frame and ring for one frame fli */
 {
 Errcode err;

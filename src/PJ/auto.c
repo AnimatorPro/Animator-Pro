@@ -29,7 +29,7 @@
 #include "auto.h"
 #include "bhash.h"
 #include "errcodes.h"
-#include "fli.h"
+#include "flx.h"
 #include "inks.h"
 
 Boolean auto_abort_verify(Autoarg *aa)

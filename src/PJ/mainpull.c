@@ -4,15 +4,15 @@
    along the top.  Also a routine to disable menu options we cant' deal
    with yet. */
 
-#include "linklist.h"
 #include "jimk.h"
-#include "menus.h"
-#include "homepul.h"
-#include "fli.h"
 #include "errcodes.h"
-#include "resource.h"
 #include "filepath.h"
-
+#include "flicel.h"
+#include "flx.h"
+#include "homepul.h"
+#include "linklist.h"
+#include "menus.h"
+#include "resource.h"
 
 Boolean do_mainpull(Menuhdr *mh)
 /* set disable flags and goes to do the pull */

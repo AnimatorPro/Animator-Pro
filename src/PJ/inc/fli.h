@@ -1,16 +1,8 @@
 #ifndef FLI_H
 #define FLI_H
 
-#ifndef STDTYPES_H
-	#include "stdtypes.h"
-#endif
-
 #ifndef JFILE_H
 	#include "jfile.h"
-#endif
-
-#ifndef RCEL_H
-	#include "rcel.h"
 #endif
 
 #ifndef VMAGICS_H
@@ -18,6 +10,8 @@
 #endif
 
 struct cmap;
+struct rcel;
+struct rectangle;
 struct rgb3;
 
 /***** end file types ******/
@@ -196,8 +190,8 @@ typedef struct flifile {
 LONG pj_fli_cbuf_size(USHORT width,USHORT height, LONG num_colors);
 Errcode pj_fli_alloc_cbuf(Fli_frame **pcbuf, USHORT width,USHORT height,
 				   LONG num_colors);
-LONG pj_fli_cel_cbuf_size(Rcel *cel);
-Errcode pj_fli_cel_alloc_cbuf(Fli_frame **pcbuf, Rcel *cel);
+LONG pj_fli_cel_cbuf_size(struct rcel *cel);
+Errcode pj_fli_cel_alloc_cbuf(Fli_frame **pcbuf, struct rcel *cel);
 
 /* Flifile header checking open and close */
 
@@ -224,11 +218,13 @@ Errcode pj_i_add_ring_rec(char *name, Flifile *flif, Fli_frame *frame);
 
 /* record compressing and adding */
 
-Errcode pj_fli_add_frame1(char *name, Flifile *flif, void *cbuf, Rcel *frame1);
+extern Errcode
+pj_fli_add_frame1(char *name, Flifile *flif, void *cbuf, struct rcel *frame1);
+
 Errcode pj_fli_add_next(char *name, Flifile *flif, void *cbuf,
-					 Rcel *last_screen, Rcel *this_screen);
+		struct rcel *last_screen, struct rcel *this_screen);
 Errcode pj_fli_add_ring(char *name, Flifile *flif, void *cbuf,
-					 Rcel *last_screen, Rcel *first_screen);
+		struct rcel *last_screen, struct rcel *first_screen);
 
 /* empty record handleing */
 
@@ -246,16 +242,23 @@ Errcode pj_i_add_empty_ring(char *name,Flifile *flif);
 #define COMP_DELTA_FRAME  1 /* compress a delta frame record */
 #define COMP_BLACK_FIRST  2 /* compress a first black frame record */
 
-LONG pj_fli_comp_rect(void *comp_buf, Rcel *last_screen, Rcel *this_screen,
-				   Rectangle *rect, Boolean do_colors, SHORT frame_type,
-				   Flicomp comp_type);
+extern LONG
+pj_fli_comp_rect(void *comp_buf,
+		struct rcel *last_screen, struct rcel *this_screen,
+		struct rectangle *rect, Boolean do_colors, SHORT frame_type,
+		Flicomp comp_type);
 
-LONG pj_fli_comp_cel(void *comp_buf, Rcel *last_screen,
-				  Rcel *this_screen, SHORT frame_type, Flicomp comp_type);
+extern LONG
+pj_fli_comp_cel(void *comp_buf,
+		struct rcel *last_screen, struct rcel *this_screen,
+		SHORT frame_type, Flicomp comp_type);
 
-LONG pj_fli_comp_frame1(void *cbuf,Rcel *this_screen, Flicomp comp_type);
+extern LONG
+pj_fli_comp_frame1(void *cbuf, struct rcel *this_screen, Flicomp comp_type);
 
-extern Errcode pj_write_one_frame_fli(char *name, Flifile *flif, Rcel *screen);
+extern Errcode
+pj_write_one_frame_fli(char *name, Flifile *flif, struct rcel *screen);
+
 extern Errcode jwrite_chunk(Jfile f, void *data, LONG size, SHORT type);
 
 /* reading and decompression */
@@ -264,9 +267,11 @@ extern void pj_fcuncomp(const UBYTE *src, struct rgb3 *dst);
 extern void pj_fcuncomp64(const UBYTE *buf, struct rgb3 *dst);
 
 extern void
-pj_fli_uncomp_rect(Rcel *f, Fli_frame *frame, Rectangle *rect, int colors);
+pj_fli_uncomp_rect(struct rcel *f, Fli_frame *frame, struct rectangle *rect,
+		int colors);
 
-extern void pj_fli_uncomp_frame(Rcel *screen, Fli_frame *frame, int colors);
+extern void
+pj_fli_uncomp_frame(struct rcel *screen, Fli_frame *frame, int colors);
 
 Errcode pj_fli_seek_first(Flifile *flif);
 Errcode pj_fli_seek_second(Flifile *flif);
@@ -274,16 +279,20 @@ Errcode pj_fli_seek_second(Flifile *flif);
 extern Errcode fli_read_colors(Flifile *flif, struct cmap *cmap);
 
 extern Errcode
-pj_i_read_uncomp1(char *fname, Flifile *flif, Rcel *fscreen,
+pj_i_read_uncomp1(char *fname, Flifile *flif, struct rcel *fscreen,
 		Fli_frame *ff, Boolean colors);
 
-Errcode pj_fli_read_uncomp(char *name, Flifile *flif, Rcel *fscreen,
-						Fli_frame *ff, int colors);
+extern Errcode
+pj_fli_read_uncomp(char *name, Flifile *flif, struct rcel *fscreen,
+		Fli_frame *ff, int colors);
 
-Errcode pj_fli_read_first(char *name, Flifile *flif, Rcel *fscreen,
-					   Boolean colors );
-Errcode pj_fli_read_next(char *name, Flifile *flif, Rcel *fscreen,
-					  Boolean colors );
+extern Errcode
+pj_fli_read_first(char *name, Flifile *flif, struct rcel *fscreen,
+		Boolean colors);
+
+extern Errcode
+pj_fli_read_next(char *name, Flifile *flif, struct rcel *fscreen,
+		Boolean colors);
 
 extern int fli_wrap_frame(Flifile *flif, int frame);
 
@@ -296,7 +305,7 @@ pj_get_stampsize(SHORT maxw, SHORT maxh, SHORT sw, SHORT sh,
 		SHORT *pw, SHORT *ph);
 
 extern LONG
-pj_build_rect_pstamp(Rcel *screen, void *cbuf,
+pj_build_rect_pstamp(struct rcel *screen, void *cbuf,
 		SHORT x, SHORT y, USHORT width, USHORT height);
 
 /*----------------------------------------------------------------------------
@@ -308,4 +317,4 @@ Errcode pj_fli_error_report(Errcode err, char *msg, char *filename);
 
 extern LONG pj__fii_get_user_id(void);
 
-#endif /* FLI_H */
+#endif

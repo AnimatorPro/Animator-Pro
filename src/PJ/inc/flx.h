@@ -1,10 +1,6 @@
 #ifndef FLX_H
 #define FLX_H
 
-#ifndef STDTYPES_H
-	#include "stdtypes.h"
-#endif
-
 #ifndef PTRMACRO_H
 	#include "ptrmacro.h"
 #endif
@@ -13,13 +9,15 @@
 	#include "fli.h"
 #endif
 
-#ifndef FLIPATH_H
-	#include "flipath.h"
+#ifndef RECTANG_H
+#include "rectang.h"
 #endif
 
 #ifndef VERTICES_H
 	#include "vertices.h"
 #endif
+
+struct flipath;
 
 typedef struct GCC_PACKED flx_head {
 	FHEAD_COMMON;
@@ -74,7 +72,7 @@ typedef struct flxfile {
 	Flx *idx;      /* frame index */
 	Flx_overlay **overlays; /* array of overlays to add to flx frames */
 	SHORT overlays_in_table;
-	Flipath *path;  /* path of file loaded into tempflx */
+	struct flipath *path; /* path of file loaded into tempflx */
 } Flxfile;
 
 extern Flxfile flix;
@@ -91,9 +89,9 @@ STATIC_ASSERT(flx, OFFSET(Flifile, comp_type) == OFFSET(Flxfile, comp_type));
 Errcode create_flxfile(char *path, Flxfile *flx);
 LONG flx_data_offset(Flxfile *flx);
 Errcode read_flx_frame(Flxfile *flx,Fli_frame *frame, int ix);
-Errcode gb_unfli_flx_frame(Flxfile *flx, Rcel *screen,int ix,
+Errcode gb_unfli_flx_frame(Flxfile *flx, struct rcel *screen, int ix,
 						   int wait,Fli_frame *frame);
-Errcode gb_flx_ringseek(Flxfile *flx, Rcel *screen, int curix, int ix, 
+Errcode gb_flx_ringseek(Flxfile *flx, struct rcel *screen, int curix, int ix,
 						Fli_frame *frame);
 
 /**** functions for serially writing to a new empty flx */
@@ -102,16 +100,21 @@ Errcode write_first_flxchunk(char *name, Flxfile *flxf, Fli_frame *frame);
 Errcode write_next_flxchunk(char *name, Flxfile *flxf, Fli_frame *frame);
 Errcode write_ring_flxchunk(char *name, Flxfile *flxf, Fli_frame *frame);
 
+extern Errcode
+write_first_flxframe(char *name, Flxfile *flxf, void *cbuf,
+		struct rcel *frame1);
 
-Errcode write_first_flxframe(char *name, Flxfile *flxf, 
-							 void *cbuf, Rcel *frame1);
-Errcode write_next_flxframe(char *name, Flxfile *flxf, void *cbuf,
-					 		Rcel *last_screen, Rcel *this_screen);
-Errcode write_ring_flxframe(char *name, Flxfile *flxf, void *cbuf,
-						 	Rcel *last_screen, Rcel *first_screen);
+extern Errcode
+write_next_flxframe(char *name, Flxfile *flxf, void *cbuf,
+		struct rcel *last_screen, struct rcel *this_screen);
 
+extern Errcode
+write_ring_flxframe(char *name, Flxfile *flxf, void *cbuf,
+		struct rcel *last_screen, struct rcel *first_screen);
 
-Errcode write_first_flxblack(char *name,Flxfile *flxf,Rcel *screen);
+extern Errcode
+write_first_flxblack(char *name, Flxfile *flxf, struct rcel *screen);
+
 Errcode write_next_flxempty(char *name,Flxfile *flxf,int num_emptys);
 Errcode write_ring_flxempty(char *name,Flxfile *flxf);
 
@@ -119,7 +122,7 @@ Errcode write_ring_flxempty(char *name,Flxfile *flxf);
 
 void free_flx_overlays(Flxfile *flx);
 Errcode alloc_flx_olaytab(Flxfile *flx, int tablesize);
-void unfli_flx_overlay(Flxfile *flx,Rcel *screen,int frame_ix);
+void unfli_flx_overlay(Flxfile *flx, struct rcel *screen, int frame_ix);
 Errcode push_flx_overlays();
 Errcode pop_flx_overlays();
 
@@ -129,9 +132,8 @@ Errcode add_flx_olayrec(Short_xy *cpos, SHORT cframe,
 /* path maintenance */
 
 Errcode update_flx_path(Flxfile *flx, Fli_id *flid, char *fliname);
-Errcode read_flx_path(Flxfile *flx, Flipath *fp);
+Errcode read_flx_path(Flxfile *flx, struct flipath *fp);
 
 #define FLX_DEFAULT_SPEED 71
 
-
-#endif /* FLX_H */
+#endif

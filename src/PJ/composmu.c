@@ -5,10 +5,13 @@
  * Peter Kennard wrote this file for Animator Pro.  Since then Jim Kent has
  * done some light maintenance work and commenting.
  */
-#include "errcodes.h"
 #include "jimk.h"
 #include "commonst.h"
 #include "composit.h"
+#include "errcodes.h"
+#include "flicel.h"
+#include "flipath.h"
+#include "flx.h"
 #include "ftextf.h"
 #include "memory.h"
 #include "picdrive.h"

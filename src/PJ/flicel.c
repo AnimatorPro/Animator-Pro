@@ -6,10 +6,11 @@
    and pasting routines here too.  Also some of the other easy stuff on
    the Cel drop-down */
 
-#include "errcodes.h"
 #include "jimk.h"
 #include "auto.h"
+#include "errcodes.h"
 #include "floatgfx.h"
+#include "flx.h"
 #include "memory.h"
 #include "rastlib.h"
 #include "rastrans.h"

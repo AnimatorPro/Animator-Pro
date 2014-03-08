@@ -5,7 +5,7 @@
 #include <math.h>
 #include "jimk.h"
 #include "menus.h"
-#include "fli.h"
+#include "flx.h"
 #include "ptrmacro.h"
 #include "errcodes.h"
 #include "options.h"

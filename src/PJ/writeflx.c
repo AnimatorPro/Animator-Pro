@@ -3,8 +3,10 @@
 
 #include "cmap.h"
 #include "errcodes.h"
+#include "flipath.h"
 #include "flx.h"
 #include "memory.h"
+#include "rcel.h"
 
 void copy_fhead_common(Fli_head *sh, Fli_head *dh)
 {

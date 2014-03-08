@@ -7,6 +7,7 @@
 #include "a3d.h"
 #include "a3dpul.h"
 #include "commonst.h"
+#include "flx.h"
 #include "inks.h"
 #include "memory.h"
 #include "poly.h"

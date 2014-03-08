@@ -1,8 +1,12 @@
 #ifndef UNCHUNK_H
 #define UNCHUNK_H
 
-#ifndef FLI_H
-	#include "fli.h"
+#ifndef JFILE_H
+#include "jfile.h"
+#endif
+
+#ifndef VMAGICS_H
+#include "vmagics.h"
 #endif
 
 /***** stuff for and chunk parser functions *****/
@@ -61,4 +65,4 @@ Errcode read_parsed_chunk(Chunkparse_data *pd,void *buf,LONG maxsize);
 Errcode copy_parsed_chunk(Chunkparse_data *pd,Jfile dest);
 Errcode update_parsed_chunk(Chunkparse_data *pd, void *buf);
 
-#endif /* UNCHUNK_H */
+#endif

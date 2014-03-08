@@ -5,12 +5,13 @@
 	These nest.  Only when the nesting count transitions between 0 and 1 is
 	anything actually performed */
 
-#include "memory.h"
 #include "jimk.h"
-#include "jfile.h"
-#include "fli.h"
-#include "inks.h"
 #include "errcodes.h"
+#include "flicel.h"
+#include "flx.h"
+#include "inks.h"
+#include "jfile.h"
+#include "memory.h"
 
 static char pushed_cel;
 static char pushed_alt;

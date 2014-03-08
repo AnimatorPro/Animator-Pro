@@ -3,9 +3,9 @@
    intermediate palette that is the same for all frames */
 
 #include "jimk.h"
-#include "fli.h"
 #include "auto.h"
 #include "errcodes.h"
+#include "flx.h"
 
 #define MAXC (21000)
 

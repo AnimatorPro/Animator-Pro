@@ -2,12 +2,12 @@
  * 'Snap' input to fall on intersections of a user definable
  * grid.  Routines to see and paste the grid too. */
 
+#include "jimk.h"
 #include "errcodes.h"
-#include  "jimk.h"
+#include "flicel.h"
 #include "menus.h"
-#include "softmenu.h"
 #include "render.h"
-
+#include "softmenu.h"
 
 USHORT constrain_angle(SHORT angle)
 /* note this accepts angles in FCEL_TWOPI units */

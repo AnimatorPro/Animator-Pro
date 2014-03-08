@@ -7,11 +7,9 @@
 #include "jimk.h"
 #include "animinfo.h"
 #include "errcodes.h"
-#include "fli.h"
+#include "flx.h"
 #include "picdrive.h"
-#include "ptrmacro.h"
 #include "unchunk.h"
-
 
 Errcode read_flx_frame(Flxfile *flx, Fli_frame *frame, int ix)
 {

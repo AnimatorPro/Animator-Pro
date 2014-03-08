@@ -5,7 +5,7 @@
 #include "errcodes.h"
 #include "jimk.h"
 #include "auto.h"
-#include "fli.h"
+#include "flx.h"
 #include "memory.h"
 
 extern Boolean auto_abort_verify();

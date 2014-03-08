@@ -17,18 +17,6 @@
 	#include "marqi.h"
 #endif
 
-#ifndef FLI_H
-	#include "fli.h"
-#endif
-
-#ifndef FLX_H
-	#include "flx.h"
-#endif
-
-#ifndef FLICEL_H
-	#include "flicel.h"
-#endif
-
 #ifndef OPTIONS_H
 	#include "options.h"
 #endif
@@ -567,7 +555,6 @@ typedef struct vlcb {  /* v local control block not saved !!! */
 /* globals found in globals.c */
 
 extern Vlcb vl;
-extern Flicel *thecel;
 extern Rcel *undof;
 extern Bitmap *mask_rast;
 extern Minitime_data flxtime_data;
@@ -575,10 +562,4 @@ extern Minitime_data flxtime_data;
 
 extern long pj_ddfree(int device);
 
-
-/* special pj functions */
-
-Errcode flic_create(char *name,Flifile *flif);
-
-/* leave at end of file */
-#endif /* JIMK_H */
+#endif

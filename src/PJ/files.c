@@ -2,13 +2,12 @@
 /* Files.c - Let user choose whether to load/save/delete any of our 12
    basic file types. */
 
-/* generated with makemenu */
-#include "menus.h"
 #include "jimk.h"
-#include "textedit.h"
-#include "softmenu.h"
 #include "commonst.h"
-
+#include "flicel.h"
+#include "menus.h"
+#include "softmenu.h"
+#include "textedit.h"
 
 /*** Display Functions ***/
 

@@ -2,9 +2,9 @@
 /* time.c - stuff to insert and delete frames in a FLIC.  Used mostly
    by timemenu.c. */
 
-#include "errcodes.h"
 #include "jimk.h"
-#include "fli.h"
+#include "errcodes.h"
+#include "flx.h"
 #include "memory.h"
 
 extern long flx_file_hi();

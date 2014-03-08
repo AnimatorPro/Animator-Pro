@@ -3,6 +3,7 @@
 #include "fli.h"
 #include "ptrmacro.h"
 #include "rastcall.h"
+#include "rcel.h"
 
 /* Function: pj_fcuncomp
  *

@@ -2,6 +2,7 @@
 #include "bhash.h"
 #include "errcodes.h"
 #include "floatgfx.h"
+#include "flicel.h"
 #include "inkdot.h"
 #include "memory.h"
 #include "options.h"

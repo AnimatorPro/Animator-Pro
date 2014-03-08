@@ -4,6 +4,7 @@
 #include "aaconfig.h"
 #include "animinfo.h"
 #include "errcodes.h"
+#include "fli.h"
 #include "jfile.h"
 #include "memory.h"
 #include "menus.h"

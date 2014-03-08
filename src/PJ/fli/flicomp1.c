@@ -1,6 +1,6 @@
 #include "fli.h"
 
-LONG pj_fli_comp_frame1(void *cbuf,Rcel *this_screen,Flicomp comp_type)
+LONG pj_fli_comp_frame1(void *cbuf, struct rcel *this_screen, Flicomp comp_type)
 /* given a screen. Makes a compressed first frame record from it and 
  * loads it in *cbuf */
 {

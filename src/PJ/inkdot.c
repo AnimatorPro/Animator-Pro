@@ -1,5 +1,6 @@
 #include "jimk.h"
 #include "bhash.h"
+#include "flicel.h"
 #include "inkdot.h"
 #include "inks.h"
 #include "memory.h"

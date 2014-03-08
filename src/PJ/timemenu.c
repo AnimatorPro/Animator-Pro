@@ -4,9 +4,9 @@
    Frames control panel. and some other frames control button stuff */
 
 #include "jimk.h"
-#include "menus.h"
-#include "fli.h"
+#include "flx.h"
 #include "input.h"
+#include "menus.h"
 #include "softmenu.h"
 
 extern void ccolor_box(), ppalette(), see_pen(), toggle_pen(), set_pbrush(),

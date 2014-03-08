@@ -1,15 +1,16 @@
 /* generated with makepull */
 #include "jimk.h"
+#include "broadcas.h"
+#include "commonst.h"
+#include "errcodes.h"
+#include "flx.h"
 #include "linklist.h"
 #include "menus.h"
-#include "errcodes.h"
-#include "tween.h"
-#include "tweenpul.h"
-#include "tweenmag.h"
 #include "polyrub.h"
-#include "commonst.h"
 #include "softmenu.h"
-#include "broadcas.h"
+#include "tween.h"
+#include "tweenmag.h"
+#include "tweenpul.h"
 
 /* draw vertices and links in PTCOL */
 #define PTCOL vb.screen->SBRIGHT

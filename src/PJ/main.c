@@ -7,10 +7,9 @@
 #include "aaconfig.h"
 #include "argparse.h"
 #include "errcodes.h"
-#include "fli.h"
+#include "flx.h"
 #include "menus.h"
 #include "picdrive.h"
-#include "ptrmacro.h"
 
 static Errcode resize_pencel(Boolean err_on_abort,Boolean reset);
 

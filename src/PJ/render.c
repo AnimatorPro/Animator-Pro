@@ -12,6 +12,7 @@
 #include "inks.h"
 #include "poly.h"
 #include "rastcall.h"
+#include "rastrans.h"
 #include "render.h"
 
 extern void a1bdot(), rbdot(), rbbrush();

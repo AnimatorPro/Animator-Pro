@@ -7,6 +7,7 @@
 #include "broadcas.h"
 #include "commonst.h"
 #include "errcodes.h"
+#include "flicel.h"
 #include "inks.h"
 #include "memory.h"
 #include "menus.h"

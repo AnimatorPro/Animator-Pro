@@ -2,6 +2,7 @@
 #include "errcodes.h"
 #include "fli.h"
 #include "memory.h"
+#include "rcel.h"
 
 Errcode pj_fli_alloc_cbuf(Fli_frame **pcbuf, USHORT width,USHORT height, 
 				   LONG num_colors)

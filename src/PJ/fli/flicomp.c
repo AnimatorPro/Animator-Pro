@@ -4,6 +4,7 @@
 #include "memory.h"
 #include "ptrmacro.h"
 #include "rastcomp.h"
+#include "rcel.h"
 
 LONG pj_fli_comp_rect(void *comp_buf,
 					Rcel *last_screen,

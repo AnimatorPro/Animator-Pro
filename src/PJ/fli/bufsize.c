@@ -1,6 +1,7 @@
 #include "cmap.h"
 #include "errcodes.h"
 #include "fli.h"
+#include "rcel.h"
 
 LONG pj_fli_cbuf_size(USHORT width,USHORT height, LONG num_colors)
 

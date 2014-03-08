@@ -6,7 +6,7 @@
 #include "animinfo.h"
 #include "commonst.h"
 #include "errcodes.h"
-#include "fli.h"
+#include "flx.h"
 #include "ftextf.h"
 #include "menus.h"
 #include "picdrive.h"

@@ -4,7 +4,7 @@ Errcode pj_fli_add_frame1(char *name, /* name for error reporting
 								     * if NULL no reports */
 					    Flifile *flif,
 						void *cbuf,
-					 	Rcel *frame1)
+						struct rcel *frame1)
 
 /* will compress the first frame, from the screen provided, and call
  * fii_add_frame1_rec() with the resultant record */

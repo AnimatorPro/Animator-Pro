@@ -2,6 +2,7 @@
 #include "aaconfig.h"
 #include "commonst.h"
 #include "errcodes.h"
+#include "flx.h"
 #include "memory.h"
 #include "rastext.h"
 #include "softmenu.h"

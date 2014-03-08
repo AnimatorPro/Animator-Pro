@@ -3,8 +3,8 @@
    selector" */
 
 #include "jimk.h"
+#include "flx.h"
 #include "menus.h"
-#include "fli.h"
 
 void see_seg_size(), see_tseg(), feel_tseg(), rfeel_tseg(),
 	stuff_with_cur_ix(), see_twidth(), change_time_mode();

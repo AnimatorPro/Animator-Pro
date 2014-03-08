@@ -3,7 +3,7 @@
 Errcode pj_i_read_uncomp1(char *fname, /* name of file for error report 
 										  * NULL == no reporting */
 					   Flifile *flif,
-					   Rcel *fscreen,	/* optional screen to update */
+					   struct rcel *fscreen, /* optional screen to update */
 					   Fli_frame *ff,  /* frame buffer */
 					   Boolean colors) /* wait for vblank and update 
 					   			        * hardware palette? */

@@ -3,7 +3,7 @@
 Errcode pj_fli_add_ring(char *name, /* name for error reporting 
 								     * if NULL no reports */
 					    Flifile *flif, void *cbuf,
-					 	Rcel *last_screen, Rcel *first_screen)
+						struct rcel *last_screen, struct rcel *first_screen)
 
 /* compresses record and writes a final ring frame (delta between last frame 
  * and first) of a fli file sets header data and flushes the header. The file

@@ -16,4 +16,4 @@ typedef struct flipath {
 
 Boolean flipaths_same(Flipath *pa, Flipath *pb);
 
-#endif /* FLIPATH_H */
+#endif

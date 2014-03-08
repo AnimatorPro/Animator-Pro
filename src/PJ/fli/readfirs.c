@@ -4,7 +4,7 @@ Errcode pj_fli_read_first(char *fname,        /* optional name for reporting
 										     * errors, will not report 
 											 * if NULL */
 						Flifile *flif, 
-						Rcel *fscreen,
+						struct rcel *fscreen,
 						Boolean colors )  	/* update hw color map??? */
 
 /* Seek to the first frame then call fli_read_next() to read it in 

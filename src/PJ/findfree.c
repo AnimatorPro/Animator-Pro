@@ -1,11 +1,10 @@
 /* findfree.c - Find space in the temp-file to put a frame.  Expand file
    if necessary.  Works on temp_flx - our basic indexed frame/state file. */
 
-#include "errcodes.h"
-#include "fli.h"
 #include "jimk.h"
+#include "errcodes.h"
+#include "flx.h"
 #include "linklist.h"
-#include "ptrmacro.h"
 
 extern LONG flx_data_offset(Flxfile *flx);
 

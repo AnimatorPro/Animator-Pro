@@ -3,7 +3,7 @@
 Errcode pj_fli_add_next(char *name, /* name for error reporting 
 								      * if NULL no reports */
 					    Flifile *flif, void *cbuf,
-					 	Rcel *last_screen, Rcel *this_screen)
+						struct rcel *last_screen, struct rcel *this_screen)
 
 /* calculates an intermediate delta record from the two rasters provided
  * and writes it to the output fli file.  Mus be called after a 

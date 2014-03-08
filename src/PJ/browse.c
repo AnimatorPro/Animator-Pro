@@ -3,14 +3,15 @@
    in filemenu.c in a semi-gnarly fashion.  Wants pstamp.c for
    doing the actual read and shrink of the first frame of a fli. */
 
-#include "errcodes.h"
 #include "jimk.h"
-#include "scroller.h"
-#include "commonst.h"
-#include "filepath.h"
 #include "animinfo.h"
-#include "wildlist.h"
+#include "commonst.h"
+#include "errcodes.h"
+#include "filepath.h"
+#include "fli.h"
+#include "scroller.h"
 #include "softmenu.h"
+#include "wildlist.h"
 
 extern Errcode postage_stamp(Raster *r, char *name, 
 				  	  		 SHORT x,SHORT y,USHORT width, USHORT height,

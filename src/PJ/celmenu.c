@@ -1,10 +1,11 @@
-#include "errcodes.h"
-#include "rastrans.h"
-#include "render.h"
 #include "jimk.h"
 #include "broadcas.h"
-#include "inks.h"
 #include "celmenu.h"
+#include "errcodes.h"
+#include "flx.h"
+#include "inks.h"
+#include "rastrans.h"
+#include "render.h"
 #include "softmenu.h"
 
 /* globals for cel menu functions */
