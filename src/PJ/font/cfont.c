@@ -1,5 +1,6 @@
 #include "stfont.h"
 #include "fontdev.h"
+#include "rastext.h"
 
 Vfont *get_sys_font(void)
 {

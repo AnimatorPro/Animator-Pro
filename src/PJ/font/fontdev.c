@@ -4,7 +4,9 @@
 
 #include "errcodes.h"
 #include "fontdev.h"
+#include "jfile.h"
 #include "linklist.h"
+#include "rastext.h" /* sixhi_font_name */
 #include "stfont.h"
 
 Font_dev *font_dev_list;

@@ -5,6 +5,7 @@
 #define VFONT_C
 #include "errcodes.h"
 #include "fontdev.h"
+#include "jfile.h"
 #include "memory.h"
 #include "rastext.h"
 #include "stfont.h"

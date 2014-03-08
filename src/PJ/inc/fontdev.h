@@ -1,14 +1,11 @@
-
 #ifndef FONTDEV_H
 #define FONTDEV_H
 
-#ifndef JFILE_H
-	#include "jfile.h"
-#endif /* JFILE_H */
+#ifndef STDTYPES_H
+#include "stdtypes.h"
+#endif
 
-#ifndef RASTEXT_H
-	#include "rastext.h"
-#endif /* RASTEXT_H */
+struct vfont;
 
 typedef struct font_dev
 	{
@@ -17,7 +14,7 @@ typedef struct font_dev
 	char *wild_pat;
 	Errcode (*check_font)(char *name);
 
-	Errcode (*load_font)(char *title, Vfont *vfont,
+	Errcode (*load_font)(char *title, struct vfont *vfont,
 			SHORT height, SHORT unzag_flag);
 
 	SHORT type;
@@ -35,4 +32,4 @@ extern Font_dev *font_dev_list;
 extern void init_font_dev(void);
 extern Errcode init_menufont_dev(void);
 
-#endif /* FONTDEV_H */
+#endif
