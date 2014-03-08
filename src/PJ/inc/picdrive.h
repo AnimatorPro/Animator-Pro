@@ -9,11 +9,8 @@
 	#include "rcel.h"
 #endif
 
-#ifndef CMAP_H
-	#include "cmap.h"
-#endif
-
 struct anim_info;
+struct rgb3;
 
 #define PDR_VERSION 0
 #define PDR_SUFFI_SIZE 15
@@ -265,7 +262,7 @@ struct pdr {
 	 * processing.
 	 *************************************************************************/
 
-	Errcode (*rgb_readline)(Image_file *ifile, Rgb3 *linebuf);
+	Errcode (*rgb_readline)(Image_file *ifile, struct rgb3 *linebuf);
 	/**************************************************************************
 	 * This will return the next line of RGB data from the file into linebuf.
 	 * The data placed into linebuf by the PDR must be in Rgb3 format.	This
@@ -329,7 +326,7 @@ Errcode pdr_save_frames(Image_file *ifile,	Rcel *screen, ULONG num_frames,
 						void *seek_data, Rcel *work_screen );
 
 Errcode pdr_rgb_seekstart(Image_file *ifile);
-Errcode pdr_rgb_readline(Image_file *ifile, Rgb3 *linebuf);
+Errcode pdr_rgb_readline(Image_file *ifile, struct rgb3 *linebuf);
 
 #endif /* REXLIB_CODE */
 

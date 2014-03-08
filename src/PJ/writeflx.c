@@ -1,9 +1,10 @@
 /* writeflx.c - stuff to serially create a tempflx file from uncompressed 
  * or compressed frames similar to writefli.c but for the tempflx */
 
-#include "memory.h"
+#include "cmap.h"
 #include "errcodes.h"
 #include "flx.h"
+#include "memory.h"
 
 void copy_fhead_common(Fli_head *sh, Fli_head *dh)
 {

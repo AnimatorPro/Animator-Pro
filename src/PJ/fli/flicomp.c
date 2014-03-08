@@ -1,3 +1,4 @@
+#include "cmap.h"
 #include "fli.h"
 #include "flicomp.h"
 #include "memory.h"

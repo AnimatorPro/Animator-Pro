@@ -9,6 +9,10 @@
 	#include <stdarg.h>
 #endif
 
+#ifndef CMAP_H
+#include "cmap.h"
+#endif
+
 #ifndef VERTICES_H
 	#include "vertices.h"
 #endif

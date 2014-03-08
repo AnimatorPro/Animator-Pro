@@ -3,6 +3,7 @@
  ****************************************************************************/
 
 #include <string.h>
+#include "cmap.h"
 #include "memory.h"
 #include "targa.h"
 

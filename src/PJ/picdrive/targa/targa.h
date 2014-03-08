@@ -10,6 +10,8 @@
 #include "picdrive.h"
 #include "xfile.h"
 
+struct rgb3;
+
 /*----------------------------------------------------------------------------
  * constants for targa-defined values...
  *--------------------------------------------------------------------------*/
@@ -113,7 +115,7 @@ typedef struct targa_file { 	/* the main juju; gets passed to everyone...*/
 Errcode write_targa_image(Targa_file *tf);
 Errcode write_targa_header(Targa_file *tf);
 
-Errcode read_nextline(Image_file *ifile, Rgb3 *destbuf);
+Errcode read_nextline(Image_file *ifile, struct rgb3 *destbuf);
 Errcode read_seekstart(Image_file *ifile);
 Errcode read_cmapped_image(Targa_file *tf);
 Errcode read_targa_header(Targa_file *tf);

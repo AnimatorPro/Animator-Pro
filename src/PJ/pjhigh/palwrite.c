@@ -1,5 +1,6 @@
-#include "ptrmacro.h"
+#include "cmap.h"
 #include "palchunk.h"
+#include "ptrmacro.h"
 
 Errcode pj_write_palchunk(Jfile fd, Cmap *cmap, SHORT id_type)
 

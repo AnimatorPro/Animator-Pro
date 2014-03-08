@@ -1,7 +1,8 @@
 /* cmapload.c - Stuff to read a color map file. */
 
-#include "palchunk.h"
+#include "cmap.h"
 #include "errcodes.h"
+#include "palchunk.h"
 
 #define OLD_SIZE (3*COLORS)
 

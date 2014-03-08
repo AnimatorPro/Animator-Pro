@@ -9,6 +9,9 @@
 	#include "poly.h"
 #endif
 
+struct cmap;
+struct rgb3;
+
 typedef struct renderdata {
 	Cliprect cr;			/* the current render form clip rectangle */
 
@@ -27,13 +30,13 @@ typedef struct thash {
 	UBYTE valid, closest;
 } Thash;
 
-extern Rgb3 tcolor_src;
+extern struct rgb3 tcolor_src;
 
 Errcode rblit_cel(register Rcel *c, Tcolxldat *txd);
 
 Errcode render_blit(Rcel *src, SHORT sx,SHORT sy, Rcel *dest, 
 					SHORT dx,SHORT dy,SHORT w,SHORT h, 
-					Tcolxldat *txd, Cmap *scmap);
+					Tcolxldat *txd, struct cmap *scmap);
 
 void render_mask_blit(UBYTE *mplane, SHORT mbpr,
 					  SHORT mx, SHORT my,

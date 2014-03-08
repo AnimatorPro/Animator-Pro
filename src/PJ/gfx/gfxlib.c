@@ -1,5 +1,6 @@
 #define REXLIB_INTERNALS
 
+#include "cmap.h"
 #include "gfx.h"
 #include "gfxlib.h"
 

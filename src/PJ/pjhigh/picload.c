@@ -1,7 +1,8 @@
+#include "cmap.h"
 #include "errcodes.h"
+#include "palchunk.h"
 #include "picfile.h"
 #include "unchunk.h"
-#include "palchunk.h"
 
 static Errcode read_pic_pixels(Jfile f,Pic_header *pic,Raster *cel,
 							   SHORT chunk_type, LONG offset, LONG data_size)

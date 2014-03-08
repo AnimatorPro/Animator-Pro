@@ -12,7 +12,7 @@ typedef struct rgb3 {
 	UBYTE r,g,b;
 } Rgb3;
 
-typedef struct colormap {
+typedef struct cmap {
 	LONG num_colors;
 	Rgb3 ctab[COLORS];
 } Cmap;
@@ -46,4 +46,4 @@ extern LONG _h_lsrgb_value(LONG n1, LONG n2, SHORT hue);
 extern void rgb_to_hls(SHORT r, SHORT g, SHORT b, SHORT *h, SHORT *l, SHORT *s);
 extern void hls_to_rgb(SHORT *r, SHORT *g, SHORT *b, SHORT h, SHORT l, SHORT s);
 
-#endif /* CMAP_H */
+#endif

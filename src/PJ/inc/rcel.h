@@ -13,9 +13,7 @@
 	#include "rastcall.h"
 #endif
 
-#ifndef CMAP_H
-	#include "cmap.h"
-#endif
+struct cmap;
 
 /* a minimal drawing cel designed to be compatible with a window and 
  * raster and window screen but smaller
@@ -30,7 +28,7 @@
  * with the same rendering routines */
 
 #define CEL_FIELDS \
- 	Cmap *cmap
+	struct cmap *cmap
 
 typedef struct rcel {
 	RASTHDR_FIELDS;  /* the raster for raster library */
@@ -84,8 +82,8 @@ Errcode alloc_vd_rcel(Vdevice *vd, Rasthdr *spec, Rcel **pcel,
 
 Errcode valloc_bytemap(Raster **r, SHORT w, SHORT h);
 Boolean need_fit_cel(Rcel *c);
-void cfit_rcel(Rcel *c, Cmap *dcmap);
-void refit_rcel(Rcel *c, Cmap *ncmap, Cmap *ocmap);
+void cfit_rcel(Rcel *c, struct cmap *dcmap);
+void refit_rcel(Rcel *c, struct cmap *ncmap, struct cmap *ocmap);
 Rcel *clone_rcel(Rcel *s);
 Rcel *clone_any_rcel(Rcel *in);
 void pj_rcel_copy(Rcel *s, Rcel *d);

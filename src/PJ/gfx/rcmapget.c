@@ -1,7 +1,7 @@
+#include "cmap.h"
 #include "errcodes.h"
 #include "memory.h"
 #include "ptrmacro.h"
-#include "rcel.h"
 
 void pj_cmap_free(Cmap *cmap)
 {

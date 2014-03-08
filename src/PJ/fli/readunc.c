@@ -1,6 +1,7 @@
+#include "cmap.h"
 #include "errcodes.h"
-#include "rcel.h"
 #include "fli.h"
+#include "rcel.h"
 
 Errcode pj_fli_read_uncomp(char *fname, Flifile *flif, Rcel *fscreen,
 					   Fli_frame *ff, int colors)

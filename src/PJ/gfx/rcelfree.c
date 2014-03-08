@@ -1,3 +1,4 @@
+#include "cmap.h"
 #include "memory.h"
 #include "rcel.h"
 

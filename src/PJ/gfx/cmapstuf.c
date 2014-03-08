@@ -1,4 +1,4 @@
-#include "gfx.h"
+#include "cmap.h"
 
 void stuff_cmap(Cmap *cmap, Rgb3 *color)
 {

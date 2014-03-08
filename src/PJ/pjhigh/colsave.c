@@ -1,6 +1,6 @@
 #include "palchunk.h"
 
-Errcode pj_col_save(char *name,Cmap *cmap)
+Errcode pj_col_save(char *name, struct cmap *cmap)
 /* Save color map file */
 {
 Errcode err;

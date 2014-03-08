@@ -9,25 +9,13 @@
 	#include "vmagics.h"
 #endif
 
-#ifndef CMAP_H
-	#include "cmap.h"
-#endif
-
-#ifdef COMMENT
-
-typedef struct pal_chunk {
-	Fat_chunk id;  /* Type is for file use, version is type of cmap data. */
-	Rgb3 ctab[1]; 
-} Pal_chunk;
-
-#endif /* COMMENT */
+struct cmap;
 
 #define PAL_RGB256_VERS 0   /* only one type for now */
 
-Errcode pj_write_palchunk(Jfile fd, Cmap *cmap, SHORT id_type);
-Errcode pj_read_palchunk(Jfile fd, Fat_chunk *id,Cmap *cmap);
-Errcode pj_col_load(char *name, Cmap *cmap);
-Errcode pj_col_save(char *name, Cmap *cmap);
+extern Errcode pj_write_palchunk(Jfile fd, struct cmap *cmap, SHORT id_type);
+extern Errcode pj_read_palchunk(Jfile fd, Fat_chunk *id, struct cmap *cmap);
+extern Errcode pj_col_load(char *name, struct cmap *cmap);
+extern Errcode pj_col_save(char *name, struct cmap *cmap);
 
-#endif /* PALCHUNK_H */
-
+#endif

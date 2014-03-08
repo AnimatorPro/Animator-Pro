@@ -1,7 +1,8 @@
 #include <string.h>
-#include "rastcall.h"
+#include "cmap.h"
 #include "fli.h"
 #include "ptrmacro.h"
+#include "rastcall.h"
 
 /* Function: pj_fcuncomp
  *

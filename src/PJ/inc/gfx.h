@@ -5,10 +5,6 @@
 	#include "stdtypes.h"
 #endif
 
-#ifndef CMAP_H
-	#include "cmap.h"
-#endif
-
 #ifndef RASTCALL_H
 	#include "rastcall.h"
 #endif

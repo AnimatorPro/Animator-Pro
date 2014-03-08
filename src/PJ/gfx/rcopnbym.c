@@ -1,7 +1,6 @@
-#include "rcel.h"
-#include "memory.h"
+#include "cmap.h"
 #include "errcodes.h"
-//#include "vdevcall.h"
+#include "rcel.h"
 
 Errcode pj_rcel_bytemap_open(Rasthdr *spec,Rcel *cel,LONG num_colors)
 

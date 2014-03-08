@@ -1,3 +1,4 @@
+#include "cmap.h"
 #include "errcodes.h"
 #include "fli.h"
 #include "memory.h"

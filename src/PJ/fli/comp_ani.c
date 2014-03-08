@@ -1,7 +1,8 @@
 #define RASTCOMP_INTERNALS
-#include "memory.h"
+#include "cmap.h"
 #include "fli.h"
 #include "flicomp.h"
+#include "memory.h"
 #include "rastcomp.h"
 
 static void *full_cmap(Rgb3 *ctab, void *cbuf, int num_colors)

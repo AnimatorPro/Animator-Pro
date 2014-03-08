@@ -1,6 +1,6 @@
-#include "rcel.h"
-#include "memory.h"
+#include "cmap.h"
 #include "errcodes.h"
+#include "rcel.h"
 #include "vdevcall.h"
 
 Errcode open_vd_rcel(Vdevice *vd, Rasthdr *spec, Rcel *cel,

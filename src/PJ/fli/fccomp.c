@@ -5,7 +5,8 @@
 #include "rastcomp.h"
 
 void *
-pj_fccomp(Rgb3 *last_ctab, Rgb3 *this_ctab, void *cbuf, unsigned int count)
+pj_fccomp(struct rgb3 *last_ctab, struct rgb3 *this_ctab,
+		void *cbuf, unsigned int count)
 /* fccomp - compress an rgb triples color map just doing 'skip' compression */
 {
 UBYTE *s1 = (UBYTE *)last_ctab;

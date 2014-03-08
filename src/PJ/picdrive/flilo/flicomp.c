@@ -1,5 +1,6 @@
 #include <string.h>
 #define RASTCOMP_INTERNALS
+#include "cmap.h"
 #include "flilo.h"
 #include "ptrmacro.h"
 #include "rastcomp.h"

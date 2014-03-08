@@ -17,6 +17,8 @@
 	#include "vmagics.h"
 #endif
 
+struct cmap;
+
 /* Old style pic header, Animator 1.0 compatible */
 typedef struct opic_header {
 	USHORT type;  	/* type == OPIC_MAGIC */
@@ -49,7 +51,9 @@ enum pic_chunks {
 /* "pic" file io calls */
 
 Errcode pj_read_pichead(Jfile f,Pic_header *pic);
-Errcode pj_read_picbody(Jfile f,Pic_header *pic,Raster *cel, Cmap *cmap);
+
+extern Errcode
+pj_read_picbody(Jfile f, Pic_header *pic, Raster *cel, struct cmap *cmap);
 
 Errcode load_pic(char *name,Rcel *rcel,LONG check_id, Boolean load_colors);
 Errcode save_pic(char *name,Rcel *screen,LONG id, Boolean save_colors);

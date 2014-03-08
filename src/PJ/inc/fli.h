@@ -17,6 +17,9 @@
 	#include "vmagics.h"
 #endif
 
+struct cmap;
+struct rgb3;
+
 /***** end file types ******/
 
 #define MAXFRAMES (4*1000)	/* Max number of frames... */
@@ -257,8 +260,8 @@ extern Errcode jwrite_chunk(Jfile f, void *data, LONG size, SHORT type);
 
 /* reading and decompression */
 
-extern void pj_fcuncomp(const UBYTE *src, Rgb3 *dst);
-extern void pj_fcuncomp64(const UBYTE *buf, Rgb3 *dst);
+extern void pj_fcuncomp(const UBYTE *src, struct rgb3 *dst);
+extern void pj_fcuncomp64(const UBYTE *buf, struct rgb3 *dst);
 
 extern void
 pj_fli_uncomp_rect(Rcel *f, Fli_frame *frame, Rectangle *rect, int colors);
@@ -268,7 +271,7 @@ extern void pj_fli_uncomp_frame(Rcel *screen, Fli_frame *frame, int colors);
 Errcode pj_fli_seek_first(Flifile *flif);
 Errcode pj_fli_seek_second(Flifile *flif);
 
-extern Errcode fli_read_colors(Flifile *flif, Cmap *cmap);
+extern Errcode fli_read_colors(Flifile *flif, struct cmap *cmap);
 
 extern Errcode
 pj_i_read_uncomp1(char *fname, Flifile *flif, Rcel *fscreen,
@@ -286,7 +289,7 @@ extern int fli_wrap_frame(Flifile *flif, int frame);
 
 /* Postage stamp */
 
-extern void pj_make_pstamp_xlat(Rgb3 *ctab, UBYTE *xlat, int count);
+extern void pj_make_pstamp_xlat(struct rgb3 *ctab, UBYTE *xlat, int count);
 
 extern void
 pj_get_stampsize(SHORT maxw, SHORT maxh, SHORT sw, SHORT sh,

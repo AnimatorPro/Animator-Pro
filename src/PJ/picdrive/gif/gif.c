@@ -4,6 +4,7 @@
 
 #include <string.h>
 #define REXLIB_INTERNALS
+#include "cmap.h"
 #include "errcodes.h"
 #include "gif.h"
 #include "memory.h"

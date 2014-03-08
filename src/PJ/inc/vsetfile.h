@@ -17,6 +17,9 @@
 	#include "jfile.h"
 #endif
 
+#ifndef CMAP_H
+#include "cmap.h"
+#endif
 
 enum vset_chunks {
 	VSET_FLIDEF_ID = 1,     /* chunk id for fli defaults chunk */

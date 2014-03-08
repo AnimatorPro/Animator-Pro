@@ -1,6 +1,7 @@
+#include "cmap.h"
 #include "errcodes.h"
-#include "ptrmacro.h"
 #include "palchunk.h"
+#include "ptrmacro.h"
 
 Errcode pj_read_palchunk(Jfile fd, Fat_chunk *id,Cmap *cmap)
 

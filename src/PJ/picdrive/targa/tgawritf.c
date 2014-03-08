@@ -2,6 +2,7 @@
  * TGAGWRIT.C - Routines to write headers and data to a targa file.
  ****************************************************************************/
 
+#include "cmap.h"
 #include "memory.h"
 #include "targa.h"
 

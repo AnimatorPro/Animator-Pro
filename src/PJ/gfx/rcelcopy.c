@@ -1,4 +1,4 @@
-#include "gfx.h"
+#include "cmap.h"
 #include "rcel.h"
 
 void pj_rcel_copy(Rcel *s, Rcel *d)

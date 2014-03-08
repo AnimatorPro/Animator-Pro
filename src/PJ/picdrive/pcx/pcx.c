@@ -3,6 +3,7 @@
 
 #include <string.h>
 #define REXLIB_INTERNALS
+#include "cmap.h"
 #include "errcodes.h"
 #include "memory.h"
 #include "pcx.h"
