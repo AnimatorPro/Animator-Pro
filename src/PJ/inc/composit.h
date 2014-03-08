@@ -5,10 +5,9 @@
 	#include "stdtypes.h"
 #endif
 
-#ifndef FLICEL_H
-	#include "flicel.h"
-#endif
-
+struct flicel;
+struct flipath;
+struct raster;
 
 enum {
 	FIT_TOA = 0,
@@ -42,16 +41,16 @@ enum {
 
 typedef struct compo_cb {
 /* Items to fill in before calling render_composite. */
-	Flipath *tflxpath;  /* saved tempflx flipath */
-	Flipath *maskpath;  /* saved flipath for mask cel */
-	Flicel *fcela;		/* cel for tempflx used during render */
-	Flicel *fcelb;		/* cel for fli b */
-	Flicel *mask_cel;   /* cel for mask */
+	struct flipath *tflxpath;   /* saved tempflx flipath */
+	struct flipath *maskpath;   /* saved flipath for mask cel */
+	struct flicel *fcela;       /* cel for tempflx used during render */
+	struct flicel *fcelb;       /* cel for fli b */
+	struct flicel *mask_cel;    /* cel for mask */
 
 /* items calculated by render composite */
 
-	Flicel *start_cel; /* cela items refer to this */
-	Flicel *end_cel;   /* celb items refer to this */
+	struct flicel *start_cel;   /* cela items refer to this */
+	struct flicel *end_cel;     /* celb items refer to this */
 	SHORT cela_start;     /* start of cela */
 	SHORT cela_frames;    /* frames before transition of cela */ 
 	SHORT celb_start;     /* start of celb (first of transition) */
@@ -73,6 +72,9 @@ extern Compocb ccb;
 
 Errcode render_composite(Boolean preview);
 Errcode draw_slatmask(Boolean *pvertical,USHORT size);
-void zoom_boxil_mask(Raster *boxil_mask,Raster *dest,Coor hsize,Coor vsize);
 
-#endif /* COMPOSIT_H */
+extern void
+zoom_boxil_mask(struct raster *boxil_mask, struct raster *dest,
+		Coor hsize, Coor vsize);
+
+#endif
