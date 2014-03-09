@@ -4,6 +4,7 @@
    if you have duplicate colors in the source it sometimes hangs.
    (So filter out duplicate colors before calling pack_ctable... ) */
 
+#include <assert.h>
 #include <string.h>
 #include "memory.h"
 #include "wndo.h"
@@ -18,7 +19,8 @@ static int find_newc(int freec, Rgb3 *ctab, int threshold,
 {
 int closestix;
 long new;
-int dif;
+int dif = 0;
+assert(usedc >= 0);
 
 new = 0;
 while (new < freec  && --lscount >= 0)
