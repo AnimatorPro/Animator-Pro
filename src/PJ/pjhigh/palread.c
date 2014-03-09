@@ -16,7 +16,7 @@ LONG dsize;
 		return(Err_version);
 
 	ssize = id->size - sizeof(Fat_chunk);
-	if(ssize < sizeof(Rgb3) || ssize % sizeof(Rgb3))
+	if (ssize < (LONG)sizeof(Rgb3) || (ssize % sizeof(Rgb3)) != 0)
 		return(Err_corrupted);
 
 	dsize = cmap->num_colors * sizeof(Rgb3);

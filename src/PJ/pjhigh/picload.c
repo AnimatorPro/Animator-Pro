@@ -14,7 +14,7 @@ LONG bpr;
 LONG toposet;
 SHORT x, y, ymax;
 LONG lct;
-
+assert(data_size >= 0);
 
 	if(pic->width < cel->width || pic->height < cel->height)
 		pj_clear_rast(cel); /* pic is smaller than cel */
@@ -36,7 +36,7 @@ LONG lct;
 			break;
 		check_readplane:
 			if(pic->depth != cel->pdepth
-				|| data_size != cel->hw.bm.psize
+				|| (ULONG)data_size != cel->hw.bm.psize
 		   		|| pic->width != cel->width 
 		   		|| pic->height != cel->height)
 			{

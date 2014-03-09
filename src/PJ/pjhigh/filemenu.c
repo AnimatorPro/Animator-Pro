@@ -687,7 +687,7 @@ char wild_buf[WILD_SIZE];
 char wildbufs[6*4];
 char *wbuf;
 char *wilds[4];
-int num_wilds;
+size_t num_wilds;
 int len;
 SHORT top_name = 0;
 

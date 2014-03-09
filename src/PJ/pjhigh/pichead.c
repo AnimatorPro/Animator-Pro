@@ -7,7 +7,7 @@ Errcode pj_read_pichead(Jfile f,Pic_header *pic)
 Opic_header *opic;
 Rectangle orect;
 
-	if (pj_read(f, pic, (long)sizeof(*pic)) < sizeof(*pic) )
+	if (pj_read(f, pic, sizeof(*pic)) < (long)sizeof(*pic) )
 		return(pj_ioerr());
 	if (pic->id.type != PIC_MAGIC)
 	{

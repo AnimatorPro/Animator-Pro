@@ -55,7 +55,7 @@ static Errcode va_qchoicef(USHORT *qc_flags,char *formats,
  * failure 0 to 8 for a selected choice */
 {
 Errcode err;
-int count;
+unsigned int count;
 char *choices[11];
 char *tbuf;
 
