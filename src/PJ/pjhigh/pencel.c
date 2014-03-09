@@ -103,7 +103,8 @@ Pixel c1;
 	else
 		c1 = 0;
 
-	draw_quad(vb.screen,c1,w->x - 1,w->y - 1,w->width + 2,w->height + 2);
+	draw_quad((Raster *)&vb.screen->wndo, c1,
+			w->x - 1, w->y - 1, w->width + 2, w->height + 2);
 }
 void draw_flibord(void)
 {

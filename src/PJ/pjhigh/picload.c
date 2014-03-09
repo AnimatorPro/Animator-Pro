@@ -120,7 +120,8 @@ Chunkparse_data pd;
 			{
 				goto error;
 			}
-			pj_shift_cmap(cmap->ctab,cmap->ctab,COLORS*3);
+			pj_shift_cmap((const UBYTE *)cmap->ctab, (UBYTE *)cmap->ctab,
+					COLORS*3);
 			pj_cmap_load(cel,cmap);
 		}
 		return(read_pic_pixels(f,pic,cel,PIC_BYTEPIXELS,

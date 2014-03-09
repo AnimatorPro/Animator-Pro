@@ -171,7 +171,8 @@ int i,ix;
 	bsize = (dev_count+2)*sizeof(Button);
 
 		/* Allocate enough space for all buttons and a Dsel_group. */
-	if((err = ealloc(&(hanger->children),bsize + sizeof(Dsel_group)))<Success)
+	if ((err = ealloc((void **)&(hanger->children), bsize + sizeof(Dsel_group)))
+			< Success)
 		return(err);
 
 	sel = hanger->children;

@@ -270,7 +270,7 @@ Pdr_entry *current;
 	/* Use the entire local_pdr list instead of the two Config_pdrs
 	 * and any PDRs found in the resource directory.
 	 */
-	namelist = local_pdrs;
+	namelist = (Names *)local_pdrs;
 
 	if((err = build_pdr_list(namelist,&pdrlist,&current,name_buf,
 							 rwmode,multiframe_only)) < Success)

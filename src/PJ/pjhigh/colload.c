@@ -24,7 +24,7 @@ if (size == OLD_SIZE && cmap->num_colors == COLORS)
 	{
 	if ((err = pj_read_ecode(fd, cmap->ctab, sizeof(cmap->ctab))) < Success)
 		goto ERROR;
-	pj_shift_cmap(cmap->ctab,cmap->ctab,COLORS*3);
+	pj_shift_cmap((const UBYTE *)cmap->ctab, (UBYTE *)cmap->ctab, COLORS*3);
 	}
 else
 	{
