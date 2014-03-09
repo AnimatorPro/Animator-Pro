@@ -275,14 +275,14 @@ Menuhdr fmu_menu = {
 /*********   End of makemenu generated code *********/
 
 static Smu_button_list font_blist[] = {
-	{"cancel", &fmu_can_sel },
-	{"ok", &fmu_ok_sel },
-	{"dir", &fmu_tdi_sel },
-	{"space", &fmu_spa_sel },
-	{"lead", &fmu_lea_sel },
-	{"height", &fmu_hei_sel },
-	{"title", &fmu_tit_sel },
-	{"unzag", &fmu_unz_sel },
+	{ "cancel", { &fmu_can_sel } },
+	{ "ok",     { &fmu_ok_sel } },
+	{ "dir",    { &fmu_tdi_sel } },
+	{ "space",  { &fmu_spa_sel } },
+	{ "lead",   { &fmu_lea_sel } },
+	{ "height", { &fmu_hei_sel } },
+	{ "title",  { &fmu_tit_sel } },
+	{ "unzag",  { &fmu_unz_sel } },
 };
 
 

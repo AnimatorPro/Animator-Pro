@@ -135,10 +135,10 @@ static Menuhdr driver_menu = {
 };
 
 static Smu_button_list drv_smblist[] = {
-	{ "title", &drv_title_sel },
-	{ "ok", &drv_ok_sel },
-	{ "cancel", &drv_cancel_sel },
-	{ "info", &drv_info_sel },
+	{ "title",  { &drv_title_sel } },
+	{ "ok",     { &drv_ok_sel } },
+	{ "cancel", { &drv_cancel_sel } },
+	{ "info",   { &drv_info_sel } },
 };
 
 

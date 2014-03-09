@@ -24,20 +24,20 @@ char *please_wait_str;
 
 
 static Smu_name_scats common_keys[] = {
-	{ "aalrmenu", &lrmenu_font_name },
-	{ "aamenu", &menu_font_name },
-	{ "aahrmenu", &hrmenu_font_name }, 
-	{ "continue", &continue_str }, 
-	{ "yes", &yes_str },
-	{ "no", &no_str },
-	{ "ok", &ok_str }, 
-	{ "cancel", &cancel_str },
-	{ "load", &load_str },
-	{ "save", &save_str },
-	{ "any_key", &any_continue },
-	{ "enter", &enter_choice },
-	{ "unnamed", &unnamed_str },
-	{ "pls_wait", &please_wait_str },
+	{ "aalrmenu", { &lrmenu_font_name } },
+	{ "aamenu",   { &menu_font_name } },
+	{ "aahrmenu", { &hrmenu_font_name } },
+	{ "continue", { &continue_str } },
+	{ "yes",      { &yes_str } },
+	{ "no",       { &no_str } },
+	{ "ok",       { &ok_str } },
+	{ "cancel",   { &cancel_str } },
+	{ "load",     { &load_str } },
+	{ "save",     { &save_str } },
+	{ "any_key",  { &any_continue } },
+	{ "enter",    { &enter_choice } },
+	{ "unnamed",  { &unnamed_str } },
+	{ "pls_wait", { &please_wait_str } },
 };
 static void *common_ss;
 

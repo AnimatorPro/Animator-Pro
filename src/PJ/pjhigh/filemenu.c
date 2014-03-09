@@ -326,12 +326,12 @@ static Menuhdr fileq_menu = {
 };
 
 static Smu_button_list fmu_smblist[] = {
-	{ "ok", &fok_sel },
-	{ "cancel", &fcancel_sel },
-	{ "plus", &fplus_sel },
-	{ "wild", &fwildp_sel },
-	{ "dir", &fdrawerp_sel },
-	{ "file", &ffilep_sel },
+	{ "ok",     { &fok_sel } },
+	{ "cancel", { &fcancel_sel } },
+	{ "plus",   { &fplus_sel } },
+	{ "wild",   { &fwildp_sel } },
+	{ "dir",    { &fdrawerp_sel } },
+	{ "file",   { &ffilep_sel } },
 };
 
 static SHORT *fscroller_top_name;

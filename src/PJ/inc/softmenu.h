@@ -159,8 +159,8 @@ Errcode load_soft_pull(
 typedef struct smu_name_scats {
 	char *name;
 	union {
-		char *s;
 		char **ps;
+		char *s;
 	} toload;
 } Smu_name_scats;
 
