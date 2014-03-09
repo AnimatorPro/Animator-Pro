@@ -10,7 +10,7 @@ Boolean varg_qreq_number(SHORT *val,SHORT min, SHORT max,
 					     va_list args)
 {
 Errcode err;
-Menuhdr *mh;
+Menuhdr *mh = NULL;
 char *okcan[3];
 char sbuf[256];
 char *tbuf = sbuf;
