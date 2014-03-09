@@ -1,7 +1,6 @@
 #if WITH_POCO
 #include "ftextf.h"
-#include "pjbasics.h"
-#include "commonst.h"
+#include "reqlib.h"
 
 Boolean qreq_number(short *inum,short min,short max,char *hailing,...)
 {

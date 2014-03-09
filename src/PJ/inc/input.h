@@ -328,6 +328,7 @@ SHORT dos_wait_key(void); /* very low level key wait, not recorded in macros
 						   * flushes buffer first, for use in low level error 
 						   * requestors */
 
+Errcode init_input(void);
 Errcode init_idriver(char *name, UBYTE *modes, SHORT comm_port);
 void cleanup_idriver(void);
 Errcode reset_input(void);

@@ -35,7 +35,7 @@ static UBYTE xhair_pixels[] = {
 #undef M
 
 
-static Raster _default_cursor;
+static Cursorcel _default_cursor;
 static Pixel vsave[DFLT_CURS_HT];
 static Pixel hsave[DFLT_CURS_WID];
 static Short_xy spos;
@@ -46,6 +46,7 @@ static void show_default_cursor(Cursorhdr *ch)
 {
 SHORT cx, cy;
 Rcel *screen;
+(void)ch;
 
 	screen = icb.input_screen->viscel;
 	cx = (spos.x = icb.cx) - XHOT;
@@ -58,11 +59,13 @@ Rcel *screen;
 static void hide_default_cursor(Cursorhdr *ch)
 {
 Rcel *screen;
+(void)ch;
+
 	screen = icb.input_screen->viscel;
 	pj_put_hseg(screen,hsave,spos.x-XHOT,spos.y,DFLT_CURS_WID);
 	pj_put_vseg(screen,vsave,spos.x,spos.y-YHOT,DFLT_CURS_HT);
 }
-Rastcursor *get_default_cursor()
+Rastcursor *get_default_cursor(void)
 {
 static Rastcursor dcurs = {
  	{ show_default_cursor, hide_default_cursor, NULL },
@@ -75,7 +78,7 @@ static Rastcursor dcurs = {
 	_default_cursor.pdepth = 8;
 	_default_cursor.aspect_dx = _default_cursor.aspect_dy = 1;
 	pj_build_bytemap((Rasthdr *)&_default_cursor,
-								&_default_cursor,xhair_pixels);
+					(Raster *)&_default_cursor, xhair_pixels);
 	_default_cursor.x = XHOT;
 	_default_cursor.y = YHOT;
 	return(&dcurs);

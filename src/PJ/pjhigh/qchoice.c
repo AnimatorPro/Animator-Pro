@@ -2,13 +2,12 @@
    strings etc.  */
 
 #include <string.h>
-#include "errcodes.h"
-#include "rastext.h"
-#include "pjbasics.h"
-#include "softmenu.h"
+#include "jimk.h"
 #include "commonst.h"
+#include "errcodes.h"
 #include "ftextf.h"
 #include "rastext.h"
+#include "softmenu.h"
 
 /***** qchoice menus directed to icb.input_screen *****************************/
 

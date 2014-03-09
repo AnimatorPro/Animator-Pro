@@ -1,5 +1,6 @@
 #include "errcodes.h"
 #include "pjbasics.h"
+#include "vdevcall.h"
 
 #ifdef SLUFFED
 void old_video(void)
@@ -10,7 +11,7 @@ void old_video(void)
 	restore_ivmode();
 }
 #endif /* SLUFFED */
-void cleanup_screen()
+void cleanup_screen(void)
 /* inverse of init_screen() */
 {
 	hide_mouse(); /* make sure it's gone */

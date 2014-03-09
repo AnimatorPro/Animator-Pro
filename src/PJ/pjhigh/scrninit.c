@@ -1,10 +1,11 @@
 /* scrninit.c whats needed to initialize screen and menu fonts and mouse input
  * and to clean it up */
 
+#include <string.h>
 #define SCRNINIT_CODE
+#include "jimk.h"
 #include "aaconfig.h"
 #include "errcodes.h"
-#include "pjbasics.h"
 #include "rastext.h"
 #include "rastcurs.h"
 #include "resource.h"

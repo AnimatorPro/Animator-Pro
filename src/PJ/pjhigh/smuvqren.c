@@ -1,10 +1,10 @@
 #include "ftextf.h"
-#include "pjbasics.h"
-#include "commonst.h"
+#include "reqlib.h"
 #include "softmenu.h"
 
-Boolean vsoft_qreq_number(short *inum,short min,short max, char *key,
-						  va_list args, EFUNC update, void *uddat)
+Boolean
+vsoft_qreq_number(short *inum, short min, short max, char *key, va_list args,
+		Errcode (*update)(void *data, SHORT val), void *uddat)
 
 /* subroutine to various soft_qreq_number routines */
 {

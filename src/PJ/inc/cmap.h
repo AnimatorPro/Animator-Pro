@@ -46,4 +46,6 @@ extern LONG _h_lsrgb_value(LONG n1, LONG n2, SHORT hue);
 extern void rgb_to_hls(SHORT r, SHORT g, SHORT b, SHORT *h, SHORT *l, SHORT *s);
 extern void hls_to_rgb(SHORT *r, SHORT *g, SHORT *b, SHORT h, SHORT l, SHORT s);
 
+extern void pack_ctable(Rgb3 *source, LONG scount, Rgb3 *dest, int dcount);
+
 #endif

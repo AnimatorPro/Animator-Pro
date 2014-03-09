@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "errcodes.h"
 #include "ftextf.h"
 #include "softmenu.h"

@@ -1,3 +1,4 @@
+#include <string.h>
 #include "procblit.h"
 #include "rastcurs.h"
 
@@ -19,7 +20,7 @@ void set_cursor_ccolor(Pixel *pccolor)
 		cccolor = &default_ccolor;
 }
 
-static Pixel closest_to_tcol()
+static Pixel closest_to_tcol(void)
 {
 Cmap *cmap;
 
@@ -27,8 +28,7 @@ Cmap *cmap;
 	/* can't use the tcolor 0, so start with [1] */
 	return(1 + closestc(&cmap->ctab[0],&cmap->ctab[1],cmap->num_colors - 1));
 }
-Tcolxldat *get_cursor_xlat()
-
+Tcolxldat *get_cursor_xlat(void)
 /* checks current values and re makes transltion table for cursor if 
  * environment has changed */
 {

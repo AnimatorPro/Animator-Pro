@@ -29,7 +29,7 @@ typedef struct config_pdr_info {
 	UBYTE type;
 } Config_pdr;
 
-extern Errcode pic_anim_info(char *ifname,Anim_info *ainfo);
+static Errcode select_save_pdr(int type);
 
 #define PICTYPE 0
 #define FLICTYPE 1

@@ -4,7 +4,7 @@
 
 #define MTD ((Minitime_data *)(b->group))
 
-static redraw_ix(Button *b)
+static void redraw_ix(Button *b)
 {
 	draw_buttontop(find_button(b,IXSEL_ID));
 }
@@ -82,7 +82,7 @@ void mini_seek_frame(Minitime_data *mtd,SHORT ix)
 	(*(mtd->seek_frame))(ix,mtd->data);
 	mini_draw_overlays(mtd);
 }
-static mtd_clear_call(Minitime_data *mtd, VFUNC func)
+static void mtd_clear_call(Minitime_data *mtd, VFUNC func)
 {
 	mini_clear_overlays(mtd);
 	(*func)(mtd->data);

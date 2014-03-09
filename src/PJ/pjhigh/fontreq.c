@@ -1,15 +1,18 @@
 /* generated with makemenu 2.0 */
-#include "memory.h"
+#include <stdio.h>
+#include <string.h>
+#include "jimk.h"
+#include "commonst.h"
 #include "errcodes.h"
+#include "fontdev.h"
 #include "linklist.h"
+#include "memory.h"
 #include "menus.h"
 #include "rastext.h"
-#include "fontdev.h"
+#include "reqlib.h"
 #include "scroller.h"
 #include "softmenu.h"
-#include "commonst.h"
-#include "reqlib.h"
-#include "pjbasics.h"
+#include "wildlist.h"
 
 typedef struct qfont_cb
 	{
@@ -29,10 +32,8 @@ static void free_qfont_font(void);
 
 /*** Display Functions ***/
 static void font_sample_text(Button *m);
-static void see_point_size(Button *m);
 static void see_font_spacing(Button *m);
 static void see_font_leading(Button *m);
-static void see_font_dir(Button *m);
 static void see_font_height(Button *m);
 static void set_font_height(Button *m);
 static void see_font_unzag(Button *m);
@@ -408,9 +409,9 @@ static void set_font_unzag(Button *m)
 		soft_continu_box("font_scale_only");
 }
 
-static Errcode update_font_spacing(Vfont *f, SHORT spacing)
+static Errcode update_font_spacing(void *f, SHORT spacing)
 {
-	fset_spacing(f,spacing,-1);
+	fset_spacing((Vfont *)f, spacing, -1);
 	draw_button(&fmu_sam_sel);
 	return(Success);
 }
@@ -432,9 +433,9 @@ Vfont *f = &qfcb->vfont;
 	draw_button(m);
 }
 
-static update_font_leading(Vfont *f, SHORT leading)
+static Errcode update_font_leading(void *f, SHORT leading)
 {
-	fset_spacing(f,-1,leading);
+	fset_spacing((Vfont *)f,-1,leading);
 	draw_button(&fmu_sam_sel);
 	return(Success);
 }
@@ -497,6 +498,7 @@ char sbuf[50];
 char selb[17];
 char lpath[PATH_SIZE];  /* buffer for path returned from file requestor */
 char *fpath;
+(void)m;
 
 	hide_mp();
 	free_wild_list(&font_scroller.names);
@@ -513,7 +515,7 @@ char *fpath;
 	show_mp();
 }
 
-static void refresh_font()
+static void refresh_font(void)
 /*
  * When font changes we need to redraw some buttons.
  */
@@ -529,6 +531,9 @@ static void feel_1_font(Button *b,void *rast,int x,int y,Names *entry,
 					    int why)
 {
 char fpath[PATH_SIZE];
+(void)rast;
+(void)x;
+(void)y;
 
 	strcpy(fpath,qfcb->fpath);
 	strcpy(pj_get_path_name(fpath), entry->name); 

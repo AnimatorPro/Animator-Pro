@@ -1,8 +1,6 @@
 #ifdef WITH_POCO
 #include "ftextf.h"
-#include "pjbasics.h"
-#include "commonst.h"
-
+#include "reqlib.h"
 
 Boolean qreq_string(char *strbuf,int bufsize,char *hailing,...)
 {

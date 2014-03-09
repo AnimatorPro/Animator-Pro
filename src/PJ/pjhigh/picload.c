@@ -12,7 +12,6 @@ LONG bufsize;
 Bytemap rr;
 LONG bpr;
 LONG toposet;
-Boolean bufopen = 0;
 SHORT x, y, ymax;
 LONG lct;
 

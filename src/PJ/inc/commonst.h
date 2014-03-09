@@ -1,6 +1,12 @@
 #ifndef COMMONST_H
 #define COMMONST_H
 
+#ifndef STDTYPES_H
+#include "stdtypes.h"
+#endif
+
+struct softmenu;
+
 /* commonst.h - place where common strings like "ok", "cancel", "load",
  * "save", etc. are defined */
 
@@ -24,6 +30,8 @@ extern char w_str[];
 extern char rb_str[];
 extern char wb_str[];
 
+extern Errcode init_common_str(struct softmenu *sm);
 extern void default_common_str(void);
+extern void cleanup_common_str(void);
 
 #endif /* COMMONST_H */

@@ -107,6 +107,7 @@ Errcode add_subpath(char *drawer, char *subpath, char *outpath);
 Errcode full_path_name(char *drawer,char *subpath,char *fullpath);
 Errcode make_file_path(char *drawer, char *name, char *outpath);
 Errcode full_file_path(char *drawer, char *name, char *fullpath);
+Errcode make_good_dir(char *path);
 
 Errcode fnsplit(char *path, char *device, char *dir, char *file, char *suffix);
 Errcode split_path(char *p1, char *device, char *dir);

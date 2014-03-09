@@ -1,8 +1,7 @@
-#include "pjbasics.h"
-#include "softmenu.h"
-#include "ftextf.h"
 #include "errcodes.h"
-
+#include "jimk.h"
+#include "ftextf.h"
+#include "softmenu.h"
 
 Errcode soft_menu_err(Errcode err, int class, char *symname)
 {
@@ -71,7 +70,7 @@ Errcode soft_name_scatters(char *symname, Smu_name_scats *nscats,
 	return(smu_name_scatters(&smu_sm,symname,nscats,num_scats,
 							 allocd, flags));
 }
-Errcode soft_load_text(char *key, char **ptext)
+static Errcode soft_load_text(char *key, char **ptext)
 /*******
  * Loads text from softmenu file in global smu_sm and reports any errors
  ******/

@@ -1,6 +1,6 @@
-#include "pjbasics.h"
+#include "jimk.h"
 #include "commonst.h"
-
+#include "scroller.h"
 
 Boolean qscroller(
 	char *result,			/* Put string user selects here */

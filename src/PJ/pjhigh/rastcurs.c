@@ -31,12 +31,12 @@ void hide_rastcursor(Cursorhdr *rastcursor)
 			 rc->cel->width,rc->cel->height); 
 }
 /************************************************************************/
-static erase_rcurs_leftover(Coor x, Coor y, Coor w, Coor h,Rastcursor *rc)
+static void erase_rcurs_leftover(Coor x, Coor y, Coor w, Coor h, Rastcursor *rc)
 {
 Cursorsave *save = rc->save;
 	pj_blitrect(save,x - save->r.x,y - save->r.y,vb.screen->viscel,x,y,w,h);
 }
-static save_newcurs(Coor x, Coor y, Coor w, Coor h,Rastcursor *rc)
+static void save_newcurs(Coor x, Coor y, Coor w, Coor h, Rastcursor *rc)
 {
 Cursorsave *save = rc->save;
 	pj_blitrect(vb.screen->viscel,x,y,save,x - save->r.x,y - save->r.y,w,h);

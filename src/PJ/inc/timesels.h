@@ -32,6 +32,8 @@ extern Button timeslider_sel;
 
 void mtd_ix_dofeel(Button *b, void (*feeler)(void *));
 void mtd_clear_dofeel(Button *b, void (*feeler)(void *));
+void mt_feel_prev(Button *b);
+void mt_feel_next(Button *b);
 void mt_feel_first(Button *b);
 void mt_feel_play(Button *b);
 void mt_feel_last(Button *b);
@@ -39,6 +41,11 @@ void mt_feel_last(Button *b);
 #endif /* MUPARTS_INTERNALS */
 
 void update_time_sel(Button *b);
+void mini_playit(Minitime_data *mtd);
+void mini_prev_frame(Minitime_data *mtd);
+void mini_next_frame(Minitime_data *mtd);
+void mini_first_frame(Minitime_data *mtd);
+void mini_last_frame(Minitime_data *mtd);
 void mini_seek_frame(Minitime_data *mtd, SHORT ix);
 void mini_clear_overlays(Minitime_data *mtd);
 void mini_draw_overlays(Minitime_data *mtd);

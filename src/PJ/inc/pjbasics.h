@@ -80,8 +80,6 @@ extern Errcode builtin_err;     /* in pocolib(pocoface.c) */
 
 /***** initializer functions ******/
 
-Errcode init_menu_resource(char *menu_file);
-
 #ifdef SCRNINIT_CODE
 	#define OPTdata void*
 #else
@@ -102,10 +100,12 @@ Errcode go_resize_screen(Errcode (*reinit)(void *dat),
 void get_default_cmap(Cmap *cm);
 void clip_penwinrect(Rectangle *r);
 Errcode set_pencel_size(SHORT width, SHORT height, SHORT xcen, SHORT ycen);
-void fliborder_off();
-void fliborder_on();
-void erase_flibord();
-void draw_flibord();
+extern void fliborder_off(void);
+extern void fliborder_on(void);
+extern void erase_flibord(void);
+extern void draw_flibord(void);
+extern void hide_mp(void);
+extern void show_mp(void);
 
 extern void hide_mp(void);
 extern void show_mp(void);

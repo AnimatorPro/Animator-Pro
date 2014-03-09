@@ -1,13 +1,15 @@
 #include "errcodes.h"
-#include "pjbasics.h"
+#include "jimk.h"
 #include "scroller.h"
 #include "softmenu.h"
 
 
 extern Image ctridown, ctriup;
-static void pick_entry(), see_pick_entry(), show_entry_info(), 
-	see_info_button(), verify_pick_close();
 
+static void see_pick_entry(Button *b);
+static void see_info_button(Button *b);
+static void show_entry_info(Button *b);
+static void verify_pick_close(Button *b);
 
 static Name_scroller sscroller;
 
@@ -182,6 +184,10 @@ Names *entry;
 static void feel_1_scroll(Button *list_sel,void *rast,int x,int y,
 						  Names *entry, int why)
 {
+	(void)rast;
+	(void)x;
+	(void)y;
+
 	drv_pick_sel.datme = entry;
 	draw_buttontop(&drv_pick_sel);
 	if(why & (SCR_MDHIT|SCR_ENTER))

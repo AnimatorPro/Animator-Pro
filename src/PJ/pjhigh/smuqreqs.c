@@ -1,8 +1,5 @@
-#include "ftextf.h"
-#include "pjbasics.h"
-#include "commonst.h"
+#include "reqlib.h"
 #include "softmenu.h"
-
 
 Boolean soft_qreq_string(char *strbuf,int bufsize,char *key,...)
 {

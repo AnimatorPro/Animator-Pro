@@ -17,8 +17,7 @@ void cleanup_toptext(void)
 	topwin = NULL;
 	tried = 0;
 }
-void check_top_wndo_pos()
-
+void check_top_wndo_pos(void)
 /* see if cursor is close to covering window. move window if so */
 {
 Rectangle newpos;
@@ -43,6 +42,12 @@ Rectangle newpos;
 			reposit_wndo(topwin,&newpos,NULL);
 		}
 	}
+}
+static int check_top_wndo_pos_wndo(void *wndo)
+{
+	(void)wndo;
+	check_top_wndo_pos();
+	return 0;
 }
 static Errcode open_topwin(Vfont *f)
 {
@@ -71,7 +76,7 @@ Errcode err;
 		goto error;
 
 	topwin->ioflags = MMOVE;
-	topwin->doit = check_top_wndo_pos;
+	topwin->doit = check_top_wndo_pos_wndo;
 
 error:
 	tried = 1;
@@ -86,7 +91,6 @@ Errcode ttextf(char *fmt,va_list argptr,char *formats)
 int spwid;
 char buff[TTEXTF_MAXCHARS];
 Vfont *f = vb.screen->mufont;
-int yoset;
 Errcode err;
 
 	if((err = open_topwin(f)) < 0)
@@ -94,7 +98,6 @@ Errcode err;
 
 	spwid = fchar_spacing(f,"m");
 	vnsftextf(buff,sizeof(buff),formats,fmt,argptr);
-    yoset = font_ycent_oset(f,topwin->height);
 	pj_set_rast(topwin,swhite);
 
 	check_top_wndo_pos();

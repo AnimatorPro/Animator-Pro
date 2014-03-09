@@ -1,24 +1,28 @@
-#include "ftextf.h"
-#include "pjbasics.h"
-#include "softmenu.h"
 #include "errcodes.h"
+#include "jimk.h"
+#include "ftextf.h"
+#include "reqlib.h"
+#include "softmenu.h"
 
 typedef struct udd {
-	void (*update)(void *uddat, SHORT val);
+	Errcode (*update)(void *uddat, SHORT val);
 	void *uddat;
 	SHORT min, max;
 } Udd;
 
-static clip_udat(Udd *ud, SHORT val)
+static Errcode clip_udat(void *dat, SHORT val)
 {
+	Udd *ud = dat;
 	if (val < ud->min)
 		val = ud->min;
 	if (val > ud->max)
 		val = ud->max;
 	ud->update(ud->uddat,val);
+	return Success;
 }
 Boolean clip_soft_qreq_number(short *inum,short min,short max, 
-					        VFUNC update, void *vfuncdat,char *key,...)
+		Errcode (*update)(void *data, SHORT val), void *vfuncdat,
+		char *key, ...)
 /* Force number returned by number requestor to be between min and max */
 {
 Boolean ret;

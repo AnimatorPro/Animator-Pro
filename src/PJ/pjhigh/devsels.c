@@ -2,18 +2,21 @@
  * file menus */
 
 #include <ctype.h>
+#include <string.h>
+#include "jimk.h"
 #include "errcodes.h"
 #include "jfile.h"
 #include "libdummy.h"
 #include "memory.h"
 #include "menus.h"
+#include "msfile.h"
 #include "pjbasics.h"
 #include "ptrmacro.h"
 
 typedef struct dsel_group {
 	SHORT devnum;
 	char *drawer;
-    Errcode (*on_newdrawer)();
+    Errcode (*on_newdrawer)(void *data);
     void *on_newd_data;
 	char curdev[DEV_NAME_LEN];
 } Dsel_group;
@@ -21,7 +24,7 @@ typedef struct dsel_group {
 /* A list of disk drives that look like they're really on this machine */
 
 
-void go_updir(Button *b)
+static void go_updir(Button *b)
 /* move up one directory */
 {
 Dsel_group *dg = b->group;
@@ -53,7 +56,7 @@ char *d;
 	(*dg->on_newdrawer)(dg->on_newd_data);
 	draw_buttontop(b);
 }
-void go_rootdir(Button *b)
+static void go_rootdir(Button *b)
 {
 Dsel_group *dg = b->group;
 char *drawer = dg->drawer;
@@ -115,7 +118,6 @@ static void hang_dev_sels(Button *b)
 }
 static void see_device(Button *b)
 {
-Dsel_group *dg = b->group;
 char buf[2];
 
 	switch(b->identity)
@@ -177,9 +179,12 @@ int i,ix;
 	dg->drawer = drawer;
 	dg->on_newd_data = ond_data;
 
-	dg->on_newdrawer = pj_vdo_nutin; /* just in case it's not supplied */
-	if(on_newdrawer)
+	if (on_newdrawer) {
 		dg->on_newdrawer = on_newdrawer;
+	}
+	else { /* just in case it's not supplied */
+		dg->on_newdrawer = (Errcode (*)(void *))pj_errdo_unimpl;
+	}
 
 	hanger->seeme = hang_dev_sels;
 
@@ -213,7 +218,10 @@ int i,ix;
 	sel->next = NULL;
 	return(Success);
 }
-static no_see(Button *b) {}
+static void no_see(Button *b)
+{
+	(void)b;
+}
 void cleanup_dev_sels(Button *hanger)
 {
 	pj_freez(&hanger->children);

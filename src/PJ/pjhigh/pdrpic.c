@@ -1,11 +1,11 @@
 /* this is a local pdr s that are set up for linking in to the code
  * and used by the pdr managing routines */
 
+#include "jimk.h"
 #include "animinfo.h"
 #include "errcodes.h"
 #include "picdrive.h"
 #include "picfile.h"
-#include "pjbasics.h"
 
 Errcode pdr_load_picture(char *pdr_path,char *picname, Rcel *screen)
 {

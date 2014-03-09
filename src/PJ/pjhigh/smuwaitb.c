@@ -1,6 +1,6 @@
-#include "pjbasics.h"
-#include "softmenu.h"
 #include "ftextf.h"
+#include "reqlib.h"
+#include "softmenu.h"
 
 Errcode soft_put_wait_box(char *key,...)
 {

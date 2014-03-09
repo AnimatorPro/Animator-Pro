@@ -1,6 +1,10 @@
-#include "pjbasics.h"
+#include <stdio.h>
+#include "commonst.h"
 #include "errcodes.h"
 #include "fontdev.h"
+#include "jfile.h"
+#include "pjbasics.h"
+#include "reqlib.h"
 #include "resource.h"
 #include "softmenu.h"
 
@@ -72,7 +76,7 @@ char *make_resource_name(char *name, char *path_buf)
 	make_file_path(resource_dir, name, path_buf);
 	return(path_buf);
 }
-void cleanup_menu_resource()
+void cleanup_menu_resource(void)
 {
 	cleanup_common_str();
 	smu_cleanup(&smu_sm);

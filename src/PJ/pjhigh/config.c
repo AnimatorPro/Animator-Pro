@@ -6,12 +6,14 @@
    summa tablet, whether it's safe to speed up the clock interrupt, 
    user interface file path settings. interface menu colors */
 
+#include <stdio.h>
+#include <string.h>
+#include "jimk.h"
 #include "aaconfig.h"
 #include "errcodes.h"
-#include "jfile.h"
-#include "memory.h"
-#include "pjbasics.h"
-#include "ptrmacro.h"
+#include "msfile.h"
+#include "reqlib.h"
+#include "tfile.h"
 #include "util.h"
 
 AA_config vconfg = {  /* Ram image of v.cfg containing default values
@@ -179,6 +181,6 @@ Jfile jcf;
 	}
 	return(err);
 }
-void cleanup_config()
+void cleanup_config(void)
 {
 }

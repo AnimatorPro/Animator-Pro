@@ -1,8 +1,7 @@
-
-#include "ftextf.h"
-#include "commonst.h"
-#include "softmenu.h"
+#include "jimk.h"
 #include "errcodes.h"
+#include "ftextf.h"
+#include "softmenu.h"
 
 static Errcode soft_errline(Errcode err,char *errsym,char *key,va_list *pargs)
 /* note, will not report if Successful or Err_aborted or Err_reported */

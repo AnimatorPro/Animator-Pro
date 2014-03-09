@@ -1,11 +1,15 @@
+#include <stdio.h>
+#include <string.h>
 #define SCRNINIT_CODE
+#include "jimk.h"
 #include "aaconfig.h"
 #include "errcodes.h"
-#include "pjbasics.h"
 #include "resource.h"
 #include "rexlib.h"
+#include "scroller.h"
 #include "softmenu.h"
 #include "util.h"
+#include "vdevcall.h"
 #include "vdevinfo.h"
 #include "wildlist.h"
 
@@ -151,6 +155,7 @@ Vdevice *drv = NULL;
 Boolean is_current;
 char *more_info;
 char *soft_info = NULL;
+(void)dat;
 
 	if (NULL == (mentry = (Mode_entry *)entry)) /* it's possible for us to */
 		return FALSE;						/* get called with a NULL ptr! */

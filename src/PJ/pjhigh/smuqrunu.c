@@ -2,10 +2,11 @@
 #include "pjbasics.h"
 #include "commonst.h"
 #include "softmenu.h"
-
+#include "reqlib.h"
 
 Boolean soft_ud_qreq_number(short *inum,short min,short max, 
-					        VFUNC update, void *vfuncdat,char *key,...)
+		Errcode (*update)(void *data, SHORT val), void *vfuncdat,
+		char *key, ...)
 {
 Boolean ret;
 va_list args;

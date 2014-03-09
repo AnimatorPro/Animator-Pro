@@ -303,6 +303,7 @@ void close_menu(Menuhdr *md);
 
 extern void hide_menu(Menuhdr *m);
 extern Errcode show_menu(Menuhdr *m);
+extern void toggle_menu(void);
 extern void draw_menu(Menuhdr *mh);
 extern void draw_menupull(Menuhdr *mh);
 
@@ -577,6 +578,10 @@ Errcode new_pull(Pull **ppull, char *inits);
  * If the string inits is non-NULL, then
  * allocate extra space at end of pull for 
  * string, and set the Pull data pointer. */
+
+extern void
+pullfmt(Menuhdr *mp, int subspace, int charw, int charh,
+		Rectangle *screen_rect);
 
 /* flags manipulators */
 Pull *id_to_pull(Menuhdr *mh, SHORT id);

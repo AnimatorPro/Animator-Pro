@@ -188,6 +188,8 @@ int smu_name_scatters(struct softmenu *sm,	/* read in a named string */
 
 Errcode soft_name_scatters(char *symname, Smu_name_scats *scts,
 		unsigned int num_scatters, void **allocd, USHORT flags);
+Errcode soft_load_ftext_type(char *key, va_list *pargs,
+		char **pformats, char **ptext);
 
 typedef struct smu_button_list {
 	char *name;
@@ -200,6 +202,7 @@ typedef struct smu_button_list {
 int soft_buttons(char *listsym, Smu_button_list *blist, 
 		unsigned int bcount, void **allocd);
 
+Errcode soft_menu_err(Errcode err, int class, char *symname);
 Errcode soft_qchoice_err(Errcode err, char *symname);
 Errcode soft_strings(char *symname, Smu_strings *s);
 char *soft_string(char *key, char *buf, int len);

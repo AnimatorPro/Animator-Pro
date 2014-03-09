@@ -35,6 +35,7 @@ static Errcode open_picfile(Pdr *pd, char *path, Image_file **pif,
 {
 Picfile *pf;
 Errcode err;
+(void)pd;
 
 	if(NULL == (*pif = pj_zalloc(sizeof(Picfile))))
 		return(Err_no_memory);

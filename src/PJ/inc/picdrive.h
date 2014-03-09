@@ -289,6 +289,8 @@ typedef struct local_pdr {
 	Pdr *header;
 } Local_pdr;
 
+struct names;
+
 extern char 	 gif_pdr_name[];
 extern char 	 fli_pdr_name[];
 extern Local_pdr fli_local_pdr;
@@ -301,6 +303,10 @@ extern Local_pdr pic_local_pdr;
 
 extern	Local_pdr *local_pdrs;
 
+extern Errcode
+go_pdr_menu(char *header, char *name_buf, char *suffi_buf,
+		struct names *local_names, int rwmode, Boolean multiframe_only);
+
 void	add_local_pdr(Local_pdr *lpd); /* make a locally linked in pdr available */
 
 Errcode load_pdr(char *path, Pdr **ppdr);
@@ -312,6 +318,8 @@ int 	pdr_get_suffi(Pdr *pd, char *buf);
 char	*pdr_alloc_info(Pdr *pd);
 void	pdr_free_info(char *info);
 
+void    get_screen_ainfo(Rcel *screen, struct anim_info *spec);
+
 Boolean pdr_best_fit(Pdr *pd, struct anim_info *spec);
 Errcode pdr_create_ifile(Pdr *pd, char *path, Image_file **pifile,
 		struct anim_info *spec);
@@ -320,6 +328,7 @@ Errcode pdr_open_ifile(Pdr *pd, char *path, Image_file **pifile,
 void	pdr_close_ifile(Image_file **pifile);
 Errcode pdr_read_first(Image_file *ifile, Rcel *screen);
 Errcode pdr_read_next(Image_file *ifile,Rcel *screen);
+Errcode pdr_load_picture(char *pdr_path, char *picname, Rcel *screen);
 
 Errcode pdr_save_frames(Image_file *ifile,	Rcel *screen, ULONG num_frames,
 						Errcode (*seek_frame)(int ix,void *seek_data),

@@ -76,6 +76,7 @@ typedef struct vfont
 
 struct font_hdr;
 struct names;
+struct wscreen;
 
 /* defines for font flags. */
 #define VFF_SCALEABLE 	0x0001
@@ -84,6 +85,10 @@ struct names;
 
 extern char sixhi_font_name[];
 extern Vfont *uvfont;
+
+extern Errcode
+font_req(char *font_path, char *wildcard, SHORT *ptop_name, SHORT *point_size,
+		Vfont *pfont, struct wscreen *screen, SHORT *punzag_flag);
 
 extern void init_sail_vfont(Vfont *vf);
 extern void init_sixhi_vfont(Vfont *vf);
@@ -143,6 +148,8 @@ Errcode gftext(RASType *rast,
 
 void close_vfont(Vfont *v);
 Vfont *get_sys_font(void);
+
+extern void free_menu_font(void);
 
 /* what to expand tabs to */
 #define TABEXP 4

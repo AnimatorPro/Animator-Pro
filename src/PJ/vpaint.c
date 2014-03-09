@@ -350,7 +350,6 @@ extern Button sh1_brush_sel;
 	toggle_pen(&sh1_brush_sel);
 }
 
-extern void toggle_menu();
 extern void clear_pic();
 
 

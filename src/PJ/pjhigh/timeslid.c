@@ -1,5 +1,6 @@
 #define MUPARTS_INTERNALS
 #include "pjbasics.h"
+#include "reqlib.h"
 #include "timesels.h"
 
 extern Image cup, cdown, cleft, cright, csleft, cright2;
@@ -7,9 +8,6 @@ extern Image cup, cdown, cleft, cright, csleft, cright2;
 static SHORT frame_ix;
 static Qslider frame_sl = QTSL_INIT1(0, 0, &frame_ix, 1, NULL, leftright_arrs,
 									 TRUE );
-
-extern void mt_feel_prev(Button *b);
-extern void mt_feel_next(Button *b);
 
 static void see_time_slider(Button *b)
 {

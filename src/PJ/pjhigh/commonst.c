@@ -67,7 +67,7 @@ Errcode init_common_str(Softmenu *sm)
 				  Array_els(common_keys), &common_ss, SCT_STRINIT ));
 }
 
-void cleanup_common_str()
+void cleanup_common_str(void)
 {
 	smu_free_scatters(&common_ss);
 }

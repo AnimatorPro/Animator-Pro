@@ -29,6 +29,7 @@ long pj_tell(Jfile f);
 long pj_read(Jfile f, void *buf, long size);
 long pj_write(Jfile f, void *buf, long size);
 
+void remove_path_name(char *path);
 Errcode pj_delete(const char *path);
 Errcode pj_rename(const char *oldname, const char *newname);
 

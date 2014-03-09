@@ -1,8 +1,7 @@
-
-#include "stdtypes.h"
-#include "errcodes.h"
-#include "commonst.h"
 #include <stdarg.h>
+#include "jimk.h"
+#include "commonst.h"
+#include "errcodes.h"
 
 Errcode errline(Errcode err,char *fmt,...)
 

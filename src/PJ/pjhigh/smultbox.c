@@ -1,7 +1,7 @@
-#include "pjbasics.h"
-#include "softmenu.h"
-#include "ftextf.h"
 #include "errcodes.h"
+#include "ftextf.h"
+#include "reqlib.h"
+#include "softmenu.h"
 
 Boolean soft_multi_box(char **keys,char *symbol,...)
 

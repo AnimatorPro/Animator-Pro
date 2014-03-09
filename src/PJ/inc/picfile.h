@@ -47,9 +47,11 @@ enum pic_chunks {
 	PIC_BITPIXELS = 2,	/* uncompressed pixels in Bitmap format */
 };
 
+struct anim_info;
 
 /* "pic" file io calls */
 
+Errcode pic_anim_info(char *ifname, struct anim_info *ainfo);
 Errcode pj_read_pichead(Jfile f,Pic_header *pic);
 
 extern Errcode

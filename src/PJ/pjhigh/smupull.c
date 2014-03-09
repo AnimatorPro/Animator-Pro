@@ -1,6 +1,4 @@
-#include "pjbasics.h"
-#include "errcodes.h"
-#include "resource.h"
+#include "jimk.h"
 #include "softmenu.h"
 
 void scale_pull( Menuhdr *mh, int subspace)

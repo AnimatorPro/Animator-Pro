@@ -36,6 +36,7 @@ static Errcode open_fliif(Pdr *pd, char *path, Image_file **pif,
 {
 Fliif *flif;
 Errcode err;
+(void)pd;
 
 	if(NULL == (*pif = pj_zalloc(sizeof(Fliif))))
 		return(Err_no_memory);
@@ -66,6 +67,7 @@ static Errcode create_fliif(Pdr *pd, char *path, Image_file **pif,
 {
 Fliif *flif;
 Errcode err;
+(void)pd;
 
 	if(NULL == (*pif = pj_zalloc(sizeof(Fliif))))
 		return(Err_no_memory);
@@ -91,6 +93,9 @@ static Errcode fliif_save_frames(Image_file *ifile,
 						   		 Rcel *work_screen )
 {
 Fliif *flif = ((Fliif *)ifile);
+(void)seek_frame;
+(void)seek_data;
+(void)work_screen;
 
 	if(num_frames != 1)
 		return(Err_bad_input);

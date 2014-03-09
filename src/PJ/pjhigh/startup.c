@@ -26,7 +26,7 @@ static char default_config_name[] = "aa.cfg";
 
 Errcode builtin_err; /* for poco and other things */
 
-void restore_ivmode()
+void restore_ivmode(void)
 {
 	if(vb.ivmode != -1)
 		pj_set_vmode(vb.ivmode);

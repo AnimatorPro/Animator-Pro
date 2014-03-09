@@ -1,5 +1,8 @@
 /* menu to select a pdr from the resource directory */
 
+#include <stdio.h>
+#include <string.h>
+#include "jimk.h"
 #include "errcodes.h"
 #include "ftextf.h"
 #include "jfile.h"
@@ -8,9 +11,12 @@
 #include "picdrive.h"
 #include "pjbasics.h"
 #include "resource.h"
+#include "ftextf.h"
 #include "rexlib.h"
+#include "scroller.h"
 #include "softmenu.h"
 #include "util.h"
+#include "wildlist.h"
 
 typedef struct pdr_entry {
 	Names hdr;
@@ -145,6 +151,7 @@ static Smu_name_scats scts[] = {
 	{ "box_text" },
 
 };
+(void)dat;
 
 	if(!pdentry)
 		return FALSE;
@@ -246,10 +253,10 @@ Errcode go_pdr_menu( char *header,	   /* header text for menu */
 struct pick_dat pdat;
 Errcode err;
 char opath[PATH_SIZE];
-char cur_name[PATH_SIZE];
 Names *namelist;
 Pdr_entry *pdrlist = NULL;
 Pdr_entry *current;
+(void)local_names;
 
 	get_dir(opath);
 	if((err = change_dir(resource_dir)) < Success)

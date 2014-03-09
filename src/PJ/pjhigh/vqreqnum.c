@@ -1,6 +1,6 @@
-#include "ftextf.h"
-#include "pjbasics.h"
+#include "jimk.h"
 #include "commonst.h"
+#include "ftextf.h"
 
 extern Image *leftright_arrs[];
 

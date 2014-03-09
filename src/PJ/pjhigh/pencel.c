@@ -105,26 +105,31 @@ Pixel c1;
 
 	draw_quad(vb.screen,c1,w->x - 1,w->y - 1,w->width + 2,w->height + 2);
 }
-void draw_flibord()
+void draw_flibord(void)
 {
 	do_fliborder(PENWNDO,1);
 }
-void erase_flibord()
+static void draw_flibord_wndo(Wndo *w)
+{
+	(void)w;
+	draw_flibord();
+}
+void erase_flibord(void)
 {
 	do_fliborder(PENWNDO,0);
 }
-void fliborder_off()
+void fliborder_off(void)
 /* Turn off the box surrounding the active drawing area.
  */
 {
 	if(PENWNDO->redraw)
 	{
-		erase_flibord(PENWNDO);
+		erase_flibord();
 		PENWNDO->flags &= ~(WNDO_MUCOLORS);
 	}
 	PENWNDO->redraw = NULL;
 }
-void fliborder_on()
+void fliborder_on(void)
 /* Set up things so that a rectangle is drawn around the active
  * drawing area when menus are up.
  */
@@ -134,7 +139,7 @@ void fliborder_on()
 			clipcode_crects((Cliprect *)&(PENWNDO->CRECTSTART),
 							 (Cliprect *)&(vb.screen->wndo.CRECTSTART))))
 	{
-		PENWNDO->redraw = draw_flibord;
+		PENWNDO->redraw = draw_flibord_wndo;
 		PENWNDO->flags |= WNDO_MUCOLORS;
 		redraw_wndo(PENWNDO);
 	}

@@ -1,6 +1,6 @@
+#include "animinfo.h"
 #include "memory.h"
 #include "picfile.h"
-#include "animinfo.h"
 
 Errcode pic_anim_info(char *name, Anim_info *pinfo)
 {

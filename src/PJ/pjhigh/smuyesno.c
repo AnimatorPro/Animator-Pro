@@ -1,6 +1,6 @@
-#include "pjbasics.h"
-#include "softmenu.h"
 #include "ftextf.h"
+#include "reqlib.h"
+#include "softmenu.h"
 
 Boolean soft_yes_no_box(char *key,...)
 {

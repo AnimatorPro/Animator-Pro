@@ -4,6 +4,7 @@
    if you have duplicate colors in the source it sometimes hangs.
    (So filter out duplicate colors before calling pack_ctable... ) */
 
+#include <string.h>
 #include "memory.h"
 #include "wndo.h"
 #include "cmap.h"

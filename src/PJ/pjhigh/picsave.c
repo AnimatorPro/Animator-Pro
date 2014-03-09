@@ -1,11 +1,8 @@
-
 #include "errcodes.h"
 #include "memory.h"
-#include "vmagics.h"
+#include "palchunk.h"
 #include "picfile.h"
-
-
-
+#include "vmagics.h"
 
 Errcode save_pic(char *name,Rcel *screen,LONG id, Boolean save_colors)
 /* if save_colors is FALSE it may save a raster without a cmap */
@@ -108,7 +105,6 @@ long bpr;
 	err = pj_writeoset(f,&pic,0,sizeof(pic));
 
 error:
-done:
 	pj_gentle_free(lbuf);
 	pj_close(f);
 	if(err < Success)

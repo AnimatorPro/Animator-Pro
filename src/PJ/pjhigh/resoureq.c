@@ -1,5 +1,8 @@
-#include "pjbasics.h"
-
+#include <string.h>
+#include "jimk.h"
+#include "resource.h"
+#include "scroller.h"
+#include "wildlist.h"
 
 Boolean req_resource_name(char *result, char *pat, char *hailing)
 

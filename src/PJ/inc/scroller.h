@@ -75,6 +75,9 @@ typedef struct name_scroller {
 #define SCR_MDHIT	0x02 /* mouse pen double hit */
 #define SCR_ENTER	0x04 /* enter key hit during key mode */
 
+extern Boolean
+qscroller(char *result, char *hailing, Names *items, SHORT lines, SHORT *ipos);
+
 extern Errcode
 build_qscroller(char *result, Wscreen *s, Menuhdr **pmh, char *hailing,
 		Names *items, SHORT lines, char *ok, char *cancel, SHORT *ipos);
@@ -108,5 +111,11 @@ void init_name_scroller(Name_scroller *scr,Wscreen *s);
 void see_scroll_names(Button *b); /* seeme for list_sel button */
 int scroll_name_xoff(Vfont *f);
 int scroll_names_ysize(Vfont *f, int lines);
+
+extern Errcode
+go_driver_scroller(char *title, Names *list, Names *initial_entry,
+		Errcode (*pick_entry)(Names *entry, void *dat),
+		Boolean (*show_info)(Names *entry, void *dat), void *dat,
+		char **button_texts);
 
 #endif /* SCROLLER_H */

@@ -30,11 +30,11 @@ Image ckill = IMAGE_INIT1(ITYPE_BITPLANES,1,ikill, 16, 8);
 
 static UBYTE izin[] = { /* 6x6 */
 0xff^0x80, 0xff^0xe0, 0xff^0xe0, 0xff^0xd8, 0xff^0xb8, 0xff^0x7c, };
-Image zin = IMAGE_INIT1(ITYPE_BITPLANES,1,izin, 6, 6);
+static Image zin = IMAGE_INIT1(ITYPE_BITPLANES,1,izin, 6, 6);
 
 static UBYTE izout[] = { /* 6x6 */
 0xff^0xf8, 0xff^0x74, 0xff^0x6c, 0xff^0x1c, 0xff^0x1c, 0xff^0x4, };
-Image zout = IMAGE_INIT1(ITYPE_BITPLANES,1,izout, 6, 6);
+static Image zout = IMAGE_INIT1(ITYPE_BITPLANES,1,izout, 6, 6);
 
 static UBYTE idown[] = 
 	{

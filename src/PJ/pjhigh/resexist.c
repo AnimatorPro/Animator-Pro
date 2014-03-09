@@ -1,4 +1,5 @@
-#include "pjbasics.h"
+#include "jfile.h"
+#include "resource.h"
 
 Boolean resource_exists(char *name)
 {

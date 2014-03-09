@@ -4,8 +4,6 @@
 #include "timesels.h"
 
 extern Image cup, cdown, cleft, cright, csleft, cright2;
-extern void mt_feel_prev(Button *b);
-extern void mt_feel_next(Button *b);
 
 /****** minitime group *******/
 
@@ -19,8 +17,9 @@ static void mt_opt_all(Button *b)
 {
 	mtd_ix_dofeel(b,MTD->opt_all);
 }
-static SHORT ret_neg1()
+static SHORT ret_neg1(void *data)
 {
+	(void)data;
 	return(-1);
 }
 static void mt_see_ix(Button *b)

@@ -1,6 +1,9 @@
 /* Filemenu.c - code for the famous PJ file requestor with scrolling list */
 
 #include <ctype.h>
+#include <stdio.h>
+#include <string.h>
+#include "jimk.h"
 #include "commonst.h"
 #include "errcodes.h"
 #include "filepath.h"
@@ -13,7 +16,7 @@
 #include "wildlist.h"
 
 static void fq_set_wild(Button *b);
-void accept_file_name(Button *b);
+static void accept_file_name(Button *b);
 
 extern Image ctriup, ctridown;
 
@@ -361,10 +364,19 @@ Errcode err;
 	return(Success);
 }
 
+static Errcode new_drawer_with_data(void *data)
+{
+	(void)data;
+	return new_drawer();
+}
+
 static void feel_1_fname(Button *m,void *rast,int x,int y,Names *entry,
 					  int why)
 {
 char *name;
+(void)rast;
+(void)x;
+(void)y;
 
 	name = entry->name;
 	if (name[0] == '\\')	/* a directory */
@@ -424,7 +436,7 @@ static void undo_drawer(Button *m)
 		undo_stringq(m, &fdrawer_sel);
 }
 
-static void fq_new_drawer()
+static void fq_new_drawer(void)
 {
 int len;
 
@@ -456,7 +468,7 @@ int ret;
 		}
 }
 
-static void fq_redraw_new_wild()
+static void fq_redraw_new_wild(void)
 /* Redraw parts of menu that need it whenever the wildcard changes. */
 {
 	draw_buttontop(&fwild_sel);
@@ -491,7 +503,7 @@ static void inc_file(void)
 	*fscroller_top_name = fscroller.top_name;
 }
 
-void accept_file_name(Button *b)
+static void accept_file_name(Button *b)
 {
 int ret;
 Stringq *sq = b->datme;
@@ -622,7 +634,7 @@ void *ss = NULL;
 	fmu_sdots_sel.next = dhanger;
 
 	if((err = alloc_dev_sels(dhanger,&fmu_devsel_320size,4,5,dir_in,
-							 new_drawer )) < Success)
+							 new_drawer_with_data, NULL)) < Success)
 	{
 		goto error;
 	}

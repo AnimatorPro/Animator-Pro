@@ -72,8 +72,7 @@ Errcode move_penwndo()
 Wndo *fw = PENWNDO;
 Errcode err;
 
-
-	erase_flibord(fw);
+	erase_flibord();
 	if(fw->flags & WNDO_BACKDROP)
 	{
 		if(marqmove_wndo(fw, (Rectangle *)&(vb.screen->wndo.RECTSTART)))

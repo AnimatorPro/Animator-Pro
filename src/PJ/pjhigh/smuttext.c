@@ -1,6 +1,5 @@
-#include <stdarg.h>
+#include <string.h>
 #include "errcodes.h"
-#include "pjbasics.h"
 #include "reqlib.h"
 #include "ftextf.h"
 #include "softmenu.h"

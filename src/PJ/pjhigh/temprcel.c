@@ -1,11 +1,11 @@
-
+#include <stdio.h>
 #include "errcodes.h"
-#include "pjbasics.h"
+#include "jimk.h"
 
 Errcode temp_save_rcel(Rcel_save *sc, Rcel *cel)
 /* Save a rcel to the card if possible or else to a temp file */
 {
-static rnum = 0;
+static int rnum = 0;
 Errcode err;
 
 	/* Try to put it on the video card */

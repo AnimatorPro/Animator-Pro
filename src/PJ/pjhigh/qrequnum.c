@@ -1,10 +1,10 @@
 #ifdef SLUFFED
 #include "ftextf.h"
-#include "pjbasics.h"
-#include "commonst.h"
+#include "reqlib.h"
 
 Boolean ud_qreq_number(short *inum,short min,short max, 
-					   EFUNC update, void *vfuncdat,char *hailing,...)
+		Errcode (*update)(void *data, SHORT val), void *vfuncdat,
+		char *hailing,...)
 {
 Boolean ret;
 va_list args;

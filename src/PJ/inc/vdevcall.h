@@ -16,6 +16,8 @@
 
 extern char pj_mcga_name[]; /* name used by pj_open_ddriver() that opens mcga */
 
+extern void cleanup_screen(void);
+
 Errcode pj_open_loadable_vdriver(Vdevice **pvd, char *name);
 Errcode pj_open_mcga_vdriver(Vdevice **pvd);
 Errcode pj_open_ddriver(Vdevice **pvd, char *name);
@@ -26,5 +28,9 @@ Errcode pj_vd_open_screen(Vdevice *vd, Raster *r,
 Errcode pj_vd_open_raster(Vdevice *vd, Rasthdr *spec, 
 					   Raster *r, UBYTE displayable);
 
+extern int pj_get_vmode(void);
+extern void pj_set_vmode(int mode);
+extern void restore_ivmode(void);
+extern void pj_wait_vsync(void);
 
 #endif /* VDEVCALL_H */

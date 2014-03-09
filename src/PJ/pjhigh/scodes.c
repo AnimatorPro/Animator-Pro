@@ -5,7 +5,7 @@
 
 static char secret_code[] = " ";
 
-Errcode init_scodes()
+Errcode init_scodes(void)
 /* this should do some security verify ??? */
 {
 	return(Success);
