@@ -224,7 +224,7 @@ extern char pj_mcga_name[];
 		if((err = open_wscreen(&vb.screen,&newscr)) < 0)
 			goto error;
 
-		vb.screen->mc_ideals = &vconfg.mc_ideals;
+		vb.screen->mc_ideals = vconfg.mc_ideals;
 	}
 
 	/* set pre calc'd center point */
