@@ -13,6 +13,7 @@ add_subdirectory(gfx)
 add_subdirectory(input)
 add_subdirectory(menus)
 add_subdirectory(picdrive)
+add_subdirectory(pjhigh)
 add_subdirectory(poco)
 add_subdirectory(rastlib)
 add_subdirectory(rexlib)
@@ -35,6 +36,7 @@ target_link_libraries(pj
 	macinput
 	menulib
 	picdrive
+	pjhigh
 	poco
 	raster
 	minirex
