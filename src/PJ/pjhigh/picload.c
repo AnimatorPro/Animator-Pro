@@ -1,3 +1,4 @@
+#include <assert.h>
 #include "cmap.h"
 #include "errcodes.h"
 #include "palchunk.h"
@@ -21,7 +22,7 @@ assert(data_size >= 0);
 
 	/* by the time we get here we must have the right type of chunk and
 	 * the file must be positioned to the beginning of the data */
-
+	assert(chunk_type == PIC_BITPIXELS || chunk_type == PIC_BYTEPIXELS);
 	switch(chunk_type)
 	{
 		case PIC_BITPIXELS:
@@ -48,6 +49,9 @@ assert(data_size >= 0);
 
 			return(pj_readoset(f,((Bytemap *)cel)->bm.bp[0],
 								 offset, ((Bytemap *)cel)->bm.psize));
+
+		default:
+			return Err_nogood;
 	}
 
 	/* open a big buffer to read in pic */
