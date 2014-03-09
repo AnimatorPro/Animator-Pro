@@ -14,10 +14,17 @@
 
 static void fq_set_wild(Button *b);
 void accept_file_name(Button *b);
-void fq_ok_plus(), fq_wild_stringq(), fq_drawer_stringq(), undo_drawer(),
-	undo_file();
 
 extern Image ctriup, ctridown;
+
+static void init_fscroller(void);
+static void redraw_fscroller(void);
+static void undo_file(Button *m);
+static void undo_drawer(Button *m);
+static void fq_drawer_stringq(Button *m);
+static void fq_wild_stringq(Button *b);
+static void fq_ok_plus(Button *b);
+static void inc_file(void);
 
 static Button fcancel_sel = MB_INIT1(
 	NONEXT,
@@ -382,7 +389,7 @@ char *name;
 	}
 }
 
-static void init_fscroller()
+static void init_fscroller(void)
 {
 SHORT tname;
 

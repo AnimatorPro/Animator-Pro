@@ -24,6 +24,9 @@ typedef struct qfont_cb
 	} Qfont_cb;
 Qfont_cb *qfcb;
 
+static void init_font_scroller(void);
+static void free_qfont_font(void);
+
 /*** Display Functions ***/
 static void font_sample_text(Button *m);
 static void see_point_size(Button *m);
@@ -534,7 +537,7 @@ char fpath[PATH_SIZE];
 	if(why == SCR_ENTER)
 		mb_close_ok(b);
 }
-static void init_font_scroller()
+static void init_font_scroller(void)
 {
 char saved_c;
 char *name;
@@ -553,7 +556,7 @@ char *name;
 	font_scroller.feel_1_cel = feel_1_font;
 	init_name_scroller(&font_scroller,qfcb->screen);
 }
-static free_qfont_font()
+static void free_qfont_font(void)
 {
 	if (qfcb->font_err == Success)
 		close_vfont(&qfcb->vfont);
