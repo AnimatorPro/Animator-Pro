@@ -253,7 +253,7 @@ extern char pj_mcga_name[];
 
 	/* save actual operational setting in config file */
 
-	if(memcmp(&sm,&vconfg.smode))
+	if (memcmp(&sm, &vconfg.smode, sizeof(sm)))
 	{
 		vconfg.smode = sm;
 		rewrite_config();
