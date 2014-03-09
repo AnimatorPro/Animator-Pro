@@ -40,7 +40,7 @@ static Errcode build_pdr_list(Names *wildlist, Pdr_entry **pdrlist,
 /* while in resource directory builds list of pdr info name strings for use
  * in the driver menu */
 {
-Errcode err;
+Errcode err = Err_nogood;
 char *pdr_name;
 Pdr_entry *entry;
 Pdr_entry **pentry;

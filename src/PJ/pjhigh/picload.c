@@ -112,7 +112,7 @@ Errcode pj_read_picbody(Jfile f,Pic_header *pic,Raster *cel, Cmap *cmap)
  * into an Rcel it will truncate the pic if the cel is smaller and
  * center it otherwise */
 {
-Errcode err;
+Errcode err = Err_nogood;
 Chunkparse_data pd;
 
 	if(pic->id.type == OPIC_MAGIC)
@@ -162,7 +162,10 @@ Chunkparse_data pd;
 		}
 	}
 	if(pd.error < Success)
+	{
+		err = pd.error;
 		goto error;
+	}
 		
 	if(cmap) /* no cmap chunk found and requested */
 	{
