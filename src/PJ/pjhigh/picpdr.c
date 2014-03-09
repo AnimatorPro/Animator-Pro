@@ -10,7 +10,7 @@
 typedef struct picfile {
 	Image_file ifile;
 	Pic_header pic;
-	Jfile *fd;
+	Jfile fd;
 } Picfile;
 
 
