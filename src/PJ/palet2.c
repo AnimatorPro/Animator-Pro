@@ -632,9 +632,6 @@ Rgb3 omc[NUM_MUCOLORS];
 /* Some RGB values for common colors */
 Rgb3 pure_white = {255,255,255};
 Rgb3 pure_black = {0,0,0};
-Rgb3 pure_red = {255, 0, 0};
-Rgb3 pure_green = {0, 255, 0};
-Rgb3 pure_blue = {0, 0, 255};
 
 Boolean visible_cmap(void)
 /* Are colors distinct enough from each other? */

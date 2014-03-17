@@ -15,54 +15,6 @@
 extern Button dsel1_sel, it0_sel; /* first pen tool slot first ink slot */
 extern Menuhdr quick_menu;
 
-#define DEBUG
-
-#ifdef DEBUG
-static void poke_bg(Rgb3 *p)
-{
-	pj_set_colors(&(vb.screen->wndo), 0,1,(UBYTE *)p);
-}
-
-static void restore_bg(void)
-{
-	pj_set_colors(vb.screen, 0,1,(UBYTE *)(vb.screen->wndo.cmap->ctab));
-}
-
-static void flash_bg(Rgb3 *p)
-{
-poke_bg(p);
-wait_a_jiffy(4);
-restore_bg();
-}
-#endif /* DEBUG */
-
-
-#ifdef SLUFFED
-#endif /* SLUFFED */
-void flash_green(void)
-{
-extern Rgb3 pure_green;
-flash_bg(&pure_green);
-}
-
-
-#ifdef DEBUG
-#endif /* DEBUG */
-void flash_red(void)
-{
-extern Rgb3 pure_red;
-flash_bg(&pure_red);
-}
-
-#ifdef SLUFFED
-#endif /* SLUFFED */
-void flash_blue(void)
-{
-extern Rgb3 pure_blue;
-
-flash_bg(&pure_blue);
-}
-
 #ifdef SLUFFED
 long fli_screen_size()
 {

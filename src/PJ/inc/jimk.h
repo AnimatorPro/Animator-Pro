@@ -321,7 +321,7 @@ extern char dirty_frame;	/* need to recompress frame? */
 extern long dirty_strokes;	/* # of strokes */
 
 /* RGB values for some of my favorite colors.  Not used much lately. */
-extern Rgb3 pure_white, pure_black, pure_red, pure_green, pure_blue;
+extern Rgb3 pure_white, pure_black;
 
 
 /* Some variable to maintain start and stop of time range we're
