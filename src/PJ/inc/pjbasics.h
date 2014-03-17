@@ -104,8 +104,6 @@ extern void fliborder_off(void);
 extern void fliborder_on(void);
 extern void erase_flibord(void);
 extern void draw_flibord(void);
-extern void hide_mp(void);
-extern void show_mp(void);
 
 extern void hide_mp(void);
 extern void show_mp(void);
