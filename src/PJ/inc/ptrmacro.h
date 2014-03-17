@@ -27,31 +27,6 @@
 #define POSTOSET(struc,field) \
 	(OFFSET(struc,field)+sizeof(MEMBER(struc,field)))
 
-/* macro for defining pad sizes in structures can not define a pad of 
- * less than two bytes  one may use pname for the offset to it but
- * sizeof(struc->pname) will not be valid 
- *
- *	struct sname {
- *		char fld1[64];
- *		PADTO(68,sname,pname);
- *	};
- * will make:
- *
- *	struct sname {
- *		char fld1[64];
- *		UBYTE pname[1];
- *		UBYTE __pname[3];
- *	};
- *
- * TODO: this doesn't work.
- */
-#if defined(__WATCOMC__)
-#define PADTO(sz,struc,padfld) \
-	UBYTE padfld[1];UBYTE __##padfld[(sz)-OFFSET(struct struc,padfld)-1]
-#else /* __WATCOMC__ */
-#define PADTO(sz,struc,padfld)
-#endif /* __WATCOMC__ */
-
 /* returns pointer to structure given struct name, field name, and
  * pointer to field */
 
