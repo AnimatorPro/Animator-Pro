@@ -1022,12 +1022,9 @@ typedef struct plinedat {
 	Rcel *blitsrc;
 } Plinedat;
 
-void break_line(){}
-
 static Errcode fcel_putline(Plinedat *pd, Pixel *line,
 							Coor x, Coor y, Ucoor width)
 {
-	break_line();
 	if(pd->pline == NULL)
 	{
 		if(pd->tcxl.xlat != NULL)

@@ -570,7 +570,6 @@ static void id_set_cel_tool(SHORT id)
 }
 static void mb_set_celtool(Button *b)
 {
-	break_here();
 	id_set_ctool(b->identity);
 	mb_unhi_group(b);
 	vs.cur_cel_tool = vl.ptool->ot.id;
@@ -718,14 +717,10 @@ int i;
 	vs.render_under = ounder;
 	return(err);
 }
-void break_there()
-{
-}
 static Errcode init_tcolor_ptool(Pentool *pt)
 {
 Errcode err;
 
-	break_there();
 	/* if overlays hidden do not draw cel */
 	if(!thecel || flx_olays_hidden())
 		return(Success);
@@ -733,14 +728,9 @@ Errcode err;
 		cmu_marqi_cel();
 	return(err);
 }
-void break_here()
-{
-}
 static void cel_tcolor_ptfunc(Pentool *pt,Wndo *w)
 {
 Pixel color;
-
-break_here();
 
 	cel_cancel_undo();
 	if(!thecel)
