@@ -1061,20 +1061,10 @@ static void toolcel_color_redraw(void *dat, USHORT why)
 	}
 }
 
-static void cmu_rmode_redraw(void *dat, USHORT why)
-{
-	mh_draw_group(&cel_menu, &vs.zero_clear);
-}
 static void toolcel_rmode_redraw(void *dat, USHORT why)
 {
 	cm_deltadraw(1);
 }
-
-static Redraw_node cmu_rmode_rn = {
-	NULL,NULL, /* node */
-	cmu_rmode_redraw,
-	NULL,
-	RSTAT_ZCLEAR };
 
 static Redraw_node toolcel_rn = {
 	NULL,NULL, /* node */
