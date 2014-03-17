@@ -50,8 +50,6 @@
 
 #define Array_els(arr) (sizeof(arr)/sizeof(arr[0]))
 
-#define strempty(s) ((s)[0] == 0)
-
 /* macro to assign something to what a void pointer points to. */
 #define vass(v,type) (*((type *)(v)))
 
