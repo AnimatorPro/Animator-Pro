@@ -22,16 +22,19 @@ return((long)vb.pencel->width * (long)vb.pencel->height);
 }
 #endif /* SLUFFED */
 
+#ifdef WITH_POCO
 int fli_screen_width()
 {
 return(vb.pencel->width);
 }
+#endif /* WITH_POCO */
 
+#ifdef WITH_POCO
 int fli_screen_height()
 {
 return(vb.pencel->height);
 }
-
+#endif /* WITH_POCO */
 
 void ccolor_dot(SHORT x,SHORT y)
 {
