@@ -570,10 +570,14 @@ static char *keys[] = {
 
 void main_selit(Menuhdr *mh, SHORT hitid)
 {
+(void)mh;
+
 hide_mp();
 if (hitid > POC_DOT_PUL && hitid <= POC_DOT_PUL+10) /* poco call */
 	{
+#ifdef WITH_POCO
 	run_pull_poco(mh,hitid);
+#endif /* WITH_POCO */
 	}
 else
 	{

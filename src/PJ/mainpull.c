@@ -135,21 +135,20 @@ change_dir(vb.init_drawer);
 return(softerr(err,"poco_leaf"));
 }
 
-
+#ifdef WITH_POCO
 static void poco_pull_path(Menuhdr *mh, int id, char *buf)
 {
 make_resource_name(id_to_pull(mh,id)->data, buf);
 strcat(buf, ".POC");
 }
+#endif /* WITH_POCO */
 
+#ifdef WITH_POCO
 Errcode run_pull_poco(Menuhdr *mh, SHORT id)
 {
-#ifdef WITH_POCO
 char ppath[PATH_SIZE];
 
 poco_pull_path(mh,id,ppath);
 return(qrun_pocofile(ppath,FALSE));
-#else /* WITH_POCO */
-return(Err_unimpl);
-#endif /* WITH_POCO */
 }
+#endif /* WITH_POCO */
