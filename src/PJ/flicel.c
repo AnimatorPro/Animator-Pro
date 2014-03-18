@@ -1159,12 +1159,14 @@ done:
 	return(err);
 }
 
+#ifdef WITH_POCO
 Errcode render_thecel()
 {
 	if (thecel == NULL)
 		return(Err_abort);
 	return(draw_flicel(thecel,DRAW_RENDER,NEW_CFIT));
 }
+#endif /* WITH_POCO */
 
 #ifdef SLUFFED
 void qfind_the_cel()
