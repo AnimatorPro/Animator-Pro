@@ -230,6 +230,8 @@ Vset_flidef fdef;
 	}
 	return(err);
 }
+
+#ifdef WITH_POCO
 Errcode resize_default_temps(SHORT width, SHORT height)
 
 /* called from poco and the like to reset to default settings */
@@ -256,6 +258,7 @@ Errcode err, ret;
 	show_mp();
 	return(ret);
 }
+#endif
 
 Errcode load_fli(char *title)
 
