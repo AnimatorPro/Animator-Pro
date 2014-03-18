@@ -190,6 +190,7 @@ SHORT ocolor;
 #undef c
 }
 
+#ifdef WITH_POCO
 Errcode rend_circ(int x, int y, int radius)
 {
 Redo_rec rr;
@@ -201,6 +202,7 @@ Redo_rec rr;
 	return(_redo_draw(&rr));
 #undef ci
 }
+#endif /* WITH_POCO */
 
 static Errcode redo_box(Redo_rec *r)
 {
