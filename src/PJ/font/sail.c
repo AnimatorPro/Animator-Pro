@@ -1,4 +1,4 @@
-
+#ifdef SLUFFED
 /* sail.c - Data for Poco's lo-res font. */
 
 #include "stdtypes.h"
@@ -105,10 +105,9 @@ static struct font_hdr sail_font =
 	NULL,	/* next font */
 	};
 
-
 void init_sail_vfont(Vfont *vf)
 {
 	init_st_vfont(vf,&sail_font);
 	vf->close_vfont = NULL; /* this is static */
 }
-
+#endif /* SLUFFED */

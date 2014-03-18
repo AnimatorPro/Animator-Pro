@@ -6,7 +6,6 @@ set(FONTLIB_SRC_FILES
 	hpjet.c
 	vfont.c
 	stfont.c
-	sail.c
 	sixhi.c
 	wwcountl.c
 	wwcstart.c

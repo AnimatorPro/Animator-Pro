@@ -10,6 +10,7 @@ Vfont *uvfont = &_uvfont;
 
 static char *system_font_name = sixhi_font_name;
 
+#ifdef WITH_POCO
 Vfont *get_poco_font()
 /* Default to Aegis Animator style font */
 {
@@ -17,6 +18,8 @@ static Vfont sfont;
 	init_sail_vfont(&sfont);
 	return(&sfont);
 }
+#endif /* WITH_POCO */
+
 void release_uvfont(void)
 /* Release memory associated with user font.  */
 {
