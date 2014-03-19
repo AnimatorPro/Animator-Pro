@@ -1,15 +1,12 @@
-
 /* pentools.c - routines that recieve input when the cursor is over the
    drawing screen (and not in a sub-menu).  */
 
 #include "jimk.h"
-#include "errcodes.h"
-#include "redo.h"
 #include "broadcas.h"
+#include "errcodes.h"
 #include "inks.h"
-
-/* some functions for line drawing */
-extern int random();
+#include "redo.h"
+#include "util.h"
 
 static void save_thik_line_undo(SHORT y1, SHORT y2, SHORT brushsize);
 static Errcode dtool(int mode);
@@ -428,7 +425,7 @@ Boolean check_time;
 Boolean pressure_sensitive = is_pressure();
 Spray_redo sr;
 
-	srandom(1); /* make it repeatable... */
+	pj_srandom(1); /* make it repeatable... */
 	set_full_gradrect();
 	if((err = make_render_cashes()) < 0)
 		return(err);
@@ -477,7 +474,7 @@ Spray_redo sr;
 
 		while(--i >= 0)
 		{
-			polar( random()+roff++, random()%spread, xy);
+			polar(pj_random() + roff++, pj_random() % spread, xy);
 			xy[0]+=rp.x;
 			xy[1]+= rp.y;
 			save_undo_brush(xy[1]);

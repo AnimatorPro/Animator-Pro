@@ -15,4 +15,7 @@ extern int txtncmp(const char *as, const char *bs, int len);
 extern char *clone_string(char *s);
 extern void tr_string(char *string, char in, char out);
 
+extern void pj_srandom(int seed);
+extern int pj_random(void);
+
 #endif

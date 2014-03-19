@@ -5,6 +5,7 @@
 #include "options.h"
 #include "rastlib.h"
 #include "render.h"
+#include "util.h"
 
 static Pixel rclosest_color(Thash *th, const Rgb3 *oldc,
 							const SHORT underc, const SHORT dither)
@@ -110,8 +111,8 @@ SHORT endc;
 Short_xy nxy;
 
 endc = inky->strength+1;
-nxy.x = x+random()%(endc) - (endc>>1);
-nxy.y = y+random()%(endc) - (endc>>1);
+nxy.x = x + pj_random()%(endc) - (endc>>1);
+nxy.y = y + pj_random()%(endc) - (endc>>1);
 clip_xy(&nxy);
 return(pj_get_dot(undof,nxy.x,nxy.y));
 }

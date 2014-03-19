@@ -7,6 +7,7 @@
 #include "imath.h"
 #include "memory.h"
 #include "rastrans.h"
+#include "util.h"
 
 Compocb ccb;
 
@@ -1052,7 +1053,7 @@ static Errcode init_boxil_mask(Pframedat *pfd)
 Errcode err;
 Rasthdr spec;
 
-	srandom(1);
+	pj_srandom(1);
 	pfd->reverse_wipe = FALSE; /* this doesn't make sense here it's random */
 	init_masked_pframe(pfd);
 
@@ -1126,7 +1127,6 @@ static Errcode get_boxil_mask(int tscale0,int tscale1, Pframedat *pfd)
 ULONG boxils_needed;
 Coor x, y;
 Ucoor width, height;
-extern int random();
 
 	width = (pfd->boxil_mask->width);
 	height = (pfd->boxil_mask->height);
@@ -1136,8 +1136,8 @@ extern int random();
 
 	while(pfd->boxils_done < boxils_needed)
 	{
-		x = ((ULONG)random())%width;
-		y = ((ULONG)random())%height;
+		x = ((ULONG)pj_random()) % width;
+		y = ((ULONG)pj_random()) % height;
 
 		if(pfd->invert)
 		{
