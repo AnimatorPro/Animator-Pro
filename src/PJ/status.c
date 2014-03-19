@@ -7,8 +7,6 @@
 #ifdef SLUFFED
 #include "memory.h"
 
-extern long add_up_frames();
-
 void status(void)
 {
 long tot;

@@ -14,6 +14,7 @@ static int cmp_flx(Flx *f1, Flx *f2)
 return(f1->foff>f2->foff ? -1 : 1);
 }
 
+#ifdef SLUFFED
 LONG add_up_frames(void)
 {
 int i;
@@ -29,6 +30,7 @@ while (--i >= 0)
 	}
 return(acc);
 }
+#endif /* SLUFFED */
 
 LONG flx_file_hi()	/* return last byte of flx file actually used... */
 {
