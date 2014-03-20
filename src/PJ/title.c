@@ -285,7 +285,7 @@ static Button tit_tit_sel = MB_INIT1(
 void seebg_title_back();
 
 static Menuhdr tit_menu = {
-	{320,62,0,137,},   /* width, height, x, y */
+	{320,62,0,137},   /* width, height, x, y */
 	TITLE_MUID,		/* id */
 	PANELMENU,		/* type */
 	&tit_tit_sel,	/* buttons */
@@ -295,6 +295,14 @@ static Menuhdr tit_menu = {
 	NULL,					/* dodata */
 	NULL,					/* domenu */
 	(MBPEN|MBRIGHT|KEYHIT), /* ioflags */
+	0,				/* flags */
+	NULL,			/* mw */
+	NULL,			/* group */
+	{ NULL, NULL },	/* node */
+	NULL,			/* procmouse */
+	NULL,			/* on_showhide */
+	NULL,			/* cleanup */
+	0, 0, 0, 0		/* scaled width, height, x, y */
 };
 
 static Smu_button_list tit_smblist[] = {

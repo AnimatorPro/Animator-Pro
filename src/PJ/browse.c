@@ -313,7 +313,7 @@ static void see_browse_bg(Menuwndo *mw)
 }
 
 Menuhdr bro_menu = {
-	{320,200,0,0,},
+	{320,200,0,0},	/* orig_rect */
 	BROWSE_MUID,	/* id */
 	PANELMENU,		/* type */
 	&brw_panel,		/* buttons */
@@ -323,6 +323,14 @@ Menuhdr bro_menu = {
 	NULL,			/* data */
 	NULL,			/* domenu */
 	(MBPEN|MBRIGHT|KEYHIT),	/* ioflags */
+	0,				/* flags */
+	NULL,			/* mw */
+	NULL,			/* group */
+	{ NULL, NULL },	/* node */
+	NULL,			/* procmouse */
+	NULL,			/* on_showhide */
+	NULL,			/* cleanup */
+	0, 0, 0, 0		/* scaled width, height, x, y */
 };
 
 static char *cant_read_str;

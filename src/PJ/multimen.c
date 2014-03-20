@@ -323,7 +323,7 @@ seebg_white(m);
 }
 
 Menuhdr mum_menu = {
-	{320,70,0,130,},   /* width, height, x, y */
+	{320,70,0,130}, /* width, height, x, y */
 	MULTI_MUID,		/* id */
 	PANELMENU,		/* type */
 	&mum_tit_sel,	/* buttons */
@@ -333,6 +333,14 @@ Menuhdr mum_menu = {
 	NULL,				/* dodata */
 	NULL,				/* domenu */
 	(MBPEN|MBRIGHT|KEYHIT), /* ioflags */
+	0,				/* flags */
+	NULL,			/* mw */
+	NULL,			/* group */
+	{ NULL, NULL },	/* node */
+	NULL,			/* procmouse */
+	NULL,			/* on_showhide */
+	NULL,			/* cleanup */
+	0, 0, 0, 0		/* scaled width, height, x, y */
 };
 
 /* two sets of keys first chars are different! */

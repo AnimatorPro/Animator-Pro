@@ -296,7 +296,7 @@ static Button fml_fil_sel = MB_INIT1(
 	);
 
 static Menuhdr fml_menu = {
-	{320,62,0,150,},	/* width, height, x, y */
+	{320,62,0,150},		/* width, height, x, y */
 	FILE_MUID,  		/* id */
 	PANELMENU,			/* type */
 	&fml_fil_sel, 		/* buttons */
@@ -306,6 +306,14 @@ static Menuhdr fml_menu = {
 	NULL,				/* dodata */
 	NULL,				/* domenu */
 	(MBPEN|MBRIGHT|KEYHIT), /* ioflags */
+	0,				/* flags */
+	NULL,			/* mw */
+	NULL,			/* group */
+	{ NULL, NULL },	/* node */
+	NULL,			/* procmouse */
+	NULL,			/* on_showhide */
+	NULL,			/* cleanup */
+	0, 0, 0, 0		/* scaled width, height, x, y */
 };
 
 static Smu_button_list fml_blist[] = {

@@ -1252,7 +1252,7 @@ void seebg_a3d();
 
 
 Menuhdr a3d_menu = {
-	{320,72,0,127,},		/* width, height, x y */
+	{320,72,0,127},		/* width, height, x y */
 	OPTIC_MUID,   		/* id */
 	PANELMENU,			/* type */
 	&a3d_moveq_sel, 	/* buttons */
@@ -1263,9 +1263,13 @@ Menuhdr a3d_menu = {
 	NULL,				/* domenu */
 	(MBPEN|MBRIGHT|KEYHIT), /* ioflags */
 	0,				/* flags */
+	NULL,			/* mw */
+	NULL,			/* group */
+	{ NULL, NULL },	/* node */
 	NULL,			/* procmouse */
 	NULL,			/* on_showhide */
 	NULL,			/* cleanup */
+	0, 0, 0, 0		/* scaled width, height, x, y */
 };
 
 static Smu_button_list a3d_smblist[] = {

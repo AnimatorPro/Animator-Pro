@@ -1038,7 +1038,7 @@ static Button omu_title_sel = MB_INIT1(
 	);
 
 Menuhdr options_menu = {
-	{320,98,0,120,},   /* width, height, x, y */
+	{320,98,0,120}, /* width, height, x, y */
 	OPT_MUID,		/* id */
 	PANELMENU,		/* type */
 	&omu_title_sel,	/* buttons */
@@ -1048,6 +1048,14 @@ Menuhdr options_menu = {
 	NULL,			/* dodata */
 	NULL,			/* domenu */
 	(MBPEN|MBRIGHT|KEYHIT), /* ioflags */
+	0,				/* flags */
+	NULL,			/* mw */
+	NULL,			/* group */
+	{ NULL, NULL },	/* node */
+	NULL,			/* procmouse */
+	NULL,			/* on_showhide */
+	NULL,			/* cleanup */
+	0, 0, 0, 0		/* scaled width, height, x, y */
 };
 
 static Smu_button_list omu_smblist[] = {

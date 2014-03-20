@@ -220,6 +220,7 @@ static Optgroup_data opg = {
 	&vs.cur_cel_tool,
 	(Option_tool *)&FIRST_CEL_TOOL,
 	NULL,
+	0
 };
 
 static Button cmu_toolopts_sel = MB_INIT1(
@@ -973,6 +974,7 @@ static Minitime_data cm_flitime_data = {
 	cm_clear_olays,    /* clear_overlays */
 	cm_draw_olays,  /* draw_overlays */
 	ring_seek_fli,       /* seek */
+	0,            /* olay_stack */
 	NULL, /* data */
 };
 

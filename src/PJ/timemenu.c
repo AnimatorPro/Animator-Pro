@@ -327,6 +327,14 @@ Menuhdr tmu_menu = {
 	NULL,				/* dodata */
 	NULL,				/* domenu */
 	(MBPEN|MBRIGHT|KEYHIT), /* ioflags */
+	0,				/* flags */
+	NULL,			/* mw */
+	NULL,			/* group */
+	{ NULL, NULL },	/* node */
+	NULL,			/* procmouse */
+	NULL,			/* on_showhide */
+	NULL,			/* cleanup */
+	0, 0, 0, 0		/* scaled width, height, x, y */
 };
 
 static Smu_button_list tmu_smblist[] = {

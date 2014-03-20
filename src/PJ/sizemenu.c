@@ -191,7 +191,15 @@ static Menuhdr format_menu = {
 	seebg_white,	/* seebg */
 	NULL,			/* data */
 	NULL,			/* domenu */
-	(MBPEN|MBRIGHT|KEYHIT) /* ioflags */
+	(MBPEN|MBRIGHT|KEYHIT), /* ioflags */
+	0,				/* flags */
+	NULL,			/* mw */
+	NULL,			/* group */
+	{ NULL, NULL },	/* node */
+	NULL,			/* procmouse */
+	NULL,			/* on_showhide */
+	NULL,			/* cleanup */
+	0, 0, 0, 0		/* scaled width, height, x, y */
 };
 
 static Smu_button_list fmt_smblist[] = {

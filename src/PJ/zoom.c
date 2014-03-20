@@ -121,7 +121,15 @@ static Menuhdr zoom_menu = {
 	seebg_white, 	/* seebg */
 	NULL,			/* dodata */
 	NULL,			/* domenu */
-	(MBPEN|MBRIGHT|KEYHIT) /* ioflags */
+	(MBPEN|MBRIGHT|KEYHIT), /* ioflags */
+	0,				/* flags */
+	NULL,			/* mw */
+	NULL,			/* group */
+	{ NULL, NULL },	/* node */
+	NULL,			/* procmouse */
+	NULL,			/* on_showhide */
+	NULL,			/* cleanup */
+	0, 0, 0, 0		/* scaled width, height, x, y */
 };
 
 static void titbar_close_zwinmenu(Button *b)
@@ -135,6 +143,7 @@ extern Button zpan_cycle_group;
 static Titbar_group z_tbg = {
  	move_zwinmenu,	/* moveit */
 	titbar_close_zwinmenu, /* closeit */
+	NULL /* data */
 };
 
 
@@ -176,7 +185,15 @@ static Menuhdr zwinmenu = {
 	seebg_none,		/* seebg */
 	NODATA,         /* dodata */
 	do_menubuttons,	/* domenu */
-	(MBPEN|MBRIGHT) /* ioflags */
+	(MBPEN|MBRIGHT), /* ioflags */
+	0,				/* flags */
+	NULL,			/* mw */
+	NULL,			/* group */
+	{ NULL, NULL },	/* node */
+	NULL,			/* procmouse */
+	NULL,			/* on_showhide */
+	NULL,			/* cleanup */
+	0, 0, 0, 0		/* scaled width, height, x, y */
 };
 
 Boolean check_zoom_drag(void)

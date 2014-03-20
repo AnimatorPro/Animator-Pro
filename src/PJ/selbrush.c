@@ -247,7 +247,7 @@ static Button bmu_title_sel = MB_INIT1(
 	);
 
 static Menuhdr pbrush_menu = {
-	{138,90,0,0,},	/* width, height, x, y */
+	{138,90,0,0},	/* width, height, x, y */
 	BRUSH_MUID,		/* id */
 	PANELMENU,		/* type */
 	&bmu_title_sel, /* buttons */
@@ -256,7 +256,15 @@ static Menuhdr pbrush_menu = {
 	seebg_white, 	/* seebg */
 	NULL,			/* dodata */
 	NULL,			/* domenu */
-	(MBPEN|MBRIGHT|KEYHIT) /* ioflags */
+	(MBPEN|MBRIGHT|KEYHIT), /* ioflags */
+	0,				/* flags */
+	NULL,			/* mw */
+	NULL,			/* group */
+	{ NULL, NULL },	/* node */
+	NULL,			/* procmouse */
+	NULL,			/* on_showhide */
+	NULL,			/* cleanup */
+	0, 0, 0, 0		/* scaled width, height, x, y */
 };
 
 /* nested alloc because these get used in two places in options and in the 
