@@ -83,9 +83,9 @@ static Menuhdr saveseg_menu = MENU_INIT0(
 );
 
 static Smu_button_list sseg_smblist[] = {
-	{ "title", &ssm_title_sel },
-	{ "save", &ssm_save_sel },
-	{ "cancel", &ssm_cancel_sel },
+	{ "title",  { &ssm_title_sel } },
+	{ "save",   { &ssm_save_sel } },
+	{ "cancel", { &ssm_cancel_sel } },
 };
 
 go_save_segment()

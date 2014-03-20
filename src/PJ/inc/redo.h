@@ -29,14 +29,6 @@
 #define DT_GEL 3
 #define DT_SPRAY 4
 
-
-
-/* Placeholder for REDO_NONE */
-typedef struct none_p
-	{
-	UBYTE dummy;
-	} None_p;
-
 typedef struct circle_p
 	{
 	Short_xy center;
@@ -70,7 +62,7 @@ typedef struct big_p
 
 typedef union redo_all_p
 	{
-	None_p none_p;
+	UBYTE none_p; /* Placeholder for REDO_NONE. */
 	Rectangle rect_p;
 	Circle_p circle_p;
 	Poly_p poly_p;

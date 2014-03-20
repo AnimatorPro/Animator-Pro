@@ -800,10 +800,11 @@ see_abovetext_qslider(b);
 }
 
 static Smu_button_list iopt_smblist[] = {
-	{ "dither", &dither_sel },
-	{ "rgcent", &setrad_sel },
-// texts preceded by 'T'
-	{ "Tstrength", &tinting_sel.group },
+	{ "dither", { /* butn */ &dither_sel } },
+	{ "rgcent", { /* butn */ &setrad_sel } },
+
+	/* texts preceded by 'T' */
+	{ "Tstrength",  { /* ps */ &tinting_sel.group } },
 };
 
 void *ss;

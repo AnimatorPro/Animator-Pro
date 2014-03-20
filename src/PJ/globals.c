@@ -153,7 +153,7 @@ Vsettings default_vs =  {
 	50, 	/* cblend */
 	30,     /* font_height */
 	0,		/* box_bevel */
-	{0, {0,},},		/* redo - Empty record */
+	{0, {0}},		/* redo - Empty record */
 	0, 		/* font_type */
 	0,		/* ped_yoff - poco editor cursor position */
 	0,		/* ped_cursor_p - poco editor window y start */

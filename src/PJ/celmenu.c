@@ -507,7 +507,7 @@ static void celmenu_credraw(void *dat, USHORT why)
 	draw_button(&cmu_minipal_sel);
 }
 static Redraw_node celmenu_rn = {
-	NULL,NULL, /* node */
+	{ NULL, NULL }, /* node */
 	celmenu_credraw,
 	NULL,
 	NEW_CCOLOR };
@@ -531,22 +531,22 @@ Menuhdr cel_menu = MENU_INIT0(
 );
 
 static Smu_button_list cel_smblist[] = {
-	{ "title", &cmu_title_sel },
-	{ "bluelast", &cmu_bluelast_sel },
-	{ "stream", &cmu_stream_sel },
-	{ "moveto", &cmu_moveto_sel },
-	{ "grid", &cmu_grid_sel },
-	{ "mask", &cmu_mask_sel },
-	{ "cel_frames", &cmu_minitime_sel },
-	{ "undo", &cmu_undo_sel },
+	{ "title",      { /* butn */ &cmu_title_sel } },
+	{ "bluelast",   { /* butn */ &cmu_bluelast_sel } },
+	{ "stream",     { /* butn */ &cmu_stream_sel } },
+	{ "moveto",     { /* butn */ &cmu_moveto_sel } },
+	{ "grid",       { /* butn */ &cmu_grid_sel } },
+	{ "mask",       { /* butn */ &cmu_mask_sel } },
+	{ "cel_frames", { /* butn */ &cmu_minitime_sel } },
+	{ "undo",       { /* butn */ &cmu_undo_sel } },
 
-/* texts note first char is a 'T' */
-	{ "Tscale", &cel_scale_tool.ot.name },
-	{ "Tturn", &cel_rotate_tool.ot.name },
-	{ "Tmove", &cel_move_tool.ot.name },
-	{ "Tpaste", &cel_paste_tool.ot.name },
-	{ "Tsprite", &cel_paint_tool.ot.name },
-	{ "Tsetkey", &cel_tcolor_tool.ot.name },
+	/* texts note first char is a 'T' */
+	{ "Tscale",     { /* ps */ &cel_scale_tool.ot.name } },
+	{ "Tturn",      { /* ps */ &cel_rotate_tool.ot.name } },
+	{ "Tmove",      { /* ps */ &cel_move_tool.ot.name } },
+	{ "Tpaste",     { /* ps */ &cel_paste_tool.ot.name } },
+	{ "Tsprite",    { /* ps */ &cel_paint_tool.ot.name } },
+	{ "Tsetkey",    { /* ps */ &cel_tcolor_tool.ot.name } },
 };
 
 void see_cel_minitime(Button *b)
@@ -1069,13 +1069,13 @@ static void toolcel_rmode_redraw(void *dat, USHORT why)
 }
 
 static Redraw_node toolcel_rn = {
-	NULL,NULL, /* node */
+	{ NULL, NULL }, /* node */
 	toolcel_color_redraw,
 	NULL,
 	NEW_CCOLOR|NEW_INK0|NEW_INK1|NEW_CMAP|NEW_CEL_TCOLOR };
 
 static Redraw_node tcel_rmode_rn = {
-	NULL,NULL, /* node */
+	{ NULL, NULL }, /* node */
 	toolcel_rmode_redraw,
 	NULL,
 	(RSTAT_ZCLEAR|RSTAT_CFIT|RSTAT_UNDER|RSTAT_ONECOL) };

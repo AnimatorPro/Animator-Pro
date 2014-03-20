@@ -194,6 +194,7 @@ Errcode soft_load_ftext_type(char *key, va_list *pargs,
 typedef struct smu_button_list {
 	char *name;
 	union {
+		void *_init; /* Dummy generic pointer for initialisation only. */
 		Button *butn;
 		char **ps;
 	} toload;

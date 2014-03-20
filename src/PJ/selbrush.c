@@ -272,11 +272,12 @@ static Menuhdr pbrush_menu = {
  * nesting will remain in sync */
 
 static Smu_button_list sel_smblist[] = {
-	{ "title", &bmu_title_sel },
-	{ "angle", &bmu_langlable_sel },
-	{ "bsize", &bmu_sizelab_sel },
-/* texts note first char is 'T' */
-	{ "Tgel_size", &gel_brush_sl_sel.group },
+	{ "title",  { /* butn */ &bmu_title_sel } },
+	{ "angle",  { /* butn */ &bmu_langlable_sel } },
+	{ "bsize",  { /* butn */ &bmu_sizelab_sel } },
+
+	/* texts note first char is 'T' */
+	{ "Tgel_size",  { /* ps */ &gel_brush_sl_sel.group } },
 };
 
 void *smbs;

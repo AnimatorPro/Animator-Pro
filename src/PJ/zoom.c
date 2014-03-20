@@ -1003,11 +1003,11 @@ static Pentool hand_ptool = PTOOLINIT1(
 );
 
 static Smu_button_list zoom_smblist[] = {
-	{ "title", &zoom_tit_sel },
-	{ "src", &zoom_source_sel },
-	{ "dest", &zoom_resize_sel },
-	{ "fullsz", &zoom_fullsize_sel },
-	{ "scale", &zoom_scaletext },
+	{ "title",  { &zoom_tit_sel } },
+	{ "src",    { &zoom_source_sel } },
+	{ "dest",   { &zoom_resize_sel } },
+	{ "fullsz", { &zoom_fullsize_sel } },
+	{ "scale",  { &zoom_scaletext } },
 };
 
 void go_zoom_settings(void)

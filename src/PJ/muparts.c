@@ -388,23 +388,22 @@ char *rub_rect_str; /* "![1] ![2]  (![3] ![4])  ![5] ![6]" */
 char *rub_circle_str; /* "R = ![1] D = ![2]" */
 
 static Smu_button_list mup_smblist[] = {
-	{ "kcol", &sh1_tco_sel },
-	{ "fillp", &sh1_filp_sel },
-	{ "otime", &sh1_tim_sel },
-	{ "pan", &zpg_pan_sel },
-	{ "ccycle", &zpg_cycle_sel },
-	{ "zoom", &zpan_cycle_group },
-	{ "tseg_all", &tseg_a_sel },   /* button in tseg.c */
-	{ "tseg_seg", &tseg_s_sel },   /* button in tseg.c */
-	{ "tseg_frame", &tseg_f_sel }, /* button in tseg.c */
-	{ "pbrush", &sh1_brush_sel },
+	{ "kcol",       { /* butn */ &sh1_tco_sel } },
+	{ "fillp",      { /* butn */ &sh1_filp_sel } },
+	{ "otime",      { /* butn */ &sh1_tim_sel } },
+	{ "pan",        { /* butn */ &zpg_pan_sel } },
+	{ "ccycle",     { /* butn */ &zpg_cycle_sel } },
+	{ "zoom",       { /* butn */ &zpan_cycle_group } },
+	{ "tseg_all",   { /* butn */ &tseg_a_sel } }, /* button in tseg.c */
+	{ "tseg_seg",   { /* butn */ &tseg_s_sel } }, /* button in tseg.c */
+	{ "tseg_frame", { /* butn */ &tseg_f_sel } }, /* button in tseg.c */
+	{ "pbrush",     { /* butn */ &sh1_brush_sel } },
 
-	// texts start with 'T'
-
-	{ "Trub_line", &rub_line_str }, 
-	{ "Tbox_coor", &box_coor_str },
-	{ "Trub_rect", &rub_rect_str },
-	{ "Trub_circle", &rub_circle_str },
+	/* texts start with 'T' */
+	{ "Trub_line",  { /* ps */ &rub_line_str } },
+	{ "Tbox_coor",  { /* ps */ &box_coor_str } },
+	{ "Trub_rect",  { /* ps */ &rub_rect_str } },
+	{ "Trub_circle",{ /* ps */ &rub_circle_str } },
 };
 
 static void *mupss;

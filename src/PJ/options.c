@@ -785,49 +785,49 @@ Button om_sratio_group_sel = MB_INIT1(
 	);
 
 static Smu_button_list otool_smblist[] = {
-	{ "tfont", &tfont_sel },
-	{ "tsave", &tsave_sel },
-	{ "tload", &tload_sel },
-	{ "tedit", &tedit_sel },
-	{ "tplace", &tplace_sel },
-	{ "tjust", &tjust_sel },
-	{ "copy",	   &move_copy_sel },
-	{ "one_color", &move_one_color_sel },
-	{ "under"	,  &move_under_sel },
-	{ "sep_boxed", &sep_boxed_sel },
-	{ "sep_close", &sep_close_sel },
-	{ "sep_range", &sep_range_sel },
-	{ "sep_single", &sep_single_sel },
-	{ "os_psens", &os_psens_sel },
-	{ "biastag", &biastag_sel },
-	{ "conttag", &conttag_sel },
-	{ "tenstag", &tenstag_sel },
-	{ "c2curve", &c2curve_sel },
-	{ "fcurve", &fcurve_sel },
-	{ "ccurve", &ccurve_sel },
-	{ "ecurve", &ecurve_sel },
-	{ "color2", &color2_sel },
-	{ "filledp", &filledp_sel },
-	{ "bcolor2", &bcolor2_sel },
-	{ "filledb", &filledb_sel },
-	{ "fpg_files", &fpg_files_sel },
-	{ "fpg_o1mpg_editp", &fpg_o1mpg_editp_sel },
-	{ "fpg_closed", &fpg_closed_sel },
-	{ "fpg_color2", &fpg_color2_sel },
-	{ "fpg_filledp", &fpg_filledp_sel },
-	{ "ompg_color2", &ompg_color2_sel },
-	{ "ompg_filledp", &ompg_filledp_sel },
-	{ "o1mpg_color2", &o1mpg_color2_sel },
-	{ "o1mpg_filledp", &o1mpg_filledp_sel },
+	{ "tfont",          { /* butn */ &tfont_sel } },
+	{ "tsave",          { /* butn */ &tsave_sel } },
+	{ "tload",          { /* butn */ &tload_sel } },
+	{ "tedit",          { /* butn */ &tedit_sel } },
+	{ "tplace",         { /* butn */ &tplace_sel } },
+	{ "tjust",          { /* butn */ &tjust_sel } },
+	{ "copy",           { /* butn */ &move_copy_sel } },
+	{ "one_color",      { /* butn */ &move_one_color_sel } },
+	{ "under",          { /* butn */ &move_under_sel } },
+	{ "sep_boxed",      { /* butn */ &sep_boxed_sel } },
+	{ "sep_close",      { /* butn */ &sep_close_sel } },
+	{ "sep_range",      { /* butn */ &sep_range_sel } },
+	{ "sep_single",     { /* butn */ &sep_single_sel } },
+	{ "os_psens",       { /* butn */ &os_psens_sel } },
+	{ "biastag",        { /* butn */ &biastag_sel } },
+	{ "conttag",        { /* butn */ &conttag_sel } },
+	{ "tenstag",        { /* butn */ &tenstag_sel } },
+	{ "c2curve",        { /* butn */ &c2curve_sel } },
+	{ "fcurve",         { /* butn */ &fcurve_sel } },
+	{ "ccurve",         { /* butn */ &ccurve_sel } },
+	{ "ecurve",         { /* butn */ &ecurve_sel } },
+	{ "color2",         { /* butn */ &color2_sel } },
+	{ "filledp",        { /* butn */ &filledp_sel } },
+	{ "bcolor2",        { /* butn */ &bcolor2_sel } },
+	{ "filledb",        { /* butn */ &filledb_sel } },
+	{ "fpg_files",      { /* butn */ &fpg_files_sel } },
+	{ "fpg_o1mpg_editp",{ /* butn */ &fpg_o1mpg_editp_sel } },
+	{ "fpg_closed",     { /* butn */ &fpg_closed_sel } },
+	{ "fpg_color2",     { /* butn */ &fpg_color2_sel } },
+	{ "fpg_filledp",    { /* butn */ &fpg_filledp_sel } },
+	{ "ompg_color2",    { /* butn */ &ompg_color2_sel } },
+	{ "ompg_filledp",   { /* butn */ &ompg_filledp_sel } },
+	{ "o1mpg_color2",   { /* butn */ &o1mpg_color2_sel } },
+	{ "o1mpg_filledp",  { /* butn */ &o1mpg_filledp_sel } },
 
 	/* string texts, first char is 'T' */
-	{ "Tnthresh", &osep_rgb_sl_sel.group },
-	{ "Tswid", &osprd_sel.group },
-	{ "Tsair", &osped_sel.group },
-	{ "Tbevel", &bevel_slide_sel.group },
-	{ "Tomppts", &omp_slider_sel.group },
-	{ "Tosrpts", &osr_points_sl_sel.group },
-	{ "Tinrad", &osr_inrad_sl_sel.group },
+	{ "Tnthresh",   { /* ps */ &osep_rgb_sl_sel.group } },
+	{ "Tswid",      { /* ps */ &osprd_sel.group } },
+	{ "Tsair",      { /* ps */ &osped_sel.group } },
+	{ "Tbevel",     { /* ps */ &bevel_slide_sel.group } },
+	{ "Tomppts",    { /* ps */ &omp_slider_sel.group } },
+	{ "Tosrpts",    { /* ps */ &osr_points_sl_sel.group } },
+	{ "Tinrad",     { /* ps */ &osr_inrad_sl_sel.group } },
 };
 
 static void *toolsmbs;
@@ -1059,11 +1059,11 @@ Menuhdr options_menu = {
 };
 
 static Smu_button_list omu_smblist[] = {
-	{ "title", &omu_title_sel },
-	{ "help", &omu_help_sel },
-	{ "clusid", &omu_clusid_sel },
-	{ "redo", &omu_redo_sel },
-	{ "undo", &omu_undo_sel },
+	{ "title",  { &omu_title_sel } },
+	{ "help",   { &omu_help_sel } },
+	{ "clusid", { &omu_clusid_sel } },
+	{ "redo",   { &omu_redo_sel } },
+	{ "undo",   { &omu_undo_sel } },
 };
 
 void see_abovetext_qslider(Button *b)
@@ -1425,7 +1425,7 @@ static void omu_color_redraw(Menuhdr *mh, USHORT why)
 }
 
 static Redraw_node omu_redraw_node = {
-	NULL,NULL, /* node */
+	{ NULL, NULL }, /* node */
 	omu_color_redraw,
 	NULL,
 	NEW_CCOLOR };

@@ -538,21 +538,21 @@ Rastcursor menu_cursor = {
 };
 
 static Curslist cursortab[] = {
-	&pen_cursor, "penbrush.cur",
-	&spray_cursor, "spray.cur",
-	&star_cursor, "star.cur",
-	&box_cursor, "box.cur",
+	{ &pen_cursor, "penbrush.cur" },
+	{ &spray_cursor, "spray.cur" },
+	{ &star_cursor, "star.cur" },
+	{ &box_cursor, "box.cur" },
 #define NUM_USE_BRUSH 4   /* number of items that may eventually call 
 						   * save_ubrush() */
 
-	&fill_cursor, "fill.cur",
-	&text_cursor, "texttool.cur",
-	&hand_cursor, "hand.cur",
-	&menu_cursor, "menu.cur",
-	&move_tool_cursor, "move.cur",
-	&sep_cursor, "sep.cur",
-	&edge_cursor, "edge.cur",
-	&pick_cursor, "pick.cur",
+	{ &fill_cursor, "fill.cur" },
+	{ &text_cursor, "texttool.cur" },
+	{ &hand_cursor, "hand.cur" },
+	{ &menu_cursor, "menu.cur" },
+	{ &move_tool_cursor, "move.cur" },
+	{ &sep_cursor, "sep.cur" },
+	{ &edge_cursor, "edge.cur" },
+	{ &pick_cursor, "pick.cur" },
 };
 
 static char is_init;

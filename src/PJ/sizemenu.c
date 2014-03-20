@@ -203,13 +203,13 @@ static Menuhdr format_menu = {
 };
 
 static Smu_button_list fmt_smblist[] = {
-	{ "title", &fmt_title_sel },
-	{ "ok", &fmt_ok_sel },
-	{ "fullsize", &fmt_format_sel },
-	{ "cancel", &fmt_cancel_sel },
-	{ "defaultsz", &fmt_savesize_sel },
-	{ "hgt", &fmt_height_lab },
-	{ "wid", &fmt_width_lab },
+	{ "title",      { &fmt_title_sel } },
+	{ "ok",         { &fmt_ok_sel } },
+	{ "fullsize",   { &fmt_format_sel } },
+	{ "cancel",     { &fmt_cancel_sel } },
+	{ "defaultsz",  { &fmt_savesize_sel } },
+	{ "hgt",        { &fmt_height_lab } },
+	{ "wid",        { &fmt_width_lab } },
 };
 
 static void get_saved_settings()

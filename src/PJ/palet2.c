@@ -305,17 +305,17 @@ static Button pal_most_sel = MB_INIT1(
 	);
 
 static Smu_button_list pal_blist[] = {
-	{ "title", &pal_tit_sel },
-	{ "hls", &pal_hls_sel },
-	{ "rgb", &pal_rgb_sel },
-	{ "b", &pal_tsp_sel },
-	{ "a", &pal_tbu_sel },
-	{ "clus", &pal_clu_sel },
-	{ "all", &pal_all_sel },
-	{ "t", &pal_m_sel },
-	{ "fit", &pal_fit_sel },
-	{ "undo", &pal_res_sel },
-	{ "pen", &pal_bru_sel },
+	{ "title",  { &pal_tit_sel } },
+	{ "hls",    { &pal_hls_sel } },
+	{ "rgb",    { &pal_rgb_sel } },
+	{ "b",      { &pal_tsp_sel } },
+	{ "a",      { &pal_tbu_sel } },
+	{ "clus",   { &pal_clu_sel } },
+	{ "all",    { &pal_all_sel } },
+	{ "t",      { &pal_m_sel } },
+	{ "fit",    { &pal_fit_sel } },
+	{ "undo",   { &pal_res_sel } },
+	{ "pen",    { &pal_bru_sel } },
 	};
 
 static void pmu_color_redraw(Menuhdr *mh, USHORT why)
@@ -328,7 +328,7 @@ static void pmu_color_redraw(Menuhdr *mh, USHORT why)
 	see_color_sliders();
 }
 static Redraw_node palette_rn = {
-	NULL,NULL, /* node */
+	{ NULL, NULL }, /* node */
 	pmu_color_redraw,
 	NULL,
 	NEW_CCOLOR|NEW_CMAP };

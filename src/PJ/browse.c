@@ -337,19 +337,19 @@ static char *cant_read_str;
 
 static Smu_button_list bro_smblist[] = {
 #define BRO_TITLE_KEY bro_smblist[0].name
-	{ NULL, &bro_tit_sel },
+	{ NULL,     { /* butn */ &bro_tit_sel } },
 #define BRO_LOADB_KEY bro_smblist[1].name
-	{ NULL, &bro_loa_sel },
-	{ "dir", &bro_tpa_sel },
-	{ "drive", &bro_tdr_sel },
-	{ "ok", &bro_ok_sel },
-	{ "cancel", &bro_can_sel },
-	{ "del", &bro_del_sel },
-	{ "info", &bro_inf_sel },
-	{ "play", &bro_vie_sel },
+	{ NULL,     { /* butn */ &bro_loa_sel } },
+	{ "dir",    { /* butn */ &bro_tpa_sel } },
+	{ "drive",  { /* butn */ &bro_tdr_sel } },
+	{ "ok",     { /* butn */ &bro_ok_sel } },
+	{ "cancel", { /* butn */ &bro_can_sel } },
+	{ "del",    { /* butn */ &bro_del_sel } },
+	{ "info",   { /* butn */ &bro_inf_sel } },
+	{ "play",   { /* butn */ &bro_vie_sel } },
 
-/* texts note first char is a 'T' */
-	{ "Tcant_read", &cant_read_str },
+	/* texts note first char is a 'T' */
+	{ "Tcant_read", { /* ps */ &cant_read_str } },
 };
 
 /* variables to hold x y and list position of selected file.  */

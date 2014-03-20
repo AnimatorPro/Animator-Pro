@@ -1117,7 +1117,7 @@ Pixel os, oe;
 }
 
 static Redraw_node twe_color_rn = {
-	NULL,NULL, /* node */
+	{ NULL, NULL }, /* node */
 	twe_color_refresh,
 	NULL,
 	NEW_MINIPAL_INK,

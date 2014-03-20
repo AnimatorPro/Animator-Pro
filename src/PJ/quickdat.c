@@ -431,7 +431,7 @@ static void qmu_color_redraw(void *dat, USHORT why)
 }
 
 static Redraw_node quick_rn = {
-	NULL,NULL, /* node */
+	{ NULL, NULL }, /* node */
 	qmu_color_redraw,
 	NULL,
 	NEW_CCOLOR };
@@ -464,13 +464,13 @@ Menuhdr quick_menu = MENU_INIT0(
 );
 
 static Smu_button_list home_smblist[] = {
-	{ "title", &qmu_title_sel },
-	{ "clusid", &qmu_clusid_sel },
-	{ "grid", &qmu_grid_sel },
-	{ "mask", &qmu_mask_sel },
-	{ "files", &qmu_files_sel },
-	{ "redo", &qmu_redo_sel },
-	{ "undo", &qmu_undo_sel },
+	{ "title",  { &qmu_title_sel } },
+	{ "clusid", { &qmu_clusid_sel } },
+	{ "grid",   { &qmu_grid_sel } },
+	{ "mask",   { &qmu_mask_sel } },
+	{ "files",  { &qmu_files_sel } },
+	{ "redo",   { &qmu_redo_sel } },
+	{ "undo",   { &qmu_undo_sel } },
 };
 
 extern void main_selit();

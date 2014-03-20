@@ -124,7 +124,7 @@ static void twemenu_credraw(void *dat, USHORT why)
 	draw_button(&twe_minipal_sel);
 }
 static Redraw_node twemenu_rn = {
-	NULL,NULL, /* node */
+	{ NULL, NULL }, /* node */
 	twemenu_credraw,
 	NULL,
 	NEW_CCOLOR };
@@ -157,12 +157,13 @@ Menuhdr twe_menu = MENU_INIT0(
 extern Pentool tween_pen_tool;
 
 static Smu_button_list twe_smblist[] = {
-	{ "title", &twe_title_sel },
-	{ "grid", &twe_grid_sel },
-	{ "mask", &twe_mask_sel },
-	{ "tool", &twe_tool_sel },
+	{ "title",  { /* butn */ &twe_title_sel } },
+	{ "grid",   { /* butn */ &twe_grid_sel } },
+	{ "mask",   { /* butn */ &twe_mask_sel } },
+	{ "tool",   { /* butn */ &twe_tool_sel } },
+
 	/* texts with first char a 'T' */
-	{ "Ttoolname", &tween_pen_tool.ot.name },
+	{ "Ttoolname",  { /* ps */ &tween_pen_tool.ot.name } },
 };
 
 

@@ -85,9 +85,9 @@ static Menuhdr anipaste_menu = MENU_INIT0(
 );
 
 static Smu_button_list apa_smblist[] =  {
-	{ "title", &apa_title_sel },
-	{ "rend", &apa_rendseq_sel },
-	{ "kill", &apa_kill_sel },
+	{ "title",  { &apa_title_sel } },
+	{ "rend",   { &apa_rendseq_sel } },
+	{ "kill",   { &apa_kill_sel } },
 };
 
 static Boolean do_pastemenu_keys()
