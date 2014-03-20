@@ -188,6 +188,8 @@ int ocurve;
 Boolean closed;
 Tw_tlist tlist;
 int i;
+(void)ix;
+(void)intween;
 
 closed = vs.fillp || vs.closed_curve;
 ocurve = curveflag;

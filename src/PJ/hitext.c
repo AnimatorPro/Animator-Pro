@@ -80,6 +80,7 @@ static void ttext_undraw_rect(Raster *r, void *data, int x, int y,
 void etext_undraw_rect(Raster *r, void *data, int x, int y,
 	int width, int height)
 {
+	(void)data;
 	pj_set_rect(r, sblack, x, y, width, height);
 }
 

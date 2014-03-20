@@ -89,7 +89,7 @@ static Menuhdr cgr_menu = MENU_INIT0(
 
 static int ab_get_color(Wndo *w)
 {
-SHORT occolor = vs.ccolor;
+	(void)w;
 
 	if(JSTHIT(MBRIGHT))
 		return(check_pen_abort());

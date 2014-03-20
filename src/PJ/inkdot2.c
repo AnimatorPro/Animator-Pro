@@ -99,6 +99,7 @@ else
 /************ xor ink stuff *************************/
 Pixel xor_dot(const Ink *inky, const SHORT x, const SHORT y)
 {
+(void)inky;
 return(pj_get_dot(undof,x,y)^vs.ccolor);
 }
 
@@ -120,6 +121,7 @@ return(pj_get_dot(undof,nxy.x,nxy.y));
 /************ add ink  stuff *************************/
 Pixel add_dot(const Ink *inky, const SHORT x, const SHORT y)
 {
+(void)inky;
 return((pj_get_dot(undof,x,y)+vs.ccolor)&(COLORS-1));
 }
 
@@ -134,7 +136,7 @@ Pixel cry_dot(const Ink *inky, const SHORT x, const SHORT y)
 {
 Pixel odot;
 int extras;
-
+(void)inky;
 
 	if(x > 0)
 	{
@@ -170,7 +172,7 @@ Pixel *out;
 Pixel *maxout;
 Pixel line[SBSIZE+2];
 Pixel *pline;
-
+(void)inky;
 
 	pj__get_hseg(undof,&line[1],x0,y,width);
 	line[0] = line[1];
@@ -229,6 +231,7 @@ else
 Pixel out_dot(const Ink *inky, const SHORT x, const SHORT y)
 {
 Pixel endc;
+(void)inky;
 
 endc = pj_get_dot(undof,x,y);
 if (endc == pj_get_dot(undof,x+1,y) 
@@ -285,6 +288,7 @@ return(bclosest_col(&rgb, COLORS,inky->dither));
 Pixel swe_dot(const Ink *inky, const SHORT x, const SHORT y)
 {
 Pixel color, endc;
+(void)inky;
 
 color = pj_get_dot(undof,x,y);
 endc = pj_get_dot(undof,x,y-1);
@@ -314,7 +318,7 @@ Pixel clh_dot(const Ink *inky, const SHORT x,const SHORT y)
 {
 SHORT color;
 SHORT nbd;
-
+(void)inky;
 
 color = pj_get_dot(undof,x,y);
 
@@ -380,6 +384,7 @@ return(bclosest_col(&rgb, COLORS,inky->dither));
 Pixel pull_dot(const Ink *inky, const SHORT x, const SHORT y)
 {
 Short_xy nxy;
+(void)inky;
 
 nxy.x = x + (icb.lastsx-icb.sx);
 nxy.y = y + (icb.lastsy-icb.sy);
@@ -390,6 +395,7 @@ return(pj_get_dot(vb.pencel,nxy.x,nxy.y));
 Pixel smea_dot(const Ink *inky, const SHORT x, const SHORT y)
 {
 Short_xy nxy;
+(void)inky;
 
 nxy.x = x + ((icb.lastsx-icb.sx)+1)/2;
 nxy.y = y + ((icb.lastsy-icb.sy)+1)/2;

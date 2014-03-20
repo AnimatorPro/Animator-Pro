@@ -341,6 +341,8 @@ static int paste1(Paste1dat *pdat, int ix,int it,int scale,Autoarg *aa)
 {
 Errcode err;
 int dx,dy;
+(void)ix;
+(void)it;
 
 	if(aa->cur_frame == 0) 	/* first frame set end position to current */
 		pdat->ncent = thecel->cd.cent;

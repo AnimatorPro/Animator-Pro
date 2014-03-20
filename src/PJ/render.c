@@ -129,10 +129,11 @@ register SHORT sbpr;
 PLANEPTR sbyte;
 SHORT srcx, srcy;
 Errcode err = Success;
-
-
 int occolor, xend, yend;
 int x,y;
+(void)sx;
+(void)sy;
+(void)dst;
 
 	if(src->type == RT_BYTEMAP)
 	{
@@ -418,6 +419,7 @@ UBYTE *mbyte;
 UBYTE mbits;
 UBYTE mbit;
 int x, y, MaxX, MaxY;
+(void)drast;
 
 	mplane += (my * mbpr) + (mx >> 3);
 	mbit_mx = 0x80 >> (mx & 0x07);
@@ -473,6 +475,7 @@ Rgb3 dest;
 Cmap *cmap = r->cmap;
 Rgb3 *ctab = cmap->ctab;
 Rgb3 *s1, *s2;
+(void)oncolor;
 
 endx = x + w;
 
@@ -738,7 +741,6 @@ SHORT xstart;
 SHORT in;
 UBYTE *pixbuf = NULL;
 UBYTE *pixpt;
-extern UBYTE render_real_fast;
 
 	if((err = make_render_cashes()) < 0)
 		return(err);

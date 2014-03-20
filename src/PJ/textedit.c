@@ -238,13 +238,11 @@ static void cursor_to_pixel(Text_file *gf)
 {
 char lbuf[512];
 char *np;
-char *tend;
 char *cstart;
 
 	clip_cursorp(gf);
 	gf->pixely = gf->twin.y;
 	cstart = gf->text_buf + gf->tcursor_p;
-	tend = gf->text_buf + gf->text_size;
 	gf->lstart = gf->wstart;
 	gf->llstart = gf->lwstart;
 	for (gf->twypos=0;gf->twypos<gf->text_lines_visible;gf->twypos++)
@@ -592,6 +590,7 @@ static void update_mark(Text_file *gf,
 	long alterp, long count, long *pmark)
 {
 long mark = *pmark;
+(void)gf;
 
 if (alterp <= mark)
 	{
@@ -610,7 +609,6 @@ static void update_win(Text_file *gf,
    that have to be redrawn. */
 {
 char *new_lstart, *new_nlstart;
-Vfont *font = gf->font;
 
 update_mark(gf, gf->tcursor_p, (long)extracs, &gf->block_start);
 update_mark(gf, gf->tcursor_p, (long)extracs, &gf->block_end);
@@ -1228,6 +1226,7 @@ static void movable_editor_help(Text_file *gf)
  * window around.
  */
 {
+(void)gf;
 display_two_texts("editor_help", "editor_move_window");
 }
 
@@ -1236,6 +1235,7 @@ static void mouse_position_editor_help(Text_file *gf)
  * Help for editors where left mouse button positions cursor.
  */
 {
+(void)gf;
 display_two_texts("editor_help", "editor_move_cursor");
 }
 

@@ -180,6 +180,7 @@ static Button tit_pla_sel = MB_INIT1(
 
 static go_text_files(Button *b)
 {
+(void)b;
 go_files(4);
 }
 
@@ -392,6 +393,8 @@ Errcode err;
 long tscroll;
 int lscroll, pscroll;
 int extra;
+(void)ix;
+(void)intween;
 
 	tscroll = pixels_to_scroll * scale / SCALE_ONE;
 	lscroll = tscroll/fc_height;
@@ -431,6 +434,8 @@ char *s;
 char c;
 int cw;
 int poff;
+(void)ix;
+(void)intween;
 
 	tscroll = pixels_to_scroll * scale / SCALE_ONE;
 	s = gf->text_buf;
@@ -479,6 +484,8 @@ char line_buf[256];
 int i;
 int y;
 int ending;
+(void)ix;
+(void)intween;
 
 	/* figure out which character to stop at */
 	stoppos = 1+rscale_by(characters, scale, SCALE_ONE);
@@ -689,6 +696,7 @@ Text_file lgtf;
 static void suggest_frames(Button *b)
 {
 int pix;
+(void)b;
 
 	hide_mp();
 	if ((pix = calc_suggest_frames()) > 0)
@@ -699,6 +707,7 @@ int pix;
 static void make_suggested_frames(Button *b)
 {
 short pix;
+(void)b;
 
 	hide_mp();
 	if ((pix = calc_suggest_frames()) > 0)

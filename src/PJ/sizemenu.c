@@ -5,7 +5,7 @@
 #include "menus.h"
 #include "softmenu.h"
 
-static void see_screen_format(), cancel_flisize(), feel_numqdim(),
+static void see_screen_format(), feel_numqdim(),
 	set_full_screen(), see_savesize(), set_savesize();
 
 static Button fmt_wslider_sel, fmt_hslider_sel; /* initialized later on */
@@ -66,6 +66,7 @@ static Button fmt_savesize_sel = MB_INIT1(
 
 void update_slgroup(void *dat,Button *b)
 {
+	(void)dat;
 	draw_buttontop(b->group);
 }
 static Qslider wslider = 

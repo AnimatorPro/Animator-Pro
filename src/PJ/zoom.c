@@ -135,6 +135,7 @@ static Menuhdr zoom_menu = {
 static void titbar_close_zwinmenu(Button *b)
 {
 extern Button zpan_cycle_group;
+(void)b;
 
 	close_zwinmenu(); /* closeit */
 	draw_buttontop(&zpan_cycle_group);
@@ -243,6 +244,8 @@ static void see_zoombox(Button *b)
 }
 static void feel_zoombox(Button *b)
 {
+	(void)b;
+
 	if((PENWNDO->doit)
 		&& ISINPUT(PENWNDO->ioflags))
 	{
@@ -421,6 +424,7 @@ int borderless;
 
 void cleanup_zwinmenu(struct menuhdr *mh)
 {
+	(void)mh;
 	vl.zoomwndo = NULL;
 }
 void close_zwinmenu(void)
@@ -608,6 +612,7 @@ static void zwin_fullsize(Button *b)
 {
 Errcode err;
 Rectangle owin;
+(void)b;
 
 	if(is_fullsize())
 		return;
@@ -651,6 +656,7 @@ static void feel_scale_slider(Button *b)
 static void deltascale_zwndo(void *data)
 {
 Rectangle zbox;
+(void)data;
 
 	if(vl.zoomwndo == NULL)
 		return;
@@ -719,6 +725,7 @@ void zoom_put_dot(void *r, Pixel c, Coor x, Coor y)
 
 /* substitute for put_dot() */
 {
+	(void)r;
 	upd_zoom_dot(c,x,y);
 }
 void both_put_dot(void *r, Pixel c, Coor x, Coor y)
@@ -739,6 +746,7 @@ Coor height;
 Pixel *xlat;
 Pixel tcolor;
 Pixel pix;
+(void)r;
 
 	if( ((Coor)(y -= vl.zrect.y) < 0)
 		|| (y >= vl.zrect.height))
@@ -867,6 +875,7 @@ void zoom_put_vseg(void *r,void *pixbuf, Ucoor x,Coor y,Ucoor height)
 {
 Coor maxy, width;
 Pixel *pixel;
+(void)r;
 
 	if( ((Coor)(x -= vl.zrect.x) < 0)
 		|| (x >= vl.zrect.width))
@@ -982,6 +991,8 @@ void rect_zoom_it(Coor x,Coor y, Coor width, Coor height)
 
 static void hand_ptfunc(Pentool *pt,Wndo *w)
 {
+	(void)pt;
+
 	if(w == vl.zoomwndo)
 		scroll_zoomwndo();
 	else

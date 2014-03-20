@@ -1448,6 +1448,8 @@ void set_axis(Button *m)
 static
 void csame_size(Button *m)
 {
+	(void)m;
+
 	pj_copy_structure(&vs.move3.size_center, 
 					&vs.move3.spin_center, sizeof(Short_xyz) );
 	draw_button(&a3d_g2_sel);
@@ -1456,6 +1458,8 @@ void csame_size(Button *m)
 static
 void csame_spin(Button *m)
 {
+	(void)m;
+
 	pj_copy_structure(&vs.move3.spin_center, 
 					&vs.move3.size_center, sizeof(Short_xyz) );
 	draw_button(&a3d_g2_sel);
@@ -1464,6 +1468,8 @@ void csame_spin(Button *m)
 static
 void csize_default(Button *m)
 {
+	(void)m;
+
 	default_center(&vs.move3.size_center);
 	draw_button(&a3d_g2_sel);
 }
@@ -1520,6 +1526,8 @@ void feel_rdc_qslider(Button *m)
 static
 void cspin_default(Button *m)
 {
+	(void)m;
+
 	default_center(&vs.move3.spin_center);
 	draw_button(&a3d_g2_sel);
 }

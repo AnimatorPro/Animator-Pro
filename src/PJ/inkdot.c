@@ -56,11 +56,16 @@ ink_aid.undo = undof;
 /*********** Start of opaque ink stuff (real easy!) ********************/
 Pixel opq_dot(const Ink *inky, const SHORT x, const SHORT y)
 {
+(void)inky;
+(void)x;
+(void)y;
+
 return(vs.ccolor);
 }
 
 void opq_hline(const Ink *inky, SHORT x0, const SHORT y, SHORT width)
 {
+(void)inky;
 SET_HLINE(vb.pencel,vs.ccolor,x0,y,width);
 }
 /*********** Start of gradient oriented ink stuff **********************/
@@ -393,6 +398,7 @@ static Pixel tvdot(const Ink *inky, const SHORT x, const SHORT y,
 Thash *t = inky->inkdata;
 SHORT underc = GET_DOT(source,x,y);
 Rgb3 rgb;
+(void)inky;
 
 if (inky->dither)
 	{

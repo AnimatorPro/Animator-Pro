@@ -428,11 +428,13 @@ Option_tool *ink_list = NULL;
 
 extern Button dtintgroup_sel,tintgroup_sel, radgroup_sel, dithergroup_sel;
 
+#ifdef BUILD_TEST_INKS
 static Ink_groups igs = { 
 	&dithergroup_sel, 
 	&tintgroup_sel, 
 	&dtintgroup_sel,
 };
+#endif /* BUILD_TEST_INKS */
 
 static void close_static_ink(Ink *ink)
 /* simply put ink back on static inks list and set close to null */
@@ -515,8 +517,6 @@ Errcode init_inks()
 Errcode err;
 Ink *ink;
 Names *ink_devs = NULL;
-Names *inkd;
-Ink *loaded_ink;
 
 	/* move static inks into ink_list */
 	while(static_inks != NULL)

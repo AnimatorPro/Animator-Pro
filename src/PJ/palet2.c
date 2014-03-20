@@ -320,6 +320,9 @@ static Smu_button_list pal_blist[] = {
 
 static void pmu_color_redraw(Menuhdr *mh, USHORT why)
 {
+	(void)mh;
+	(void)why;
+
 	draw_buttontop(&pal_bun_sel);
 	draw_buttontop(&pal_cco_sel);
 	draw_button(&pal_minipal_sel);
@@ -335,6 +338,8 @@ static Redraw_node palette_rn = {
 
 static void pmu_on_showhide(Menuhdr *mh,Boolean showing)
 {
+	(void)mh;
+
 	if(showing)
 		add_color_redraw(&palette_rn);
 	else
@@ -359,9 +364,6 @@ Menuhdr palette_menu = MENU_INIT0(
 
 static void pal_feel_qslider(Button *m)
 {
-Wscreen *s;
-
-	s = m->root->w.W_screen;
 	save_undo();
 	feel_qslider(m);
 	dirties();
@@ -466,6 +468,10 @@ char buf[50];
 static void refit_1c( SHORT scale, Rgb3 *p, SHORT ccolor, 
 					  SHORT cix, SHORT ccount)
 {
+	(void)scale;
+	(void)cix;
+	(void)ccount;
+
 	get_color_rgb(ccolor,new_cmap,p);
 }
 
@@ -838,7 +844,7 @@ void mb_toggle_ccycle(Button *b)
 }
 int get_mousecolor(Wndo *w)
 {
-SHORT occolor = vs.ccolor;
+(void)w;
 
 	if(JSTHIT(MBRIGHT))
 		return(check_pen_abort());
@@ -872,6 +878,8 @@ static void qone_palette(void)
 
 static void palette_selit(Menuhdr *mh, SHORT hitid)
 {
+(void)mh;
+
 switch(hitid)
 	{
 	case PAL_RES_PUL:

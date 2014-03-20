@@ -14,6 +14,8 @@ static Dlheader _rmode_reflist = DLHEADER_INIT(_rmode_reflist);
 
 static Boolean do_brotask(Waitask *bt)
 {
+	(void)bt;
+
 	if(_colorwhy)
 		do_color_redraw(_colorwhy);
 	if(_rmodewhy)

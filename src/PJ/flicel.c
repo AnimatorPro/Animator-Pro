@@ -213,6 +213,7 @@ void marqi_flicel(Flicel *fc, int dotmod, Pixel *save_buf)
 {
 Marqihdr mh;
 Short_xy *pgpt;
+(void)fc;
 
 	vinit_marqihdr(&mh,1,1);
 	mh.dmod = mh.smod = dotmod;
@@ -236,6 +237,7 @@ void undo_flicel_marqi(Flicel *fc,Pixel *save_buf)
 {
 Short_xy *pgpt;
 Marqihdr mh;
+(void)fc;
 
 	vinit_marqihdr(&mh,1,1);
 	if(NULL == (mh.dotbuf = save_buf))
@@ -331,6 +333,8 @@ Flicel *fc;
 Rcel *rc;
 Fli_frame *cbuf = NULL;
 LONG oset;
+(void)ix;
+(void)it;
 
 	dx = cd->end.x - cd->start.x;
 	dy = cd->end.y - cd->start.y;

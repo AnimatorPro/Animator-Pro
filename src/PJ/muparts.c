@@ -278,7 +278,6 @@ static void fill_inkwell(Button *b)
 int c;
 Cursorhdr *ocurs;
 USHORT changes = 0;
-SHORT occolor = vs.ccolor;
 
 	ocurs = set_pen_cursor(&pick_cursor);
 	mb_dcorner(b,mc_red(b));

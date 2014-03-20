@@ -196,7 +196,6 @@ static char po_suffix[] = ".POC";
 
 static Errcode go_vpaint()
 {
-Errcode err;
 extern Errcode go_quick_menu();
 
 	init_wrefresh(vb.screen); /* clear window refresh stack start over */
@@ -223,7 +222,7 @@ extern Errcode go_quick_menu();
 #ifdef WITH_POCO
 	if(cl_poco_name != NULL)
 	{
-		err = do_cl_poco(cl_poco_name);
+		Errcode err = do_cl_poco(cl_poco_name);
 		if (err < Success && err != Err_abort)
 		{
 			cleanup(TRUE);
@@ -241,6 +240,9 @@ extern Errcode go_quick_menu();
 static Errcode get_poco_arg(Argparse_list *ap,int argc,
 							 char **argv,int position)
 {
+(void)ap;
+(void)position;
+
 if (argc < 2 )
 	return Err_bad_input;
 cl_poco_name = argv[1];
@@ -251,6 +253,9 @@ if (cl_poco_name[0] == '-')
 static Errcode get_flic_arg(Argparse_list *ap,int argc,
 							 char **argv,int position)
 {
+(void)ap;
+(void)position;
+
 if (argc < 2 )
 	return Err_bad_input;
 cl_flic_name = argv[1];
@@ -264,6 +269,8 @@ static Errcode get_rest_of_command_line(Argparse_list *ap,int argc,
 {
 	char *arg;
 	int i;
+	(void)ap;
+	(void)position;
 
 	for (i=0; i<argc; ++i)
 		{

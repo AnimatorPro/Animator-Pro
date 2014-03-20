@@ -119,6 +119,9 @@ static Button twe_title_sel = MB_INIT1(
 
 static void twemenu_credraw(void *dat, USHORT why)
 {
+	(void)dat;
+	(void)why;
+
 	redraw_head1_ccolor(&twe_std1_sel);
 	zpan_ccycle_redraw(&twe_zpan_sel);
 	draw_button(&twe_minipal_sel);
@@ -132,6 +135,8 @@ static Redraw_node twemenu_rn = {
 static void twemenu_on_showhide(Menuhdr *mh,Boolean showing)
 /* also used in paste menu which uses same common buttons */
 {
+	(void)mh;
+
 	if(showing)
 		add_color_redraw(&twemenu_rn);
 	else

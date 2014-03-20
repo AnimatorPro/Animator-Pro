@@ -222,7 +222,6 @@ static void to_trd_maxmem()
 /* make sure temp file system leaves enough for compression buffer and 
  * extra screen */
 {
-Slnode *list = NULL;
 void *cbuf;
 void *extra_screen;
 long size;
@@ -286,6 +285,7 @@ static Waitask trdtask;
 
 static int trdtask_func(Waitask *wt)
 {
+	(void)wt;
 
 	if(pushed_mask > 0  	   /* wait till all is popped */
 		|| pushed_alt > 0 

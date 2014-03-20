@@ -77,6 +77,7 @@ Rgb3 *cm, *cm2;
 Errcode err;
 int si, di;
 int ccount;
+(void)dat;
 
 	if(intween == 1) /* make it so single frame cycles in segment or all work */
 		ix = 1;
@@ -116,6 +117,7 @@ void shortcut_ccycle(Button *b)
 BYTE opal_fit;       /* fit option on palette menu */
 BYTE omulti;			/* do it to many frames? */
 SHORT opal_to;		/* 0 for to cluster, 1 for to all */
+(void)b;
 
 	if(flix.overlays != NULL) /* can't do with overlays present */
 		return;
@@ -352,8 +354,6 @@ got_color:
 
 static void draw_cco(void)
 {
-extern Button ccolor_sel;
-
 	/* note that draw button top will only draw if menu is up */
 	draw_buttontop(&pal_cco_sel);
 }
@@ -468,6 +468,9 @@ void cl_paste(void)
 
 static void cl_blend_1c(int scale, Rgb3 *dcol, int cix, int ix, int count)
 {
+	(void)cix;
+	(void)count;
+
 	if (ix >= clp_count)
 		return;
 	true_blend(dcol, ictab + ix, itmult(scale, vs.cblend), dcol);
@@ -475,6 +478,10 @@ static void cl_blend_1c(int scale, Rgb3 *dcol, int cix, int ix, int count)
 
 static int cl_blend1(void *dat,int ix, int intween, int scale)
 {
+	(void)dat;
+	(void)ix;
+	(void)intween;
+
 	some_cmod(cl_blend_1c,scale);
 	return(0);
 }
@@ -544,6 +551,10 @@ static void tint_1c(int scale, Rgb3 *p)
 
 static ctint1(void *dat,int ix, int intween, int scale)
 {
+	(void)dat;
+	(void)ix;
+	(void)intween;
+
 	some_cmod(tint_1c, scale);
 	return(0);	
 }
@@ -587,6 +598,10 @@ Rgb3 nrgb;
 
 static int cneg1(void *dat,int ix, int intween, int scale)
 {
+	(void)dat;
+	(void)ix;
+	(void)intween;
+
 	some_cmod(neg_1c, scale);
 	return(0);
 }

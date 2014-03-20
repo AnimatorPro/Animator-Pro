@@ -157,6 +157,7 @@ static Errcode get_cut(Pixel offc, Pixel onhi, Pixel onlo)
 Wiostate ios;
 Cutdata cd;
 int ret;
+(void)onlo;
 
 	if(NULL == (cd.hline = pj_malloc(vb.pencel->width + vb.pencel->height)))
 		return(Err_no_memory);

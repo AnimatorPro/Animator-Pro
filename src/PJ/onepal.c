@@ -40,6 +40,9 @@ return(1);
 
 static int force1(Cmap *dcmap, int ix,int it,int scale,Autoarg *aa)
 {
+	(void)ix;
+	(void)scale;
+
 	soft_top_textf("!%d%d", "top_refit", aa->cur_frame, it - aa->cur_frame);
 	refit_rcel(vb.pencel, dcmap, vb.pencel->cmap);
 	pj_cmap_copy(dcmap, vb.pencel->cmap);
@@ -95,7 +98,6 @@ Cmap *dcmap;
 char *cused;
 int i;
 int ok;
-char buf[40];
 Autoarg aa;
 
 ok = 1;		/* this routine is an optimist */

@@ -668,6 +668,7 @@ void go_files(int type)
 }
 void mb_go_files(Button *b)
 {
+	(void)b;
 	same_old_files();
 }
 

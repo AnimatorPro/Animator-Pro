@@ -502,6 +502,9 @@ static Button cmu_title_sel = MB_INIT1(
 
 static void celmenu_credraw(void *dat, USHORT why)
 {
+	(void)dat;
+	(void)why;
+
 	redraw_head1_ccolor(&cmu_std1_sel);
 	zpan_ccycle_redraw(&cmu_zpan_sel);
 	draw_button(&cmu_minipal_sel);
@@ -629,18 +632,24 @@ void cmu_unmarqi_cel()
 }
 Errcode init_marqi_ctool(Pentool *pt)
 {
+	(void)pt;
+
 	if(!flx_olays_hidden())
 		cmu_marqi_cel();
 	return(Success);
 }
 void exit_marqi_ctool(Pentool *pt)
 {
+	(void)pt;
 	cmu_unmarqi_cel();
 }
 /****** scale tool *****/
 
 static void cel_scale_ptfunc(Pentool *pt,Wndo *w)
 {
+	(void)pt;
+	(void)w;
+
 	if(!thecel)
 		return;
 	save_celpos_undo();
@@ -653,6 +662,9 @@ static void cel_scale_ptfunc(Pentool *pt,Wndo *w)
 
 static void cel_rotate_ptfunc(Pentool *pt,Wndo *w)
 {
+	(void)pt;
+	(void)w;
+
 	if(!thecel)
 		return;
 	save_celpos_undo();
@@ -664,6 +676,9 @@ static void cel_rotate_ptfunc(Pentool *pt,Wndo *w)
 
 static void cel_move_ptfunc(Pentool *pt,Wndo *w)
 {
+	(void)pt;
+	(void)w;
+
 	if(!thecel)
 		return;
 	save_celpos_undo();
@@ -721,6 +736,7 @@ int i;
 static Errcode init_tcolor_ptool(Pentool *pt)
 {
 Errcode err;
+(void)pt;
 
 	/* if overlays hidden do not draw cel */
 	if(!thecel || flx_olays_hidden())
@@ -732,6 +748,8 @@ Errcode err;
 static void cel_tcolor_ptfunc(Pentool *pt,Wndo *w)
 {
 Pixel color;
+(void)pt;
+(void)w;
 
 	cel_cancel_undo();
 	if(!thecel)
@@ -1047,6 +1065,8 @@ error:
 
 static void toolcel_color_redraw(void *dat, USHORT why)
 {
+	(void)dat;
+
 	if(flx_olays_hidden()
 		|| flxtime_data.draw_overlays != cm_draw_olays) 
 	{
@@ -1065,6 +1085,9 @@ static void toolcel_color_redraw(void *dat, USHORT why)
 
 static void toolcel_rmode_redraw(void *dat, USHORT why)
 {
+	(void)dat;
+	(void)why;
+
 	cm_deltadraw(1);
 }
 

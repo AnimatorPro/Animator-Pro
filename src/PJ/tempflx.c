@@ -227,6 +227,7 @@ Errcode err;
 Errcode open_tempflx(Boolean reload_settings)
 {
 Errcode err;
+(void)reload_settings;
 
 	vs.bframe_ix = 0; /* back frame buffer no good now */
 	if((err = otempflx()) < Success)
@@ -617,6 +618,7 @@ error:
 void qset_first_frame(void *data)
 {
 SHORT ix;
+(void)data;
 
 	ix = vs.frame_ix + 1;
 	if(!soft_qreq_number(&ix,1,flix.hdr.frame_count,"set_frame0"))

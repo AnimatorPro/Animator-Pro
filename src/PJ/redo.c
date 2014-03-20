@@ -68,6 +68,7 @@ Errcode save_redo_spray()
 static Errcode redo_draw_get_pos(Pos_p *p, XFILE *f, int mode)
 {
 Errcode err;
+(void)mode;
 
 	if((err = poll_abort()) < Success)
 		return(err);
@@ -94,6 +95,7 @@ Errcode err;
 static Errcode redo_gel(Redo_rec *r)
 {
 Errcode err;
+(void)r;
 
 	if ((rbf = xfopen(rbf_name, rb_str)) == NULL)
 		return(Err_abort);
@@ -105,6 +107,7 @@ Errcode err;
 static Errcode redo_spray(Redo_rec *r)
 {
 Errcode err;
+(void)r;
 
 	if ((rbf = xfopen(rbf_name, rb_str)) == NULL)
 		return(Err_abort);
@@ -211,6 +214,8 @@ static Errcode redo_box(Redo_rec *r)
 
 static Errcode redo_text(Redo_rec *r)
 {
+	(void)r;
+
 	if(pj_exists(text_name))
 		return(softerr(load_and_paste_text(text_name), "redo_text"));
 	return(Err_abort);
@@ -293,6 +298,8 @@ Pixel ctable[COLORS];
 }
 static Errcode redo_edit_text(Redo_rec *r)
 {
+	(void)r;
+
 	qpwtitles(FALSE);
 	return(Success);
 }
@@ -308,7 +315,6 @@ static Errcode _redo_edit(Redo_rec *r)
 {
 Errcode err = Success;
 Errcode (*doedit)();
-int hidden = FALSE;
 
 	switch(r->type)
 	{
@@ -422,6 +428,7 @@ void do_auto_redo(Boolean edit)
 {
 Errcode edit_err;
 USHORT flags;
+(void)edit;
 
 	if(!redo_exists())
 		return;

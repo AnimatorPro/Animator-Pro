@@ -396,6 +396,8 @@ void insert_a_frame(void)
 
 static void minsert(Button *b)
 {
+	(void)b;
+
 	hide_mp();
 	unzoom();
 	qinsert_frames();
@@ -405,6 +407,8 @@ static void minsert(Button *b)
 
 static void mdelete_frames(Button *b)
 {
+	(void)b;
+
 	hide_mp();
 	unzoom();
 	qdelete_frames();

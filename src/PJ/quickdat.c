@@ -424,6 +424,9 @@ static Button qmu_title_sel = MB_INIT1(
 
 static void qmu_color_redraw(void *dat, USHORT why)
 {
+	(void)dat;
+	(void)why;
+
 	redraw_head1_ccolor(&qmu_std1_sel);
 	zpan_ccycle_redraw(&qmu_zpan_sel);
 	draw_button(&qmu_clus_sel);
@@ -438,6 +441,8 @@ static Redraw_node quick_rn = {
 
 static void qmu_on_showhide(Menuhdr *mh,Boolean showing)
 {
+	(void)mh;
+
 	if(showing)
 	{
 		add_color_redraw(&quick_rn);

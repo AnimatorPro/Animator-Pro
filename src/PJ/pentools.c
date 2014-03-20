@@ -14,6 +14,7 @@ static Errcode dtool(int mode);
 static int pticheck(void *dat)
 {
 Wndo *ckwndo;
+(void)dat;
 
 	check_top_wndo_pos();		/* move top window if necessary. */
 	if(JSTHIT(KEYHIT|MBRIGHT))
@@ -105,6 +106,7 @@ Errcode box_tool(Pentool *pt)
 {
 Errcode err;
 Rectangle rect;
+(void)pt;
 
 	if (!pti_input())
 		return(Success);
@@ -119,6 +121,7 @@ error:
 Errcode fill_tool(Pentool *pt)
 {
 Short_xy fpt;
+(void)pt;
 
 	if (!pti_input())
 		return(Success);
@@ -192,6 +195,7 @@ Errcode dtool_input(Pos_p *p, void *dummy, SHORT mode)
 /* Get input from mouse/digitizer for draw tool loop */
 {
 Errcode err;
+(void)dummy;
 
 	switch (mode)
 	{
@@ -229,7 +233,7 @@ SHORT delt,i,j;
 SHORT delts[DL];
 SHORT around;
 SHORT bsize;
-SHORT obsize, pen_width, open_width;
+SHORT obsize, pen_width;
 SHORT drx,dry;
 Pos_p rp, op;
 Boolean first = TRUE;
@@ -237,7 +241,6 @@ Errcode err;
 
 	obsize = get_brush_size();
 	pen_width = vs.use_brush?obsize:0;
-	open_width = pen_width;
 
 	set_full_gradrect();
 	if ((err = make_render_cashes()) < Success)
@@ -562,6 +565,8 @@ void move_or_copy_tool(Wndo *wndo,Pentool *pt, Boolean clear_move_out)
 Errcode err;
 Rcel *clipcel;
 Move_p mop;
+(void)wndo;
+(void)pt;
 
 if (!pti_input())
 	return;

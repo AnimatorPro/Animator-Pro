@@ -180,6 +180,7 @@ static void celblit(Raster *src,SHORT sx,SHORT sy,
 
 /* blits a rectangle fron source to dest */
 {
+	(void)xld;
 	pj_blitrect(src,sx,sy,dest,dx,dy,w,h);
 }
 static void celblitxl(Raster *src,SHORT sx,SHORT sy,

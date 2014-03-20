@@ -1075,6 +1075,8 @@ static void tog_redraw_group(Button *b)
 }
 static void tog_ends(Button *b)
 {
+	(void)b;
+
 	vs.co_b_first = !vs.co_b_first;
 	draw_buttontop(&seg_abslid_sel);
 }

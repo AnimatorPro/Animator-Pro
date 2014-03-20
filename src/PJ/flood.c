@@ -124,6 +124,7 @@ static Errcode nofunc() /* always successful */ { return(Success); }
 
 static Errcode flood_rhline(SHORT y, SHORT x0, SHORT x1, SHORT color)
 {
+	(void)color;
 	return(render_hline(y, x0, x1,vb.pencel));
 }
 

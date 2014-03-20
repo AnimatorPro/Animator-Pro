@@ -35,9 +35,6 @@ int pw;
 int pwt[4];
 int i;
 Pos_p rp;
-Boolean ozoom;
-
-	ozoom = vs.zoom_open;
 
 	if((err = get_posp(&rp, idata, DT_GEL)) != Success)
 		return(err);

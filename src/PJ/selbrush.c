@@ -436,9 +436,6 @@ SHORT oht;
 }
 static void update_brush_sel(void)
 {
-void *ogroup;
-
-	ogroup = bmu_brush_sel.group;
 	bmu_brush_sel.group = &pwidth;
 	draw_buttontop(&bmu_brush_sel);
 	bmu_brush_sel.group = NULL;

@@ -62,7 +62,6 @@ int new_pull_list(		/* Returns Errcode or # of pull selections made */
 {
 Pull *list = NULL;
 Pull *new;
-void *data;
 int count;
 Errcode err = Success;
 
@@ -72,7 +71,6 @@ for (count = 0; count < ncount; count++)
 		break;
 	if ((err = new_pull(&new, nlist->name)) < Success)
 		goto OUT;
-	data = new->data;
 	new->key2 = ((char *)(new->data))[0];
 	new->next = list;
 	new->id = ++startid;

@@ -423,7 +423,6 @@ static Errcode ado_calc_poly(Poly2 *dpoly, Rcel *form, SHORT scale)
  * calculations.   Generally you'll need to do a poly2_free(dpoly)
  * eventually as dpoly's pointlist is allocated here. */
 {
-Short_xy celpoly[4];
 Rectangle rect;
 int i;
 Poly3 vpoly;
@@ -509,6 +508,8 @@ Xformspec xf;
 Tcolxldat tcxl;
 Rcel_save oundo;
 Poly2 dpoly;
+(void)ix;
+(void)frames;
 
 	clear_struct(&dpoly);
 	clear_struct(&oundo);
@@ -1506,6 +1507,9 @@ static void ado_mouse_ptfunc(Pentool *pt,Wndo *w)
 /* Hide menus and then go move things around with the mouse above 
  * or abort if a right click */
 {
+	(void)pt;
+	(void)w;
+
 	hide_mp();
 	ado_mouse_move();
 	show_mp();

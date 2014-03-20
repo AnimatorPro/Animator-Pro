@@ -136,6 +136,7 @@ static Errcode blue_num1(void *dat, SHORT ix)
 {
 char buf[16];
 int ypos;
+(void)dat;
 
 	sprintf(buf, "%4d", ix+1);
 	ypos = vb.pencel->width - fstring_width(vb.screen->mufont,"a9999");
@@ -580,7 +581,6 @@ Errcode err;
 int xoff, yoff;
 int x,y;
 int i, j;
-UBYTE *s[4];
 Rgb3 *ctab;
 Rgb3 *aa,*ab,*ba,*bb;
 UBYTE me;

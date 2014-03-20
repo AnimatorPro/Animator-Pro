@@ -284,7 +284,7 @@ Errcode find_pdr_loader(char *ifname, Boolean multi_frame,
  * pdr_name. The screen is the screen tho match if loader is a resolution
  * independent loader */
 {
-Errcode err, wlerr;
+Errcode err;
 int type, check_type;
 Anim_info screen_info;
 Config_pdr *cpd;
@@ -343,7 +343,6 @@ Config_pdr *cpd;
 			break;
 	}
 
-error:
 	err = softerr(err, "!%s", "unknown_image", ifname);
 	goto out;
 done:
@@ -444,6 +443,8 @@ char *get_celload_suffi(char *sufbuf)
 }
 static Errcode pdr_check_save_abort(int ix, void *dat)
 {
+	(void)ix;
+
 	if(poll_abort() < Success)
 	{
 		if(soft_yes_no_box("!%s", "save_abort",

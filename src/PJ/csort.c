@@ -217,7 +217,6 @@ static int fold_in_cluster(Rgb3 *ncl, int clcount)
 /* Put result of our color squeezing/packing etc back into
    the current palette in case of 'to cluster'. */
 {
-UBYTE cflags[COLORS];
 int osize;
 UBYTE *ocl, *dcl;
 Errcode err;

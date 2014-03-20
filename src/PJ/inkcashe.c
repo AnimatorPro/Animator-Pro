@@ -7,17 +7,18 @@
 #include "util.h"
 
 void free_render_cashes();
-static void flush_dither_err(void);
 
 Rgb3 tcolor_src;
 
 void free_ink_bhash(Ink *inky)
 {
+(void)inky;
 free_bhash();
 }
 
 Errcode make_ink_bhash(Ink *inky)
 {
+(void)inky;
 return(make_bhash());
 }
 
@@ -95,6 +96,8 @@ inky->inkdata = NULL;
     frame. */
 Errcode clear_random_cashe(Ink *inky)
 {
+	(void)inky;
+
 	pj_srandom(1);
 	return(Success);
 }

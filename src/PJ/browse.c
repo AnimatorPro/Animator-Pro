@@ -386,7 +386,6 @@ static void find_el_rect(Raster *r,Rectangle *rect, int elx, int ely)
  * we read it from the screen itself. Since, hopefully, it is there. */
 {
 Coor doty, dotx;
-Pixel color;
 
 	rect->x = elx;
 	rect->y = ely;
@@ -395,7 +394,6 @@ Pixel color;
 
 	doty = ely + brw_cpi_sel.height/2;
 	dotx = elx + brw_cpi_sel.width/2;
-	color = sblack;
 
 	while(pj_get_dot(r,rect->x,doty) == sblack)
 		++rect->x;
@@ -473,6 +471,9 @@ static void feel_1_browse(Button *list_sel,void *rast,int x,int y,
 						  Names *entry, int why)
 {
 char *title;
+(void)rast;
+(void)x;
+(void)y;
 
 	title = entry->name;
 	if(title[0] == DIR_DELIM)	/* directory */
@@ -501,14 +502,12 @@ static void bredraw_cpic(void)
 static int new_bdrawer(char *drawer)
 {
 Errcode err;
-LONG time;
 
 	if((err = change_dir(drawer)) < Success)
 		return(err);
 	init_bscroller(0);
 	draw_buttontop(&bro_pat_sel);
 	draw_button(&bro_dev_hanger);
-	time = pj_clock_1000();
 	redraw_scroller(&bscroller);
 	return(0);
 }
@@ -804,7 +803,7 @@ SHORT dx,dy;
 SHORT pixbor;		/* single pixel in lo res, 2 in hi */
 SHORT pixbor2;		/* 2*pixbor */
 SHORT listw, listh;
-SHORT xrema, yrema;	
+SHORT xrema;
 
 pixbor = 1 + vb.screen->is_hires;
 pixbor2 = pixbor+pixbor;
@@ -846,7 +845,6 @@ bro_ycount = listh/dy;
 bro_cel_w = listw/bro_xcount;
 bro_cel_h = listh/bro_ycount;
 xrema = listw - bro_cel_w*bro_xcount;
-yrema = listh - bro_cel_h*bro_ycount;
 
 bro_xcount += 1;		/* now can include the flush to the right last one */
 bro_count = bro_xcount*bro_ycount;
@@ -868,7 +866,6 @@ char odir[PATH_SIZE];
 char drawer[PATH_SIZE];
 char name[PATH_SIZE];
 void *ss = NULL;
-char estr[32];
 static char panel_key[] = "browse_panel";
 
 	split_copy_path(inpath, drawer, name);

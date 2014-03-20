@@ -275,6 +275,7 @@ Vsetfile vsf;
 static long path_type_offset(Vsetfile *vsf, int ptype)
 /* given path type (index) this returns offset of path record in file */
 {
+	(void)vsf;
 	return(sizeof(Fat_chunk)+sizeof(Fat_chunk)
 					+(ptype*sizeof(Vset_path)));
 }
@@ -517,7 +518,6 @@ Chunkparse_data pd;
 Tsettings_file *tset;
 Fat_chunk *buf;
 LONG recsize;
-Boolean cmap_read = FALSE;
 Boolean load_inkstrengths;
 
 	if(id->version != VSETCHUNK_VERSION)
@@ -618,6 +618,7 @@ static Errcode load_fli_settings(char *path,Cmap *cmap)
 Errcode err;
 Flifile flif;
 Chunkparse_data pd;
+(void)cmap;
 
 	if((err = pj_fli_open(path,&flif,JREADONLY)) < Success)
 		return(err);

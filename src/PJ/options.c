@@ -151,6 +151,7 @@ static void get_justify(Button *b)
 int choice;
 static char mname[] = "justify";
 USHORT mdis[5];
+(void)b;
 
 /* set up asterisks and disables */
 clear_mem(mdis, sizeof(mdis));
@@ -212,6 +213,7 @@ Button move_group_sel = MB_INIT1(
 	);
 static void copy_has_moved(Button *b)
 {
+	(void)b;
 	soft_continu_box("copy_has_moved");
 }
 /* -----------------Block for separate options --------------*/
@@ -1107,7 +1109,11 @@ Ink *ink;
 	return(Success);
 }
 
-static void notool(Pentool *pt, Wndo *w) {return;};
+static void notool(Pentool *pt, Wndo *w)
+{
+	(void)pt;
+	(void)w;
+}
 
 Pentool null_pentool = PTOOLINIT1(
 	NONEXT,
@@ -1237,6 +1243,11 @@ static void feel_1_opt(Button *m,void *rast,int x,int y,Names *entry,
 Option_tool *o = (Option_tool *)entry;
 Button *match, *obuttons;
 UBYTE *slots;
+(void)m;
+(void)rast;
+(void)x;
+(void)y;
+(void)why;
 
 	if(o->type == INK_OPT)
 	{
@@ -1338,6 +1349,8 @@ Option_tool *o;
 
 void mload_titles(Button *m)
 {
+(void)m;
+
 hide_mp();
 qload_titles();
 show_mp();
@@ -1418,6 +1431,9 @@ static void iopt_scroller(SHORT topname)
 
 static void omu_color_redraw(Menuhdr *mh, USHORT why)
 {
+	(void)mh;
+	(void)why;
+
 	redraw_head1_ccolor(&omu_std1_sel);
 	zpan_ccycle_redraw(&omu_zpan_sel);
 	draw_button(&omu_minipal_sel);
@@ -1432,6 +1448,8 @@ static Redraw_node omu_redraw_node = {
 
 static void omu_on_showhide(Menuhdr *mh,Boolean showing)
 {
+	(void)mh;
+
 	if(showing)
 		add_color_redraw(&omu_redraw_node);
 	else

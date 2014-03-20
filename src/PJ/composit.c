@@ -759,6 +759,7 @@ Rcel *dest = pfd->dest;
 int radius;
 int cenx;
 int ceny;
+(void)tscale0;
 
 	cenx = dest->width/2;
 	ceny = dest->height/2;
@@ -773,6 +774,7 @@ Rcel *dest = pfd->dest;
 int cenx;
 int ceny;
 int width, height;
+(void)tscale0;
 
 	cenx = dest->width/2;
 	ceny = dest->height/2;
@@ -789,6 +791,7 @@ static Errcode make_diamond_mask(int tscale0,int tscale1,Pframedat *pfd)
 Rcel *dest = pfd->dest;
 int width, height;
 Short_xy dpg[4];
+(void)tscale0;
 
 	dpg[0].x = dpg[2].x = dest->width/2;
 	dpg[1].y = dpg[3].y = dest->height/2;
@@ -816,6 +819,7 @@ Rcel *dest = pfd->dest;
 Bytemap *dotmask;
 UBYTE *plane;
 UBYTE dotcol;
+(void)tscale0;
 
 	clear_struct(&spec);
 	spec.width = 320;
@@ -859,6 +863,7 @@ static Errcode make_corbox_mask(int tscale0,int tscale1, Pframedat *pfd)
 {
 Rcel *dest = pfd->dest;
 int x,y,width,height;
+(void)tscale0;
 
 	width = ((tscale1 * dest->width)+1)/SCALE_ONE;
 	height = ((tscale1 * dest->height)+1)/SCALE_ONE;
@@ -895,10 +900,12 @@ int width, x;
 }
 static Errcode make_vert_mask(int tscale0,int tscale1,Pframedat *pfd)
 {
+	(void)tscale0;
 	return(make_vmask(tscale1,pfd,0));
 }
 static Errcode make_vwedge_mask(int tscale0,int tscale1,Pframedat *pfd)
 {
+	(void)tscale0;
 	return(make_vmask(tscale1,pfd,1));
 }
 static Errcode make_hmask(int tscale,Pframedat *pfd, Boolean centered)
@@ -916,10 +923,12 @@ Coor y,height;
 }
 static Errcode make_horiz_mask(int tscale0,int tscale1,Pframedat *pfd)
 {
+	(void)tscale0;
 	return(make_hmask(tscale1,pfd,0));
 }
 static Errcode make_hwedge_mask(int tscale0,int tscale1,Pframedat *pfd)
 {
+	(void)tscale0;
 	return(make_hmask(tscale1,pfd,1));
 }
 static Errcode make_tdiag_mask(int tscale0,int tscale1, Pframedat *pfd)
@@ -928,6 +937,7 @@ Rcel *dest = pfd->dest;
 Short_xy pg[3];
 SHORT height, rightx;
 Pixel invert;
+(void)tscale0;
 
 	height = ((2*tscale1 * dest->height)+1)/SCALE_ONE;
 	rightx = dest->width - 1;
@@ -957,6 +967,7 @@ Rcel *dest = pfd->dest;
 Short_xy pg[3];
 SHORT height, rightx;
 Pixel invert;
+(void)tscale0;
 
 	height = ((2*tscale1 * dest->height)+1)/SCALE_ONE;
 	rightx = dest->width - 1;
@@ -1029,11 +1040,13 @@ static SHORT zeroval = 0;
 }
 static Errcode make_venetian_mask(int tscale0, int tscale1, Pframedat *pfd)
 {
+	(void)tscale0;
 	return(make_blind_mask(tscale1, pfd, 0, pfd->invert, !pfd->invert,
 						   vs.co_venetian_height));
 }
 static Errcode make_louver_mask(int tscale0, int tscale1, Pframedat *pfd)
 {
+	(void)tscale0;
 	return(make_blind_mask(tscale1, pfd, 1, pfd->invert, !pfd->invert,
 						   vs.co_louver_width));
 }
@@ -1127,6 +1140,7 @@ static Errcode get_boxil_mask(int tscale0,int tscale1, Pframedat *pfd)
 ULONG boxils_needed;
 Coor x, y;
 Ucoor width, height;
+(void)tscale0;
 
 	width = (pfd->boxil_mask->width);
 	height = (pfd->boxil_mask->height);
@@ -1171,6 +1185,7 @@ static Errcode init_flicel_mask(Pframedat *pfd)
 }
 static void cleanup_flicel_mask(Pframedat *pfd)
 {
+	(void)pfd;
 	close_fcelio(ccb.mask_cel);
 }
 static Errcode get_flicel_mask(int tscale0,int tscale1, Pframedat *pfd)
@@ -1178,6 +1193,7 @@ static Errcode get_flicel_mask(int tscale0,int tscale1, Pframedat *pfd)
 Errcode err;
 int frame;
 Celcfit *cfit;
+(void)tscale1;
 
 	/* although math is ok to 300 or so insure 1 to 1 case */
 

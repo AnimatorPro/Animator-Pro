@@ -192,6 +192,9 @@ static Errcode render1_ram_olay(Flx_overlay **overlays,int ix,int it,
 {
 Flx_overlay *olay;
 Errcode err = Success;
+(void)ix;
+(void)it;
+(void)scale;
 
 	start_abort_atom();
 	if(aa->cur_frame == 0)
@@ -221,6 +224,9 @@ static Errcode render1_file_olay(Fod *fod,int ix,int it,
 {
 Errcode err;
 Flx_overlay solay; /* stack overlay */
+(void)ix;
+(void)it;
+(void)scale;
 
 	start_abort_atom();
 	if(aa->cur_frame == 0)
@@ -436,6 +442,7 @@ BYTE o1col;
 SHORT occolor;
 Celcfit *ocfit;
 Celcfit cfit;
+(void)fc;
 
 	/* save old render state */
 	o1col = vs.render_one_color;
@@ -968,7 +975,8 @@ Errcode err;
 SHORT dx,dy,omx,omy;
 Boolean do_delta = FALSE;
 LONG clock;
-
+(void)pt;
+(void)w;
 
 	cel_cancel_undo();
 	if(!thecel)
@@ -1148,6 +1156,8 @@ Errcode cel_paste_ptfunc(Pentool *pt,Wndo *w)
 Errcode err;
 Fcelpos lastpos;
 SHORT dx,dy,omx,omy;
+(void)pt;
+(void)w;
 
 	cel_cancel_undo();
 	if(!thecel)

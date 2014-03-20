@@ -26,7 +26,6 @@ static Errcode get_filecursor(char *name, Cursorcel **pcurs,Rectangle *maxsave)
 Jfile file;
 Errcode err;
 Pic_header pic;
-Bytemap *r = NULL;
 Cursorcel *curs;
 
 	*pcurs = NULL;
@@ -387,18 +386,24 @@ void show_brush()
 
 static void zshow_pcel_curs(Cursorhdr *ch)
 {
+	(void)ch;
+
 	zoomcursor = 1;
 	(*(PENWNDO->cursor->showit))(PENWNDO->cursor);
 	zoomcursor = 0;
 }
 static void zhide_pcel_curs(Cursorhdr *ch)
 {
+	(void)ch;
+
 	zoomcursor = 1;
 	(*(PENWNDO->cursor->hideit))(PENWNDO->cursor);
 	zoomcursor = 0;
 }
 static void zmove_pcel_curs(Cursorhdr *ch)
 {
+	(void)ch;
+
 	zoomcursor = 1;
 	(*(PENWNDO->cursor->moveit))(PENWNDO->cursor);
 	zoomcursor = 0;
@@ -429,14 +434,17 @@ Cursorhdr *och;
 
 static void show_ptool_curs(Cursorhdr *ch)
 {
+	(void)ch;
 	(*(vl.ptool->cursor->showit))(vl.ptool->cursor);
 }
 static void hide_ptool_curs(Cursorhdr *ch)
 {
+	(void)ch;
 	(*(vl.ptool->cursor->hideit))(vl.ptool->cursor);
 }
 static void move_ptool_curs(Cursorhdr *ch)
 {
+	(void)ch;
 	(*(vl.ptool->cursor->moveit))(vl.ptool->cursor);
 }
 Cursorhdr pentool_cursor = {

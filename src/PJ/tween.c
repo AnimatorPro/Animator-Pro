@@ -1012,6 +1012,8 @@ Pentool tween_pen_tool = PTOOLINIT1(
 
 void twe_go_tool(Button *b)
 {
+	(void)b;
+
 	hide_mp();
 	tween_undraw();
 	twe_disable_refresh();
@@ -1098,6 +1100,8 @@ static twe_set_colors()
 static void twe_color_refresh(void *dat, USHORT why)
 {
 Pixel os, oe;
+(void)dat;
+(void)why;
 
 	os = twcb->s_color;
 	oe = twcb->e_color;

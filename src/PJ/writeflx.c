@@ -102,6 +102,8 @@ static Errcode flx_save_frame(char *name, /* name for error report, if NULL no
 }
 static void frame1_prep(Flxfile *flxf, char *name)
 {
+	(void)name;
+
 	clear_mem(flxf->idx,flxf->hdr.frames_in_table*sizeof(Flx));
 	flxf->hdr.size = flxf->idx->foff = flx_data_offset(flxf);
 	flxf->hdr.frame_count = 0;
@@ -221,6 +223,7 @@ Flx *flx;
 Errcode write_ring_flxempty(char *name,Flxfile *flxf)
 {
 Fli_frame frame;
+(void)name;
 
 	pj_i_get_empty_rec(&frame);
 	return(write_ring_flxchunk(NULL,flxf,&frame));
