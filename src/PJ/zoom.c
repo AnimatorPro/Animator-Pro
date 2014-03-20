@@ -11,10 +11,16 @@
 
 static char esize_zwin_line[] = "zoom_win";
 
-void hmp_zwin_repos(), zwin_fullsize(), deltascale_zwndo(),
-	qset_zoom_source(), feel_scale_slider();
-
-static Errcode scroll_zoomwndo(void);
+static void see_zoom_title(Button *b);
+static void see_zoombox(Button *b);
+static void feel_zoombox(Button *b);
+static void move_zwinmenu(Button *b);
+static void qset_zoom_source(void);
+static void reposit_zoomwndo(void);
+static void hmp_zwin_repos(void);
+static void zwin_fullsize(Button *b);
+static void feel_scale_slider(Button *b);
+static void deltascale_zwndo(void *data);
 
 #define ZBOX_BORSIZE	2
 
@@ -118,10 +124,6 @@ static Menuhdr zoom_menu = {
 	(MBPEN|MBRIGHT|KEYHIT) /* ioflags */
 };
 
-void see_zoom_title();
-void move_zwinmenu();
-void reposit_zoomwndo();
-
 static void titbar_close_zwinmenu(Button *b)
 {
 extern Button zpan_cycle_group;
@@ -149,9 +151,6 @@ static Button zoom_dragbar = MB_INIT1(
 	NOKEY,      /* key equivalent */
 	MB_NOHILITE|MB_NORESCALE /* flags */
 );
-
-void see_zoombox();
-void feel_zoombox();
 
 Button zoom_box = MB_INIT1(
 	&zoom_dragbar,  /* next */
@@ -513,7 +512,7 @@ Errcode zoom_handtool(void)
 	return(scroll_zoomwndo());
 }
 
-static void qset_zoom_source()
+static void qset_zoom_source(void)
 /* have user rubberband rectangle around area he/she wants zoomed */
 {
 Errcode err;
@@ -540,7 +539,7 @@ error:
 	return;
 }
 
-static void reposit_zoomwndo()
+static void reposit_zoomwndo(void)
 {
 Errcode err;
 Rectangle maxrect;

@@ -20,16 +20,16 @@ static Autoarg *mum_autoarg;
 extern void  ccolor_box(), ppalette(), see_pen(), toggle_pen(), set_pbrush(),
 	see_cur_ink(), go_color_grid(Button *b),
 	go_cel_menu(),  
-	qmask(), change_time_mode(),
-	multi_preview(), multi_use();
-
-static multi_go_inks();
+	qmask(), change_time_mode();
 
 extern void go_nodraw_cel_menu();
 
 extern Button tseg_group_sel;
 extern Menuhdr quick_menu;
 
+static void multi_use(Button *b);
+static void multi_preview(void);
+static void multi_go_inks(void);
 
 /*** Button Data ***/
 
@@ -416,7 +416,7 @@ Errcode err;
 	}
 }
 
-static void multi_go_inks()
+static void multi_go_inks(void)
 /* Disable redo button before going to inks. */
 {
 VFUNC oredo;

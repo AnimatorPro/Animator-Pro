@@ -9,6 +9,21 @@
 #include "softmenu.h"
 #include "commonst.h"
 
+static void cm_save_cursor(void);
+static void cm_clip_cel(void);
+static void cm_cut_out_cel(void);
+static void cm_lasso_cel(void);
+static void cm_load_cel(void);
+static void cm_browse_cel(void);
+static void repos_cel(Fcelpos *pos);
+static void z_turn_cel(int angle);
+static void unturn_cel(void);
+static void center_cel(void);
+static void unstretch_cel(void);
+static void filfli_with_cel(void);
+static void filbox_with_cel(void);
+static void flip_cel(Boolean vertical);
+static void qmirror_cel(void);
 
 Boolean do_celpull(Menuhdr *mh)
 /* set disable flag in items that need cel to exist. */
@@ -156,7 +171,7 @@ void cm_selit(Menuhdr *mh, SHORT hitid)
 			break;
 	}
 }
-static cm_save_cursor(void)
+static void cm_save_cursor(void)
 {
 SHORT odcoor;
 char *title;
@@ -240,18 +255,18 @@ static void cm_lasso_cel(void)
 extern Errcode lasso_cel();
 	cm_getcel_bracket(lasso_cel);
 }
-static cm_load_cel(void)
+static void cm_load_cel(void)
 {
 extern Errcode go_load_the_cel();
 	cm_getcel_bracket(go_load_the_cel);
 }
-static cm_browse_cel()
+static void cm_browse_cel(void)
 {
 extern void go_browse_cels(void);
 	cm_getcel_bracket(go_browse_cels);
 }
 /************************************************/
-static void cmu_undo_celpos()
+static void cmu_undo_celpos(void)
 {
 Fcelpos opos;
 
@@ -293,7 +308,7 @@ Fcelpos pos;
 	pos.rotang.z += angle;
 	repos_cel(&pos);
 }
-static void unturn_cel()
+static void unturn_cel(void)
 {
 Fcelpos pos;
 
@@ -301,7 +316,7 @@ Fcelpos pos;
 	pos.rotang.x = pos.rotang.y = pos.rotang.z = 0;
 	repos_cel(&pos);
 }
-static void center_cel()
+static void center_cel(void)
 {
 Fcelpos pos;
 
@@ -317,7 +332,7 @@ static void mirror_stretch(Rcel *rc, Boolean along_y_axis, Fcelpos *pos)
 	else
 		pos->stretch.x = -(pos->stretch.x + 2*rc->width);
 }
-static void unstretch_cel()
+static void unstretch_cel(void)
 {
 Rcel *rc;
 Boolean xflip, yflip;
@@ -342,7 +357,7 @@ Fcelpos pos;
 	repos_cel(&pos);
 }
 #ifdef SLUFFED
-static void un_mirror_cel()
+static void un_mirror_cel(void)
 {
 Rcel *rc;
 Boolean xflip, yflip;
@@ -385,7 +400,7 @@ Rcel *rc;
 		mirror_stretch(rc,1,newpos);
 	}
 }
-static void filfli_with_cel()
+static void filfli_with_cel(void)
 {
 Fcelpos pos;
 Rectangle box;
@@ -396,7 +411,7 @@ Rectangle box;
 	mirrored_cel_to_box(thecel,&pos,&box);
 	repos_cel(&pos);
 }
-static void filbox_with_cel()
+static void filbox_with_cel(void)
 {
 Fcelpos pos;
 Rectangle box;
@@ -471,7 +486,7 @@ double cost;   /* cos theta */
 	mirror_stretch(cel->rc,TRUE,mirpos);
 	return;
 }
-static flip_cel(Boolean vertical)
+static void flip_cel(Boolean vertical)
 {
 Fcelpos pos;
 
@@ -479,7 +494,7 @@ Fcelpos pos;
 	mirror_stretch(thecel->rc,vertical,&pos);
 	repos_cel(&pos);
 }
-static void qmirror_cel()
+static void qmirror_cel(void)
 {
 Short_xy axis[2];
 Fcelpos pos;

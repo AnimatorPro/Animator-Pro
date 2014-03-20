@@ -15,9 +15,6 @@ typedef struct sep_cb
 	Rgb3 sep_rgb_dest;
 	} Sep_cb;
 
-void free_ctable();
-
-
 int in_cnums(UBYTE color, UBYTE *table, int count)
 /* returns 0 if not found otherwise ix+1 of color in table */
 {

@@ -8,11 +8,15 @@
 #include "textedit.h"
 #include "util.h"
 
-extern void mload_font(), qplace_window(), render_mask_blit();
 Errcode check_max_frames(int count);
-static void qnew_text(), title_button(), suggest_frames(), 
-	make_suggested_frames();
 
+static void seebg_title_back(Menuwndo *mw);
+static void qplace_window(void);
+static void mload_font(void);
+static void qnew_text(void);
+static void title_button(void);
+static void suggest_frames(Button *b);
+static void make_suggested_frames(Button *b);
 
 /* generated with makemenu */
 

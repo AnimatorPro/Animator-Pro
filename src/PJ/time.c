@@ -9,9 +9,9 @@
 
 extern long flx_file_hi();
 
-Errcode delete_middle_frames();
-void set_frame_count();
-Errcode make_frames();
+static void delete_first_frames(int frames);
+static Errcode delete_middle_frames(int start, int frames);
+static Errcode make_frames(int frames);
 
 void qinsert_frames(void)
 {

@@ -15,7 +15,7 @@ extern Button text_group_sel, om_sratio_group_sel, om_osped_group_sel,
  fill2c_group_sel, fill2c_group_sel, box_group_sel, move_group_sel,
  gel_brush_group, pen_brush_group;
 
-void close_static_ptool();
+static void close_static_ptool(Option_tool *tool);
 
 extern Cursorhdr fill_cursor;
 extern Cursorhdr pen_cursor;

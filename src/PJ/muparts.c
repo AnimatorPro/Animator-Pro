@@ -11,6 +11,9 @@ void shortcut_ccycle(Button *b);
 void go_color_grid(Button *b);
 extern Button tseg_a_sel, tseg_s_sel, tseg_f_sel;
 
+static void pget_color(Button *b);
+static void fill_inkwell(Button *b);
+
 /**** standard header group 1 the right side of the home menu ****/
 
 #define SHG ((Sgroup1_data *)(b->group))

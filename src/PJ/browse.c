@@ -33,11 +33,12 @@ static SHORT bro_xcount, bro_ycount, bro_count;
 static Names *bro_wild_list;
 char *bro_wild;
 
-void draw_cpi();
-	
 static void bredraw_cpic();
+static int new_bdrawer(char *drawer);
+static void draw_cpi(Button *m);
 static void init_bscroller(int top_name);
 static void browse_action();
+static void make_browse_cmap(void);
 
 extern Image cdown, cleft, cright, csleft,
 	cinsert, cappend, cright2, cleft2, csright, cup, size_cursor,

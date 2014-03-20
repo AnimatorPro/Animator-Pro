@@ -18,13 +18,12 @@
 
 /* #define BUILD_TEST_INKS */
 
-extern Button dtintgroup_sel,tintgroup_sel, radgroup_sel, dithergroup_sel;
+/* These are actually static, be they need to be forward-declared. */
+extern Button dtintgroup_sel, tintgroup_sel, radgroup_sel, dithergroup_sel;
 
-extern void set_rad_center();
-
-void see_ink_strength(Button *b);
-void see_dither_button(Button *b);
-
+static void set_rad_center(void);
+static void see_dither_button(Button *b);
+static void see_ink_strength(Button *b);
 
 static Ink xor_ink_opt = INKINIT(
 	NONEXT,
@@ -715,7 +714,7 @@ static Button setrad_sel = MB_INIT1(
 	NOKEY,
 	0
 	);
-static Button radgroup_sel = MB_INIT1(
+Button radgroup_sel = MB_INIT1(
 	NONEXT,
 	&setrad_sel,
 	138,82,0,0,

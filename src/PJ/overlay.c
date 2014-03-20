@@ -11,8 +11,8 @@
 #include "commonst.h"
 #include "softmenu.h"
 
-
-void load_overlay();
+static void load_overlay(int how);
+static int load_fli_overlay(char *title, int how);
 
 void qload_overlay(void)
 {

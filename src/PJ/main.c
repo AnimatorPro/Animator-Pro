@@ -20,6 +20,8 @@ extern Boolean do_pj_hotkey(Global_icb *gicb);
 
 extern void do_auto_redo(), swap_undo();
 
+static Errcode set_flisize(Rectangle *newsize);
+
 static Errcode init_after_screen()
 /* initializes and allocs every thing that has to be done after the screen
  * and before the dynamic stuff (tempflx) and push/pop stuff is opened */

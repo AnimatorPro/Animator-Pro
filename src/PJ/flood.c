@@ -30,10 +30,10 @@ typedef struct floodata {
 	UBYTE *linebuf;
 } Floodata;
 
+static Errcode some_flood(USHORT x, USHORT y, int floodto, Pixel fcolor);
 
-
-static Errcode some_flood();
-static Errcode flood_visit();
+static Errcode
+flood_visit(Floodata *fd, EFUNC hout, USHORT x, USHORT y, USHORT color);
 
 static void visit_hline(Floodata *fd, SHORT y, SHORT x1, SHORT x2)
 {

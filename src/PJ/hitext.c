@@ -7,6 +7,10 @@
 
 extern char text_name[];
 
+extern void qpwtitles(int paste);
+
+static void rendr_twin(Text_file *gf);
+
 #ifdef SLUFFED
 ted_wndo_doit(Wndo *w)
 /* glue  to attatch text editor to window */

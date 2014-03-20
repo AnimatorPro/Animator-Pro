@@ -31,6 +31,8 @@ typedef struct tween_cb
 	} Tween_cb;
 Tween_cb *twcb;
 
+static void twe_disable_refresh(void);
+static void twe_enable_refresh(void);
 
 static Boolean tween_got_both()
 /* Make sure both end polygons of the tween are present */
@@ -1121,13 +1123,13 @@ static Redraw_node twe_color_rn = {
 	NEW_MINIPAL_INK,
 };
 
-static void twe_disable_refresh()
+static void twe_disable_refresh(void)
 {
 	flxtime_data.clear_overlays = NULL;
 	flxtime_data.draw_overlays = NULL;
 	rem_color_redraw(&twe_color_rn);
 }
-static void twe_enable_refresh()
+static void twe_enable_refresh(void)
 {
 	flxtime_data.clear_overlays = tween_undraw;
 	flxtime_data.draw_overlays =  tween_redraw;

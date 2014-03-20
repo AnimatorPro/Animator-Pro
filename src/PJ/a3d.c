@@ -15,6 +15,9 @@
 #include "softmenu.h"
 #include "tween.h"
 
+static Errcode eload_a3d(char *name);
+static Errcode save_a3d(char *title);
+
 /************** Stuff for 2-Dimensional point-lists *****************/
 typedef struct poly2
 	{

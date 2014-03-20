@@ -9,10 +9,14 @@ extern Button gel_brush_group;
 
 static void see_bsize_slider(), feel_bsize_slider(), see_circle_button(),
 	see_square_button(), see_line_button(), mb_set_brush_type();
-	see_brush_sel(), update_brush_sel(), see_lang_slider(),
-	zero_lang_slider(), feel_lang_slider(), rclick_line_sel(),
-	see_abovetext_qslider();
+extern void see_abovetext_qslider();
 
+static void see_brush_sel(Button *b);
+static void update_brush_sel(void);
+static void see_lang_slider(Button *b);
+static void feel_lang_slider(Button *b);
+static void zero_lang_slider(Button *b);
+static void rclick_line_sel(Button *b);
 
 /* -----------------Block for gel brush group options --------------*/
 
@@ -421,7 +425,7 @@ SHORT oht;
 	}
 	b->height = oht;
 }
-static void update_brush_sel()
+static void update_brush_sel(void)
 {
 void *ogroup;
 

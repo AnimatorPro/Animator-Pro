@@ -10,6 +10,10 @@
 #include "softmenu.h"
 #include "util.h"
 
+static void merge_overlay(Button *b);
+static void free_paint_buffers(void);
+static Errcode alloc_paint_buffers(void);
+
 static void render_overlay(), kill_overlay();
 extern Button cmu_common_sels, cmu_pa_group_sel;
 
@@ -840,12 +844,12 @@ static Errcode realloc_fcel_backup(Flicel *fc, Raster **bup)
 	return(valloc_bytemap(bup,fc->xf.mmax.width,fc->xf.mmax.height));
 }
 
-static void free_paint_buffers()
+static void free_paint_buffers(void)
 {
 	free_fcel_backup(&cmcb->crast1);
 	free_fcel_backup(&cmcb->crast2);
 }
-static Errcode alloc_paint_buffers()
+static Errcode alloc_paint_buffers(void)
 
 /* alloc buffers needed exclusively for paint tool */
 {

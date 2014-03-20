@@ -15,6 +15,8 @@ extern void a1bdot(), rbdot(), rbbrush();
 
 extern int pxmin, pxmax, pymin, pymax;
 
+static int get_rub_spiral(void);
+
 int make_spiral_poly(int x0,int y0,int rad,int itheta,long ttheta)
 {
 int i;

@@ -4,7 +4,7 @@
 #include "jimk.h"
 #include "memory.h"
 
-void act_rot_offset();
+static void act_rot_offset(Short_xyz *point, SHORT *op, SHORT scale);
 
 void find_conjugates(struct ado_setting *function)
 

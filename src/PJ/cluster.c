@@ -14,12 +14,13 @@ extern Button pal_men_sel, pal_pal_sel,  rpal_pal_sel, pal_spe_sel,
 extern Menuhdr palette_menu;
 
 void some_cmod();
-void pp_hi_bundle();
 
 static SHORT c1, c2;
 static Rgb3 *ictab;
 
-
+static void pp_unhi_bundle(Button *b);
+static void pp_hi_bundle(Button *b, int ocolor);
+static void pp_hi_ccolor(Button *b);
 
 int in_bundle(Pixel color, struct bundle *bun)
 /* returns 0 if not found otherwise ix+1 of bundle color */

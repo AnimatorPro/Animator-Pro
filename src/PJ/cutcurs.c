@@ -15,7 +15,6 @@ typedef struct cutdata {
 	Pixel oncol, offcol, zon;
 } Cutdata;
 
-extern void zoom_put_dot();
 extern void zoom_put_hseg();
 extern void zoom_put_vseg();
 

@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "jimk.h"
 #include "commonst.h"
 #include "errcodes.h"

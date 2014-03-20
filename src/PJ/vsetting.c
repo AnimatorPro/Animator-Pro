@@ -10,6 +10,11 @@
 #include "util.h"
 #include "vsetfile.h"
 
+static Errcode default_tsettings(Vset_flidef *fdef);
+
+static Errcode
+load_file_settings(char *path, Vset_flidef *fdef, Boolean default_reset);
+
 void rethink_settings(void)
 {
 	reres_settings();

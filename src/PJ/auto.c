@@ -32,6 +32,8 @@
 #include "flx.h"
 #include "inks.h"
 
+static Errcode dall(Autoarg *aa);
+
 Boolean auto_abort_verify(Autoarg *aa)
 /* verify they'd like to call rendering off... */
 {

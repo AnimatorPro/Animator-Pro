@@ -24,7 +24,6 @@ typedef enum tween_tool_ids
 	TTI_LINK,
 	} Tween_tool_ids;
 
-Boolean tween_got_both();
 Boolean tween_got_either();
 Boolean tween_renderable();
 Boolean got_tween();

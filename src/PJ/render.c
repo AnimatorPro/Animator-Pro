@@ -15,17 +15,19 @@
 #include "rastrans.h"
 #include "render.h"
 
-extern void a1bdot(), rbdot(), rbbrush();
-
-
 extern char under_flag;
+
+extern Errcode render_line(SHORT x, SHORT y, SHORT xx, SHORT yy);
 
 Rendata rdta;
 
-static tblit();
+static Errcode
+tblit(Rcel *src, SHORT sx, SHORT sy,
+		Rcel *dest, SHORT dx, SHORT dy, SHORT w, SHORT h,
+		Pixel tcolor, int clear, int tinting, SHORT dither,
+		Cmap *scmap, Pixel *xlat);
 
-r_box();
-static Pixel dfrom_range();
+static Errcode r_box(Raster *r, SHORT x, SHORT y, SHORT xx, SHORT yy);
 
 void set_render_clip(register Rectangle *rect)
 
@@ -603,7 +605,7 @@ int i;
 	render_poly(&poly, filled, TRUE);
 }
 
-Errcode r_box(Raster *r,SHORT x,SHORT y,SHORT xx,SHORT yy)
+static Errcode r_box(Raster *r, SHORT x, SHORT y, SHORT xx, SHORT yy)
 {
 int i;
 int swap;
@@ -690,13 +692,21 @@ Rbrush *rb = vl.brush;
 	}
 	enable_lsp_ink();
 }
+
+static void
+render_line_with_data(SHORT x1, SHORT y1, SHORT x2, SHORT y2, void *data)
+{
+	(void)data;
+	render_line(x1, y1, x2, y2);
+}
+
 Errcode render_opoly(Poly *p, Boolean closed)
 {
 LLpoint *this;
 
 	this = p->clipped_list;
 	render_brush(this->x,this->y);	/* round off the 1st end */
-	hollow_polygon(p, render_line, NULL,closed);
+	hollow_polygon(p, render_line_with_data, NULL, closed);
 	return(Success);
 }
 

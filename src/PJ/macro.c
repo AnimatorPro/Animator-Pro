@@ -3,6 +3,7 @@
    and then play it back without c_input() routine suspecting too much. */
 
 #define INPUT_INTERNALS
+#include <stdio.h>
 #include <stdarg.h>
 #include "jimk.h"
 #include "commonst.h"

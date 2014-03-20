@@ -11,11 +11,12 @@
 
 /*** Display Functions ***/
 
-extern void fml_load(), fml_save(), fml_info(), fml_kill(),
-	fml_change_mode();
-
-void config_fml();
-
+static void fml_save(void);
+static void fml_load(void);
+static void fml_kill(void);
+static void enable_saves(void);
+static void config_fml(void);
+static void fml_change_mode(Button *m);
 
 static char *file_ends[] =
 	{

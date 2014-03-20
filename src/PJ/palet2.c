@@ -16,15 +16,21 @@
 #include "softmenu.h"
 
 extern Button inks_sel, ccolor_sel, spec1_sel;
-extern void see_cluster(), feel_cluster(), go_multi(), sliders_from_ccolor(),
+extern void see_cluster(), feel_cluster(), go_multi(),
 	see_undo(), toggle_pen(), see_pen(), set_pbrush();
 
 void see_powell_palette(), feel_pp(), right_click_pp(), ccolor_box(),
-	mselect_bundle(), change_cluster_mode(), pal_menu_back(),
-	change_hls_mode(), ccolor_from_sliders(), pal_feel_qslider();
+	mselect_bundle(), change_cluster_mode();
 void go_color_grid(Button *b);
 
 extern void swap_undo();
+
+static void pal_feel_qslider(Button *m);
+static void sliders_from_ccolor(void);
+static void see_color_sliders(void);
+static void ccolor_from_sliders(void);
+static void change_hls_mode(Button *m);
+static void pal_menu_back(Button *m);
 
 static SHORT ccred,ccgreen,ccblue;
 #ifdef SLUFFED

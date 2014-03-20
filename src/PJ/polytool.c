@@ -5,6 +5,7 @@
    to/from working_poly here.  Also routines to move individual points
    in a polygon.  */
 
+#include <stdio.h>
 #include "jimk.h"
 #include "commonst.h"
 #include "errcodes.h"

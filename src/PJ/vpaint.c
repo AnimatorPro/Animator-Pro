@@ -16,9 +16,10 @@
 #include "softmenu.h"
 #include "textedit.h"
 
-static char *unsaved_string(char *buf);
 #define UNSAVE_BUFSIZ 80
 
+static char *unsaved_string(char *buf);
+static void qquit(void);
 
 static void get_color(void)
 {

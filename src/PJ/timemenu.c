@@ -11,10 +11,7 @@
 
 extern void ccolor_box(), ppalette(), see_pen(), toggle_pen(), set_pbrush(),
 	insert_a_frame(), kill_a_frame(), set_total_frames(),
-	minsert(), mdelete_frames(), jump_to_frame(), jump_to_mark(), set_mark(),
-	spread_frames(), go_multi(), 
-	see_range_button(), use_range_button(), set_range_button(),
-	multi_preview(), multi_use();
+	go_multi(), multi_preview(), multi_use();
 
 #define TR1 155
 #define TR2 187
@@ -22,6 +19,15 @@ extern void ccolor_box(), ppalette(), see_pen(), toggle_pen(), set_pbrush(),
 extern Button tseg_group_sel;
 
 extern Menuhdr quick_menu;
+
+static void set_mark(Button *m);
+static void jump_to_mark(Button *b);
+static void minsert(Button *b);
+static void mdelete_frames(Button *b);
+static void set_range_button(Button *m);
+static void see_range_button(Button *b);
+static void use_range_button(Button *m);
+static void spread_frames(Button *m);
 
 static SHORT jiffies;
 Qslider speed_sl = QSL_INIT1(0, 120, &jiffies, 0, NULL, leftright_arrs);

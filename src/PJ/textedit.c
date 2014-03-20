@@ -14,7 +14,7 @@
 
 extern char *strstr(char *s1, char *s2);
 
-
+static void marqi_twinbox(Text_file *gf);
 static slide_down();
 static slide_up();
 static void scroll_up();

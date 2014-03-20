@@ -20,10 +20,7 @@ static Optgroup_data optgroup;
 
 extern Image ctriup, ctridown;
 
-void mb_go_files(), go_poly_files();
-
-void sample_text(), mfont_text(), zero_sl(), zero_slider(), zero_sl(),
-	zero_slider(), mfont_text(), mfont_text(), zero_slider(),
+void sample_text(), zero_sl(),
 	ppalette(), see_clusid(), toggle_clusid(), see_undo(), see_redo();
 void see_crb(Button *m);
 void feel_crb(Button *m);
@@ -35,6 +32,10 @@ extern Button om_points_group_sel, om_sratio_group_sel, om_osped_group_sel,
 	text_group_sel, curve_group_sel;
 
 void see_abovetext_qslider();
+
+static void zero_slider(Button *b);
+static void mfont_text(void);
+static void go_poly_files(void);
 
 /* block for Text options */
 

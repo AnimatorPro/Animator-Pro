@@ -23,6 +23,8 @@ static void qload_fli_b(), see_fli_bname(), see_fli_aname(), see_trans_icon(),
 	see_abslid_sel(), feel_abslid_sel(), set_blindmask_mode(),
 	opt_blindmask_size(), set_boxil_size();
 
+static void optload_mask_cel(Button *b);
+static int compos_get_overlap(void);
 
 extern Image cright, cleft;		/* Left and right arrow icons. */
 

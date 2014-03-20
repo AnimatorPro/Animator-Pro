@@ -9,6 +9,8 @@
 #include "render.h"
 #include "softmenu.h"
 
+static void go_gridreq(Boolean keep_undo);
+
 USHORT constrain_angle(SHORT angle)
 /* note this accepts angles in FCEL_TWOPI units */
 {

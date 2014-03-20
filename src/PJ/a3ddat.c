@@ -46,6 +46,8 @@
 #include "softmenu.h"
 #include "util.h"
 
+static void seebg_a3d(Menuwndo *mw);
+
 extern Button tseg_group_sel;
 
 void qinks(), go_multi(), arrange_a3d_menu(), go_cel_menu(),
