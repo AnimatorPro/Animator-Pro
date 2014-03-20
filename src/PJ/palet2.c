@@ -440,7 +440,7 @@ char buf[50];
 
 	if ((title =  vset_get_filename(stack_string("load_pal",buf),
 								".COL;.FLC;.CEL", load_str,
-							    PALETTE_PATH,NULL,0)) != NULL);
+							    PALETTE_PATH, NULL, 0)) != NULL)
 	{
 		load_palette(title, 1);
 	}
