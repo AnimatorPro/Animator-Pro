@@ -373,16 +373,6 @@ static void show_shape_cursor(Rastcursor *ch)
 	else
 		show_brush_cursor(ch);
 }
-void hide_brush()
-{
-	vl.hide_brush = 1;
-}
-void show_brush()
-{
-	vl.hide_brush = 0;
-}
-
-
 
 static void zshow_pcel_curs(Cursorhdr *ch)
 {

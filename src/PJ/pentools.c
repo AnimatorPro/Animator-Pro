@@ -11,6 +11,16 @@
 static void save_thik_line_undo(SHORT y1, SHORT y2, SHORT brushsize);
 static Errcode dtool(int mode);
 
+static void hide_brush(void)
+{
+	vl.hide_brush = 1;
+}
+
+static void show_brush(void)
+{
+	vl.hide_brush = 0;
+}
+
 static int pticheck(void *dat)
 {
 Wndo *ckwndo;
