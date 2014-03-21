@@ -425,50 +425,6 @@ void flush_tempflx(void)
 	flush_tflx();
 }
 
-void delete_file_list(char **list)
-{
-char *name;
-
-while ((name = *list++) != NULL)
-	pj_delete(name);
-}
-
-void cleanup(Boolean save_state)
-{
-	/* delete back buffer screen */
-	pj_delete(bscreen_name);
-	vs.bframe_ix = 0;
-	if (save_state)
-	{
-		soft_put_wait_box("wait_quit");
-		flush_tempflx(); /* update tempflx header and stuff */
-		flush_tsettings(TRUE); /* update temp settings file */
-	}
-	close_tflx();
-	/* push a copy of current screen and alt,cel etc for when program started 
-	   again with id of last tflx flush... */
-
-	delete_file_list(work_temp_files);
-	if (save_state)
-	{
-		push_pics_id(flix.hdr.id.update_time);
-			/* move files from memory to filing system */
-		softerr(trd_ram_to_files(), "!%s", "temp_copy", get_temp_path());
-		rcompact();			/* free blocks used for ram-disk */
-	}
-	else
-	{
-		delete_file_list(state_temp_files);
-	}
-	cleanup_all(Success);
-}
-
-void outofhere(Boolean save_state)
-{
-	cleanup(save_state);
-	exit(0);
-}
-
 void hide_mp(void)
 {
 	fliborder_off();
