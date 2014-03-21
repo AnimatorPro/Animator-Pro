@@ -22,7 +22,7 @@ O = test.obj a3d.obj a3ddat.obj alt.obj&
  inkdot.obj inkdot2.obj macro.obj main.obj mainpull.obj vmarqi.obj mask.obj &
  messages.obj multimen.obj muparts.obj names.obj onepal.obj&
  options.obj overlay.obj palet2.obj pencel.obj&
- penopts.obj pentools.obj penwndo.obj picfiles.obj pixbuf.obj pjfont.obj&
+ penopts.obj pentools.obj penwndo.obj picfiles.obj pjfont.obj&
  qconfig.obj qmacro.obj qmenu.obj&
  poly.obj polyrub.obj polytool.obj pstamp.obj&
  quickdat.obj random.obj rcel.obj resource.obj redo.obj render.obj&

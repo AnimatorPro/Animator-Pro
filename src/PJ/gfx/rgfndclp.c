@@ -1,5 +1,15 @@
 #include "rastgfx.ih"
 
+static int pixsame(void *pixbuf, USHORT numpix, Pixel first_col)
+/* gives number of contiguous pixels in pixbuf equal to first_col.
+ * note: does not check for numpix <= 0
+ * only works for pixsize = 1 for now */
+{
+	if (*(Pixel *)pixbuf != first_col)
+		return 0;
+	return pj_bsame(pixbuf, numpix);
+}
+
 Errcode find_clip(void *rast, Rectangle *rect, Pixel tcolor)
 /* place minimum boundaries of rast containing all that is not tcolor 
  * into rectangle if nothing is in the rectangle the output width will

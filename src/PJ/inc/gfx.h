@@ -85,7 +85,6 @@ void ublitrect(const RASType *s, Coor sx, Coor sy,
 void blitmove_rect(RASType *s,Coor sx, Coor sy, RASType *d,
 				   Coor dx, Coor dy, Ucoor width, Ucoor height);
 
-extern int pixsame(void *pixbuf, USHORT numpix, Pixel first_color);
 extern Errcode find_clip(void *rast, Rectangle *rect, Pixel tcolor);
 
 typedef void (*do_leftbehind_func)(Coor x,Coor y,Coor w,Coor h,OPTdata);
