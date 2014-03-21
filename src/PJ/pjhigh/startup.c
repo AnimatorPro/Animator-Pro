@@ -13,11 +13,6 @@
 #include "argparse.h"
 #include "softmenu.h"
 
-Vbcb vb =  /* yep, this is where it is */
-{
-	-1,  /* video mode at -1  */
-};
-
 static char default_config_name[] = "aa.cfg";
 
 #ifdef TESTING

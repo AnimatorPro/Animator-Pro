@@ -201,6 +201,11 @@ Vsettings default_vs =  {
 Vsettings vs;		/* The settings used by program.  Default_vs gets copied
 						here a lot. */
 
+Vbcb vb = /* yep, this is where it is */
+{
+	-1, /* video mode at -1  */
+};
+
 Vlcb vl;	/* local control block data, all zeros, see jimk.h */
 
 
