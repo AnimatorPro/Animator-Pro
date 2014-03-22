@@ -70,11 +70,17 @@ typedef struct compo_cb {
 
 extern Compocb ccb;
 
-Errcode render_composite(Boolean preview);
-Errcode draw_slatmask(Boolean *pvertical,USHORT size);
+/* composit.c. */
+extern Errcode draw_slatmask(void *pvertical, SHORT size);
 
 extern void
 zoom_boxil_mask(struct raster *boxil_mask, struct raster *dest,
 		Coor hsize, Coor vsize);
+
+extern Errcode render_composite(Boolean preview);
+
+/* composmu.c */
+extern Errcode reload_mask_cel(void);
+extern void qdo_composite(void);
 
 #endif

@@ -5,6 +5,8 @@
  * Peter Kennard wrote this file for Animator Pro.  Since then Jim Kent has
  * done some light maintenance work and commenting.
  */
+#include <assert.h>
+#include <stdio.h>
 #include "jimk.h"
 #include "commonst.h"
 #include "composit.h"
@@ -17,13 +19,24 @@
 #include "picdrive.h"
 #include "softmenu.h"
 
-static void qload_fli_b(), see_fli_bname(), see_fli_aname(), see_trans_icon(),
-	setup_nonmask_mode(), inc_overlap(), tog_ends(), qrender_composite(),
-	tog_redraw_group(), see_mode_info(), setup_mask_mode(), qload_mask_cel(),
-	see_abslid_sel(), feel_abslid_sel(), set_blindmask_mode(),
-	opt_blindmask_size(), set_boxil_size();
-
+static void qload_mask_cel(Button *b);
 static void optload_mask_cel(Button *b);
+static void qload_fli_b(Button *b);
+static void see_fli_aname(Button *b);
+static void see_fli_bname(Button *b);
+static void see_mode_info(Button *b);
+static void see_trans_icon(Button *b);
+static void setup_nonmask_mode(Button *b);
+static void setup_mask_mode(Button *b);
+static void inc_overlap(Button *b);
+static void tog_redraw_group(Button *b);
+static void tog_ends(Button *b);
+static void qrender_composite(Button *b);
+static void see_abslid_sel(Button *b);
+static void feel_abslid_sel(Button *b);
+static void set_boxil_size(Button *b);
+static void set_blindmask_mode(Button *b);
+static void opt_blindmask_size(Button *b);
 static int compos_get_overlap(void);
 
 extern Image cright, cleft;		/* Left and right arrow icons. */
@@ -314,7 +327,6 @@ static Button seg_disol_sel = MB_INIT1(
 	MB_B_GHILITE /* flags */
 	);
 
-void optload_mask_cel(Button *b);
 static Button seg_mask_sel = MB_INIT1(
 	&seg_disol_sel, /* next */
 	NOCHILD, /* children */
@@ -504,12 +516,12 @@ static Button seg_namea_sel = MB_INIT1(
 static SHORT olapf;
 static Numq frames_numq = NUMQ_INIT(&olapf);
 
-static void see_olap_frames(Button *b)\
+static void see_olap_frames(Button *b)
 {
 	olapf = compos_get_overlap();
 	see_numq(b);
 }
-static feel_olap_frames(Button *b)
+static void feel_olap_frames(Button *b)
 {
 	feel_numq(b);
 	vs.co_olap_frames = olapf;
@@ -517,7 +529,7 @@ static feel_olap_frames(Button *b)
 	vs.co_olap_frames = olapf;
 	draw_buttontop(&seg_abslid_sel);
 }
-static opt_olap_frames(Button *b)
+static void opt_olap_frames(Button *b)
 {
 short maxtrans;
 
@@ -640,7 +652,7 @@ static Smu_button_list co_smblist[] = {
 	{ "custinfo",   { &seg_modeinfo_sel } },
 };
 
-Errcode reload_mask_cel()
+Errcode reload_mask_cel(void)
 {
 Errcode err;
 
@@ -675,7 +687,7 @@ Errcode err;
 		copy_flipath(ccb.mask_cel->cpath,ccb.maskpath);
 	return(err);
 }
-static Errcode ask_load_mask_cel()
+static Errcode ask_load_mask_cel(void)
 {
 Errcode err;
 char path[PATH_SIZE];
@@ -718,7 +730,7 @@ static void optload_mask_cel(Button *b)
 	else
 		setup_mask_mode(b);
 }
-static Errcode load_fli_b()
+static Errcode load_fli_b(void)
 {
 Errcode err;
 char suffi[PDR_SUFFI_SIZE*2 +10];
@@ -783,14 +795,14 @@ Errcode err;
 		show_mp();
 }
 
-cleanup_composite()
+static void cleanup_composite(void)
 {
 	free_fcel(&ccb.fcela);
 	free_fcel(&ccb.fcelb);
 	free_fcel(&ccb.mask_cel);
 	pj_freez(&ccb.tflxpath);
 }
-static Errcode init_paths_and_cels()
+static Errcode init_paths_and_cels(void)
 {
 	if(NULL == (ccb.tflxpath = pj_malloc(sizeof(Flipath)*2)))
 		return(Err_no_memory);
@@ -811,7 +823,7 @@ static void scale_seg_menu(Rscale *scale)
 	scale_xylist(scale, (Short_xy *)&unscale_xys, (Short_xy *)&scale_xys,
 					sizeof(scale_xys)/sizeof(Short_xy));
 }
-static void go_seg_menu()
+static void go_seg_menu(void)
 {
 Errcode err;
 void *ss;
@@ -840,7 +852,7 @@ early_error:
 	add_check_tflx_toram();
 	return;
 }
-void qdo_composite()
+void qdo_composite(void)
 {
 	hide_mp();
 	unzoom();
@@ -854,7 +866,7 @@ void qdo_composite()
 	show_mp();
 }
 
-static see_celname(Button *b, Flipath *fpath)
+static void see_celname(Button *b, Flipath *fpath)
 {
 char buf[32];
 void *odat;
@@ -1031,10 +1043,10 @@ static void setup_mask_mode(Button *b)
 	if(ccb.mask_cel)
 		change_trans_mode(b);
 }
-static void incit(Button *b)
+static void incit(void *b)
 {
 	if(vs.co_type != COMP_CUT)
-		vs.co_olap_frames += b->identity;
+		vs.co_olap_frames += ((Button *)b)->identity;
 	draw_buttontop(&seg_abslid_sel);  /* this will clip things */
 	draw_buttontop(&seg_frames_sel);
 }
@@ -1044,8 +1056,7 @@ static void inc_overlap(Button *b)
 	repeat_on_pdn(incit,b);
 	draw_buttontop(b);
 }
-static int compos_get_overlap()
-
+static int compos_get_overlap(void)
 /* returns clipped value for current mode does not alter global setting */
 {
 int maxolap;
@@ -1110,7 +1121,7 @@ typedef struct abslidat {
 	int bstart, bwid;
 } Abslidat;
 
-static build_abslid(Button *b, Abslidat *abs)
+static void build_abslid(Button *b, Abslidat *abs)
 {
 int olap_frames;
 int olap_start, olap_wid;
@@ -1262,10 +1273,12 @@ struct boxil_zdata {
 	Rcel *zdots;
 	Boolean size_is_height;
 };
-static Errcode zoom_boxils(struct boxil_zdata *bd, USHORT size)
+static Errcode zoom_boxils(void *boxil_zdata, SHORT size)
 {
-LONG hsize;
-LONG vsize;
+	struct boxil_zdata *bd = boxil_zdata;
+	LONG hsize;
+	LONG vsize;
+	assert(size >= 0);
 
 	if(bd->size_is_height)
 	{

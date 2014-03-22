@@ -1,3 +1,4 @@
+#include <assert.h>
 #include "jimk.h"
 #include "composit.h"
 #include "errcodes.h"
@@ -57,9 +58,11 @@ typedef struct pldat {
 	Pixel *xlat;
 } Pldat;
 
-static Errcode putxlat_line(Pldat *pld, Pixel *line,
+static Errcode putxlat_line(void *pldat, Pixel *line,
 							Coor x, Coor y, Ucoor width)
 {
+	Pldat *pld = pldat;
+
 	if(pld->xlat != NULL)
 		pj_xlate(pld->xlat,line,width);
 	pj_put_hseg(pld->dest,line,x,y,width);
@@ -129,6 +132,7 @@ Errcode err;
 	if((err = unfli(undof, 0, 0)) < Success)
 		return(err);
 	err = write_ring_flxframe(NULL,&flix,cbuf,vb.pencel,undof);
+	return err;
 }
 static Errcode write_celframes(Flicel *src, SHORT start, SHORT num_frames,
 							   Boolean keep_cel, Boolean ringit,
@@ -383,11 +387,12 @@ static void abcfit_line(Pixel *aline,Pixel *bline,Pixel *dline,Pixel *maxdline,
 		}
 	}
 }
-static Errcode put_celsline(Pframedat *pfd, Pixel *bline,
+static Errcode put_celsline(void *pframedat, Pixel *bline,
 						 Coor x, Coor y, Ucoor width)
 
 /* line function for rendering masked cel lines */
 {
+Pframedat *pfd = pframedat;
 Pixel *dline;
 Pixel *maxdline;
 Pixel *aline;
@@ -1050,9 +1055,11 @@ static Errcode make_louver_mask(int tscale0, int tscale1, Pframedat *pfd)
 	return(make_blind_mask(tscale1, pfd, 1, pfd->invert, !pfd->invert,
 						   vs.co_louver_width));
 }
-Errcode draw_slatmask(Boolean *pvertical,USHORT size)
+Errcode draw_slatmask(void *data, SHORT size)
 {
-Pframedat pfd;
+	Boolean *pvertical = data;
+	Pframedat pfd;
+	assert(size >= 0);
 
 	clear_struct(&pfd);
 	pfd.dest = vb.pencel;
@@ -1220,7 +1227,7 @@ error:
 
 /******* simple cut function ******/
 
-static Errcode do_cut()
+static Errcode do_cut(void)
 /* no cfitting, no transition frames. */
 {
 Errcode err;
@@ -1237,8 +1244,10 @@ error:
 }
 /***** main composit function *****/
 
-static Boolean comp_abort_verify()
+static Boolean comp_abort_verify(void *data)
 {
+	(void)data;
+
 	if(ccb.preview_mode)
 	{
 		if(vs.co_type == COMP_CUT)
@@ -1276,7 +1285,7 @@ Closepframe close_pframe = NULL;
 	else
 		free_fcel(&ccb.mask_cel);
 
-	set_abort_verify(comp_abort_verify);
+	set_abort_verify(comp_abort_verify, NULL);
 
 	exit_flx_ix = flx_ix = vs.frame_ix;
 

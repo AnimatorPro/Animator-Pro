@@ -11,6 +11,7 @@
 #include "browse.h"
 #include "celmenu.h"
 #include "commonst.h"
+#include "composit.h"
 #include "errcodes.h"
 #include "fli.h"
 #include "ftextf.h"
