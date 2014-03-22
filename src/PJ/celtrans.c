@@ -336,13 +336,15 @@ typedef struct paste1dat {
 	Short_xy ncent, ocent;
 } Paste1dat;
 
-static int paste1(Paste1dat *pdat, int ix,int it,int scale,Autoarg *aa)
+static Errcode
+paste1(void *paste1dat, int ix, int intween, int scale, Autoarg *aa)
 /* auto vec for moving a cel in a straight line.  Ie paste multi */
 {
-Errcode err;
-int dx,dy;
-(void)ix;
-(void)it;
+	Paste1dat *pdat = paste1dat;
+	Errcode err;
+	int dx,dy;
+	(void)ix;
+	(void)intween;
 
 	if(aa->cur_frame == 0) 	/* first frame set end position to current */
 		pdat->ncent = thecel->cd.cent;

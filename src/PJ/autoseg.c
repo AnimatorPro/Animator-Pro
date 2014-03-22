@@ -8,7 +8,6 @@
 #include "flx.h"
 #include "memory.h"
 
-extern Boolean auto_abort_verify();
 extern long ff_tflx();
 
 Errcode dseg(Autoarg *aa)

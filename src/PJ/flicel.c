@@ -321,9 +321,10 @@ typedef struct clipceldat {
 	Flicel *old_cel;
 } Clipceldat;
 
-static Errcode clip1_celframe(Clipceldat *cd,
-							  int ix,int it,int scale,Autoarg *aa)
+static Errcode
+clip1_celframe(void *clipceldat, int ix, int it, int scale, Autoarg *aa)
 {
+Clipceldat *cd = clipceldat;
 Errcode err;
 int dx,dy;
 Rectangle bounds;
@@ -640,7 +641,7 @@ int oframe_ix;
 	if(vs.multi && flix.hdr.frame_count > 1)
 	{
 		oframe_ix = vs.frame_ix;
-		if((err = go_autodraw(pj_errdo_success,NULL,
+		if ((err = go_autodraw((autoarg_func)pj_errdo_success, NULL,
 							  AUTO_READONLY|AUTO_PREVIEW_ONLY|AUTO_UNZOOM)) < 0)
 		{
 			goto error;

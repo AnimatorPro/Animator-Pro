@@ -490,9 +490,10 @@ int i;
 	return(err);
 }
 
-static Errcode twirl1(Celcfit *cfit, int ix, int frames, int scale)
+static Errcode twirl1(void *celcfit, int ix, int frames, int scale, Autoarg *aa)
 /* This is the 'auto vec' to render optics on one frame */
 {
+Celcfit *cfit = celcfit;
 Rcel *tf = NULL;
 Errcode err;
 Xformspec xf;
@@ -501,6 +502,7 @@ Rcel_save oundo;
 Poly2 dpoly;
 (void)ix;
 (void)frames;
+(void)aa;
 
 	clear_struct(&dpoly);
 	clear_struct(&oundo);
@@ -999,7 +1001,6 @@ static Errcode make_path(void)
 /* Response to pendown over drawing area when path sub-panel is
    being displayed */
 {
-extern SHORT tr_frames;
 Errcode err = Success;
 Rcel_save opic;
 Poly wpoly;

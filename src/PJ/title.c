@@ -387,14 +387,17 @@ show_mp();
 static int fc_height;
 static long pixels_to_scroll;
 
-static int title1(Text_file *gf,int ix,int intween,int scale)
+static int
+title1(void *text_file, int ix, int intween, int scale, Autoarg *aa)
 {
+Text_file *gf = text_file;
 Errcode err;
 long tscroll;
 int lscroll, pscroll;
 int extra;
 (void)ix;
 (void)intween;
+(void)aa;
 
 	tscroll = pixels_to_scroll * scale / SCALE_ONE;
 	lscroll = tscroll/fc_height;
@@ -423,10 +426,11 @@ error:
 	return(err);
 }
 
-
-static int timesq1(Text_file *gf,int ix,int intween,int scale)
+static int
+timesq1(void *text_file, int ix, int intween, int scale, Autoarg *aa)
 /* Scroll a single line of text from right to left */
 {
+Text_file *gf = text_file;
 Errcode err;
 long tscroll;
 long so_far;
@@ -436,6 +440,7 @@ int cw;
 int poff;
 (void)ix;
 (void)intween;
+(void)aa;
 
 	tscroll = pixels_to_scroll * scale / SCALE_ONE;
 	s = gf->text_buf;
@@ -473,8 +478,10 @@ error:
 static int characters;
 static int clines;
 
-static int type1(Text_file *gf,int ix,int intween,int scale)
+static int
+type1(void *text_file, int ix, int intween, int scale, Autoarg *aa)
 {
+Text_file *gf = text_file;
 Errcode err;
 int stoppos;
 char *stops;
@@ -486,6 +493,7 @@ int y;
 int ending;
 (void)ix;
 (void)intween;
+(void)aa;
 
 	/* figure out which character to stop at */
 	stoppos = 1+rscale_by(characters, scale, SCALE_ONE);

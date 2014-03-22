@@ -1,12 +1,12 @@
 /* mask.c - Routines to maintain and select our screen-sized bitplane
    used mostly for write-protecting pixels.  */
 
-#include "errcodes.h"
 #include "jimk.h"
-#include "menus.h"
+#include "auto.h"
 #include "broadcas.h"
+#include "errcodes.h"
+#include "menus.h"
 #include "softmenu.h"
-
 
 void free_mask(Bitmap *mask)
 {
@@ -113,9 +113,15 @@ void mb_toggle_mask(Button *b)
 	draw_button(b);
 }
 
-static int paste1_mask(void)
+static Errcode
+paste1_mask(void *data, int ix, int intween, int scale, Autoarg *aa)
 {
-Errcode err;
+	Errcode err;
+	(void)data;
+	(void)ix;
+	(void)intween;
+	(void)scale;
+	(void)aa;
 
 	if(mask_rast == NULL)
 		return(Err_nogood);
@@ -306,7 +312,7 @@ USHORT mdis[9];
 				do_qfunc(qshow_mask,keep_undo);
 				break;
 			case 5:
-				uzauto(paste1_mask);
+				uzauto(paste1_mask, NULL);
 				break;
 			case 6:
 				if (soft_yes_no_box("mask_del"))

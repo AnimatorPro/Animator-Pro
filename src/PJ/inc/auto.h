@@ -13,9 +13,13 @@
 	#include "flicel.h"
 #endif
 
+struct autoarg;
+
+typedef Errcode (*autoarg_func)
+	(void *data, int ix, int intween, int scale, struct autoarg *aa);
+
 typedef struct autoarg {
-	EFUNC avec; /* called as (*avec)(avecdat,int ix,int intween,int scale,
-								     Autoarg *this) */
+	autoarg_func avec;
 	void *avecdat;
 	USHORT flags;
 
@@ -43,14 +47,50 @@ typedef struct autoarg {
 #define AUTO_USES_UNDO  0x0100  /* set if undo is altered by avec */
 #define AUTO_PREVIEW_ONLY 0x0200 /* multi menu is only to do preview,
 									render is only to return Success */
-Errcode noask_do_auto(Autoarg *aa, int mode); /* does not call multi menu
-											   * just does it */
 
-Errcode do_auto(Autoarg *aa);
-Errcode noask_do_auto_time_mode(Autoarg *aa);
-Errcode noask_do_auto(Autoarg *aa, int frame_mode);
+/* some external variables that find_seg_range() sets up for us to
+ * tell us how many frames are in the time segment etc.
+ */
+extern SHORT tr_r1;
+extern SHORT tr_r2;
+extern SHORT tr_rdir;
+extern SHORT tr_tix;
+extern SHORT tr_frames;
 
-Errcode go_autodraw(EFUNC avec, void *avecdat, USHORT flags);
+/* auto.c */
+extern Boolean auto_abort_verify(Autoarg *aa);
+extern void pmhmpauto(autoarg_func what, void *data);
+extern void hmpauto(autoarg_func what, void *data);
+extern Errcode uzauto(autoarg_func what, void *data);
+extern void clear_pic(void);
+extern void auto_blue_nums(void);
+extern int auto_trails(void);
+extern void greys_only(void);
+extern void auto_engrave(void);
+extern void auto_dither(void);
+extern void auto_put(void);
+extern void auto_set(void);
+extern void crop_video(void);
+extern void auto_shrink(void);
+extern void quantize(void);
+extern void auto_expand(void);
+extern void auto_setup(Autoarg *aa);
+extern Errcode auto_restores(Autoarg *aa, Errcode err);
+extern Errcode noask_do_auto(Autoarg *aa, int frame_mode);
+extern Errcode noask_do_auto_time_mode(Autoarg *aa);
+extern void clip_tseg(void);
+extern Errcode auto_merge_overlays(void);
+extern void find_seg_range(void);
+extern void find_range(void);
+extern int calc_time_scale(int ix, int intween);
+extern Errcode auto_apply(Autoarg *aa, int ix, int intween);
+extern Errcode dopreview(Autoarg *aa);
+extern Errcode do_autodraw(autoarg_func avec, void *avecdat);
+extern Errcode go_autodraw(autoarg_func avec, void *avecdat, USHORT flags);
+extern Errcode do_auto(Autoarg *aa);
+
+/* autoseg.c */
+extern Errcode dseg(Autoarg *aa);
 
 /* found in vs.time mode */
 

@@ -63,7 +63,6 @@ typedef struct tween1_data
 	Tween_state *ts;
 	Boolean is_spline;
 	} Tween1_data;
-Errcode tween1(Tween1_data *twd, int ix, int  intween, int  scale);
 
 /******** structures internal to tween system **********/
 typedef struct tw_tlist

@@ -84,6 +84,17 @@ int cscale;
 	return(err);
 }
 
+static Errcode
+auto_sep1(void *sep_cb, int ix, int intween, int scale, Autoarg *aa)
+{
+	(void)ix;
+	(void)intween;
+	(void)scale;
+	(void)aa;
+
+	return sep1(sep_cb);
+}
+
 static Errcode get_sep_source_colors(Sep_cb *sep)
 {
 int color;
@@ -212,7 +223,7 @@ USHORT flags;
 			else
 				flags = 0;
 
-			err = go_autodraw(sep1,&sep,flags);
+			err = go_autodraw(auto_sep1, &sep, flags);
 		}
 		else
 		{

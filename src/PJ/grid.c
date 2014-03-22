@@ -3,6 +3,7 @@
  * grid.  Routines to see and paste the grid too. */
 
 #include "jimk.h"
+#include "auto.h"
 #include "errcodes.h"
 #include "flicel.h"
 #include "menus.h"
@@ -19,11 +20,17 @@ USHORT constrain_angle(SHORT angle)
 	else
 		return(angle);
 }
-static int paste1_grid(void)
+static Errcode
+paste1_grid(void *data, int ix, int intween, int scale, Autoarg *aa)
 /* auto-function to paste  grid  onto picture */
 {
-Errcode err;
-SHORT x, y;
+	Errcode err;
+	SHORT x, y;
+	(void)data;
+	(void)ix;
+	(void)intween;
+	(void)scale;
+	(void)aa;
 
 	set_full_gradrect();
 	if((err = make_render_cashes()) < 0)
@@ -153,7 +160,7 @@ SHORT angle;
 				do_qfunc(make_grid,keep_undo);
 				break;
 			case 2: /* paste grid */
-				uzauto(paste1_grid);
+				uzauto(paste1_grid, NULL);
 				break;
 			case 3: /* see grid */
 				do_qfunc(see_grid,keep_undo);

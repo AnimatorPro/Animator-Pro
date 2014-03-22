@@ -38,8 +38,10 @@ for (i=0; i<COLORS; ++i)
 return(1);
 }
 
-static int force1(Cmap *dcmap, int ix,int it,int scale,Autoarg *aa)
+static Errcode
+force1(void *cmap, int ix, int it, int scale, Autoarg *aa)
 {
+	Cmap *dcmap = cmap;
 	(void)ix;
 	(void)scale;
 
@@ -47,7 +49,7 @@ static int force1(Cmap *dcmap, int ix,int it,int scale,Autoarg *aa)
 	refit_rcel(vb.pencel, dcmap, vb.pencel->cmap);
 	pj_cmap_copy(dcmap, vb.pencel->cmap);
 	see_cmap();
-	return(0);
+	return Success;
 }
 
 void fold_in_mucolors(Cmap *cmap, int first_free, Wscreen *s)

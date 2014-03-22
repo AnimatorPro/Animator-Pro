@@ -185,16 +185,16 @@ Errcode err;
 		save_fcel_undo(thecel);
 }
 
-static Errcode render1_ram_olay(Flx_overlay **overlays,int ix,int it,
-								   int scale,Autoarg *aa)
-
+static Errcode
+render1_ram_olay(void *poverlays, int ix, int intween, int scale, Autoarg *aa)
 /* only to be called with dall so aa->cur_frame is the frame ix */
 {
-Flx_overlay *olay;
-Errcode err = Success;
-(void)ix;
-(void)it;
-(void)scale;
+	Flx_overlay **overlays = poverlays;
+	Flx_overlay *olay;
+	Errcode err = Success;
+	(void)ix;
+	(void)intween;
+	(void)scale;
 
 	start_abort_atom();
 	if(aa->cur_frame == 0)
@@ -219,14 +219,15 @@ typedef struct fileolay_dat {
 	Chunk_id next_one;
 } Fod;
 
-static Errcode render1_file_olay(Fod *fod,int ix,int it,
-								 int scale,Autoarg *aa)
+static Errcode
+render1_file_olay(void *data, int ix, int intween, int scale, Autoarg *aa)
 {
-Errcode err;
-Flx_overlay solay; /* stack overlay */
-(void)ix;
-(void)it;
-(void)scale;
+	Fod *fod = data;
+	Errcode err;
+	Flx_overlay solay; /* stack overlay */
+	(void)ix;
+	(void)intween;
+	(void)scale;
 
 	start_abort_atom();
 	if(aa->cur_frame == 0)

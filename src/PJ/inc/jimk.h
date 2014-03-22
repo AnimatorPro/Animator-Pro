@@ -340,14 +340,6 @@ extern long dirty_strokes;	/* # of strokes */
 /* RGB values for some of my favorite colors.  Not used much lately. */
 extern Rgb3 pure_white, pure_black;
 
-
-/* Some variable to maintain start and stop of time range we're
-   currently concerned with. */
-extern SHORT tr_r1,tr_r2;
-extern SHORT tr_rdir;
-extern SHORT tr_tix;
-extern SHORT tr_frames;
-
 /* What's in the v.cfg file.  The state stuff that doesn't change much
    at all. or is highly machine dependant */
 

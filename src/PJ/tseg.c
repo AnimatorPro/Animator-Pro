@@ -1,8 +1,8 @@
-
 /* tseg.c - data structures and associated code to implement "Time Segment
    selector" */
 
 #include "jimk.h"
+#include "auto.h"
 #include "flx.h"
 #include "menus.h"
 
@@ -173,8 +173,6 @@ static SHORT *itg;
 
 static void see_twidth(Button *m)
 {
-extern SHORT tr_frames;
-
 	find_seg_range();
 	m->datme = &tr_frames;
 	ncorner_short(m);

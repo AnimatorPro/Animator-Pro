@@ -1,9 +1,9 @@
-
 /* undone */
 /* timemenu.c - The data structures and some associated code for the
    Frames control panel. and some other frames control button stuff */
 
 #include "jimk.h"
+#include "auto.h"
 #include "flx.h"
 #include "input.h"
 #include "menus.h"

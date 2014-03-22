@@ -4,6 +4,7 @@
 
 #include "jimk.h"
 #include "animinfo.h"
+#include "auto.h"
 #include "commonst.h"
 #include "errcodes.h"
 #include "flx.h"

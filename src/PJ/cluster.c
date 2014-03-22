@@ -1,8 +1,8 @@
-
 /* Cluster.c - most of the routines dealing with color cluster one
    way or another.  Some connections to palet2.c and cpack.c */
 
 #include "jimk.h"
+#include "auto.h"
 #include "errcodes.h"
 #include "flx.h"
 #include "memory.h"
@@ -71,13 +71,15 @@ Rgb3 *ctab;
 	return(ctab);
 }
 
-static int ccycle1(void *dat,int ix, int intween)
+static Errcode ccycle1(void *data, int ix, int intween, int scale, Autoarg *aa)
 {
 Rgb3 *cm, *cm2;
 Errcode err;
 int si, di;
 int ccount;
-(void)dat;
+(void)data;
+(void)scale;
+(void)aa;
 
 	if(intween == 1) /* make it so single frame cycles in segment or all work */
 		ix = 1;
@@ -107,7 +109,7 @@ int ccount;
 
 void ccycle(void)
 {
-	pmhmpauto(ccycle1);
+	pmhmpauto(ccycle1, NULL);
 }
 
 void shortcut_ccycle(Button *b)
@@ -412,11 +414,18 @@ Wscreen *s = b->root->w.W_screen;
 	pp_hi_bundle(b,s->SBRIGHT);
 }
 
-static int framp1(void)
+static Errcode framp1(void *data, int ix, int intween, int scale, Autoarg *aa)
 {
+	(void)data;
+	(void)ix;
+	(void)intween;
+	(void)scale;
+	(void)aa;
+
 	ctable_to_cluster(ictab, bctt);
 	refit_vf();
-	return(0);
+
+	return Success;
 }
 
 static int clp_count;
@@ -431,7 +440,7 @@ static int cl_paste1(void)
 	return(0);
 }
 
-static void cl_pblend(FUNC autov)
+static void cl_pblend(EFUNC autov)
 {
 long ccut_size;
 unsigned char c;
@@ -454,7 +463,7 @@ Jfile f;
 	}
 	pj_read(f, ictab, ccut_size);
 	pj_close(f);
-	uzauto(autov);
+	uzauto(autov, NULL);
 OUT:
 	pj_gentle_free(ictab);
 }
@@ -548,15 +557,15 @@ static void tint_1c(int scale, Rgb3 *p)
 	true_blend(p, &r1, itmult(scale, vs.ctint), p);
 }
 
-
-static ctint1(void *dat,int ix, int intween, int scale)
+static Errcode ctint1(void *data, int ix, int intween, int scale, Autoarg *aa)
 {
-	(void)dat;
+	(void)data;
 	(void)ix;
 	(void)intween;
+	(void)aa;
 
 	some_cmod(tint_1c, scale);
-	return(0);	
+	return Success;
 }
 
 void ctint(void)
@@ -580,7 +589,7 @@ struct bundle *cb;
 	cb = vs.buns+vs.use_bun;
 	unique_cluster(cb,&uniq);
 	swap_mem(cb,&uniq,sizeof(uniq));
-	uzauto(ctint1);
+	uzauto(ctint1, NULL);
 	swap_mem(cb,&uniq,sizeof(uniq));
 	show_mp();
 }
@@ -596,14 +605,15 @@ Rgb3 nrgb;
 	true_blend(p, &nrgb, itmult(scale, 100), p);
 }
 
-static int cneg1(void *dat,int ix, int intween, int scale)
+static Errcode cneg1(void *data, int ix, int intween, int scale, Autoarg *aa)
 {
-	(void)dat;
+	(void)data;
 	(void)ix;
 	(void)intween;
+	(void)aa;
 
 	some_cmod(neg_1c, scale);
-	return(0);
+	return Success;
 }
 
 void cneg(void)
@@ -616,7 +626,7 @@ struct bundle *cb;
 	cb = vs.buns+vs.use_bun;
 	unique_cluster(cb,&uniq);
 	swap_mem(cb,&uniq,sizeof(uniq));
-	hmpauto(cneg1);
+	hmpauto(cneg1, NULL);
 	swap_mem(cb,&uniq,sizeof(uniq));
 }
 
@@ -631,7 +641,7 @@ void force_ramp(void)
 		hls_rampit(&r1, &r2, ictab, bctt);
 	else
 		rampit(&r1, &r2, ictab, bctt);
-	pmhmpauto(framp1);
+	pmhmpauto(framp1, NULL);
 	pj_free(ictab);
 }
 
@@ -1048,13 +1058,17 @@ while (--count >= 0)
 draw_buttontop(bsel[vs.use_bun]);
 }
 
-
-static int cl_swap1(void)
+static Errcode cl_swap1(void *data, int ix, int intween, int scale, Autoarg *aa)
 {
 static int bcount;
 int i;
 UBYTE *b1, *b2;
 Rgb3 *ctab;
+(void)data;
+(void)ix;
+(void)intween;
+(void)scale;
+(void)aa;
 
 	/* set count to smaller of 2 bundles */
 	bcount = vs.buns[0].bun_count;
@@ -1070,12 +1084,13 @@ Rgb3 *ctab;
 		swap_mem(ctab + *b1++, ctab + *b2++, sizeof(Rgb3));
 	}
 	refit_vf();
-	return(0);
+
+	return Success;
 }
 
 void cl_swap(void)
 {
-	pmhmpauto(cl_swap1);
+	pmhmpauto(cl_swap1, NULL);
 }
 
 typedef struct copy1dat {
@@ -1089,6 +1104,18 @@ static Errcode ccopy1(Copy1dat *cd)
 	pj_set_colors(vb.pencel,cd->where,1,(UBYTE *)&(cd->rgb));
 	return(Success);
 }
+
+static Errcode
+auto_ccopy1(void *cd, int ix, int intween, int scale, Autoarg *aa)
+{
+	(void)ix;
+	(void)intween;
+	(void)scale;
+	(void)aa;
+
+	return ccopy1(cd);
+}
+
 void right_click_pp(Button *m)
 {
 int s;
@@ -1102,7 +1129,7 @@ Copy1dat cd;
 	{
 		get_color_rgb(s, vb.pencel->cmap,&cd.rgb);
 		if(vs.multi)
-			pmhmpauto(ccopy1,&cd);
+			pmhmpauto(auto_ccopy1,&cd);
 		else
 		{
 			save_undo();	

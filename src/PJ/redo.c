@@ -405,6 +405,17 @@ no_ccycle:
 	return(rfunc(r));
 }
 
+static Errcode
+auto_redo_draw(void *r, int ix, int intween, int scale, Autoarg *aa)
+{
+	(void)ix;
+	(void)intween;
+	(void)scale;
+	(void)aa;
+
+	return _redo_draw(r);
+}
+
 Boolean redo_exists()
 {
 	return(vs.redo.type != REDO_NONE);
@@ -438,7 +449,7 @@ USHORT flags;
 		flags = AUTO_PUSHINKS|AUTO_HIDEMP|AUTO_UNZOOM;
 		if(vl.ink->needs & INK_NEEDS_CEL)
 			flags |= AUTO_USESCEL;
-		go_autodraw(_redo_draw, &vs.redo, flags);
+		go_autodraw(auto_redo_draw, &vs.redo, flags);
 	}
 	else
 		redo();

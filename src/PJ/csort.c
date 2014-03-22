@@ -241,12 +241,18 @@ Errcode err;
 	return(err);
 }
 
-static Errcode cpack1(Csort_dat *cpd)
+static Errcode
+cpack1(void *csort_dat, int ix, int intween, int scale, Autoarg *aa)
 /* color pack one frame */
 {
+Csort_dat *cpd = csort_dat;
 SHORT ccount;
 SHORT max;
 Errcode err;
+(void)ix;
+(void)intween;
+(void)scale;
+(void)aa;
 
 	pj_cmap_copy(vb.pencel->cmap, cpd->tcmap);
 
@@ -354,15 +360,20 @@ long acc;
 	return(acc);
 }
 
-
-static int csort1(Csort_dat *cpd)
+static Errcode
+csort1(void *csort_dat, int ix, int intween, int scale, Autoarg *aa)
 /* luminance sort one frame */
 {
+Csort_dat *cpd = csort_dat;
 UBYTE *p, **pp;
 PLANEPTR ncmap, old_ctab;
 int i;
 Errcode err;
 unsigned char c;
+(void)ix;
+(void)intween;
+(void)scale;
+(void)aa;
 
 	if((err = find_ssctable(cpd)) < 0)
 		return(err);
@@ -414,13 +425,18 @@ Csort_dat cpd;
 
 /* say is this a thread (aka gradient) or a spectrum? */
 
-static int cthread1(Csort_dat *cpd)
+static Errcode
+cthread1(void *csort_dat, int ix, int intween, int scale, Autoarg *aa)
 /* Thread out one frame */
 {
+Csort_dat *cpd = csort_dat;
 Errcode err;
 UBYTE gotit[COLORS];
 UBYTE *tctable;
-
+(void)ix;
+(void)intween;
+(void)scale;
+(void)aa;
 
 	if((err = find_ssctable(cpd)) < 0)
 		return(err);

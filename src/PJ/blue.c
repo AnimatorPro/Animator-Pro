@@ -1,40 +1,50 @@
-
 /* blue.c - Stuff to implement much of the trace drop down */
 
-#include "errcodes.h"
 #include "jimk.h"
+#include "auto.h"
+#include "errcodes.h"
 #include "fli.h"
 
-static int blue1(void)
+static Errcode blue1(void *data, int ix, int intween, int scale, Autoarg *aa)
 /* blue pic stuff */
 {
-	set_one_val(vb.pencel, vs.inks[0], vs.inks[1]);
-	return(0);
-}
+	(void)data;
+	(void)ix;
+	(void)intween;
+	(void)scale;
+	(void)aa;
 
+	set_one_val(vb.pencel, vs.inks[0], vs.inks[1]);
+	return Success;
+}
 
 void qblue_pic(void)
 {
-	uzauto(blue1);
+	uzauto(blue1, NULL);
 }
 
-
-static int unblue1(void)
+static Errcode unblue1(void *data, int ix, int intween, int scale, Autoarg *aa)
 /* unblue pic stuff */
 {
-UBYTE table[COLORS];
-int i;
+	UBYTE table[COLORS];
+	int i;
+	(void)data;
+	(void)ix;
+	(void)intween;
+	(void)scale;
+	(void)aa;
 
 	for (i=0; i<COLORS; i++)
 		table[i] = i;
 	table[vs.inks[1]] = vs.inks[0];
 	xlat_rast(vb.pencel, table, 1);
-	return(0);
+
+	return Success;
 }
 
 void qunblue_pic(void)
 {
-	uzauto(unblue1);
+	uzauto(unblue1, NULL);
 }
 
 static void bluesome(Rcel *src,		/* red frame */
@@ -116,24 +126,29 @@ dirties();
 rezoom();
 }
 
-
 /* stuff for remove guides */
-static int clean_t1(void)
+static Errcode clean_t1(void *data, int ix, int intween, int scale, Autoarg *aa)
 {
-UBYTE table[COLORS];
-int i;
+	UBYTE table[COLORS];
+	int i;
+	(void)data;
+	(void)ix;
+	(void)intween;
+	(void)scale;
+	(void)aa;
 
 	for (i=0; i<COLORS; i++)
 		table[i] = i;
 	table[vs.inks[1]] = vs.inks[0];
 	table[vs.inks[2]] = vs.inks[0];
 	xlat_rast(vb.pencel, table, 1);
-	return(0);
+
+	return Success;
 }
 
 void clean_tween(void)
 {
-	uzauto(clean_t1);
+	uzauto(clean_t1, NULL);
 }
 
 static void cmask_line(UBYTE *line1, UBYTE *line2,

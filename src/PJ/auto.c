@@ -25,6 +25,7 @@
 
    all rvec functions return 0 if all is well (Ecode < 0) if not */
 
+#include <stdio.h>
 #include "jimk.h"
 #include "auto.h"
 #include "bhash.h"
@@ -41,15 +42,14 @@ Boolean auto_abort_verify(Autoarg *aa)
 	return(soft_yes_no_box("!%u%u", "auto_abort",
 					   		aa->cur_frame, aa->frames_in_seq));
 }
-static void rpmuzauto(EFUNC what,void *dat)
-
+static void rpmuzauto(autoarg_func what, void *dat)
 /* Free up lots of memory by swapping out the world to disk.  Then
    doauto. */
 {
 	go_autodraw(what,dat,(AUTO_UNZOOM|AUTO_HIDEMP|AUTO_PUSHMOST));
 }
 
-void pmhmpauto(EFUNC what,void *dat)
+void pmhmpauto(autoarg_func what, void *dat)
 {
 	go_autodraw(what,dat,(AUTO_UNZOOM|AUTO_HIDEMP|AUTO_PUSHMOST));
 	/*
@@ -61,14 +61,13 @@ void pmhmpauto(EFUNC what,void *dat)
 	*/
 }
 
-
-void hmpauto(EFUNC what,void *dat)
+void hmpauto(autoarg_func what, void *dat)
 /* Hide menus before do auto */
 {
 	go_autodraw(what,dat,(AUTO_HIDEMP|AUTO_UNZOOM));
 }
 
-Errcode uzauto(EFUNC what,void *dat)
+Errcode uzauto(autoarg_func what, void *dat)
 /* close zoom window before doauto */
 {
 	return(go_autodraw(what,dat,AUTO_UNZOOM));
@@ -81,14 +80,25 @@ static Errcode setpic1(UBYTE *color)
 	pj_set_rast(vb.pencel,(Pixel)*color);
 	return(Success);
 }
-static void clear_one_frame()
+static void clear_one_frame(void)
 {
 	save_undo();
 	setpic1(&vs.inks[0]);
 	zoom_it();
 	dirties();
-	return;
 }
+
+static Errcode
+auto_setpic1(void *color, int ix, int intween, int scale, Autoarg *aa)
+{
+	(void)ix;
+	(void)intween;
+	(void)scale;
+	(void)aa;
+
+	return setpic1(color);
+}
+
 void clear_pic(void)
 {
 
@@ -102,7 +112,7 @@ void clear_pic(void)
 	unzoom();
 
 	/* only for preview, render returns Success */ 
-	if((go_autodraw(setpic1,&vs.inks[0],AUTO_PREVIEW_ONLY)) < Success)
+	if ((go_autodraw(auto_setpic1, &vs.inks[0], AUTO_PREVIEW_ONLY)) < Success)
 		goto out;
 
 	switch(vs.time_mode)
@@ -115,7 +125,7 @@ void clear_pic(void)
 		Autoarg aa;
 
 			clear_struct(&aa);
-			aa.avec = setpic1;
+			aa.avec = auto_setpic1;
 			aa.avecdat = &vs.inks[0];
 			aa.flags = AUTO_UNZOOM|AUTO_HIDEMP|AUTO_PUSHMOST;
 			noask_do_auto_time_mode(&aa);
@@ -131,12 +141,15 @@ out:
 	show_mp();
 }
 
-static Errcode blue_num1(void *dat, SHORT ix)
+static Errcode blue_num1(void *dat, int ix, int intween, int scale, Autoarg *aa)
 /* Blue numbers rvec */
 {
 char buf[16];
 int ypos;
 (void)dat;
+(void)intween;
+(void)scale;
+(void)aa;
 
 	sprintf(buf, "%4d", ix+1);
 	ypos = vb.pencel->width - fstring_width(vb.screen->mufont,"a9999");
@@ -162,13 +175,18 @@ typedef struct traildat {
 	int tcount;
 } Traildat;
 
-static Errcode trail1(Traildat *td)
-
+static Errcode
+trail1(void *traildat, int ix, int intween, int scale, Autoarg *aa)
 /* returns Ecode */
 {
+Traildat *td = traildat;
 Errcode err;
 int ink;
 int percent;
+(void)ix;
+(void)intween;
+(void)scale;
+(void)aa;
 
 	err = Success;
 	if(td->tcount)
@@ -225,11 +243,16 @@ Traildat td;
 }
 
 /* Greys only stuff */
-static Errcode grey1(void)
+static Errcode grey1(void *data, int ix, int intween, int scale, Autoarg *aa)
 {
 unsigned char ttable[COLORS];
 int i;
 Rgb3 *rgb;
+(void)data;
+(void)ix;
+(void)intween;
+(void)scale;
+(void)aa;
 
 	rgb = vb.pencel->cmap->ctab;
 	for (i=0; i<COLORS; i++)
@@ -258,9 +281,9 @@ rpmuzauto(grey1,NULL);
 /* Lace and Engrave stuff */
 #define BIGC ((RGB_MAX-1)*3)
 
-static engrave;	/* is it engrave or dither? */
+static int engrave; /* is it engrave or dither? */
 
-static Errcode dither1(void)
+static Errcode dither1(void *data, int ix, int intween, int scale, Autoarg *aa)
 {
 SHORT *lb[2];
 int bix;
@@ -271,6 +294,11 @@ int c;
 int cerr;
 SHORT *tp, *np;
 LONG sz;
+(void)data;
+(void)ix;
+(void)intween;
+(void)scale;
+(void)aa;
 
 	sz = (2*sizeof(SHORT))*(vb.pencel->width+2);
 
@@ -354,10 +382,17 @@ void auto_dither(void)
 }
 
 /* Put alt stuff */
-static int put_alt1(void)
+static Errcode
+put_alt1(void *data, int ix, int intween, int scale, Autoarg *aa)
 {
+	(void)data;
+	(void)ix;
+	(void)intween;
+	(void)scale;
+	(void)aa;
+
 	pj_rcel_copy(vl.alt_cel, vb.pencel);
-	return(0);
+	return Success;
 }
 
 void auto_put(void)
@@ -367,8 +402,15 @@ void auto_put(void)
 }
 
 /* Apply ink stuff */
-static Errcode render_set1(void)
+static Errcode
+render_set1(void *data, int ix, int intween, int scale, Autoarg *aa)
 {
+	(void)data;
+	(void)ix;
+	(void)intween;
+	(void)scale;
+	(void)aa;
+
 	return(render_box(0,0,vb.pencel->width,vb.pencel->height));
 }
 void auto_set(void)
@@ -381,11 +423,16 @@ USHORT flags;
 	go_autodraw(render_set1,NULL,flags);
 }
 
-static Errcode crop1(Cliprect *crop)
-
+static Errcode
+crop1(void *cliprect, int ix, int intween, int scale, Autoarg *aa)
 /* render all but crop Cliprect */
 {
-SHORT omode, ocolor;
+	Cliprect *crop = cliprect;
+	SHORT omode, ocolor;
+	(void)ix;
+	(void)intween;
+	(void)scale;
+	(void)aa;
 
 	omode = vs.ink_id;
 	ocolor = vs.ccolor;
@@ -411,7 +458,8 @@ Cliprect crop;
 }
 
 /* Shrink x2 stuff */
-static Errcode auto_shrink1(void)
+static Errcode
+auto_shrink1(void *data, int ix, int intween, int scale, Autoarg *aa)
 {
 Errcode err;
 int x,y;
@@ -421,6 +469,11 @@ Rgb3 rgb;
 register int cix;
 register UBYTE *ctab;
 SHORT dither = vl.ink->dither;
+(void)data;
+(void)ix;
+(void)intween;
+(void)scale;
+(void)aa;
 
 	ctab = (UBYTE *)(vb.pencel->cmap->ctab);
 	incx = 2;
@@ -481,9 +534,8 @@ void auto_shrink(void)
 	rpmuzauto(auto_shrink1,NULL);
 }
 
-
 /* Pixelate stuff */
-static int quant1(void)
+static Errcode quant1(void *data, int ix_, int intween, int scale, Autoarg *aa)
 {
 Errcode err;
 UBYTE *rc;
@@ -494,6 +546,11 @@ int lr,lg,lb;
 register UBYTE *c;
 int dx2,dy2;
 UBYTE rgb[3];
+(void)data;
+(void)ix_;
+(void)intween;
+(void)scale;
+(void)aa;
 
 	if (vs.qdx == 1 && vs.qdy == 1)
 		return(0);
@@ -575,8 +632,10 @@ int i;
 	return(bclosest_col((Rgb3 *)rgb, COLORS, dither) );
 }
 
-static int expand1(Rectangle *where)
+static Errcode
+expand1(void *rectangle, int ix, int intween, int scale, Autoarg *aa_)
 {
+Rectangle *where = rectangle;
 Errcode err;
 int xoff, yoff;
 int x,y;
@@ -587,7 +646,10 @@ UBYTE me;
 int x2,y2;
 Rcel *tf;
 SHORT dither = vl.ink->dither;
-
+(void)ix;
+(void)intween;
+(void)scale;
+(void)aa_;
 
 	if((err = alloc_pencel(&tf)) < 0)
 		goto error;
@@ -798,7 +860,7 @@ done:
 	return(softerr(err, "auto_apply"));
 }
 
-ErrCode noask_do_auto_time_mode(Autoarg *aa)
+Errcode noask_do_auto_time_mode(Autoarg *aa)
 /* Do something over time on the current time mode with no menu. */
 {
 	return noask_do_auto(aa, vs.time_mode);
@@ -1204,9 +1266,7 @@ return(time_scale);
 }
 
 /* Figure out time-scale as altered by slow-in/slow-out */
-static
-calc_ease_in(time_ix, time_frames)
-int time_ix, time_frames;
+static int calc_ease_in(int time_ix, int time_frames)
 {
 int time_scale;
 
@@ -1381,12 +1441,12 @@ OUT:
 	return(auto_restores(aa,err));
 }
 
-Errcode do_autodraw(EFUNC avec, void *avecdat)
+Errcode do_autodraw(autoarg_func avec, void *avecdat)
 {
 	return(go_autodraw(avec,avecdat,0));
 }
 
-Errcode go_autodraw(EFUNC avec, void *avecdat, USHORT flags)
+Errcode go_autodraw(autoarg_func avec, void *avecdat, USHORT flags)
 {
 Autoarg aa;
 

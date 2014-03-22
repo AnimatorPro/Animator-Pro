@@ -6,6 +6,7 @@
 
 #include "jimk.h"
 #include "animinfo.h"
+#include "auto.h"
 #include "errcodes.h"
 #include "flx.h"
 #include "picdrive.h"
@@ -487,14 +488,6 @@ wait_millis(wait);
 if (vp_playit(count) >= Success)	/* don't wait if they aborted */
 	wait_millis(wait);
 }
-
-
-/* some external variable that find_seg_range() sets up for us to tell
-   us how many frames are in the time segment etc. */
-extern SHORT tr_r1,tr_r2;
-extern SHORT tr_rdir;
-extern SHORT tr_tix;
-extern SHORT tr_frames;
 
 static void fl_range(int once)
 /* Flip through the time segment without destroying undo buffer or

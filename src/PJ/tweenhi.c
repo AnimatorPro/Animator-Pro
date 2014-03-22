@@ -177,8 +177,10 @@ return(err);
 
 extern char curveflag;
 
-Errcode tween1(Tween1_data *twd, int ix, int  intween, int  scale)
+static Errcode
+tween1(void *tween1_data, int ix, int intween, int scale, Autoarg *aa)
 {
+Tween1_data *twd = tween1_data;
 Poly dpoly;
 Short_xyz *v;
 int vcount;
@@ -190,6 +192,7 @@ Tw_tlist tlist;
 int i;
 (void)ix;
 (void)intween;
+(void)aa;
 
 closed = vs.fillp || vs.closed_curve;
 ocurve = curveflag;
@@ -249,7 +252,7 @@ twda.ts = ts;
 for (i=0; i<steps; i++)
 	{
 	scale =  calc_time_scale(i, steps);
-	if ((err = tween1(&twda, i, steps, scale)) < Success)
+	if ((err = tween1(&twda, i, steps, scale, NULL)) < Success)
 		break;
 	if (vs.cycle_draw) 
 		cycle_ccolor();

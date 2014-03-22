@@ -4,6 +4,7 @@
 
 #include "jimk.h"
 #include "aaconfig.h"
+#include "auto.h"
 #include "broadcas.h"
 #include "commonst.h"
 #include "errcodes.h"
@@ -372,17 +373,24 @@ static void pal_feel_qslider(Button *m)
 #endif
 }
 
-static int cmapcopy1(void)
+static Errcode
+cmapcopy1(void *data, int ix, int intween, int scale, Autoarg *aa)
 {
+	(void)data;
+	(void)ix;
+	(void)intween;
+	(void)scale;
+	(void)aa;
+
 	pj_cmap_copy(new_cmap, vb.pencel->cmap);
-	return(0);
+	return Success;
 }
 
-static int refit1(void)
+static Errcode refit1(void *data, int ix, int intween, int scale, Autoarg *aa)
 {
 	if (vs.pal_fit)
 		refit_rcel(vb.pencel, new_cmap, vb.pencel->cmap);
-	return(cmapcopy1());
+	return cmapcopy1(data, ix, intween, scale, aa);
 }
 Errcode load_palette(char *title, int fitting)
 
@@ -391,7 +399,7 @@ Errcode load_palette(char *title, int fitting)
 Errcode err;
 Errcode fliret;
 Flifile flif;
-FUNC how;
+autoarg_func how;
 
 	if(title == NULL)
 		return(Err_bad_input);
@@ -426,7 +434,7 @@ FUNC how;
 	/* for undo to work change colors again...*/
 	swap_cmaps(vb.pencel->cmap, new_cmap);
 	see_cmap();
-	err = uzauto(how);
+	err = uzauto(how, NULL);
 error:
 	pj_cmap_free(new_cmap);
 	pj_fli_close(&flif);
@@ -483,10 +491,17 @@ void refit_vf(void)
 		refit_rcel(vb.pencel, vb.pencel->cmap, undof->cmap);
 }
 
-static int cl_refit1(void)
+static Errcode
+cl_refit1(void *data, int ix, int intween, int scale, Autoarg *aa)
 {
+	(void)data;
+	(void)ix;
+	(void)intween;
+	(void)scale;
+	(void)aa;
+
 	some_cmod(refit_1c, SCALE_ONE);
-	return(0);
+	return Success;
 }
 
 void cdefault(void)
@@ -494,7 +509,7 @@ void cdefault(void)
 extern Cmap *pj_default_cmap;
 
 	new_cmap = pj_default_cmap;
-	pmhmpauto(cl_refit1);
+	pmhmpauto(cl_refit1, NULL);
 }
 
 void cuse_cel(void)
@@ -503,7 +518,7 @@ void cuse_cel(void)
 	{
 		if ((new_cmap = clone_cmap(thecel->rc->cmap)) != NULL)
 		{
-			pmhmpauto(cl_refit1);
+			pmhmpauto(cl_refit1, NULL);
 			pj_cmap_free(new_cmap);
 		}
 	}

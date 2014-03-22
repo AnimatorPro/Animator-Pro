@@ -1,5 +1,6 @@
 /* generated with makepull */
 #include "jimk.h"
+#include "auto.h"
 #include "broadcas.h"
 #include "commonst.h"
 #include "errcodes.h"

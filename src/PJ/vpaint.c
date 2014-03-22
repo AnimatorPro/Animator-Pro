@@ -1,4 +1,3 @@
-
 /* vpaint.c - handle high level user button pushes.  Main pull-down
    interpreter switch and main keyboard interpreter switch.  Implementations
    of many of routines called by above.  The first layer under main(). */
@@ -6,6 +5,7 @@
 #include "jimk.h"
 #include "a3d.h"
 #include "alt.h"
+#include "auto.h"
 #include "broadcas.h"
 #include "commonst.h"
 #include "errcodes.h"
@@ -352,9 +352,6 @@ static void tog_pen()
 extern Button sh1_brush_sel;
 	toggle_pen(&sh1_brush_sel);
 }
-
-extern void clear_pic();
-
 
 static void home_help()
 {
