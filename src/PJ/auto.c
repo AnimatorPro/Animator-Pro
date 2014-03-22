@@ -834,7 +834,6 @@ static void tflx_emessage(Errcode err)
 	softerr(err, "!%s", "auto_tflx", tflxname);
 }
 
-extern char disk_tflx_name[];
 #define auto_tflx_name disk_tflx_name
 
 static Errcode dall(Autoarg *aa) 

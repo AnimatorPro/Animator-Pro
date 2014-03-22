@@ -9,8 +9,6 @@
 
 /* stuff to deal with redo-draw */
 static XFILE *rbf;
-extern char rbf_name[];
-extern char text_name[];
 
 Errcode start_save_redo_points()
 {

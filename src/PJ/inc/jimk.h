@@ -306,12 +306,29 @@ enum file_types {
 };
 /* names of all our temp files */
 
-extern char tflxname[], disk_tflx_name[], ram_tflx_name[], tmacro_name[],
-	alt_name[], cel_name[], screen_name[], text_name[], cclip_name[],
-	poly_name[], mask_name[], another_name[], optics_name[], cel_fli_name[],
-	tween_name[], poly_name[], default_name[], ppoly_name[], bscreen_name[],
-	flxolayname[], poco_source_name[], poco_err_name[], macro_name[],
-	tsettings_name[];
+extern char alt_name[];
+extern char another_name[];
+extern char bscreen_name[];
+extern char cclip_name[];
+extern char cel_fli_name[];
+extern char cel_name[];
+extern char default_name[];
+extern char disk_tflx_name[];
+extern char flxolayname[];
+extern char macro_name[];
+extern char mask_name[];
+extern char optics_name[];
+extern char poco_err_name[];
+extern char poco_source_name[];
+extern char poly_name[];
+extern char ppoly_name[];
+extern char ram_tflx_name[];
+extern char rbf_name[];
+extern char screen_name[];
+extern char text_name[];
+extern char tflxname[];
+extern char tsettings_name[];
+extern char tween_name[];
 
 extern char *state_temp_files[];
 extern char *work_temp_files[];

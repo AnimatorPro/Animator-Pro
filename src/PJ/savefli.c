@@ -18,7 +18,7 @@ char dirty_file;
 char dirty_frame;
 long dirty_strokes;
 
-extern char tflxname[];
+extern char *get_flisave_pdr(char *pdr_path);
 
 void dirties(void)
 {

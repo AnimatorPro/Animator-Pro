@@ -1,5 +1,6 @@
 /* tempname.c  global temporary file names for pj */
 
+#include "jimk.h"
 #include "tfile.h"
 
 #define TDIR "H:\\PAAT"

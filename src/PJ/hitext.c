@@ -5,8 +5,6 @@
 
 /* hi level vpaint specific text routines */
 
-extern char text_name[];
-
 extern void qpwtitles(int paste);
 
 static void rendr_twin(Text_file *gf);
