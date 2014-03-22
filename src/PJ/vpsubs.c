@@ -36,12 +36,14 @@ return(vb.pencel->height);
 }
 #endif /* WITH_POCO */
 
-void ccolor_dot(SHORT x,SHORT y)
+void ccolor_dot(SHORT x, SHORT y, void *data)
 {
+	(void)data;
 	pj_put_dot(vb.pencel,vs.ccolor,x,y);
 }
-void undo_dot(SHORT x, SHORT y)
+void undo_dot(SHORT x, SHORT y, void *data)
 {
+	(void)data;
 	pj_put_dot(vb.pencel,pj_get_dot(undof,x,y),x,y);
 }
 void undo_rect(Coor x,Coor y,Coor w,Coor h)

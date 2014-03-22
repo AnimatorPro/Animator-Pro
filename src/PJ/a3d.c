@@ -1,5 +1,6 @@
 /*	a3d.c - This file contains most of the code for the optics section. */
 
+#include <string.h>
 #include "errcodes.h"
 #include "ptrmacro.h"
 #include "jimk.h"
@@ -15,8 +16,10 @@
 #include "softmenu.h"
 #include "tween.h"
 
+static Errcode ado_mouse_ptfunc(Pentool *pt, Wndo *w);
 static Errcode eload_a3d(char *name);
 static Errcode save_a3d(char *title);
+static Errcode do_move_along(void);
 
 /************** Stuff for 2-Dimensional point-lists *****************/
 typedef struct poly2
@@ -24,8 +27,6 @@ typedef struct poly2
 	int count;
 	Short_xy *p2;
 	} Poly2;
-static Errcode poly2_init(Poly2 *p, int count);
-static void poly2_cleanup(Poly2 *p);
 
 static Errcode poly2_init(Poly2 *p, int count)
 /* Initialize Poly2 structure and allocate buffer for count points */
@@ -53,9 +54,7 @@ typedef struct poly3
 	Short_xyz *p3;		/* 3-D point list */
 	Short_xyz *p3alloc;	/* allocated 3-D points */
 	} Poly3;
-static Errcode poly3_init(Poly3 *p, int count, Short_xyz *points);
 static void poly3_cleanup(Poly3 *p);
-
 
 static Errcode poly3_init(Poly3 *p, int count, Short_xyz *points)
 /* Initialize a poly3 structure.  If points is NULL then allocate
@@ -179,13 +178,6 @@ int i;
 extern char curveflag;	/* draw points as polygon or curve? */
 extern int is_path;		/* Use path or curve tension cont. bias? */
 
-
-extern Short_xyz rot_theta;	/* guy that gets directly dinked by xyz sliders */
-
-extern SHORT got_path;		/* a3ddat.c lets us know here if there's a path */
-extern char inspin;			/* a3ddat.c's flag if spin sub-panel is up */
-
-
 /* Variables to hold our graphic element (source for optics) */
 static Rcel *ado_cel;					/* if it's a raster element */
 static Poly ado_poly_el;
@@ -193,7 +185,7 @@ static Tween_state ado_tween_el;
 static Tw_tlist ado_tlist;
 static Poly ado_path_poly;	/* a place for the path in RAM */
 
-static Boolean is_poly_el()
+static Boolean is_poly_el(void)
 {
 	return(vs.ado_source == OPS_SPLINE || vs.ado_source == OPS_POLY);
 }
@@ -400,7 +392,7 @@ void default_center(Short_xyz *v)
 	}
 }
 
-void a3d_default_centers()
+static void a3d_default_centers(void)
 {
 default_center(&vs.move3.spin_center);
 pj_copy_structure(&vs.move3.spin_center, &vs.move3.size_center,
@@ -498,8 +490,7 @@ int i;
 	return(err);
 }
 
-
-int twirl1(Celcfit *cfit, int ix, int frames,int scale)
+static Errcode twirl1(Celcfit *cfit, int ix, int frames, int scale)
 /* This is the 'auto vec' to render optics on one frame */
 {
 Rcel *tf = NULL;
@@ -657,8 +648,7 @@ void xyz_zero_sl(Button *m)
 		nscale_theta(&rot_theta, &vs.move3.spin_theta, m->identity);
 }
 
-
-make_rot_op(void)
+static void make_rot_op(void)
 /* Gnarly math I wrote for Aegis Animator and then tried to forget.
    Make a 'conjugacy' matrix to compensate for axis tilt.  Ie
    we'll go ahead and do the op-rotation as if there were no
@@ -678,8 +668,7 @@ static Short_xyz csvecs[4] = {{0, 0, 0}, {-36, 0, 0}, {0, -36, 0}, {0, 0, 36}};
 static Short_xyz cdvecs[4];
 static Short_xy cdpts[4];
 
-static Errcode dcenter( VFUNC dotout, void *dotdat,
-			         int scale)
+static Errcode dcenter(dotout_func dotout, void *dotdat, int scale)
 /* Display center.  */
 {
 register Short_xyz *pt;
@@ -818,7 +807,7 @@ void mado_view(void)
 	show_mp();
 }
 
-int a3d_get_auto_flags()
+static int a3d_get_auto_flags(void)
 {
 int autoflags;
 
@@ -844,7 +833,7 @@ int omulti;
 	vs.multi = omulti;
 }
 
-static void ado_clear_top()
+static void ado_clear_top(void)
 /* sets top of transform stack to default values */
 {
 struct ado_setting *next;
@@ -856,21 +845,21 @@ struct ado_setting *next;
 	a3d_default_centers();
 }
 
-void ado_clear_pos()
+void ado_clear_pos(void)
 /* Clears top of optics stack and path */
 {
 	ado_clear_top();
 	pj_delete(ppoly_name);
 }
 
-static void ado_free_trans()
+static void ado_free_trans(void)
 /* free optics transform stack */
 {
 	free_slist(vs.move3.next);
 	vs.move3.next = NULL;
 }
 
-static void ado_clear_stack()
+static void ado_clear_stack(void)
 {
 	ado_free_trans();
 	ado_clear_top();
@@ -883,7 +872,7 @@ static void ado_clear(void)
 	a3d_disables();
 }
 
-void ado_clear_all(void)
+static void ado_clear_all(void)
 /* Clear all optics motion */
 {
 	ado_clear_stack();
@@ -938,10 +927,7 @@ static void auto_squash(void)
 	vs.move3.size_center.y = vb.pencel->height - 1;
 }
 
-
-
-static void clock_line(int theta, VFUNC dotout)
-
+static void clock_line(int theta, dotout_func dotout)
 /* Draw a ray for a clock to help user tell where he is during real-time
    sampled path */
 {
@@ -949,7 +935,7 @@ Short_xy clk;
 
 #define CLK_RAD 24
 
-	polar(theta-TWOPI/4, CLK_RAD, &clk);
+	polar(theta-TWOPI/4, CLK_RAD, (short *)&clk);
 	pj_cline(vb.pencel->width/2, CLK_RAD, vb.pencel->width/2+clk.x, 
 		  CLK_RAD+clk.y, dotout);
 
@@ -975,7 +961,7 @@ int i, theta;
 		{
 			if ((this = new_poly_point(poly)) == NULL)
 				goto OUT;	
-			ccolor_dot(this->x, this->y);
+			ccolor_dot(this->x, this->y, NULL);
 		}
 		else
 			break;
@@ -1016,7 +1002,6 @@ static Errcode make_path(void)
 extern SHORT tr_frames;
 Errcode err = Success;
 Rcel_save opic;
-extern USHORT millisec_to_jiffies(ULONG millis);
 Poly wpoly;
 
 	clear_struct(&wpoly);
@@ -1487,7 +1472,6 @@ HMP:
 
 /**************/
 
-static void ado_mouse_ptfunc();
 static Pentool ado_mouse_ptool = PTOOLINIT1(
 	NONEXT,
 	empty_str,		/* real name filled in later */
@@ -1502,8 +1486,7 @@ static Pentool ado_mouse_ptool = PTOOLINIT1(
 	NULL /* on remove */
 );
 
-
-static void ado_mouse_ptfunc(Pentool *pt,Wndo *w)
+static Errcode ado_mouse_ptfunc(Pentool *pt, Wndo *w)
 /* Hide menus and then go move things around with the mouse above 
  * or abort if a right click */
 {
@@ -1513,10 +1496,10 @@ static void ado_mouse_ptfunc(Pentool *pt,Wndo *w)
 	hide_mp();
 	ado_mouse_move();
 	show_mp();
-	return;
+	return Success;
 }
 
-Errcode get_a3d_state()
+static Errcode get_a3d_state(void)
 /* retrieve optics state from temp file */
 {
 ado_clear();
@@ -1527,7 +1510,7 @@ if (pj_exists(optics_name))
 return(Success);
 }
 
-Errcode set_a3d_state()
+static Errcode set_a3d_state(void)
 /* save optics state to temp file */
 {
 Errcode err;
@@ -1755,7 +1738,7 @@ Poly wpoly;
 	show_mp();
 }
 
-Errcode do_move_along(void)
+static Errcode do_move_along(void)
 /* Duplicate top of transformation stack. */
 {
 struct ado_setting *as;
@@ -1768,7 +1751,7 @@ vs.move3.next = as;
 return(Success);
 }
 
-void a3d_check_el(Boolean *no_poly, Boolean *no_tween)
+static void a3d_check_el(Boolean *no_poly, Boolean *no_tween)
 /* make sure that the optics element exists.  If it doesn't set it to
  * the Flic */
 {
@@ -1818,7 +1801,7 @@ Boolean no_poly, no_tween;
 	pul_xflag(mh,ELE_OUT_PUL, vs.ado_outline);
 	return(menu_dopull(mh));
 }
-static Boolean do_a3d_keys()
+static Boolean do_a3d_keys(void)
 {
  	if(check_esc_abort())
 		return(TRUE);
@@ -1827,7 +1810,6 @@ static Boolean do_a3d_keys()
 void go_ado(void)
 /* Lets go to the optics editor folks! */
 {
-extern Menuhdr a3d_menu;
 Menuhdr tpull;
 char optics_str[16];		/* The word optics in local language */
 void *ss;

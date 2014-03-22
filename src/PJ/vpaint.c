@@ -4,6 +4,7 @@
    of many of routines called by above.  The first layer under main(). */
 
 #include "jimk.h"
+#include "a3d.h"
 #include "broadcas.h"
 #include "commonst.h"
 #include "errcodes.h"
@@ -243,7 +244,7 @@ rfree_dir(&nl);
 extern void flip_range(), flip5(), get_color(), first_frame(),
 	next_frame(), prev_frame(), menu_doredo(), cut_out_cel(), clip_cel(),
 	paste_the_cel(), move_the_cel(), qsave(), qload(), qnew_flx(), qquit(),
-	quse_poco(), test(), go_ado(), insert_a_frame(), kill_a_frame(),
+	quse_poco(), test(), insert_a_frame(), kill_a_frame(),
 	palette(), ktoggle_zoom();
 
 static void flix_first_frame()

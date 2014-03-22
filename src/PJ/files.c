@@ -3,6 +3,7 @@
    basic file types. */
 
 #include "jimk.h"
+#include "a3d.h"
 #include "commonst.h"
 #include "flicel.h"
 #include "menus.h"

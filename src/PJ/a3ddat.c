@@ -36,7 +36,7 @@
    when they go beyond simple columns of text.
    */
 
-
+#include <stdio.h>
 #include "jimk.h"
 #include "a3d.h"
 #include "fli.h"
@@ -50,32 +50,31 @@ static void seebg_a3d(Menuwndo *mw);
 
 extern Button tseg_group_sel;
 
-void qinks(), go_multi(), arrange_a3d_menu(), go_cel_menu(),
-	ado_xyz_slider(), xyz_zero_sl(), iscale_theta(), mview_path(),
-	edit_path(), move_along(), mauto_ado(), mado_loop(), mado_view(), 
+void qinks(), go_multi(), go_cel_menu(),
 	ccolor_box(),
 	toggle_pen(), qmask(), zero_sl(), ppalette(), see_pen(),
 	set_pbrush();
 void go_color_grid(Button *b);
+
 static void a3d_go_color_grid(Button *b);
-static void clear_pos();
-
-
-static void feel_rdc_qslider();
-static void change_rot_scale();
-static void set_axis();
-static void csame_spin();
-static void csize_default();
-static void csame_size();
-static void cspin_default();
-static void see_size_ratio();
-static void change_size_mode();
-static void change_spin_mode();
-static void mgo_path_files();
-static void change_ado_mode();
-static void clear_track();
+static void change_rot_scale(Button *m);
+static void change_size_mode(Button *m);
+static void change_spin_mode(Button *m);
+static void change_ado_mode(Button *m);
+static void set_axis(Button *m);
+static void csame_size(Button *m);
+static void csame_spin(Button *m);
+static void csize_default(Button *m);
+static void see_size_ratio(Button *m);
+static void feel_rdc_qslider(Button *m);
+static void cspin_default(Button *m);
+static void clear_track(void);
+static void clear_pos(void);
+static void mgo_path_files(void);
 
 Short_xyz rot_theta;	/* where the xyz sliders usually point... */
+SHORT got_path;
+char inspin;
 
 /* The usual x/y/z optics sliders */
 static Qslider a3d_xslider = 
@@ -1248,9 +1247,6 @@ static Button a3d_moveq_sel = MB_INIT1(
 	0 /* flags */
 	);
 
-void seebg_a3d();
-
-
 Menuhdr a3d_menu = {
 	{320,72,0,127},		/* width, height, x y */
 	OPTIC_MUID,   		/* id */
@@ -1333,10 +1329,6 @@ static void a3d_go_color_grid(Button *b)
 	go_color_grid(b);
 	draw_button(&a3d_cco_sel);
 }
-
-SHORT got_path;
-char inspin;
-
 
 void a3d_disables(void)
 {

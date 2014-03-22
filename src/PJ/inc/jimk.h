@@ -144,8 +144,8 @@ void grid_flixy(SHORT *flix, SHORT *fliy);
 
 /* some vpaint specific dotout functions */
 
-void ccolor_dot(SHORT x,SHORT y);
-void undo_dot(SHORT x, SHORT y);
+extern void ccolor_dot(SHORT x, SHORT y, void *data);
+extern void undo_dot(SHORT x, SHORT y, void *data);
 
 /* undo buffer functions */
 
