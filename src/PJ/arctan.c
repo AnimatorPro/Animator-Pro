@@ -3,9 +3,10 @@
    angle given the x,y coordinates of a ray at that angle */
 
 #include "jimk.h"
+#include "imath.h"
 
 /* arc-tangent table */
-static
+static int
 tan_tab[] = {
 1,2,3,5,6,7,8,10,11,12,
 13,15,16,17,18,19,21,22,23,24,

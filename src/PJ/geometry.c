@@ -35,10 +35,7 @@ while (theta < -TWOPI/2) theta += TWOPI;
 function->itheta2 = theta;
 }
 
-
-static void act_rot_offset(register Short_xyz *point,
-			        register SHORT *op,
-					SHORT scale)
+static void act_rot_offset(Short_xyz *point, SHORT *op, SHORT scale)
 {
 register SHORT theta;
 register SHORT s,c;

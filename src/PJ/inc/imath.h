@@ -6,6 +6,8 @@
 	#include "stdtypes.h"
 #endif
 
+struct ado_setting;
+
 #define SIXTY4K ((1L<<16)-16)
 #define BIG_SHORT ((1L<<15)-1)
 
@@ -33,9 +35,13 @@ extern void polar(short theta, short rad, short *xy);
 extern int isin(short t);
 extern int icos(short t);
 extern int isincos(int angle, int *cos);
+extern SHORT arctan(int x, int y);
+extern int arcnorm(int t);
 
 extern int rscale_by(int x, int p, int q);
 extern int sscale_by(int x, int p, int q);
 extern int pj_uscale_by(USHORT x, USHORT p, USHORT q);
+
+extern void find_conjugates(struct ado_setting *function);
 
 #endif /* IMATH_H */
