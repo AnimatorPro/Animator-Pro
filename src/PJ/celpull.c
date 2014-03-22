@@ -1,13 +1,13 @@
-
 #include <math.h>
-#include "errcodes.h"
 #include "jimk.h"
-#include "menus.h"
+#include "browse.h"
 #include "celmenu.h"
 #include "celpul.h"
-#include "floatgfx.h"
-#include "softmenu.h"
 #include "commonst.h"
+#include "errcodes.h"
+#include "floatgfx.h"
+#include "menus.h"
+#include "softmenu.h"
 
 static void cm_save_cursor(void);
 static void cm_clip_cel(void);
@@ -262,7 +262,6 @@ extern Errcode go_load_the_cel();
 }
 static void cm_browse_cel(void)
 {
-extern void go_browse_cels(void);
 	cm_getcel_bracket(go_browse_cels);
 }
 /************************************************/

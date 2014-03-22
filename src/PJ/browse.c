@@ -1,10 +1,11 @@
-
 /* browse.c - Stuff for browse flics.  Shares code with normal file menu
    in filemenu.c in a semi-gnarly fashion.  Wants pstamp.c for
    doing the actual read and shrink of the first frame of a fli. */
 
+#include <string.h>
 #include "jimk.h"
 #include "animinfo.h"
+#include "browse.h"
 #include "commonst.h"
 #include "errcodes.h"
 #include "filepath.h"
@@ -12,10 +13,6 @@
 #include "scroller.h"
 #include "softmenu.h"
 #include "wildlist.h"
-
-extern Errcode postage_stamp(Raster *r, char *name, 
-				  	  		 SHORT x,SHORT y,USHORT width, USHORT height,
-					  		 Rectangle *actual);
 
 /* Browse action defines. See browse.c */
 #define BA_LOAD 0
@@ -31,13 +28,13 @@ static SHORT bro_cel_w, bro_cel_h;
 static SHORT bro_xcount, bro_ycount, bro_count;
 
 static Names *bro_wild_list;
-char *bro_wild;
+static char *bro_wild;
 
-static void bredraw_cpic();
-static int new_bdrawer(char *drawer);
+static void bredraw_cpic(void);
+static int new_bdrawer(void *drawer);
 static void draw_cpi(Button *m);
 static void init_bscroller(int top_name);
-static void browse_action();
+static void browse_action(Button *m);
 static void make_browse_cmap(void);
 
 extern Image cdown, cleft, cright, csleft,
@@ -312,7 +309,7 @@ static void see_browse_bg(Menuwndo *mw)
 	seebg_bblack(mw);	/* seebg */
 }
 
-Menuhdr bro_menu = {
+static Menuhdr bro_menu = {
 	{320,200,0,0},	/* orig_rect */
 	BROWSE_MUID,	/* id */
 	PANELMENU,		/* type */
@@ -354,8 +351,7 @@ static Smu_button_list bro_smblist[] = {
 
 /* variables to hold x y and list position of selected file.  */
 
-int find_elix(Short_xy *spos, Names **pel)
-
+static int find_elix(Short_xy *spos, Names **pel)
 /* returns -2 if element not found -1 if not in scroller 0 and up is index of
  * a visible cel */
 {
@@ -406,8 +402,8 @@ Coor doty, dotx;
 	rect->width -= (rect->x - 1);
 	rect->height -= (rect->y - 1);
 }
-static void text_1_browse(void *rast,Vfont *font,Names *el,
-						   Pixel color,int x,int y)
+static void
+text_1_browse(Raster *rast, Vfont *font, Names *el, Pixel color, int x, int y)
 {
 int textx;
 
@@ -419,8 +415,9 @@ int textx;
 		y+brw_cpi_sel.height+1+vb.screen->is_hires, 
 		color, TM_MASK1);
 }
-static void hilite_1_browse(Button *b,void *rast,int x,int y,
-							Names *entry, Boolean hilit)
+static void
+hilite_1_browse(Button *b, Raster *rast, int x, int y,
+		Names *entry, Boolean hilit)
 {
 Rectangle brect;
 Pixel color = hilit?sred:swhite;
@@ -465,10 +462,10 @@ Rectangle psize;
 		text_1_browse(rast,font,el,swhite,x,y);
 	}
 	bro_frame(rast,&psize,swhite);
-	return;
 }
-static void feel_1_browse(Button *list_sel,void *rast,int x,int y,
-						  Names *entry, int why)
+static void
+feel_1_browse(Button *list_sel, Raster *rast, int x, int y,
+		Names *entry, int why)
 {
 char *title;
 (void)rast;
@@ -499,7 +496,7 @@ static void bredraw_cpic(void)
 	draw_buttontop(&bro_tna_sel);
 }
 
-static int new_bdrawer(char *drawer)
+static int new_bdrawer(void *drawer)
 {
 Errcode err;
 
@@ -795,7 +792,7 @@ UBYTE *cm;
 	}
 }
 
-static void format_browse_menu()
+static void format_browse_menu(void)
 /* Figure out the dimensions of browse buttons */
 {
 SHORT sw,sh;
@@ -853,10 +850,9 @@ brw_list_sel.x = sw-brw_list_sel.width;
 brw_list_sel.height = listh;
 }
 
-
-static browse_anims(char *inpath, char *outpath, char *title_key, 
-			 	    char *loadb_key, SHORT *scroll_top)
-
+static Errcode
+browse_anims(char *inpath, char *outpath, char *title_key, char *loadb_key,
+		SHORT *scroll_top)
 /* Put up browse screen.  Return with name of file selected, or NULL if
    no file selected.  Pass in a title string and string to put on
    button for default/accept file radio button */
@@ -929,18 +925,20 @@ Vset_path cpath;
 	vset_set_pathinfo(FLI_PATH,&cpath);
 }
 
-void go_browse_cels(void)
+Errcode go_browse_cels(void)
 /* do browse menu with default action to load */
 {
+Errcode err;
 char name[PATH_SIZE];
 Vset_path cpath;
 
 	vset_get_pathinfo(CEL_PATH, &cpath);
-	if(browse_anims(cpath.path, name, "cel_title", 
-					"load", &cpath.scroller_top) >= Success)
+	if ((err = browse_anims(cpath.path, name, "cel_title",
+					"load", &cpath.scroller_top)) >= Success)
 	{
-		load_the_cel(name);
+		err = load_the_cel(name);
 		strcpy(cpath.path,name);
 	}
 	vset_set_pathinfo(CEL_PATH,&cpath);
+	return err;
 }

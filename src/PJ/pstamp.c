@@ -1,10 +1,10 @@
-
 /* pstamp.c - routine to read the first frame of a FLIC into a buffer
    1/5 the size of a screen.  (4 out of 5 lines are discarded here).
    Then do an x dimension shrink by 5 and put result on screen somewhere.
    */
 
 #include "jimk.h"
+#include "browse.h"
 #include "errcodes.h"
 #include "fli.h"
 #include "rastcomp.h"

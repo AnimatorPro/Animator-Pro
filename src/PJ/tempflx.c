@@ -1,9 +1,9 @@
-
 /* tempflx.c - stuff that helps manage our main scratch file. */
 
 #include <time.h>
 #include "jimk.h"
 #include "animinfo.h"
+#include "browse.h"
 #include "errcodes.h"
 #include "flicel.h"
 #include "flipath.h"
