@@ -55,6 +55,17 @@ extern void mselect_bundle(struct button *m);
 extern void scale_powell_palette(struct rscale *scale);
 extern void see_powell_palette(struct button *b);
 
+/* csort.c */
+extern void cpack(void);
+extern void csort(void);
+extern void cthread(void);
+extern void cspec(void);
+
+/* cthread.c */
+extern void
+rthread_cmap(UBYTE *gotit,
+		struct rgb3 *scmap, struct rgb3 *dcmap, int inertia, int ccount);
+
 /* quickdat.c */
 extern void see_clusid(struct button *b);
 extern void toggle_clusid(struct button *b);

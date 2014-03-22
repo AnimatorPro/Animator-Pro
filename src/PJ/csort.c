@@ -20,7 +20,7 @@ typedef struct occ_map {
 
 typedef struct csort_dat {
 	SHORT pnum;
-	UBYTE *ssctable;
+	Rgb3 *ssctable;
 	int scolors;
 	int inertia;
 	Cmap *tcmap;
@@ -37,7 +37,7 @@ static int find_ssctable(Csort_dat *cpd)
 {
 	if (vs.pal_to == 1)	/* to all colors */
 	{
-		cpd->ssctable = (UBYTE *)(vb.pencel->cmap->ctab);
+		cpd->ssctable = vb.pencel->cmap->ctab;
 		cpd->scolors = COLORS;
 	}
 	else
@@ -217,7 +217,7 @@ static int fold_in_cluster(Rgb3 *ncl, int clcount)
    the current palette in case of 'to cluster'. */
 {
 int osize;
-UBYTE *ocl, *dcl;
+Rgb3 *ocl, *dcl;
 Errcode err;
 
 	err = Err_no_memory;
@@ -226,7 +226,7 @@ Errcode err;
 	{
 		if ((dcl = begmem(3*osize)) != NULL)
 		{
-		   fold_over_ctable(ncl,(Rgb3 *)ocl,(Rgb3 *)dcl,clcount, osize);
+		   fold_over_ctable(ncl, ocl, dcl, clcount, osize);
 #ifdef OLD
 			pj_copy_bytes(dcl, ocl, 3*osize);
 			ctable_to_cluster(ocl, osize);
@@ -431,7 +431,7 @@ cthread1(void *csort_dat, int ix, int intween, int scale, Autoarg *aa)
 Csort_dat *cpd = csort_dat;
 Errcode err;
 UBYTE gotit[COLORS];
-UBYTE *tctable;
+Rgb3 *tctable;
 (void)ix;
 (void)intween;
 (void)scale;

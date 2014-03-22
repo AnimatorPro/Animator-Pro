@@ -1,12 +1,12 @@
-
 /* undone */
 /* cthread.c - a rather clever little algorithm to rearrange your palette
    in such a way that it's likely to have a lot of smooth spectrums
    suitable for gradient fills and generally nicer to look at than
    your typical mess of a digitized palette. */
 
-#include "memory.h"
 #include "cmap.h"
+#include "memory.h"
+#include "palmenu.h"
 
 static UBYTE adddif(UBYTE orig, UBYTE next)
 /* return orig plus half of difference between orig and next.  */
