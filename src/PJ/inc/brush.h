@@ -9,6 +9,8 @@
 	#include "vertices.h"
 #endif
 
+struct button;
+
 #define BRUSH_MAX_WIDTH 32
 #define BRUSH_MAX_HEIGHT 32
 
@@ -49,5 +51,30 @@ typedef struct rast_brush {
 		struct lineb_data line;
 	} b;
 } Rbrush;
+
+extern struct button gel_brush_group;
+extern struct button pen_brush_group;
+
+/* brush.c */
+extern void save_ubrush(Rbrush *rb, void *src, Coor x, Coor y);
+extern void rest_ubrush(Rbrush *rb, void *dst);
+extern void cleanup_brushes(void);
+extern Errcode init_brushes(void);
+
+extern void
+draw_line_brush(void *rast, Short_xy *cent, Pixel color, int size, int angle);
+
+extern Errcode set_brush_type(int type);
+extern int get_brush_size(void);
+extern void set_brush_size(int size);
+extern void blit_brush(Rbrush *rb, void *dest, Coor x, Coor y);
+extern void zoom_blit_brush(Rbrush *rb, Coor x, Coor y);
+extern void save_undo_brush(SHORT y);
+extern void see_pen(struct button *b);
+
+/* selbrush.c */
+extern Errcode nest_alloc_brush_texts(void);
+extern void nest_free_brush_texts(void);
+extern void set_pbrush(struct button *b);
 
 #endif

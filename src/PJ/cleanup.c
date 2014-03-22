@@ -1,11 +1,10 @@
-
 /* cleanup.c - stuff to cleanup what vpaint opens in init.c and subsequent
  * code */
 
 #include "jimk.h"
-#include "wndo.h"
+#include "brush.h"
 #include "softmenu.h"
-
+#include "wndo.h"
 
 void close_downto_screen()
 /* closes all that may be opened after init_screen() */

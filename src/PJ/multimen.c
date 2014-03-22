@@ -8,16 +8,17 @@
    (but slow) preview, and finally actually call do_auto with the 
    auto-vec. */
 
-#include "errcodes.h"
 #include "jimk.h"
-#include "menus.h"
 #include "auto.h"
+#include "brush.h"
+#include "errcodes.h"
 #include "inks.h"
+#include "menus.h"
 #include "softmenu.h"
 
 static Autoarg *mum_autoarg;
 
-extern void  ccolor_box(), ppalette(), see_pen(), toggle_pen(), set_pbrush(),
+extern void ccolor_box(), ppalette(), toggle_pen(),
 	see_cur_ink(), go_color_grid(Button *b),
 	go_cel_menu(),  
 	qmask(), change_time_mode();

@@ -1,4 +1,5 @@
 #include "jimk.h"
+#include "brush.h"
 #include "options.h"
 
 extern Errcode box_tool(), circle_tool(), 
@@ -12,8 +13,7 @@ extern Errcode box_tool(), circle_tool(),
 extern Button text_group_sel, om_sratio_group_sel, om_osped_group_sel,
  curve_group_sel, fill2c_group_sel, sep_group_sel,
  om_points_group_sel, freepoly_group_sel, om_sratio_group_sel,
- fill2c_group_sel, fill2c_group_sel, box_group_sel, move_group_sel,
- gel_brush_group, pen_brush_group;
+ fill2c_group_sel, fill2c_group_sel, box_group_sel, move_group_sel;
 
 static void close_static_ptool(Option_tool *tool);
 

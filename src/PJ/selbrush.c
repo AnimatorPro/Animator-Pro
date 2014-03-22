@@ -1,18 +1,19 @@
-
 /* selbrush.c - Menu that has the brush size slider and not much else */
 
 #include "jimk.h"
 #include "brush.h"
 #include "softmenu.h"
 
-extern Button gel_brush_group;
-
-static void see_bsize_slider(), feel_bsize_slider(), see_circle_button(),
-	see_square_button(), see_line_button(), mb_set_brush_type();
 extern void see_abovetext_qslider();
 
+static void see_bsize_slider(Button *b);
+static void feel_bsize_slider(Button *b);
+static void see_circle_button(Button *b);
+static void see_square_button(Button *b);
+static void see_line_button(Button *b);
+static void mb_set_brush_type(Button *b);
 static void see_brush_sel(Button *b);
-static void update_brush_sel(void);
+static void update_brush_sel_with_data(void *data, Button *b);
 static void see_lang_slider(Button *b);
 static void feel_lang_slider(Button *b);
 static void zero_lang_slider(Button *b);
@@ -34,8 +35,11 @@ static Button gel_brush_sel = MB_INIT1(
 	0
 	);
 
-static void gelb_update()
+static void gelb_update(void *data, Button *b)
 {
+	(void)data;
+	(void)b;
+
 	draw_buttontop(&gel_brush_sel);
 }
 
@@ -122,7 +126,7 @@ static Button bmu_langlable_sel = MB_INIT1(
 
 static SHORT lang;
 static Qslider lang_sl = 
-	QSL_INIT1( -90, 90, &lang, 0,update_brush_sel, leftright_arrs);
+	QSL_INIT1( -90, 90, &lang, 0, update_brush_sel_with_data, leftright_arrs);
 
 static Button bmu_langsl_sel = MB_INIT1(
 	&bmu_langlable_sel,
@@ -165,7 +169,7 @@ static Button bmu_brush_sel = MB_INIT1(
 
 static SHORT pwidth;
 static Qslider bsize_sl = 
-	QSL_INIT1( 0, 31, &pwidth, 1,update_brush_sel, leftright_arrs);
+	QSL_INIT1( 0, 31, &pwidth, 1, update_brush_sel_with_data, leftright_arrs);
 
 static Button bmu_sizesl_sel = MB_INIT1(
 	&bmu_brush_sel,
@@ -280,16 +284,17 @@ static Smu_button_list sel_smblist[] = {
 	{ "Tgel_size",  { /* ps */ &gel_brush_sl_sel.group } },
 };
 
-void *smbs;
-char allocs = 0;
-Errcode nest_alloc_brush_texts()
+static void *smbs;
+static char allocs = 0;
+
+Errcode nest_alloc_brush_texts(void)
 {
 	if(allocs++ > 0 && smbs != NULL)
 		return(Success);
 	return(soft_buttons("brush_panels", sel_smblist, 
 						 Array_els(sel_smblist), &smbs));
 }
-void nest_free_brush_texts()
+void nest_free_brush_texts(void)
 {
 	if(--allocs <= 0)
 	{
@@ -439,6 +444,13 @@ static void update_brush_sel(void)
 	bmu_brush_sel.group = &pwidth;
 	draw_buttontop(&bmu_brush_sel);
 	bmu_brush_sel.group = NULL;
+}
+static void update_brush_sel_with_data(void *data, Button *b)
+{
+	(void)data;
+	(void)b;
+
+	update_brush_sel();
 }
 static void see_lang_slider(Button *b)
 {

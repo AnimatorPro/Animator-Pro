@@ -1,14 +1,15 @@
 /* options.c - module to handle the draw tools menu.  Also by inadvisable
    kludging handles most of the ink types menu as well. */
 
-#include "errcodes.h"
 #include "jimk.h"
-#include "scroller.h"
 #include "broadcas.h"
-#include "rastext.h"
-#include "options.h"
-#include "softmenu.h"
+#include "brush.h"
 #include "commonst.h"
+#include "errcodes.h"
+#include "options.h"
+#include "rastext.h"
+#include "scroller.h"
+#include "softmenu.h"
 
 extern Button pen_opts_sel, fill2c_group_sel,
 	freepoly_group_sel, sep_group_sel, ink_opts_sel, box_group_sel;

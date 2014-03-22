@@ -1,4 +1,3 @@
-
 /* polytool.c - Stuff to rubberband and render polygons, splines, and other
    point-listy vectory objects.  Most of this works on a global poly -
    the working_poly.  There are routines to load and save a poly file
@@ -7,6 +6,7 @@
 
 #include <stdio.h>
 #include "jimk.h"
+#include "brush.h"
 #include "commonst.h"
 #include "errcodes.h"
 #include "inks.h"

@@ -13,7 +13,7 @@
 
 extern void change_pen_mode(), ccolor_box(), change_ink_mode(), qmake_frames(),
 	go_time_menu(), mplayit(), prev_frame(),next_frame(), 
-	first_frame(), last_frame(), see_pen(), toggle_pen(), set_pbrush(), 
+	first_frame(), last_frame(), toggle_pen(),
 	set_pspeed(), toggle_draw_mode(), toggle_zoom(), ppalette(), 
 	go_dtoolopts(), go_inkopts(), quse_mask(), go_zoom_settings(),
 	movefli_tool(), go_multi(), qmask(), toggle_stencil(), feel_crb(),

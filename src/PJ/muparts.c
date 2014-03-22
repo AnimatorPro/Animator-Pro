@@ -1,11 +1,12 @@
 #define MUPARTS_INTERNALS
 #include "jimk.h"
 #include "broadcas.h"
+#include "brush.h"
 #include "flicel.h"
 #include "menus.h"
 #include "softmenu.h"
 
-extern void ccolor_box(), see_pen(), ppalette(), set_pbrush();
+extern void ccolor_box(), ppalette();
 extern void toggle_zoom(), toggle_pen(), go_cel_menu(), go_multi();
 void shortcut_ccycle(Button *b);
 void go_color_grid(Button *b);

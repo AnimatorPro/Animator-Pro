@@ -1,4 +1,3 @@
-
 /* main.c -  Make sure system initializes ok, and then flop up the menuing
   system. */
 
@@ -6,6 +5,7 @@
 #include "jimk.h"
 #include "aaconfig.h"
 #include "argparse.h"
+#include "brush.h"
 #include "errcodes.h"
 #include "flx.h"
 #include "menus.h"

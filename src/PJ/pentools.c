@@ -3,6 +3,7 @@
 
 #include "jimk.h"
 #include "broadcas.h"
+#include "brush.h"
 #include "errcodes.h"
 #include "inks.h"
 #include "redo.h"

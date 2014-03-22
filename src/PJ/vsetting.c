@@ -1,5 +1,6 @@
 #include "jimk.h"
 #include "aaconfig.h"
+#include "brush.h"
 #include "commonst.h"
 #include "errcodes.h"
 #include "flx.h"

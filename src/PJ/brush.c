@@ -246,15 +246,14 @@ void rest_ubrush(Rbrush *rb,void *dst)
 }
 /* end KLUDGE Y stuff */
 
-
-void cleanup_brushes()
+void cleanup_brushes(void)
 {
 	pj_rast_free(thebrush.rast);
 	pj_rast_free(ubrush);
 	pj_freez(&thebrush.tcxl.xlat);
 	clear_struct(&thebrush);
 }
-Errcode init_brushes()
+Errcode init_brushes(void)
 {
 Errcode err;
 
@@ -283,9 +282,7 @@ no_mem_error:
 	return(err);
 }
 
-
-Errcode set_circle_brush(int size)
-
+static Errcode set_circle_brush(int size)
 /* size of 0 is a dot and not a circle brush 1 is 2x2 square and on up */
 {
 Rbrush *rb = &thebrush;
@@ -315,8 +312,8 @@ Rbrush *rb = &thebrush;
 	rb->type = CIRCLE_BRUSH;
 	return(Success);
 }
-Errcode set_square_brush(int size)
 
+static Errcode set_square_brush(int size)
 /* size of 0 is a dot and 1 is 2x2 square and on up */
 {
 Rbrush *rb = &thebrush;
@@ -384,8 +381,8 @@ Short_xy pt;
 	line(rast, color, cent->x - pt.x, cent->y - pt.y,
 		  cent->x + pt.x, cent->y + pt.y );
 }
-Errcode set_line_brush(int size,int degrees)
 
+static Errcode set_line_brush(int size, int degrees)
 /* size of 0 is a dot and 1 is 2 dots on up */
 {
 Rbrush *rb = &thebrush;
@@ -437,7 +434,7 @@ Errcode set_brush_type(int type)
 			return(set_line_brush(vs.line_brush_size,vs.line_brush_angle));
 	}
 }
-int get_brush_size()
+int get_brush_size(void)
 {
 	switch(vs.pen_brush_type)
 	{
@@ -492,7 +489,7 @@ void zoom_blit_brush(Rbrush *rb,Coor x, Coor y)
 	zoom_txlatblit(rb->rast,0,0, rb->width, rb->height,
 				   x - rb->cent.x,y - rb->cent.y, &rb->tcxl);
 }
-save_undo_brush(SHORT y)
+void save_undo_brush(SHORT y)
 {
 	if(vs.use_brush)
 		save_lines_undo(y-vl.brush->cent.y, vl.brush->height);

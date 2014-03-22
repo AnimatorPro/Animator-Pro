@@ -39,6 +39,7 @@
 #include <stdio.h>
 #include "jimk.h"
 #include "a3d.h"
+#include "brush.h"
 #include "fli.h"
 #include "inks.h"
 #include "memory.h"
@@ -52,8 +53,7 @@ extern Button tseg_group_sel;
 
 void qinks(), go_multi(), go_cel_menu(),
 	ccolor_box(),
-	toggle_pen(), qmask(), zero_sl(), ppalette(), see_pen(),
-	set_pbrush();
+	toggle_pen(), qmask(), zero_sl(), ppalette();
 void go_color_grid(Button *b);
 
 static void a3d_go_color_grid(Button *b);
