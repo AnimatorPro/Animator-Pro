@@ -29,6 +29,7 @@
 #include "jimk.h"
 #include "auto.h"
 #include "bhash.h"
+#include "celmenu.h"
 #include "errcodes.h"
 #include "flx.h"
 #include "inks.h"

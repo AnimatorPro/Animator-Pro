@@ -1,13 +1,13 @@
-
 /* celtrans.c - code for rotate,stretch and moving the cel, Eventually will
    call raster twisting routine in gfx/rastrans.c */
 
-#include "errcodes.h"
-#include "rastrans.h"
 #include "jimk.h"
-#include "flicel.h"
 #include "auto.h"
+#include "celmenu.h"
+#include "errcodes.h"
+#include "flicel.h"
 #include "floatgfx.h"
+#include "rastrans.h"
 
 Boolean isin_fcel(Flicel *fcel,SHORT x,SHORT y)
 {
@@ -358,7 +358,7 @@ paste1(void *paste1dat, int ix, int intween, int scale, Autoarg *aa)
 	return(err);
 }
 
-Errcode inc_thecel()
+Errcode inc_thecel(void)
 /* Advance cel to next frame if vs.paste_inc_cel says so. */
 {
 if(vs.paste_inc_cel && thecel->flif.hdr.frame_count > 1)

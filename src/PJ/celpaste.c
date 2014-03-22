@@ -10,12 +10,11 @@
 #include "softmenu.h"
 #include "util.h"
 
+static void kill_overlay(Button *b);
+static void render_overlay(Button *b);
 static void merge_overlay(Button *b);
 static void free_paint_buffers(void);
 static Errcode alloc_paint_buffers(void);
-
-static void render_overlay(), kill_overlay();
-extern Button cmu_common_sels, cmu_pa_group_sel;
 
 static Button apa_paintopt_sel = MB_INIT1(
 	NONEXT, /* next */
@@ -90,7 +89,7 @@ static Smu_button_list apa_smblist[] =  {
 	{ "kill",   { &apa_kill_sel } },
 };
 
-static Boolean do_pastemenu_keys()
+static Boolean do_pastemenu_keys(void)
 {
  	if(check_toggle_menu()
 		|| common_header_keys()
@@ -100,13 +99,12 @@ static Boolean do_pastemenu_keys()
 	}
 	return(FALSE);
 }
-static Errcode go_paste_menu()
 
+static Errcode go_paste_menu(void)
 /* it is assumed undo is valid under cel and cel is not present
  * when this is called */
 {
 Errcode err;
-extern Menuhdr cel_menu;
 void *ss;
 VFUNC oundo;
 
@@ -640,7 +638,7 @@ static void restore_from_rast2(Celmu_cb *cb)
 		 	 vb.pencel,thecel->xf.mmax.x,thecel->xf.mmax.y,
 		 	 thecel->xf.mmax.width,thecel->xf.mmax.height);
 }
-static Errcode finish_cel_overlay()
+static Errcode finish_cel_overlay(void)
 {
 Errcode err;
 Rectangle changerect;
@@ -897,7 +895,7 @@ error:
 	free_paint_buffers();
 	return(err);
 }
-static Errcode insure_paint_buffers()
+static Errcode insure_paint_buffers(void)
 /* Make sure we've got them or else! */
 {
 	if(cmcb->outta_mem)
@@ -960,7 +958,7 @@ error:
 	exit_paint_ctool(pt);
 	return(err);
 }
-static void check_cel_ccycle()
+static void check_cel_ccycle(void)
 {
 	if(vs.cycle_draw && vs.render_one_color)
 	{
@@ -1094,7 +1092,7 @@ LONG clock;
 }
 
 /******** paste tool ********/
-static void cmu_undo_celpaste()
+static void cmu_undo_celpaste(void)
 {
 	if(cmcb->paste_undo != NULL)
 	{
@@ -1105,7 +1103,7 @@ static void cmu_undo_celpaste()
 	else
 		vl.undoit = NULL;
 }
-static Errcode save_paste_undo()
+static Errcode save_paste_undo(void)
 {
 	if(cmcb->paste_undo != NULL)
 		pj_rcel_copy(undof,cmcb->paste_undo);
@@ -1117,7 +1115,7 @@ static Errcode save_paste_undo()
 		return(Err_no_memory);
 	return(Success);
 }
-void cmu_free_paste_undo()
+void cmu_free_paste_undo(void)
 {
 	if(cmcb->paste_undo)
 	{

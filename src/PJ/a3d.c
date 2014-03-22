@@ -7,6 +7,7 @@
 #include "auto.h"
 #include "a3d.h"
 #include "a3dpul.h"
+#include "celmenu.h"
 #include "commonst.h"
 #include "flx.h"
 #include "inks.h"

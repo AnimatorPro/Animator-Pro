@@ -40,6 +40,7 @@
 #include "jimk.h"
 #include "a3d.h"
 #include "brush.h"
+#include "celmenu.h"
 #include "fli.h"
 #include "inks.h"
 #include "memory.h"
@@ -51,7 +52,7 @@ static void seebg_a3d(Menuwndo *mw);
 
 extern Button tseg_group_sel;
 
-void qinks(), go_multi(), go_cel_menu(),
+void qinks(), go_multi(),
 	ccolor_box(),
 	toggle_pen(), qmask(), zero_sl(), ppalette();
 void go_color_grid(Button *b);

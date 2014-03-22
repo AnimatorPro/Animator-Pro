@@ -47,9 +47,7 @@ SHORT cel_pulltab[] = {
 	return(menu_dopull(mh));
 }
 
-
-
-static void cm_stretch()
+static void cm_stretch(void)
 {
 switch(soft_qchoice(NULL,"cel_stretch"))
 	{
@@ -67,7 +65,7 @@ switch(soft_qchoice(NULL,"cel_stretch"))
 	}
 }
 
-static void cm_turn()
+static void cm_turn(void)
 {
 switch (soft_qchoice(NULL,"cel_turn"))
 	{
@@ -85,7 +83,7 @@ switch (soft_qchoice(NULL,"cel_turn"))
 	}
 }
 
-static void cm_mirror()
+static void cm_mirror(void)
 {
 switch (soft_qchoice(NULL,"cel_mirror"))
 	{
@@ -107,7 +105,7 @@ switch (soft_qchoice(NULL,"cel_mirror"))
 #endif /* SLUFFED */
 	}
 }
-static void cm_restore()
+static void cm_restore(void)
 {
 Fcelpos pos;
 
@@ -221,7 +219,7 @@ done:
 }
 /********* functions that get new cels ***********/
 
-static void cm_getcel_bracket(EFUNC getcel)
+static void cm_getcel_bracket(Errcode (*getcel)(void))
 {
 Errcode err;
 
@@ -278,7 +276,7 @@ Fcelpos opos;
 	else
 		vl.undoit = NULL;
 }
-void save_celpos_undo()
+void save_celpos_undo(void)
 {
 	if(thecel)
 	{
@@ -288,7 +286,7 @@ void save_celpos_undo()
 	else
 		vl.undoit = NULL;
 }
-void cel_cancel_undo()
+void cel_cancel_undo(void)
 {
 	vl.undoit = NULL;
 }

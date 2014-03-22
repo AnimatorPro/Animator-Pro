@@ -14,28 +14,21 @@ Celmu_cb *cmcb;
 
 /* seeme feelme */
 
-extern void go_multi(), go_zoom_settings(), movefli_tool(),
-	qinks(), see_cur_ink();
-
-/******* tools *******/
-extern Errcode cel_paste_ptfunc(), cel_paint_ptfunc();
-extern Errcode init_paint_ctool(), init_paste_ctool();
-extern void exit_paint_ctool(), exit_paste_ctool();
-
-extern Errcode pj_errdo_unimpl(); /* dummy returns Err_unimpl */
+extern void qinks(), see_cur_ink();
 
 /* locals */
 
-static void cel_scale_ptfunc(), cel_tcolor_ptfunc(), cel_rotate_ptfunc(),
-	cel_move_ptfunc();
-
-void see_cel_minitime();
 static Minitime_data celtime_data;
 static Minitime_data cm_flitime_data;
-static Errcode init_tcolor_ptool();
-static void exit_refresh_cel();
 
-static void mb_set_celtool();
+static void see_cel_minitime(Button *b);
+static void mb_set_celtool(Button *b);
+static void exit_refresh_cel(Pentool *pt);
+static Errcode cel_scale_ptfunc(Pentool *pt, Wndo *w);
+static Errcode cel_rotate_ptfunc(Pentool *pt, Wndo *w);
+static Errcode cel_move_ptfunc(Pentool *pt, Wndo *w);
+static Errcode init_tcolor_ptool(Pentool *pt);
+static Errcode cel_tcolor_ptfunc(Pentool *pt, Wndo *w);
 
 /******* button sub groups for tools ****/
 
@@ -418,7 +411,7 @@ static Button cmu_minipal_sel = MB_INIT1(
 	NOKEY,
 	0
 	);
-void qcel_inks(Button *b)
+static void qcel_inks(Button *b)
 {
 Pentool *pt;
 
@@ -552,12 +545,12 @@ static Smu_button_list cel_smblist[] = {
 	{ "Tsetkey",    { /* ps */ &cel_tcolor_tool.ot.name } },
 };
 
-void see_cel_minitime(Button *b)
+static void see_cel_minitime(Button *b)
 {
 	black_label(b);
 	mb_hang_chiles_oset(b,b->width, 0);
 }
-static void redraw_ctool_buttons()
+static void redraw_ctool_buttons(void)
 {
 	draw_button(&cmu_toolopts_sel);
 }
@@ -583,14 +576,16 @@ static void mb_set_celtool(Button *b)
 
 /***** tool functions ******/
 
-static void exit_refresh_cel()
+static void exit_refresh_cel(Pentool *pt)
 {
+	(void)pt;
+
 	if(!thecel || flx_olays_hidden())
 		return;
 	cmu_unmarqi_cel();
 	draw_flicel(thecel,DRAW_DELTA,FORCE_CFIT);
 }
-static Boolean delta_marqi_cel()
+static Boolean delta_marqi_cel(void)
 {
 ULONG time;
 
@@ -604,7 +599,7 @@ ULONG time;
 	}
 	return(0);
 }
-void cmu_marqi_cel()
+void cmu_marqi_cel(void)
 {
 	rem_waitask(&cmcb->mwt); /* just incase it is attached */
 	if(thecel)
@@ -623,7 +618,7 @@ void cmu_marqi_cel()
 	else
 		cmcb->marqi_save = NULL;
 }
-void cmu_unmarqi_cel()
+void cmu_unmarqi_cel(void)
 {
 	rem_waitask(&cmcb->mwt); /* stop creepy re-drawing task */
 	if(thecel)
@@ -645,46 +640,49 @@ void exit_marqi_ctool(Pentool *pt)
 }
 /****** scale tool *****/
 
-static void cel_scale_ptfunc(Pentool *pt,Wndo *w)
+static Errcode cel_scale_ptfunc(Pentool *pt, Wndo *w)
 {
 	(void)pt;
 	(void)w;
 
 	if(!thecel)
-		return;
+		return Err_bad_input;
 	save_celpos_undo();
 	cmu_unmarqi_cel();
 	vstretch_cel(1);
 	cmu_marqi_cel();
+	return Success;
 }
 
 /**** rotate tool *****/
 
-static void cel_rotate_ptfunc(Pentool *pt,Wndo *w)
+static Errcode cel_rotate_ptfunc(Pentool *pt, Wndo *w)
 {
 	(void)pt;
 	(void)w;
 
 	if(!thecel)
-		return;
+		return Err_bad_input;
 	save_celpos_undo();
 	cmu_unmarqi_cel();
 	vrotate_cel(1);
 	cmu_marqi_cel();
+	return Success;
 }
 /**** move tool *****/
 
-static void cel_move_ptfunc(Pentool *pt,Wndo *w)
+static Errcode cel_move_ptfunc(Pentool *pt, Wndo *w)
 {
 	(void)pt;
 	(void)w;
 
 	if(!thecel)
-		return;
+		return Err_bad_input;
 	save_celpos_undo();
 	cmu_unmarqi_cel();
 	mp_thecel(0,vs.cm_move_to_cursor?2:1);
 	cmu_marqi_cel();
+	return Success;
 }
 /***** paint tool *****/
 
@@ -745,7 +743,7 @@ Errcode err;
 		cmu_marqi_cel();
 	return(err);
 }
-static void cel_tcolor_ptfunc(Pentool *pt,Wndo *w)
+static Errcode cel_tcolor_ptfunc(Pentool *pt, Wndo *w)
 {
 Pixel color;
 (void)pt;
@@ -753,13 +751,14 @@ Pixel color;
 
 	cel_cancel_undo();
 	if(!thecel)
-		return;
+		return Err_bad_input;
 	if(!isin_fcel(thecel,icb.mx,icb.my))
-		return;
+		return Success; /* TODO - not sure */
 	color = celt_color(icb.mx,icb.my);
 	set_flicel_tcolor(thecel,color);
 	draw_solid_tcolor(vs.inks[1]);
 	cmu_marqi_cel();
+	return Success;
 }
 /**************** minitime cel frame control ************************/
 
@@ -777,36 +776,42 @@ Errcode err;
 		return(err);
 	if(marqi)
 		cmu_marqi_cel();
+	return Success;
 }
 static Errcode cm_deltadraw(int marqi)
 {
 	if(thecel)
 		return(cm_celdraw(marqi,DRAW_DELTA));
+	else
+		return Err_nogood;
 }
-static void mtcel_first_frame(Flicel **pcel)
+static void mtcel_first_frame(void *flicel)
 {
-Flicel *cel;
+	Flicel **pcel = flicel;
+	Flicel *cel;
+
 	if((cel = *pcel) == NULL)
 		return;
 	seek_fcel_frame(*pcel, 0);
 	cm_deltadraw(1);
 }
-static void mtcel_prev_frame(Flicel **pcel)
+static void mtcel_prev_frame(void *pcel)
 {
-Flicel *cel;
-	if((cel = *pcel) == NULL)
+	Flicel *cel;
+
+	if ((cel = *(Flicel **)pcel) == NULL)
 		return;
 	seek_fcel_frame(cel, cel->cd.cur_frame - 1);
 	cm_deltadraw(1);
 }
-static void mtcel_playit(Flicel **pcel)
+static void mtcel_playit(void *pcel)
 {
 Errcode err;
 Flicel *cel;
 ULONG clock;
 Fli_frame *cbuf;
 
-	if((cel = *pcel) == NULL)
+	if ((cel = *(Flicel **)pcel) == NULL)
 		return;
 
 	hide_mp();
@@ -842,42 +847,45 @@ error:
 	show_mp();
 	pj_free(cbuf);
 }
-static void mtcel_next_frame(Flicel **pcel)
+static void mtcel_next_frame(void *pcel)
 {
-Flicel *cel;
-	if((cel = *pcel) == NULL)
+	Flicel *cel;
+
+	if ((cel = *(Flicel **)pcel) == NULL)
 		return;
 	seek_fcel_frame(cel, cel->cd.cur_frame + 1);
 	cm_deltadraw(1);
 }
-static void mtcel_last_frame(Flicel **pcel)
+static void mtcel_last_frame(void *pcel)
 {
-Flicel *cel;
-	if((cel = *pcel) == NULL)
+	Flicel *cel;
+
+	if ((cel = *(Flicel **)pcel) == NULL)
 		return;
 	seek_fcel_frame(cel, cel->flif.hdr.frame_count - 1);
 	cm_deltadraw(1);
 }
-static SHORT mtcel_get_framenum(Flicel **pcel)
+static SHORT mtcel_get_framenum(void *pcel)
 {
-Flicel *cel;
+	Flicel *cel;
 
-	if((cel = *pcel) == NULL)
+	if ((cel = *(Flicel **)pcel) == NULL)
 		return(0);
 	return(cel->cd.cur_frame);
 }
-static SHORT mtcel_get_framecount(Flicel **pcel)
+static SHORT mtcel_get_framecount(void *pcel)
 {
-Flicel *cel;
+	Flicel *cel;
 
-	if((cel = *pcel) == NULL)
+	if ((cel = *(Flicel **)pcel) == NULL)
 		return(1);
 	return(cel->flif.hdr.frame_count);
 }
-static void mtcel_seek_frame(SHORT ix, Flicel **pcel)
+static void mtcel_seek_frame(SHORT ix, void *pcel)
 {
-Flicel *cel;
-	if((cel = *pcel) == NULL)
+	Flicel *cel;
+
+	if ((cel = *(Flicel **)pcel) == NULL)
 		return;
 	seek_fcel_frame(cel, ix);
 	cm_deltadraw(1);
@@ -903,7 +911,7 @@ static Minitime_data celtime_data = {
 
 /* fly playing functions */
 
-void cm_erase_toolcel()
+void cm_erase_toolcel(void)
 {
 	if(thecel)
 	{
@@ -911,7 +919,7 @@ void cm_erase_toolcel()
 		unsee_flicel(thecel);
 	}
 }
-void cm_restore_toolcel()
+void cm_restore_toolcel(void)
 /* draw cel and its marqi assuming cel is not present on screen */
 {
 	if(thecel)
@@ -937,22 +945,35 @@ int new_ix;
 	if(new_ix >= 0)
 		vs.frame_ix = new_ix;
 }
-static void cm_firstfli()
+
+static void ring_seek_fli_with_data(SHORT ix, void *data)
 {
+	(void)data;
+	ring_seek_fli(ix);
+}
+
+static void cm_firstfli(void *data)
+{
+	(void)data;
+
 	if(cmcb->num_overlays)
 		ring_seek_fli(0);
 	else
 		first_frame();
 } 
-static void cm_nextfli()
+static void cm_nextfli(void *data)
 {
+	(void)data;
+
 	if(cmcb->num_overlays)
 		ring_seek_fli(vs.frame_ix + 1);
 	else
 		next_frame();
 } 
-static void cm_prevfli()
+static void cm_prevfli(void *data)
 {
+	(void)data;
+
 	if(cmcb->num_overlays)
 		ring_seek_fli(vs.frame_ix - 1);
 	else
@@ -960,12 +981,13 @@ static void cm_prevfli()
 } 
 
 extern SHORT flx_get_framecount(), flx_get_frameix();
-void go_time_menu(), mplayit(), last_frame(), cm_erase_toolcel(), 
-	cm_restore_toolcel();
+extern void go_time_menu(), mplayit(), last_frame();
 
 static char cel_off = 0; /* this brackets scrubs and flx seeks */
-void cm_clear_olays()
+static void cm_clear_olays(void *data)
 {
+	(void)data;
+
 	if(cel_off == 0)
 	{
 		cmu_free_paste_undo(); /* kill paste undo and free mem */
@@ -973,8 +995,10 @@ void cm_clear_olays()
 	}
 	++cel_off;
 }
-void cm_draw_olays()
+static void cm_draw_olays(void *data)
 {
+	(void)data;
+
 	if((--cel_off) == 0)
 		cm_restore_toolcel();
 }
@@ -991,13 +1015,13 @@ static Minitime_data cm_flitime_data = {
 	flx_get_framecount,	/* get framecount */
 	cm_clear_olays,    /* clear_overlays */
 	cm_draw_olays,  /* draw_overlays */
-	ring_seek_fli,       /* seek */
+	ring_seek_fli_with_data, /* seek */
 	0,            /* olay_stack */
 	NULL, /* data */
 };
 
 /********************************************/
-static void cleanup_cel_menu()
+static void cleanup_cel_menu(void)
 {
 	free_buttonlist(&(cmu_minitime_sel.children));
 	if(thecel)
@@ -1103,22 +1127,18 @@ static Redraw_node tcel_rmode_rn = {
 	NULL,
 	(RSTAT_ZCLEAR|RSTAT_CFIT|RSTAT_UNDER|RSTAT_ONECOL) };
 
-void enable_toolcel_redraw()
+void enable_toolcel_redraw(void)
 {
 	add_color_redraw(&toolcel_rn);
 	add_rmode_redraw(&tcel_rmode_rn);
 }
-void disable_toolcel_redraw()
+void disable_toolcel_redraw(void)
 {
 	rem_color_redraw(&toolcel_rn);
 	rem_rmode_redraw(&tcel_rmode_rn);
 }
 
-extern void cm_selit();
-extern Boolean do_celpull();
-
-
-static Boolean do_celmenu_keys()
+static Boolean do_celmenu_keys(void)
 {
  	if(check_toggle_abort()
 		|| common_header_keys()

@@ -2,12 +2,13 @@
 #include "jimk.h"
 #include "broadcas.h"
 #include "brush.h"
+#include "celmenu.h"
 #include "flicel.h"
 #include "menus.h"
 #include "softmenu.h"
 
 extern void ccolor_box(), ppalette();
-extern void toggle_zoom(), toggle_pen(), go_cel_menu(), go_multi();
+extern void toggle_zoom(), toggle_pen(), go_multi();
 void shortcut_ccycle(Button *b);
 void go_color_grid(Button *b);
 extern Button tseg_a_sel, tseg_s_sel, tseg_f_sel;

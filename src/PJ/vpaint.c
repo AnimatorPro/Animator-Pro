@@ -9,6 +9,7 @@
 #include "blue.h"
 #include "broadcas.h"
 #include "browse.h"
+#include "celmenu.h"
 #include "commonst.h"
 #include "errcodes.h"
 #include "fli.h"
@@ -246,7 +247,7 @@ rfree_dir(&nl);
 
 extern void flip_range(), flip5(), get_color(), first_frame(),
 	next_frame(), prev_frame(), menu_doredo(), cut_out_cel(), clip_cel(),
-	paste_the_cel(), move_the_cel(), qsave(), qload(), qnew_flx(), qquit(),
+	qsave(), qload(), qnew_flx(), qquit(),
 	quse_poco(), test(), insert_a_frame(), kill_a_frame(),
 	palette(), ktoggle_zoom();
 

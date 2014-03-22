@@ -11,6 +11,7 @@
 #include "jimk.h"
 #include "auto.h"
 #include "brush.h"
+#include "celmenu.h"
 #include "errcodes.h"
 #include "inks.h"
 #include "menus.h"
@@ -20,10 +21,7 @@ static Autoarg *mum_autoarg;
 
 extern void ccolor_box(), ppalette(), toggle_pen(),
 	see_cur_ink(), go_color_grid(Button *b),
-	go_cel_menu(),  
 	qmask(), change_time_mode();
-
-extern void go_nodraw_cel_menu();
 
 extern Button tseg_group_sel;
 extern Menuhdr quick_menu;
