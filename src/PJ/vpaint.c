@@ -5,6 +5,7 @@
 
 #include "jimk.h"
 #include "a3d.h"
+#include "alt.h"
 #include "broadcas.h"
 #include "commonst.h"
 #include "errcodes.h"

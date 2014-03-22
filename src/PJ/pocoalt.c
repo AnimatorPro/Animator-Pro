@@ -3,10 +3,6 @@
 #include "pocoface.h"
 #include "pocolib.h"
 
-extern void grab_alt(void);
-extern void free_alt(void);
-extern void swap_alt(void);
-
 static Boolean po_alt_exists(void)
 /*****************************************************************************
  * Boolean SwapExists(void);

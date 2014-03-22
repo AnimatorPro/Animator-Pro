@@ -1,10 +1,10 @@
-
 /* alt.c - A few functions for the alt screen */
 
 #include "jimk.h"
+#include "alt.h"
 #include "errcodes.h"
 
-void free_alt(void)
+static void free_alt(void)
 {
 	pj_rcel_free(vl.alt_cel);
 	vl.alt_cel = NULL;
