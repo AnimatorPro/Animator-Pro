@@ -2,6 +2,7 @@
 
 #include "jimk.h"
 #include "auto.h"
+#include "blue.h"
 #include "errcodes.h"
 #include "fli.h"
 

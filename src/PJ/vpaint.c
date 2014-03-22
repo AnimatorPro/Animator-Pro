@@ -6,6 +6,7 @@
 #include "a3d.h"
 #include "alt.h"
 #include "auto.h"
+#include "blue.h"
 #include "broadcas.h"
 #include "commonst.h"
 #include "errcodes.h"
