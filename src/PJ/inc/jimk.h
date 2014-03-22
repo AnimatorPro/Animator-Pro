@@ -350,8 +350,6 @@ typedef struct bundle {
 	UBYTE bundle[256];
 } Bundle;
 
-extern UBYTE *cluster_bundle();
-
 #define START_SIXCUBE 0
 
 

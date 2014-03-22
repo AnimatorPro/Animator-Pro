@@ -7,6 +7,7 @@
 #include "commonst.h"
 #include "errcodes.h"
 #include "options.h"
+#include "palmenu.h"
 #include "rastext.h"
 #include "scroller.h"
 #include "softmenu.h"
@@ -22,9 +23,7 @@ static Optgroup_data optgroup;
 extern Image ctriup, ctridown;
 
 void sample_text(), zero_sl(),
-	ppalette(), see_clusid(), toggle_clusid(), see_undo(), see_redo();
-void see_crb(Button *m);
-void feel_crb(Button *m);
+	ppalette(), see_undo(), see_redo();
 
 extern void edit_curve(), mtween_curve(), mtween_poly(), edit_poly(),
 	toggle_zoom(), go_zoom_settings(), movefli_tool();

@@ -7,13 +7,12 @@
 #include "flx.h"
 #include "memory.h"
 #include "menus.h"
+#include "palmenu.h"
 
 extern Button pal_men_sel, pal_pal_sel,  rpal_pal_sel, pal_spe_sel,
-	qmu_clus_sel, pal_bun_sel, pal_cco_sel;
+	   pal_bun_sel, pal_cco_sel;
 
 extern Menuhdr palette_menu;
-
-void some_cmod();
 
 static SHORT c1, c2;
 static Rgb3 *ictab;
@@ -21,8 +20,9 @@ static Rgb3 *ictab;
 static void pp_unhi_bundle(Button *b);
 static void pp_hi_bundle(Button *b, int ocolor);
 static void pp_hi_ccolor(Button *b);
+static int f_cbun(Button *m);
 
-int in_bundle(Pixel color, struct bundle *bun)
+int in_bundle(Pixel color, Bundle *bun)
 /* returns 0 if not found otherwise ix+1 of bundle color */
 {
 	return(in_cnums(color, bun->bundle, bun->bun_count));
@@ -35,7 +35,7 @@ static Button *bsel[] = {&pal_bun_sel, &pal_spe_sel};
 #define bctt (vs.buns[vs.use_bun].bun_count)
 #define bndl (vs.buns[vs.use_bun].bundle)
 
-ctable_to_cluster(Rgb3 *ctab, int ccount)
+void ctable_to_cluster(Rgb3 *ctab, int ccount)
 {
 int i;
 Rgb3 *s;
@@ -48,8 +48,7 @@ Rgb3 *s;
 	}
 }
 
-
-void static clus_ctab(Rgb3 *ctab)
+static void clus_ctab(Rgb3 *ctab)
 {
 Rgb3 *s;
 int i;
@@ -244,7 +243,7 @@ Rgb3 *rgb;
 					c, rgb->r, rgb->g, rgb->b );
 }
 
-static void show_startc(int c)
+static void show_startc(Pixel c)
 {
 	soft_top_textf("!%-3d", "top_startc", c );
 }
@@ -360,15 +359,14 @@ static void draw_cco(void)
 	draw_buttontop(&pal_cco_sel);
 }
 
-
-static int check_getaend(VFUNC dfunc)
+static int check_getaend(void (*dfunc)(Pixel c))
 {
 	(*dfunc)(vs.ccolor = get_pp_color());
 	draw_cco();
 	return(0);
 }
 
-int get_a_end(VFUNC dfunc)
+int get_a_end(void (*dfunc)(Pixel c))
 {
 int c;
 Pixel occolor;
@@ -475,10 +473,9 @@ void cl_paste(void)
 	show_mp();
 }
 
-static void cl_blend_1c(int scale, Rgb3 *dcol, int cix, int ix, int count)
+static void cl_blend_1c(int scale, Rgb3 *dcol, int cix, int ix)
 {
 	(void)cix;
-	(void)count;
 
 	if (ix >= clp_count)
 		return;
@@ -503,8 +500,8 @@ void cl_blend(void)
 	show_mp();
 }
 
-
-void some_cmod(VFUNC f, int scale)
+void
+some_cmod(void (*f)(int scale, struct rgb3 *p, int cix, int ix), int scale)
 {
 UBYTE *bun;
 Rgb3 *p;
@@ -520,14 +517,14 @@ int bct;
 		for (i=0; i<bct; i++)
 		{
 			cix = *bun++;
-			(*f)(scale, p + cix, cix, i, bct);
+			(*f)(scale, p + cix, cix, i);
 		}
 	}
 	else
 	{
 		for (cix = 0; cix < COLORS; cix++)
 		{
-			(*f)(scale, p, cix, cix, COLORS);
+			(*f)(scale, p, cix, cix);
 			++p;
 		}
 	}
@@ -551,9 +548,11 @@ UBYTE c;
 	}
 }
 
-
-static void tint_1c(int scale, Rgb3 *p)
+static void tint_1c(int scale, Rgb3 *p, int cix, int ix)
 {
+	(void)cix;
+	(void)ix;
+
 	true_blend(p, &r1, itmult(scale, vs.ctint), p);
 }
 
@@ -594,9 +593,11 @@ struct bundle *cb;
 	show_mp();
 }
 
-static void neg_1c(int scale, Rgb3 *p)
+static void neg_1c(int scale, Rgb3 *p, int cix, int ix)
 {
-Rgb3 nrgb;
+	Rgb3 nrgb;
+	(void)cix;
+	(void)ix;
 
 	nrgb = *p;
 	nrgb.r = (RGB_MAX-1)-nrgb.r;
@@ -781,7 +782,7 @@ else
 show_mp();
 }
 
-static void show_secondc(int c2)
+static void show_secondc(Pixel c2)
 {
 	soft_top_textf("!%3d%3d%3d", "top_secondc", c1, intabs(c1-c2)+1, c2);
 }
@@ -828,7 +829,7 @@ Button *m;
 	scrange(m,&vs.buns[which]);
 	draw_buttontop(m);
 }
-static void show_lastc(int c2)
+static void show_lastc(Pixel c2)
 {
 Bundle *bun;
 
@@ -919,7 +920,7 @@ int yix, xix;
 
 	yix = ix >> 5;
 	xix = ix & 31;
-	draw_quad(b->root,ocolor,pwp_xoff[xix]+b->x,pwp_yoff[yix]+b->y,
+	draw_quad((Raster *)b->root, ocolor, pwp_xoff[xix]+b->x, pwp_yoff[yix]+b->y,
 			 pwp_width(xix)+1,pwp_height(yix)+1);
 }
 static void pp_color_box(Button *b,int ix)
@@ -1011,7 +1012,7 @@ int grey;
 	pp_hi_bundle(b,mc_bright(b));
 }
 
-static void show_ccp1(int c1)
+static void show_ccp1(Pixel c1)
 {
 	soft_top_textf("!%3d", "top_source", c1);
 }
@@ -1209,7 +1210,7 @@ SHORT width;
 	}
 	return(lookup[count]);
 }
-int f_cbun(Button *m)
+static int f_cbun(Button *m)
 {
 struct bundle *bun;
 

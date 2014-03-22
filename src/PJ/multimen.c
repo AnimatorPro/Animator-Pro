@@ -15,11 +15,12 @@
 #include "errcodes.h"
 #include "inks.h"
 #include "menus.h"
+#include "palmenu.h"
 #include "softmenu.h"
 
 static Autoarg *mum_autoarg;
 
-extern void ccolor_box(), ppalette(), toggle_pen(),
+extern void ppalette(), toggle_pen(),
 	see_cur_ink(), go_color_grid(Button *b),
 	qmask(), change_time_mode();
 

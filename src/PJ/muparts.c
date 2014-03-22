@@ -5,11 +5,11 @@
 #include "celmenu.h"
 #include "flicel.h"
 #include "menus.h"
+#include "palmenu.h"
 #include "softmenu.h"
 
-extern void ccolor_box(), ppalette();
+extern void ppalette();
 extern void toggle_zoom(), toggle_pen(), go_multi();
-void shortcut_ccycle(Button *b);
 void go_color_grid(Button *b);
 extern Button tseg_a_sel, tseg_s_sel, tseg_f_sel;
 
@@ -262,7 +262,7 @@ static void pget_color(Button *b)
 		update_ccolor(pj_get_dot(b->root,icb.mx, icb.my));
 	}
 }
-static void show_ink(int c)
+static void show_ink(Pixel c)
 {
 Rgb3 m;
 static int lastc;

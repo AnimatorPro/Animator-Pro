@@ -1,16 +1,16 @@
-
 /* vpsubs.c - routines used by all sort of menu panels.  Really a mismatch.
    Not well suited to being in an overlay. */
 
 #include <math.h>
 #include "jimk.h"
-#include "menus.h"
-#include "flx.h"
-#include "ptrmacro.h"
-#include "errcodes.h"
-#include "options.h"
-#include "softmenu.h"
 #include "broadcas.h"
+#include "errcodes.h"
+#include "flx.h"
+#include "menus.h"
+#include "options.h"
+#include "palmenu.h"
+#include "ptrmacro.h"
+#include "softmenu.h"
 
 extern Button dsel1_sel, it0_sel; /* first pen tool slot first ink slot */
 extern Menuhdr quick_menu;

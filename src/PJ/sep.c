@@ -1,10 +1,11 @@
 /* sep.c - stuff to implement the color separation functions. Also the
    edge tool from the looks of it. */
 
-#include "errcodes.h"
 #include "jimk.h"
 #include "auto.h"
+#include "errcodes.h"
 #include "memory.h"
+#include "palmenu.h"
 #include "redo.h"
 
 /* separate control block. */

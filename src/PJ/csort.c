@@ -7,8 +7,7 @@
 #include "errcodes.h"
 #include "memory.h"
 #include "menus.h"
-
-extern UBYTE *cluster_to_ctable();
+#include "palmenu.h"
 
 /* structure to build color histogram */
 

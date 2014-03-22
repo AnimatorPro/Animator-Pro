@@ -14,15 +14,14 @@
 #include "memory.h"
 #include "menus.h"
 #include "palchunk.h"
+#include "palmenu.h"
 #include "palpul.h"
 #include "softmenu.h"
 
 extern Button inks_sel, ccolor_sel, spec1_sel;
-extern void see_cluster(), feel_cluster(), go_multi(),
+extern void go_multi(),
 	see_undo(), toggle_pen();
 
-void see_powell_palette(), feel_pp(), right_click_pp(), ccolor_box(),
-	mselect_bundle(), change_cluster_mode();
 void go_color_grid(Button *b);
 
 extern void swap_undo();
@@ -474,12 +473,10 @@ char buf[50];
 	}
 }
 
-static void refit_1c( SHORT scale, Rgb3 *p, SHORT ccolor, 
-					  SHORT cix, SHORT ccount)
+static void refit_1c(int scale, Rgb3 *p, int ccolor, int ix)
 {
 	(void)scale;
-	(void)cix;
-	(void)ccount;
+	(void)ix;
 
 	get_color_rgb(ccolor,new_cmap,p);
 }

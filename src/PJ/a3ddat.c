@@ -45,6 +45,7 @@
 #include "inks.h"
 #include "memory.h"
 #include "menus.h"
+#include "palmenu.h"
 #include "softmenu.h"
 #include "util.h"
 
@@ -53,7 +54,6 @@ static void seebg_a3d(Menuwndo *mw);
 extern Button tseg_group_sel;
 
 void qinks(), go_multi(),
-	ccolor_box(),
 	toggle_pen(), qmask(), zero_sl(), ppalette();
 void go_color_grid(Button *b);
 

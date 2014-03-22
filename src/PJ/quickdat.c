@@ -1,23 +1,23 @@
-
 /* quickdat.c - the data structures for the main control panel.  6 tools,
    6 inks, etc.   Also some code at end for some of the buttons feelme
    and seeme's.
    */
 
 #include "jimk.h"
-#include "menus.h"
 #include "broadcas.h"
-#include "input.h"
 #include "homepul.h"
+#include "input.h"
+#include "menus.h"
+#include "palmenu.h"
 #include "softmenu.h"
 
-extern void change_pen_mode(), ccolor_box(), change_ink_mode(), qmake_frames(),
+extern void change_pen_mode(), change_ink_mode(), qmake_frames(),
 	go_time_menu(), mplayit(), prev_frame(),next_frame(), 
 	first_frame(), last_frame(), toggle_pen(),
 	set_pspeed(), toggle_draw_mode(), toggle_zoom(), ppalette(), 
 	go_dtoolopts(), go_inkopts(), quse_mask(), go_zoom_settings(),
-	movefli_tool(), go_multi(), qmask(), toggle_stencil(), feel_crb(),
-	see_undo(), see_redo(), see_crb(), qgrid();
+	movefli_tool(), go_multi(), qmask(), toggle_stencil(),
+	see_undo(), see_redo(), qgrid();
 
 extern Button palette_menu;
 void mb_go_files(), see_option_name();
@@ -68,7 +68,7 @@ void toggle_clusid(Button *b)
 	draw_buttontop(b);
 	draw_buttontop(b->group);
 }
-Button qmu_clusid_sel = MB_INIT1(
+static Button qmu_clusid_sel = MB_INIT1(
 	&qmu_clus_sel,
 	NOCHILD,
 	12, 9, 114, 44, /* w,h,x,y */
