@@ -22,7 +22,7 @@ static Boolean do_brotask(Waitask *bt)
 		do_rmode_redraw(_rmodewhy);
 	return(1); /* remove self */
 }
-static void set_brotask()
+static void set_brotask(void)
 {
 	if(WT_ISATTACHED(&brotask))
 		return;
