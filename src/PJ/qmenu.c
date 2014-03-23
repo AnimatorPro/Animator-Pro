@@ -10,8 +10,8 @@
 #include "softmenu.h"
 #include "commonst.h"
 #include "ftextf.h"
+#include "rastcurs.h"
 #include "rastext.h"
-
 
 static Pixel cgr_result;
 
@@ -76,7 +76,7 @@ static Menuhdr cgr_menu = MENU_INIT0(
 	PANELMENU,			/* type */
 	&cgr_pal_sel,		/* buttons */
 	SCREEN_FONT, 		/* font */
-	&menu_cursor,		/* cursor */
+	&menu_cursor.hdr,	/* cursor */
 	NULL,				/* seebg */
 	NULL,					/* dodata */
 	NULL,					/* domenu */

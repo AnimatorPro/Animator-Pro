@@ -7,6 +7,15 @@
 #include "brush.h"
 #include "picfile.h"
 
+typedef struct curslist {
+	Rastcursor *curs;
+	char *name;
+} Curslist;
+
+extern void zoom_txlatblit(Raster *src, Coor sx, Coor sy,
+		Ucoor width, Ucoor height,
+		Coor dx, Coor dy, Tcolxldat *tcxl);
+
 static int zoomcursor;
 static Cursorsave umouse;
 
@@ -168,25 +177,25 @@ Coor w, h;
  *		....
  */
 
-
-static void show_either_rcursor(Rastcursor *ch)
-
+static void show_either_rcursor(Cursorhdr *hdr)
 /* this loads its hide function */
 {
+	Rastcursor *ch = (Rastcursor *)hdr;
+
 	if(zoomcursor)
 	{
 		zshow_rastcursor(ch);
-		ch->hdr.hideit = zhide_rastcursor;
-		ch->hdr.moveit = zmove_rastcursor;
+		hdr->hideit = zhide_rastcursor;
+		hdr->moveit = zmove_rastcursor;
 	}
 	else
 	{
-		show_rastcursor(ch);
-		ch->hdr.hideit = hide_rastcursor;
-		ch->hdr.moveit = move_rastcursor;
+		show_rastcursor(hdr);
+		hdr->hideit = hide_rastcursor;
+		hdr->moveit = move_rastcursor;
 	}
 }
-static save_under_brushcurs(void *screen, Rastcursor *rc, 
+static void save_under_brushcurs(void *screen, Rastcursor *rc,
 							Rbrush *rb, Short_xy *cpos, Boolean zoom)
 {
 Cursorcel *r = rc->cel;
@@ -331,24 +340,24 @@ Short_xy bpos, cpos;
 			upd_zoom_dot(vs.ccolor,bpos.x,bpos.y);
 	}
 }
-static void show_brush_cursor(Rastcursor *ch)
-
+static void show_brush_cursor(Cursorhdr *hdr)
 /* selects display function and sets hide function for it's inverse */
 {
+	Rastcursor *ch = (Rastcursor *)hdr;
 
 	if(vl.hide_brush)
 	{
 		if(zoomcursor)
 		{
 			zshow_rastcursor(ch);
-			ch->hdr.hideit = zhide_rastcursor;
-			ch->hdr.moveit = zmove_rastcursor;
+			hdr->hideit = zhide_rastcursor;
+			hdr->moveit = zmove_rastcursor;
 		}
 		else
 		{
-			show_rastcursor(ch);
-			ch->hdr.hideit = hide_rastcursor;
-			ch->hdr.moveit = move_rastcursor;
+			show_rastcursor(hdr);
+			hdr->hideit = hide_rastcursor;
+			hdr->moveit = move_rastcursor;
 		}
 	}
 	else
@@ -356,17 +365,17 @@ static void show_brush_cursor(Rastcursor *ch)
 		if(zoomcursor)
 		{
 			zshow_brushcurs(ch);
-			ch->hdr.hideit = zhide_brushcurs;
+			hdr->hideit = zhide_brushcurs;
 		}
 		else
 		{
 			show_brushcurs(ch);
-			ch->hdr.hideit = hide_brushcurs;
+			hdr->hideit = hide_brushcurs;
 		}
-		ch->hdr.moveit = gen_move_cursor;
+		hdr->moveit = gen_move_cursor;
 	}
 }
-static void show_shape_cursor(Rastcursor *ch)
+static void show_shape_cursor(Cursorhdr *ch)
 {
 	if(vs.fillp)
 		show_either_rcursor(ch);
@@ -555,7 +564,7 @@ static Curslist cursortab[] = {
 
 static char is_init;
 
-Errcode init_cursors()
+Errcode init_cursors(void)
 
 /* sets up cursor save/restore area to match current display and loads any 
  * loadable cursors, defaults to crosshair 16 loadable if cursors absent */
@@ -606,7 +615,7 @@ error:
 	cleanup_cursors();
 	return(err);
 }
-cleanup_cursors()
+void cleanup_cursors(void)
 {
 Curslist *clist;
 Rastcursor *default_curs;
@@ -617,8 +626,8 @@ Rastcursor *default_curs;
 	if(vb.screen)
 	{
 		vb.screen->wndo.cursor = vb.screen->cursor = 
-				vb.screen->menu_cursor = (Cursorhdr *)default_curs;
-		set_cursor((Cursorhdr *)default_curs);
+				vb.screen->menu_cursor = &default_curs->hdr;
+		set_cursor(&default_curs->hdr);
 	}
 	pj_close_raster(&umouse.r);
 	clist = &cursortab[0];

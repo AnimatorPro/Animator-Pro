@@ -5,6 +5,7 @@
 #include "errcodes.h"
 #include "flx.h"
 #include "inks.h"
+#include "rastcurs.h"
 #include "rastrans.h"
 #include "render.h"
 #include "softmenu.h"
@@ -72,7 +73,7 @@ static Menuhdr anipaste_menu = MENU_INIT0(
 	PANELMENU,		/* type */
 	&apa_title_sel,	/* buttons */
 	SCREEN_FONT,	/* font */
-	&menu_cursor,	/* cursor */
+	&menu_cursor.hdr,	/* cursor */
 	seebg_white, 		/* seebg */
 	NULL,					/* dodata */
 	NULL,					/* domenu */

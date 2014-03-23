@@ -2,6 +2,7 @@
 
 #include "jimk.h"
 #include "brush.h"
+#include "rastcurs.h"
 #include "softmenu.h"
 
 extern void see_abovetext_qslider();
@@ -256,7 +257,7 @@ static Menuhdr pbrush_menu = {
 	PANELMENU,		/* type */
 	&bmu_title_sel, /* buttons */
 	SCREEN_FONT,	/* font */
-	&menu_cursor,	/* cursor */
+	&menu_cursor.hdr, /* cursor */
 	seebg_white, 	/* seebg */
 	NULL,			/* dodata */
 	NULL,			/* domenu */

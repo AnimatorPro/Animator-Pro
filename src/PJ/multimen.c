@@ -16,6 +16,7 @@
 #include "inks.h"
 #include "menus.h"
 #include "palmenu.h"
+#include "rastcurs.h"
 #include "softmenu.h"
 
 static Autoarg *mum_autoarg;
@@ -328,7 +329,7 @@ Menuhdr mum_menu = {
 	PANELMENU,		/* type */
 	&mum_tit_sel,	/* buttons */
 	SCREEN_FONT,	/* font */
-	&menu_cursor,	/* cursor */
+	&menu_cursor.hdr,	/* cursor */
 	mum_seebg_white, 	/* seebg */
 	NULL,				/* dodata */
 	NULL,				/* domenu */

@@ -8,6 +8,7 @@
 #include "linklist.h"
 #include "menus.h"
 #include "polyrub.h"
+#include "rastcurs.h"
 #include "softmenu.h"
 #include "tween.h"
 #include "tweenmag.h"
@@ -1005,7 +1006,7 @@ Pentool tween_pen_tool = PTOOLINIT1(
 	NO_SUBOPTS,
 	NULL,
 	twe_tool_func,
-	&plain_ptool_cursor,
+	&plain_ptool_cursor.hdr,
 	NULL, /* on install */
 	NULL /* on remove */
 );

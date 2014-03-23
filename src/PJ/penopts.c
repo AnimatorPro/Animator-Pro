@@ -1,6 +1,7 @@
 #include "jimk.h"
 #include "brush.h"
 #include "options.h"
+#include "rastcurs.h"
 
 extern Errcode box_tool(), circle_tool(), 
 	draw_tool(), drizl_tool(), edge_tool(),
@@ -17,22 +18,6 @@ extern Button text_group_sel, om_sratio_group_sel, om_osped_group_sel,
 
 static void close_static_ptool(Option_tool *tool);
 
-extern Cursorhdr fill_cursor;
-extern Cursorhdr pen_cursor;
-extern Cursorhdr shape_cursor;
-extern Cursorhdr text_cursor;
-extern Cursorhdr box_cursor;
-extern Cursorhdr move_tool_cursor;
-extern Cursorhdr sep_cursor;
-extern Cursorhdr edge_cursor;
-extern Cursorhdr pick_cursor;
-extern Cursorhdr spray_cursor;
-extern Cursorhdr star_cursor;
-extern Cursorhdr plain_ptool_cursor;
-
-
-
-
 extern void test_ptfunc();
 extern void zoom_unundo();
 
@@ -46,7 +31,7 @@ extern void zoom_unundo();
 		NO_SUBOPTS,
 		close_static_ptool,
 		test_ptfunc,	
-		&plain_ptool_cursor,
+		&plain_ptool_cursor.hdr,
 		NOINSTALL,
 		zoom_unundo
 	); 
@@ -62,7 +47,7 @@ static Pentool text_ptool_opt = PTOOLINIT0(
 	TEXT_PTOOL,
 	RL_KEYTEXT("text_help"),
 	&text_group_sel,
-	&text_cursor,
+	&text_cursor.hdr,
 	text_tool,	
 	close_static_ptool
 ); 
@@ -74,7 +59,7 @@ static Pentool streak_ptool_opt = PTOOLINIT0(
 	STREAK_PTOOL,
 	RL_KEYTEXT("streak_help"),
 	&pen_brush_group,
-	&pen_cursor,	
+	&pen_cursor.hdr,
 	streak_tool,	
 	close_static_ptool
 ); 
@@ -85,7 +70,7 @@ static Pentool starf_ptool_opt = PTOOLINIT0(
 	STARF_PTOOL,
 	RL_KEYTEXT("star_help"),
 	&om_sratio_group_sel,
-	&star_cursor,	
+	&star_cursor.hdr,
 	starf_tool,
 	close_static_ptool
 ); 
@@ -96,7 +81,7 @@ static Pentool spray_ptool_opt = PTOOLINIT0(
 	SPRAY_PTOOL,
 	RL_KEYTEXT("spray_help"),
 	&om_osped_group_sel,
-	&spray_cursor,	
+	&spray_cursor.hdr,
 	spray_tool,
 	close_static_ptool
 ); 
@@ -107,7 +92,7 @@ static Pentool curve_ptool_opt = PTOOLINIT0(
 	CURVE_PTOOL,
 	RL_KEYTEXT("spline_help"),
 	&curve_group_sel,
-	&shape_cursor,	
+	&shape_cursor.hdr,
 	curve_tool,
 	close_static_ptool
 ); 
@@ -118,7 +103,7 @@ static Pentool spiral_ptool_opt = PTOOLINIT0(
 	SPIRAL_PTOOL,
 	RL_KEYTEXT("spiral_help"),
 	NO_SUBOPTS,
-	&pen_cursor,	
+	&pen_cursor.hdr,
 	spiral_tool,
 	close_static_ptool
 ); 
@@ -129,7 +114,7 @@ static Pentool shapef_ptool_opt = PTOOLINIT0(
 	SHAPEF_PTOOL,
 	RL_KEYTEXT("shape_help"),
 	&fill2c_group_sel,
-	&shape_cursor,	
+	&shape_cursor.hdr,
 	shapef_tool,
 	close_static_ptool
 ); 
@@ -140,7 +125,7 @@ Pentool sep_ptool_opt = PTOOLINIT0(
 	SEP_PTOOL,
 	RL_KEYTEXT("sep_help"),
 	&sep_group_sel,
-	&sep_cursor,	
+	&sep_cursor.hdr,
 	sep_tool,
 	close_static_ptool
 ); 
@@ -151,7 +136,7 @@ static Pentool rpolyf_ptool_opt = PTOOLINIT0(
 	RPOLYF_PTOOL,	
 	RL_KEYTEXT("rpoly_help"),
 	&om_points_group_sel,
-	&shape_cursor,	
+	&shape_cursor.hdr,
 	rpolyf_tool,
 	close_static_ptool
 ); 
@@ -162,7 +147,7 @@ static Pentool polyf_ptool_opt = PTOOLINIT0(
 	POLYF_PTOOL,
 	RL_KEYTEXT("poly_help"),
 	&freepoly_group_sel,
-	&shape_cursor,	
+	&shape_cursor.hdr,
 	polyf_tool,
 	close_static_ptool
 ); 
@@ -173,7 +158,7 @@ static Pentool petlf_ptool_opt = PTOOLINIT0(
 	PETLF_PTOOL,
 	RL_KEYTEXT("petal_help"),
 	&om_sratio_group_sel,
-	&shape_cursor,	
+	&shape_cursor.hdr,
 	petlf_tool,
 	close_static_ptool
 ); 
@@ -184,7 +169,7 @@ static Pentool ovalf_ptool_opt = PTOOLINIT0(
 	OVALF_PTOOL,
 	RL_KEYTEXT("oval_help"),
 	&fill2c_group_sel,
-	&shape_cursor,
+	&shape_cursor.hdr,
 	ovalf_tool,
 	close_static_ptool
 ); 
@@ -195,7 +180,7 @@ static Pentool move_ptool_opt = PTOOLINIT0(
 	MOVE_PTOOL,
 	RL_KEYTEXT("move_help"),
 	&move_group_sel,
-	&move_tool_cursor,	
+	&move_tool_cursor.hdr,
 	move_tool,
 	close_static_ptool
 ); 
@@ -206,7 +191,7 @@ static Pentool line_ptool_opt = PTOOLINIT0(
 	LINE_PTOOL,
 	RL_KEYTEXT("line_help"),
 	&pen_brush_group,
-	&pen_cursor,	
+	&pen_cursor.hdr,
 	line_tool,
 	close_static_ptool
 ); 
@@ -217,7 +202,7 @@ static Pentool gel_ptool_opt = PTOOLINIT0(
 	GEL_PTOOL,
 	RL_KEYTEXT("gel_help"),
 	&gel_brush_group,
-	&pen_cursor,	
+	&pen_cursor.hdr,
 	gel_tool,
 	close_static_ptool
 ); 
@@ -228,7 +213,7 @@ static Pentool flood_ptool_opt = PTOOLINIT0(
 	FLOOD_PTOOL,
 	RL_KEYTEXT("fillto_help"),
 	NO_SUBOPTS,
-	&pick_cursor,	
+	&pick_cursor.hdr,
 	flood_tool,
 	close_static_ptool
 ); 
@@ -239,7 +224,7 @@ static Pentool fill_ptool_opt = PTOOLINIT0(
 	FILL_PTOOL,
 	RL_KEYTEXT("fill_help"),
 	NO_SUBOPTS,
-	&fill_cursor,	
+	&fill_cursor.hdr,
 	fill_tool,
 	close_static_ptool
 ); 
@@ -250,7 +235,7 @@ static Pentool edge_ptool_opt = PTOOLINIT0(
 	EDGE_PTOOL,
 	RL_KEYTEXT("edge_help"),
 	&pen_brush_group,
-	&edge_cursor,	
+	&edge_cursor.hdr,
 	edge_tool,
 	close_static_ptool
 ); 
@@ -261,7 +246,7 @@ static Pentool driz_ptool_opt = PTOOLINIT0(
 	DRIZ_PTOOL,
 	RL_KEYTEXT("driz_help"),
 	&pen_brush_group,
-	&pen_cursor,
+	&pen_cursor.hdr,
 	drizl_tool,
 	close_static_ptool
 ); 
@@ -272,7 +257,7 @@ static Pentool draw_ptool_opt = PTOOLINIT0(
 	DRAW_PTOOL,
 	RL_KEYTEXT("draw_help"),
 	&pen_brush_group,
-	&pen_cursor,
+	&pen_cursor.hdr,
 	draw_tool,
 	close_static_ptool
 ); 
@@ -283,7 +268,7 @@ static Pentool copy_ptool_opt = PTOOLINIT0(
 	COPY_PTOOL,
 	RL_KEYTEXT("copy_help"),
 	&move_group_sel,
-	&move_tool_cursor,	
+	&move_tool_cursor.hdr,
 	copy_tool,
 	close_static_ptool
 ); 
@@ -294,7 +279,7 @@ static Pentool circle_ptool_opt = PTOOLINIT0(
 	CIRCLE_PTOOL,
 	RL_KEYTEXT("circle_help"),
 	&fill2c_group_sel,
-	&shape_cursor,
+	&shape_cursor.hdr,
 	circle_tool,
 	close_static_ptool
 ); 
@@ -305,7 +290,7 @@ Pentool box_ptool_opt = PTOOLINIT0(
 	BOX_PTOOL,
 	RL_KEYTEXT("box_help"),
 	&box_group_sel,
-	&box_cursor,
+	&box_cursor.hdr,
 	box_tool,
 	close_static_ptool
 ); 

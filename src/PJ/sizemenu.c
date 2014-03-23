@@ -3,6 +3,7 @@
 #include "errcodes.h"
 #include "ftextf.h"
 #include "menus.h"
+#include "rastcurs.h"
 #include "softmenu.h"
 
 static void see_screen_format(), feel_numqdim(),
@@ -188,7 +189,7 @@ static Menuhdr format_menu = {
 	PANELMENU,		/* type */
 	&fmt_title_sel,	/* buttons */
 	SCREEN_FONT,	/* font */
-	&menu_cursor,	/* cursor */
+	&menu_cursor.hdr, /* cursor */
 	seebg_white,	/* seebg */
 	NULL,			/* data */
 	NULL,			/* domenu */

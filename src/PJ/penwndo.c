@@ -1,5 +1,6 @@
-#include "errcodes.h"
 #include "jimk.h"
+#include "errcodes.h"
+#include "rastcurs.h"
 
 extern int do_pen_tool(Wndo *w);
 
@@ -34,7 +35,7 @@ void movefli_tool(void)
 {
 	hide_mp();
 	load_wndo_mouset(NULL);
-	set_cursor(&hand_cursor);
+	set_cursor(&hand_cursor.hdr);
 	draw_flibord();
 
 	for(;;)

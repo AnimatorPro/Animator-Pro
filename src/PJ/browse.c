@@ -10,6 +10,7 @@
 #include "errcodes.h"
 #include "filepath.h"
 #include "fli.h"
+#include "rastcurs.h"
 #include "scroller.h"
 #include "softmenu.h"
 #include "wildlist.h"
@@ -315,7 +316,7 @@ static Menuhdr bro_menu = {
 	PANELMENU,		/* type */
 	&brw_panel,		/* buttons */
 	SCREEN_FONT,	/* font */
-	&menu_cursor,	/* cursor */
+	&menu_cursor.hdr, /* cursor */
 	see_browse_bg,	/* seebg */
 	NULL,			/* data */
 	NULL,			/* domenu */

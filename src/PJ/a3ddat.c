@@ -46,6 +46,7 @@
 #include "memory.h"
 #include "menus.h"
 #include "palmenu.h"
+#include "rastcurs.h"
 #include "softmenu.h"
 #include "util.h"
 
@@ -1254,7 +1255,7 @@ Menuhdr a3d_menu = {
 	PANELMENU,			/* type */
 	&a3d_moveq_sel, 	/* buttons */
 	SCREEN_FONT,		/* font */
-	&menu_cursor,		/* cursor */
+	&menu_cursor.hdr,	/* cursor */
 	seebg_a3d, 			/* seebg */
 	NULL,				/* dodata */
 	NULL,				/* domenu */

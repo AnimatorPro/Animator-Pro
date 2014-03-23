@@ -8,8 +8,9 @@
 
 /*************************************************/
 
-void show_rastcursor(Rastcursor *rc)
+void show_rastcursor(Cursorhdr *rastcursor)
 {
+Rastcursor *rc = (Rastcursor *)rastcursor;
 Cursorcel *r = rc->cel;
 SHORT cx, cy;
 

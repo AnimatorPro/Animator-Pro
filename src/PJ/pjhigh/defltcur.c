@@ -1,5 +1,6 @@
 #include "ptrmacro.h"
 #include "rastcurs.h"
+#include "wndo.h"
 
 /****** a staticly defined default crosshair cursor ******/
 

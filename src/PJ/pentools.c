@@ -6,6 +6,7 @@
 #include "brush.h"
 #include "errcodes.h"
 #include "inks.h"
+#include "rastcurs.h"
 #include "redo.h"
 #include "util.h"
 
@@ -151,7 +152,7 @@ Short_xy fpt[2];
 		goto done;
 	fpt[0].x = icb.mx;
 	fpt[0].y = icb.my;
-	vl.ptool->cursor = &fill_cursor;
+	vl.ptool->cursor = &fill_cursor.hdr;
 	wait_click();
 	if(JSTHIT(MBPEN))
 	{
@@ -159,7 +160,7 @@ Short_xy fpt[2];
 		fpt[1].y = icb.my;
 		err = save_redo_flood(fpt);
 	}
-	vl.ptool->cursor = &pick_cursor;
+	vl.ptool->cursor = &pick_cursor.hdr;
 done:
 	return(err);
 }

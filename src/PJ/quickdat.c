@@ -9,6 +9,7 @@
 #include "input.h"
 #include "menus.h"
 #include "palmenu.h"
+#include "rastcurs.h"
 #include "softmenu.h"
 
 extern void change_pen_mode(), change_ink_mode(), qmake_frames(),
@@ -457,7 +458,7 @@ Menuhdr quick_menu = MENU_INIT0(
 	PANELMENU,		/* type */
 	&qmu_title_sel,	/* buttons */
 	SCREEN_FONT,	/* font */
-	&menu_cursor,	/* cursor */
+	&menu_cursor.hdr, /* cursor */
 	seebg_white, 	/* seebg */
 	NULL,			/* data */
 	NULL,			/* domenu */

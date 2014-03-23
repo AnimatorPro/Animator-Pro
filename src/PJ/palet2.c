@@ -16,6 +16,7 @@
 #include "palchunk.h"
 #include "palmenu.h"
 #include "palpul.h"
+#include "rastcurs.h"
 #include "softmenu.h"
 
 extern Button inks_sel, ccolor_sel, spec1_sel;
@@ -352,7 +353,7 @@ Menuhdr palette_menu = MENU_INIT0(
 	PANELMENU,			/* type */
 	&pal_most_sel,		/* buttons */
 	SCREEN_FONT, 		/* font */
-	&menu_cursor,		/* cursor */
+	&menu_cursor.hdr,	/* cursor */
 	sliders_from_ccolor,	/* seebg */
 	NULL,					/* dodata */
 	NULL,					/* domenu */
@@ -1023,7 +1024,7 @@ void *ss;
 
 	fliborder_on();
 	menu_to_quickcent(&palette_menu);
-	och = set_pen_cursor(&menu_cursor);
+	och = set_pen_cursor(&menu_cursor.hdr);
 	if (load_soft_pull(&tpull, 8, "palette", PALP_MUID,
 		palette_selit, pal_dopull) >= Success)
 	{

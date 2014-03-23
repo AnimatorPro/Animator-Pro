@@ -10,6 +10,7 @@
 #include "flx.h"
 #include "menus.h"
 #include "picdrive.h"
+#include "rastcurs.h"
 
 static Errcode resize_pencel(Boolean err_on_abort,Boolean reset);
 
@@ -27,8 +28,8 @@ static Errcode init_after_screen()
  * and before the dynamic stuff (tempflx) and push/pop stuff is opened */
 {
 	init_cursors();
-	vb.screen->menu_cursor = &menu_cursor;
-	vb.screen->cursor = &menu_cursor;
+	vb.screen->menu_cursor = &menu_cursor.hdr;
+	vb.screen->cursor = &menu_cursor.hdr;
 	set_cursor_ccolor((Pixel *)(&vs.ccolor)); /* only works with 80x86 */
 	return(init_brushes());
 }

@@ -93,24 +93,6 @@ enum muids {
 extern Menuhdr quick_menu;
 extern Button ink_group_sel;
 
-/*** cursors found in cursor.c ******/
-
-#ifndef CURSOR_C
-	extern Cursorhdr crosshair16_cursor;
-	extern Cursorhdr pentool_cursor;
-	extern Cursorhdr zoom_pencel_cursor;
-	extern Cursorhdr zoom_cursor;
-	extern Cursorhdr menu_cursor;
-	extern Cursorhdr hand_cursor;
-	extern Cursorhdr fill_cursor;
-	extern Cursorhdr pick_cursor;
-	extern Cursorhdr plain_ptool_cursor;
-#endif
-
-Errcode save_cursor(char *title,Rcel *rc,Short_xy *hot);
-
-Cursorhdr *set_pen_cursor(Cursorhdr *ch);
-
 /* error message and dialog handling and text box functions */
 
 Errcode errline(Errcode err,char *fmt,...);

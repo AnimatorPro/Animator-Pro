@@ -1,5 +1,6 @@
 #include "jimk.h"
 #include "commonst.h"
+#include "rastcurs.h"
 #include "softmenu.h"
 
 extern Button tseg_slider_sel;
@@ -71,7 +72,7 @@ static Menuhdr saveseg_menu = MENU_INIT0(
 	PANELMENU,			/* type */
 	&ssm_title_sel, 	/* buttons */
 	SCREEN_FONT, 		/* font */
-	&menu_cursor,		/* cursor */
+	&menu_cursor.hdr,	/* cursor */
 	seebg_white, 		/* seebg */
 	NULL,				/* dodata */
 	NULL,				/* domenu */

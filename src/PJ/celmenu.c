@@ -4,6 +4,7 @@
 #include "errcodes.h"
 #include "flx.h"
 #include "inks.h"
+#include "rastcurs.h"
 #include "rastrans.h"
 #include "render.h"
 #include "softmenu.h"
@@ -135,7 +136,7 @@ static Pentool cel_scale_tool = PTOOLINIT1(
 	NO_SUBOPTS,
 	NULL,
 	cel_scale_ptfunc,
-	&plain_ptool_cursor,
+	&plain_ptool_cursor.hdr,
 	init_marqi_ctool, /* on install */
 	exit_marqi_ctool /* on remove */
 );
@@ -148,7 +149,7 @@ static Pentool cel_rotate_tool = PTOOLINIT1(
 	NO_SUBOPTS,
 	NULL,
 	cel_rotate_ptfunc,
-	&plain_ptool_cursor,
+	&plain_ptool_cursor.hdr,
 	init_marqi_ctool, /* on install */
 	exit_marqi_ctool /* on remove */
 );
@@ -161,7 +162,7 @@ static Pentool cel_move_tool = PTOOLINIT1(
 	&cmu_move_group_sel,
 	NULL,
 	cel_move_ptfunc,
-	&plain_ptool_cursor,
+	&plain_ptool_cursor.hdr,
 	init_marqi_ctool, /* on install */
 	exit_marqi_ctool /* on remove */
 );
@@ -174,7 +175,7 @@ static Pentool cel_paste_tool = PTOOLINIT1(
 	&cmu_pa_group_sel,
 	NULL,
 	cel_paste_ptfunc,
-	&plain_ptool_cursor,
+	&plain_ptool_cursor.hdr,
 	init_paste_ctool, /* on install */
 	exit_paste_ctool /* on remove */
 );
@@ -187,7 +188,7 @@ static Pentool cel_paint_tool = PTOOLINIT1(
 	&cmu_pa_group_sel,
 	NULL,
 	cel_paint_ptfunc,
-	&plain_ptool_cursor,
+	&plain_ptool_cursor.hdr,
 	init_paint_ctool, /* on install */
 	exit_paint_ctool /* on remove */
 );
@@ -200,7 +201,7 @@ static Pentool cel_tcolor_tool = PTOOLINIT1(
 	NO_SUBOPTS,
 	NULL,
 	cel_tcolor_ptfunc,
-	&plain_ptool_cursor,
+	&plain_ptool_cursor.hdr,
 	init_tcolor_ptool, /* on install */
 	exit_refresh_cel /* on remove */
 );
@@ -515,7 +516,7 @@ Menuhdr cel_menu = MENU_INIT0(
 	PANELMENU,		/* type */
 	&cmu_title_sel,	/* buttons */
 	SCREEN_FONT,	/* font */
-	&menu_cursor,	/* cursor */
+	&menu_cursor.hdr,	/* cursor */
 	seebg_white, 		/* seebg */
 	NULL,					/* dodata */
 	NULL,					/* domenu */

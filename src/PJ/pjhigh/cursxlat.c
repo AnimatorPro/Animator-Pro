@@ -1,6 +1,7 @@
 #include <string.h>
 #include "procblit.h"
 #include "rastcurs.h"
+#include "wndo.h"
 
 static Pixel curs_xlat[COLORS];
 static Tcolxldat curs_tcxl = { 0, {0}, curs_xlat };

@@ -7,6 +7,7 @@
 #include "errcodes.h"
 #include "floatgfx.h"
 #include "menus.h"
+#include "rastcurs.h"
 #include "softmenu.h"
 
 static void cm_save_cursor(void);

@@ -8,6 +8,7 @@
 #include "errcodes.h"
 #include "options.h"
 #include "palmenu.h"
+#include "rastcurs.h"
 #include "rastext.h"
 #include "scroller.h"
 #include "softmenu.h"
@@ -1045,7 +1046,7 @@ Menuhdr options_menu = {
 	PANELMENU,		/* type */
 	&omu_title_sel,	/* buttons */
 	SCREEN_FONT,	/* font */
-	&menu_cursor,	/* cursor */
+	&menu_cursor.hdr, /* cursor */
 	seebg_white, 	/* seebg */
 	NULL,			/* dodata */
 	NULL,			/* domenu */
@@ -1124,7 +1125,7 @@ Pentool null_pentool = PTOOLINIT1(
 	NO_SUBOPTS,
 	NOCLOSE,
  	notool,
-	&plain_ptool_cursor,
+	&plain_ptool_cursor.hdr,
 	NULL,
 	NULL
 );
@@ -1146,7 +1147,7 @@ Errcode err;
 
 	/* just in case ********************/
 	if(ptool->cursor == NULL)
-		ptool->cursor =	&plain_ptool_cursor;
+		ptool->cursor =	&plain_ptool_cursor.hdr;
 
 	if(ptool->on_install)
 	{

@@ -4,6 +4,7 @@
 #include "jimk.h"
 #include "auto.h"
 #include "errcodes.h"
+#include "rastcurs.h"
 #include "softmenu.h"
 #include "textedit.h"
 #include "util.h"
@@ -291,7 +292,7 @@ static Menuhdr tit_menu = {
 	PANELMENU,		/* type */
 	&tit_tit_sel,	/* buttons */
 	SCREEN_FONT,	/* font */
-	&menu_cursor,	/* cursor */
+	&menu_cursor.hdr, /* cursor */
 	seebg_title_back, 		/* seebg */
 	NULL,					/* dodata */
 	NULL,					/* domenu */

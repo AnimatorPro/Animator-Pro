@@ -7,6 +7,7 @@
 #include "commonst.h"
 #include "flicel.h"
 #include "menus.h"
+#include "rastcurs.h"
 #include "softmenu.h"
 #include "textedit.h"
 
@@ -302,7 +303,7 @@ static Menuhdr fml_menu = {
 	PANELMENU,			/* type */
 	&fml_fil_sel, 		/* buttons */
 	SCREEN_FONT, 		/* font */
-	&menu_cursor,		/* cursor */
+	&menu_cursor.hdr,	/* cursor */
 	seebg_white, 		/* seebg */
 	NULL,				/* dodata */
 	NULL,				/* domenu */

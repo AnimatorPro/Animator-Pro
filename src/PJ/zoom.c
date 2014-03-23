@@ -6,6 +6,7 @@
 #include "memory.h"
 #include "menus.h"
 #include "ptrmacro.h"
+#include "rastcurs.h"
 #include "rastlib.h"
 #include "softmenu.h"
 
@@ -117,7 +118,7 @@ static Menuhdr zoom_menu = {
 	PANELMENU,		/* type */
 	&zoom_tit_sel,	/* buttons */
 	SCREEN_FONT,	/* font */
-	&menu_cursor,	/* cursor */
+	&menu_cursor.hdr, /* cursor */
 	seebg_white, 	/* seebg */
 	NULL,			/* dodata */
 	NULL,			/* domenu */
@@ -317,7 +318,7 @@ static void proc_zoomouse()
 		set_wndo_cursor(vl.zoomwndo, &zoom_pencel_cursor);
 	}
 	else
-		set_wndo_cursor(vl.zoomwndo, &menu_cursor);
+		set_wndo_cursor(vl.zoomwndo, &menu_cursor.hdr);
 
 	if(icb.cx == icb.lastcx && icb.cy == icb.lastcy) /* cancel mouse move */
 		icb.state &= ~(MMOVE);
@@ -1008,7 +1009,7 @@ static Pentool hand_ptool = PTOOLINIT1(
 	NO_SUBOPTS,
 	NULL,
 	hand_ptfunc,
-	&hand_cursor,
+	&hand_cursor.hdr,
 	NULL, /* on install */
 	NULL /* on remove */
 );

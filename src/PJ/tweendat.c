@@ -4,6 +4,7 @@
 #include "tween.h"
 #include "tweenpul.h"
 #include "inks.h"
+#include "rastcurs.h"
 #include "softmenu.h"
 #include "options.h"
 
@@ -148,7 +149,7 @@ Menuhdr twe_menu = MENU_INIT0(
 	PANELMENU,		/* type */
 	&twe_title_sel,	/* buttons */
 	SCREEN_FONT,	/* font */
-	&menu_cursor,	/* cursor */
+	&menu_cursor.hdr,	/* cursor */
 	seebg_white, 		/* seebg */
 	NULL,					/* dodata */
 	NULL,					/* domenu */

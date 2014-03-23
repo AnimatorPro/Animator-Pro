@@ -1,18 +1,19 @@
 /*	a3d.c - This file contains most of the code for the optics section. */
 
 #include <string.h>
-#include "errcodes.h"
-#include "ptrmacro.h"
 #include "jimk.h"
-#include "auto.h"
 #include "a3d.h"
 #include "a3dpul.h"
+#include "auto.h"
 #include "celmenu.h"
 #include "commonst.h"
+#include "errcodes.h"
 #include "flx.h"
 #include "inks.h"
 #include "memory.h"
 #include "poly.h"
+#include "ptrmacro.h"
+#include "rastcurs.h"
 #include "rastrans.h"
 #include "softmenu.h"
 #include "tween.h"
@@ -1483,7 +1484,7 @@ static Pentool ado_mouse_ptool = PTOOLINIT1(
 	NO_SUBOPTS,
 	NULL,
 	ado_mouse_ptfunc,
-	&plain_ptool_cursor,
+	&plain_ptool_cursor.hdr,
 	NULL, /* on install */
 	NULL /* on remove */
 );

@@ -6,6 +6,7 @@
 #include "flicel.h"
 #include "menus.h"
 #include "palmenu.h"
+#include "rastcurs.h"
 #include "softmenu.h"
 
 extern void ppalette();
@@ -281,7 +282,7 @@ int c;
 Cursorhdr *ocurs;
 USHORT changes = 0;
 
-	ocurs = set_pen_cursor(&pick_cursor);
+	ocurs = set_pen_cursor(&pick_cursor.hdr);
 	mb_dcorner(b,mc_red(b));
 	show_ink(-1);
 	if((c = get_a_end(show_ink))>=0)
