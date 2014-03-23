@@ -12,6 +12,7 @@
 #include "flipath.h"
 #include "floatgfx.h"
 #include "flx.h"
+#include "marqi.h"
 #include "memory.h"
 #include "rastlib.h"
 #include "rastrans.h"

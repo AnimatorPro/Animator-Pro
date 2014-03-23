@@ -6,6 +6,7 @@
 
 #include "jimk.h"
 #include "errcodes.h"
+#include "marqi.h"
 #include "poly.h"
 #include "tweenmag.h"
 

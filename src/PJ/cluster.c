@@ -5,6 +5,7 @@
 #include "auto.h"
 #include "errcodes.h"
 #include "flx.h"
+#include "marqi.h"
 #include "memory.h"
 #include "menus.h"
 #include "palmenu.h"

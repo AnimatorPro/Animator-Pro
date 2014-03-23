@@ -7,6 +7,7 @@
 #include "jimk.h"
 #include "commonst.h"
 #include "errcodes.h"
+#include "marqi.h"
 #include "memory.h"
 #include "softmenu.h"
 #include "textedit.h"
@@ -193,7 +194,7 @@ Marqihdr mh;
 	if(gf->raster == (Raster *)(vb.pencel))
 		vinit_marqihdr(&mh,0,1);
 	else
-		init_marqihdr(&mh,gf->raster,NULL,gf->ccolor,gf->ccolor);
+		init_marqihdr(&mh, (Wndo *)gf->raster, NULL, gf->ccolor, gf->ccolor);
 
 	marqtwin(gf,&mh,mh.pdot);
 }
@@ -1380,7 +1381,8 @@ Marqihdr mh;
 		}
 		else
 		{
-			init_marqihdr(&mh,gf->raster,NULL,gf->ccolor,gf->ccolor);
+			init_marqihdr(&mh, (Wndo *)gf->raster, NULL,
+					gf->ccolor, gf->ccolor);
 			if((err = mh_cut_rect(&mh,&gf->twin,NULL)) < 0)
 				return(err);
 		}

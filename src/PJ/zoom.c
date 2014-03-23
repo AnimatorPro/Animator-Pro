@@ -4,6 +4,7 @@
 #include "errcodes.h"
 #include "ftextf.h"
 #include "grid.h"
+#include "marqi.h"
 #include "memory.h"
 #include "menus.h"
 #include "ptrmacro.h"

@@ -6,6 +6,7 @@
 #include "flx.h"
 #include "grid.h"
 #include "inks.h"
+#include "marqi.h"
 #include "rastcurs.h"
 #include "rastrans.h"
 #include "render.h"

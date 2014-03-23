@@ -7,6 +7,7 @@
 #include "errcodes.h"
 #include "flicel.h"
 #include "grid.h"
+#include "marqi.h"
 #include "menus.h"
 #include "render.h"
 #include "softmenu.h"

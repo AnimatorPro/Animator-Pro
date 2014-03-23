@@ -5,6 +5,7 @@
 #include "auto.h"
 #include "errcodes.h"
 #include "inks.h"
+#include "marqi.h"
 #include "memory.h"
 #include "palmenu.h"
 #include "redo.h"

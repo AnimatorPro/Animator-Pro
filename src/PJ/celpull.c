@@ -8,6 +8,7 @@
 #include "flicel.h"
 #include "flx.h"
 #include "floatgfx.h"
+#include "marqi.h"
 #include "menus.h"
 #include "rastcurs.h"
 #include "softmenu.h"

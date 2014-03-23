@@ -13,10 +13,6 @@
 	#include "asm.h"
 #endif
 
-#ifndef MARQI_H
-	#include "marqi.h"
-#endif
-
 #ifndef OPTIONS_H
 	#include "options.h"
 #endif
@@ -136,39 +132,6 @@ void save_undo_rect(Coor x,Coor y,Coor w,Coor h);
 
 void menu_doundo();
 void menu_doredo();
-
-/***** marqi functions ******/
-
-void vinit_marqihdr(Marqihdr *mh,int marqi_it,Boolean bothwins);
-
-/* dotouts */
-
-void undo_marqidot(SHORT x,SHORT y, Marqihdr *mh);
-void savedraw_marqidot(SHORT x, SHORT y, Marqihdr *mh);
-void restore_marqidot(SHORT x, SHORT y, Marqihdr *mh);
-
-/* rectangles */
-void marqi_frame(Marqihdr *mh,SHORT x0,SHORT y0,SHORT x1,SHORT y1);
-void marqi_crect(Marqihdr *mh, Cliprect *cr);
-void marqi_rect(Marqihdr *mh, Rectangle *r);
-
-Errcode rect_in_place(Rectangle *rect);
-Errcode quadpoly_in_place(Short_xy *qpoly);
-Errcode rub_rect_in_place(Rectangle *rect);
-Errcode r_in_place(SHORT x0,SHORT y0,SHORT x1,SHORT y1);
-Errcode clip_move_rect(Rectangle *rect);
-Errcode get_rub_clip(Cliprect *clip);
-Errcode cut_out_clip(Cliprect *clip);
-Errcode get_rub_rect(Rectangle *rect);
-Errcode get_srub_rect(Rectangle *rect);
-Errcode cut_out_rect(Rectangle *rect);
-Errcode gcut_out_rect(Rectangle *rect);
-
-Errcode get_rub_vertex(Short_xy *p0, Short_xy *p1, Short_xy *p2, Pixel color);
-Errcode get_rub_line(Short_xy *xys);
-
-void marqi_vector(Marqihdr *mh, Short_xy *pts, int count, int pt_size);
-void undo_vector(Marqihdr *mh, Short_xy *pts, int count, int pt_size);
 
 /* standard menu header parts structures and funcs */
 

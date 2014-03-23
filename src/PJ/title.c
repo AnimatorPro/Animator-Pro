@@ -5,6 +5,7 @@
 #include "auto.h"
 #include "errcodes.h"
 #include "filemenu.h"
+#include "marqi.h"
 #include "rastcurs.h"
 #include "render.h"
 #include "softmenu.h"

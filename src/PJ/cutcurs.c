@@ -1,4 +1,5 @@
 #define CUTCURS_C
+#define RASTCALL_INTERNALS
 #include "errcodes.h"
 #include "jimk.h"
 #include "marqi.h"
@@ -10,8 +11,8 @@ typedef struct cutdata {
 	SHORT doneonce;
 	UBYTE *hline;
 	UBYTE *vline;
-	void (*puthseg)(void *r,void *buf,Coor x,Coor y,Ucoor width);
-	void (*putvseg)(void *r,void *buf,Coor x,Coor y,Ucoor height);
+	void (*puthseg)(Raster *r, Pixel *buf, Coor x, Coor y, Ucoor width);
+	void (*putvseg)(Raster *r, Pixel *buf, Coor x, Coor y, Ucoor height);
 	Pixel oncol, offcol, zon;
 } Cutdata;
 
@@ -20,8 +21,10 @@ extern void zoom_put_vseg();
 
 static void save_cut(Cutdata *cd)
 {
-	pj_get_hseg(cd->mh.w,cd->hline,0,cd->lasty,cd->mh.port.width);
-	pj_get_vseg(cd->mh.w,cd->vline,cd->lastx,0,cd->mh.port.height);
+	pj_get_hseg((Raster *)cd->mh.w, cd->hline,
+			0, cd->lasty, cd->mh.port.width);
+	pj_get_vseg((Raster *)cd->mh.w, cd->vline,
+			cd->lastx, 0, cd->mh.port.height);
 	cd->doneonce = 1;
 }
 static void rest_cut(Cutdata *cd,Boolean zoomed)
@@ -40,9 +43,10 @@ static void rest_cut(Cutdata *cd,Boolean zoomed)
 		cd->putvseg = pj_put_vseg;
 	}
 
-	(*(cd->puthseg))(cd->mh.w,cd->hline,0,cd->lasty,cd->mh.port.width);
-	(*(cd->putvseg))(cd->mh.w,cd->vline,cd->lastx,0,cd->mh.port.height);
-
+	(*(cd->puthseg))((Raster *)cd->mh.w, cd->hline,
+			0, cd->lasty, cd->mh.port.width);
+	(*(cd->putvseg))((Raster *)cd->mh.w, cd->vline,
+			cd->lastx, 0, cd->mh.port.height);
 }
 static void restore_cut(Cutdata *cd)
 {
@@ -86,7 +90,7 @@ static int anim_cut(Cutdata *cd)
 		if(cd->wndoid != FLI_WNDOID)
 		{
 			cd->wndoid = FLI_WNDOID;
-			load_wndo_iostate(vb.pencel);
+			load_wndo_iostate((Wndo *)vb.pencel);
 			cd->zon = vb.screen->SGREY;
 			cd->oncol = vb.screen->SWHITE;
 		}
@@ -128,8 +132,7 @@ static int anim_cut(Cutdata *cd)
 	restore_cut(cd);
 	cd->doneonce = 0;
 	hide_mouse();
-	init_marqihdr(&(cd->mh),vb.pencel,
-				  NULL,cd->oncol,cd->offcol);
+	init_marqihdr(&(cd->mh), (Wndo *)vb.pencel, NULL, cd->oncol, cd->offcol);
 redraw:
 
 	redraw_cut(cd);

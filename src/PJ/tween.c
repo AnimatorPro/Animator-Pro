@@ -7,6 +7,7 @@
 #include "filemenu.h"
 #include "flx.h"
 #include "linklist.h"
+#include "marqi.h"
 #include "menus.h"
 #include "polyrub.h"
 #include "rastcurs.h"

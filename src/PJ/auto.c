@@ -34,6 +34,7 @@
 #include "flicel.h"
 #include "flx.h"
 #include "inks.h"
+#include "marqi.h"
 
 static Errcode dall(Autoarg *aa);
 

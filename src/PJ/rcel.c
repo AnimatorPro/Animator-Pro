@@ -1,11 +1,10 @@
-
+#include "jimk.h"
+#include "errcodes.h"
+#include "inks.h"
+#include "marqi.h"
 #include "memory.h"
 #include "rastcall.h"
 #include "rcel.h"
-#include "errcodes.h"
-#include "jimk.h"
-#include "inks.h"
-
 
 void cfit_rcel(Rcel *c, Cmap *dcmap)
 /* Find closest colors in this color map to cel's color map, and then

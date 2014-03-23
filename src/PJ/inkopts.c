@@ -11,6 +11,7 @@
 #include "inks.h"
 #include "jfile.h"
 #include "linklist.h"
+#include "marqi.h"
 #include "menus.h"
 #include "options.h"
 #include "rastext.h"

@@ -2,12 +2,12 @@
 /* Also some "Dotout" family functions that take x/y parameters and act
    on vb.pencel.  Dotout's are used by line drawers, circle drawers etc. */
 
-#include "errcodes.h"
+#define RASTCALL_INTERNALS
 #include "jimk.h"
+#include "errcodes.h"
 #include "gfx.h"
 #include "marqi.h"
 #include "menus.h"
-
 
 /* strings from muparts.c */
 
@@ -51,7 +51,7 @@ static int get_dowins(int bothwins)
 
 void cinit_marqihdr(Marqihdr *mh,Pixel oncolor,Pixel offcolor,Boolean bothwins)
 {
-	init_marqihdr(mh,vb.pencel,NULL,oncolor,offcolor);
+	init_marqihdr(mh, (Wndo *)vb.pencel, NULL, oncolor, offcolor);
 	switch(get_dowins(bothwins))
 	{
 		case DOZOOM:
@@ -83,30 +83,37 @@ Pixel oncolor,offcolor;
 /*************************************************************/
 /* additional dot routines for marqis */
 
-void undo_marqidot(SHORT x,SHORT y, Marqihdr *mh)
+void undo_marqidot(SHORT x, SHORT y, void *marqihdr)
 /* "dotout" routine to erase from undo screen */
 {
+	Marqihdr *mh = marqihdr;
+
 	if( ((USHORT)x) < vb.pencel->width
 		&& ((USHORT)y) < vb.pencel->height)
 	{
-		(*(mh->putdot))(vb.pencel,pj_get_dot(undof,x,y),x,y);
+		(*(mh->putdot))((Raster *)vb.pencel,
+				pj_get_dot((Raster *)undof, x, y), x, y);
 	}
 }
-void savedraw_marqidot(SHORT x,SHORT y, Marqihdr *mh)
+void savedraw_marqidot(SHORT x, SHORT y, void *marqihdr)
 {
+	Marqihdr *mh = marqihdr;
+
 	if( ((USHORT)x) < vb.pencel->width
 		&& ((USHORT)y) < vb.pencel->height)
 	{
-		*mh->dotbuf++ = pj__get_dot(vb.pencel,x,y);
+		*mh->dotbuf++ = pj__get_dot((Raster *)vb.pencel, x, y);
 	}
 	(*mh->pdot)(x,y,mh); /* marqi or solid */
 }
-void restore_marqidot(SHORT x, SHORT y, Marqihdr *mh)
+void restore_marqidot(SHORT x, SHORT y, void *marqihdr)
 {
+	Marqihdr *mh = marqihdr;
+
 	if( ((USHORT)x) < vb.pencel->width
 		&& ((USHORT)y) < vb.pencel->height)
 	{
-		(*mh->putdot)(vb.pencel,*mh->dotbuf++,x,y);
+		(*mh->putdot)((Raster *)vb.pencel, *mh->dotbuf++, x, y);
 	}
 }
 
@@ -118,7 +125,7 @@ typedef struct vectordat {
 	Short_xy *v;
 	SHORT count;
 	SHORT saved;
-	VFUNC dispit;
+	void (*dispit)(Short_xy *v);
 } Vecdat;
 
 static void marqi_polyvect(Marqihdr *mh, Short_xy *ends,int count)
@@ -179,16 +186,17 @@ Vecdat *vd = mh->adata;
 	return(0);
 }
 
-
-Errcode rubba_vertex(Short_xy *p0, 
-					    	Short_xy *p1,  /* the moved vertex */
-					    	Short_xy *p2,
-							VFUNC dispfunc, /* function to display info */
-							Pixel color)
-
-/* display a marqi line until next click.  Display many
- * meaningful number on top lines. load result p1
- * does not alter p1 if aborted */
+/* Function: rubba_vertex
+ *
+ *  Display a marqi line until next click.  Display many meaningful
+ *  number on top lines.  Load result p1 does not alter p1 if aborted.
+ *
+ *  p1 - the moved vertex.
+ *  dispfunc - function to display info.
+ */
+Errcode
+rubba_vertex(Short_xy *p0, Short_xy *p1, Short_xy *p2,
+		void (*dispfunc)(Short_xy *v), Pixel color)
 {
 Marqihdr mh;
 Vecdat vd;
@@ -235,7 +243,7 @@ Errcode get_rub_vertex(Short_xy *p0,
 	return(rubba_vertex(p0,p1,p2,NULL,color));
 }
 
-void disp_line_alot(Short_xy *v)
+static void disp_line_alot(Short_xy *v)
 {
 	top_textf("!%3d%3d%3d%3d%3d%3d%3ld%3d", rub_line_str,
 			v[0].x, v[0].y, 
@@ -267,13 +275,13 @@ typedef struct rlinedat {
 
 static void marqi_maxline(Marqihdr *mh, Short_xy *ends)
 {
-	max_line(mh->w, ends, mh->pdot, mh); 
+	max_line((Raster *)mh->w, ends, mh->pdot, mh);
 }
 static void savedraw_maxline(Rlinedat *rd)
 {
 	rd->saved = 1;
 	rd->mh.dotbuf = rd->save;
-	max_line(rd->mh.w, rd->v, savedraw_marqidot, &rd->mh); 
+	max_line((Raster *)rd->mh.w, rd->v, savedraw_marqidot, &rd->mh);
 }
 static void restore_maxline(Rlinedat *rd)
 /* undraws in reverse order for proper restore */
@@ -282,7 +290,7 @@ static void restore_maxline(Rlinedat *rd)
 		return;
 
 	rd->mh.dotbuf = rd->save;
-	max_line(rd->mh.w, rd->v, restore_marqidot, &rd->mh); 
+	max_line((Raster *)rd->mh.w, rd->v, restore_marqidot, &rd->mh);
 }
 
 static int anim_axis(Rlinedat *rd)
@@ -352,8 +360,8 @@ typedef struct rectdata {
 
 
 static void mhmove_frect(Marqihdr *mh, Fullrect *fr, 
-				    void (*hmove)(void *r,void *pb,Coor x,Coor y, Ucoor len),
-				    void (*vmove)(void *r,void *pb,Coor x,Coor y, Ucoor len))
+		void (*hmove)(Raster *r, Pixel *pb, Coor x, Coor y, Ucoor len),
+		void (*vmove)(Raster *r, Pixel *pb, Coor x, Coor y, Ucoor len))
 
 /* moves a frame defined by fr into or out of save buffer */
 {
@@ -361,13 +369,13 @@ UBYTE *sbuf;
 Rectdata *rd = mh->adata;
 
 	sbuf = rd->save;
-	(*hmove)(mh->w,sbuf,fr->x,fr->y,fr->width);
+	(*hmove)((Raster *)mh->w, sbuf, fr->x, fr->y, fr->width);
 	sbuf += fr->width;
-	(*hmove)(mh->w,sbuf,fr->x,fr->MaxY-1,fr->width);
+	(*hmove)((Raster *)mh->w, sbuf, fr->x, fr->MaxY-1, fr->width);
 	sbuf += fr->width;
-	(*vmove)(mh->w,sbuf,fr->x,fr->y,fr->height);
+	(*vmove)((Raster *)mh->w, sbuf, fr->x, fr->y, fr->height);
 	sbuf += fr->height;
-	(*vmove)(mh->w,sbuf,fr->MaxX-1,fr->y,fr->height);
+	(*vmove)((Raster *)mh->w, sbuf, fr->MaxX-1, fr->y, fr->height);
 }
 static void save_frect(Marqihdr *mh, Fullrect *fr)
 {
@@ -403,7 +411,7 @@ void marqi_frame(Marqihdr *mh,SHORT x0,SHORT y0,SHORT x1,SHORT y1)
 #endif /* SLUFFED */
 
 #define mhdraw_frect(mh,fr) (marqi_crect(mh,(Cliprect *)&(fr->CRECTSTART)))
-void marqi_crect(Marqihdr *mh, Cliprect *cr)
+static void marqi_crect(Marqihdr *mh, Cliprect *cr)
 {
 	cline_frame(cr->x,cr->y,cr->MaxX-1,cr->MaxY-1,mh->pdot,mh);
 }
@@ -414,12 +422,12 @@ Cliprect cr;
 	marqi_crect(mh,&cr);
 }
 
-static draw_zoom_frect(Marqihdr *mh, Fullrect *fr)
+static void draw_zoom_frect(Marqihdr *mh, Fullrect *fr)
 {
 	mh->putdot = zoom_put_dot;
 	mhdraw_frect(mh,fr);
 }
-static draw_fli_frect(Marqihdr *mh, Fullrect *fr)
+static void draw_fli_frect(Marqihdr *mh, Fullrect *fr)
 {
 	mh->putdot = pj_put_dot;
 	mhdraw_frect(mh,fr);
@@ -743,7 +751,7 @@ Rectdata rd;
 		return(Err_abort);
 }
 
-Errcode get_rub_clip(Cliprect *clip)
+static Errcode get_rub_clip(Cliprect *clip)
 {
 Fullrect fr;
 Errcode err;
@@ -900,11 +908,11 @@ Errcode err;
 	}
 	return(Err_abort);
 }
-int get_rub_circle(Short_xy *cent,SHORT *diam, Pixel color)
+Errcode get_rub_circle(Short_xy *cent, SHORT *diam, Pixel color)
 {
 	return(rubcirc(color,cent,diam,0));
 }
-int rub_circle_diagonal(Short_xy *cent,SHORT *diam, Pixel color)
+Errcode rub_circle_diagonal(Short_xy *cent, SHORT *diam, Pixel color)
 {
 	return(rubcirc(color,cent,diam,1));
 }
@@ -913,7 +921,7 @@ int rub_circle_diagonal(Short_xy *cent,SHORT *diam, Pixel color)
 
 void msome_vector(Short_xy *pts,
 				  int count, 
-				  VFUNC dotout, void *dotdat, 
+				  dotout_func dotout, void *dotdat,
 				  int open, int pt_size)
 /* display a point-list through dotout note this increments the start mod */
 {

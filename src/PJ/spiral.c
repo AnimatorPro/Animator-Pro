@@ -1,11 +1,10 @@
-
 /* spiral.c - help draw a spiral */
 
-#include "errcodes.h"
 #include "jimk.h"
-#include "poly.h"
+#include "errcodes.h"
 #include "fli.h"
-
+#include "marqi.h"
+#include "poly.h"
 
 extern Poly working_poly;
 extern LLpoint *poly_last_point();

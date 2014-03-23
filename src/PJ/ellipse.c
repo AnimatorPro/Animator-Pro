@@ -1,11 +1,11 @@
-
 /* Ellipse.c - draw an ellipse possibly with tilted axis's.  The jaggies
    on this one are still kind of ugly.  Keep promising myself to improve
    it someday. */
 
 #include "jimk.h"
-#include "poly.h"
 #include "errcodes.h"
+#include "marqi.h"
+#include "poly.h"
 
 extern Poly working_poly;
 /* extern int cenx, ceny, rad; */

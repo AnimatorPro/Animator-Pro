@@ -11,6 +11,7 @@
 #include "filemenu.h"
 #include "flx.h"
 #include "inks.h"
+#include "marqi.h"
 #include "memory.h"
 #include "poly.h"
 #include "ptrmacro.h"
