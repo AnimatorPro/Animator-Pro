@@ -86,7 +86,7 @@ static void push_close_toscreen()
 	pj_clear_rast(vb.screen->viscel);  /* clear anything left in there */
 	close_downto_screen();	/* close all but screen */
 }
-Errcode empty_newflx()
+Errcode empty_newflx(void)
 /* Open a new empty flx, but with old settings */
 {
 Vset_flidef fdef;

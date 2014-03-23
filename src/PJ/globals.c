@@ -9,6 +9,7 @@
 #include "composit.h"
 #include "errcodes.h"
 #include "filemenu.h"
+#include "flx.h"
 #include "inks.h"
 #include "options.h"
 
@@ -217,8 +218,6 @@ Bitmap *mask_rast;    /* the new one !! both are set by alloc mask */
    back to 0 again when you're through. */
 char under_flag;
 
-extern void qset_first_frame(void *dat);
-
 /* control block for time oriented menus */ 
 
 Minitime_data flxtime_data = {
@@ -250,7 +249,7 @@ void flx_draw_olays(void)
 {
 	mini_draw_overlays(&flxtime_data);
 }
-Boolean flx_olays_hidden()
+Boolean flx_olays_hidden(void)
 {
 	return(flxtime_data.olay_stack != 0);
 }

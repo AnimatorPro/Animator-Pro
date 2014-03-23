@@ -15,6 +15,7 @@
 #include "errcodes.h"
 #include "filemenu.h"
 #include "flicel.h"
+#include "flx.h"
 #include "ftextf.h"
 #include "homepul.h"
 #include "input.h"

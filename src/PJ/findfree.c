@@ -6,8 +6,6 @@
 #include "flx.h"
 #include "linklist.h"
 
-extern LONG flx_data_offset(Flxfile *flx);
-
 static int cmp_flx(Flx *f1, Flx *f2)
 /* int value returned for sort_indarray() to compare two Flx */
 {
@@ -32,7 +30,7 @@ return(acc);
 }
 #endif /* SLUFFED */
 
-LONG flx_file_hi()	/* return last byte of flx file actually used... */
+LONG flx_file_hi(void) /* return last byte of flx file actually used... */
 {
 int i;
 register Flx *cf;

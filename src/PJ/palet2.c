@@ -11,6 +11,7 @@
 #include "errcodes.h"
 #include "filemenu.h"
 #include "flicel.h"
+#include "flx.h"
 #include "inks.h"
 #include "memory.h"
 #include "menus.h"

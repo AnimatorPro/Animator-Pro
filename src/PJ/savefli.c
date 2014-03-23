@@ -309,7 +309,7 @@ Errcode err;
 
 	/* copy common fields from Flx_head of tflx */
 
-	copy_fhead_common(&flix.hdr,&flif->hdr);
+	copy_fhead_common((Fli_head *)&flix.hdr, &flif->hdr);
 
 	/* copy in aspect ratio from screen */
 	flif->hdr.aspect_dx = vb.pencel->aspect_dx;

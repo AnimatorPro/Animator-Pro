@@ -1,3 +1,4 @@
+#include <string.h>
 #include "jimk.h"
 #include "errcodes.h"
 #include "flx.h"
@@ -62,8 +63,8 @@ Flx_overlay *olay;
 	copy_mem(rec,&olay->overlay,rec->size);
 	return(Success);
 }
-void free_flx_overlay(Flx_overlay **polay)
 
+static void free_flx_overlay(Flx_overlay **polay)
 /* frees a list of overlay records */
 {
 Flx_overlay *olay = *polay;
@@ -269,8 +270,8 @@ Flx_overlay *olay;
 	}
 	return;
 }
-void restore_with_overlays()
 
+void restore_with_overlays(void)
 /* like restore but does so with overlays present a bit slow but works */
 {
 	soft_put_wait_box("olay_cleanup");

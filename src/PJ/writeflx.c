@@ -1,6 +1,8 @@
 /* writeflx.c - stuff to serially create a tempflx file from uncompressed 
  * or compressed frames similar to writefli.c but for the tempflx */
 
+#include <string.h>
+#include "jimk.h"
 #include "cmap.h"
 #include "errcodes.h"
 #include "flipath.h"
@@ -148,7 +150,7 @@ Errcode write_next_flxchunk(char *name, /* name for error reporting
 }
 static Errcode write_flx_finish(Flxfile *flxf)
 {
-	return(flush_flx_hidx(flxf,NULL));
+	return flush_flx_hidx(flxf);
 }
 Errcode write_ring_flxframe(char *name, /* name for error reporting 
 								     * if NULL no reports */

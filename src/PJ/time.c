@@ -7,8 +7,6 @@
 #include "flx.h"
 #include "memory.h"
 
-extern long flx_file_hi();
-
 static void delete_first_frames(int frames);
 static Errcode delete_middle_frames(int start, int frames);
 static Errcode make_frames(int frames);

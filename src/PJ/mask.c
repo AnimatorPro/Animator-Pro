@@ -6,6 +6,7 @@
 #include "broadcas.h"
 #include "errcodes.h"
 #include "filemenu.h"
+#include "flx.h"
 #include "menus.h"
 #include "softmenu.h"
 

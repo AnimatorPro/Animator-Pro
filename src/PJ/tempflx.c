@@ -1,5 +1,6 @@
 /* tempflx.c - stuff that helps manage our main scratch file. */
 
+#include <string.h>
 #include <time.h>
 #include "jimk.h"
 #include "animinfo.h"
@@ -21,7 +22,7 @@
 
 Flxfile flix; /* THE temp flx file */
 
-void close_flx(Flxfile *flx)
+static void close_flx(Flxfile *flx)
 {
 	pj_gentle_free(flx->idx);
 	free_flx_overlays(flx);
@@ -211,7 +212,7 @@ error:
 	return(softerr(err,"!%s", "tflx_empty", tflxname));
 }
 
-Errcode otempflx()
+Errcode otempflx(void)
 {
 Errcode err;
 
@@ -250,7 +251,7 @@ Chunkparse_data pd;
 
 	/* move in common fields defining fli and it's creator id */
 
-	copy_fhead_common(&flif->hdr,&flix.hdr);
+	copy_fhead_common(&flif->hdr, (Fli_head *)&flix.hdr);
 
 	/* allocate new cleared index of size requested */
 
@@ -391,8 +392,8 @@ Fli_frame *frame;
 	pj_freez(&frame);
 	return(err);
 }
-Errcode fli_to_tempflx(char *name, int extra_frames, Boolean allow_abort)
 
+static Errcode fli_to_tempflx(char *name, int extra_frames, Boolean allow_abort)
 /* closes old tflx and creates a new tempflx from a fli (file name) 
  * this reports errors will attempt to allow a partial tempflx if 
  * only part is read in */

@@ -17,6 +17,7 @@
 	#include "vertices.h"
 #endif
 
+struct anim_info;
 struct flipath;
 
 typedef struct GCC_PACKED flx_head {
@@ -75,13 +76,11 @@ typedef struct flxfile {
 	struct flipath *path; /* path of file loaded into tempflx */
 } Flxfile;
 
-extern Flxfile flix;
-LONG write_tflx();
-
 /* make sure fd and comp_type fields are in the same position as in a flifile */
 STATIC_ASSERT(flx, OFFSET(Flifile, fd) == OFFSET(Flxfile, fd));
 STATIC_ASSERT(flx, OFFSET(Flifile, comp_type) == OFFSET(Flxfile, comp_type));
 
+extern Flxfile flix;
 
 /***** Flxfile functions ****/
 
@@ -121,17 +120,53 @@ Errcode write_flx_frame(Flxfile *flx, int ix, Fli_frame *frame);
 
 void free_flx_overlays(Flxfile *flx);
 Errcode alloc_flx_olaytab(Flxfile *flx, int tablesize);
+Errcode push_flx_overlays(void);
+Errcode pop_flx_overlays(void);
 void unfli_flx_overlay(Flxfile *flx, struct rcel *screen, int frame_ix);
-Errcode push_flx_overlays();
-Errcode pop_flx_overlays();
+void restore_with_overlays(void);
 
 Errcode add_flx_olayrec(Short_xy *cpos, SHORT cframe,
 				  	    Rectangle *fpos, Fli_frame *rec, int frame_ix);
 
-/* path maintenance */
+extern void flx_clear_olays(void);
+extern void flx_draw_olays(void);
+extern Boolean flx_olays_hidden(void);
+extern void qload_overlay(void);
 
-Errcode update_flx_path(Flxfile *flx, Fli_id *flid, char *fliname);
-Errcode read_flx_path(Flxfile *flx, struct flipath *fp);
+/* findfree.c */
+extern LONG flx_file_hi(void);
+extern LONG ff_tflx(LONG size, int xcount, Flx *xpt);
+
+extern Errcode
+make_flx_record(Flxfile *flx, ULONG recnum, void *newdata, LONG size,
+		Boolean overwrite);
+
+/* main.c */
+extern Errcode empty_newflx(void);
+
+/* tempflx.c */
+extern Errcode flush_flx_hidx(Flxfile *flx);
+extern void flush_tflx(void);
+extern void close_tflx(void);
+extern Errcode ring_tflx(Fli_frame *cbuf);
+extern Errcode empty_tempflx(int iframes);
+extern Errcode otempflx(void);
+extern Errcode open_tempflx(Boolean reload_settings);
+
+extern Errcode
+make_pdr_tempflx(char *pdr_name, char *flicname, struct anim_info *ainfo);
+
+extern Errcode make_tempflx(char *name, Boolean allow_abort);
+extern void qset_first_frame(void *data);
+extern void empty_cleared_flx(Pixel color);
+
+/* writeflx.c */
+extern void copy_fhead_common(Fli_head *sh, Fli_head *dh);
+extern Errcode update_flx_path(Flxfile *flx, Fli_id *flid, char *fliname);
+extern Errcode read_flx_path(Flxfile *flx, struct flipath *fp);
+
+/* vpsubs.c */
+extern void flush_tempflx(void);
 
 #define FLX_DEFAULT_SPEED 71
 

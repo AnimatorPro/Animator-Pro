@@ -6,6 +6,7 @@
 #include "commonst.h"
 #include "errcodes.h"
 #include "flicel.h"
+#include "flx.h"
 #include "floatgfx.h"
 #include "menus.h"
 #include "rastcurs.h"

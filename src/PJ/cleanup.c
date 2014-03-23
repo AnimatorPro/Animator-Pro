@@ -3,6 +3,7 @@
 
 #include "jimk.h"
 #include "brush.h"
+#include "flx.h"
 #include "rastcurs.h"
 #include "softmenu.h"
 #include "wndo.h"

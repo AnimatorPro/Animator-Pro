@@ -8,8 +8,6 @@
 #include "flx.h"
 #include "memory.h"
 
-extern long ff_tflx();
-
 Errcode dseg(Autoarg *aa)
 
 /* Basically repeat rvec to each frame

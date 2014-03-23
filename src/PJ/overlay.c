@@ -4,7 +4,7 @@
 
 #include "jimk.h"
 #include "errcodes.h"
-#include "fli.h"
+#include "flx.h"
 #include "menus.h"
 #include "inks.h"
 #include "options.h"		/* for Ink def to use glass... */
