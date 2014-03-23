@@ -3,6 +3,7 @@
 #include "jimk.h"
 #include "alt.h"
 #include "errcodes.h"
+#include "fli.h"
 
 static void free_alt(void)
 {

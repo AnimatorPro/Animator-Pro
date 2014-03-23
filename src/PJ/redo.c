@@ -2,6 +2,7 @@
 #include "auto.h"
 #include "commonst.h"
 #include "errcodes.h"
+#include "fli.h"
 #include "memory.h"
 #include "rastcall.h"
 #include "redo.h"

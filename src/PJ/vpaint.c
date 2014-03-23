@@ -14,7 +14,7 @@
 #include "composit.h"
 #include "errcodes.h"
 #include "filemenu.h"
-#include "fli.h"
+#include "flicel.h"
 #include "ftextf.h"
 #include "homepul.h"
 #include "input.h"
@@ -247,9 +247,9 @@ rfree_dir(&nl);
 }
 #endif /* TESTING */
 
-extern void flip_range(), flip5(), get_color(), first_frame(),
-	next_frame(), prev_frame(), menu_doredo(), cut_out_cel(), clip_cel(),
-	qsave(), qload(), qnew_flx(), qquit(),
+extern void get_color(),
+	menu_doredo(),
+	qnew_flx(), qquit(),
 	quse_poco(), test(), insert_a_frame(), kill_a_frame(),
 	palette(), ktoggle_zoom();
 

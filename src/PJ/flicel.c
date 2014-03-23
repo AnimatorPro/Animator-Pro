@@ -9,6 +9,7 @@
 #include "jimk.h"
 #include "auto.h"
 #include "errcodes.h"
+#include "flipath.h"
 #include "floatgfx.h"
 #include "flx.h"
 #include "memory.h"
@@ -40,7 +41,7 @@ static void init_celchunk(Celdata *cd)
 	cd->id.type = FP_CELDATA;
 	cd->id.size = sizeof(Celdata);
 }
-void free_fcel_cfit(Flicel *fc)
+static void free_fcel_cfit(Flicel *fc)
 {
 	if(fc->flags & FCEL_OWNS_CFIT)
 	{
@@ -49,7 +50,7 @@ void free_fcel_cfit(Flicel *fc)
 	}
 	fc->cfit = NULL;
 }
-Errcode alloc_fcel_cfit(Flicel *fc)
+static Errcode alloc_fcel_cfit(Flicel *fc)
 {
 	free_fcel_cfit(fc);
 	if(NULL == (fc->cfit = pj_malloc(sizeof(Celcfit))))
@@ -93,18 +94,18 @@ Flicel *fc;
 	pj_freez(&fc->tpath);
 	pj_freez(pfc);
 }
-void free_the_cel()
+void free_the_cel(void)
 {
 	free_fcel(&thecel);
 }
-void noask_delete_the_cel(void)
+static void noask_delete_the_cel(void)
 {
 	free_the_cel();
 	pj_delete(cel_name);
 	pj_delete(cel_fli_name);
 	set_trd_maxmem();
 }
-void delete_the_cel()
+void delete_the_cel(void)
 {
 	if (soft_yes_no_box("cel_del"))
 		noask_delete_the_cel();
@@ -174,7 +175,7 @@ void fcelpos_to_box(Flicel *fc, Fcelpos *pos, Rectangle *box)
 	pos->stretch.x = box->width - fc->flif.hdr.width;
 	pos->stretch.y = box->height - fc->flif.hdr.height;
 }
-void fcel_to_box(Flicel *fc, Rectangle *box)
+static void fcel_to_box(Flicel *fc, Rectangle *box)
 {
 	fcelpos_to_box(fc,((Fcelpos *)&((fc)->cd.CDAT_POS_START)),box);
 }
@@ -257,7 +258,7 @@ Marqihdr mh;
 		}
 	}
 }
-static Errcode draw_thecel_a_sec()
+static Errcode draw_thecel_a_sec(void)
 {
 Errcode err;
 Marqihdr mh;
@@ -277,7 +278,7 @@ Marqihdr mh;
 error:
 	return(err);
 }
-Errcode show_thecel_a_sec()
+Errcode show_thecel_a_sec(void)
 {
 Errcode err;
 
@@ -546,8 +547,12 @@ static void clphseg(Crast *cr,Pixel *pbuf,Coor x,Coor y,Coor width)
 	}
 }
 
-static Pixel nogetd()
+static Pixel nogetd(Raster *r, Coor x, Coor y)
 {
+	(void)r;
+	(void)x;
+	(void)y;
+
 	return(0);
 }
 static Errcode find_segment_clip(int from, int to, Rectangle *bounds)
@@ -572,7 +577,7 @@ struct rastlib *lib;
 	cliprast->rc = *vb.pencel;
 	cliprast->rc.lib = lib = (struct rastlib *)(cliprast+1);
 	lib->put_dot = (rl_type_put_dot)clpdot;
-	lib->get_dot = (rl_type_get_dot)nogetd;
+	lib->get_dot = nogetd;
 	lib->put_hseg =(rl_type_put_hseg) clphseg;
 	lib->set_hline = (rl_type_set_hline)clsethline;
 	pj_set_grc_calls(lib);
@@ -605,7 +610,7 @@ struct rastlib *lib;
 			if(soft_yes_no_box("clip_abort"))
 				break;
 		}
-		if((err = flx_ringseek(cliprast, from, from+1)) < Success)
+		if ((err = flx_ringseek(&cliprast->rc, from, from+1)) < Success)
 			break;
 		++from;
 	}
@@ -691,7 +696,7 @@ error:
 	return(cel_cant_clip(err));
 }
 
-Errcode cel_from_rect(Rectangle *rect, Boolean render_only)
+static Errcode cel_from_rect(Rectangle *rect, Boolean render_only)
 {
 Errcode err;
 
@@ -1022,7 +1027,7 @@ static void zundraw_line(Coor x, Coor y, Ucoor width, Pixel *lbuf)
 	pj_get_hseg(undof,lbuf,x,y,width);
 	pj_put_hseg(vb.pencel,lbuf,x,y,width);
 	if(vs.zoom_open)
-		zoom_put_hseg(vb.pencel,lbuf,x,y,width);
+		zoom_put_hseg((Raster *)vb.pencel, lbuf, x, y, width);
 }
 
 typedef struct plinedat {
@@ -1032,9 +1037,11 @@ typedef struct plinedat {
 	Rcel *blitsrc;
 } Plinedat;
 
-static Errcode fcel_putline(Plinedat *pd, Pixel *line,
+static Errcode fcel_putline(void *plinedat, Pixel *line,
 							Coor x, Coor y, Ucoor width)
 {
+	Plinedat *pd = plinedat;
+
 	if(pd->pline == NULL)
 	{
 		if(pd->tcxl.xlat != NULL)
@@ -1048,7 +1055,7 @@ static Errcode fcel_putline(Plinedat *pd, Pixel *line,
 	}
 	pj_put_hseg(vb.pencel,line,x,y,width);
 	if(vs.zoom_open)
-		zoom_put_hseg(vb.pencel,line,x,y,width);
+		zoom_put_hseg((Raster *)vb.pencel, line, x, y, width);
 	return(0);
 }
 
@@ -1211,8 +1218,8 @@ Rcel *cel;
 }
 #endif /* SLUFFED */
 
-static void changetocel(register UBYTE *oldline,
-						register UBYTE *newline,
+static void changetocel(UBYTE *oldline,
+						UBYTE *newline,
 						Rcel *cel, SHORT y,
 						Pixel tcolor )
 

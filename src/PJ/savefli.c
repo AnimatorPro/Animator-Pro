@@ -2,6 +2,7 @@
    device.  This thing just takes out the indexing.  Doesn't actually
    have to recompress any images.  (That's done in writefli.c). */
 
+#include <string.h>
 #include "jimk.h"
 #include "animinfo.h"
 #include "auto.h"
@@ -34,11 +35,11 @@ void cleans(void)
 	dirty_strokes = 0;
 }
 
-Boolean need_scrub_frame()
+Boolean need_scrub_frame(void)
 {
 	return(dirty_frame);
 }
-Errcode scrub_frame_save_undo()
+Errcode scrub_frame_save_undo(void)
 /* a scrub cur frame that insures undo is current index and saves it if not */
 {
 Errcode ret;
@@ -363,8 +364,8 @@ error:
 	pj_gentle_free(cbuf);
 	return(err);
 }
-Errcode save_fli(char *name)
 
+static Errcode save_fli(char *name)
 /* save whole fli without altering records */
 {
 Errcode err;
@@ -396,14 +397,13 @@ struct pdr_seek_dat {
 	int cur_ix;
 };
 
-static Errcode pdr_seek_seg_frame(int ix,struct pdr_seek_dat *sd)
+static Errcode pdr_seek_seg_frame(int ix, void *data)
 {
+struct pdr_seek_dat *sd = data;
 Errcode err;
 LONG ocksum;
 Rcel *tcel;
 Errcode (*flx_seek)(Rcel *screen, int cur_ix, int ix);
-extern Errcode fli_tseek(Rcel *screen, int cur_ix, int ix);
-extern Errcode flx_ringseek(Rcel *screen, int cur_ix, int ix);
 
 	if(poll_abort() < Success)
 	{
@@ -677,7 +677,7 @@ done:
 	show_mp();
 	return(err);
 }
-static Boolean save_as_fli()
+static Boolean save_as_fli(void)
 {
 char pdr_name[PATH_SIZE];
 	return(is_fli_pdr_name(get_flisave_pdr(pdr_name)));

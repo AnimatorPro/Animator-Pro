@@ -31,6 +31,7 @@
 #include "bhash.h"
 #include "celmenu.h"
 #include "errcodes.h"
+#include "flicel.h"
 #include "flx.h"
 #include "inks.h"
 

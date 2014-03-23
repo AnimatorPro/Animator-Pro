@@ -9,7 +9,7 @@
 #include "brush.h"
 #include "commonst.h"
 #include "errcodes.h"
-#include "inks.h"
+#include "fli.h"
 #include "marqi.h"
 #include "memory.h"
 #include "poly.h"

@@ -1,7 +1,8 @@
 
-#include "errcodes.h"
-#include "textedit.h"
 #include "jimk.h"
+#include "errcodes.h"
+#include "fli.h"
+#include "textedit.h"
 
 /* hi level vpaint specific text routines */
 

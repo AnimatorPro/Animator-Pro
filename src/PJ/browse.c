@@ -9,7 +9,7 @@
 #include "commonst.h"
 #include "errcodes.h"
 #include "filepath.h"
-#include "fli.h"
+#include "flicel.h"
 #include "rastcurs.h"
 #include "scroller.h"
 #include "softmenu.h"

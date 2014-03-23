@@ -14,6 +14,11 @@ typedef struct flipath {
 							 * memory only guaranteed to be to NULL */
 } Flipath;
 
-Boolean flipaths_same(Flipath *pa, Flipath *pb);
+extern Errcode set_flipath(char *fliname, Fli_id *flid, Flipath *fp);
+extern void clear_flipath(Flipath *fp);
+extern void copy_flipath(Flipath *a, Flipath *b);
+extern Errcode alloc_flipath(char *fliname, Flifile *flif, Flipath **pfpath);
+extern void free_flipath(Flipath **fp);
+extern Boolean flipaths_same(Flipath *pa, Flipath *pb);
 
 #endif

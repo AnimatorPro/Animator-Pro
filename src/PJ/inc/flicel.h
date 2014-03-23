@@ -127,27 +127,8 @@ struct celinfo_file {
 
 #define CELDATA_OFFSET (sizeof(Fli_head) + sizeof(Chunk_id))
 
-void noask_delete_the_cel(void);
-
-Errcode alloc_fcel(Flicel **pfc);
-void free_fcel(Flicel **pfc);
-void free_fcel_raster(Flicel *fc);
-Errcode alloc_fcel_raster(Flicel *fc);
-Errcode load_temp_fcel(char *tempname, Flicel **fc);
-Errcode save_fcel_temp(Flicel *fc);
-Errcode load_fli_fcel(char *flipath,char *tempname,char *celfli_name,
-					  Flicel **pfc);
-
-void move_flicel(Flicel *vc);
-
-Boolean make_flicelpoly(Flicel *cel);
-
-Errcode make_cfcel(Flicel *vc);
-void free_cfcel(Flicel *vc);
-Errcode load_cel(char *name);
 Boolean need_render_cfit(Cmap *scmap);
 Boolean make_render_cfit(Cmap *scmap, Celcfit *cfit, SHORT tcolor);
-Errcode draw_flicel(Flicel *fc,int drawmode,int cfitmode);
 
 /* draw flicel options */
 #define DRAW_DELTA	0
@@ -160,17 +141,66 @@ Errcode draw_flicel(Flicel *fc,int drawmode,int cfitmode);
 #define FORCE_CFIT	2
 #define NEW_CFIT	4
 
-void set_flicel_tcolor(Flicel *fc,Pixel tcolor);
-Boolean refresh_flicel_pos(Flicel *cel);
-Boolean maybe_ref_flicel_pos(Flicel *cel);
-void set_flicel_center(Flicel *fc,SHORT x, SHORT y);
-void rotate_flicel(Flicel *fc,Short_xyz *drotate);
-void translate_flicel(Flicel *fc, SHORT dx, SHORT dy);
+/* flicel.c */
+extern void free_fcel_raster(Flicel *fc);
+extern Errcode alloc_fcel_raster(Flicel *fc);
+extern void free_fcel(Flicel **pfc);
+extern void free_the_cel(void);
+extern void delete_the_cel(void);
+extern Errcode alloc_fcel(Flicel **pfc);
+extern void set_flicel_tcolor(Flicel *fc, Pixel tcolor);
+extern void set_fcel_center(Flicel *fc, SHORT x, SHORT y);
+extern void rotate_flicel(Flicel *fc, Short_xyz *drotate);
+extern void translate_flicel(Flicel *fc, SHORT dx, SHORT dy);
+extern void clear_fcel_xform(Flicel *fc);
+extern void fcelpos_to_box(Flicel *fc, Fcelpos *pos, Rectangle *box);
+extern void center_fcel_in_screen(Flicel *fcel, Rcel *screen);
+extern void scale_fcel_to_screen(Flicel *fcel, Rcel *screen);
+extern void save_fcel_undo(Flicel *fc);
+extern void unsee_flicel(Flicel *fc);
+extern void marqi_flicel(Flicel *fc, int dotmod, Pixel *save_buf);
+extern void undo_flicel_marqi(Flicel *fc, Pixel *save_buf);
+extern Errcode show_thecel_a_sec(void);
+extern Errcode clip_cel(void);
+extern Errcode cut_out_cel(void);
+extern void qget_changes(void);
+extern Errcode lasso_cel(void);
+extern Boolean fcel_stretchsize(Flicel *cel, Srect *cr);
+extern Boolean maybe_ref_flicel_pos(Flicel *cel);
+extern Errcode draw_flicel(Flicel *fc, int drawmode, int cfitmode);
+extern Boolean refresh_flicel_pos(Flicel *cel);
 
-Errcode gb_seek_fcel_frame(Flicel *fc, SHORT frame,
-						   Fli_frame *cbuf,Boolean force_read);
-Errcode gb_abseek_fcel_frame(Flicel *fc, SHORT frame,Fli_frame *cbuf);
+/* flicelio.c */
+extern Errcode save_fcel_temp(Flicel *fc);
 
-Errcode seek_fcel_frame(Flicel *fc, SHORT frame);
+extern Errcode
+create_celfli_start(char *tempname, char *fliname, Flicel **pfcel, Rcel *rc);
+
+extern Errcode
+make1_flicel(char *tempname, char *fliname, Flicel **pfcel, Rcel *rc);
+
+extern Errcode
+load_fli_fcel(char *flipath, char *tempname, char *celfli_name, Flicel **pfc);
+
+extern void close_fcelio(Flicel *fc);
+extern Errcode reopen_fcelio(Flicel *fc, int jmode);
+
+extern Errcode
+gb_seek_fcel_frame(Flicel *fc, SHORT frame, Fli_frame *cbuf,
+		Boolean force_read);
+
+extern LONG fcel_cbuf_size(Flicel *fc);
+extern Boolean fcel_needs_seekbuf(Flicel *fc);
+extern Errcode seek_fcel_frame(Flicel *fc, SHORT frame);
+extern Errcode inc_fcel_frame(Flicel *fc);
+extern Errcode load_temp_fcel(char *tempname, Flicel **pfc);
+
+extern Errcode
+pdr_load_any_flicel(char *path, char *tempname, char *fliname, Flicel **pfcel);
+
+extern Errcode load_the_cel(char *path);
+extern Errcode go_load_the_cel(void);
+extern void qload_the_cel(void);
+extern void qsave_the_cel(void);
 
 #endif

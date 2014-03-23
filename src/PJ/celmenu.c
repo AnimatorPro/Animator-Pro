@@ -2,6 +2,7 @@
 #include "broadcas.h"
 #include "celmenu.h"
 #include "errcodes.h"
+#include "flicel.h"
 #include "flx.h"
 #include "inks.h"
 #include "rastcurs.h"
@@ -955,34 +956,27 @@ static void ring_seek_fli_with_data(SHORT ix, void *data)
 
 static void cm_firstfli(void *data)
 {
-	(void)data;
-
 	if(cmcb->num_overlays)
 		ring_seek_fli(0);
 	else
-		first_frame();
+		first_frame(data);
 } 
 static void cm_nextfli(void *data)
 {
-	(void)data;
-
 	if(cmcb->num_overlays)
 		ring_seek_fli(vs.frame_ix + 1);
 	else
-		next_frame();
+		next_frame(data);
 } 
 static void cm_prevfli(void *data)
 {
-	(void)data;
-
 	if(cmcb->num_overlays)
 		ring_seek_fli(vs.frame_ix - 1);
 	else
-		prev_frame();
+		prev_frame(data);
 } 
 
-extern SHORT flx_get_framecount(), flx_get_frameix();
-extern void go_time_menu(), mplayit(), last_frame();
+extern void go_time_menu();
 
 static char cel_off = 0; /* this brackets scrubs and flx seeks */
 static void cm_clear_olays(void *data)

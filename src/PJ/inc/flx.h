@@ -91,8 +91,6 @@ LONG flx_data_offset(Flxfile *flx);
 Errcode read_flx_frame(Flxfile *flx,Fli_frame *frame, int ix);
 Errcode gb_unfli_flx_frame(Flxfile *flx, struct rcel *screen, int ix,
 						   int wait,Fli_frame *frame);
-Errcode gb_flx_ringseek(Flxfile *flx, struct rcel *screen, int curix, int ix,
-						Fli_frame *frame);
 
 /**** functions for serially writing to a new empty flx */
 
@@ -117,6 +115,7 @@ write_first_flxblack(char *name, Flxfile *flxf, struct rcel *screen);
 
 Errcode write_next_flxempty(char *name,Flxfile *flxf,int num_emptys);
 Errcode write_ring_flxempty(char *name,Flxfile *flxf);
+Errcode write_flx_frame(Flxfile *flx, int ix, Fli_frame *frame);
 
 /* flx overlay functions */
 

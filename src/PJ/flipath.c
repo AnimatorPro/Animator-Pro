@@ -1,6 +1,7 @@
+#include <stdio.h>
+#include <string.h>
 #include "commonst.h"
 #include "errcodes.h"
-#include "fli.h"
 #include "flipath.h"
 #include "jfile.h"
 #include "memory.h"

@@ -5,6 +5,7 @@
 #include "celpul.h"
 #include "commonst.h"
 #include "errcodes.h"
+#include "flicel.h"
 #include "floatgfx.h"
 #include "menus.h"
 #include "rastcurs.h"
@@ -241,22 +242,18 @@ Errcode err;
 
 static void cm_clip_cel(void)
 {
-extern Errcode clip_cel();
 	cm_getcel_bracket(clip_cel);
 }
 static void cm_cut_out_cel(void)
 {
-extern Errcode cut_out_cel();
 	cm_getcel_bracket(cut_out_cel);
 }
 static void cm_lasso_cel(void)
 {
-extern Errcode lasso_cel();
 	cm_getcel_bracket(lasso_cel);
 }
 static void cm_load_cel(void)
 {
-extern Errcode go_load_the_cel();
 	cm_getcel_bracket(go_load_the_cel);
 }
 static void cm_browse_cel(void)

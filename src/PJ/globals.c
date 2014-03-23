@@ -13,15 +13,10 @@
 #include "options.h"
 
 extern void go_time_menu();
-extern SHORT flx_get_frameix();
-extern SHORT flx_get_framecount();
-extern void flx_seek_frame(), first_frame(), prev_frame(), 
-	next_frame(), mplayit(), last_frame();
 
 /* The Vsettings structure holds all of Vpaint's state info, all
    that's a fixed size and not too big at least.  The default_vs
    is where we start 1st time program's run.  */
-
 
 Vsettings default_vs =  {
     { sizeof(Vsettings), VSET_VS_ID, VSET_VS_VERS }, /* id for settings */	
@@ -239,7 +234,7 @@ Minitime_data flxtime_data = {
 	flx_get_framecount,	 /* get_frame_count */
 	NULL, /* clear_overlays used to clean up frame before seeking etc */
 	NULL, /* draw_overlays used to restore overlays after seeking etc */
-	flx_seek_frame,
+	flx_seek_frame_with_data,
 	0,	  /* start with a clear stack */
 	NULL, /* data */
 };

@@ -12,6 +12,8 @@
 #include "picdrive.h"
 #include "unchunk.h"
 
+static Errcode load_fli(char *title);
+
 Errcode read_flx_frame(Flxfile *flx, Fli_frame *frame, int ix)
 {
 Errcode err;
@@ -47,9 +49,9 @@ Errcode err;
 	unfli_flx_overlay(flx,screen,ix);
 	return(Success);
 }
-Errcode gb_flx_ringseek(Flxfile *flx, Rcel *screen, int curix, int ix, 
-						Fli_frame *frame)
 
+static Errcode
+gb_flx_ringseek(Flxfile *flx, Rcel *screen, int curix, int ix, Fli_frame *frame)
 /* seeks to frame from current position by going around through ring frame
  * and not re reading frame 0 returns actual index left in screen */
 {
@@ -261,8 +263,7 @@ Errcode err, ret;
 }
 #endif
 
-Errcode load_fli(char *title)
-
+static Errcode load_fli(char *title)
 /* Convert a FLI file into an indexed frame (FLX) file - into our 
    main temp file in fact.  Make first frame visible.  On failure
    generate an empty FLX file */
@@ -304,18 +305,22 @@ void advance_frame_ix(void)
 	check_loop();
 }
 
-SHORT flx_get_frameix()
+SHORT flx_get_frameix(void *data)
 {
+	(void)data;
 	return(vs.frame_ix);
 }
-SHORT flx_get_framecount()
+SHORT flx_get_framecount(void *data)
 {
+	(void)data;
 	return(flix.hdr.frame_count);
 }
 
-void last_frame(void)
+void last_frame(void *data)
 /* Do what it takes to move to last frame of our temp file */
 {
+	(void)data;
+
 	if (!flix.fd)
 		return;
 	flx_clear_olays();
@@ -367,17 +372,25 @@ void flx_seek_frame(SHORT frame)
 	flx_draw_olays();
 }
 
-void prev_frame(void)
+void flx_seek_frame_with_data(SHORT frame, void *data)
+{
+	(void)data;
+	flx_seek_frame(frame);
+}
+
+void prev_frame(void *data)
 /* do what it takes to go to previous frame of our temp file.  If go before
    first frame then wrap back to last frame */
 {
-
+	(void)data;
 	flx_seek_frame(vs.frame_ix-1);
 }
 
-void first_frame(void)
+void first_frame(void *data)
 /* Jump to first frame of temp file */
 {
+	(void)data;
+
 	if (!flix.fd)
 		return;
 	flx_clear_olays();
@@ -388,12 +401,13 @@ void first_frame(void)
 	flx_draw_olays();
 }
 
-void next_frame(void)
+void next_frame(void *data)
 /* Jump to next frame of temp file, wrapping back to 1st frame if go past
    end... */
 {
-int oix;
-int undoix;
+	int oix;
+	int undoix;
+	(void)data;
 
 	if (!flix.fd)
 		return;
@@ -416,7 +430,7 @@ int undoix;
 	flx_draw_olays();
 }
 
-Errcode vp_playit(LONG frames)
+static Errcode vp_playit(LONG frames)
 /* Ya, go play dem frames.  Replay temp file */
 {
 ULONG clock;
@@ -454,9 +468,11 @@ Errcode err;
 return(err);
 }
 
-void mplayit(void)
+void mplayit(void *data)
 /* Play temp file forever */
 {
+	(void)data;
+
 	hide_mp();
 	scrub_cur_frame();
 	vp_playit(-1L);
@@ -672,7 +688,7 @@ Errcode err;
 
 	if (vs.bframe_ix == 0 || vs.bframe_ix > new_ix)
 	{
-		if (err = gb_unfli(screen, 0, 0, fbuf) < 0)
+		if ((err = gb_unfli(screen, 0, 0, fbuf)) < 0)
 			return(err);
 	}
 	return(gb_fli_tseek(screen,0,new_ix,fbuf) );
@@ -688,7 +704,7 @@ Errcode err;
 
 	if (vs.bframe_ix == 0 || vs.bframe_ix > new_ix)
 	{
-		if (err = unfli(screen, 0, 0) < 0)
+		if ((err = unfli(screen, 0, 0)) < 0)
 			return(err);
 	}
 	return(fli_tseek(screen,0,new_ix) );

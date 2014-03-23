@@ -1,3 +1,4 @@
+#include <string.h>
 #include "jimk.h"
 #include "animinfo.h"
 #include "commonst.h"
@@ -718,7 +719,7 @@ void qload_the_cel(void)
 	if(go_load_the_cel() >= 0)
 		show_thecel_a_sec();
 }
-Errcode save_the_cel(char *path)
+static Errcode save_the_cel(char *path)
 {
 Errcode err;
 char *celpath;

@@ -1,5 +1,6 @@
 #include "jimk.h"
 #include "commonst.h"
+#include "fli.h"
 #include "rastcurs.h"
 #include "softmenu.h"
 

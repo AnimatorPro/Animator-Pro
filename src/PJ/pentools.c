@@ -5,6 +5,7 @@
 #include "broadcas.h"
 #include "brush.h"
 #include "errcodes.h"
+#include "fli.h"
 #include "inks.h"
 #include "rastcurs.h"
 #include "redo.h"

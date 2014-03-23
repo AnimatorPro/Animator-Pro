@@ -317,4 +317,53 @@ Errcode pj_fli_error_report(Errcode err, char *msg, char *filename);
 
 extern LONG pj__fii_get_user_id(void);
 
+/* fli.c */
+extern Errcode
+gb_unfli(struct rcel *screen, int ix, int wait, Fli_frame *frame);
+
+extern Errcode flx_ringseek(struct rcel *screen, int curix, int ix);
+extern Errcode unfli(struct rcel *f, int ix, int wait);
+extern Errcode flisize_error(Errcode err, SHORT width, SHORT height);
+extern Errcode resize_load_fli(char *flicname);
+extern Errcode open_default_flx(void);
+extern int wrap_frame(int frame);
+extern void check_loop(void);
+extern void advance_frame_ix(void);
+extern void flip_range(void);
+extern void loop_range(void);
+extern void flip5(void);
+extern Errcode fli_tseek(struct rcel *screen, int cur_ix, int new_ix);
+
+extern Errcode
+gb_fli_tseek(struct rcel *screen, int cur_ix, int new_ix,
+		struct fli_frame *fbuf);
+
+extern Errcode
+gb_fli_abs_tseek(struct rcel *screen, int new_ix, struct fli_frame *fbuf);
+
+extern Errcode fli_abs_tseek(struct rcel *screen, int new_ix);
+
+/* fli.c -- Minitime_data functions */
+extern void first_frame(void *data);
+extern void prev_frame(void *data);
+extern void next_frame(void *data);
+extern void mplayit(void *data);
+extern void last_frame(void *data);
+extern SHORT flx_get_frameix(void *data);
+extern SHORT flx_get_framecount(void *data);
+extern void flx_seek_frame(SHORT frame);
+extern void flx_seek_frame_with_data(SHORT frame, void *data);
+
+/* savefli.c */
+extern void dirties(void);
+extern void cleans(void);
+extern Boolean need_scrub_frame(void);
+extern Errcode scrub_frame_save_undo(void);
+extern Errcode scrub_cur_frame(void);
+extern Errcode sub_cur_frame(void);
+extern Errcode sv_fli(char *name);
+extern void qsave(void);
+extern void qsave_backwards(void);
+extern void qsave_segment(void);
+
 #endif
