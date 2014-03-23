@@ -170,7 +170,7 @@ static UBYTE eoflags[2] = {(MACRO_REC|MR_EOF),(MACRO_REC|MR_EOF)};
 	icb.macro_clocked = 0;
 	icb.macro_mode = 0;
 }
-static create_macro(char *path, Boolean realtime)
+static Errcode create_macro(char *path, Boolean realtime)
 {
 Errcode err;
 
@@ -336,7 +336,7 @@ error:
 	close_macro();
 	return(err);
 }
-static Errcode poll_macro_abort()
+static Errcode poll_macro_abort(void)
 
 /**** poll to see if user wants to abort macro playback ****/
 {
@@ -675,7 +675,7 @@ SHORT reps;
 
 /********************* nested abort polling stuff ********************/
 static Boolean (*_verify_abort)(void *dat);
-void *_verify_dat;
+static void *_verify_dat;
 void set_abort_verify(Boolean (*verify)(void *dat), void *dat)
 {
 	_verify_abort = verify;
@@ -687,7 +687,7 @@ static Boolean verify_abort(void)
 		return(TRUE);
 	return((*_verify_abort)(_verify_dat));
 }
-static Errcode write_abort_rec()
+static Errcode write_abort_rec(void)
 {
 Errcode err;
 UBYTE buf[32]; /* for now only 7 levels possible */
@@ -711,7 +711,7 @@ Abortnest *pan;
 		return(macro_write_error(err));
 	return(Success);
 }
-static Errcode read_abort_rec()
+static Errcode read_abort_rec(void)
 {
 Errcode err;
 int readsize;
@@ -772,7 +772,7 @@ void start_abort_atom(void)
 	pstart_abort_atom(NULL);
 }
 
-Errcode end_abort_atom()
+Errcode end_abort_atom(void)
 {
 SHORT *pcount;
 Errcode err;
@@ -853,7 +853,7 @@ Errcode errend_abort_atom(Errcode err)
 	return(err);
 }
 
-Errcode poll_abort()
+Errcode poll_abort(void)
 /* use whenever you wish to poll if user has requested an abort using a 
  * key hit or right pen click */
 {

@@ -88,8 +88,9 @@ typedef struct abtdat {
 	USHORT *totframes;
 } Vabortdat;
 
-static Boolean olay_abort_verify(Vabortdat *vd)
+static Boolean olay_abort_verify(void *vabortdat)
 {
+	Vabortdat *vd = vabortdat;
 	return(soft_yes_no_box("!%d%d", "olay_abort", *vd->frame+1, 
 						   *vd->totframes));
 }
@@ -235,7 +236,7 @@ OUT:
 	pj_cmap_free(cmap);
 	pj_rcel_free(loadcel);
 	pj_fli_close(&flif);
-	set_abort_verify(NULL);
+	set_abort_verify(NULL, NULL);
 	return(err);
 }
 

@@ -18,7 +18,6 @@ static Errcode resize_pencel(Boolean err_on_abort,Boolean reset);
 USHORT program_id = 0;
 USHORT program_version = 0;
 extern Errcode builtin_err;
-extern Boolean do_pj_hotkey(Global_icb *gicb);
 
 extern void do_auto_redo(), swap_undo();
 

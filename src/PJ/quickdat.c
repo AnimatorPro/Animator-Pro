@@ -489,7 +489,6 @@ Errcode go_quick_menu(void)
 {
 Errcode err;
 Menuhdr tpull;
-extern Boolean home_dokeys();
 void *ss;
 
 	if((err = soft_buttons("home_panel", home_smblist, 

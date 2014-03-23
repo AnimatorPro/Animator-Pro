@@ -58,7 +58,7 @@ extern SHORT tr_tix;
 extern SHORT tr_frames;
 
 /* auto.c */
-extern Boolean auto_abort_verify(Autoarg *aa);
+extern Boolean auto_abort_verify(void *aa);
 extern void pmhmpauto(autoarg_func what, void *data);
 extern void hmpauto(autoarg_func what, void *data);
 extern Errcode uzauto(autoarg_func what, void *data);

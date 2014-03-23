@@ -397,11 +397,13 @@ typedef struct abnest {
 } Abortnest;
 
 typedef UBYTE Abortbuf[sizeof(Abortnest)];
-Errcode poll_abort(void);
-void pstart_abort_atom(Abortbuf *ab);
-void start_abort_atom(void);
-Errcode end_abort_atom(void);
-Errcode errend_abort_atom(Errcode err);
+
+extern void set_abort_verify(Boolean (*verify)(void *data), void *data);
+extern void pstart_abort_atom(Abortbuf *ab);
+extern void start_abort_atom(void);
+extern Errcode end_abort_atom(void);
+extern Errcode errend_abort_atom(Errcode err);
+extern Errcode poll_abort(void);
 
 /****** input polling "wait task" items *******/
 
@@ -432,7 +434,28 @@ extern int pj_key_is(void);
 extern int pj_key_in(void);
 extern int dos_key_shift(void);
 
-extern Errcode get_macro_input(void);
-extern Errcode put_macro(Boolean ishit);
+/* hotkey.c */
+extern Boolean do_pj_hotkey(Global_icb *gicb);
 
-#endif /* INPUT_H */
+/* macro.c */
+extern void close_macro(void);
+extern Errcode put_macro(Boolean ishit);
+extern Errcode get_macro_input(void);
+extern void qsave_macro(void);
+extern void qload_macro(void);
+extern void qstart_macro(void);
+extern void qrealtime_macro(void);
+extern void qclose_macro(void);
+extern void quse_macro(void);
+extern void qrepeat_macro(void);
+
+/* qmacro.c */
+extern void qmacro(void);
+
+/* vpaint.c */
+extern Boolean common_header_keys(void);
+extern Errcode load_home_keys(void);
+extern Boolean hit_undo_key(void);
+extern Boolean home_dokeys(void);
+
+#endif

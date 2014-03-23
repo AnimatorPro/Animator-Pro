@@ -1476,7 +1476,7 @@ error:
 
 save_error:
 	err = softerr(err,"join_flis");
-	set_abort_verify(NULL);
+	set_abort_verify(NULL, NULL);
 	pj_delete(ram_tflx_name);
 	zoom_unundo();
 	return(err);

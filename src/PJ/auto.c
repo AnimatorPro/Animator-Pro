@@ -37,9 +37,11 @@
 
 static Errcode dall(Autoarg *aa);
 
-Boolean auto_abort_verify(Autoarg *aa)
+Boolean auto_abort_verify(void *autoarg)
 /* verify they'd like to call rendering off... */
 {
+	Autoarg *aa = autoarg;
+
 	see_cmap(); /* some conditions may leave cmap out of sync */
 	return(soft_yes_no_box("!%u%u", "auto_abort",
 					   		aa->cur_frame, aa->frames_in_seq));
@@ -788,7 +790,7 @@ Errcode auto_restores(Autoarg *aa,Errcode err)
 		fake_pop_cel();
 	if(aa->flags & AUTO_HIDEMP)
 		show_mp();
-	set_abort_verify(NULL);
+	set_abort_verify(NULL, NULL);
 	flx_draw_olays();
 	if(!aa->in_preview)
 		add_check_tflx_toram();

@@ -432,7 +432,7 @@ static Keyequiv home_keys[] = {
 #endif /* TESTING */
 };
 
-Errcode load_home_keys()
+Errcode load_home_keys(void)
 /* note this also loads common header keys, since all menus are sub to home
  *menu this works */
 {
@@ -445,7 +445,7 @@ Errcode err;
 	}
 	return(load_key_equivs("home_keys", home_keys, Array_els(home_keys)));
 }
-Boolean hit_undo_key()
+Boolean hit_undo_key(void)
 {
 	return(hit_keyequiv(UNDO_KE, icb.inkey));
 }
