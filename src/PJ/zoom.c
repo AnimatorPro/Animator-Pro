@@ -3,6 +3,7 @@
 #include "jimk.h"
 #include "errcodes.h"
 #include "ftextf.h"
+#include "grid.h"
 #include "memory.h"
 #include "menus.h"
 #include "ptrmacro.h"

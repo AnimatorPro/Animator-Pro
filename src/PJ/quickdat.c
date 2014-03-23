@@ -6,6 +6,7 @@
 #include "jimk.h"
 #include "broadcas.h"
 #include "filemenu.h"
+#include "grid.h"
 #include "homepul.h"
 #include "input.h"
 #include "menus.h"
@@ -19,7 +20,7 @@ extern void change_pen_mode(), change_ink_mode(), qmake_frames(),
 	set_pspeed(), toggle_draw_mode(), toggle_zoom(), ppalette(), 
 	go_dtoolopts(), go_inkopts(), quse_mask(), go_zoom_settings(),
 	movefli_tool(), go_multi(), qmask(), toggle_stencil(),
-	see_undo(), see_redo(), qgrid();
+	see_undo(), see_redo();
 
 extern Button palette_menu;
 void see_option_name();

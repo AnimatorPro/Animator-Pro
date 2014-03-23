@@ -1,19 +1,20 @@
-#include "errcodes.h"
 #include "jimk.h"
 #include "broadcas.h"
-#include "tween.h"
-#include "tweenpul.h"
+#include "errcodes.h"
+#include "grid.h"
 #include "inks.h"
+#include "options.h"
 #include "rastcurs.h"
 #include "softmenu.h"
-#include "options.h"
+#include "tween.h"
+#include "tweenpul.h"
 
 extern void tween_undraw();
 extern void tween_redraw();
 extern Minitime_data flxtime_data;
 
 extern void go_multi(), go_zoom_settings(), movefli_tool(),
-	qinks(), see_cur_ink(), qgrid_keep_undo();
+	qinks(), see_cur_ink();
 
 static Button twe_grid_sel = MB_INIT1(
 	NONEXT,

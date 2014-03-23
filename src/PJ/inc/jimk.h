@@ -120,10 +120,6 @@ void zoom_blitrect(void *src, Coor sx, Coor sy,
 				   Coor x,Coor y, Coor width, Coor height);
 void get_zoomcurs_flixy(Short_xy *xy);
 
-/* grids a point through vs.grid */
-
-void grid_flixy(SHORT *flix, SHORT *fliy);
-
 /* some vpaint specific dotout functions */
 
 extern void ccolor_dot(SHORT x, SHORT y, void *data);

@@ -1,6 +1,7 @@
 #include "jimk.h"
 #include "errcodes.h"
 #include "fli.h"
+#include "grid.h"
 #include "rastcurs.h"
 
 extern int do_pen_tool(Wndo *w);

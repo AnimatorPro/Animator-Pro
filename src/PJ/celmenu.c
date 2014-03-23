@@ -4,6 +4,7 @@
 #include "errcodes.h"
 #include "flicel.h"
 #include "flx.h"
+#include "grid.h"
 #include "inks.h"
 #include "rastcurs.h"
 #include "rastrans.h"
@@ -325,8 +326,6 @@ static Button cmu_mov_sel = MB_INIT1(
 static Sgroup1_data cel_sh1dat = {
 	&flxtime_data,
 };
-
-extern void qgrid_keep_undo(Button *b);
 
 static Button cmu_grid_sel = MB_INIT1(
 	NONEXT,

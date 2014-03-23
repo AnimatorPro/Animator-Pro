@@ -17,6 +17,7 @@
 #include "flicel.h"
 #include "flx.h"
 #include "ftextf.h"
+#include "grid.h"
 #include "homepul.h"
 #include "input.h"
 #include "menus.h"
