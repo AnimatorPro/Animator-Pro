@@ -8,6 +8,7 @@
 #include "brush.h"
 #include "errcodes.h"
 #include "flx.h"
+#include "inks.h"
 #include "menus.h"
 #include "picdrive.h"
 #include "rastcurs.h"

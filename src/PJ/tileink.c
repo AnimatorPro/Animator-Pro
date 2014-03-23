@@ -1,9 +1,12 @@
+#include <string.h>
+#define RASTCALL_INTERNALS
 #include "jimk.h"
 #include "bhash.h"
 #include "errcodes.h"
 #include "floatgfx.h"
 #include "flicel.h"
 #include "inkdot.h"
+#include "inks.h"
 #include "memory.h"
 #include "options.h"
 #include "rastlib.h"
@@ -20,7 +23,7 @@ typedef struct celt_cache {
 	SHORT x;
 	SHORT xsplit;  /* if cel is bigger than screen */
 	SHORT *xtable; /* width of screen */
-	void(*get_hseg)(void *dat,void *pixbuf,Coor x,Ucoor y,Ucoor w);
+	void (*get_hseg)(Raster *r, Pixel *pixbuf, Coor x, Coor y, Ucoor w);
 
 	double sin; /* sin of rotation angle if rotated */
 	double cos; /* cos of rotation angle if rotated */
@@ -46,8 +49,7 @@ typedef struct celt_cache {
 
 static Celt_cache *ct_cache; /* cel tile ink cache */
 
-
-static void celt_scale_hseg(void *cel, Pixel *pbuf, Coor x, Ucoor y,Ucoor w) 
+static void celt_scale_hseg(Raster *cel, Pixel *pbuf, Coor x, Coor y, Ucoor w)
 /* will handle shrunk 4x to real big limited by size of buffer */
 {
 Pixel cbuf[(SBSIZE*4)+1];
@@ -314,7 +316,7 @@ SHORT cely;
 	return(GET_DOT(thecel->rc,celx,cely));
 }
 
-Pixel celt_color(const SHORT x, const SHORT y)
+Pixel celt_color(SHORT x, SHORT y)
 /* called in cel menu for getting tcolor color */
 {
 Pixel color;
@@ -326,7 +328,7 @@ Pixel color;
 	return(color);
 }
 
-Pixel celt_dot(const Ink *inky, const SHORT x, const SHORT y)
+Pixel celt_dot(const Ink *inky, SHORT x, SHORT y)
 {
 Pixel color, undoc;
 Celcfit *cfit;
@@ -358,8 +360,7 @@ Celcfit *cfit;
 	return(color);
 }
 
-
-void celt_hline(const Ink *inky, SHORT x0, const SHORT y, SHORT width)
+void celt_hline(const Ink *inky, SHORT x0, SHORT y, SHORT width)
 {
 UBYTE sbuf[SBSIZE];
 UBYTE dbuf[SBSIZE];
@@ -425,11 +426,11 @@ Short_xy cxy;
 		celleft = ct_cache->width - cxy.x;
 		if (celleft >= width)	/* hline is all inside cel */
 		{
-			ct_cache->get_hseg(cel,sbuf,cxy.x,cxy.y,width);
+			ct_cache->get_hseg((Raster *)cel, sbuf, cxy.x, cxy.y, width);
 		}
 		else  /* have to get hline in pieces */
 		{
-			ct_cache->get_hseg(cel,sbuf,cxy.x, cxy.y, celleft);
+			ct_cache->get_hseg((Raster *)cel, sbuf, cxy.x, cxy.y, celleft);
 			w = width - celleft;
 			spt = sbuf + celleft;
 
@@ -437,12 +438,13 @@ Short_xy cxy;
 			{
 				if(w <= ct_cache->width)
 				{
-					ct_cache->get_hseg(cel,spt,0,cxy.y,w);
+					ct_cache->get_hseg((Raster *)cel, spt, 0, cxy.y, w);
 					break;
 				}
 				else
 				{
-					ct_cache->get_hseg(cel,spt,0,cxy.y,ct_cache->width);
+					ct_cache->get_hseg((Raster *)cel, spt, 0, cxy.y,
+							ct_cache->width);
 					spt += ct_cache->width;
 					w -= ct_cache->width;
 				}
@@ -465,7 +467,7 @@ Short_xy cxy;
 
 		if(vs.zero_clear || vs.render_under)
 		{
-			pj__get_hseg(undof, dpt, x0, y, w);
+			pj__get_hseg((Raster *)undof, dpt, x0, y, w);
 			--spt;
 			--dpt;
 			while (--w >= 0)
@@ -500,16 +502,16 @@ Short_xy cxy;
 		{
 			if(vs.render_under)
 				tcxl.tcolor = vs.inks[0];
-			pj__get_hseg(undof, dbuf, x0, y, width);
+			pj__get_hseg((Raster *)undof, dbuf, x0, y, width);
 			(*pline)(sbuf,dbuf,width,&tcxl);
 		}
 		else
 		{
 			if(tcxl.xlat != NULL)
 				pj_xlate(tcxl.xlat,sbuf,width);
-			pj__put_hseg(vb.pencel,sbuf,x0,y,width);
+			pj__put_hseg((Raster *)vb.pencel, sbuf, x0, y, width);
 			return;
 		}
 	}
-	pj__put_hseg(vb.pencel,dbuf,x0,y,width);
+	pj__put_hseg((Raster *)vb.pencel, dbuf, x0, y, width);
 }

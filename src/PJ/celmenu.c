@@ -17,7 +17,7 @@ Celmu_cb *cmcb;
 
 /* seeme feelme */
 
-extern void qinks(), see_cur_ink();
+extern void qinks();
 
 /* locals */
 

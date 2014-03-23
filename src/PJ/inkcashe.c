@@ -1,12 +1,13 @@
 /* inkcashe.c - stuff for precomputing as much as possible for render_dot */
 
-#include "errcodes.h"
 #include "jimk.h"
+#include "bhash.h"
+#include "errcodes.h"
+#include "inkaid.h"
+#include "inkdot.h"
 #include "inks.h"
 #include "render.h"
 #include "util.h"
-
-void free_render_cashes();
 
 Rgb3 tcolor_src;
 
@@ -104,7 +105,7 @@ Errcode clear_random_cashe(Ink *inky)
 
 /********* Dispatcher to inks' cashe set up and free routines *******/
 
-void free_ink_cashes(Ink *inky)
+static void free_ink_cashes(Ink *inky)
 {
 	if (inky->free_cashe != NULL)
 		(*inky->free_cashe)(inky);

@@ -6,6 +6,7 @@
 #include "errcodes.h"
 #include "filemenu.h"
 #include "rastcurs.h"
+#include "render.h"
 #include "softmenu.h"
 #include "textedit.h"
 #include "util.h"

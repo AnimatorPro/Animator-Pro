@@ -8,6 +8,7 @@
 #include "filemenu.h"
 #include "grid.h"
 #include "homepul.h"
+#include "inks.h"
 #include "input.h"
 #include "menus.h"
 #include "palmenu.h"

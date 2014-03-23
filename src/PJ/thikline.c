@@ -15,6 +15,8 @@
 #include "brush.h"
 #include "fpmath.h"
 #include "gfx.h"
+#include "inkdot.h"
+#include "inks.h"
 #include "memory.h"
 #include "poly.h"
 #include "ptrmacro.h"

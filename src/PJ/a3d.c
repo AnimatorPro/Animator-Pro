@@ -16,6 +16,7 @@
 #include "ptrmacro.h"
 #include "rastcurs.h"
 #include "rastrans.h"
+#include "render.h"
 #include "softmenu.h"
 #include "tween.h"
 

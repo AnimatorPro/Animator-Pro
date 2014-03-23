@@ -32,7 +32,7 @@ color_dif(const Rgb3 *c1, const Rgb3 *c2)
  *  legit (FWIW), and results in a return value of 0.
  */
 int
-closestc(Rgb3 *rgb, Rgb3 *cmap, int count)
+closestc(const Rgb3 *rgb, const Rgb3 *cmap, int count)
 {
 	unsigned int closest_diff2 = 620000;
 	int closest_index = 0;

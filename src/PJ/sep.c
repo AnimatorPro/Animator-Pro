@@ -4,9 +4,11 @@
 #include "jimk.h"
 #include "auto.h"
 #include "errcodes.h"
+#include "inks.h"
 #include "memory.h"
 #include "palmenu.h"
 #include "redo.h"
+#include "render.h"
 
 /* separate control block. */
 typedef struct sep_cb

@@ -22,7 +22,7 @@
 static Autoarg *mum_autoarg;
 
 extern void ppalette(), toggle_pen(),
-	see_cur_ink(), go_color_grid(Button *b),
+	go_color_grid(Button *b),
 	qmask(), change_time_mode();
 
 extern Button tseg_group_sel;

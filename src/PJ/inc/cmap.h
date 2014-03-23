@@ -35,7 +35,7 @@ extern void set_color_rgb(Rgb3 *rgb, USHORT cnum, Cmap *cmap);
 extern void stuff_cmap(Cmap *cmap, Rgb3 *color);
 
 extern int color_dif(const Rgb3 *c1, const Rgb3 *c2);
-extern int closestc(Rgb3 *rgb, Rgb3 *cmap, int count);
+extern int closestc(const Rgb3 *rgb, const Rgb3 *cmap, int count);
 
 extern int
 closestc_excl(Rgb3 *rgb, Rgb3 *ctab, int ccount, UBYTE *ignore, int icount);

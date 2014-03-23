@@ -8,6 +8,7 @@
 #include "filemenu.h"
 #include "flx.h"
 #include "menus.h"
+#include "render.h"
 #include "softmenu.h"
 
 void free_mask(Bitmap *mask)

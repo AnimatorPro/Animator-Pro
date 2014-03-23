@@ -2,6 +2,7 @@
 #include "jimk.h"
 #include "errcodes.h"
 #include "fli.h"
+#include "render.h"
 #include "textedit.h"
 
 /* hi level vpaint specific text routines */
@@ -228,8 +229,6 @@ show_mp();
 static void rendr_twin(Text_file *gf)
 /* Plot text window permanently on rendering screen considering inks and all. */
 {
-extern void render_mask_blit();
-
 	if (gf->text_buf != NULL)
 	{
 		set_twin_gradrect();

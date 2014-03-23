@@ -1,13 +1,12 @@
-
 /* Flood.c - a little flood fill routine.  Nearly portable! A horizontal
    segment/FIFO oriented flood fill.
   */
 
-#include "ptrmacro.h"
 #include "jimk.h"
 #include "errcodes.h"
 #include "inks.h"
-
+#include "ptrmacro.h"
+#include "render.h"
 
 #define FSZ 1024
 #define FMOD 1023

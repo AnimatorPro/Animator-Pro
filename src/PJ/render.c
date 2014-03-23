@@ -9,6 +9,7 @@
 #include "errcodes.h"
 #include "gfx.h"
 #include "inkaid.h"
+#include "inkdot.h"
 #include "inks.h"
 #include "poly.h"
 #include "rastcall.h"
@@ -521,7 +522,7 @@ Errcode err;
 	set_centrad_gradrect(r,cenx,ceny,(diam+1)>>1);
 	start_abort_atom();
 	err = doval(cenx,ceny,diam,r->aspect_dx, r->aspect_dy,
-			    NULL,NULL,(EFUNC)poll_render_hline,r,TRUE);
+			    NULL, NULL, poll_render_hline, r, TRUE);
 	free_render_cashes();
 	return(errend_abort_atom(err));
 }
@@ -696,6 +697,12 @@ Rbrush *rb = vl.brush;
 	enable_lsp_ink();
 }
 
+static void render_brush_with_data(SHORT x, SHORT y, void *data)
+{
+	(void)data;
+	render_brush(x, y);
+}
+
 static void
 render_line_with_data(SHORT x1, SHORT y1, SHORT x2, SHORT y2, void *data)
 {
@@ -725,8 +732,8 @@ SHORT gradrad;
 	if((err = make_render_cashes()) < Success)
 		return(err);
 	doval(cenx,ceny,diam, r->aspect_dx, r->aspect_dy,
-				(EFUNC)(vs.use_brush ? render_brush : render_dot), 
-				 vb.pencel, NULL, NULL, FALSE);
+			vs.use_brush ? render_brush_with_data : render_dot, vb.pencel,
+			NULL, NULL, FALSE);
 	free_render_cashes();
 	return(Success);
 }

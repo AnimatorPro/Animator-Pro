@@ -20,6 +20,7 @@
 #include "grid.h"
 #include "homepul.h"
 #include "input.h"
+#include "inks.h"
 #include "menus.h"
 #include "picdrive.h"
 #include "softmenu.h"

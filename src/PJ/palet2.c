@@ -19,6 +19,7 @@
 #include "palmenu.h"
 #include "palpul.h"
 #include "rastcurs.h"
+#include "render.h"
 #include "softmenu.h"
 
 extern Button inks_sel, ccolor_sel, spec1_sel;

@@ -25,12 +25,9 @@ struct xformspec;
 
 extern Rendata rdta;
 
-/* Hash for transparent color */
-typedef struct thash {
-	UBYTE valid, closest;
-} Thash;
-
-extern struct rgb3 tcolor_src;
+extern void set_render_fast(void);
+extern void free_render_cashes(void);
+extern Errcode make_render_cashes(void);
 
 Errcode rblit_cel(register Rcel *c, Tcolxldat *txd);
 
@@ -49,8 +46,8 @@ Errcode render_transform(Rcel *cel, struct xformspec *xf
 void render_dot(SHORT x, SHORT y, void *data);
 Errcode transpblit(register Rcel *tcel,int clearcolor,int clear,int tinting);
 
-Errcode render_hline(register SHORT y,register SHORT x0,SHORT x1,Raster *r);
-Errcode poll_render_hline(SHORT y,SHORT x0,SHORT x1,Raster *r);
+extern Errcode render_hline(SHORT y, SHORT x0, SHORT x1, void *r);
+extern Errcode poll_render_hline(SHORT y, SHORT x0, SHORT x1, void *r);
 
 Errcode render_a_poly_or_spline(struct poly *wpoly, Boolean filled,
 	Boolean closed, Boolean curved);

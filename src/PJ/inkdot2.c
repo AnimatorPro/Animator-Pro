@@ -1,7 +1,9 @@
 #include "jimk.h"
 #include "bhash.h"
 #include "errcodes.h"
+#include "inkaid.h"
 #include "inkdot.h"
+#include "inks.h"
 #include "options.h"
 #include "rastlib.h"
 #include "render.h"
@@ -39,7 +41,7 @@ SHORT i;
 
 /*********** Reveal alt ink stuff *************************/
 
-Pixel rvl_dot(const Ink *inky, const SHORT x, const SHORT y)
+Pixel rvl_dot(const Ink *inky, SHORT x, SHORT y)
 {
 if (vl.alt_cel)
 	{
@@ -50,7 +52,7 @@ else
 	return(vs.ccolor);
 }
 
-void rvl_hline(const Ink *inky, SHORT x0, const SHORT y, SHORT width)
+void rvl_hline(const Ink *inky, SHORT x0, SHORT y, SHORT width)
 {
 UBYTE sbuf[SBSIZE];
 UBYTE *spt;
@@ -97,7 +99,7 @@ else
 
 
 /************ xor ink stuff *************************/
-Pixel xor_dot(const Ink *inky, const SHORT x, const SHORT y)
+Pixel xor_dot(const Ink *inky, SHORT x, SHORT y)
 {
 (void)inky;
 return(pj_get_dot(undof,x,y)^vs.ccolor);
@@ -105,8 +107,7 @@ return(pj_get_dot(undof,x,y)^vs.ccolor);
 
 /************ jumble ink stuff **********************/
 
-
-Pixel jmb_dot(const Ink *inky, const SHORT x, const SHORT y)
+Pixel jmb_dot(const Ink *inky, SHORT x, SHORT y)
 {
 SHORT endc;
 Short_xy nxy;
@@ -119,20 +120,20 @@ return(pj_get_dot(undof,nxy.x,nxy.y));
 }
 
 /************ add ink  stuff *************************/
-Pixel add_dot(const Ink *inky, const SHORT x, const SHORT y)
+Pixel add_dot(const Ink *inky, SHORT x, SHORT y)
 {
 (void)inky;
 return((pj_get_dot(undof,x,y)+vs.ccolor)&(COLORS-1));
 }
 
 /************ glow ink stuff *************************/
-Pixel glr_dot(const Ink *inky, const SHORT x, const SHORT y)
+Pixel glr_dot(const Ink *inky, SHORT x, SHORT y)
 {
 return(((UBYTE *)(inky->inkdata))[pj_get_dot(undof,x,y)]);
 }
 
 /*********** crystalize ink stuff ***************/
-Pixel cry_dot(const Ink *inky, const SHORT x, const SHORT y)
+Pixel cry_dot(const Ink *inky, SHORT x, SHORT y)
 {
 Pixel odot;
 int extras;
@@ -165,7 +166,7 @@ int extras;
 		odot += (extras * pj__get_dot(undof,x,y));
 	return(odot);
 }
-void cry_hline(const Ink *inky, SHORT x0, const SHORT y, SHORT width)
+void cry_hline(const Ink *inky, SHORT x0, SHORT y, SHORT width)
 {
 Pixel obuf[SBSIZE];
 Pixel *out;
@@ -213,7 +214,7 @@ Pixel *pline;
 }
 
 /********** shatter ink stuff ********************/
-Pixel shat_dot(const Ink *inky, const SHORT x, const SHORT y)
+Pixel shat_dot(const Ink *inky, SHORT x, SHORT y)
 {
 Short_xy nxy;
 
@@ -228,7 +229,7 @@ else
 }
 
 /********** hollow ink stuff ***********************/
-Pixel out_dot(const Ink *inky, const SHORT x, const SHORT y)
+Pixel out_dot(const Ink *inky, SHORT x, SHORT y)
 {
 Pixel endc;
 (void)inky;
@@ -253,7 +254,7 @@ static Pixel brighten_ccomp(int c, SHORT percent)
 	return(c);
 }
 
-Pixel bri_dot(const Ink *inky, const SHORT x, const SHORT y)
+Pixel bri_dot(const Ink *inky, SHORT x, SHORT y)
 {
 Pixel endc;
 Rgb3 rgb, *c;
@@ -275,7 +276,7 @@ Rgb3 grey;
 	true_blend(rgb, &grey, percent, d);
 }
 
-Pixel des_dot(const Ink *inky, const SHORT x, const SHORT y)
+Pixel des_dot(const Ink *inky, SHORT x, SHORT y)
 {
 Rgb3 rgb;
 
@@ -285,7 +286,7 @@ return(bclosest_col(&rgb, COLORS,inky->dither));
 }
 
 /************* sweep ink stuff ************************/
-Pixel swe_dot(const Ink *inky, const SHORT x, const SHORT y)
+Pixel swe_dot(const Ink *inky, SHORT x, SHORT y)
 {
 Pixel color, endc;
 (void)inky;
@@ -313,7 +314,7 @@ static char chtab[32] = {
 	0x76, 0x0, 0x40, 0x0, 0x24, 0x0, 0x0, 0x0,
 	};
 
-Pixel clh_dot(const Ink *inky, const SHORT x,const SHORT y)
+Pixel clh_dot(const Ink *inky, SHORT x, SHORT y)
 /* this could be a lot faster if it used get_rectpix() for the neighbors */
 {
 SHORT color;
@@ -363,7 +364,7 @@ int r;
 	return(r);
 }
 
-Pixel emb_dot(const Ink *inky, const SHORT x, const SHORT y)
+Pixel emb_dot(const Ink *inky, SHORT x, SHORT y)
 {
 Short_xy nxy;
 Rgb3 rgb,*c,*c2;
@@ -381,7 +382,7 @@ return(bclosest_col(&rgb, COLORS,inky->dither));
 }
 
 /************* pull/smear ink stuff ********************/
-Pixel pull_dot(const Ink *inky, const SHORT x, const SHORT y)
+Pixel pull_dot(const Ink *inky, SHORT x, SHORT y)
 {
 Short_xy nxy;
 (void)inky;
@@ -392,7 +393,7 @@ clip_xy(&nxy);
 return(pj_get_dot(vb.pencel,nxy.x,nxy.y));
 }
 
-Pixel smea_dot(const Ink *inky, const SHORT x, const SHORT y)
+Pixel smea_dot(const Ink *inky, SHORT x, SHORT y)
 {
 Short_xy nxy;
 (void)inky;

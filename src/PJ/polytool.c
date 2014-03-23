@@ -10,6 +10,7 @@
 #include "commonst.h"
 #include "errcodes.h"
 #include "fli.h"
+#include "inkdot.h"
 #include "marqi.h"
 #include "memory.h"
 #include "poly.h"

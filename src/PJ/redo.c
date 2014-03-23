@@ -3,9 +3,12 @@
 #include "commonst.h"
 #include "errcodes.h"
 #include "fli.h"
+#include "inkdot.h"
+#include "inks.h"
 #include "memory.h"
 #include "rastcall.h"
 #include "redo.h"
+#include "render.h"
 #include "xfile.h"
 
 /* stuff to deal with redo-draw */

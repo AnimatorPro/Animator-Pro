@@ -14,7 +14,7 @@ extern void tween_redraw();
 extern Minitime_data flxtime_data;
 
 extern void go_multi(), go_zoom_settings(), movefli_tool(),
-	qinks(), see_cur_ink();
+	qinks();
 
 static Button twe_grid_sel = MB_INIT1(
 	NONEXT,

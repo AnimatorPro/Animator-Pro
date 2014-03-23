@@ -6,17 +6,27 @@
 
 #include "jimk.h"
 #include "errcodes.h"
+#include "inkaid.h"
+#include "inkdot.h"
+#include "inks.h"
 #include "jfile.h"
 #include "linklist.h"
 #include "menus.h"
-#include "rastext.h"
-#include "inks.h"
 #include "options.h"
-#include "inkdot.h"
+#include "rastext.h"
 #include "resource.h"
 #include "softmenu.h"
+#include "wildlist.h"
 
 /* #define BUILD_TEST_INKS */
+
+#ifdef BUILD_TEST_INKS
+/* first ink in chain of rex library inks has rexlib header */
+typedef struct rootink {
+	Ink ink; /* first ink in singly linked chain (at least one) */
+	Errcode (*init_inks)(Aa_ink_data *aid, Ink_groups *g);
+} RootInk;
+#endif /* BUILD_TEST_INKS */
 
 /* These are actually static, be they need to be forward-declared. */
 extern Button dtintgroup_sel, tintgroup_sel, radgroup_sel, dithergroup_sel;
@@ -71,9 +81,6 @@ static Ink anti_ink_opt = INKINIT(
 	INK_NEEDS_UNDO
 );
 
-extern Errcode init_celt_ink();
-extern void cleanup_celt_ink();
-
 static Ink celt_ink_opt = INKINIT(
 	&anti_ink_opt,
 	RL_KEYTEXT("tile_n"),  /* Filled in from resource */
@@ -119,7 +126,6 @@ static Ink shat_ink_opt = INKINIT(
 	NO_FC,
 	INK_NEEDS_UNDO
 );
-extern void cry_hline(const Ink *inky, SHORT x0, const SHORT y, SHORT width);
 static Ink cry_ink_opt = INKINIT(
 	&shat_ink_opt,
 	RL_KEYTEXT("spark_n"),  /* Filled in from resource */
@@ -135,7 +141,6 @@ static Ink cry_ink_opt = INKINIT(
 	NO_FC,
 	INK_NEEDS_UNDO
 );
-extern void soft_hline(const Ink *inky, SHORT x0, const SHORT y, SHORT width);
 static Ink soft_ink_opt = INKINIT(
 	&cry_ink_opt,
 	RL_KEYTEXT("soften_n"),  /* Filled in from resource */
@@ -406,7 +411,7 @@ static Ink bri_ink_opt = INKINIT(
 	free_ink_bhash,
 	INK_NEEDS_UNDO
 );
-Ink add_ink_opt = INKINIT(
+static Ink add_ink_opt = INKINIT(
 	&bri_ink_opt,
 	RL_KEYTEXT("add_n"),  /* Filled in from resource */
 	INK_OPT,
@@ -422,11 +427,8 @@ Ink add_ink_opt = INKINIT(
 	INK_NEEDS_UNDO|INK_NEEDS_COLOR
 );
 
-#define first_option ((Option_tool*)&add_ink_opt)
 static Ink *static_inks = &add_ink_opt;
 Option_tool *ink_list = NULL;
-
-extern Button dtintgroup_sel,tintgroup_sel, radgroup_sel, dithergroup_sel;
 
 #ifdef BUILD_TEST_INKS
 static Ink_groups igs = { 
@@ -448,7 +450,7 @@ typedef void (*ink_closer)(struct option_tool *ot);
 
 static void *ink_ss = NULL;
 
-void cleanup_inks()
+void cleanup_inks(void)
 {
 	/* transfer to loaded or static list */
 	close_option_tools((Option_tool **)&ink_list);
@@ -512,7 +514,7 @@ init_test_inks(void)
 }
 #endif
 
-Errcode init_inks()
+Errcode init_inks(void)
 {
 Errcode err;
 Ink *ink;
@@ -553,7 +555,7 @@ done:
 	return(err);
 }
 
-get_default_ink_strengths(UBYTE *inktab)
+void get_default_ink_strengths(UBYTE *inktab)
 {
 Ink *l;
 
@@ -567,7 +569,7 @@ while (l != NULL)
 save_ink_strengths(inktab);
 }
 
-load_ink_strengths(UBYTE *inktab)
+void load_ink_strengths(UBYTE *inktab)
 {
 Ink *l;
 UBYTE code;
@@ -584,7 +586,7 @@ while (l != NULL)
 	}
 }
 
-save_ink_strengths(UBYTE *inktab)
+void save_ink_strengths(UBYTE *inktab)
 {
 Ink *l;
 UBYTE code;
@@ -756,7 +758,6 @@ void see_cur_ink(Button *m)
 
 void attatch_inks(void)
 {
-extern Button ink_opts_sel;
 int i;
 int id;
 Button *ob;
@@ -793,7 +794,7 @@ b->group = &(vl.ink->dither);
 dcorner_text(b);
 }
 
-void see_ink_strength(Button *b)
+static void see_ink_strength(Button *b)
 {
 tint_sl.value = &(vl.ink->strength);
 see_abovetext_qslider(b);
@@ -807,8 +808,8 @@ static Smu_button_list iopt_smblist[] = {
 	{ "Tstrength",  { /* ps */ &tinting_sel.group } },
 };
 
-void *ss;
-Errcode load_inkopt_texts()
+static void *ss;
+Errcode load_inkopt_texts(void)
 /* called by options menu before using buttons */
 {
 Errcode err;
@@ -818,7 +819,7 @@ Errcode err;
 	dtinting_sel.group = tinting_sel.group;
 	return(err);
 }
-void free_inkopt_texts()
+void free_inkopt_texts(void)
 {
 	smu_free_scatters(&ss);
 }

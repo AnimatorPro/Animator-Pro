@@ -7,6 +7,7 @@
 #include "commonst.h"
 #include "errcodes.h"
 #include "filemenu.h"
+#include "inks.h"
 #include "options.h"
 #include "palmenu.h"
 #include "rastcurs.h"
@@ -15,10 +16,9 @@
 #include "softmenu.h"
 
 extern Button pen_opts_sel, fill2c_group_sel,
-	freepoly_group_sel, sep_group_sel, ink_opts_sel, box_group_sel;
+	freepoly_group_sel, sep_group_sel, box_group_sel;
 
 extern Option_tool *ptool_list;
-extern Option_tool *ink_list;
 extern Minitime_data flxtime_data;
 static Optgroup_data optgroup;
 

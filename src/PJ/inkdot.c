@@ -1,6 +1,7 @@
 #include "jimk.h"
 #include "bhash.h"
 #include "flicel.h"
+#include "inkaid.h"
 #include "inkdot.h"
 #include "inks.h"
 #include "memory.h"
@@ -18,8 +19,6 @@ static UBYTE
 static int ink_type;
 static Pixel (*ink_dot)(const Ink *inky,const SHORT x,const SHORT y);
 
-extern Button dithergroup_sel, dtintgroup_sel, tintgroup_sel;
-
 Aa_ink_data ink_aid = {
 	0, 0, NULL, NULL, NULL, NULL, 
 	COLORS, RGB_MAX, RGB_MAX, RGB_MAX,
@@ -30,7 +29,7 @@ Aa_ink_data ink_aid = {
 	bclosest_col,
 };
 
-set_render_fast()
+void set_render_fast(void)
 {
 ink_type = vl.ink->ot.id;
 ink_dot = vl.ink->dot;
@@ -54,7 +53,7 @@ ink_aid.undo = undof;
 
 
 /*********** Start of opaque ink stuff (real easy!) ********************/
-Pixel opq_dot(const Ink *inky, const SHORT x, const SHORT y)
+Pixel opq_dot(const Ink *inky, SHORT x, SHORT y)
 {
 (void)inky;
 (void)x;
@@ -63,7 +62,7 @@ Pixel opq_dot(const Ink *inky, const SHORT x, const SHORT y)
 return(vs.ccolor);
 }
 
-void opq_hline(const Ink *inky, SHORT x0, const SHORT y, SHORT width)
+void opq_hline(const Ink *inky, SHORT x0, SHORT y, SHORT width)
 {
 (void)inky;
 SET_HLINE(vb.pencel,vs.ccolor,x0,y,width);
@@ -88,12 +87,12 @@ color = vs.buns[vs.use_bun].bundle[color];
 return(color);
 }
 
-Pixel vsp_dot(const Ink *inky, const SHORT x, const SHORT y)
+Pixel vsp_dot(const Ink *inky, SHORT x, SHORT y)
 {
 return(dfrom_range(y-rdta.rdy0,rdta.rheight,x,y,inky->dither));
 }
 
-void vsp_hline(const Ink *inky, SHORT x0, const SHORT y, SHORT width)
+void vsp_hline(const Ink *inky, SHORT x0, SHORT y, SHORT width)
 {
 UBYTE short_buf[SBSIZE];
 UBYTE *spt;
@@ -138,12 +137,12 @@ else
 return;
 }
 
-Pixel hsp_dot(const Ink *inky, const SHORT x,const SHORT y)
+Pixel hsp_dot(const Ink *inky, SHORT x, SHORT y)
 {
 return(dfrom_range(x-rdta.rdx0,rdta.rwidth,x,y,inky->dither));
 }
 
-void hsp_hline(const Ink *inky, SHORT x0, const SHORT y, SHORT width)
+void hsp_hline(const Ink *inky, SHORT x0, SHORT y, SHORT width)
 {
 UBYTE short_buf[SBSIZE];
 UBYTE *spt;
@@ -194,7 +193,7 @@ else
 PUT_HSEG(vb.pencel,short_buf,x0,y,width);
 }
 
-Pixel rad_dot(const Ink *inky, const SHORT x, const SHORT y)
+Pixel rad_dot(const Ink *inky, SHORT x, SHORT y)
 /* This one is so slow don't bother to have a hline routine... */
 {
 	if(vl.rgr == 0) /* can't be zero */
@@ -261,8 +260,7 @@ Rgb3 *pcolor;
 	aver->b = b / count;
 }
 
-
-Pixel soft_dot(const Ink *inky, const SHORT x, const SHORT y)
+Pixel soft_dot(const Ink *inky, SHORT x, SHORT y)
 {
 Rgb3 rgb;
 Pixel neighbors[9];
@@ -272,7 +270,7 @@ Pixel neighbors[9];
 				vb.pencel->cmap);
 	return(bclosest_col(&rgb,COLORS,inky->dither));
 }
-void soft_hline(const Ink *inky, SHORT x0, const SHORT y, SHORT width)
+void soft_hline(const Ink *inky, SHORT x0, SHORT y, SHORT width)
 {
 LONG rgbs[(SBSIZE+3)*3];
 LONG *prgb, *rgbstart;
@@ -363,8 +361,7 @@ Coor getw;
 	pj__put_hseg(vb.pencel, line, x0, y, width);
 }
 
-
-Pixel anti_dot(const Ink *inky, const SHORT x, const SHORT y)
+Pixel anti_dot(const Ink *inky, SHORT x, SHORT y)
 {
 Pixel neighbors[9];
 Rgb3 rgb;
@@ -417,13 +414,12 @@ if (!t->valid)
 return(t->closest);
 }
 
-Pixel tsp_dot(const Ink *inky, const SHORT x, const SHORT y)
+Pixel tsp_dot(const Ink *inky, SHORT x, SHORT y)
 {
 return(tvdot(inky,x,y,undof));
 }
 
-
-void tsp_hline(const Ink *inky, SHORT x0, const SHORT y, SHORT width)
+void tsp_hline(const Ink *inky, SHORT x0, SHORT y, SHORT width)
 /* This one has basically an in-line tclosest_color for speed. */
 {
 UBYTE sbuf[SBSIZE];
@@ -468,7 +464,7 @@ else
 PUT_HSEG(vb.pencel, dbuf, x0, y, width);
 }
 
-Pixel tlc_dot(const Ink *inky, const SHORT x, const SHORT y)
+Pixel tlc_dot(const Ink *inky, SHORT x, SHORT y)
 {
 return(tvdot(inky,x,y,vb.pencel));
 }
@@ -539,7 +535,7 @@ if (vs.zoom_open)
 
 /****** start of render hline things ************/
 
-void gink_hline(const Ink *inky, SHORT x0, const SHORT y, SHORT width)
+void gink_hline(const Ink *inky, SHORT x0, SHORT y, SHORT width)
 /* generic ink hline NOTE this is Un-clipped */
 {
 Pixel buf[SBSIZE];
@@ -553,17 +549,18 @@ Pixel *pbuf, *maxbuf;
 }
 
 static BYTE lsp_disabled = 0;
-void disable_lsp_ink()
+void disable_lsp_ink(void)
 {
 	++lsp_disabled;
 }
-void enable_lsp_ink()
+void enable_lsp_ink(void)
 {
 	--lsp_disabled;
 }
 
-Errcode render_hline(register SHORT y,register SHORT x0,SHORT x1,Raster *r)
+Errcode render_hline(SHORT y, SHORT x0, SHORT x1, void *raster)
 {
+Raster *r = raster;
 SHORT width, w1, w2;
 SHORT x;
 void (*ink_hline)(const Ink *inky, SHORT x0,const SHORT y,SHORT width);
@@ -617,7 +614,7 @@ void (*ink_hline)(const Ink *inky, SHORT x0,const SHORT y,SHORT width);
 	return(0);
 }
 
-Errcode poll_render_hline(SHORT y,SHORT x0,SHORT x1,Raster *r)
+Errcode poll_render_hline(SHORT y, SHORT x0, SHORT x1, void *r)
 {
 render_hline(y,x0,x1,r);
 return(poll_abort());

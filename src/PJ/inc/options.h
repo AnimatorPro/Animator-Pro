@@ -9,10 +9,6 @@
 	#include "rcel.h"
 #endif
 
-#ifndef INKAID_H
-	#include "inkaid.h"
-#endif
-
 #ifndef REXLIB_H
 	#include "rexlib.h"
 #endif
@@ -28,6 +24,8 @@ typedef struct option_tool {
 } Option_tool;
 
 #undef OPTHDR_FIELDS
+
+extern Option_tool *ink_list;
 
 void close_option_tools(Option_tool **ppfirst);
 void *id_find_option(Option_tool *list, SHORT id);
@@ -53,41 +51,6 @@ extern Pentool null_pentool;
 
 #define PTOOLINIT1(nx,na,t,id,hlp,opt,cl,tl,cur,oi,or) \
  {{nx,na,t,id,hlp,opt,cl},tl,cur,oi,or}
-
-
-typedef struct ink {
-	Option_tool ot;
-	Pixel (*dot)(const struct ink *i,const SHORT x, const SHORT y);
-	void (*hline)(const struct ink *i,SHORT x, const SHORT y, SHORT width);
-	SHORT default_strength;
-	SHORT strength;
-	SHORT default_dither;
-	SHORT dither;
-	void *inkdata;
-	Errcode (*make_cashe)(struct ink *i);
-	void (*free_cashe)(struct ink *i);
-	Aa_ink_data *aid;
-	USHORT needs;
-} Ink;
-
-#define INK_NEEDS_UNDO	0x0001
-#define INK_NEEDS_ALT	0x0002
-#define INK_NEEDS_CEL	0x0004
-#define INK_NEEDS_COLOR 0x0008 /* uses a source color other than undo 
-								* (ccolor or raster) as input */
-
-
-#define INK_CASHE_MADE	0x8000
-
-/* macro to help with static initialization */
-
-#define INKINIT(nx,na,t,id,hlp,opt,dot,hline,dstren,ddither,mcashe,fcashe,nd) \
- {{nx,na,t,id,hlp,opt,NOCLOSE}, \
- dot, hline,dstren,0,ddither,0,NULL,mcashe,fcashe,NULL,nd}
-
-#define NOSTRENGTH 0
-#define NO_MC NULL
-#define NO_FC NULL
 
 /* option types */
 
@@ -136,17 +99,8 @@ typedef struct optgroup_data {
 	SHORT topname;
 } Optgroup_data;
 
-
-/* first ink in chain of rex library inks has rexlib header */
-typedef struct rootink {
-	Ink ink; 	 /* first ink in singly linked chain (at least one) */
-	Errcode (*init_inks)(Aa_ink_data *aid, Ink_groups *g);
-} RootInk;
-
-
 void hang_toolopts(Button *b);
 void see_toolhelp(Button *b);
 void see_option_name(Button *b);
 
-
-#endif /* OPTIONS_H */
+#endif

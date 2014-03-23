@@ -45,6 +45,8 @@
 	#include "vsetfile.h"
 #endif
 
+struct ink;
+
 void return_to_main(Errcode code);
 
 enum maincodes {
@@ -185,8 +187,6 @@ void zpan_ccycle_redraw(Button *hanger);
 
 extern void mb_move_quickmenu();
 extern void mb_quickmenu_to_bottom();
-extern void see_cur_ink();
-
 extern void mb_toggle_zclear();
 extern void mb_toggle_mask();
 
@@ -512,7 +512,7 @@ typedef struct vlcb {  /* v local control block not saved !!! */
 	Short_xy scrcent;	/* precalculated center of screen */
 
 	Pentool *ptool; 	/* current pen tool */
-	Ink *ink;			/* curent ink tool */
+	struct ink *ink;	/* curent ink tool */
 	SHORT hide_brush;	/* hide the brush in the brush cursor */
 	VFUNC undoit;		/* current undo function */
 	VFUNC redoit;		/* current redo function */

@@ -6,9 +6,10 @@
 #include "brush.h"
 #include "errcodes.h"
 #include "fli.h"
-#include "inks.h"
+#include "inkdot.h"
 #include "rastcurs.h"
 #include "redo.h"
+#include "render.h"
 #include "util.h"
 
 static void save_thik_line_undo(SHORT y1, SHORT y2, SHORT brushsize);

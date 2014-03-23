@@ -1,4 +1,3 @@
-
 /* undone */
 /* gel.c - Stuff to do the gel tool.  Basiccally concentric transparent
   circles with the wider ones thinner. */
@@ -7,14 +6,12 @@
 #include "bhash.h"
 #include "broadcas.h"
 #include "errcodes.h"
+#include "inkdot.h"
 #include "inks.h"
 #include "redo.h"
+#include "render.h"
 
-extern void render_hline();
-
-extern SHORT gel_factor;
 static int gft[4] = {15*1, 16*2, 17*3, 18*4};
-extern char *gel_thash;
 
 static char *th[4];
 
