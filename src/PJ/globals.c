@@ -3,14 +3,14 @@
 /* Globals.c - all the really pervasive global variables. */
 
 #include <stdio.h>
-#include "errcodes.h"
 #include "jimk.h"
-#include "math.h"
+#include "brush.h"
+#include "celmenu.h"
+#include "composit.h"
+#include "errcodes.h"
+#include "filemenu.h"
 #include "inks.h"
 #include "options.h"
-#include "celmenu.h"
-#include "brush.h"
-#include "composit.h"
 
 extern void go_time_menu();
 extern SHORT flx_get_frameix();

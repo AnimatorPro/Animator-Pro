@@ -1,9 +1,10 @@
 /* qmacro.c - macro numbered choice menu. */
 
 #define INPUT_INTERNALS
+#include "jimk.h"
+#include "filemenu.h"
 #include "input.h"
 #include "menus.h"
-#include "jimk.h"
 
 void qmacro(void)
 {
@@ -52,7 +53,7 @@ int choice;
 				qrealtime_macro();
 				break;
 			case 5:
-				go_files(11);
+				go_files(FTP_MACRO);
 				continue; /* leave menu up */
 			default:
 				break;

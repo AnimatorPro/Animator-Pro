@@ -9,6 +9,7 @@
 #include "brush.h"
 #include "commonst.h"
 #include "errcodes.h"
+#include "filemenu.h"
 #include "flicel.h"
 #include "inks.h"
 #include "memory.h"
@@ -911,7 +912,7 @@ switch(hitid)
 		get_menu_colors();
 		break;
 	case PAL_FIL_PUL:
-		go_files(3);
+		go_files(FTP_PALETTE);
 		break;
 	case CLU_GET_PUL:	/* get range */
 		qselect_bundle();

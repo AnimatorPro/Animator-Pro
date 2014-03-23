@@ -5,6 +5,7 @@
 #include "auto.h"
 #include "broadcas.h"
 #include "errcodes.h"
+#include "filemenu.h"
 #include "menus.h"
 #include "softmenu.h"
 
@@ -323,7 +324,7 @@ USHORT mdis[9];
 				}
 				break;
 			case 7:
-				go_files(10);
+				go_files(FTP_MASK);
 				break;
 			default:
 				goto OUT;

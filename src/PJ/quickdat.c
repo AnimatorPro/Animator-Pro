@@ -5,6 +5,7 @@
 
 #include "jimk.h"
 #include "broadcas.h"
+#include "filemenu.h"
 #include "homepul.h"
 #include "input.h"
 #include "menus.h"
@@ -21,7 +22,7 @@ extern void change_pen_mode(), change_ink_mode(), qmake_frames(),
 	see_undo(), see_redo(), qgrid();
 
 extern Button palette_menu;
-void mb_go_files(), see_option_name();
+void see_option_name();
 
 static Sgroup1_data qmu_sh1dat = {
 	&flxtime_data,

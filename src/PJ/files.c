@@ -5,6 +5,7 @@
 #include "jimk.h"
 #include "a3d.h"
 #include "commonst.h"
+#include "filemenu.h"
 #include "flicel.h"
 #include "menus.h"
 #include "rastcurs.h"
@@ -349,27 +350,27 @@ if ((err = check_poly_file(source)) < Success)
 return pj_copyfile(source, dest);
 }
 
-Errcode load_path(char *name)
+static Errcode load_path(char *name)
 {
 	return(copy_poly_file(name,ppoly_name));
 }
 
-Errcode save_path(char *name)
+static Errcode save_path(char *name)
 {
 	return(pj_copyfile(ppoly_name,name));
 }
 
-Errcode load_polygon(char *name)
+static Errcode load_polygon(char *name)
 {
 	return(cant_load(copy_poly_file(name,poly_name),name));
 }
 
-Errcode save_polygon(char *name)
+static Errcode save_polygon(char *name)
 {
 	return(pj_copyfile(poly_name, name));
 }
 
-void qload_path(void)
+static void qload_path(void)
 {
 char *path;
 char buf[50];
@@ -382,7 +383,7 @@ if ((path = vset_get_filename(stack_string("load_path",buf),
 	}
 }
 
-void qsave_path(void)
+static void qsave_path(void)
 {
 char *path;
 char buf[50];
@@ -397,7 +398,7 @@ if ((path = vset_get_filename(stack_string("save_path",buf),
 	}
 }
 
-void qload_polygon(void)
+static void qload_polygon(void)
 {
 char *path;
 char buf[50];
@@ -410,7 +411,7 @@ if ((path = vset_get_filename(stack_string("load_poly",buf),
 	}
 }
 
-void qsave_polygon(void)
+static void qsave_polygon(void)
 {
 char *path;
 char buf[50];
@@ -425,12 +426,12 @@ if ((path = vset_get_filename(stack_string("save_poly",buf),
 	}
 }
 
-Errcode po_save_tween(char *name)
+static Errcode po_save_tween(char *name)
 {
 return(pj_copyfile(tween_name,name));
 }
 
-Errcode po_load_tween(char *name)
+static Errcode po_load_tween(char *name)
 {
 Errcode err;
 
@@ -439,8 +440,7 @@ if ((err = test_load_tween(name)) < Success)
 return(cant_load(pj_copyfile(name,tween_name),name));
 }
 
-
-void qload_tween(void)
+static void qload_tween(void)
 {
 char *path;
 char buf[50];
@@ -453,7 +453,7 @@ if ((path = vset_get_filename(stack_string("load_tween",buf),
 	}
 }
 
-void qsave_tween(void)
+static void qsave_tween(void)
 {
 char *path;
 char buf[50];
@@ -645,7 +645,7 @@ static void fml_change_mode(Button *m)
 	draw_buttontop(&fml_sav_sel);
 }
 
-static void same_old_files()
+static void same_old_files(void)
 {
 void *ss;
 

@@ -4,6 +4,7 @@
 #include "jimk.h"
 #include "auto.h"
 #include "errcodes.h"
+#include "filemenu.h"
 #include "rastcurs.h"
 #include "softmenu.h"
 #include "textedit.h"
@@ -181,8 +182,8 @@ static Button tit_pla_sel = MB_INIT1(
 
 static go_text_files(Button *b)
 {
-(void)b;
-go_files(4);
+	(void)b;
+	go_files(FTP_TEXT);
 }
 
 static Button tit_loa_sel = MB_INIT1(

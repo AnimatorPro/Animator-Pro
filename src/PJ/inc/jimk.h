@@ -269,23 +269,6 @@ struct ado_setting
 	Short_xyz move;
 	};
 
-/*** file types for go_files(int type) ***/
-
-enum file_types {
-	FTP_FLIC = 0,	/* video */
-	FTP_PIC,	/* frame */
-	FTP_CEL,	/* cel */
-	FTP_PALETTE, /* palette */
-	FTP_TEXT,		/* text */
-	FTP_FONT,	/* font */
-	FTP_POLY,	/* polygon */
-	FTP_PATH,		/* path */
-	FTP_OPTICS, 	/* optic */
-	FTP_SETTINGS, /* settings */
-	FTP_MASK,	/* stencil */
-	FTP_MACRO,	/* macro */
-	FTP_TWEEN,	/* tween */
-};
 /* names of all our temp files */
 
 extern char alt_name[];

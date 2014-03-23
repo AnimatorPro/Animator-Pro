@@ -6,6 +6,7 @@
 #include "brush.h"
 #include "commonst.h"
 #include "errcodes.h"
+#include "filemenu.h"
 #include "options.h"
 #include "palmenu.h"
 #include "rastcurs.h"
@@ -1413,7 +1414,7 @@ if (pj_exists(text_name) )
 static void go_poly_files(void)
 {
 	hide_mp();
-	go_files(6);
+	go_files(FTP_POLY);
 	show_mp();
 }
 

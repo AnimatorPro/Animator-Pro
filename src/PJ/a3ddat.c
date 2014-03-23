@@ -41,6 +41,7 @@
 #include "a3d.h"
 #include "brush.h"
 #include "celmenu.h"
+#include "filemenu.h"
 #include "fli.h"
 #include "inks.h"
 #include "memory.h"
@@ -1565,7 +1566,7 @@ draw_button(&a3d_g0_sel);
 static void mgo_path_files(void)
 {
 	hide_mp();
-	go_files(7);
+	go_files(FTP_PATH);
 	show_mp();
 }
 

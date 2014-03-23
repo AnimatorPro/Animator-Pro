@@ -4,6 +4,7 @@
 #include "broadcas.h"
 #include "commonst.h"
 #include "errcodes.h"
+#include "filemenu.h"
 #include "flx.h"
 #include "linklist.h"
 #include "menus.h"
@@ -866,7 +867,7 @@ switch(hitid)
 				tween_undraw();
 				twe_disable_refresh();
 				trash_tween_state(&twcb->cur);
-				go_files(12);
+				go_files(FTP_TWEEN);
 				load_tween_state();
 				twe_enable_refresh();
 				tween_redraw();

@@ -13,6 +13,7 @@
 #include "commonst.h"
 #include "composit.h"
 #include "errcodes.h"
+#include "filemenu.h"
 #include "fli.h"
 #include "ftextf.h"
 #include "homepul.h"
@@ -645,7 +646,7 @@ else
 			go_save_segment();
 			break;
 		case FLI_FIL_PUL: /* files */
-			go_files(0);
+			go_files(FTP_FLIC);
 			break;
 		case PIC_CLE_PUL:	/* clear */
 			clear_pic();
@@ -663,7 +664,7 @@ else
 			view_frame();
 			break;
 		case PIC_FIL_PUL: /* files */
-			go_files(1);
+			go_files(FTP_PIC);
 			break;
 		case CEL_CLI_PUL:	/* clip */
 			clip_cel();
@@ -693,7 +694,7 @@ else
 			delete_the_cel();
 			break;
 		case CEL_FIL_PUL:  /* files */
-			go_files(2);
+			go_files(FTP_CEL);
 			break;
 		case TRA_BLU_PUL: /* blue frame */
 			qblue_pic();
@@ -760,7 +761,7 @@ else
 			qmacro();
 			break;
 		case EXT_SET_PUL: /* settings */
-			go_files(9);
+			go_files(FTP_SETTINGS);
 			break;
 		case EXT_CON_PUL: /* configure */
 			new_config();

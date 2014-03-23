@@ -8,6 +8,7 @@
 #include "celmenu.h"
 #include "commonst.h"
 #include "errcodes.h"
+#include "filemenu.h"
 #include "flx.h"
 #include "inks.h"
 #include "memory.h"
@@ -1463,7 +1464,7 @@ HMP:
 			auto_squash();
 			break;
 		case PRE_FIL_PUL:
-			go_files(8);
+			go_files(FTP_OPTICS);
 			a3d_disables();
 			break;
 		case PRE_QUI_PUL:
