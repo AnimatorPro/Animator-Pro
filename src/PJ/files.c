@@ -1,4 +1,3 @@
-
 /* Files.c - Let user choose whether to load/save/delete any of our 12
    basic file types. */
 
@@ -7,6 +6,7 @@
 #include "commonst.h"
 #include "filemenu.h"
 #include "flicel.h"
+#include "mask.h"
 #include "menus.h"
 #include "rastcurs.h"
 #include "softmenu.h"

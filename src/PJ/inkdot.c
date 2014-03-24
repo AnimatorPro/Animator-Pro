@@ -4,6 +4,7 @@
 #include "inkaid.h"
 #include "inkdot.h"
 #include "inks.h"
+#include "mask.h"
 #include "memory.h"
 #include "options.h"
 #include "rastlib.h"

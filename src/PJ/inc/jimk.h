@@ -151,7 +151,6 @@ void zpan_ccycle_redraw(Button *hanger);
 extern void mb_move_quickmenu();
 extern void mb_quickmenu_to_bottom();
 extern void mb_toggle_zclear();
-extern void mb_toggle_mask();
 
 /* for use in default input */
 Boolean check_pen_abort();	  /* checks for abort outside menus */
@@ -487,7 +486,6 @@ typedef struct vlcb {  /* v local control block not saved !!! */
 
 extern Vlcb vl;
 extern Rcel *undof;
-extern Bitmap *mask_rast;
 extern Minitime_data flxtime_data;
 
 

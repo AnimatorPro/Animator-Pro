@@ -3,6 +3,7 @@
 #include "errcodes.h"
 #include "grid.h"
 #include "inks.h"
+#include "mask.h"
 #include "options.h"
 #include "rastcurs.h"
 #include "softmenu.h"
@@ -28,8 +29,6 @@ static Button twe_grid_sel = MB_INIT1(
 	NOKEY,
 	MB_B_GHILITE /* flags */
 	);
-extern void see_mask_button(Button *b);
-extern void qmask_keep_undo();
 static Button twe_mask_sel = MB_INIT1(
 	&twe_grid_sel, /* next */
 	NOCHILD,

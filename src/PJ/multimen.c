@@ -14,6 +14,7 @@
 #include "celmenu.h"
 #include "errcodes.h"
 #include "inks.h"
+#include "mask.h"
 #include "menus.h"
 #include "palmenu.h"
 #include "rastcurs.h"
@@ -23,7 +24,7 @@ static Autoarg *mum_autoarg;
 
 extern void ppalette(), toggle_pen(),
 	go_color_grid(Button *b),
-	qmask(), change_time_mode();
+	change_time_mode();
 
 extern Button tseg_group_sel;
 extern Menuhdr quick_menu;

@@ -7,6 +7,7 @@
 #include "errcodes.h"
 #include "filemenu.h"
 #include "flx.h"
+#include "mask.h"
 #include "menus.h"
 #include "render.h"
 #include "softmenu.h"
@@ -81,8 +82,7 @@ Errcode err;
 	return(load_pic(name,(Rcel *)mask_rast,0,FALSE));
 }
 
-
-static void qcreate_mask()
+static void qcreate_mask(void)
 {
 	vs.make_mask = !vs.make_mask;
 	if(vs.make_mask)
@@ -95,7 +95,7 @@ static void qcreate_mask()
 	}
 }
 
-static Boolean tog_mask()
+static Boolean tog_mask(void)
 {
 	vs.use_mask = !vs.use_mask;
 	if (vs.use_mask)
@@ -148,7 +148,7 @@ static void blitmask(Pixel color)
 	zoom_it();
 }
 
-static void qshow_mask()
+static void qshow_mask(void)
 {
 Errcode err;
 int twocolor;
@@ -201,9 +201,7 @@ Rgb3 *white;
 	show_mouse();
 }
 
-
-static void qgrab_mask()
-
+static void qgrab_mask(void)
 /* this assumes the mask is the same dimension as the vb.pencel */
 {
 UBYTE *hline;
@@ -252,8 +250,7 @@ error:
 	free_the_mask();
 }
 
-
-static void do_qfunc(VFUNC gfunc, Boolean keep_undo)
+static void do_qfunc(void (*gfunc)(void), Boolean keep_undo)
 {
 Rcel_save undosave;
 
@@ -268,7 +265,7 @@ Rcel_save undosave;
 		report_temp_restore_rcel(&undosave,undof);
 	}
 }
-static void qinvert_mask()
+static void qinvert_mask(void)
 {
 	pj_xor_rect(mask_rast,1,   /* xor plane [0] or mask with color 1 */
 		      0, 0, mask_rast->width, mask_rast->height);

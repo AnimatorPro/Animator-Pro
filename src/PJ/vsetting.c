@@ -5,6 +5,7 @@
 #include "errcodes.h"
 #include "flx.h"
 #include "inks.h"
+#include "mask.h"
 #include "memory.h"
 #include "rastext.h"
 #include "softmenu.h"

@@ -5,6 +5,7 @@
 #include "blue.h"
 #include "errcodes.h"
 #include "fli.h"
+#include "mask.h"
 
 static Errcode blue1(void *data, int ix, int intween, int scale, Autoarg *aa)
 /* blue pic stuff */

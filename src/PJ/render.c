@@ -11,6 +11,7 @@
 #include "inkaid.h"
 #include "inkdot.h"
 #include "inks.h"
+#include "mask.h"
 #include "poly.h"
 #include "rastcall.h"
 #include "rastrans.h"

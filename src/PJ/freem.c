@@ -11,6 +11,7 @@
 #include "flx.h"
 #include "inks.h"
 #include "jfile.h"
+#include "mask.h"
 #include "memory.h"
 
 static char pushed_cel;
@@ -165,7 +166,7 @@ Errcode err;
 	return(0);
 }
 
-Boolean mask_is_present()
+Boolean mask_is_present(void)
 {
 	return(mask_rast != NULL || (pushed_mask < 0 && pj_exists(mask_name)));
 }

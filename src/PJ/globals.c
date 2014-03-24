@@ -11,6 +11,7 @@
 #include "filemenu.h"
 #include "flx.h"
 #include "inks.h"
+#include "mask.h"
 #include "options.h"
 
 extern void go_time_menu();

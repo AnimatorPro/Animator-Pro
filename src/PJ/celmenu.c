@@ -7,6 +7,7 @@
 #include "grid.h"
 #include "inks.h"
 #include "marqi.h"
+#include "mask.h"
 #include "rastcurs.h"
 #include "rastrans.h"
 #include "render.h"
@@ -340,8 +341,6 @@ static Button cmu_grid_sel = MB_INIT1(
 	NOKEY,
 	MB_B_GHILITE /* flags */
 	);
-extern void see_mask_button(Button *b);
-extern void qmask_keep_undo(Button *b);
 static Button cmu_mask_sel = MB_INIT1(
 	&cmu_grid_sel, /* next */
 	NOCHILD,
