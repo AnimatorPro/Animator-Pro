@@ -93,4 +93,25 @@ extern long largest_frag(void);
 extern void *lo_askmem(long size);
 extern long lo_freemem(void *pt);
 
-#endif /* MEMORY_H */
+/* freem.c */
+extern Errcode fake_push(void);
+extern void free_buffers(void);
+extern Errcode pop_screen_id(LONG check_id);
+extern void fake_push_cel(void);
+extern void fake_pop_cel(void);
+extern Errcode push_cel(void);
+extern Errcode pop_cel(void);
+extern Errcode push_most(void);
+extern Errcode push_pics_id(LONG time_id);
+extern void set_trd_maxmem(void);
+extern void rem_check_tflx_toram(void);
+extern void add_check_tflx_toram(void);
+extern void pop_most(void);
+extern void maybe_push_most(void);
+extern void maybe_pop_most(void);
+extern void push_inks(void);
+extern void ink_push_cel(void);
+extern void ink_pop_cel(void);
+extern void pop_inks(void);
+
+#endif

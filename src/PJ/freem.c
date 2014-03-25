@@ -1,4 +1,3 @@
-
 /* freem.c - 
 	This module contains routines to pop you into and out of a state which
     maximizes free memory by swapping everything possible out to disk.
@@ -13,6 +12,8 @@
 #include "jfile.h"
 #include "mask.h"
 #include "memory.h"
+#include "rfile.h"
+#include "tfile.h"
 
 static char pushed_cel;
 static char pushed_alt;
@@ -24,8 +25,8 @@ Errcode fake_push(void)
 	pushed_alt = pushed_cel = pushed_screen = pushed_mask = 1;
 	return(0); /* allways successful */
 }
-void free_buffers()
 
+void free_buffers(void)
 /* frees all non transient buffers */
 {
 	release_uvfont();
@@ -87,11 +88,11 @@ Errcode err;
 
 /******* cel push pop *******/
 
-void fake_push_cel()
+void fake_push_cel(void)
 {
 	++pushed_cel;
 }
-void fake_pop_cel()
+void fake_pop_cel(void)
 {
 	--pushed_cel;
 }
@@ -193,7 +194,7 @@ error:
 	return(err);
 }
 
-Errcode push_most_id(LONG id)
+static Errcode push_most_id(LONG id)
 {
 Errcode err;
 	release_uvfont();
@@ -219,7 +220,7 @@ Errcode err;
 		return(err);
 	return(push_screen_id(time_id));
 }
-static void to_trd_maxmem()
+static void to_trd_maxmem(void)
 /* make sure temp file system leaves enough for compression buffer and 
  * extra screen */
 {
@@ -274,7 +275,7 @@ Boolean got_bufs;
 			pj_seek(flix.fd,ooset,JSEEK_START);
 	}
 }
-void set_trd_maxmem()
+void set_trd_maxmem(void)
 {
 	rem_check_tflx_toram();
 	to_trd_maxmem();
@@ -304,11 +305,11 @@ static int trdtask_func(Waitask *wt)
 
 	return(TRUE); /* done with it */
 }
-void rem_check_tflx_toram()
+void rem_check_tflx_toram(void)
 {
 	rem_waitask(&trdtask);
 }
-void add_check_tflx_toram()
+void add_check_tflx_toram(void)
 {
 	if(WT_ISATTACHED(&trdtask))
 		return;
