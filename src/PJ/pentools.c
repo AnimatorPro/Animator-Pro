@@ -8,6 +8,7 @@
 #include "fli.h"
 #include "inkdot.h"
 #include "marqi.h"
+#include "options.h"
 #include "rastcurs.h"
 #include "redo.h"
 #include "render.h"

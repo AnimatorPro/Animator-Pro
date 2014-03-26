@@ -16,16 +16,15 @@
 #include "rastcurs.h"
 #include "softmenu.h"
 
-extern void change_pen_mode(), change_ink_mode(), qmake_frames(),
+extern void qmake_frames(),
 	go_time_menu(),
 	toggle_pen(),
 	set_pspeed(), toggle_draw_mode(), toggle_zoom(), ppalette(), 
-	go_dtoolopts(), go_inkopts(), go_zoom_settings(),
+	go_zoom_settings(),
 	movefli_tool(), go_multi(), toggle_stencil(),
 	see_undo(), see_redo();
 
 extern Button palette_menu;
-void see_option_name();
 
 static Sgroup1_data qmu_sh1dat = {
 	&flxtime_data,

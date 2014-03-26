@@ -1,11 +1,12 @@
 #define CURSOR_C
-#include "errcodes.h"
-#include "rastcurs.h"
 #include "jimk.h"
-#include "fli.h"
-#include "resource.h"
 #include "brush.h"
+#include "errcodes.h"
+#include "fli.h"
+#include "options.h"
 #include "picfile.h"
+#include "rastcurs.h"
+#include "resource.h"
 
 typedef struct curslist {
 	Rastcursor *curs;

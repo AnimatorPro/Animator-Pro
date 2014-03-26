@@ -2,10 +2,9 @@
 
 #include "jimk.h"
 #include "brush.h"
+#include "options.h"
 #include "rastcurs.h"
 #include "softmenu.h"
-
-extern void see_abovetext_qslider();
 
 static void see_bsize_slider(Button *b);
 static void feel_bsize_slider(Button *b);

@@ -56,8 +56,8 @@ static void seebg_a3d(Menuwndo *mw);
 
 extern Button tseg_group_sel;
 
-void qinks(), go_multi(),
-	toggle_pen(), zero_sl(), ppalette();
+void go_multi(),
+	toggle_pen(), ppalette();
 void go_color_grid(Button *b);
 
 static void a3d_go_color_grid(Button *b);

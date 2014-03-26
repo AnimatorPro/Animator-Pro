@@ -8,6 +8,7 @@
 #include "inks.h"
 #include "marqi.h"
 #include "mask.h"
+#include "options.h"
 #include "rastcurs.h"
 #include "rastrans.h"
 #include "render.h"
@@ -16,10 +17,6 @@
 /* globals for cel menu functions */
 
 Celmu_cb *cmcb;
-
-/* seeme feelme */
-
-extern void qinks();
 
 /* locals */
 
@@ -414,7 +411,8 @@ static Button cmu_minipal_sel = MB_INIT1(
 	);
 static void qcel_inks(Button *b)
 {
-Pentool *pt;
+	Pentool *pt;
+	(void)b;
 
 	/* we can't paste sprite in inks menu !!!! so don't do it */
 
@@ -424,7 +422,7 @@ Pentool *pt;
 		vl.ptool = &null_pentool; /* fudge to prevent going into sprite mode
 								   * when in inks menu */
 		flx_clear_olays(); /* clear cel if present */
-		qinks(b);
+		qinks();
 		flx_draw_olays(); /* (re)draw cel (if present) */
 		vl.ptool = pt;
 	}

@@ -15,16 +15,14 @@
 #include "scroller.h"
 #include "softmenu.h"
 
-extern Button pen_opts_sel, fill2c_group_sel,
-	freepoly_group_sel, sep_group_sel, box_group_sel;
+extern Button pen_opts_sel;
 
-extern Option_tool *ptool_list;
 extern Minitime_data flxtime_data;
 static Optgroup_data optgroup;
 
 extern Image ctriup, ctridown;
 
-void sample_text(), zero_sl(),
+void
 	ppalette(), see_undo(), see_redo();
 
 extern void edit_curve(), mtween_curve(), mtween_poly(), edit_poly(),
@@ -33,11 +31,15 @@ extern void edit_curve(), mtween_curve(), mtween_poly(), edit_poly(),
 extern Button om_points_group_sel, om_sratio_group_sel, om_osped_group_sel,
 	text_group_sel, curve_group_sel;
 
-void see_abovetext_qslider();
-
+static void get_justify(Button *b);
+static void copy_has_moved(Button *b);
 static void zero_slider(Button *b);
+static void sample_text(Button *b);
+static void mload_titles(Button *m);
 static void mfont_text(void);
+static void msave_titles(void);
 static void go_poly_files(void);
+static void show_help(Button *b);
 
 /* block for Text options */
 
@@ -65,7 +67,6 @@ static Button tfont_sel = MB_INIT1(
 	NOKEY,
 	0
 	);
-static void msave_titles(void);
 static void save_grey(Button *m)
 {
 set_button_disable(m,!pj_exists(text_name));
@@ -83,7 +84,6 @@ static Button tsave_sel = MB_INIT1(
 	NOKEY,
 	0
 	);
-void mload_titles(Button *m);
 static Button tload_sel = MB_INIT1(
 	&tsave_sel,
 	NOCHILD,
@@ -122,7 +122,6 @@ static Button tplace_sel = MB_INIT1(
 	NOKEY,
 	0
 	);
-static void get_justify();
 static Button tjust_sel = MB_INIT1(
 	&tplace_sel,
 	NOCHILD,
@@ -164,7 +163,6 @@ if (choice >= 0)
 }
 
 /* -----------------Block for move/copy --------------*/
-static void copy_has_moved(Button *b);
 static Button move_copy_sel = MB_INIT1(
 	NONEXT,
 	NOCHILD,
@@ -355,11 +353,11 @@ Button om_osped_group_sel = MB_INIT1(
 	);
 
 /* ----------- block for curve options -----------**/
-Qslider otens_sl = 
+static Qslider otens_sl =
 	QSL_INIT1( -20, 20, &vs.sp_tens, 0, NULL, leftright_arrs);
-Qslider ocont_sl = 
+static Qslider ocont_sl =
 	QSL_INIT1( -20, 20, &vs.sp_cont, 0, NULL, leftright_arrs);
-Qslider obias_sl = 
+static Qslider obias_sl =
 	QSL_INIT1( -20, 20, &vs.sp_bias, 0, NULL, leftright_arrs);
 
 static Button bias_sl_sel = MB_INIT1(
@@ -667,7 +665,7 @@ Button freepoly_group_sel = MB_INIT1(
 	);
 
 /* -----------------Block for Star Point slider --------------- */
-Qslider star_points_sl = 
+static Qslider star_points_sl =
 	QSL_INIT1( 3, 32, &vs.star_points, 0, NULL, leftright_arrs);
 
 static Button ompg_color2_sel = MB_INIT1(
@@ -760,7 +758,7 @@ static Button osr_points_sl_sel = MB_INIT1(
 	0
 	);
 
-Qslider star_ratio_sl = 
+static Qslider star_ratio_sl =
 	QSL_INIT1( 0, 100, &vs.star_ratio,0,NULL, leftright_arrs);
 static Button osr_inrad_sl_sel = MB_INIT1(
 	&osr_points_sl_sel,
@@ -835,7 +833,7 @@ static Smu_button_list otool_smblist[] = {
 };
 
 static void *toolsmbs;
-static Errcode nest_load_toolopt_texts()
+static Errcode nest_load_toolopt_texts(void)
 /** allocate and free texts for tool option sub menu buttons **/
 {
 Errcode err;
@@ -844,7 +842,7 @@ Errcode err;
 	return(soft_buttons("tool_panels", otool_smblist, Array_els(otool_smblist),
 						 &toolsmbs ));
 }
-static void nest_free_toolopt_texts()
+static void nest_free_toolopt_texts(void)
 {
 	smu_free_scatters(&toolsmbs);
 	nest_free_brush_texts();
@@ -865,7 +863,6 @@ static Button omu_zpan_sel = MB_INIT1(
 	NOKEY,
 	0
 	);
-static void show_help();
 static Button omu_help_sel = MB_INIT1(
 	&omu_zpan_sel,
 	NONEXT,
@@ -878,7 +875,7 @@ static Button omu_help_sel = MB_INIT1(
 	NOKEY,
 	0
 	);
-Button omu_clus_sel = MB_INIT1(
+static Button omu_clus_sel = MB_INIT1(
 	&omu_help_sel,
 	NOCHILD,
 	78, 9, 92, 64, /* w,h,x,y */
@@ -890,7 +887,7 @@ Button omu_clus_sel = MB_INIT1(
 	NOKEY,
 	0
 	);
-Button omu_clusid_sel = MB_INIT1(
+static Button omu_clusid_sel = MB_INIT1(
 	&omu_clus_sel,
 	NOCHILD,
 	12, 9, 78, 64, /* w,h,x,y */
@@ -1111,10 +1108,12 @@ Ink *ink;
 	return(Success);
 }
 
-static void notool(Pentool *pt, Wndo *w)
+static Errcode notool(Pentool *pt, Wndo *w)
 {
 	(void)pt;
 	(void)w;
+
+	return Success;
 }
 
 Pentool null_pentool = PTOOLINIT1(
@@ -1221,7 +1220,7 @@ static void refresh_options(void)
 	draw_button(&omu_subopts_sel);
 }
 
-void sample_text(Button *b)
+static void sample_text(Button *b)
 {
 int w,h;
 char *s;
@@ -1239,7 +1238,7 @@ char buf[PATH_SIZE];
 	if(w > b->width || h > b->height)
 		mb_centext(b,mc_black(b),s);
 }
-static void feel_1_opt(Button *m,void *rast,int x,int y,Names *entry,
+static void feel_1_opt(Button *m, Raster *rast, int x, int y, Names *entry,
 					  int why)
 {
 Option_tool *o = (Option_tool *)entry;
@@ -1348,8 +1347,7 @@ Option_tool *o;
 #undef OPTG
 }
 
-
-void mload_titles(Button *m)
+static void mload_titles(Button *m)
 {
 (void)m;
 
@@ -1387,7 +1385,7 @@ qsave_titles();
 show_mp();
 }
 
-Errcode save_titles(char *title)
+static Errcode save_titles(char *title)
 {
 return(pj_copyfile(text_name, title));
 }
@@ -1431,7 +1429,7 @@ static void iopt_scroller(SHORT topname)
 	init_name_scroller(&oscroller,vb.screen);
 }
 
-static void omu_color_redraw(Menuhdr *mh, USHORT why)
+static void omu_color_redraw(void *mh, USHORT why)
 {
 	(void)mh;
 	(void)why;
@@ -1457,7 +1455,7 @@ static void omu_on_showhide(Menuhdr *mh,Boolean showing)
 	else
 		rem_color_redraw(&omu_redraw_node);
 }
-static Boolean do_options_keys()
+static Boolean do_options_keys(void)
 {
  	if(check_pen_abort())
 		return(TRUE);

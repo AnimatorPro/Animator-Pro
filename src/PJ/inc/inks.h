@@ -1,8 +1,8 @@
 #ifndef INKS_H
 #define INKS_H
 
-#ifndef STDTYPES_H
-	#include "stdtypes.h"
+#ifndef OPTIONS_H
+#include "options.h"
 #endif
 
 struct aa_ink_data;

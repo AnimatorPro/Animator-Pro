@@ -13,10 +13,6 @@
 	#include "asm.h"
 #endif
 
-#ifndef OPTIONS_H
-	#include "options.h"
-#endif
-
 #ifndef REDO_H
 	#include "redo.h"
 #endif
@@ -42,6 +38,7 @@
 #endif
 
 struct ink;
+struct pentool;
 
 void return_to_main(Errcode code);
 
@@ -473,7 +470,7 @@ typedef struct vlcb {  /* v local control block not saved !!! */
 	SHORT flidiag_scale; /* scalar for diag relative items */
 	Short_xy scrcent;	/* precalculated center of screen */
 
-	Pentool *ptool; 	/* current pen tool */
+	struct pentool *ptool; /* current pen tool */
 	struct ink *ink;	/* curent ink tool */
 	SHORT hide_brush;	/* hide the brush in the brush cursor */
 	VFUNC undoit;		/* current undo function */

@@ -7,6 +7,7 @@
 #include "menus.h"
 #include "ptrmacro.h"
 #include "resource.h"
+#include "rexlib.h"
 #include "softmenu.h"
 
 Errcode config_idriver(char *name, UBYTE *modes, Boolean use_modes, SHORT port)

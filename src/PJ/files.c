@@ -8,6 +8,7 @@
 #include "flicel.h"
 #include "mask.h"
 #include "menus.h"
+#include "options.h"
 #include "rastcurs.h"
 #include "softmenu.h"
 #include "textedit.h"
