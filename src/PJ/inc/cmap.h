@@ -5,6 +5,10 @@
 	#include "stdtypes.h"
 #endif
 
+struct button;
+struct menuhdr;
+struct wscreen;
+
 #define COLORS 256
 #define RGB_MAX 256
 
@@ -17,15 +21,23 @@ typedef struct cmap {
 	Rgb3 ctab[COLORS];
 } Cmap;
 
-Errcode pj_cmap_alloc(Cmap **pcmap, LONG num_colors);
-void pj_cmap_free(Cmap *cmap);
-void pj_get_default_cmap(Cmap *cmap);
+extern Cmap *pj_default_cmap;
+extern struct button pal_bun_sel;
+extern struct button pal_cco_sel;
+extern struct button pal_pal_sel;
+extern struct button pal_spe_sel;
+extern struct menuhdr palette_menu;
+
+extern Errcode pj_cmap_alloc(Cmap **pcmap, LONG num_colors);
+extern void pj_cmap_free(Cmap *cmap);
+extern void pj_get_default_cmap(Cmap *cmap);
 
 extern ULONG cmap_crcsum(Cmap *cmap);
 extern Boolean cmaps_same(Cmap *s1, Cmap *s2);
 extern Cmap *clone_cmap(Cmap *toclone);
 extern void pj_cmap_load(void *raster, Cmap *cmap);
 extern void pj_cmap_copy(Cmap *s, Cmap *d);
+extern int compromise_cmap(Cmap *s1, Cmap *s2, Cmap *d);
 extern void pj_shift_cmap(const UBYTE *src, UBYTE *dst, unsigned int n);
 extern void swap_cmaps(Cmap *a, Cmap *b);
 
@@ -47,5 +59,15 @@ extern void rgb_to_hls(SHORT r, SHORT g, SHORT b, SHORT *h, SHORT *l, SHORT *s);
 extern void hls_to_rgb(SHORT *r, SHORT *g, SHORT *b, SHORT h, SHORT l, SHORT s);
 
 extern void pack_ctable(Rgb3 *source, LONG scount, Rgb3 *dest, int dcount);
+
+/* cfit.c */
+extern void fitting_ctable(Rgb3 *scm, Rgb3 *dcm, UBYTE *cnums);
+extern void nz_fitting_ctable(Rgb3 *scm, Rgb3 *dcm, UBYTE *cnums);
+extern void get_cmap_blend(int bscale, Cmap *cmapa, Cmap *cmapb, Cmap *dcmap);
+extern void make_one_color_ctable(Pixel *ctable, SHORT tcolor);
+
+/* vpsubs.c */
+extern void see_cmap(void);
+extern int interp_range(int c1, int c2, int i, int divi);
 
 #endif

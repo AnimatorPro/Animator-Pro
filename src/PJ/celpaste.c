@@ -6,6 +6,7 @@
 #include "flicel.h"
 #include "flx.h"
 #include "inks.h"
+#include "palmenu.h"
 #include "rastcurs.h"
 #include "rastrans.h"
 #include "render.h"

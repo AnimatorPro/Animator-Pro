@@ -127,8 +127,12 @@ struct celinfo_file {
 
 #define CELDATA_OFFSET (sizeof(Fli_head) + sizeof(Chunk_id))
 
-Boolean need_render_cfit(Cmap *scmap);
-Boolean make_render_cfit(Cmap *scmap, Celcfit *cfit, SHORT tcolor);
+extern void init_celcfit(Celcfit *cfit);
+extern Boolean need_render_cfit(Cmap *scmap);
+extern Boolean make_render_cfit(Cmap *scmap, Celcfit *cfit, SHORT tcolor);
+
+extern Boolean
+make_simple_cfit(Cmap *scmap, Cmap *dcmap, Celcfit *cfit, int clearc);
 
 /* draw flicel options */
 #define DRAW_DELTA	0

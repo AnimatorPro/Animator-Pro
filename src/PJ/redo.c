@@ -6,6 +6,7 @@
 #include "inkdot.h"
 #include "inks.h"
 #include "memory.h"
+#include "palmenu.h"
 #include "rastcall.h"
 #include "redo.h"
 #include "render.h"

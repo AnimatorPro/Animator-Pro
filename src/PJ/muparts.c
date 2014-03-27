@@ -9,9 +9,7 @@
 #include "rastcurs.h"
 #include "softmenu.h"
 
-extern void ppalette();
 extern void toggle_zoom(), toggle_pen(), go_multi();
-void go_color_grid(Button *b);
 extern Button tseg_a_sel, tseg_s_sel, tseg_f_sel;
 
 static void pget_color(Button *b);
@@ -325,8 +323,6 @@ USHORT changes = 0;
 /****** zoom cycle_color pan group *********/
 
 extern void movefli_tool(), go_zoom_settings();
-
-extern void mb_toggle_ccycle();
 
 static void see_ccycle(Button *b)
 {

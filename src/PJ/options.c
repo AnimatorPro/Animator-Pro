@@ -23,7 +23,7 @@ static Optgroup_data optgroup;
 extern Image ctriup, ctridown;
 
 void
-	ppalette(), see_undo(), see_redo();
+	see_undo(), see_redo();
 
 extern void edit_curve(), mtween_curve(), mtween_poly(), edit_poly(),
 	toggle_zoom(), go_zoom_settings(), movefli_tool();

@@ -7,6 +7,7 @@
 #include "inks.h"
 #include "mask.h"
 #include "memory.h"
+#include "palchunk.h"
 #include "rastext.h"
 #include "softmenu.h"
 #include "unchunk.h"

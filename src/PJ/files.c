@@ -9,6 +9,7 @@
 #include "mask.h"
 #include "menus.h"
 #include "options.h"
+#include "palmenu.h"
 #include "rastcurs.h"
 #include "softmenu.h"
 #include "textedit.h"

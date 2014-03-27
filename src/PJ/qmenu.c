@@ -1,17 +1,16 @@
-
 /* qmenu.c - build up simple list of selections type menus out of
    strings etc.  */
 
 #include <string.h>
-#include "errcodes.h"
-#include "rastext.h"
 #include "jimk.h"
-#include "scroller.h"
-#include "softmenu.h"
 #include "commonst.h"
+#include "errcodes.h"
 #include "ftextf.h"
+#include "palmenu.h"
 #include "rastcurs.h"
 #include "rastext.h"
+#include "scroller.h"
+#include "softmenu.h"
 
 static Pixel cgr_result;
 

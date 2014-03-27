@@ -22,8 +22,7 @@
 
 static Autoarg *mum_autoarg;
 
-extern void ppalette(), toggle_pen(),
-	go_color_grid(Button *b),
+extern void toggle_pen(),
 	change_time_mode();
 
 extern Button tseg_group_sel;

@@ -19,12 +19,10 @@
 extern void qmake_frames(),
 	go_time_menu(),
 	toggle_pen(),
-	set_pspeed(), toggle_draw_mode(), toggle_zoom(), ppalette(), 
+	set_pspeed(), toggle_draw_mode(), toggle_zoom(),
 	go_zoom_settings(),
 	movefli_tool(), go_multi(), toggle_stencil(),
 	see_undo(), see_redo();
-
-extern Button palette_menu;
 
 static Sgroup1_data qmu_sh1dat = {
 	&flxtime_data,

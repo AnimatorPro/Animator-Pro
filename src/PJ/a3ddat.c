@@ -57,8 +57,7 @@ static void seebg_a3d(Menuwndo *mw);
 extern Button tseg_group_sel;
 
 void go_multi(),
-	toggle_pen(), ppalette();
-void go_color_grid(Button *b);
+	toggle_pen();
 
 static void a3d_go_color_grid(Button *b);
 static void change_rot_scale(Button *m);

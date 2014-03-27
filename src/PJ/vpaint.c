@@ -23,6 +23,7 @@
 #include "input.h"
 #include "mask.h"
 #include "menus.h"
+#include "palmenu.h"
 #include "picdrive.h"
 #include "softmenu.h"
 #include "textedit.h"

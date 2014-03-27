@@ -66,6 +66,32 @@ extern void
 rthread_cmap(UBYTE *gotit,
 		struct rgb3 *scmap, struct rgb3 *dcmap, int inertia, int ccount);
 
+/* onepal.c */
+extern void fold_in_mucolors(Cmap *cmap, int first_free, struct wscreen *s);
+extern void one_palette(void);
+
+/* palet2.c */
+extern void qload_palette(void);
+extern void qsave_palette(void);
+extern void refit_vf(void);
+extern void rampit(const Rgb3 *r1, const Rgb3 *r2, Rgb3 *dr, int ccount);
+extern void hls_rampit(const Rgb3 *r1, const Rgb3 *r2, Rgb3 *dr, int ccount);
+extern void find_colors(void);
+extern void cycle_ccolor(void);
+extern void cycle_redraw_ccolor(void);
+extern void set_ccolor(int newccol);
+extern void update_ccolor(int newcol);
+extern void set_use_bun(int newbun);
+extern void toggle_ccycle(void);
+extern void mb_toggle_ccycle(struct button *b);
+extern void disable_palette_menu(void);
+extern void enable_palette_menu(void);
+extern void palette(void);
+extern void ppalette(void);
+
+/* qmenu.c */
+extern void go_color_grid(struct button *b);
+
 /* quickdat.c */
 extern void see_clusid(struct button *b);
 extern void toggle_clusid(struct button *b);

@@ -13,6 +13,7 @@
 #include "inkdot.h"
 #include "marqi.h"
 #include "memory.h"
+#include "palmenu.h"
 #include "poly.h"
 #include "rectang.h"
 #include "render.h"

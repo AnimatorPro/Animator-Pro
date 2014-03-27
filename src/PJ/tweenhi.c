@@ -9,6 +9,7 @@
 #include "input.h"
 #include "marqi.h"
 #include "memory.h"
+#include "palmenu.h"
 #include "tween.h"
 #include "vmagics.h"
 #include "xfile.h"

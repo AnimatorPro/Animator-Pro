@@ -9,6 +9,7 @@
 #include "flx.h"
 #include "mask.h"
 #include "menus.h"
+#include "palmenu.h"
 #include "render.h"
 #include "softmenu.h"
 

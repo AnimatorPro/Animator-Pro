@@ -26,14 +26,13 @@ extern Button inks_sel, ccolor_sel, spec1_sel;
 extern void go_multi(),
 	see_undo(), toggle_pen();
 
-void go_color_grid(Button *b);
-
 extern void swap_undo();
 
 static void pal_feel_qslider(Button *m);
-static void sliders_from_ccolor(void);
+static void sliders_from_ccolor_with_menuwndo(Menuwndo *m);
 static void see_color_sliders(void);
-static void ccolor_from_sliders(void);
+static Boolean visible_cmap(void);
+static void ccolor_from_sliders(void *data, Button *b);
 static void change_hls_mode(Button *m);
 static void pal_menu_back(Button *m);
 
@@ -138,7 +137,7 @@ Button pal_cco_sel = MB_INIT1(
 	NOKEY,
 	0
 	);
-Button pal_bru_sel = MB_INIT1(
+static Button pal_bru_sel = MB_INIT1(
 	&pal_cco_sel,
 	NOCHILD,
 	11,11,293,105-103,
@@ -323,7 +322,7 @@ static Smu_button_list pal_blist[] = {
 	{ "pen",    { &pal_bru_sel } },
 	};
 
-static void pmu_color_redraw(Menuhdr *mh, USHORT why)
+static void pmu_color_redraw(void *mh, USHORT why)
 {
 	(void)mh;
 	(void)why;
@@ -357,7 +356,7 @@ Menuhdr palette_menu = MENU_INIT0(
 	&pal_most_sel,		/* buttons */
 	SCREEN_FONT, 		/* font */
 	&menu_cursor.hdr,	/* cursor */
-	sliders_from_ccolor,	/* seebg */
+	sliders_from_ccolor_with_menuwndo, /* seebg */
 	NULL,					/* dodata */
 	NULL,					/* domenu */
 	(MBPEN|MBRIGHT|KEYHIT), /* ioflags */
@@ -396,8 +395,8 @@ static Errcode refit1(void *data, int ix, int intween, int scale, Autoarg *aa)
 		refit_rcel(vb.pencel, new_cmap, vb.pencel->cmap);
 	return cmapcopy1(data, ix, intween, scale, aa);
 }
-Errcode load_palette(char *title, int fitting)
 
+static Errcode load_palette(char *title, int fitting)
 /* loads a palette from a palette file or a fli reports errors */
 {
 Errcode err;
@@ -506,15 +505,13 @@ cl_refit1(void *data, int ix, int intween, int scale, Autoarg *aa)
 	return Success;
 }
 
-void cdefault(void)
+static void cdefault(void)
 {
-extern Cmap *pj_default_cmap;
-
 	new_cmap = pj_default_cmap;
 	pmhmpauto(cl_refit1, NULL);
 }
 
-void cuse_cel(void)
+static void cuse_cel(void)
 {
 	if (thecel != NULL)
 	{
@@ -550,6 +547,13 @@ SHORT r, g, b;
 		red_sl.max = green_sl.max = blue_sl.max = RGB_MAX-1;
 	}
 }
+
+static void sliders_from_ccolor_with_menuwndo(Menuwndo *m)
+{
+	(void)m;
+	sliders_from_ccolor();
+}
+
 static void see_color_sliders(void)
 {
 Button **s, *f;
@@ -567,20 +571,19 @@ static Button *slides[3] = {&pal_rsl_sel, &pal_gsl_sel, &pal_bsl_sel};
 	}
 }
 
-void rampit(UBYTE *r1, UBYTE *r2, UBYTE *dr, int ccount)
+void rampit(const Rgb3 *r1, const Rgb3 *r2, Rgb3 *dr, int ccount)
 /* Make a color smooth RGB color ramp between r1 and r2 into dr. */
 {
-int i,j;
+	int i;
 
-for (i=0; i<ccount; i++)
-	{
-	for (j=0; j<3; j++)
-		dr[j] = interp_range(r1[j], r2[j],  i, ccount);
-	dr += 3;
+	for (i = 0; i < ccount; i++) {
+		dr[i].r = interp_range(r1->r, r2->r, i, ccount);
+		dr[i].g = interp_range(r1->g, r2->g, i, ccount);
+		dr[i].b = interp_range(r1->b, r2->b, i, ccount);
 	}
 }
 
-void hls_rampit(Rgb3 *r1, Rgb3 *r2, Rgb3 *dr, int ccount)
+void hls_rampit(const Rgb3 *r1, const Rgb3 *r2, Rgb3 *dr, int ccount)
 /* Make a color smooth RGB color ramp between r1 and r2 into dr. */
 {
 	SHORT h1,l1,s1;
@@ -662,7 +665,7 @@ Rgb3 omc[NUM_MUCOLORS];
 Rgb3 pure_white = {255,255,255};
 Rgb3 pure_black = {0,0,0};
 
-Boolean visible_cmap(void)
+static Boolean visible_cmap(void)
 /* Are colors distinct enough from each other? */
 {
 	return(visible_mucolors(vb.screen->wndo.cmap,vb.screen->mc_colors));
@@ -726,7 +729,7 @@ static Rgb3 cideals[IDC][NUM_MUCOLORS] =      /* menu colors to try for */
 	},
 };
 
-void get_menu_colors()
+static void get_menu_colors(void)
 {
 int choice;
 
@@ -738,8 +741,7 @@ int choice;
 		get_menu_5();
 }
 
-
-void crestore(void)
+static void crestore(void)
 {
 	hide_mp();
 	restore();
@@ -747,10 +749,12 @@ void crestore(void)
 	show_mp();
 }
 
-static void ccolor_from_sliders(void)
+static void ccolor_from_sliders(void *data, Button *button)
 {
 Rgb3 *rgb;
 SHORT r, g, b;
+(void)data;
+(void)button;
 
 	rgb = vb.pencel->cmap->ctab + vs.ccolor;
 	if (vs.hls)
@@ -798,7 +802,7 @@ void cycle_ccolor(void)
 		}
 	}
 }
-void cycle_redraw_ccolor()
+void cycle_redraw_ccolor(void)
 {
 	cycle_ccolor();
 	do_color_redraw(NEW_CCOLOR);
@@ -841,7 +845,7 @@ int obun;
 		}
 	}
 }
-void set_ccycle(Boolean newcyc)
+static void set_ccycle(Boolean newcyc)
 {
 	if((vs.cycle_draw = newcyc) != 0)
 	{
@@ -850,7 +854,7 @@ void set_ccycle(Boolean newcyc)
 		do_color_redraw(NEW_CCOLOR|NEW_CCYCLE);
 	}
 }
-void toggle_ccycle()
+void toggle_ccycle(void)
 {
 	set_ccycle(!vs.cycle_draw);
 }
@@ -859,7 +863,7 @@ void mb_toggle_ccycle(Button *b)
 	toggle_ccycle();
 	draw_buttontop(b); /* draws twice if ccolor changed oh well */
 }
-int get_mousecolor(Wndo *w)
+static int get_mousecolor(Wndo *w)
 {
 (void)w;
 
@@ -991,11 +995,11 @@ switch(hitid)
 
 
 static UBYTE pal_disable;
-void disable_palette_menu()
+void disable_palette_menu(void)
 {
 	++pal_disable;
 }
-void enable_palette_menu()
+void enable_palette_menu(void)
 {
 	--pal_disable;
 }

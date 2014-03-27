@@ -10,11 +10,6 @@
 #include "menus.h"
 #include "palmenu.h"
 
-extern Button pal_men_sel, pal_pal_sel,  rpal_pal_sel, pal_spe_sel,
-	   pal_bun_sel, pal_cco_sel;
-
-extern Menuhdr palette_menu;
-
 static SHORT c1, c2;
 static Rgb3 *ictab;
 

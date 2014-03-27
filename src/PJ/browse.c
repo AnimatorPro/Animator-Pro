@@ -10,6 +10,7 @@
 #include "errcodes.h"
 #include "filepath.h"
 #include "flicel.h"
+#include "palmenu.h"
 #include "rastcurs.h"
 #include "scroller.h"
 #include "softmenu.h"

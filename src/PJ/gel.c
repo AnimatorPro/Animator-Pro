@@ -8,6 +8,7 @@
 #include "errcodes.h"
 #include "inkdot.h"
 #include "inks.h"
+#include "palmenu.h"
 #include "redo.h"
 #include "render.h"
 

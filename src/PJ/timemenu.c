@@ -10,7 +10,7 @@
 #include "rastcurs.h"
 #include "softmenu.h"
 
-extern void ppalette(), toggle_pen(),
+extern void toggle_pen(),
 	insert_a_frame(), kill_a_frame(), set_total_frames(),
 	go_multi(), multi_preview(), multi_use();
 

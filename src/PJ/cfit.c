@@ -4,7 +4,7 @@
 #include "memory.h"
 #include "render.h"
 
-void make_cfit_table(Rgb3 *scm,Rgb3 *dcm,Pixel *cnums, int clearc)
+static void make_cfit_table(Rgb3 *scm, Rgb3 *dcm, Pixel *cnums, int clearc)
 {
 int i;
 UBYTE c;

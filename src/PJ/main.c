@@ -10,6 +10,7 @@
 #include "flx.h"
 #include "inks.h"
 #include "menus.h"
+#include "palmenu.h"
 #include "picdrive.h"
 #include "rastcurs.h"
 

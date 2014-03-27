@@ -1,4 +1,3 @@
-
 /* onepal.c - A routine to force all the frames of a FLIC to a reasonable
    intermediate palette that is the same for all frames */
 
@@ -6,6 +5,7 @@
 #include "auto.h"
 #include "errcodes.h"
 #include "flx.h"
+#include "palmenu.h"
 
 #define MAXC (21000)
 

@@ -1,4 +1,3 @@
-
 /* truecolo.c - stuff to help me pretend that my pixels are RGB values
    and not an index into the color map.  */
 
@@ -6,9 +5,8 @@
 #include "jimk.h"
 #include "inks.h"
 #include "memory.h"
+#include "palmenu.h"
 #include "render.h"
-
-void fitting_ctable();
 
 /* Function: color_dif
  *
