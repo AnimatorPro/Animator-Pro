@@ -2,6 +2,7 @@
    interpreter switch and main keyboard interpreter switch.  Implementations
    of many of routines called by above.  The first layer under main(). */
 
+#include <string.h>
 #include "jimk.h"
 #include "a3d.h"
 #include "alt.h"
@@ -26,6 +27,7 @@
 #include "palmenu.h"
 #include "pentools.h"
 #include "picdrive.h"
+#include "picfile.h"
 #include "softmenu.h"
 #include "textedit.h"
 
@@ -129,12 +131,11 @@ char hailing[100];
 char ss[50];
 char buf[UNSAVE_BUFSIZ];
 char *path;
-extern char *get_pictype_suffi(), *get_fliload_suffi();
 
 	if (!confirm_dirty_load())
 		return;
 
-	get_fliload_suffi(suffi, FALSE);
+	get_fliload_suffi(suffi);
 
 	sprintf(hailing, "%s  %s", stack_string("load_fli",ss),
 							   unsaved_string(buf));
@@ -146,7 +147,7 @@ extern char *get_pictype_suffi(), *get_fliload_suffi();
 	}
 }
 
-Errcode load_the_pic(char *title)
+static Errcode load_the_pic(char *title)
 {
 	return(load_any_picture(title, vb.pencel));
 }
@@ -155,7 +156,6 @@ void qload_pic(void)
 {
 char *title;
 char buf[50];
-extern char *get_pictype_suffi();
 
 	if ((title = vset_get_filename(stack_string("load_pic", buf),
 								  get_pictype_suffi(),

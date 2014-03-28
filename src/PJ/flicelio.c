@@ -7,6 +7,7 @@
 #include "flipath.h"
 #include "menus.h"
 #include "picdrive.h"
+#include "picfile.h"
 #include "softmenu.h"
 #include "unchunk.h"
 #include "util.h"
@@ -700,7 +701,7 @@ char suffi[PDR_SUFFI_SIZE*2 +10];
 char *title;
 char sbuf[50];
 
-	get_celload_suffi(suffi, TRUE);
+	get_celload_suffi(suffi);
 
 	if ((title = vset_get_filename(stack_string("load_cel",sbuf),
 								   suffi,load_str,

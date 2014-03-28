@@ -342,6 +342,7 @@ extern Errcode
 gb_fli_abs_tseek(struct rcel *screen, int new_ix, struct fli_frame *fbuf);
 
 extern Errcode fli_abs_tseek(struct rcel *screen, int new_ix);
+extern void restore(void);
 
 /* fli.c -- Minitime_data functions */
 extern void first_frame(void *data);

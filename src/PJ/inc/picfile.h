@@ -17,6 +17,7 @@
 	#include "vmagics.h"
 #endif
 
+struct anim_info;
 struct cmap;
 
 /* Old style pic header, Animator 1.0 compatible */
@@ -47,8 +48,6 @@ enum pic_chunks {
 	PIC_BITPIXELS = 2,	/* uncompressed pixels in Bitmap format */
 };
 
-struct anim_info;
-
 /* "pic" file io calls */
 
 Errcode pic_anim_info(char *ifname, struct anim_info *ainfo);
@@ -60,4 +59,27 @@ pj_read_picbody(Jfile f, Pic_header *pic, Raster *cel, struct cmap *cmap);
 Errcode load_pic(char *name,Rcel *rcel,LONG check_id, Boolean load_colors);
 Errcode save_pic(char *name,Rcel *screen,LONG id, Boolean save_colors);
 
-#endif /* PICFILE_H */
+/* picfiles.c */
+extern Boolean is_fli_pdr_name(char *path);
+extern char *get_flisave_pdr(char *pdr_path);
+extern Errcode get_picsave_info(char *sufbuf, char *titlebuf, int titlesize);
+extern Errcode get_flisave_info(char *sufbuf, char *titlebuf, int titlesize);
+extern char *get_pictype_suffi(void);
+extern char *get_fliload_suffi(char *sufbuf);
+extern char *get_celload_suffi(char *sufbuf);
+extern void go_pic_pdr_menu(void);
+extern void go_flic_pdr_menu(void);
+
+extern Errcode
+find_pdr_loader(char *ifname, Boolean multi_frame,
+		struct anim_info *ainfo, char *pdr_name, Rcel *screen);
+
+extern Errcode load_any_picture(char *name, Rcel *screen);
+extern Errcode save_current_pictype(char *name, Rcel *screen);
+extern Errcode save_gif(char *name, Rcel *screen);
+
+/* vpaint.c */
+extern void qload_pic(void);
+extern void qsave_pic(void);
+
+#endif

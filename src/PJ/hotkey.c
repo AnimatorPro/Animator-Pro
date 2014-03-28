@@ -1,7 +1,8 @@
 #include <string.h>
 #define INPUT_INTERNALS
-#include "errcodes.h"
 #include "jimk.h"
+#include "errcodes.h"
+#include "picfile.h"
 
 static Errcode increment_old(char *path)
 

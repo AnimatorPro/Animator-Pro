@@ -1,4 +1,3 @@
-
 /* Fli.c - this file should probably be broken into a few sections.  It has
    the low level routines to uncompress and play-back a FLI flic.  It also
    has a few simple time-oriented utility routines.  Stuff for stepping
@@ -11,6 +10,7 @@
 #include "flx.h"
 #include "pentools.h"
 #include "picdrive.h"
+#include "picfile.h"
 #include "unchunk.h"
 
 static Errcode load_fli(char *title);

@@ -1,5 +1,7 @@
 /* file to take care of loadable still frame file types */
 
+#include <stdio.h>
+#include <string.h>
 #include "jimk.h"
 #include "aaconfig.h"
 #include "animinfo.h"
@@ -9,6 +11,7 @@
 #include "memory.h"
 #include "menus.h"
 #include "picdrive.h"
+#include "picfile.h"
 #include "resource.h"
 #include "rexlib.h"
 #include "softmenu.h"
@@ -62,6 +65,7 @@ static Config_pdr pdrconf[2] = {
 
 static Boolean is_local_pdr(char *path,int type)
 {
+extern char *pj_get_path_name(char *path);
 	return(!txtcmp(pj_get_path_name(path),pdrconf[type].local_name));
 }
 static Boolean is_pic_pdr_name(char *path)
@@ -92,7 +96,7 @@ char *get_flisave_pdr(char *pdr_path)
 {
 	return(get_save_pdr(pdr_path,FLICTYPE));
 }
-char *get_picsave_pdr(char *pdr_path)
+static char *get_picsave_pdr(char *pdr_path)
 {
 	return(get_save_pdr(pdr_path,PICTYPE));
 }
@@ -171,7 +175,7 @@ Errcode get_flisave_info(char *sufbuf, char *titlebuf, int titlesize)
 {
 	return(get_pdrsave_info(sufbuf, titlebuf, titlesize, FLICTYPE));
 }
-char *get_pictype_suffi()
+char *get_pictype_suffi(void)
 
 /* we have a little static suffi area to avoid re-loading picture module
  * every time */
@@ -180,7 +184,7 @@ char *get_pictype_suffi()
 		cur_pdrtype_info(pdrconf[PICTYPE].save_suffi,NULL,0,PICTYPE,0);
 	return(pdrconf[PICTYPE].save_suffi);
 }
-char *get_flitype_suffi()
+static char *get_flitype_suffi(void)
 
 /* we have a little static suffi area to avoid re-loading picture module
  * every time */
@@ -189,7 +193,7 @@ char *get_flitype_suffi()
 		cur_pdrtype_info(pdrconf[FLICTYPE].save_suffi,NULL,0,FLICTYPE,0);
 	return(pdrconf[FLICTYPE].save_suffi);
 }
-static reset_pdr_stuff(int type)
+static void reset_pdr_stuff(int type)
 {
 Config_pdr *cpdr = &pdrconf[type];
 Vset_path vsp;
@@ -239,12 +243,12 @@ char *hdr_key;
 		reset_pdr_stuff(type);
 	return(err);
 }
-void go_pic_pdr_menu()
+void go_pic_pdr_menu(void)
 /* called when you right click over 'picture' on files menu */
 {
 	select_save_pdr(PICTYPE);
 }
-void go_flic_pdr_menu()
+void go_flic_pdr_menu(void)
 /* called when you right click over 'flic' on files menu */
 {
 	select_save_pdr(FLICTYPE);

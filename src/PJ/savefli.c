@@ -12,6 +12,7 @@
 #include "ftextf.h"
 #include "menus.h"
 #include "picdrive.h"
+#include "picfile.h"
 #include "ptrmacro.h"
 #include "softmenu.h"
 #include "unchunk.h"
@@ -19,8 +20,6 @@
 char dirty_file;
 char dirty_frame;
 long dirty_strokes;
-
-extern char *get_flisave_pdr(char *pdr_path);
 
 void dirties(void)
 {

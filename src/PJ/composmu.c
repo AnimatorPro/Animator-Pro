@@ -18,6 +18,7 @@
 #include "memory.h"
 #include "pentools.h"
 #include "picdrive.h"
+#include "picfile.h"
 #include "rastcurs.h"
 #include "softmenu.h"
 
@@ -695,7 +696,6 @@ Errcode err;
 char path[PATH_SIZE];
 char sbuf[50];
 char suffi[16];
-extern char *get_pictype_suffi();
 
 	hide_mp();
 	sprintf(suffi,".FL?;.CEL;%.4s", get_pictype_suffi());
@@ -739,8 +739,6 @@ char suffi[PDR_SUFFI_SIZE*2 +10];
 char path[PATH_SIZE];
 char header[80];
 char hdtext[60];
-extern char *get_pictype_suffi();
-
 
 	hide_mp();
 
