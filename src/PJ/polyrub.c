@@ -5,7 +5,7 @@
 #include "poly.h"
 #include "polyrub.h"
 
-void rub_wpoints(Poly *poly, Pixel pt_color, Pixel pt1_color)
+static void rub_wpoints(Poly *poly, Pixel pt_color, Pixel pt1_color)
 {
 LLpoint *p;
 int i;
@@ -48,7 +48,7 @@ marqi_poly(&mh, p, closed);
 rub_wpoints(p,pt_color,pt1_color);
 }
 
-void unrub_poly_points(Poly *p, Boolean closed)
+static void unrub_poly_points(Poly *p, Boolean closed)
 {
 Marqihdr mh;
 
@@ -100,7 +100,7 @@ long dist;
 	}
 }
 
-void marqi_mpl_polys(Mpl_data *data, Marqihdr *mh)
+static void marqi_mpl_polys(Mpl_data *data, Marqihdr *mh)
 {
 int i;
 Poly *poly;
@@ -113,7 +113,7 @@ for (i=0; i<data->pcount; i++)
 	}
 }
 
-void unmarqi_mpl_polys(Mpl_data *data, Marqihdr *mh)
+static void unmarqi_mpl_polys(Mpl_data *data, Marqihdr *mh)
 {
 int i;
 Poly *poly;
@@ -205,9 +205,8 @@ while (--pcount >= 0)
 	}
 }
 
-
-Errcode rub_sz_polys(Mpl_data *mpl, 
-	Poly **origs, int pcount, int *pp, int *pq)
+static Errcode
+rub_sz_polys(Mpl_data *mpl, Poly **origs, int pcount, int *pp, int *pq)
 /* Rubberband out a circle.  Then rubberband polygons stretching and
   shrinking them using mouse position relative to initial circle to
   scale. */

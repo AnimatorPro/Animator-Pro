@@ -7,9 +7,6 @@
 #include "pentools.h"
 #include "poly.h"
 
-extern Poly working_poly;
-extern LLpoint *poly_last_point();
-
 /* some functions for line drawing */
 extern void a1bdot(), rbdot(), rbbrush();
 
@@ -17,7 +14,7 @@ extern int pxmin, pxmax, pymin, pymax;
 
 static int get_rub_spiral(void);
 
-int make_spiral_poly(int x0,int y0,int rad,int itheta,long ttheta)
+static int make_spiral_poly(int x0, int y0, int rad, int itheta, long ttheta)
 {
 int i;
 register int ppoints;
@@ -49,10 +46,11 @@ poly_last_point(&working_poly)->next = working_poly.clipped_list;
 return(1);
 }
 
-
-Errcode spiral_tool(void)
+Errcode spiral_tool(Pentool *pt, Wndo *w)
 {
-Errcode err;
+	Errcode err;
+	(void)pt;
+	(void)w;
 
 	if (!pti_input())
 		return(Success);

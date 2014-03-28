@@ -1,8 +1,8 @@
-
 #include "errcodes.h"
-#include "memory.h"
-#include "tween.h"
 #include "imath.h"
+#include "memory.h"
+#include "poly.h"
+#include "tween.h"
 
 /* extra precision for tween */
 #define TSHIFT 4

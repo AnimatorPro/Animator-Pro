@@ -1,4 +1,3 @@
-
 /* spline.c - hermitian splines with tension/continuity/bias.  Always go
    through their control points. */
 
@@ -7,19 +6,18 @@
 /* Tweaked into fixed point by Jim Kent */
 /* setup for ansi c by Peter Kennard */
 
-static void do_spline();
-static void gen_sh_matrix();
-static void calc_vecs();
-
 #define OPEN 0
 #define CLOSED 1
 
-#include "errcodes.h"
 #include "jimk.h"
+#include "errcodes.h"
 #include "fixpoint.h"
 #include "imath.h"
 #include "memory.h"
 #include "poly.h"
+#include "render.h"
+
+int is_path;
 
 static fixpoint sh1,sh2,sh3,sh4;
 static int *lx, *ly;
@@ -31,6 +29,14 @@ static fixpoint **ftabs[] =
 	{
 	&dinx, &doutx, &diny, &douty, &tens, &cont, &bias,
 	};
+
+static void
+do_spline(fixpoint *knotx, fixpoint *knoty, int knots, int interps, int type,
+		dotout_func dotout, void *dotdat,
+		void (*vecout)(SHORT, SHORT, SHORT, SHORT, dotout_func, void *),
+		Poly *polyout, int moving_point_ix, int invert_segment);
+
+static void gen_sh_matrix(fixpoint s);
 
 #define FTS (Array_els(ftabs))
 
@@ -79,9 +85,12 @@ error:
 	return(Err_no_memory);
 }
 
-static Errcode s_spline(Poly *polyin,VFUNC dotout,void *dotdat,VFUNC vecout,
-						int closed,int ir,Poly *polyout,
-						int moving_point_ix, int invert_segment)
+static Errcode
+s_spline(Poly *polyin,
+		dotout_func dotout, void *dotdat,
+		void (*vecout)(SHORT, SHORT, SHORT, SHORT, dotout_func, void *),
+		int closed, int ir, Poly *polyout,
+		int moving_point_ix, int invert_segment)
 
 /* Generate a spline that passes through the control points.	   */
 /* Supply pointers to control point fixpoint arrays (knotx/knoty),	*/
@@ -128,9 +137,11 @@ error:
 	return(err);
 }
 
-int some_spline(Poly *poly,VFUNC dotout,void *dotdat,
-						   VFUNC vecout,
-						   int closed,int ir)
+int
+some_spline(Poly *poly,
+		dotout_func dotout, void *dotdat,
+		void (*vecout)(SHORT, SHORT, SHORT, SHORT, dotout_func, void *),
+		int closed, int ir)
 {
 LLpoint *p;
 
@@ -143,10 +154,11 @@ if (poly->pt_count == 1)
 return(s_spline(poly,dotout,dotdat,vecout,closed,ir,NULL,-1,0));
 }
 
-int partial_spline(Poly *poly,VFUNC dotout,void *dotdat,
-						   VFUNC vecout,
-						   int closed,int ir, int moving_point_ix,
-						   int invert_seg)
+int
+partial_spline(Poly *poly,
+		dotout_func dotout, void *dotdat,
+		void (*vecout)(SHORT, SHORT, SHORT, SHORT, dotout_func, void *),
+		int closed, int ir, int moving_point_ix, int invert_seg)
 {
 	return(s_spline(poly,dotout,dotdat,vecout,closed,ir,NULL,
 		moving_point_ix,
@@ -173,8 +185,7 @@ if (ptcount == 1)
 	}
 else
 	{
-	if((err = s_spline(poly,(VFUNC)NULL,NULL,(VFUNC)NULL,
-					   closed,ir,dpoly,-1,0)) < 0)
+	if ((err = s_spline(poly, NULL, NULL, NULL, closed, ir, dpoly, -1, 0)) < 0)
 		{
 		pj_gentle_free(dpoly->clipped_list);
 		dpoly->clipped_list = NULL;
@@ -247,28 +258,25 @@ int next,last;
 	douty[x] = FP(FT(dyi,c1) , FT(dyo,c2));
 }
 
-
-int is_path;
-
-static
-void do_spline(fixpoint *knotx,
-			  fixpoint *knoty, 		/* floating point knot positions */
-			  int knots,		    /* knots: number of knots */
-			  int interps,			/* # of interpolated pts between knots */
-			  int type,VFUNC dotout,void *dotdat,
-			  VFUNC vecout, 		/* draw a line function */
-			  Poly *polyout,		/* place to put spline as a poly */
-			  int moving_point_ix,	/* point that is moving if any */
-			  int invert_segment)	/* show just moving part,
-										or just the rest */
-
-/****************************************************************/
-/* Generate a spline that passes through the control points.	*/
-/* Uses hermite interpolation									*/
-/*																*/
-/* linex & liney: output integer array							*/
-/* type: OPEN or CLOSED 										*/
-/****************************************************************/
+/* Function: do_spline
+ *
+ *  Generate a spline that passes through the control points.
+ *  Uses hermite interpolation.
+ *
+ *  knotx, knoty - floating point knot positions.
+ *  knots - number of knots.
+ *  interps - # of interpolated pts between knots.
+ *  type - OPEN or CLOSED.
+ *  vecout - draw a line function
+ *  polyout - place to put spline as a poly.
+ *  moving_point_ix - point that is moving if any.
+ *  invert_segment - show just moving part, or just the rest.
+ */
+static void
+do_spline(fixpoint *knotx, fixpoint *knoty, int knots, int interps, int type,
+		dotout_func dotout, void *dotdat,
+		void (*vecout)(SHORT, SHORT, SHORT, SHORT, dotout_func, void *),
+		Poly *polyout, int moving_point_ix, int invert_segment)
 {
 fixpoint s;
 int ix,next,tix, fpix;

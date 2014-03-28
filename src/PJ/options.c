@@ -11,6 +11,7 @@
 #include "options.h"
 #include "palmenu.h"
 #include "pentools.h"
+#include "poly.h"
 #include "rastcurs.h"
 #include "rastext.h"
 #include "scroller.h"
@@ -24,7 +25,7 @@ extern Image ctriup, ctridown;
 void
 	see_undo(), see_redo();
 
-extern void edit_curve(), mtween_curve(), mtween_poly(), edit_poly(),
+extern void mtween_curve(), mtween_poly(),
 	toggle_zoom(), go_zoom_settings(), movefli_tool();
 
 extern Button om_points_group_sel, om_sratio_group_sel, om_osped_group_sel,

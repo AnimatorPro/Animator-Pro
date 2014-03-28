@@ -8,6 +8,7 @@
 #include "memory.h"
 #include "palmenu.h"
 #include "pentools.h"
+#include "poly.h"
 #include "rastcall.h"
 #include "redo.h"
 #include "render.h"

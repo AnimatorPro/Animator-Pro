@@ -10,6 +10,7 @@
 #include "marqi.h"
 #include "menus.h"
 #include "pentools.h"
+#include "poly.h"
 #include "polyrub.h"
 #include "rastcurs.h"
 #include "softmenu.h"
@@ -1235,8 +1236,6 @@ tween_menu(TRUE);
 void mtween_curve(void)
 /* Entry point to tween system from pen-tools/spline */
 {
-extern char curveflag;
-
 curveflag = 1;
 tween_menu(TRUE);
 curveflag = 0;

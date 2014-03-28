@@ -10,11 +10,10 @@
 #include "marqi.h"
 #include "memory.h"
 #include "palmenu.h"
+#include "poly.h"
 #include "tween.h"
 #include "vmagics.h"
 #include "xfile.h"
-
-extern int ld_poly(XFILE *f, Poly *poly);
 
 void a_wireframe_tween(Tween_state *tween,
 	int frames, int speed, 
@@ -173,10 +172,6 @@ err = load_tween(name,&ts);
 trash_tween_state(&ts);
 return(err);
 }
-
-
-
-extern char curveflag;
 
 static Errcode
 tween1(void *tween1_data, int ix, int intween, int scale, Autoarg *aa)

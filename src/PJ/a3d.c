@@ -15,6 +15,7 @@
 #include "memory.h"
 #include "pentools.h"
 #include "poly.h"
+#include "polyrub.h"
 #include "ptrmacro.h"
 #include "rastcurs.h"
 #include "rastrans.h"
@@ -181,9 +182,6 @@ int i;
 
 
 /**************** Gnarly optics stuff that depends on globals *************/
-extern char curveflag;	/* draw points as polygon or curve? */
-extern int is_path;		/* Use path or curve tension cont. bias? */
-
 /* Variables to hold our graphic element (source for optics) */
 static Rcel *ado_cel;					/* if it's a raster element */
 static Poly ado_poly_el;
@@ -945,13 +943,10 @@ Short_xy clk;
 
 	polar(theta-TWOPI/4, CLK_RAD, (short *)&clk);
 	pj_cline(vb.pencel->width/2, CLK_RAD, vb.pencel->width/2+clk.x, 
-		  CLK_RAD+clk.y, dotout);
+		  CLK_RAD+clk.y, dotout, NULL);
 
 #undef CLK_RAD 
 }
-
-extern LLpoint *start_polyt(), *poly_add_point();
-
 
 static int sample_path(Poly *poly, int delay, int maxpts, int clock)
 /* Gather a sampled path from user mouse move */ 

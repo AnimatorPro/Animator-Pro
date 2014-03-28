@@ -108,7 +108,7 @@ void set_leftbehind(RASType *s,Pixel color,Coor sx,Coor sy,
 void max_line(Raster *r, Short_xy *ends, dotout_func dotout, void *dotdat);
 
 void pj_cline(SHORT x1, SHORT y1, SHORT x2, SHORT y2,
-		dotout_func dotout, OPTdata /* void *dotdat */);
+		dotout_func dotout, void *dotdat);
 
 void pj_do_linscale(int sx, int sw, int dx, int dw,
 					void (*doinc)(int sx, int dx, void *dat), OPTdata );

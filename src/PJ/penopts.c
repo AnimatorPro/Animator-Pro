@@ -1,14 +1,9 @@
 #include "jimk.h"
 #include "brush.h"
 #include "pentools.h"
+#include "poly.h"
 #include "rastcurs.h"
 #include "softmenu.h"
-
-extern Errcode
-	ovalf_tool(), petlf_tool(),
-	polyf_tool(), rpolyf_tool(), 
-	shapef_tool(), spiral_tool(), curve_tool(),
-	starf_tool(), streak_tool(), text_tool();
 
 static void close_static_ptool(Option_tool *tool);
 

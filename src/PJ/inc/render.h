@@ -49,8 +49,6 @@ Errcode transpblit(register Rcel *tcel,int clearcolor,int clear,int tinting);
 extern Errcode render_hline(SHORT y, SHORT x0, SHORT x1, void *r);
 extern Errcode poll_render_hline(SHORT y, SHORT x0, SHORT x1, void *r);
 
-Errcode render_a_poly_or_spline(struct poly *wpoly, Boolean filled,
-	Boolean closed, Boolean curved);
 Errcode render_opoly(Poly *p, Boolean closed);
 
 void render_mask_alpha_blit(UBYTE *alpha, int abpr, int x, int y, int w, int h

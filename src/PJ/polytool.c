@@ -4,6 +4,7 @@
    to/from working_poly here.  Also routines to move individual points
    in a polygon.  */
 
+#include <assert.h>
 #include <stdio.h>
 #include "jimk.h"
 #include "brush.h"
@@ -16,12 +17,16 @@
 #include "palmenu.h"
 #include "pentools.h"
 #include "poly.h"
+#include "polyrub.h"
 #include "rectang.h"
 #include "render.h"
 #include "xfile.h"
 
 Poly working_poly;
 char curveflag;
+
+static Errcode csd_render_poly(Poly *poly, Boolean filled, Boolean closed);
+static int is_closedp(void);
 
 /************* polygon and spline marqi and dotout drawing routines ***********/
 
@@ -31,7 +36,7 @@ poly_cline_with_render_dot(SHORT x1, SHORT y1, SHORT x2, SHORT y2, void *data)
 	pj_cline(x1, y1, x2, y2, render_dot, data);
 }
 
-static void dot_poly(register Poly *poly, VFUNC dotout, void *dotdat)
+static void dot_poly(register Poly *poly, dotout_func dotout, void *dotdat)
 {
 register LLpoint *this;
 int i;
@@ -44,16 +49,16 @@ int i;
 		this = this->next;
 	}
 }
-marqi_polydots(Marqihdr *mh,Poly *poly)
+void marqi_polydots(Marqihdr *mh,Poly *poly)
 {
 	dot_poly(poly,mh->pdot,mh);
 }
-undo_polydots(Marqihdr *mh,Poly *poly)
+void undo_polydots(Marqihdr *mh,Poly *poly)
 {
 	dot_poly(poly,undo_marqidot,mh);
 }
 
-static void cpoly(Poly *poly, void *dotout, void *data,Boolean closeit)
+static void cpoly(Poly *poly, dotout_func dotout, void *data, Boolean closeit)
 {
 register LLpoint *this, *next;
 int i;
@@ -70,13 +75,13 @@ int i;
 		this = next;
 	}
 }
-static marqi_open_poly(Marqihdr *mh,Poly *poly)
+static void marqi_open_poly(Marqihdr *mh, Poly *poly)
 /* used in make poly draws all but rubba vectors */
 {
 	cpoly(poly,mh->pdot,mh,0);
 }
 
-static void mwpoly(Marqihdr *mh,VFUNC dotout, Poly *p, Boolean closed)
+static void mwpoly(Marqihdr *mh, dotout_func dotout, Poly *p, Boolean closed)
 {
 	if (curveflag)
 		some_spline(p, dotout, mh, pj_cline, closed, 16);
@@ -102,10 +107,12 @@ typedef struct dot_buffer
 	UBYTE saved;
 	} Dot_buffer;
 
-dot_buffer_put(USHORT x, USHORT y, Marqihdr *mh)
+static void dot_buffer_put(SHORT x, SHORT y, void *marqihdr)
 {
+Marqihdr *mh = marqihdr;
 Dot_buffer *db;
 int pt_count;
+assert(x >= 0 && y >= 0);
 
 db = mh->adata;
 if ((pt_count = db->pt_count) < db->pt_alloc)
@@ -121,7 +128,7 @@ if ((pt_count = db->pt_count) < db->pt_alloc)
 	}
 }
 
-restore_dot_buffer(Marqihdr *mh)
+static void restore_dot_buffer(Marqihdr *mh)
 {
 Dot_buffer *db;
 Short_xy *coors;
@@ -136,13 +143,13 @@ while (--count >= 0)
 	{
 	--dots;
 	--coors;
-	(*mh->putdot)(vb.pencel,*dots,coors->x,coors->y);
+	(*mh->putdot)((Raster *)vb.pencel, *dots, coors->x, coors->y);
 	}
 db->pt_count = 0;
 }
 
-
-Errcode move_spline_segment(Marqihdr *mh, int moving_point_ix, Poly *poly)
+static Errcode
+move_spline_segment(Marqihdr *mh, int moving_point_ix, Poly *poly)
 {
 Dot_buffer rs;
 int closed;
@@ -265,10 +272,9 @@ Errcode render_fill_poly(Poly *p)
 					vb.pencel, poly_cline_with_render_dot, NULL)));
 }
 
-
-
-Errcode render_a_poly_or_spline(struct poly *poly, Boolean filled,
-	Boolean closed, Boolean curved)
+static Errcode
+render_a_poly_or_spline(Poly *poly,
+		Boolean filled, Boolean closed, Boolean curved)
 {
 Errcode err;
 int oc;
@@ -313,7 +319,7 @@ error:
 	return(err);
 }
 
-Errcode csd_render_poly(Poly *poly, Boolean filled, Boolean closed)
+static Errcode csd_render_poly(Poly *poly, Boolean filled, Boolean closed)
 {
 	return render_a_poly_or_spline(poly, filled, closed, curveflag);
 }
@@ -377,10 +383,11 @@ LLpoint *start_polyt(Poly *p)
 	return(new_poly_point(p));
 }
 
-
-Errcode polyf_tool(void)
+Errcode polyf_tool(Pentool *pt, Wndo *w)
 {
-Errcode err;
+	Errcode err;
+	(void)pt;
+	(void)w;
 
 	if((err = make_poly(&working_poly, vs.closed_curve))>=Success)
 		err = finish_polyt(vs.fillp,vs.closed_curve);
@@ -396,6 +403,7 @@ void mmake_path(void)
 }
 #endif /* SLUFFED */
 
+void
 make_poly_loop(Poly *poly, Boolean curved, Boolean closed, LLpoint *this,
 			   int color)
 {
@@ -474,18 +482,21 @@ LLpoint *this;
 	return(Success);
 }
 
-Errcode curve_tool(void)
+Errcode curve_tool(Pentool *pt, Wndo *w)
 {
-Errcode err;
+	Errcode err;
 
 	curveflag = 1;
-	err = polyf_tool();
+	err = polyf_tool(pt, w);
 	curveflag = 0;
 	return(err);
 }
 
-Errcode shapef_tool(void)
+Errcode shapef_tool(Pentool *pt, Wndo *w)
 {
+	(void)pt;
+	(void)w;
+
 	if(start_polyt(&working_poly) == NULL)
 		return(Err_no_memory);
 	get_rub_shape(&working_poly,vs.ccolor,vs.ccolor);
@@ -510,8 +521,9 @@ else
 return(p/q);
 }
 
-int make_sp_wpoly(Poly *poly, int x0,int y0,int rad, register int theta,
-				  int points,int star,int sratio)
+int
+make_sp_wpoly(Poly *poly, int x0, int y0, int rad, int theta,
+		int points, int star, int sratio)
 {
 int i;
 LLpoint *next;
@@ -605,7 +617,7 @@ poly_last_point(poly)->next = poly->clipped_list;
 return(1);
 }
 
-polystar_loop(Poly *poly,
+Errcode polystar_loop(Poly *poly,
 	int star, int dot_color, int dash_color, int x0, int y0,
 	int *ptheta, int *prad)
 {
@@ -649,18 +661,27 @@ int theta, rad;
 	return(maybe_finish_polyt(vs.fillp,TRUE));
 }
 
-Errcode rpolyf_tool(void)
+Errcode rpolyf_tool(Pentool *pt, Wndo *w)
 {
+	(void)pt;
+	(void)w;
+
 	return(polystartool(WP_RPOLY));
 }
 
-Errcode starf_tool(void)
+Errcode starf_tool(Pentool *pt, Wndo *w)
 {
+	(void)pt;
+	(void)w;
+
 	return(polystartool(WP_STAR));
 }
 
-Errcode petlf_tool(void)
+Errcode petlf_tool(Pentool *pt, Wndo *w)
 {
+	(void)pt;
+	(void)w;
+
 	return(polystartool(WP_PETAL));
 }
 
@@ -808,24 +829,21 @@ pt = pt->next;
 *next = pt;
 }
 
-
-int is_closedp(void)
+static int is_closedp(void)
 {
-extern int is_path;
-
 if (is_path)
 	return(vs.pa_closed);
 else
 	return(vs.closed_curve);
 }
 
-Errcode load_and_paste_poly()
+Errcode load_and_paste_poly(char *name)
 {
 Poly poly;
 Errcode err;
 
 	clear_struct(&poly);
-	if ((err = load_a_poly(poly_name, &poly)) >= Success)
+	if ((err = load_a_poly(name, &poly)) >= Success)
 	{
 		err = render_poly(&poly, vs.fillp,vs.closed_curve);
 		if (vs.cycle_draw)
@@ -887,7 +905,7 @@ while (--i >= 0)
 pt->next = p->clipped_list;
 }
 
-Errcode clone_ppoints(Poly *s, Poly *d)
+static Errcode clone_ppoints(Poly *s, Poly *d)
 /* makes d's point list a clone of s's.
    Previous d point list is overwritten, but not freed. */
 {

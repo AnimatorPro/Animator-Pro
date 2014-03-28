@@ -1,4 +1,3 @@
-
 /* flicel.c - Stuff to do the basic things you need to do to a cel (ie a
    rectangular image with a color map.	Flicels and Rcels (aka
    screens) are almost the same structure.	You can use all the cel
@@ -15,6 +14,8 @@
 #include "marqi.h"
 #include "memory.h"
 #include "pentools.h"
+#include "poly.h"
+#include "polyrub.h"
 #include "rastlib.h"
 #include "rastrans.h"
 

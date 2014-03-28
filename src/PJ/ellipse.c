@@ -8,10 +8,7 @@
 #include "pentools.h"
 #include "poly.h"
 
-extern Poly working_poly;
-/* extern int cenx, ceny, rad; */
-
-int ell_points(int bothrad)
+static int ell_points(int bothrad)
 {
 register int p2 = 8;
 
@@ -68,11 +65,13 @@ OUT:
 	return(err);
 }
 
-Errcode ovalf_tool(void)
+Errcode ovalf_tool(Pentool *pt, Wndo *w)
 {
-Errcode err;
-int rad;
-int x,y;
+	Errcode err;
+	int rad;
+	int x,y;
+	(void)pt;
+	(void)w;
 
 	if (!pti_input())
 		return(Success);

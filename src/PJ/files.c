@@ -10,6 +10,7 @@
 #include "menus.h"
 #include "options.h"
 #include "palmenu.h"
+#include "poly.h"
 #include "rastcurs.h"
 #include "softmenu.h"
 #include "textedit.h"
