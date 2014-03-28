@@ -1,7 +1,7 @@
-
 /* status.c - display continue alert box with program info */
 
 #include "jimk.h"
+#include "progids.h"
 #include "softmenu.h"
 
 #ifdef SLUFFED
@@ -11,9 +11,6 @@ void status(void)
 {
 long tot;
 long talloc,tfree;
-extern long pj_ddfree();
-extern long get_rmax();
-extern int count_rfree_sec();
 
 	tot = add_up_frames();
 	rstats(&talloc, &tfree);

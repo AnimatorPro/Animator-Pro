@@ -28,6 +28,7 @@
 #include "pentools.h"
 #include "picdrive.h"
 #include "picfile.h"
+#include "progids.h"
 #include "softmenu.h"
 #include "textedit.h"
 

@@ -13,6 +13,7 @@
 #include "palmenu.h"
 #include "pentools.h"
 #include "picdrive.h"
+#include "progids.h"
 #include "rastcurs.h"
 
 static Errcode resize_pencel(Boolean err_on_abort,Boolean reset);

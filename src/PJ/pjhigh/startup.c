@@ -1,16 +1,17 @@
 /* startup.c - Stuff done once only during program start-up. and inverse
  * done at close down */
 
-#define SCRNINIT_CODE
-#include <errno.h>
-#include <signal.h>
-#include <math.h>
 #include <ctype.h>
+#include <errno.h>
+#include <math.h>
+#include <signal.h>
+#define SCRNINIT_CODE
 #include "aaconfig.h"
+#include "argparse.h"
 #include "errcodes.h"
 #include "pjbasics.h"
+#include "progids.h"
 #include "resource.h"
-#include "argparse.h"
 #include "softmenu.h"
 
 static char default_config_name[] = "aa.cfg";

@@ -37,10 +37,6 @@
 	#include "vdevice.h"
 #endif
 
-#ifndef PROGIDS_H
-	#include "progids.h"
-#endif
-
 struct screen_mode;
 
 typedef struct vbasics_cb {
