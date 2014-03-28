@@ -13,6 +13,7 @@
 #include "inks.h"
 #include "mask.h"
 #include "options.h"
+#include "pentools.h"
 
 extern void go_time_menu();
 

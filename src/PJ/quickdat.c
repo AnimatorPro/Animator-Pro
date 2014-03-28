@@ -13,6 +13,7 @@
 #include "mask.h"
 #include "menus.h"
 #include "palmenu.h"
+#include "pentools.h"
 #include "rastcurs.h"
 #include "softmenu.h"
 

@@ -9,6 +9,7 @@
 #include "menus.h"
 #include "options.h"
 #include "palmenu.h"
+#include "pentools.h"
 #include "ptrmacro.h"
 #include "softmenu.h"
 

@@ -48,6 +48,7 @@
 #include "memory.h"
 #include "menus.h"
 #include "palmenu.h"
+#include "pentools.h"
 #include "rastcurs.h"
 #include "softmenu.h"
 #include "util.h"
@@ -56,8 +57,7 @@ static void seebg_a3d(Menuwndo *mw);
 
 extern Button tseg_group_sel;
 
-void go_multi(),
-	toggle_pen();
+void go_multi();
 
 static void a3d_go_color_grid(Button *b);
 static void change_rot_scale(Button *m);

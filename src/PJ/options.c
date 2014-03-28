@@ -10,12 +10,11 @@
 #include "inks.h"
 #include "options.h"
 #include "palmenu.h"
+#include "pentools.h"
 #include "rastcurs.h"
 #include "rastext.h"
 #include "scroller.h"
 #include "softmenu.h"
-
-extern Button pen_opts_sel;
 
 extern Minitime_data flxtime_data;
 static Optgroup_data optgroup;

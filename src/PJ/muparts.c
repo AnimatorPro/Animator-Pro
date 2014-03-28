@@ -6,10 +6,11 @@
 #include "flicel.h"
 #include "menus.h"
 #include "palmenu.h"
+#include "pentools.h"
 #include "rastcurs.h"
 #include "softmenu.h"
 
-extern void toggle_zoom(), toggle_pen(), go_multi();
+extern void toggle_zoom(), go_multi();
 extern Button tseg_a_sel, tseg_s_sel, tseg_f_sel;
 
 static void pget_color(Button *b);

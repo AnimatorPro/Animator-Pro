@@ -5,6 +5,7 @@
 #include "jimk.h"
 #include "errcodes.h"
 #include "inks.h"
+#include "pentools.h"
 #include "ptrmacro.h"
 #include "render.h"
 
@@ -29,10 +30,12 @@ typedef struct floodata {
 	UBYTE *linebuf;
 } Floodata;
 
+typedef Errcode (*flood_func)(SHORT y, SHORT x1, SHORT x2, SHORT col);
+
 static Errcode some_flood(USHORT x, USHORT y, int floodto, Pixel fcolor);
 
 static Errcode
-flood_visit(Floodata *fd, EFUNC hout, USHORT x, USHORT y, USHORT color);
+flood_visit(Floodata *fd, flood_func hout, USHORT x, USHORT y, USHORT color);
 
 static void visit_hline(Floodata *fd, SHORT y, SHORT x1, SHORT x2)
 {
@@ -118,8 +121,15 @@ UBYTE fcolor;
 		add_fseg(fd, y, ln, x-1);
 }
 
+static Errcode nofunc(SHORT y, SHORT x0, SHORT x1, SHORT col)
+{
+	(void)y;
+	(void)x0;
+	(void)x1;
+	(void)col;
 
-static Errcode nofunc() /* always successful */ { return(Success); }
+	return(Success);
+}
 
 static Errcode flood_rhline(SHORT y, SHORT x0, SHORT x1, SHORT color)
 {
@@ -137,8 +147,8 @@ Errcode flood(USHORT x, USHORT y, Pixel endcolor)
 	return(some_flood(x,y,1,endcolor));
 }
 
-
-Errcode csd_some_flood(USHORT x, USHORT y,int floodto, Pixel fcolor, Rcel *r)
+static Errcode
+csd_some_flood(USHORT x, USHORT y, int floodto, Pixel fcolor, Rcel *r)
 {
 Errcode err;
 register Floodata *fd;
@@ -195,9 +205,8 @@ Errcode err;
 	return(err);
 }
 
-
-static Errcode flood_visit(register Floodata *fd,
-						EFUNC hout, USHORT x, USHORT y, USHORT color)
+static Errcode
+flood_visit(Floodata *fd, flood_func hout, USHORT x, USHORT y, USHORT color)
 {
 int left, right;
 struct fseg *next;

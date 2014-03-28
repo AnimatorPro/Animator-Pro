@@ -1,14 +1,14 @@
-
 /* brush.c:  code for handling drawing brushes */
 
-#include "errcodes.h"
 #include "jimk.h"
 #include "brush.h"
+#include "errcodes.h"
 #include "floatgfx.h"
 #include "fpmath.h"
 #include "inks.h"
 #include "memory.h"
 #include "menus.h"
+#include "pentools.h"
 
 #ifdef SLUFFED
 

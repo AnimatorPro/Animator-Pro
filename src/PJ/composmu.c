@@ -16,6 +16,7 @@
 #include "flx.h"
 #include "ftextf.h"
 #include "memory.h"
+#include "pentools.h"
 #include "picdrive.h"
 #include "rastcurs.h"
 #include "softmenu.h"

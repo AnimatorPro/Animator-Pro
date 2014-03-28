@@ -14,6 +14,7 @@
 #include "flx.h"
 #include "marqi.h"
 #include "memory.h"
+#include "pentools.h"
 #include "rastlib.h"
 #include "rastrans.h"
 

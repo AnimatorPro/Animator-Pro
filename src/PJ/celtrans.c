@@ -9,6 +9,7 @@
 #include "floatgfx.h"
 #include "grid.h"
 #include "marqi.h"
+#include "pentools.h"
 #include "rastrans.h"
 
 Boolean isin_fcel(Flicel *fcel,SHORT x,SHORT y)

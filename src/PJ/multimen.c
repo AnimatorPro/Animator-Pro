@@ -17,12 +17,13 @@
 #include "mask.h"
 #include "menus.h"
 #include "palmenu.h"
+#include "pentools.h"
 #include "rastcurs.h"
 #include "softmenu.h"
 
 static Autoarg *mum_autoarg;
 
-extern void toggle_pen(),
+extern void
 	change_time_mode();
 
 extern Button tseg_group_sel;

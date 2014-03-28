@@ -5,10 +5,6 @@
 	#include "stdtypes.h"
 #endif
 
-#ifndef RCEL_H
-	#include "rcel.h"
-#endif
-
 #ifndef REXLIB_H
 	#include "rexlib.h"
 #endif
@@ -35,60 +31,10 @@ extern Option_tool *ptool_list;
 #define NOEXIT NULL
 #define NO_SUBOPTS NULL
 
-
-typedef struct pentool {
-	Option_tool ot;
-	Errcode (*doptool)(struct pentool *pt, struct wndo *w);
-	Cursorhdr *cursor; 	/* cursor for tool */
-	Errcode (*on_install)(struct pentool *pt);
-	void (*on_remove)(struct pentool *pt);
-} Pentool;
-
-extern Pentool null_pentool;
-
-#define PTOOLINIT0(nx,na,t,id,hlp,opt,cur,tl,cl) \
- {{nx,na,t,id,hlp,opt,cl},tl,cur,NULL,NULL}
-
-#define PTOOLINIT1(nx,na,t,id,hlp,opt,cl,tl,cur,oi,or) \
- {{nx,na,t,id,hlp,opt,cl},tl,cur,oi,or}
-
 /* option types */
 
 #define PTOOL_OPT 	1  /* pen tool option */
 #define INK_OPT	 	2  /* ink option */
-
-/* option ids for types */
-
-extern Pentool null_pentool;
-
-enum pentool_ids {
-	NULL_PTOOL = -1,  /* we don't want any other tool to have this id */
-	TEXT_PTOOL = 0,
-	STREAK_PTOOL,
-	STARF_PTOOL,
-	SPRAY_PTOOL,
-	CURVE_PTOOL,
-	SPIRAL_PTOOL,
-	SHAPEF_PTOOL,
-	SEP_PTOOL,
-	RPOLYF_PTOOL,
-	POLYF_PTOOL,
-	PETLF_PTOOL,
-	OVALF_PTOOL,
-	MOVE_PTOOL,
-	LINE_PTOOL,
-	GEL_PTOOL,
-	FLOOD_PTOOL,
-	FILL_PTOOL,
-	EDGE_PTOOL,
-	DRIZ_PTOOL,
-	DRAW_PTOOL,
-	CIRCLE_PTOOL,
-	BOX_PTOOL,
-	TWEEN_PTOOL,		/* unique to tween subsystem */
-	COPY_PTOOL,
-	TEST_PTOOL = 100,
-};
 
 /* button functions that use a Optgroup_data in the b->group */
 

@@ -8,7 +8,7 @@
 #include "inks.h"
 #include "marqi.h"
 #include "mask.h"
-#include "options.h"
+#include "pentools.h"
 #include "rastcurs.h"
 #include "rastrans.h"
 #include "render.h"

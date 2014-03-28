@@ -2,15 +2,14 @@
 #include "errcodes.h"
 #include "fli.h"
 #include "grid.h"
+#include "pentools.h"
 #include "rastcurs.h"
-
-extern int do_pen_tool(Wndo *w);
 
 static Errcode alloc_undof(SHORT width,SHORT height)
 {
 	return(valloc_anycel(&undof,width,height));
 }
-void free_undof()
+void free_undof(void)
 {
 	pj_rcel_free(undof);
 	undof = NULL;
@@ -70,7 +69,7 @@ void movefli_tool(void)
 	show_mp();
 }
 
-Errcode move_penwndo()
+Errcode move_penwndo(void)
 {
 Wndo *fw = PENWNDO;
 Errcode err;
@@ -184,8 +183,8 @@ void get_penwndo_port(Rectangle *port)
 	port->y -= PENWNDO->behind.y;
 }
 #endif /* SLUFFED */
-void set_penwndo_position()
 
+void set_penwndo_position(void)
 /* called as part of rethink settings */
 {
 Rectangle pos;

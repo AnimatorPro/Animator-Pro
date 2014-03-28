@@ -5,6 +5,7 @@
 #include "brush.h"
 #include "flx.h"
 #include "inks.h"
+#include "pentools.h"
 #include "rastcurs.h"
 #include "softmenu.h"
 #include "wndo.h"

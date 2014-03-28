@@ -9,6 +9,7 @@
 #include "memory.h"
 #include "menus.h"
 #include "palmenu.h"
+#include "pentools.h"
 
 static SHORT c1, c2;
 static Rgb3 *ictab;

@@ -3,7 +3,7 @@
 #include "brush.h"
 #include "errcodes.h"
 #include "fli.h"
-#include "options.h"
+#include "pentools.h"
 #include "picfile.h"
 #include "rastcurs.h"
 #include "resource.h"

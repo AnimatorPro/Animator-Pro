@@ -5,6 +5,7 @@
 #include "jimk.h"
 #include "errcodes.h"
 #include "marqi.h"
+#include "pentools.h"
 #include "poly.h"
 
 extern Poly working_poly;

@@ -156,22 +156,6 @@ Boolean check_any_abort();	  /* checks for abort anywhere */
 Boolean check_toggle_menu(); /* toggles menu on right click */
 Boolean check_toggle_abort(); /* toggles menu on right click, abort on ESC */
 
-/* pencel stuff */
-
-#ifndef PENCEL_C
-	#define CELtype void
-#else
-	#define CELtype Rcel
-#endif
-
-Errcode alloc_pencel(Rcel **pcel);
-CELtype *clone_pencel(CELtype *toclone);
-void copy_pencel(CELtype *s, CELtype *d);
-void swap_pencels(CELtype *s, CELtype *d);
-void get_penwndo_port(Rectangle *port);
-
-#undef CELtype
-
 /* text stuff */
 
 #define CH_WIDTH 6

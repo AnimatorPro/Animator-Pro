@@ -13,6 +13,7 @@
 #include "inks.h"
 #include "marqi.h"
 #include "memory.h"
+#include "pentools.h"
 #include "poly.h"
 #include "ptrmacro.h"
 #include "rastcurs.h"

@@ -72,6 +72,9 @@ extern void zoom_blit_brush(Rbrush *rb, Coor x, Coor y);
 extern void save_undo_brush(SHORT y);
 extern void see_pen(struct button *b);
 
+/* gel.c */
+extern void see_gel_brush(struct button *b);
+
 /* selbrush.c */
 extern Errcode nest_alloc_brush_texts(void);
 extern void nest_free_brush_texts(void);

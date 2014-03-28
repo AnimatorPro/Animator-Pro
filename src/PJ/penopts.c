@@ -1,25 +1,16 @@
 #include "jimk.h"
 #include "brush.h"
-#include "options.h"
+#include "pentools.h"
 #include "rastcurs.h"
+#include "softmenu.h"
 
-extern Errcode box_tool(), circle_tool(), 
-	draw_tool(), drizl_tool(), edge_tool(),
-	fill_tool(), flood_tool(), gel_tool(), line_tool(), 
-	move_tool(), copy_tool(), ovalf_tool(), petlf_tool(), 
+extern Errcode
+	ovalf_tool(), petlf_tool(),
 	polyf_tool(), rpolyf_tool(), 
-	sep_tool(), shapef_tool(), spiral_tool(), curve_tool(), spray_tool(), 
+	shapef_tool(), spiral_tool(), curve_tool(),
 	starf_tool(), streak_tool(), text_tool();
 
-extern Button text_group_sel, om_sratio_group_sel, om_osped_group_sel,
- curve_group_sel, fill2c_group_sel, sep_group_sel,
- om_points_group_sel, freepoly_group_sel, om_sratio_group_sel,
- fill2c_group_sel, fill2c_group_sel, box_group_sel, move_group_sel;
-
 static void close_static_ptool(Option_tool *tool);
-
-extern void test_ptfunc();
-extern void zoom_unundo();
 
 #ifdef TESTING
 	static Pentool test_ptool_opt = PTOOLINIT1(	
@@ -283,7 +274,7 @@ static Pentool circle_ptool_opt = PTOOLINIT0(
 	circle_tool,
 	close_static_ptool
 ); 
-Pentool box_ptool_opt = PTOOLINIT0(	
+static Pentool box_ptool_opt = PTOOLINIT0(
 	&circle_ptool_opt,	
 	RL_KEYTEXT("box_n"),
 	PTOOL_OPT,	
@@ -309,7 +300,7 @@ static void close_static_ptool(Option_tool *tool)
 	static_ptools = tool;
 }
 
-Errcode init_ptools()
+Errcode init_ptools(void)
 {
 Errcode err;
 Option_tool *tool;
@@ -331,7 +322,7 @@ Option_tool *tool;
 error:
 	return(err);
 }
-void cleanup_ptools()
+void cleanup_ptools(void)
 {
 	close_option_tools(&ptool_list);
 	smu_free_scatters(&tool_ss);
@@ -339,7 +330,6 @@ void cleanup_ptools()
 
 void attatch_tools(void)
 {
-extern Button pen_opts_sel;
 int i;
 int id;
 Button *ob;

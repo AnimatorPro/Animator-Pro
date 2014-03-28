@@ -9,7 +9,7 @@
 #include "linklist.h"
 #include "marqi.h"
 #include "menus.h"
-#include "options.h"
+#include "pentools.h"
 #include "polyrub.h"
 #include "rastcurs.h"
 #include "softmenu.h"

@@ -1,12 +1,12 @@
 /* autoseg.c - apply a graphics transformation to time segment.  See also
    auto.c, especially function 'dall(rvec)' */
 
-
-#include "errcodes.h"
 #include "jimk.h"
 #include "auto.h"
+#include "errcodes.h"
 #include "flx.h"
 #include "memory.h"
+#include "pentools.h"
 
 Errcode dseg(Autoarg *aa)
 

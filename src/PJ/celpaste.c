@@ -7,6 +7,7 @@
 #include "flx.h"
 #include "inks.h"
 #include "palmenu.h"
+#include "pentools.h"
 #include "rastcurs.h"
 #include "rastrans.h"
 #include "render.h"

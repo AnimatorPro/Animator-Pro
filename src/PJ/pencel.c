@@ -3,8 +3,9 @@
 /* pencel.c - Routines to maintain a Rcel type structure. of the current 
  * vb.pencel size and shape a pencel is not garanteed to be a Ramrast */
 
-#include "errcodes.h"
 #include "jimk.h"
+#include "errcodes.h"
+#include "pentools.h"
 
 Errcode alloc_pencel(Rcel **pcel)
 

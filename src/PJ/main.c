@@ -11,6 +11,7 @@
 #include "inks.h"
 #include "menus.h"
 #include "palmenu.h"
+#include "pentools.h"
 #include "picdrive.h"
 #include "rastcurs.h"
 

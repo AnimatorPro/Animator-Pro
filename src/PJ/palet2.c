@@ -18,13 +18,14 @@
 #include "palchunk.h"
 #include "palmenu.h"
 #include "palpul.h"
+#include "pentools.h"
 #include "rastcurs.h"
 #include "render.h"
 #include "softmenu.h"
 
 extern Button inks_sel, ccolor_sel, spec1_sel;
 extern void go_multi(),
-	see_undo(), toggle_pen();
+	see_undo();
 
 extern void swap_undo();
 

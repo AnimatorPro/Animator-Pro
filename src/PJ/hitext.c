@@ -2,6 +2,7 @@
 #include "errcodes.h"
 #include "fli.h"
 #include "palmenu.h"
+#include "pentools.h"
 #include "render.h"
 #include "textedit.h"
 
@@ -164,10 +165,13 @@ free_text_file(&lgtf);			/* Free text buffer. */
 return(Success);
 }
 
-Errcode text_tool(void)
+Errcode text_tool(Pentool *pt, Wndo *w)
 /* A pentool for text.  On pendown make a box, and if this works out
    then let them type in it.  When done paste text to screen */
 {
+	(void)pt;
+	(void)w;
+
 	ttool(1);
 	save_redo_text();
 	return(Success);

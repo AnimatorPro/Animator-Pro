@@ -4,6 +4,7 @@
 #include "alt.h"
 #include "errcodes.h"
 #include "fli.h"
+#include "pentools.h"
 
 static void free_alt(void)
 {

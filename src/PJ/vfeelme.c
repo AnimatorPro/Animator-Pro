@@ -1,10 +1,9 @@
-
 /* vfeelme.c - some input handling routines for Buttons. */
 
-#include "errcodes.h"
 #include "jimk.h"
+#include "errcodes.h"
 #include "menus.h"
-
+#include "pentools.h"
 
 void toggle_pen(Button *m)
 {

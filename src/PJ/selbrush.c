@@ -2,7 +2,7 @@
 
 #include "jimk.h"
 #include "brush.h"
-#include "options.h"
+#include "pentools.h"
 #include "rastcurs.h"
 #include "softmenu.h"
 
@@ -21,7 +21,6 @@ static void rclick_line_sel(Button *b);
 
 /* -----------------Block for gel brush group options --------------*/
 
-extern void see_gel_brush();
 static Button gel_brush_sel = MB_INIT1(
 	NONEXT,
 	NOCHILD,
@@ -58,7 +57,6 @@ static Button gel_brush_sl_sel = MB_INIT1(
 	NOKEY,
 	0
 	);
-extern void see_gel_brush();
 Button gel_brush_group = MB_INIT1(
 	NONEXT,
 	&gel_brush_sl_sel,

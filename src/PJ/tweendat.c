@@ -4,7 +4,7 @@
 #include "grid.h"
 #include "inks.h"
 #include "mask.h"
-#include "options.h"
+#include "pentools.h"
 #include "rastcurs.h"
 #include "softmenu.h"
 #include "tween.h"
@@ -158,8 +158,6 @@ Menuhdr twe_menu = MENU_INIT0(
 	twemenu_on_showhide, /* on_showhide */
 	NULL			/* cleanup */
 );
-
-extern Pentool tween_pen_tool;
 
 static Smu_button_list twe_smblist[] = {
 	{ "title",  { /* butn */ &twe_title_sel } },

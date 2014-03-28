@@ -12,6 +12,7 @@
 #include "jfile.h"
 #include "mask.h"
 #include "memory.h"
+#include "pentools.h"
 #include "rfile.h"
 #include "tfile.h"
 

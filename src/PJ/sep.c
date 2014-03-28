@@ -8,6 +8,7 @@
 #include "marqi.h"
 #include "memory.h"
 #include "palmenu.h"
+#include "pentools.h"
 #include "redo.h"
 #include "render.h"
 
@@ -205,7 +206,7 @@ return(err);
 }
 
 static UBYTE from_menu;
-static Errcode do_sep_tool()
+static Errcode do_sep_tool(void)
 {
 Errcode err;
 Sep_cb sep;
@@ -238,20 +239,21 @@ USHORT flags;
 	free_ctable(&sep);
 	return(err);
 }
-Errcode sep_tool(void)
+Errcode sep_tool(Pentool *pt, Wndo *w)
 {
+	(void)pt;
+	(void)w;
+
 	return(do_sep_tool());
 }
 void separate(void)
 {
-extern Pentool sep_ptool_opt;
-
 	from_menu = TRUE;
 	do_pentool_once(&sep_ptool_opt);
 	from_menu = FALSE;
 }
 
-Errcode csd_edge1(Pixel ecolor)
+static Errcode csd_edge1(Pixel ecolor)
 {
 Errcode err;
 UBYTE *linebufs;

@@ -14,6 +14,7 @@
 #include "marqi.h"
 #include "memory.h"
 #include "palmenu.h"
+#include "pentools.h"
 #include "poly.h"
 #include "rectang.h"
 #include "render.h"

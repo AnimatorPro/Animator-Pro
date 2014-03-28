@@ -9,6 +9,7 @@
 #include "auto.h"
 #include "errcodes.h"
 #include "flx.h"
+#include "pentools.h"
 #include "picdrive.h"
 #include "unchunk.h"
 

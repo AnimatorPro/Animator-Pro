@@ -8,6 +8,7 @@
 #include "mask.h"
 #include "memory.h"
 #include "palchunk.h"
+#include "pentools.h"
 #include "rastext.h"
 #include "softmenu.h"
 #include "unchunk.h"

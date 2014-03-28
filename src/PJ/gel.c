@@ -5,10 +5,12 @@
 #include "jimk.h"
 #include "bhash.h"
 #include "broadcas.h"
+#include "brush.h"
 #include "errcodes.h"
 #include "inkdot.h"
 #include "inks.h"
 #include "palmenu.h"
+#include "pentools.h"
 #include "redo.h"
 #include "render.h"
 
@@ -110,10 +112,11 @@ error:
 	return(err);
 }
 
-Errcode gel_tool(void)
+Errcode gel_tool(Pentool *pt, Wndo *w)
 {
-Errcode err;
-extern Errcode dtool_input(Pos_p *p, void *dummy, SHORT mode);
+	Errcode err;
+	(void)pt;
+	(void)w;
 
 	for (;;)
 	{
@@ -131,7 +134,7 @@ extern Errcode dtool_input(Pos_p *p, void *dummy, SHORT mode);
 
 /**** seeme for gel option display ******/
 
-static void seegb_dot(SHORT x,SHORT y,Raster *r)
+static void seegb_dot(SHORT x, SHORT y, void *r)
 {
 	pj_put_dot(r,sgrey,x,y);
 }

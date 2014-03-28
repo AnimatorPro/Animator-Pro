@@ -10,6 +10,7 @@
 #include "marqi.h"
 #include "options.h"
 #include "palmenu.h"
+#include "pentools.h"
 #include "rastcurs.h"
 #include "redo.h"
 #include "render.h"
@@ -84,10 +85,11 @@ if ((ret = tti_input()) != FALSE)
 	dirties();
 return(ret);
 }
-int do_pen_tool(Wndo *w)
+int do_pen_tool(void *wndo)
 /* do it function for a pentool window */
 {
-Errcode err;
+	Wndo *w = wndo;
+	Errcode err;
 
 	if(vl.ptool)
 	{
@@ -119,11 +121,12 @@ done:
 	set_curptool(optool);
 }
 
-Errcode box_tool(Pentool *pt)
+Errcode box_tool(Pentool *pt, Wndo *w)
 {
-Errcode err;
-Rectangle rect;
-(void)pt;
+	Errcode err;
+	Rectangle rect;
+	(void)pt;
+	(void)w;
 
 	if (!pti_input())
 		return(Success);
@@ -135,10 +138,11 @@ error:
 	return(err);
 }
 
-Errcode fill_tool(Pentool *pt)
+Errcode fill_tool(Pentool *pt, Wndo *w)
 {
-Short_xy fpt;
-(void)pt;
+	Short_xy fpt;
+	(void)pt;
+	(void)w;
 
 	if (!pti_input())
 		return(Success);
@@ -147,10 +151,12 @@ Short_xy fpt;
 	return(save_redo_fill(&fpt));
 }
 
-Errcode flood_tool(void)
+Errcode flood_tool(Pentool *pt, Wndo *w)
 {
-Errcode err;
-Short_xy fpt[2];
+	Errcode err;
+	Short_xy fpt[2];
+	(void)pt;
+	(void)w;
 
 	err = Success;
 	if (!pti_input())
@@ -170,9 +176,11 @@ done:
 	return(err);
 }
 
-Errcode edge_tool(void)
+Errcode edge_tool(Pentool *pt, Wndo *w)
 {
-Short_xy fpt;
+	Short_xy fpt;
+	(void)pt;
+	(void)w;
 
 	if (!pti_input())
 		return(Success);
@@ -181,10 +189,11 @@ Short_xy fpt;
 	return(save_redo_edge(&fpt));
 }
 
-
-Errcode drizl_tool(void)
+Errcode drizl_tool(Pentool *pt, Wndo *w)
 {
-Errcode err;
+	Errcode err;
+	(void)pt;
+	(void)w;
 
 	disable_lsp_ink();
 	err = dtool(DT_DRIZZLE);
@@ -192,14 +201,19 @@ Errcode err;
 	return(err);
 }
 
-Errcode streak_tool(void)
+Errcode streak_tool(Pentool *pt, Wndo *w)
 {
+	(void)pt;
+	(void)w;
+
 	return(dtool(DT_STREAK));
 }
 
-Errcode draw_tool(void)
+Errcode draw_tool(Pentool *pt, Wndo *w)
 {
-Errcode err;
+	Errcode err;
+	(void)pt;
+	(void)w;
 
 	/* line fill ink would look funky here */
 	disable_lsp_ink();
@@ -370,7 +384,7 @@ Errcode err;
 /************** Start of line-at-a-time undo saver */
 static UBYTE *ychanged;
 
-Errcode start_line_undo()
+Errcode start_line_undo(void)
 {
 	pj_cmap_copy(vb.pencel->cmap,undof->cmap);
 	if ((ychanged = pj_zalloc(vb.pencel->height)) == NULL)
@@ -378,7 +392,7 @@ Errcode start_line_undo()
 	return(Success);
 }
 
-void end_line_undo()
+void end_line_undo(void)
 {
 int y;
 
@@ -395,8 +409,7 @@ int y;
 	pj_freez(&ychanged);
 }
 
-
-save_line_undo(Coor y)
+void save_line_undo(Coor y)
 {
 	if (y >= 0 && y < vb.pencel->height)
 	{
@@ -520,9 +533,11 @@ Spray_redo sr;
 	return(err);
 }
 
-Errcode spray_tool(void)
+Errcode spray_tool(Pentool *pt, Wndo *w)
 {
-Errcode err;
+	Errcode err;
+	(void)pt;
+	(void)w;
 
 	for (;;)
 	{
@@ -544,11 +559,12 @@ Errcode err;
 	return(err);
 }
 
-
-Errcode circle_tool(void)
+Errcode circle_tool(Pentool *pt, Wndo *w)
 {
-Errcode err;
-Circle_p circp;
+	Errcode err;
+	Circle_p circp;
+	(void)pt;
+	(void)w;
 
 	if (!pti_input())
 		return(Success);
@@ -560,10 +576,12 @@ error:
 	return(err);
 }
 
-Errcode line_tool(void)
+Errcode line_tool(Pentool *pt, Wndo *w)
 {
-Errcode err;
-Short_xy xys[2];
+	Errcode err;
+	Short_xy xys[2];
+	(void)pt;
+	(void)w;
 
 	if (!pti_input())
 		return(Success);
@@ -574,7 +592,7 @@ Short_xy xys[2];
 error:
 	return(err);
 }
-void move_or_copy_tool(Wndo *wndo,Pentool *pt, Boolean clear_move_out)
+static Errcode move_or_copy_tool(Boolean clear_move_out)
 /* The move tool.  User clips a cel of und area after saving it
    and plops cel down in new position. and clears the old position */
 
@@ -582,15 +600,13 @@ void move_or_copy_tool(Wndo *wndo,Pentool *pt, Boolean clear_move_out)
 Errcode err;
 Rcel *clipcel;
 Move_p mop;
-(void)wndo;
-(void)pt;
 
 if (!pti_input())
-	return;
+	return Success;
 hide_mp();
 
 if((err = get_rub_rect(&(mop.orig))) < 0)
-	return;
+	return err;
 
 if((err = clip_celrect(vb.pencel, &mop.orig, &clipcel)) < 0)
 	goto error;
@@ -606,14 +622,21 @@ if(move_rcel(clipcel,FALSE,vs.render_one_color) >= 0)
 error:
 show_mp();
 pj_rcel_free(clipcel);
+return err;
 }
 
-void move_tool(Wndo *wndo,Pentool *pt)
+Errcode move_tool(Pentool *pt, Wndo *w)
 {
-	move_or_copy_tool(wndo, pt, TRUE);
+	(void)pt;
+	(void)w;
+
+	return move_or_copy_tool(TRUE);
 }
 
-void copy_tool(Wndo *wndo,Pentool *pt)
+Errcode copy_tool(Pentool *pt, Wndo *w)
 {
-	move_or_copy_tool(wndo, pt, FALSE);
+	(void)pt;
+	(void)w;
+
+	return move_or_copy_tool(FALSE);
 }

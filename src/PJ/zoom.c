@@ -7,7 +7,7 @@
 #include "marqi.h"
 #include "memory.h"
 #include "menus.h"
-#include "options.h"
+#include "pentools.h"
 #include "ptrmacro.h"
 #include "rastcurs.h"
 #include "rastlib.h"
