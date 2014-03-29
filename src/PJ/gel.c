@@ -11,7 +11,6 @@
 #include "inks.h"
 #include "palmenu.h"
 #include "pentools.h"
-#include "redo.h"
 #include "render.h"
 
 static int gft[4] = {15*1, 16*2, 17*3, 18*4};

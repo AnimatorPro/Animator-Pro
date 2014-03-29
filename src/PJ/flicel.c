@@ -19,8 +19,6 @@
 #include "rastlib.h"
 #include "rastrans.h"
 
-extern void zoom_undo_rect(Coor x, Coor y, Coor w, Coor h);
-
 static void
 changetocel(UBYTE *oldline, UBYTE *newline, Rcel *cel, SHORT y, Pixel tcolor);
 

@@ -118,17 +118,6 @@ void get_zoomcurs_flixy(Short_xy *xy);
 /* some vpaint specific dotout functions */
 
 extern void ccolor_dot(SHORT x, SHORT y, void *data);
-extern void undo_dot(SHORT x, SHORT y, void *data);
-
-/* undo buffer functions */
-
-void undo_rect(Coor x,Coor y,Coor w,Coor h);
-void save_undo_rect(Coor x,Coor y,Coor w,Coor h);
-
-/* global undo */
-
-void menu_doundo();
-void menu_doredo();
 
 /* standard menu header parts structures and funcs */
 

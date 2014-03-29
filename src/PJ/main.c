@@ -22,7 +22,7 @@ USHORT program_id = 0;
 USHORT program_version = 0;
 extern Errcode builtin_err;
 
-extern void do_auto_redo(), swap_undo();
+extern Errcode go_quick_menu(void);
 
 static Errcode set_flisize(Rectangle *newsize);
 

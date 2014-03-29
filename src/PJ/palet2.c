@@ -20,14 +20,12 @@
 #include "palpul.h"
 #include "pentools.h"
 #include "rastcurs.h"
+#include "redo.h"
 #include "render.h"
 #include "softmenu.h"
 
 extern Button inks_sel, ccolor_sel, spec1_sel;
-extern void go_multi(),
-	see_undo();
-
-extern void swap_undo();
+extern void go_multi();
 
 static void pal_feel_qslider(Button *m);
 static void sliders_from_ccolor_with_menuwndo(Menuwndo *m);

@@ -255,7 +255,6 @@ rfree_dir(&nl);
 #endif /* TESTING */
 
 extern void get_color(),
-	menu_doredo(),
 	qnew_flx(), qquit(),
 	quse_poco(), test(), insert_a_frame(), kill_a_frame(),
 	palette(), ktoggle_zoom();

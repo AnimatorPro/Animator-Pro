@@ -6,6 +6,8 @@
 #include "vertices.h"
 #endif /*VERTICES_H*/
 
+struct button;
+
 #define REDO_NONE 0
 #define REDO_BOX 1
 #define REDO_CIRCLE 2
@@ -54,12 +56,6 @@ typedef struct sep_p
 	UBYTE *ctable;
 	} Sep_p;
 
-/* This one is just a placeholder to alloc biggest redo structure. */
-typedef struct big_p
-	{
-	UBYTE big[16];
-	} Big_p;
-
 typedef union redo_all_p
 	{
 	UBYTE none_p; /* Placeholder for REDO_NONE. */
@@ -72,13 +68,8 @@ typedef union redo_all_p
 	Short_xy flood_p[2];
 	Short_xy edge_p;
 	Sep_p sep_p;
-	Big_p big_p;
 	SHORT draw_p;
 	} Redo_all_p;
-
-struct _redo_err_check_ {
-	char xx[sizeof(Redo_all_p) == sizeof(Big_p)];
-};
 
 typedef struct redo_rec
 	{
@@ -99,7 +90,42 @@ typedef struct spray_redo {
 	SHORT count; /* count of blobs for previous point */
 } Spray_redo;
 
-Boolean get_spray_redo(Spray_redo *sr);
+/* redo.c */
+extern Errcode start_save_redo_points(void);
+extern void end_save_redo_points(void);
+extern Errcode save_redo_point(Pos_p *p);
+extern Errcode save_spray_redo(Spray_redo *sr);
+extern Boolean get_spray_redo(Spray_redo *sr);
+extern Errcode save_redo_draw(int mode);
+extern Errcode save_redo_gel(void);
+extern Errcode save_redo_spray(void);
+extern Errcode save_redo_sep(Sep_p *sep);
+extern void do_auto_redo(Boolean edit);
+extern Errcode save_redo_box(Rectangle *r);
+extern Errcode save_redo_circle(Circle_p *cp);
+extern Errcode save_redo_text(void);
+extern Errcode save_redo_poly(char curve);
+extern Errcode save_redo_fill(Short_xy *p);
+extern Errcode save_redo_flood(Short_xy p[2]);
+extern Errcode save_redo_edge(Short_xy *p);
+extern Errcode save_redo_line(Short_xy *xys[2]);
+extern Errcode save_redo_spiral(void);
+extern Errcode save_redo_move(Move_p *m);
+extern void clear_redo(void);
 
-#endif /* REDO_H */
+/* quickdat.c */
+extern void see_undo(struct button *b);
+extern void see_redo(struct button *b);
 
+/* vpsubs.c */
+extern void undo_dot(SHORT x, SHORT y, void *data);
+extern void undo_rect(Coor x, Coor y, Coor w, Coor h);
+extern void save_undo_rect(Coor x, Coor y, Coor w, Coor h);
+extern void zoom_undo_rect(Coor x, Coor y, Coor w, Coor h);
+extern void save_undo(void);
+extern void zoom_unundo(void);
+extern void swap_undo(void);
+extern void menu_doundo(void);
+extern void menu_doredo(void);
+
+#endif

@@ -12,7 +12,6 @@
 #include "palmenu.h"
 #include "pentools.h"
 #include "rastcurs.h"
-#include "redo.h"
 #include "render.h"
 #include "util.h"
 

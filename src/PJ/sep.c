@@ -9,7 +9,6 @@
 #include "memory.h"
 #include "palmenu.h"
 #include "pentools.h"
-#include "redo.h"
 #include "render.h"
 
 /* separate control block. */

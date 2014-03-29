@@ -17,14 +17,16 @@
 /* stuff to deal with redo-draw */
 static XFILE *rbf;
 
-Errcode start_save_redo_points()
+static Errcode _redo_draw(Redo_rec *r);
+
+Errcode start_save_redo_points(void)
 {
 	if ((rbf = xfopen(rbf_name, wb_str)) == NULL)
 		return softerr(xerrno(), "redo_save");
 	return(Success);
 }
 
-void end_save_redo_points()
+void end_save_redo_points(void)
 {
 	if(rbf != NULL)
 	{
@@ -51,29 +53,30 @@ Boolean get_spray_redo(Spray_redo *sr)
 	return (xfread(sr, 1, sizeof(*sr), rbf) == sizeof(*sr));
 }
 
-Errcode save_redo_draw(mode)
+Errcode save_redo_draw(int mode)
 {
 	vs.redo.type = REDO_DRAW;
 	vs.redo.p.draw_p = mode;
 	return(Success);
 }
 
-Errcode save_redo_gel()
+Errcode save_redo_gel(void)
 {
 	vs.redo.type = REDO_GEL;
 	return(Success);
 }
 
-Errcode save_redo_spray()
+Errcode save_redo_spray(void)
 {
 	vs.redo.type = REDO_SPRAY;
 	return(Success);
 }
 
-static Errcode redo_draw_get_pos(Pos_p *p, XFILE *f, int mode)
+static Errcode redo_draw_get_pos(Pos_p *p, void *xfile, SHORT mode)
 {
-Errcode err;
-(void)mode;
+	XFILE *f = xfile;
+	Errcode err;
+	(void)mode;
 
 	if((err = poll_abort()) < Success)
 		return(err);
@@ -131,7 +134,7 @@ Errcode save_redo_sep(Sep_p *sep)
 	return(write_gulp(rbf_name, sep->ctable, (long)sep->ccount));
 }
 
-Errcode redo_sep(Redo_rec *r)
+static Errcode redo_sep(Redo_rec *r)
 {
 Sep_p *sep;
 Errcode err;
@@ -232,7 +235,6 @@ static Errcode redo_edge(Redo_rec *r)
 static Errcode redo_poly(Redo_rec *r)
 {
 Errcode err;
-extern char curveflag;
 int scf;
 
 	if(!pj_exists(poly_name))
@@ -342,7 +344,7 @@ Errcode (*doedit)();
 	return(Success + 1);
 }
 
-Errcode _redo_draw(Redo_rec *r)
+static Errcode _redo_draw(Redo_rec *r)
 
 /* actually draws a redo record onto the screen */
 {
@@ -423,12 +425,12 @@ auto_redo_draw(void *r, int ix, int intween, int scale, Autoarg *aa)
 	return _redo_draw(r);
 }
 
-Boolean redo_exists()
+static Boolean redo_exists(void)
 {
 	return(vs.redo.type != REDO_NONE);
 }
 
-Errcode redo()
+static Errcode redo(void)
 /* saves undo first does redo and sets dirties flag */
 {
 Errcode err;
@@ -480,7 +482,7 @@ Errcode save_redo_circle(Circle_p *cp)
 	return(_redo_draw(&vs.redo));
 }
 
-Errcode save_redo_text()
+Errcode save_redo_text(void)
 {
 	vs.redo.type = REDO_TEXT;
 	return(Success);
@@ -522,7 +524,7 @@ Errcode save_redo_line(Short_xy *xys[2])
 	return(_redo_draw(&vs.redo));
 }
 
-Errcode save_redo_spiral()
+Errcode save_redo_spiral(void)
 /* Note this is called after save_poly_redo() */
 {
 	vs.redo.type = REDO_SPIRAL;
@@ -535,7 +537,7 @@ Errcode save_redo_move(Move_p *m)
 	vs.redo.p.move_p = *m;
 	return(_redo_draw(&vs.redo));
 }
-void clear_redo()
+void clear_redo(void)
 {
 	vs.redo.type = REDO_NONE;
 	pj_delete(rbf_name);

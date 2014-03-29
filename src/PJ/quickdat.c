@@ -22,8 +22,7 @@ extern void qmake_frames(),
 	toggle_pen(),
 	set_pspeed(), toggle_draw_mode(), toggle_zoom(),
 	go_zoom_settings(),
-	movefli_tool(), go_multi(), toggle_stencil(),
-	see_undo(), see_redo();
+	movefli_tool(), go_multi(), toggle_stencil();
 
 static Sgroup1_data qmu_sh1dat = {
 	&flxtime_data,

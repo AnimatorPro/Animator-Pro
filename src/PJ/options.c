@@ -22,9 +22,6 @@ static Optgroup_data optgroup;
 
 extern Image ctriup, ctridown;
 
-void
-	see_undo(), see_redo();
-
 extern void mtween_curve(), mtween_poly(),
 	toggle_zoom(), go_zoom_settings(), movefli_tool();
 
