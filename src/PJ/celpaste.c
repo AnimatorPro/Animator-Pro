@@ -186,6 +186,7 @@ Errcode err;
 
 	if(vl.ink && (vl.ink->needs & INK_NEEDS_UNDO))
 		save_fcel_undo(thecel);
+	return err;
 }
 
 static Errcode
