@@ -5,10 +5,11 @@
 #include "menus.h"
 #include "rastcurs.h"
 #include "softmenu.h"
-#include "vsetfile.h"
 
-static void see_screen_format(), feel_numqdim(),
-	set_full_screen(), see_savesize(), set_savesize();
+static void see_screen_format(Button *b);
+static void set_full_screen(Button *b);
+static void see_savesize(Button *b);
+static void set_savesize(Button *b);
 
 static Button fmt_wslider_sel, fmt_hslider_sel; /* initialized later on */
 
@@ -66,7 +67,7 @@ static Button fmt_savesize_sel = MB_INIT1(
 	0 /* flags */
 	);
 
-void update_slgroup(void *dat,Button *b)
+static void update_slgroup(void *dat, Button *b)
 {
 	(void)dat;
 	draw_buttontop(b->group);
@@ -215,7 +216,7 @@ static Smu_button_list fmt_smblist[] = {
 	{ "wid",        { &fmt_width_lab } },
 };
 
-static void get_saved_settings()
+static void get_saved_settings(void)
 {
 Vset_flidef fdef;
 

@@ -104,12 +104,6 @@ extern void draw_flibord(void);
 extern void hide_mp(void);
 extern void show_mp(void);
 
-/* arrow images for sliders etc in images.c */
-
-extern Image *leftright_arrs[2];
-extern Image *updown_arrs[2];
-extern Image *zoutin_arrs[2];
-
 ULONG jiffies_to_millisec(USHORT jiffies);
 USHORT millisec_to_jiffies(ULONG millis);
 

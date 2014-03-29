@@ -4,7 +4,6 @@
 #include "errcodes.h"
 #include "rastext.h"
 #include "util.h"
-#include "vsetfile.h"
 
 static Vfont _uvfont;
 Vfont *uvfont = &_uvfont;

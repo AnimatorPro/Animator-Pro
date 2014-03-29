@@ -21,7 +21,6 @@
 #include "picfile.h"
 #include "rastcurs.h"
 #include "softmenu.h"
-#include "vsetfile.h"
 #include "zoom.h"
 
 static void qload_mask_cel(Button *b);
@@ -43,8 +42,6 @@ static void set_boxil_size(Button *b);
 static void set_blindmask_mode(Button *b);
 static void opt_blindmask_size(Button *b);
 static int compos_get_overlap(void);
-
-extern Image cright, cleft;		/* Left and right arrow icons. */
 
 /**** icon button position values *****/
 

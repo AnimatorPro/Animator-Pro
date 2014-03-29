@@ -15,9 +15,6 @@
 #include "timemenu.h"
 #include "zoom.h"
 
-extern Button dsel1_sel, it0_sel; /* first pen tool slot first ink slot */
-extern Menuhdr quick_menu;
-
 #ifdef SLUFFED
 long fli_screen_size()
 {
@@ -77,7 +74,7 @@ Boolean check_any_abort()
 }
 #endif /* SLUFFED */
 
-static Boolean rclick_on_screen()
+static Boolean rclick_on_screen(void)
 {
 	return((JSTHIT(MBRIGHT)
 			&& (curson_wndo((Wndo *)vb.pencel)
@@ -85,7 +82,7 @@ static Boolean rclick_on_screen()
 				|| curson_wndo(&vb.screen->wndo))));
 }
 
-Boolean check_esc_abort()
+Boolean check_esc_abort(void)
 {
 	if (JSTHIT(KEYHIT) && (UBYTE)icb.inkey == ESCKEY)
 	{
@@ -95,7 +92,7 @@ Boolean check_esc_abort()
 	return(FALSE);
 }
 
-Boolean check_pen_abort()
+Boolean check_pen_abort(void)
 /* checks for click abort on pen windows only and key abort */
 {
 	if( rclick_on_screen()
@@ -379,7 +376,7 @@ void menu_doundo(void)
 	if(vl.undoit != NULL)
 		(*vl.undoit)();
 }
-Boolean check_undo_key()
+Boolean check_undo_key(void)
 {
 	if(hit_undo_key())
 	{

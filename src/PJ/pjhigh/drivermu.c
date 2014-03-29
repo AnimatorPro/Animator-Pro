@@ -3,9 +3,6 @@
 #include "scroller.h"
 #include "softmenu.h"
 
-
-extern Image ctridown, ctriup;
-
 static void see_pick_entry(Button *b);
 static void see_info_button(Button *b);
 static void show_entry_info(Button *b);

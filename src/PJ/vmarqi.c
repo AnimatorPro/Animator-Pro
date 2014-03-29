@@ -10,13 +10,6 @@
 #include "menus.h"
 #include "zoom.h"
 
-/* strings from muparts.c */
-
-extern char *rub_line_str;
-extern char *box_coor_str;
-extern char *rub_rect_str;
-extern char *rub_circle_str;
-
 /***** new ones ******/
 
 #define DOZOOM 0x0001

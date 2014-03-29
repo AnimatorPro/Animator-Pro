@@ -17,9 +17,6 @@
 
 static void fq_set_wild(Button *b);
 static void accept_file_name(Button *b);
-
-extern Image ctriup, ctridown;
-
 static void init_fscroller(void);
 static void redraw_fscroller(void);
 static void undo_file(Button *m);

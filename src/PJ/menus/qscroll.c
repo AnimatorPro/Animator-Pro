@@ -17,9 +17,6 @@ typedef struct qscrollwork {
 
 static Qscrollwork *gqsw;	
 
-extern Image ctriup, ctridown;
-
-
 /* Defines so can pretend buttons in array have names */
 #define cursel buts[0]
 #define hailb buts[1]

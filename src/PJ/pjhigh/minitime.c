@@ -3,8 +3,6 @@
 #include "menus.h"
 #include "timesels.h"
 
-extern Image cup, cdown, cleft, cright, csleft, cright2;
-
 /****** minitime group *******/
 
 #define MTD ((Minitime_data *)(b->group))

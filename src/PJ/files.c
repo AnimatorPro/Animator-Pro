@@ -17,7 +17,6 @@
 #include "textedit.h"
 #include "timemenu.h"
 #include "tween.h"
-#include "vsetfile.h"
 
 /*** Display Functions ***/
 

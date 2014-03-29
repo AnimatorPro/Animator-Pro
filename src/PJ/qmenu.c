@@ -11,7 +11,6 @@
 #include "rastext.h"
 #include "scroller.h"
 #include "softmenu.h"
-#include "vsetfile.h"
 
 static Pixel cgr_result;
 
@@ -99,7 +98,7 @@ static int ab_get_color(Wndo *w)
 	return(TRUE);
 }
 
-int qcolor()
+static int qcolor(void)
 {
 Errcode err;
 

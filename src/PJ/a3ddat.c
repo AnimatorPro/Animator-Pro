@@ -56,8 +56,6 @@
 
 static void seebg_a3d(Menuwndo *mw);
 
-void go_multi();
-
 static void a3d_go_color_grid(Button *b);
 static void change_rot_scale(Button *m);
 static void change_size_mode(Button *m);

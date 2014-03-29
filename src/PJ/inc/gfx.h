@@ -43,6 +43,22 @@ typedef struct image {	/* generic bit image structure */
 	SHORT width,height; /* size */
 } Image;
 
+/* arrow images for sliders etc in images.c */
+
+extern Image cup;
+extern Image cdown;
+extern Image cleft;
+extern Image cright;
+extern Image cright2;
+extern Image ctriup;
+extern Image ctridown;
+extern Image cinsert;
+extern Image circ3_image;
+
+extern Image *leftright_arrs[2];
+extern Image *updown_arrs[2];
+extern Image *zoutin_arrs[2];
+
 #define ITYPE_BITPLANES 0
 #define IMAGE_INIT1(t,d,i,w,h) {t,d,i,w,h}
 

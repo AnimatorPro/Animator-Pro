@@ -7,8 +7,6 @@
 #include "menus.h"
 #include "timemenu.h"
 
-extern Image cleft, cright; 
-
 static void see_twidth(Button *m);
 static void inc_tseg(Button *m);
 static void dec_tseg(Button *m);

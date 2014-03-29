@@ -25,9 +25,6 @@
 #include "softmenu.h"
 #include "timemenu.h"
 
-extern Button inks_sel, ccolor_sel, spec1_sel;
-extern void go_multi();
-
 static void pal_feel_qslider(Button *m);
 static void sliders_from_ccolor_with_menuwndo(Menuwndo *m);
 static void see_color_sliders(void);

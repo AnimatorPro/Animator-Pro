@@ -18,11 +18,6 @@
 #include "softmenu.h"
 #include "zoom.h"
 
-extern void
-	toggle_pen(),
-	set_pspeed(), toggle_draw_mode(),
-	movefli_tool(), go_multi(), toggle_stencil();
-
 static Sgroup1_data qmu_sh1dat = {
 	&flxtime_data,
 };
@@ -478,9 +473,6 @@ static Smu_button_list home_smblist[] = {
 	{ "redo",   { &qmu_redo_sel } },
 	{ "undo",   { &qmu_undo_sel } },
 };
-
-extern void main_selit();
-extern Boolean do_mainpull(Menuhdr *mh);
 
 Errcode go_quick_menu(void)
 {

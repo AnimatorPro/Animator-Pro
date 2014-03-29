@@ -11,6 +11,7 @@
 #include "flipath.h"
 #include "floatgfx.h"
 #include "flx.h"
+#include "libdummy.h"
 #include "marqi.h"
 #include "memory.h"
 #include "pentools.h"
@@ -642,7 +643,6 @@ Errcode clip_cel(void)
 {
 Rectangle bounds;
 Errcode err;
-extern Errcode pj_errdo_success();
 int oframe_ix;
 
 	flx_clear_olays(); /* undraw cels cursors etc */
@@ -1069,7 +1069,6 @@ Celblit blit;
 Celcfit *cfit;
 Plinedat pld;
 Rcel *rc;
-extern char under_flag;
 
 	rc = fc->rc;
 	maybe_ref_flicel_pos(fc);

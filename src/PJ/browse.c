@@ -14,7 +14,6 @@
 #include "rastcurs.h"
 #include "scroller.h"
 #include "softmenu.h"
-#include "vsetfile.h"
 #include "wildlist.h"
 #include "zoom.h"
 
@@ -40,10 +39,6 @@ static void draw_cpi(Button *m);
 static void init_bscroller(int top_name);
 static void browse_action(Button *m);
 static void make_browse_cmap(void);
-
-extern Image cdown, cleft, cright, csleft,
-	cinsert, cappend, cright2, cleft2, csright, cup, size_cursor,
-	ctridown, ctriup, default_c;
 
 static Name_scroller bscroller;
 

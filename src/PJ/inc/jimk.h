@@ -37,6 +37,10 @@
 	#include "vsetfile.h"
 #endif
 
+#ifndef VPMENUS
+#include "vpmenus.h"
+#endif
+
 struct ink;
 struct pentool;
 
@@ -115,20 +119,12 @@ typedef struct sg1_data {
 extern Button std_head1_sel;
 extern Button minipal_sel;
 
-void redraw_head1_ccolor(Button *hanger);
-
-/**** menu seeme and feelmes ****/
-
-extern void mb_move_quickmenu();
-extern void mb_quickmenu_to_bottom();
-extern void mb_toggle_zclear();
-
 /* for use in default input */
-Boolean check_pen_abort();	  /* checks for abort outside menus */
-Boolean check_esc_abort();	  /* abort menu on ESC */
-Boolean check_any_abort();	  /* checks for abort anywhere */
-Boolean check_toggle_menu(); /* toggles menu on right click */
-Boolean check_toggle_abort(); /* toggles menu on right click, abort on ESC */
+extern Boolean check_pen_abort(void); /* checks for abort outside menus */
+extern Boolean check_esc_abort(void); /* abort menu on ESC */
+extern Boolean check_toggle_menu(void); /* toggles menu on right click */
+extern Boolean check_toggle_abort(void); /* toggles menu on right click, abort on ESC */
+extern Boolean check_undo_key(void);
 
 /* text stuff */
 

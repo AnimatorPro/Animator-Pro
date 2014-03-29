@@ -1,9 +1,10 @@
-
 /* undone */
 /* mainpull.c - The data structures for the top level drop-down menus up
    along the top.  Also a routine to disable menu options we cant' deal
    with yet. */
 
+#include <ctype.h>
+#include <string.h>
 #include "jimk.h"
 #include "errcodes.h"
 #include "filepath.h"
@@ -13,6 +14,7 @@
 #include "linklist.h"
 #include "menus.h"
 #include "resource.h"
+#include "wildlist.h"
 
 Boolean do_mainpull(Menuhdr *mh)
 /* set disable flags and goes to do the pull */
@@ -51,14 +53,17 @@ static SHORT alt_pulltab[] = {
 /* some stuff to deal with poco-pull-down which is partially made
    up during run-time */
 
-
-int new_pull_list(		/* Returns Errcode or # of pull selections made */
-	Pull **ppull, 					/* Put resulting Pulls here */
-	Names *nlist,  
-	int ncount, 		/* Input names */
-	int startid)
-/* Make a list of pulls linked along the next thread corresponding
-   to the first ncount names on nlist.   */
+/* Function: new_pull_list
+ *
+ *  Make a list of pulls linked along the next thread corresponding to
+ *  the first ncount names on nlist.
+ *  Returns Errcode or # of pull selections made.
+ *
+ *  ppull - put resulting Pulls here.
+ *  ncount - input names.
+ */
+static int
+new_pull_list(Pull **ppull, Names *nlist,  int ncount, int startid)
 {
 Pull *list = NULL;
 Pull *new;

@@ -12,9 +12,6 @@
 #include "timemenu.h"
 #include "zoom.h"
 
-extern void go_multi();
-extern Button tseg_a_sel, tseg_s_sel, tseg_f_sel;
-
 static void pget_color(Button *b);
 static void fill_inkwell(Button *b);
 
@@ -406,12 +403,12 @@ static Smu_button_list mup_smblist[] = {
 };
 
 static void *mupss;
-Errcode init_menu_parts()
+Errcode init_menu_parts(void)
 {
 	return(soft_buttons("pj_muparts",mup_smblist, 
 			Array_els(mup_smblist),&mupss));
 }
-void cleanup_menu_parts()
+void cleanup_menu_parts(void)
 {
 	smu_free_scatters(&mupss);
 }

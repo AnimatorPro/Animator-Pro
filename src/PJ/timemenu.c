@@ -12,8 +12,6 @@
 #include "timemenu.h"
 #include "zoom.h"
 
-extern void go_multi();
-
 #define TR1 155
 #define TR2 187
 

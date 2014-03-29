@@ -7,11 +7,6 @@
 #include "pentools.h"
 #include "poly.h"
 
-/* some functions for line drawing */
-extern void a1bdot(), rbdot(), rbbrush();
-
-extern int pxmin, pxmax, pymin, pymax;
-
 static int get_rub_spiral(void);
 
 static int make_spiral_poly(int x0, int y0, int rad, int itheta, long ttheta)

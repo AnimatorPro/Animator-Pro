@@ -2,6 +2,7 @@
  * file settings */
 
 #include <ctype.h>
+#include <string.h>
 #include "jimk.h"
 #include "aaconfig.h"
 #include "errcodes.h"
@@ -11,7 +12,6 @@
 #include "softmenu.h"
 #include "tfile.h"
 #include "util.h"
-#include "vsetfile.h"
 
 static Boolean get_serial_port(void)
 {

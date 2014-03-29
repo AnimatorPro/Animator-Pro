@@ -2,6 +2,7 @@
   system. */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include "jimk.h"
 #include "aaconfig.h"
 #include "argparse.h"
@@ -16,8 +17,9 @@
 #include "progids.h"
 #include "rastcurs.h"
 #include "resource.h"
+#include "rfile.h"
+#include "tfile.h"
 #include "vdevcall.h"
-#include "vsetfile.h"
 #include "zoom.h"
 
 static Errcode resize_pencel(Boolean err_on_abort,Boolean reset);
@@ -25,8 +27,6 @@ static Errcode resize_pencel(Boolean err_on_abort,Boolean reset);
 USHORT program_id = 0;
 USHORT program_version = 0;
 extern Errcode builtin_err;
-
-extern Errcode go_quick_menu(void);
 
 static Errcode set_flisize(Rectangle *newsize);
 
@@ -91,7 +91,7 @@ static Errcode clear_vtemps(Boolean reset)
 	return(Success);
 }
 
-static void push_close_toscreen()
+static void push_close_toscreen(void)
 {
 	push_most();
 	pj_clear_rast(vb.screen->viscel);  /* clear anything left in there */
@@ -132,7 +132,7 @@ Errcode err;
 	}
 	return(RESTART_VPAINT); /* return to quick menu */
 }
-static Errcode resize_screen()
+static Errcode resize_screen(void)
 {
 Errcode err;
 Rectangle oldsize;
@@ -206,10 +206,8 @@ char *cl_poco_name;  /* loaded from arguments */
 char *cl_flic_name;  /* Flic loaded from arguments. */
 static char po_suffix[] = ".POC";
 
-static Errcode go_vpaint()
+static Errcode go_vpaint(void)
 {
-extern Errcode go_quick_menu();
-
 	init_wrefresh(vb.screen); /* clear window refresh stack start over */
 	fake_push();
 	pop_most();
@@ -260,6 +258,7 @@ if (argc < 2 )
 cl_poco_name = argv[1];
 if (cl_poco_name[0] == '-')
 	return Err_bad_input;
+return Success;
 }
 
 static Errcode get_flic_arg(Argparse_list *ap,int argc,
@@ -273,6 +272,7 @@ if (argc < 2 )
 cl_flic_name = argv[1];
 if (cl_flic_name[0] == '-')
 	return Err_bad_input;
+return Success;
 }
 
 
@@ -377,7 +377,7 @@ static void outofhere(Boolean save_state)
 	exit(0);
 }
 
-void main(int argc, char **argv)
+int main(int argc, char **argv)
 {
 Errcode err;
 UBYTE oldconfig;
@@ -472,6 +472,7 @@ static Argparse_list apl[] = {
 error:
 	cleanup_all(err);
 	exit(err);
+	return err;
 }
 
 static Errcode resize_pencel(Boolean err_on_abort,Boolean reset)

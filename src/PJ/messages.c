@@ -33,7 +33,7 @@ va_list args;
 }
 /******* canned messages and error reports *******/
 
-Errcode outta_memory(void)
+static Errcode outta_memory(void)
 /* Put up the old 'out of memory' error box */
 {
 	return(softerr(Err_no_memory,NULL));

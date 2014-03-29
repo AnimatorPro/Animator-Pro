@@ -18,8 +18,6 @@
 #include "render.h"
 #include "zoom.h"
 
-extern char under_flag;
-
 Rendata rdta;
 
 static Errcode

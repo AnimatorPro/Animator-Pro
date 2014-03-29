@@ -13,7 +13,6 @@
 #include "picfile.h"
 #include "timemenu.h"
 #include "unchunk.h"
-#include "vsetfile.h"
 #include "zoom.h"
 
 static Errcode load_fli(char *title);

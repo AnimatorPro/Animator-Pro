@@ -16,7 +16,6 @@
 #include "rexlib.h"
 #include "softmenu.h"
 #include "util.h"
-#include "vsetfile.h"
 
 /* there are two of these one for "picture" files and one for "fli" files
  * so we can have 2 yes 2 codes in one */
@@ -66,7 +65,6 @@ static Config_pdr pdrconf[2] = {
 
 static Boolean is_local_pdr(char *path,int type)
 {
-extern char *pj_get_path_name(char *path);
 	return(!txtcmp(pj_get_path_name(path),pdrconf[type].local_name));
 }
 static Boolean is_pic_pdr_name(char *path)

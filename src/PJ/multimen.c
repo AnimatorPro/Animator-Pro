@@ -24,8 +24,6 @@
 
 static Autoarg *mum_autoarg;
 
-extern Menuhdr quick_menu;
-
 static void multi_use(Button *b);
 static void multi_preview(void);
 static void multi_go_inks(void);
@@ -318,7 +316,7 @@ set_button_disable(&mum_smo_sel,(mask_rast == NULL));
 seebg_white(m);
 }
 
-Menuhdr mum_menu = {
+static Menuhdr mum_menu = {
 	{320,70,0,130}, /* width, height, x, y */
 	MULTI_MUID,		/* id */
 	PANELMENU,		/* type */
@@ -471,18 +469,17 @@ error:
 	return(err);
 }
 
-void disable_multi_menu()
+void disable_multi_menu(void)
 {
 	mum_menu.flags |= MENU_DISABLED;
 }
-void enable_multi_menu()
+void enable_multi_menu(void)
 {
 	mum_menu.flags &= ~MENU_DISABLED;
 }
 void go_multi(void)
 {
 Autoarg aa;
-extern Menuhdr mum_menu;
 
 	if(mum_menu.flags & MENU_DISABLED)
 		return;
@@ -493,7 +490,6 @@ extern Menuhdr mum_menu;
 void go_multi_read(void)
 {
 Autoarg aa;
-extern Menuhdr mum_menu;
 
 	if(mum_menu.flags & MENU_DISABLED)
 		return;

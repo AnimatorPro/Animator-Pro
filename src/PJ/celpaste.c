@@ -530,8 +530,6 @@ static Errcode add_cel_overlay(Fli_frame *cbuf, Short_xy *cpos, SHORT frame,
 Errcode err;
 LONG size;
 Rectangle ovrect;
-extern long pj_mem_used;
-
 
 	if(!flix.overlays) /* protection */
 		return(Err_bad_input);

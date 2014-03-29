@@ -2,8 +2,6 @@
 #include "commonst.h"
 #include "ftextf.h"
 
-extern Image *leftright_arrs[];
-
 Boolean varg_qreq_number(SHORT *val,SHORT min, SHORT max,
 					     Errcode (*update)(void *data, SHORT val),
 					     void *ud_dat,char *formats,char *text,

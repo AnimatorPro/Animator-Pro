@@ -11,7 +11,6 @@ static void rub_wpoints(Poly *poly, Pixel pt_color, Pixel pt1_color)
 LLpoint *p;
 int i;
 Pixel icols[2];
-extern Image circ3_image;
 
 	p = poly->clipped_list;
 	i = poly->pt_count;

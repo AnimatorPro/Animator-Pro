@@ -2,6 +2,7 @@
    interpreter switch and main keyboard interpreter switch.  Implementations
    of many of routines called by above.  The first layer under main(). */
 
+#include <stdio.h>
 #include <string.h>
 #include "jimk.h"
 #include "a3d.h"
@@ -260,23 +261,19 @@ rfree_dir(&nl);
 }
 #endif /* TESTING */
 
-extern void
-	qnew_flx(),
-	quse_poco(), test();
-
-static void flix_first_frame()
+static void flix_first_frame(void)
 {
 	mini_first_frame(&flxtime_data);
 }
-static void flix_next_frame()
+static void flix_next_frame(void)
 {
 	mini_next_frame(&flxtime_data);
 }
-static void flix_prev_frame()
+static void flix_prev_frame(void)
 {
 	mini_prev_frame(&flxtime_data);
 }
-static void flix_playit()
+static void flix_playit(void)
 {
 	mini_playit(&flxtime_data);
 }
@@ -292,7 +289,7 @@ static void tog_debug()
 }
 #endif
 
-static void tog_zoom()
+static void tog_zoom(void)
 {
 	if(zoom_disabled())
 		return;
@@ -301,12 +298,12 @@ static void tog_zoom()
 	show_mp();
 }
 
-static void toggle_render_under()
+static void toggle_render_under(void)
 {
 	toggle_cel_opt(2);
 }
 
-static void toggle_one_color()
+static void toggle_one_color(void)
 {
 	toggle_cel_opt(3);
 }
@@ -363,13 +360,12 @@ static void minus_trd()
 	trd_compact(1024L*1024L*1024L);
 }
 #endif /* TESTING */
-static void tog_pen()
+static void tog_pen(void)
 {
-extern Button sh1_brush_sel;
 	toggle_pen(&sh1_brush_sel);
 }
 
-static void home_help()
+static void home_help(void)
 {
 	Errcode err;
 	Smu_strings s;
@@ -387,18 +383,18 @@ static void home_help()
 		}
 }
 
-static void toggle_dither()
+static void toggle_dither(void)
 {
 	vl.ink->dither = !vl.ink->dither;
 }
 
-static void toggle_key_clear()
+static void toggle_key_clear(void)
 {
 	vs.zero_clear = !vs.zero_clear;
 	do_rmode_redraw(RSTAT_ZCLEAR);
 }
 
-static void toggle_two_color()
+static void toggle_two_color(void)
 {
 	vs.color2 = !vs.color2;
 }
@@ -506,8 +502,7 @@ switch (soft_qchoice(NULL, "effects"))
 	}
 }
 
-
-void view_frame(void)
+static void view_frame(void)
 {
 hide_mp();
 hide_mouse();
@@ -550,7 +545,7 @@ char ss[50];
 	return(buf);
 }
 
-Boolean confirm_dirty_load()
+Boolean confirm_dirty_load(void)
 {
 char buf[UNSAVE_BUFSIZ];
 

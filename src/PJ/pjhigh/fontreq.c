@@ -45,9 +45,6 @@ static void get_any_font(Button *m);
 static void set_font_spacing(Button *m);
 static void set_font_leading(Button *m);
 
-
-extern Image ctriup, ctridown;
-
 static Name_scroller font_scroller;
 
 /*** Button Data ***/

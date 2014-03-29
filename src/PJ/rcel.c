@@ -23,7 +23,7 @@ UBYTE cvtab[COLORS];
 	nz_fitting_ctable(ocmap->ctab, ncmap->ctab, cvtab);
 	xlat_rast(c,cvtab,1);
 }
-void see_a_cel(register Rcel *cl)
+static void see_a_cel(Rcel *cl)
 /* Plop down a cel on screen */
 {
 Tcolxldat xld;
@@ -34,7 +34,7 @@ Tcolxldat xld;
 					   cl->width, cl->height,&xld, undof);
 	zoom_cel(cl);
 }
-void unsee_a_cel(Rcel *c)
+static void unsee_a_cel(Rcel *c)
 /* Erase cel image (presuming undo screen's been saved). */
 {
 	zoom_undo_rect(c->x,c->y,c->width,c->height);

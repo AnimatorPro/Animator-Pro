@@ -89,7 +89,6 @@ Rcel *clone_any_rcel(Rcel *in);
 void pj_rcel_copy(Rcel *s, Rcel *d);
 Errcode valloc_ramcel(Rcel **pcel,SHORT w,USHORT h);
 Errcode valloc_anycel(Rcel **pcel,SHORT w,USHORT h);
-void see_a_cel(register Rcel *cl_cel);
 void set_one_val(Rcel *rc, UBYTE clearc, UBYTE destc);
 void show_cel_a_sec(Rcel *cel);
 Errcode move_rcel(Rcel *rc, Boolean fit_cel, Boolean one_color);

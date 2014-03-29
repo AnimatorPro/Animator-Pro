@@ -23,6 +23,7 @@ typedef struct renderdata {
 } Rendata;
 
 extern Rendata rdta;
+extern char under_flag;
 
 /* inkcashe.c */
 extern void set_render_fast(void);

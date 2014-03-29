@@ -308,8 +308,6 @@ static void see_bsize_slider(Button *b)
 }
 static void brush_redraw(Button *b)
 {
-extern Menuhdr options_menu;
-extern Button sh1_brush_sel;
 	if(get_button_hdr(b) == &options_menu)
 		draw_buttontop(&sh1_brush_sel);
 }

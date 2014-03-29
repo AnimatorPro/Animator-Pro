@@ -17,7 +17,6 @@
 	#include "gfx.h"
 #endif
 
-
 typedef struct button 
 	{
 	struct button *next;		/* pointer to sibling buttons */
@@ -628,4 +627,4 @@ extern void see_pull(int x, int y, Pull *p, Pullwork *pw);
 	/* border width around string buttons */
 #define MB_IBORDER 1
 
-#endif /* MENUS_H */
+#endif

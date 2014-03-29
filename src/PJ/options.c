@@ -21,11 +21,6 @@
 
 static Optgroup_data optgroup;
 
-extern Image ctriup, ctridown;
-
-extern Button om_points_group_sel, om_sratio_group_sel, om_osped_group_sel,
-	text_group_sel, curve_group_sel;
-
 static void get_justify(Button *b);
 static void copy_has_moved(Button *b);
 static void zero_slider(Button *b);

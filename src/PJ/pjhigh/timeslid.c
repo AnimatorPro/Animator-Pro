@@ -3,8 +3,6 @@
 #include "reqlib.h"
 #include "timesels.h"
 
-extern Image cup, cdown, cleft, cright, csleft, cright2;
-
 static SHORT frame_ix;
 static Qslider frame_sl = QTSL_INIT1(0, 0, &frame_ix, 1, NULL, leftright_arrs,
 									 TRUE );
