@@ -5,6 +5,7 @@
 #include "menus.h"
 #include "rastcurs.h"
 #include "softmenu.h"
+#include "vsetfile.h"
 
 static void see_screen_format(), feel_numqdim(),
 	set_full_screen(), see_savesize(), set_savesize();

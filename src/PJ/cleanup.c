@@ -2,16 +2,19 @@
  * code */
 
 #include "jimk.h"
+#include "aaconfig.h"
 #include "brush.h"
 #include "flx.h"
 #include "inks.h"
 #include "pentools.h"
 #include "rastcurs.h"
+#include "resource.h"
 #include "softmenu.h"
+#include "vdevcall.h"
 #include "wndo.h"
 #include "zoom.h"
 
-void close_downto_screen()
+void close_downto_screen(void)
 /* closes all that may be opened after init_screen() */
 {
 	free_buffers();

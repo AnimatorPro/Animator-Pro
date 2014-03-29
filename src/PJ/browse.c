@@ -14,6 +14,7 @@
 #include "rastcurs.h"
 #include "scroller.h"
 #include "softmenu.h"
+#include "vsetfile.h"
 #include "wildlist.h"
 #include "zoom.h"
 

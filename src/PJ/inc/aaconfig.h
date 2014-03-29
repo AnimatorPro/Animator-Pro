@@ -49,6 +49,7 @@ extern AA_config vconfg;		/* in pjhigh.lib(config.c) */
 
 extern Errcode init_config(Boolean force_create);
 extern Errcode rewrite_config(void);
+extern void new_config(void);
 extern void cleanup_config(void);
 
 #endif

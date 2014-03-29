@@ -11,6 +11,7 @@
 #include "rastext.h"
 #include "scroller.h"
 #include "softmenu.h"
+#include "vsetfile.h"
 
 static Pixel cgr_result;
 

@@ -3,6 +3,7 @@
 #include "jimk.h"
 #include "errcodes.h"
 #include "picfile.h"
+#include "vsetfile.h"
 
 static Errcode increment_old(char *path)
 

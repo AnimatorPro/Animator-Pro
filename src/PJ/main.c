@@ -15,6 +15,9 @@
 #include "picdrive.h"
 #include "progids.h"
 #include "rastcurs.h"
+#include "resource.h"
+#include "vdevcall.h"
+#include "vsetfile.h"
 #include "zoom.h"
 
 static Errcode resize_pencel(Boolean err_on_abort,Boolean reset);
@@ -27,18 +30,22 @@ extern Errcode go_quick_menu(void);
 
 static Errcode set_flisize(Rectangle *newsize);
 
-static Errcode init_after_screen()
+static Errcode init_after_screen(void *data)
 /* initializes and allocs every thing that has to be done after the screen
  * and before the dynamic stuff (tempflx) and push/pop stuff is opened */
 {
+	(void)data;
+
 	init_cursors();
 	vb.screen->menu_cursor = &menu_cursor.hdr;
 	vb.screen->cursor = &menu_cursor.hdr;
 	set_cursor_ccolor((Pixel *)(&vs.ccolor)); /* only works with 80x86 */
 	return(init_brushes());
 }
-static void close_init_after()
+static void close_init_after(void *data)
 {
+	(void)data;
+
 	cleanup_brushes();
 	cleanup_cursors();
 }
@@ -175,7 +182,7 @@ Cmap ocolors;
 			if((err = open_tempflx(TRUE)) < Success)
 			{
 				softerr(err,"tflx_screen");
-				close_init_after();
+				close_init_after(NULL);
 				cleanup_screen();
 				if((err = init_screen(&oldmode,NULL,init_after_screen))
 					< Success)

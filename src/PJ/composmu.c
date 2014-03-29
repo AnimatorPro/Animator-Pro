@@ -21,6 +21,7 @@
 #include "picfile.h"
 #include "rastcurs.h"
 #include "softmenu.h"
+#include "vsetfile.h"
 #include "zoom.h"
 
 static void qload_mask_cel(Button *b);

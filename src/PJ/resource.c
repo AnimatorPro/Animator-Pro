@@ -18,7 +18,7 @@ Errcode err;
 error:
 	return(softerr(err,"resource_init"));
 }
-cleanup_resources()
+void cleanup_resources(void)
 {
 	cleanup_menu_parts();
 }

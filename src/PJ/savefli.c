@@ -16,6 +16,7 @@
 #include "ptrmacro.h"
 #include "softmenu.h"
 #include "unchunk.h"
+#include "vsetfile.h"
 #include "zoom.h"
 
 char dirty_file;

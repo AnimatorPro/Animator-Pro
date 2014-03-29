@@ -16,6 +16,7 @@
 #include "rexlib.h"
 #include "softmenu.h"
 #include "util.h"
+#include "vsetfile.h"
 
 /* there are two of these one for "picture" files and one for "fli" files
  * so we can have 2 yes 2 codes in one */

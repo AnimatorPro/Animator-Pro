@@ -1,3 +1,4 @@
+#include <string.h>
 #include "jimk.h"
 #include "aaconfig.h"
 #include "brush.h"
@@ -10,6 +11,7 @@
 #include "palchunk.h"
 #include "pentools.h"
 #include "rastext.h"
+#include "resource.h"
 #include "softmenu.h"
 #include "unchunk.h"
 #include "util.h"
@@ -65,11 +67,11 @@ static void load_vschunk(Vsettings *pvs)
 }
 /**** io routines for tsettings file with a linear array for path storage ****/
 
-void close_vsetfile(Vsetfile *vsf)
+static void close_vsetfile(Vsetfile *vsf)
 {
 	pj_closez(&(vsf->fd));
 }
-Errcode open_vsetfile(char *path,int jmode, Vsetfile *vsf)
+static Errcode open_vsetfile(char *path,int jmode, Vsetfile *vsf)
 {
 Errcode err;
 
@@ -449,7 +451,7 @@ char path[PATH_SIZE];
 	softerr(save_settings_file(path,TRUE),"!%s", "cant_save", path );
 }
 
-Errcode write_fli_settings(Jfile *fd, SHORT chunk_id )
+Errcode write_fli_settings(Jfile fd, SHORT chunk_id)
 /* called by fli saver to load prefix settings in new fli file */
 {
 Errcode err;

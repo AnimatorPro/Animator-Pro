@@ -7,9 +7,11 @@
 #include "errcodes.h"
 #include "fli.h"
 #include "idriver.h"
+#include "resource.h"
 #include "softmenu.h"
 #include "tfile.h"
 #include "util.h"
+#include "vsetfile.h"
 
 static Boolean get_serial_port(void)
 {
@@ -94,8 +96,7 @@ REWRITE:
 	init_input();
 }
 
-
-void config_path(void)
+static void config_path(void)
 {
 char pbuf[sizeof(vconfg.temp_path)];
 

@@ -5,6 +5,7 @@
 #include <string.h>
 #include "jimk.h"
 #include "a3d.h"
+#include "aaconfig.h"
 #include "alt.h"
 #include "auto.h"
 #include "blue.h"
@@ -259,8 +260,8 @@ rfree_dir(&nl);
 }
 #endif /* TESTING */
 
-extern void get_color(),
-	qnew_flx(), qquit(),
+extern void
+	qnew_flx(),
 	quse_poco(), test();
 
 static void flix_first_frame()

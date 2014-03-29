@@ -21,6 +21,7 @@
 #include "cmap.h"
 #endif
 
+struct vsettings;
 enum vset_chunks {
 	VSET_FLIDEF_ID = 1,     /* chunk id for fli defaults chunk */
 	VSET_PATHARRAY_ID = 2,  /* chunk id for path array chunk */
@@ -110,17 +111,27 @@ typedef struct vsetfile {
 	Jfile fd;
 } Vsetfile;
 
-Errcode flush_tsettings(Boolean full_flush);
+/* vpsubs.c */
+extern void reres_settings(void);
 
-char *vset_get_filename(char *prompt, char *suffi, char *button, 
-				       int path_type, char *outpath, Boolean force_suffix);
+/* vsetfnam.c */
+extern char *
+vset_get_filename(char *prompt, char *suffi, char *button,
+		int path_type, char *outpath, Boolean force_suffix);
 
-Errcode vset_get_pathinfo(int ptype, Vset_path *cpath);
-Errcode vset_set_pathinfo(int ptype, Vset_path *cpath);
-Errcode vset_get_path(int ptype, char *path);
-Errcode vset_set_path(int ptype, char *path);
-Errcode vset_do_all_paths(Errcode (*dopath)(Vset_path *cp,int id,void *dat),
-				     	  void *dat);
+/* vsetting.c */
+extern void rethink_settings(void);
+extern Errcode load_default_settings(Vset_flidef *fdef);
+extern Errcode reload_tsettings(struct vsettings *pvs, Vset_flidef *fdef);
+extern Errcode flush_tsettings(Boolean full_flush);
+extern Errcode vset_get_pathinfo(int ptype, Vset_path *cpath);
+extern Errcode vset_get_path(int ptype, char *path);
+extern Errcode vset_set_pathinfo(int ptype, Vset_path *cpath);
+extern Errcode vset_set_path(int ptype, char *path);
+extern void save_default_settings(void);
+extern Errcode write_fli_settings(Jfile fd, SHORT chunk_id);
+extern Errcode load_default_flidef(Vset_flidef *fdef);
+extern void qsave_vsettings(void);
+extern void qload_vsettings(void);
 
-
-#endif /* VSETFILE_H */
+#endif
