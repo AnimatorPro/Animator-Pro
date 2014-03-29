@@ -95,8 +95,9 @@ Errcode move_rcel(Rcel *rc, Boolean fit_cel, Boolean one_color);
 void zoom_cel(Rcel *c);
 Errcode clip_celrect(Rcel *src, Rectangle *rect, Rcel **clip);
 
-typedef void (*Celblit)(void *rcel,SHORT x,SHORT y,void *d,SHORT dx,SHORT dy,
-						SHORT w,SHORT h,Tcolxldat *txd,.../* void *undo */);
+typedef void (*Celblit)
+	(Rcel *rcel, SHORT x, SHORT y, Rcel *d, SHORT dx, SHORT dy,
+	 SHORT w, SHORT h, Tcolxldat *txd);
 
 /* returns blit for current settings */
 extern Celblit get_celblit(Boolean cfit); 

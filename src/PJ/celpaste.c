@@ -324,7 +324,9 @@ SHORT oocount;
 
 	clear_struct(&aa);
 
-	if((err = pj_fli_cel_alloc_cbuf(&cbuf,vb.pencel)) >= Success)
+	/* TODO: Not sure why we need cbuf at all!  Possibly a size check? */
+	err = pj_fli_cel_alloc_cbuf((Fli_frame **)&cbuf, vb.pencel);
+	if (err >= Success)
 	{
 		err = alloc_pencel(&rc);
 		pj_rcel_free(rc);
@@ -765,7 +767,7 @@ Fli_frame *cbuf = NULL;
 
 	frame_ix = vs.frame_ix!=0?vs.frame_ix:flix.hdr.frame_count;
 
-	if((err = ealloc(&cbuf,cmcb->olay_buf_size)) < Success)
+	if ((err = ealloc((void **)&cbuf, cmcb->olay_buf_size)) < Success)
 		goto restore_error;
 
 	/* unfli in undo on top of cel and previous frame */

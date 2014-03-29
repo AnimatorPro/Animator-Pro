@@ -358,7 +358,9 @@ int elix;
 
 	if((*pel = name_in_list(CPI_NAME,bro_wild_list)) != NULL)
 	{
-		elix = slist_ix(bro_wild_list, *pel) - bscroller.top_name;
+		elix = slist_ix((Slnode *)bro_wild_list, (Slnode *)*pel)
+			- bscroller.top_name;
+
 		if (elix >= 0 & elix < bro_count)	/* it's visible */
 		{
 			get_scroll_cel_pos(&bscroller, elix, spos);

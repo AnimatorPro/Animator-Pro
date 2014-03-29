@@ -103,8 +103,10 @@ Errcode tween_add_a_link(Tween_state *ts, int startix, int endix
 		{
 		if (closed)
 			{
-			ts->p0.clipped_list = slist_el(ts->p0.clipped_list, startix);
-			ts->p1.clipped_list = slist_el(ts->p1.clipped_list, endix);
+			ts->p0.clipped_list
+				= slist_el((Slnode *)ts->p0.clipped_list, startix);
+			ts->p1.clipped_list
+				= slist_el((Slnode *)ts->p1.clipped_list, endix);
 			if ((err = add_link(&ts->links, 0, 0, 
 				pnewl)) < Success)
 				goto OUT;

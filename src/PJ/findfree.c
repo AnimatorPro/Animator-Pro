@@ -71,7 +71,7 @@ long lastend, thisstart, gap, thissize;
 	{
 		*s++ = c++;
 	}
-	sort_indarray(sorted, count, cmp_flx, NULL);
+	sort_indarray((void **)sorted, count, cmp_flx, NULL);
 
 	/* Look for gaps in the list big enough to fit */
 	s = sorted;

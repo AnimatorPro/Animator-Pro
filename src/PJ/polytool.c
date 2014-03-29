@@ -217,7 +217,7 @@ if (p != NULL)
 
 LLpoint *poly_last_point(Poly *p)
 {
-	return(slist_el(p->clipped_list, p->pt_count-1));
+	return slist_el((Slnode *)p->clipped_list, p->pt_count-1);
 }
 
 static LLpoint *beg_this_mouse(void)
@@ -435,7 +435,7 @@ int cur_point_ix = 0;
 			}
 			else if(poly->pt_count >= 2) /* should always happen */
 			{
-				prev = slist_el(poly->clipped_list,
+				prev = slist_el((Slnode *)poly->clipped_list,
 							poly->pt_count-2);
 			}
 		}

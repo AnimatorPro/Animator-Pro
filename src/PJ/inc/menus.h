@@ -169,7 +169,7 @@ typedef struct menuhdr {
 
 /* some field initializers for Menuhdrs */
 
-#define SCREEN_FONT ((struct vfont *)NULL)
+#define SCREEN_FONT (NULL)
 #define SCREEN_CURSOR ((struct cursorhdr *)NULL)
 
 /* menu "mbs" types */

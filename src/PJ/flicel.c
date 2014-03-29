@@ -1150,7 +1150,7 @@ Rcel *rc;
 			blit = get_celblit(pld.tcxl.xlat != NULL);
 		blitit:
 			(*blit)(rc, 0, 0, vb.pencel, rc->x, rc->y,
-					rc->width, rc->height, &pld.tcxl, undof);
+					rc->width, rc->height, &pld.tcxl);
 			if(vs.zoom_open)
 			{
 				if(drawmode == DRAW_DELTA)

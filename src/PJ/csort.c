@@ -161,7 +161,7 @@ SHORT y;
 		sbuf[i].rgb = sctab[i];
 	}
 
-	sort_indarray(isb, colors, (FUNC)occ_cmp, NULL);
+	sort_indarray((void **)isb, colors, occ_cmp, NULL);
 	dcount = 0;
 	for (i=0; i<colors; i++)
 	{
@@ -365,7 +365,7 @@ csort1(void *csort_dat, int ix, int intween, int scale, Autoarg *aa)
 {
 Csort_dat *cpd = csort_dat;
 UBYTE *p, **pp;
-PLANEPTR ncmap, old_ctab;
+Rgb3 *ncmap, *old_ctab;
 int i;
 Errcode err;
 unsigned char c;
@@ -392,11 +392,11 @@ unsigned char c;
 					pp[i] = p+i;
 					p[i] = i;
 				}
-				sort_indarray(pp, cpd->scolors, (FUNC)rccmp, ncmap);
+				sort_indarray((void **)pp, cpd->scolors, rccmp, ncmap);
 				for (i=0; i<cpd->scolors;i++)
 				{
 					c = *(pp[i]);
-					pj_copy_bytes( old_ctab + (c * 3), ncmap + (i*3), 3);
+					pj_copy_bytes(old_ctab + c, ncmap + i, 3);
 				}
 				if (vs.pal_to == 0)	/* to cluster */
 				{

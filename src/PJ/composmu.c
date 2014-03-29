@@ -1311,7 +1311,7 @@ char *key;
 	if((err =  alloc_pencel(&bd.zdots)) < Success)
 		goto error;
 
-	if((err = ealloc(&hsegbuf, bd.zdots->width + 4)) < Success)
+	if ((err = ealloc((void **)&hsegbuf, bd.zdots->width + 4)) < Success)
 		goto error;
 
 	/* stuff zdots with checkered dots in two colors */

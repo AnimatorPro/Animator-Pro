@@ -122,8 +122,8 @@ for (link = (Tween_link *)(llist->tails_prev);
     NULL != (next = (Tween_link *)(link->node.prev));
 	link = next)
 	{
-	pt0 = slist_el(cl0, link->start);
-	pt1 = slist_el(cl1, link->end);
+	pt0 = slist_el((Slnode *)cl0, link->start);
+	pt1 = slist_el((Slnode *)cl1, link->end);
 	pj_cline(pt0->x,pt0->y,pt1->x,pt1->y,mh.pdot,&mh);
 	}
 }
@@ -752,13 +752,13 @@ if (closest_in_tween(&spoly, &ps, &distance, icb.mx, icb.my,vs.tween_end))
 			/* Figure out which point is the start and which the end. */
 			if (spoly == &twcb->cur.p0)
 				{
-				startix = slist_ix(spoly->clipped_list,ps);
-				endix = slist_ix(epoly->clipped_list,pe);
+				startix = slist_ix((Slnode *)spoly->clipped_list, (Slnode *)ps);
+				endix = slist_ix((Slnode *)epoly->clipped_list, (Slnode *)pe);
 				}
 			else
 				{
-				endix = slist_ix(spoly->clipped_list,ps);
-				startix = slist_ix(epoly->clipped_list,pe);
+				endix = slist_ix((Slnode *)spoly->clipped_list, (Slnode *)ps);
+				startix = slist_ix((Slnode *)epoly->clipped_list, (Slnode *)pe);
 				}
 			if ((err = tween_add_a_link(&twcb->cur, startix, endix
 			, vs.closed_curve, &newl)) < Success)

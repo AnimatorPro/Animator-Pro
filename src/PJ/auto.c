@@ -947,7 +947,7 @@ Boolean abort_atom_nested;
 	/* allocate cbuf here to prevent fragging cause we need it later */
 
 	maybe_push_most();
-	err = pj_fli_cel_alloc_cbuf(&cbuf,vb.pencel);
+	err = pj_fli_cel_alloc_cbuf((Fli_frame **)&cbuf, vb.pencel);
 	maybe_pop_most();
 	if(err < 0)
 		goto error;

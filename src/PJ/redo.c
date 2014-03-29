@@ -296,7 +296,7 @@ Pixel ctable[COLORS];
 		}
 	(*(get_celblit(vs.render_one_color)))(clipcel, 0, 0, vb.pencel, 
 					   clipcel->x, clipcel->y, 
-					   clipcel->width, clipcel->height,&xld, undof);
+					   clipcel->width, clipcel->height, &xld);
 	zoom_cel(clipcel);
 	if(m->clear_move_out)
 	{

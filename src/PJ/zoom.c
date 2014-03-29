@@ -439,7 +439,7 @@ void close_zwinmenu(void)
 	close_menu(&zwinmenu);
 	vs.zoom_open = 0;
 	draw_buttontop(&zoom_fullsize_sel);
-	smu_free_text(&zoom_dragbar.datme);
+	smu_free_text((char **)&zoom_dragbar.datme);
 }
 
 static Errcode open_zwinmenu(int squawk)
@@ -447,8 +447,9 @@ static Errcode open_zwinmenu(int squawk)
 Errcode err;
 Rectangle maxrect;
 
-	if((err = smu_load_name_text(&smu_sm,"zoom_panel","Tzwin_title",
-								 &zoom_dragbar.datme)) < Success)
+	err = smu_load_name_text(&smu_sm, "zoom_panel", "Tzwin_title",
+			(char **)&zoom_dragbar.datme);
+	if (err < Success)
 	{
 		goto error;
 	}

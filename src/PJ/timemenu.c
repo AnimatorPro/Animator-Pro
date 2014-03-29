@@ -354,7 +354,7 @@ static void set_mark(Button *m)
 {
 int ix;
 
-	ix = slist_ix(&tmu_ma_sel, m);
+	ix = slist_ix((Slnode *)&tmu_ma_sel, (Slnode *)m);
 	m->identity = vs.marks[ix] = vs.frame_ix;
 	change_mode(m);
 }

@@ -1176,7 +1176,7 @@ void set_quickptool(Pentool *ptool)
 Errcode restore_pentool(Pentool *pt)
 {
 	if(pt != NULL 
-		&& slist_ix(ptool_list, pt) >= 0 
+		&& slist_ix((Slnode *)ptool_list, (Slnode *)pt) >= 0
 		&& pt->ot.id != vs.ptool_id)
 	{
 		return(id_set_curptool(vs.ptool_id));
@@ -1252,14 +1252,15 @@ UBYTE *slots;
 	}
 	/* if another button's got this option swap them */
 
-	slots[slist_ix(obuttons, optgroup.optb)] = o->id;
+	slots[slist_ix((Slnode *)obuttons, (Slnode *)optgroup.optb)] = o->id;
 
 	if( (NULL != (match = find_button(obuttons, o->id))) 
 		&& (match != optgroup.optb))
 	{
 		match->datme = optgroup.optb->datme;
 		match->identity = optgroup.optb->identity;
-		slots[slist_ix(obuttons, match)] = optgroup.optb->identity;
+		slots[slist_ix((Slnode *)obuttons, (Slnode *)match)]
+			= optgroup.optb->identity;
 	}
 	optgroup.optb->identity = o->id;
 	optgroup.optb->datme = o;
