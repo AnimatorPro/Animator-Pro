@@ -9,6 +9,7 @@
 #include "pentools.h"
 #include "rastcurs.h"
 #include "softmenu.h"
+#include "timemenu.h"
 
 extern void toggle_zoom(), go_multi();
 extern Button tseg_a_sel, tseg_s_sel, tseg_f_sel;

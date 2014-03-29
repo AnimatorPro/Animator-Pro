@@ -15,6 +15,7 @@
 #include "rastcurs.h"
 #include "softmenu.h"
 #include "textedit.h"
+#include "timemenu.h"
 
 /*** Display Functions ***/
 
@@ -274,8 +275,6 @@ static Button fml_exi_sel = MB_INIT1(
 	'e',
 	0
 	);
-
-extern Minitime_data flxtime_data;
 
 static Button fml_mini_sel = MB_INIT1(
 	&fml_exi_sel,

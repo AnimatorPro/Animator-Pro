@@ -37,7 +37,7 @@ void mini_draw_overlays(Minitime_data *mtd)
 			(*(mtd->draw_overlays))(mtd->data);
 	}
 }
-void mtd_clear_dofeel(Button *b, void (*feeler)(void *))
+static void mtd_clear_dofeel(Button *b, void (*feeler)(void *))
 {
 	if(!feeler)
 		return;

@@ -23,6 +23,7 @@
 #include "redo.h"
 #include "render.h"
 #include "softmenu.h"
+#include "timemenu.h"
 
 extern Button inks_sel, ccolor_sel, spec1_sel;
 extern void go_multi();
@@ -244,8 +245,6 @@ static Button pal_m_sel = MB_INIT1(
 	NOKEY,
 	MB_B_GHILITE
 	);
-extern Minitime_data flxtime_data;
-
 static Button pal_min_sel = MB_INIT1(
 	&pal_m_sel,
 	&minitime_sel,

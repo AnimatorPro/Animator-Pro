@@ -1,11 +1,13 @@
 /* time.c - stuff to insert and delete frames in a FLIC.  Used mostly
    by timemenu.c. */
 
+#include <string.h>
 #include "jimk.h"
 #include "auto.h"
 #include "errcodes.h"
 #include "flx.h"
 #include "memory.h"
+#include "timemenu.h"
 
 static void delete_first_frames(int frames);
 static Errcode delete_middle_frames(int start, int frames);
@@ -224,7 +226,7 @@ short x;
 	}
 }
 
-Errcode set_flx_length(int frames)
+static Errcode set_flx_length(int frames)
 {
 Errcode err;
 

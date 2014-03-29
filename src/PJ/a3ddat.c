@@ -51,11 +51,10 @@
 #include "pentools.h"
 #include "rastcurs.h"
 #include "softmenu.h"
+#include "timemenu.h"
 #include "util.h"
 
 static void seebg_a3d(Menuwndo *mw);
-
-extern Button tseg_group_sel;
 
 void go_multi();
 
@@ -1183,8 +1182,6 @@ static Button a3d_ink_sel = MB_INIT1(
 	NOKEY,
 	MB_GHILITE
 	);
-
-extern Minitime_data flxtime_data;
 
 static Button a3d_minitime_hanger_sel = MB_INIT1(
 	&a3d_ink_sel,

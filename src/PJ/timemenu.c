@@ -9,17 +9,12 @@
 #include "menus.h"
 #include "rastcurs.h"
 #include "softmenu.h"
+#include "timemenu.h"
 
-extern void toggle_pen(),
-	insert_a_frame(), kill_a_frame(), set_total_frames(),
-	go_multi(), multi_preview(), multi_use();
+extern void go_multi();
 
 #define TR1 155
 #define TR2 187
-
-extern Button tseg_group_sel;
-
-extern Menuhdr quick_menu;
 
 static void set_mark(Button *m);
 static void jump_to_mark(Button *b);
@@ -31,7 +26,7 @@ static void use_range_button(Button *m);
 static void spread_frames(Button *m);
 
 static SHORT jiffies;
-Qslider speed_sl = QSL_INIT1(0, 120, &jiffies, 0, NULL, leftright_arrs);
+static Qslider speed_sl = QSL_INIT1(0, 120, &jiffies, 0, NULL, leftright_arrs);
 
 static void see_speed_sl(Button *b)
 {
@@ -47,9 +42,6 @@ SHORT ojiffies;
 	if(jiffies != ojiffies)
 		flix.hdr.speed = jiffies_to_millisec(jiffies);
 }
-
-void redraw_range_buttons();
-
 
 static Button tmu_t5_sel = MB_INIT1(
 	NONEXT,
@@ -427,7 +419,7 @@ void kill_a_frame(void)
 	show_mp();
 }
 
-void set_total_frames()
+void set_total_frames(void)
 {
 	hide_mp();
 	unzoom();
@@ -561,7 +553,7 @@ error:
 	show_mp();
 }
 
-Minitime_data *omtd;
+static Minitime_data *omtd;
 static void tmu_draw_olays(void *dat)
 {
 	mb_draw_ghi_group(&tmu_ma_sel);
@@ -583,7 +575,7 @@ static Button *ovl_disab_butns[] = {
 	&tmu_frame_ct_sel,
 	NULL,
 };
-static void tmu_disables()
+static void tmu_disables(void)
 {
 	set_mbtab_disables(ovl_disab_butns,(flix.overlays != NULL));
 }
@@ -626,8 +618,10 @@ void enable_time_menu()
 	tmu_menu.flags &= ~MENU_DISABLED;
 }
 #endif /* SLUFFED */
-void go_time_menu(void)
+void go_time_menu(void *data)
 {
+	(void)data;
+
 	if(tmu_menu.flags & MENU_DISABLED)
 		return;
 	if(MENU_ISOPEN(&tmu_menu)) /* no recursion */

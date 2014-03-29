@@ -17,8 +17,7 @@
 #include "rastcurs.h"
 #include "softmenu.h"
 
-extern void qmake_frames(),
-	go_time_menu(),
+extern void
 	toggle_pen(),
 	set_pspeed(), toggle_draw_mode(), toggle_zoom(),
 	go_zoom_settings(),

@@ -3,8 +3,7 @@
 #include "fli.h"
 #include "rastcurs.h"
 #include "softmenu.h"
-
-extern Button tseg_slider_sel;
+#include "timemenu.h"
 
 static Button ssm_save_sel = MB_INIT1(
 	NONEXT,
@@ -90,7 +89,7 @@ static Smu_button_list sseg_smblist[] = {
 	{ "cancel", { &ssm_cancel_sel } },
 };
 
-go_save_segment()
+void go_save_segment(void)
 {
 void *ss;
 

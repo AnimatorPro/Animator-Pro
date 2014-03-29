@@ -14,8 +14,7 @@
 #include "mask.h"
 #include "options.h"
 #include "pentools.h"
-
-extern void go_time_menu();
+#include "timemenu.h"
 
 /* The Vsettings structure holds all of Vpaint's state info, all
    that's a fixed size and not too big at least.  The default_vs

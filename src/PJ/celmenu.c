@@ -13,6 +13,7 @@
 #include "rastrans.h"
 #include "render.h"
 #include "softmenu.h"
+#include "timemenu.h"
 
 /* globals for cel menu functions */
 
@@ -972,8 +973,6 @@ static void cm_prevfli(void *data)
 	else
 		prev_frame(data);
 } 
-
-extern void go_time_menu();
 
 static char cel_off = 0; /* this brackets scrubs and flx seeks */
 static void cm_clear_olays(void *data)

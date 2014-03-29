@@ -456,8 +456,6 @@ typedef struct vlcb {  /* v local control block not saved !!! */
 
 extern Vlcb vl;
 extern Rcel *undof;
-extern Minitime_data flxtime_data;
-
 
 extern long pj_ddfree(int device);
 

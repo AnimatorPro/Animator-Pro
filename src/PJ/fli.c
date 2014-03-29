@@ -11,6 +11,7 @@
 #include "pentools.h"
 #include "picdrive.h"
 #include "picfile.h"
+#include "timemenu.h"
 #include "unchunk.h"
 
 static Errcode load_fli(char *title);

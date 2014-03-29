@@ -12,6 +12,7 @@
 #include "pentools.h"
 #include "ptrmacro.h"
 #include "softmenu.h"
+#include "timemenu.h"
 
 extern Button dsel1_sel, it0_sel; /* first pen tool slot first ink slot */
 extern Menuhdr quick_menu;

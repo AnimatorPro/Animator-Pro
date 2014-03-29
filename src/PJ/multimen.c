@@ -20,13 +20,10 @@
 #include "pentools.h"
 #include "rastcurs.h"
 #include "softmenu.h"
+#include "timemenu.h"
 
 static Autoarg *mum_autoarg;
 
-extern void
-	change_time_mode();
-
-extern Button tseg_group_sel;
 extern Menuhdr quick_menu;
 
 static void multi_use(Button *b);
@@ -290,9 +287,6 @@ static Button mum_ink_sel = MB_INIT1(
 	NOKEY,
 	MB_GHILITE
 	);
-
-extern Minitime_data flxtime_data;
-
 static Button mum_min_sel = MB_INIT1(
 	&mum_ink_sel,
 	&minitime_sel,

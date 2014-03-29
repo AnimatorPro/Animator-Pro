@@ -32,6 +32,7 @@
 #include "scroller.h"
 #include "softmenu.h"
 #include "textedit.h"
+#include "timemenu.h"
 #include "title.h"
 
 #define UNSAVE_BUFSIZ 80
@@ -258,7 +259,7 @@ rfree_dir(&nl);
 
 extern void get_color(),
 	qnew_flx(), qquit(),
-	quse_poco(), test(), insert_a_frame(), kill_a_frame(),
+	quse_poco(), test(),
 	palette(), ktoggle_zoom();
 
 static void flix_first_frame()

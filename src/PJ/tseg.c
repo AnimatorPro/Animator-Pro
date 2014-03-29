@@ -5,8 +5,7 @@
 #include "auto.h"
 #include "flx.h"
 #include "menus.h"
-
-void change_time_mode();
+#include "timemenu.h"
 
 extern Image cleft, cright; 
 
@@ -167,8 +166,6 @@ Button tseg_group_sel = MB_INIT1(
 	0
 	);
 
-void inc_tseg(), dec_tseg(), inc_tseg(), dec_tseg(), prop_drag_tseg();
-
 static SHORT *itg;
 
 static void see_twidth(Button *m)
@@ -181,8 +178,6 @@ static void see_twidth(Button *m)
 
 void redraw_tseg(Button *b)
 {
-extern Menuhdr tmu_menu;
-
 	draw_buttontop(&tsg_rs2_sel);
 	draw_buttontop(&tsg_ls2_sel);
 	draw_buttontop(&tsg_tseg_sel);
@@ -191,21 +186,21 @@ extern Menuhdr tmu_menu;
 		redraw_range_buttons();
 }
 
-static void itseg(Button *b)
+static void itseg(void *b)
 {
 	if (*itg < flix.hdr.frame_count-1)
 	{
 		*itg += 1;
-		redraw_tseg(b);
+		redraw_tseg((Button *)b);
 	}
 }
 
-static void dtseg(Button *b)
+static void dtseg(void *b)
 {
 	if (*itg > 0)
 	{
 		*itg -= 1;
-		redraw_tseg(b);
+		redraw_tseg((Button *)b);
 	}
 }
 

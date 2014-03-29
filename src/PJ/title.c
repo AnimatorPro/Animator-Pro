@@ -12,11 +12,10 @@
 #include "render.h"
 #include "softmenu.h"
 #include "textedit.h"
+#include "timemenu.h"
 #include "title.h"
 #include "util.h"
 #include "wordwrap.h"
-
-Errcode check_max_frames(int count);
 
 static void seebg_title_back(Menuwndo *mw);
 static void qplace_window(void);
