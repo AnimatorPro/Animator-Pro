@@ -4,6 +4,7 @@
 #include "grid.h"
 #include "pentools.h"
 #include "rastcurs.h"
+#include "render.h"
 
 static Errcode alloc_undof(SHORT width,SHORT height)
 {

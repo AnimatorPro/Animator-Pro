@@ -36,6 +36,7 @@
 #include "inks.h"
 #include "marqi.h"
 #include "pentools.h"
+#include "render.h"
 
 static Errcode dall(Autoarg *aa);
 

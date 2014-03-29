@@ -28,9 +28,6 @@
 #define PDMK (PDIV-1)
 #define PINC (TWOPI/PDIV)
 
-extern void render_brush();
-
-
 static Short_xy ptp1[] = {
 {0,0,}, {0,0,}, {0,0,}, {-1,0,}, 
 {-1,0,}, {-1,-1,}, {0,-1,}, {0,-1,}, 

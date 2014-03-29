@@ -1,15 +1,14 @@
-
-#define VFONT_C
-
 /* vfont.c  - dispatch from abstract font to Vpaint 1.0 type, Speedo,
 	or whatever type of font */
 
 #include <stdio.h>
 #include <string.h>
-#include "linklist.h"
-#include "rastext.h"
+#define VFONT_C
 #include "errcodes.h"
 #include "gfx.h"
+#include "linklist.h"
+#include "rastext.h"
+#include "render.h"
 
 /* Glue to interpret the virtual font functions */
 void close_vfont(Vfont *v)
@@ -376,12 +375,6 @@ int maxspace;
 	if(f->end_space < 1)
 		f->end_space = maxspace;
 }
-
-
-void render_mask_blit(UBYTE *mplane, SHORT mbpr,
-					  SHORT mx, SHORT my,
-					  void *drast, /* currently ignored uses vb.pencel */
-					  SHORT rx, SHORT ry, USHORT width, USHORT height, ... );
 
 void
 blit_for_mode(int tmode,

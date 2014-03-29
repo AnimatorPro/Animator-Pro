@@ -19,9 +19,11 @@
 
 extern char under_flag;
 
-extern Errcode render_line(SHORT x, SHORT y, SHORT xx, SHORT yy);
-
 Rendata rdta;
+
+static Errcode
+render_blit(Rcel *src, SHORT sx, SHORT sy, Rcel *dest, SHORT dx, SHORT dy,
+		SHORT w, SHORT h, Tcolxldat *txd, Cmap *scmap);
 
 static Errcode
 tblit(Rcel *src, SHORT sx, SHORT sy,
@@ -31,7 +33,7 @@ tblit(Rcel *src, SHORT sx, SHORT sy,
 
 static Errcode r_box(Raster *r, SHORT x, SHORT y, SHORT xx, SHORT yy);
 
-void set_render_clip(register Rectangle *rect)
+void set_render_clip(Rectangle *rect)
 
 /* sets render clip to box specified in rectangle x,y,width,height */
 {
@@ -68,7 +70,7 @@ void set_render_clip(register Rectangle *rect)
 /*************************************************/
 /* functions for setting the gradient boundaries */
 
-void set_gradrect(register Rectangle *rect)
+void set_gradrect(Rectangle *rect)
 {
 	rdta.rdx0 = rect->x;
 	rdta.rdy0 = rect->y;
@@ -302,7 +304,7 @@ Rgb3 *dctab = dest->cmap->ctab, *sctab = scmap->ctab;
 	}
 return(err);
 }
-Errcode transpblit(register Rcel *tcel,int clearcolor,int clear,int tinting)
+Errcode transpblit(Rcel *tcel, int clearcolor, int clear, int tinting)
 {
 Errcode err;
 
@@ -315,12 +317,12 @@ Errcode err;
 	return(err);
 }
 
-static Boolean is_transp_ink()
+static Boolean is_transp_ink(void)
 {
 return(vl.ink->ot.id == tlc_INKID || vl.ink->ot.id == tsp_INKID);
 }
 
-int make_brender_cashes(void)
+static int make_brender_cashes(void)
 {
 if (is_transp_ink())
 	return(make_bhash());
@@ -328,14 +330,14 @@ else
 	return(make_render_cashes());
 }
 
-void free_brender_cashes(void)
+static void free_brender_cashes(void)
 {
 if (is_transp_ink())
 	free_bhash();
 else
 	free_render_cashes();
 }
-Errcode rblit_cel(register Rcel *c, Tcolxldat *txd)
+Errcode rblit_cel(Rcel *c, Tcolxldat *txd)
 {
 Errcode err;
 
@@ -349,14 +351,10 @@ Errcode err;
 	}
 	return(err);
 }
-Errcode render_blit(Rcel *src,
-				 SHORT sx,SHORT sy,
-				 Rcel *dest,
-				 SHORT dx,SHORT dy,
-				 SHORT w,SHORT h,
-				 Tcolxldat *txd,
-				 Cmap *scmap)
 
+static Errcode
+render_blit(Rcel *src, SHORT sx, SHORT sy, Rcel *dest, SHORT dx, SHORT dy,
+		SHORT w, SHORT h, Tcolxldat *txd, Cmap *scmap)
 /* this render blits an rcel, It is one of the "Celblit" function family 
  * it does not look at cel->cmap and can take a raster input */
 {
@@ -407,14 +405,15 @@ Pixel *xlat;
 	return(errend_abort_atom(err));
 }
 
-
-void render_mask_blit(UBYTE *mplane, SHORT mbpr, 
-					  SHORT mx, SHORT my,
-					  void *drast, /* currently ignored uses vb.pencel */
-					  SHORT rx, SHORT ry, USHORT width, USHORT height, ... )
-					  /* ... to match pj_mask1blit  pj_mask2blit */
-
-/* does the render dot equivalent of pj_mask1blit() args must be same order */
+/* Function: render_mask_blit
+ *
+ *  Does the render dot equivalent of pj_mask1blit() args must be same order.
+ *
+ *  drast - currently ignored uses vb.pencel.
+ */
+void
+render_mask_blit(UBYTE *mplane, SHORT mbpr, SHORT mx, SHORT my,
+		void *drast, SHORT rx, SHORT ry, USHORT width, USHORT height)
 {
 UBYTE mbit_mx;
 UBYTE *mbyte;
@@ -568,7 +567,7 @@ int render_rect(Rectangle *rect)
 		   rect->x+rect->width-1,rect->y+rect->height-1));
 }
 #endif /* SLUFFED */
-render_beveled_box(Rectangle *r, int bevel, Boolean filled)
+Errcode render_beveled_box(Rectangle *r, int bevel, Boolean filled)
 {
 Poly poly;
 LLpoint pts[8];
@@ -608,6 +607,8 @@ int i;
 	poly.clipped_list = pts;
 	poly.polymagic = POLYMAGIC;
 	render_poly(&poly, filled, TRUE);
+
+	return Success;
 }
 
 static Errcode r_box(Raster *r, SHORT x, SHORT y, SHORT xx, SHORT yy)
@@ -826,8 +827,9 @@ typedef struct rldat {
 	Tcolxldat *txd;
 } Rldat;
 
-static Errcode rblit_line(Rldat *rld,Pixel *line,Coor x,Coor y,Ucoor width)
+static Errcode rblit_line(void *rldat, Pixel *line, Coor x, Coor y, Ucoor width)
 {
+Rldat *rld = rldat;
 Raster linerast;
 Rasthdr spec;
 

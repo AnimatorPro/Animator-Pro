@@ -185,15 +185,19 @@ Errcode err;
 SHORT ocolor;
 
 	if(!vs.fillp)
-		return(render_circle(vb.pencel, c->center.x,c->center.y,c->diam));
+		return render_circle((Raster *)vb.pencel,
+				c->center.x, c->center.y, c->diam);
 
-	if((err = render_disk(vb.pencel,c->center.x,c->center.y,c->diam)) < Success)
+	err = render_disk((Raster *)vb.pencel, c->center.x, c->center.y, c->diam);
+	if (err < Success)
 		return(err);
+
 	if (vs.color2)
 	{
 		ocolor = vs.ccolor;
 		vs.ccolor = vs.inks[7];
-		err = render_circle(vb.pencel, c->center.x,c->center.y,c->diam);
+		err = render_circle((Raster *)vb.pencel,
+				c->center.x, c->center.y, c->diam);
 		vs.ccolor = ocolor;
 	}
 	return(err);

@@ -18,6 +18,7 @@
 #include "polyrub.h"
 #include "rastlib.h"
 #include "rastrans.h"
+#include "render.h"
 
 static void
 changetocel(UBYTE *oldline, UBYTE *newline, Rcel *cel, SHORT y, Pixel tcolor);

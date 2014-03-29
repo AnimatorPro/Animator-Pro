@@ -1,14 +1,13 @@
-
 /* overlay.c - handle requests off the "composite..." menu.  Stuff to
    mix two FLICS onto the same screen and eventually same file.  */
 
 #include "jimk.h"
+#include "commonst.h"
 #include "errcodes.h"
 #include "flx.h"
-#include "menus.h"
 #include "inks.h"
-#include "options.h"		/* for Ink def to use glass... */
-#include "commonst.h"
+#include "menus.h"
+#include "render.h"
 #include "softmenu.h"
 
 static void load_overlay(int how);
@@ -80,8 +79,6 @@ Pixel fitab[256];
 	}
 	return(rblit_cel(cel,&txd));
 }
-
-extern char fli_has_colors;
 
 typedef struct abtdat {
 	int *frame;
