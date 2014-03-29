@@ -201,6 +201,12 @@ Vsettings vs;		/* The settings used by program.  Default_vs gets copied
 Vbcb vb = /* yep, this is where it is */
 {
 	-1, /* video mode at -1  */
+	"", /* init_drawer. */
+	NULL, NULL, /* vd, ram_vd. */
+	NULL, NULL, /* cel_a, cel_b. */
+	NULL, {0, 0}, /* screen, scrcent */
+	NULL, /* pencel. */
+	NULL, NULL, 0 /* config_name, vdriver_name, vdriver_mode. */
 };
 
 Vlcb vl;	/* local control block data, all zeros, see jimk.h */
