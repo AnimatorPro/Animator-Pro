@@ -11,6 +11,7 @@
 #include "softmenu.h"
 #include "unchunk.h"
 #include "util.h"
+#include "zoom.h"
 
 Errcode save_fcel_temp(Flicel *fc)
 

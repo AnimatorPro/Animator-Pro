@@ -102,19 +102,6 @@ Errcode qchoicef(USHORT *qc_flags,char *fmt,...);
 Errcode qchoice(USHORT *qc_flags,char *header, char **choices, int ccount);
 int soft_qchoice(USHORT *qc_flags, char *key,...);
 
-/**** zoom functions *****/
-
-void zoom_it(void);
-void rect_zoom_it(Coor x,Coor y, Coor w, Coor h);
-void upd_zoom_dot(Pixel c, Coor x, Coor y);
-void zoom_put_dot(void *r, Pixel c, Coor x, Coor y);
-void both_put_dot(void *r, Pixel c, Coor x, Coor y);
-void zoom_put_hseg(void *r, void *pixbuf, Coor x, Ucoor y, Ucoor width);
-void zoom_put_vseg(void *r,void *pixbuf, Ucoor x,Coor y,Ucoor height);
-void zoom_blitrect(void *src, Coor sx, Coor sy,
-				   Coor x,Coor y, Coor width, Coor height);
-void get_zoomcurs_flixy(Short_xy *xy);
-
 /* some vpaint specific dotout functions */
 
 extern void ccolor_dot(SHORT x, SHORT y, void *data);
@@ -127,10 +114,8 @@ typedef struct sg1_data {
 
 extern Button std_head1_sel;
 extern Button minipal_sel;
-extern Button zpan_cycle_group;
 
 void redraw_head1_ccolor(Button *hanger);
-void zpan_ccycle_redraw(Button *hanger);
 
 /**** menu seeme and feelmes ****/
 

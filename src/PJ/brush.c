@@ -9,6 +9,7 @@
 #include "memory.h"
 #include "menus.h"
 #include "pentools.h"
+#include "zoom.h"
 
 #ifdef SLUFFED
 
@@ -486,8 +487,8 @@ void blit_brush(Rbrush *rb, void *dest, Coor x, Coor y)
 void zoom_blit_brush(Rbrush *rb,Coor x, Coor y)
 {
 	check_rbrush_xlat(rb);
-	zoom_txlatblit(rb->rast,0,0, rb->width, rb->height,
-				   x - rb->cent.x,y - rb->cent.y, &rb->tcxl);
+	zoom_txlatblit((Raster *)rb->rast, 0, 0, rb->width, rb->height,
+				   x - rb->cent.x, y - rb->cent.y, &rb->tcxl);
 }
 void save_undo_brush(SHORT y)
 {

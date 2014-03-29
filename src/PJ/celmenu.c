@@ -14,6 +14,7 @@
 #include "render.h"
 #include "softmenu.h"
 #include "timemenu.h"
+#include "zoom.h"
 
 /* globals for cel menu functions */
 

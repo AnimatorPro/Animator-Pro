@@ -12,6 +12,7 @@
 #include "menus.h"
 #include "picdrive.h"
 #include "unchunk.h"
+#include "zoom.h"
 
 /* This module copies a single .FLI file to our TEMP.FLX file.
 	A FLX file is just a FLI file with frame offsets and configuration

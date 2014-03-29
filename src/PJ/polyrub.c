@@ -4,6 +4,7 @@
 #include "memory.h"
 #include "poly.h"
 #include "polyrub.h"
+#include "zoom.h"
 
 static void rub_wpoints(Poly *poly, Pixel pt_color, Pixel pt1_color)
 {

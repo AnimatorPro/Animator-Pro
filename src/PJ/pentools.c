@@ -14,6 +14,7 @@
 #include "rastcurs.h"
 #include "render.h"
 #include "util.h"
+#include "zoom.h"
 
 static void save_thik_line_undo(SHORT y1, SHORT y2, SHORT brushsize);
 static Errcode dtool(int mode);

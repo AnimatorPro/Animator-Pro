@@ -37,6 +37,7 @@
 #include "marqi.h"
 #include "pentools.h"
 #include "render.h"
+#include "zoom.h"
 
 static Errcode dall(Autoarg *aa);
 

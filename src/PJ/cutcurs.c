@@ -3,6 +3,7 @@
 #include "errcodes.h"
 #include "jimk.h"
 #include "marqi.h"
+#include "zoom.h"
 
 typedef struct cutdata {
 	Marqihdr mh;
@@ -15,9 +16,6 @@ typedef struct cutdata {
 	void (*putvseg)(Raster *r, Pixel *buf, Coor x, Coor y, Ucoor height);
 	Pixel oncol, offcol, zon;
 } Cutdata;
-
-extern void zoom_put_hseg();
-extern void zoom_put_vseg();
 
 static void save_cut(Cutdata *cd)
 {

@@ -7,15 +7,12 @@
 #include "picfile.h"
 #include "rastcurs.h"
 #include "resource.h"
+#include "zoom.h"
 
 typedef struct curslist {
 	Rastcursor *curs;
 	char *name;
 } Curslist;
-
-extern void zoom_txlatblit(Raster *src, Coor sx, Coor sy,
-		Ucoor width, Ucoor height,
-		Coor dx, Coor dy, Tcolxldat *tcxl);
 
 static int zoomcursor;
 static Cursorsave umouse;
@@ -119,14 +116,15 @@ Short_xy cpos;
 	rc->save->r.y = (cpos.y -= r->y);
 
 	pj_blitrect(vb.pencel,cpos.x,cpos.y,rc->save,0,0,r->width,r->height); 
-	zoom_txlatblit(r,0,0,r->width,r->height,cpos.x,cpos.y,get_cursor_xlat()); 
+	zoom_txlatblit((Raster *)r, 0, 0, r->width, r->height,
+			cpos.x, cpos.y, get_cursor_xlat());
 }
 static void zhide_rastcursor(Cursorhdr *rastcursor)
 {
 	Rastcursor *rc = (Rastcursor *)rastcursor;
+	Raster *r = (Raster *)(&rc->save->r);
 
-	zoom_blitrect(rc->save,0,0,
-				  rc->save->r.x,rc->save->r.y,rc->cel->width,rc->cel->height);
+	zoom_blitrect(r, 0, 0, r->x, r->y, rc->cel->width, rc->cel->height);
 }
 static void zmove_rastcursor(Cursorhdr *rastcursor)
 {
@@ -155,7 +153,7 @@ Coor w, h;
 	procblit(r,0,0,save,0,0,w,h,tbli_xlatline,get_cursor_xlat());
 
 	/* apply to zoom window */
-	zoom_blitrect(save, 0, 0,cpos.x,cpos.y,w,h); 
+	zoom_blitrect((Raster *)(&save->r), 0, 0, cpos.x, cpos.y, w, h);
 
 	/* re-get save area since composit corrupted it and hide may be next */
 	pj_blitrect(vb.pencel,cpos.x,cpos.y,rc->save,0,0,w,h); 
@@ -286,7 +284,8 @@ Short_xy cpos, bpos;
 	else
 		upd_zoom_dot(vs.ccolor,bpos.x,bpos.y);
 
-	zoom_txlatblit(r,0,0,r->width,r->height,cpos.x,cpos.y,get_cursor_xlat()); 
+	zoom_txlatblit((Raster *)r, 0, 0, r->width, r->height,
+			cpos.x, cpos.y, get_cursor_xlat());
 
 	if(vs.use_brush)
 		blit_brush(vl.brush,vb.pencel,bpos.x,bpos.y);

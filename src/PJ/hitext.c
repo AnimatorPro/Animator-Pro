@@ -6,6 +6,7 @@
 #include "render.h"
 #include "textedit.h"
 #include "wordwrap.h"
+#include "zoom.h"
 
 /* hi level vpaint specific text routines */
 
@@ -55,8 +56,6 @@ static void led_text(Text_file *gf)
 /* call to edit_text_file bracketed by some initialization of the 
    Text_file structure common to all uses of the editor in this file */
 {
-extern Boolean check_zoom_drag(void *dat);
-
 attatch_vs_to_gf(&vs, gf);
 edit_text_file(gf);
 detatch_vs(&vs, gf);

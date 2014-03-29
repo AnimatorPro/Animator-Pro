@@ -15,6 +15,7 @@
 #include "pentools.h"
 #include "rfile.h"
 #include "tfile.h"
+#include "zoom.h"
 
 static char pushed_cel;
 static char pushed_alt;

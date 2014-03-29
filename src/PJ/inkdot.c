@@ -10,6 +10,7 @@
 #include "rastlib.h"
 #include "render.h"
 #include "rexlib.h"
+#include "zoom.h"
 
 Thash *gel_thash;
 SHORT gel_factor;

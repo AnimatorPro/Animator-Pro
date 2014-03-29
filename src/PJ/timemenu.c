@@ -10,6 +10,7 @@
 #include "rastcurs.h"
 #include "softmenu.h"
 #include "timemenu.h"
+#include "zoom.h"
 
 extern void go_multi();
 

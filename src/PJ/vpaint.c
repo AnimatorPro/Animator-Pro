@@ -35,6 +35,7 @@
 #include "timemenu.h"
 #include "title.h"
 #include "tween.h"
+#include "zoom.h"
 
 #define UNSAVE_BUFSIZ 80
 
@@ -260,8 +261,7 @@ rfree_dir(&nl);
 
 extern void get_color(),
 	qnew_flx(), qquit(),
-	quse_poco(), test(),
-	palette(), ktoggle_zoom();
+	quse_poco(), test();
 
 static void flix_first_frame()
 {

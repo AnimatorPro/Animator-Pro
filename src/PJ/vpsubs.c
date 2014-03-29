@@ -13,6 +13,7 @@
 #include "ptrmacro.h"
 #include "softmenu.h"
 #include "timemenu.h"
+#include "zoom.h"
 
 extern Button dsel1_sel, it0_sel; /* first pen tool slot first ink slot */
 extern Menuhdr quick_menu;
@@ -60,7 +61,7 @@ void zoom_undo_rect(Coor x,Coor y,Coor w,Coor h)
 {
 	pj_blitrect(undof,x,y,vb.pencel,x,y,w,h);
 	if(vs.zoom_open)
-		zoom_blitrect(undof,x,y,x,y,w,h);
+		zoom_blitrect((Raster *)undof, x, y, x, y, w, h);
 }
 #ifdef SLUFFED
 Boolean check_any_abort()

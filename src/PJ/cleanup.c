@@ -9,6 +9,7 @@
 #include "rastcurs.h"
 #include "softmenu.h"
 #include "wndo.h"
+#include "zoom.h"
 
 void close_downto_screen()
 /* closes all that may be opened after init_screen() */

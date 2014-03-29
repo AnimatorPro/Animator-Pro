@@ -14,6 +14,7 @@
 #include "unchunk.h"
 #include "util.h"
 #include "vsetfile.h"
+#include "zoom.h"
 
 static Errcode default_tsettings(Vset_flidef *fdef);
 

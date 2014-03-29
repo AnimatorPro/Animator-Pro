@@ -15,6 +15,7 @@
 #include "picdrive.h"
 #include "progids.h"
 #include "rastcurs.h"
+#include "zoom.h"
 
 static Errcode resize_pencel(Boolean err_on_abort,Boolean reset);
 

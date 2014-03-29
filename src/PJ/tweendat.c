@@ -9,8 +9,7 @@
 #include "softmenu.h"
 #include "tween.h"
 #include "tweenpul.h"
-
-extern void go_multi(), go_zoom_settings(), movefli_tool();
+#include "zoom.h"
 
 static Button twe_grid_sel = MB_INIT1(
 	NONEXT,

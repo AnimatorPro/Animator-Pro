@@ -7,6 +7,7 @@
 #include "fli.h"
 #include "mask.h"
 #include "timemenu.h"
+#include "zoom.h"
 
 static Errcode blue1(void *data, int ix, int intween, int scale, Autoarg *aa)
 /* blue pic stuff */

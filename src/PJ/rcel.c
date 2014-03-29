@@ -5,6 +5,7 @@
 #include "memory.h"
 #include "rastcall.h"
 #include "rcel.h"
+#include "zoom.h"
 
 void cfit_rcel(Rcel *c, Cmap *dcmap)
 /* Find closest colors in this color map to cel's color map, and then

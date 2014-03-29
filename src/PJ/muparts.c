@@ -10,8 +10,9 @@
 #include "rastcurs.h"
 #include "softmenu.h"
 #include "timemenu.h"
+#include "zoom.h"
 
-extern void toggle_zoom(), go_multi();
+extern void go_multi();
 extern Button tseg_a_sel, tseg_s_sel, tseg_f_sel;
 
 static void pget_color(Button *b);
@@ -324,8 +325,6 @@ USHORT changes = 0;
 
 /****** zoom cycle_color pan group *********/
 
-extern void movefli_tool(), go_zoom_settings();
-
 static void see_ccycle(Button *b)
 {
 	mb_set_hilite(b,vs.cycle_draw);
@@ -355,7 +354,7 @@ static Button zpg_cycle_sel = MB_INIT1(
 	NOKEY,
 	MB_GHANG /* flags */
 	);
-static see_zoom(Button *b)
+static void see_zoom(Button *b)
 {
 	set_button_disable(b,zoom_disabled());
 	ncorner_text(b);

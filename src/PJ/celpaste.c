@@ -13,6 +13,7 @@
 #include "render.h"
 #include "softmenu.h"
 #include "util.h"
+#include "zoom.h"
 
 static void kill_overlay(Button *b);
 static void render_overlay(Button *b);

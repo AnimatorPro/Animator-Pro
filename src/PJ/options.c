@@ -17,13 +17,11 @@
 #include "scroller.h"
 #include "softmenu.h"
 #include "textedit.h"
+#include "zoom.h"
 
 static Optgroup_data optgroup;
 
 extern Image ctriup, ctridown;
-
-extern void mtween_curve(), mtween_poly(),
-	toggle_zoom(), go_zoom_settings(), movefli_tool();
 
 extern Button om_points_group_sel, om_sratio_group_sel, om_osped_group_sel,
 	text_group_sel, curve_group_sel;

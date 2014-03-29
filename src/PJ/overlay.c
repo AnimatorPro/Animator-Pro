@@ -9,6 +9,7 @@
 #include "menus.h"
 #include "render.h"
 #include "softmenu.h"
+#include "zoom.h"
 
 static void load_overlay(int how);
 static int load_fli_overlay(char *title, int how);

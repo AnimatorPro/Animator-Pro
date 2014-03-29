@@ -15,6 +15,7 @@
 #include "scroller.h"
 #include "softmenu.h"
 #include "wildlist.h"
+#include "zoom.h"
 
 /* Browse action defines. See browse.c */
 #define BA_LOAD 0

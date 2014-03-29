@@ -8,6 +8,7 @@
 #include "gfx.h"
 #include "marqi.h"
 #include "menus.h"
+#include "zoom.h"
 
 /* strings from muparts.c */
 

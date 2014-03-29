@@ -12,6 +12,7 @@
 #include "palmenu.h"
 #include "render.h"
 #include "softmenu.h"
+#include "zoom.h"
 
 void free_mask(Bitmap *mask)
 {

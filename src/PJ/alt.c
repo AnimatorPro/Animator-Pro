@@ -5,6 +5,7 @@
 #include "errcodes.h"
 #include "fli.h"
 #include "pentools.h"
+#include "zoom.h"
 
 static void free_alt(void)
 {

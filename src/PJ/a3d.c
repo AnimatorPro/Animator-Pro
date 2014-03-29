@@ -22,6 +22,7 @@
 #include "render.h"
 #include "softmenu.h"
 #include "tween.h"
+#include "zoom.h"
 
 static Errcode ado_mouse_ptfunc(Pentool *pt, Wndo *w);
 static Errcode eload_a3d(char *name);

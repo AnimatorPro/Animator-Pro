@@ -11,6 +11,7 @@
 #include "menus.h"
 #include "render.h"
 #include "softmenu.h"
+#include "zoom.h"
 
 static void go_gridreq(Boolean keep_undo);
 

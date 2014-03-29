@@ -12,19 +12,21 @@
 #include "rastcurs.h"
 #include "rastlib.h"
 #include "softmenu.h"
+#include "zoom.h"
 
 static char esize_zwin_line[] = "zoom_win";
 
 static void see_zoom_title(Button *b);
 static void see_zoombox(Button *b);
 static void feel_zoombox(Button *b);
-static void move_zwinmenu(Button *b);
+static void move_zwinmenu(Button *b, void *data);
 static void qset_zoom_source(void);
 static void reposit_zoomwndo(void);
 static void hmp_zwin_repos(void);
+static void see_fullsize(Button *b);
 static void zwin_fullsize(Button *b);
 static void feel_scale_slider(Button *b);
-static void deltascale_zwndo(void *data);
+static void deltascale_zwndo(void *data, Button *b);
 
 #define ZBOX_BORSIZE	2
 
@@ -54,7 +56,6 @@ static Button zoom_resize_sel = MB_INIT1(
 	NOKEY,					/* key equivalent */
 	0						/* flags */
 	);
-static void see_fullsize();
 static Button zoom_fullsize_sel = MB_INIT1(
 	&zoom_resize_sel,		/* next */
 	NOCHILD,           		/* children */
@@ -136,10 +137,10 @@ static Menuhdr zoom_menu = {
 	0, 0, 0, 0		/* scaled width, height, x, y */
 };
 
-static void titbar_close_zwinmenu(Button *b)
+static void titbar_close_zwinmenu(Button *b, void *data)
 {
-extern Button zpan_cycle_group;
-(void)b;
+	(void)b;
+	(void)data;
 
 	close_zwinmenu(); /* closeit */
 	draw_buttontop(&zpan_cycle_group);
@@ -166,7 +167,7 @@ static Button zoom_dragbar = MB_INIT1(
 	MB_NOHILITE|MB_NORESCALE /* flags */
 );
 
-Button zoom_box = MB_INIT1(
+static Button zoom_box = MB_INIT1(
 	&zoom_dragbar,  /* next */
 	NOCHILD,    /* children */
 	0,0,0,0,	/* w,h,x,y */
@@ -215,7 +216,7 @@ Boolean check_zoom_drag(void)
 	return(button_keyhit(&zwinmenu,&zoom_dragbar,NULL));
 }
 
-static void scale_zwinmenu()
+static void scale_zwinmenu(void)
 {
 	/* we do need to scale some fields of the dragbar but not all of them.
 	 * The rest are all calculated */
@@ -241,9 +242,9 @@ static void see_zoombox(Button *b)
 	if(!(b->y)) /* no border */
 		return;
 
-	draw_quad(b->root,vb.screen->SWHITE, b->x -1,b->y -1,
+	draw_quad((Raster *)b->root, vb.screen->SWHITE, b->x-1, b->y-1,
 			  b->width + 2, b->height +2);
-	draw_quad(b->root,vb.screen->SGREY, b->x -2,b->y -2,
+	draw_quad((Raster *)b->root, vb.screen->SGREY, b->x-2, b->y-2,
 			  b->width + 4, b->height + 4);
 }
 static void feel_zoombox(Button *b)
@@ -256,7 +257,7 @@ static void feel_zoombox(Button *b)
 		(*(PENWNDO->doit))(vl.zoomwndo);
 	}
 }
-static save_zwinpos()
+static void save_zwinpos(void)
 {
 	vl.zwincent.x = zwinmenu.x + (zwinmenu.width>>1);
 	vl.zwincent.y = zwinmenu.y + (zwinmenu.height>>1);
@@ -267,7 +268,7 @@ static save_zwinpos()
 	vs.zwinw = scale_vscoor(vl.zwinw, vb.screen->wndo.width);
 	vs.zwinh = scale_vscoor(vl.zwinh, vb.screen->wndo.height);
 }
-static void save_zrectpos()
+static void save_zrectpos(void)
 /* moves current zrect center to the vs.zcent as a scaled field */
 {
 	vs.zcentx = scale_vscoor(vl.zrect.x + vl.zrect.width/2,
@@ -275,13 +276,15 @@ static void save_zrectpos()
 	vs.zcenty = scale_vscoor(vl.zrect.y + vl.zrect.height/2,
 							 vb.pencel->height);
 }
-static void move_zwinmenu(Button *b)
+static void move_zwinmenu(Button *b, void *data)
 {
+	(void)data;
+
 	mb_move_menu(b);
 	save_zwinpos();
 }
 
-Boolean curs_in_zoombox()
+Boolean curs_in_zoombox(void)
 {
 	return(ptin_rect((Rectangle *)&(zoom_box.RECTSTART),
 					  icb.sx - vl.zoomwndo->behind.x,
@@ -299,7 +302,7 @@ void get_zoomcurs_flixy(Short_xy *xy)
 	xy->y = (icb.cy - (vl.zoomwndo->behind.y + zoom_box.y))/vs.zoomscale
 					+ vl.zrect.y;
 }
-static void proc_zoomouse()
+static void proc_zoomouse(void)
 /* we make icb.mx relative to the pencel NOT the zoom wndo 
  * and put cursor at fat pixel screen position */
 {
@@ -326,7 +329,7 @@ static void proc_zoomouse()
 	if(icb.cx == icb.lastcx && icb.cy == icb.lastcy) /* cancel mouse move */
 		icb.state &= ~(MMOVE);
 }
-static clip_zwinrect(Rectangle *wrect)
+static int clip_zwinrect(Rectangle *wrect)
 
 /* clips zwinmenu to screen and fli window zoomed size and (opt) borders
  * returns 1 if full screen and no borders were added 0 if bordered and
@@ -364,13 +367,13 @@ SHORT zwid, zht, mindim;
 
 	return(0);
 }
-static void recenter_zwinrect()
+static void recenter_zwinrect(void)
 {
 	zwinmenu.x = vl.zwincent.x - (zwinmenu.width>>1);
 	zwinmenu.y = vl.zwincent.y - (zwinmenu.height>>1);
 }
-static get_zwinrect()
 
+static void get_zwinrect(void)
 /* loads stored window position into zwinmenu */
 {
 	zwinmenu.width = vl.zwinw;
@@ -396,8 +399,8 @@ static void size_zrect(Rectangle *zrect, SHORT w,SHORT h)
 
 	bclip0xy_rect(zrect,(Rectangle *)&(vb.pencel->RECTSTART));
 }
-static void calc_zoombox()
 
+static void calc_zoombox(void)
 /* Calculates sizes of zoom rectangles and window sizes clipped to the
  * current environment.  Must be called before zoom menu is opened and 
  * not while it is open */
@@ -426,7 +429,7 @@ int borderless;
 	size_zrect(&vl.zrect,zoom_box.width,zoom_box.height);
 }
 
-void cleanup_zwinmenu(struct menuhdr *mh)
+static void cleanup_zwinmenu(Menuhdr *mh)
 {
 	(void)mh;
 	vl.zoomwndo = NULL;
@@ -597,7 +600,7 @@ static void hmp_zwin_repos(void)
 	show_mp();
 }
 
-static Boolean is_fullsize()
+static Boolean is_fullsize(void)
 {
 	return(vl.zoomwndo != NULL 
 			&& (zoom_box.width == vb.screen->wndo.width 
@@ -657,10 +660,11 @@ static void feel_scale_slider(Button *b)
 		calc_open_zwinmenu(1);
 	}
 }
-static void deltascale_zwndo(void *data)
+static void deltascale_zwndo(void *data, Button *b)
 {
 Rectangle zbox;
 (void)data;
+(void)b;
 
 	if(vl.zoomwndo == NULL)
 		return;
@@ -725,23 +729,21 @@ Coor height;
 /* some functions that can substitute for raster library functions for 
  * zooming note that "r" is ignored */
 
-void zoom_put_dot(void *r, Pixel c, Coor x, Coor y)
-
+void zoom_put_dot(Raster *r, Pixel c, Coor x, Coor y)
 /* substitute for put_dot() */
 {
 	(void)r;
 	upd_zoom_dot(c,x,y);
 }
-void both_put_dot(void *r, Pixel c, Coor x, Coor y)
 
+void both_put_dot(Raster *r, Pixel c, Coor x, Coor y)
 /* substitute for put_dot() */
 {
 	upd_zoom_dot(c,x,y);
-	CPUT_DOT(((Raster *)r),c,x,y);
+	CPUT_DOT(r,c,x,y);
 }
 static Tcolxldat *_zhseg_tcxl;
-void zoom_put_hseg(void *r, void *pixbuf, Coor x, Ucoor y, Ucoor width)
-
+void zoom_put_hseg(Raster *r, Pixel *pixbuf, Coor x, Coor y, Ucoor width)
 /* puts an hseg into zoom window in pencel coords */
 {
 UBYTE *pixel;
@@ -752,12 +754,12 @@ Pixel tcolor;
 Pixel pix;
 (void)r;
 
-	if( ((Coor)(y -= vl.zrect.y) < 0)
+	if (((y -= vl.zrect.y) < 0)
 		|| (y >= vl.zrect.height))
 	{
 		return;
 	}
-	if((Coor)(x -= vl.zrect.x) >= vl.zrect.width)
+	if ((x -= vl.zrect.x) >= vl.zrect.width)
 		return;
 
 	if(x < 0)
@@ -849,7 +851,7 @@ Pixel stackbuf[1024/sizeof(Pixel)];
 		lbuf = Src->bm.bp[0] + sy*Src->bm.bpr + sx;
 		while (height--)
 		{
-			zoom_put_hseg(&_zhseg_tcxl, lbuf, dx, dy++, width);
+			zoom_put_hseg(NULL, lbuf, dx, dy++, width);
 			lbuf += Src->bm.bpr;
 		}
 
@@ -866,27 +868,26 @@ Pixel stackbuf[1024/sizeof(Pixel)];
 		while(height--)
 		{
 			GET_HSEG(src,lbuf,sx,sy++,width);
-			zoom_put_hseg(&_zhseg_tcxl, lbuf, dx, dy++, width);
+			zoom_put_hseg(NULL, lbuf, dx, dy++, width);
 		}
 		if(lbuf != stackbuf)
 			pj_free(lbuf);
 	}
 	_zhseg_tcxl = NULL;
 }
-void zoom_put_vseg(void *r,void *pixbuf, Ucoor x,Coor y,Ucoor height)
-
+void zoom_put_vseg(Raster *r, Pixel *pixbuf, Coor x, Coor y, Ucoor height)
 /* puts vseg into zoom window */
 {
 Coor maxy, width;
 Pixel *pixel;
 (void)r;
 
-	if( ((Coor)(x -= vl.zrect.x) < 0)
+	if (((x -= vl.zrect.x) < 0)
 		|| (x >= vl.zrect.width))
 	{
 		return;
 	}
-	if((Coor)(y -= vl.zrect.y) >= vl.zrect.height)
+	if ((y -= vl.zrect.y) >= vl.zrect.height)
 		return;
 
 	if(y < 0)
@@ -933,9 +934,10 @@ Pixel *pixel;
 		y += vs.zoomscale;
 	}
 }
-void zoom_blitrect(void *src, Coor sx, Coor sy, 
-				   Coor x,Coor y, Coor width, Coor height)
 
+void
+zoom_blitrect(Raster *src, Coor sx, Coor sy,
+		Coor x, Coor y, Coor width, Coor height)
 /* does not clip to source rectangle only to zoom window since zoom window
  * is within vb.pencel it is safe for that others must be valid source
  * rects */
@@ -992,15 +994,14 @@ void rect_zoom_it(Coor x,Coor y, Coor width, Coor height)
 }
 /**** tcolor translate zoom raster *****/
 
-
-static void hand_ptfunc(Pentool *pt,Wndo *w)
+static Errcode hand_ptfunc(Pentool *pt, Wndo *w)
 {
 	(void)pt;
 
 	if(w == vl.zoomwndo)
-		scroll_zoomwndo();
+		return scroll_zoomwndo();
 	else
-		move_penwndo();
+		return move_penwndo();
 }
 
 static Pentool hand_ptool = PTOOLINIT1(
@@ -1074,7 +1075,7 @@ static void set_zoom(void)
 }
 
 static SHORT lzoom_mode, zstack;
-Boolean zoom_disabled()
+Boolean zoom_disabled(void)
 {
 	return(zstack > 0);
 }
@@ -1097,7 +1098,7 @@ void ktoggle_zoom(void)
 	else
 		set_zoom();
 }
-Boolean zoom_hidden()
+Boolean zoom_hidden(void)
 {
 	return(zstack < 0 && lzoom_mode);
 }

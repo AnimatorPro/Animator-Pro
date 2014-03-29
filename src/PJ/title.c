@@ -16,6 +16,7 @@
 #include "title.h"
 #include "util.h"
 #include "wordwrap.h"
+#include "zoom.h"
 
 static void seebg_title_back(Menuwndo *mw);
 static void qplace_window(void);

@@ -16,6 +16,7 @@
 #include "rastcall.h"
 #include "rastrans.h"
 #include "render.h"
+#include "zoom.h"
 
 extern char under_flag;
 

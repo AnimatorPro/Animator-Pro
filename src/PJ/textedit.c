@@ -14,6 +14,7 @@
 #include "textedit.h"
 #include "util.h"
 #include "wordwrap.h"
+#include "zoom.h"
 
 static void marqi_twinbox(Text_file *gf);
 static void slide_down(Text_file *gf);

@@ -8,6 +8,7 @@
 #include "flx.h"
 #include "memory.h"
 #include "timemenu.h"
+#include "zoom.h"
 
 static void delete_first_frames(int frames);
 static Errcode delete_middle_frames(int start, int frames);

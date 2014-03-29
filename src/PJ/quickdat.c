@@ -16,11 +16,11 @@
 #include "pentools.h"
 #include "rastcurs.h"
 #include "softmenu.h"
+#include "zoom.h"
 
 extern void
 	toggle_pen(),
-	set_pspeed(), toggle_draw_mode(), toggle_zoom(),
-	go_zoom_settings(),
+	set_pspeed(), toggle_draw_mode(),
 	movefli_tool(), go_multi(), toggle_stencil();
 
 static Sgroup1_data qmu_sh1dat = {

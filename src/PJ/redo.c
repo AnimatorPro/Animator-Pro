@@ -13,6 +13,7 @@
 #include "redo.h"
 #include "render.h"
 #include "xfile.h"
+#include "zoom.h"
 
 /* stuff to deal with redo-draw */
 static XFILE *rbf;
