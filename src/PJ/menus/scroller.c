@@ -108,10 +108,9 @@ int remain;
 	calc_scroll_pos(scr, scr->scroll_sel);
 }
 
-static void *the_big_feelme(Button *b, int *pwhy,
-							void (*feel_1_cel)(Button *list_sel,
-								  void *rast,int x,int y,Names *entry,
-								  int why))
+static void *
+the_big_feelme(Button *b, int *pwhy,
+		void (*feel_1_cel)(Button *, Raster *, int, int, Names *, int))
 /* the big feel does it all It will identify what scroll cel the mouse is 
  * clicked over find the entry, check for double hits, call the hilite, 
  * the feelme, and the un-hilite It returns the element selected and 
@@ -158,15 +157,15 @@ int why;
 				&& (time - last_time) < DHIT_MICROS)?SCR_MDHIT:SCR_MHIT;
 
 	if(scroll->high_1_cel)
-		(*scroll->high_1_cel)(b,&cbox,x,y,name,TRUE);
+		(*scroll->high_1_cel)(b, (Raster *)&cbox, x, y, name, TRUE);
 
 	wait_penup();
 
 	if(scroll->high_1_cel)
-		(*scroll->high_1_cel)(b,&cbox,x,y,name,FALSE);
+		(*scroll->high_1_cel)(b, (Raster *)&cbox, x, y, name, FALSE);
 
 	if(name != NULL && feel_1_cel)
-		(*feel_1_cel)(b,&cbox,x,y,name,why);
+		(*feel_1_cel)(b, (Raster *)&cbox, x, y, name, why);
 
 	if(why == SCR_MDHIT)
 	{
@@ -253,9 +252,9 @@ Names *name;
 	name = slist_el((Slnode *)scroll->names, scroll->top_name);
 	while(--obot >= 0)
 	{
-		(*scroll->draw_1_cel)(b,&cbox,GET_CEL_X(scroll,obot),
-					    	    	  GET_CEL_Y(scroll,obot),
-									  slist_el((Slnode *)name, obot));
+		(*scroll->draw_1_cel)(b, (Raster *)&cbox,
+				GET_CEL_X(scroll,obot), GET_CEL_Y(scroll,obot),
+				slist_el((Slnode *)name, obot));
 	}
 	rescroll(scroll);
 }
@@ -300,8 +299,8 @@ Names *name;
 	b = scroll->list_sel;
 	while(otop < scroll->dcount)
 	{
-		(*scroll->draw_1_cel)(b,&cbox,GET_CEL_X(scroll,otop),
-					    	    	  GET_CEL_Y(scroll,otop), name );
+		(*scroll->draw_1_cel)(b, (Raster *)&cbox,
+				GET_CEL_X(scroll,otop), GET_CEL_Y(scroll,otop), name);
 		++otop;
 		if(name != NULL)
 			name = name->next;
@@ -309,15 +308,17 @@ Names *name;
 	rescroll(scroll);
 }
 
-static void bincu(Button *b)
+static void bincu(void *button)
 {
+	Button *b = button;
 	bscroll_up(b, ((Name_scroller *)(b->group))->cels_per_row);
 }
-static void bincd(Button *b)
+static void bincd(void *button)
 {
+	Button *b = button;
 	bscroll_down(b, ((Name_scroller *)(b->group))->cels_per_row);
 }
-static void scroll_incit(Button *b, void *func)
+static void scroll_incit(Button *b, void (*func)(void *button))
 {
 
 #ifdef ARROW_KEY_ALTS
@@ -436,7 +437,7 @@ Clipbox cbox;
 	xix = 0;
 	for(ix = 0;ix < scroll->dcount;++ix)
 	{
-		(*scroll->draw_1_cel)(b,&cbox,x,y,name);
+		(*scroll->draw_1_cel)(b, (Raster *)&cbox, x, y, name);
 		if(name)
 			name = name->next;
 		if(++xix >= scroll->cels_per_row)
@@ -563,8 +564,8 @@ void redraw_scroller(Name_scroller *scr)
 
 /******* stuff for name scroller where entries are strings ******/
 
-static void xor_1_name(Button *b, void *rast, int x, int y, Names *name, 
-					   Boolean hilite)
+static void
+xor_1_name(Button *b, Raster *rast, int x, int y, Names *name, Boolean hilite)
 {
 Name_scroller *scroll = (Name_scroller *)(b->group);
 (void)name;
@@ -577,7 +578,7 @@ int scroll_name_xoff(Vfont *f)
 {
 	return(fchar_spacing(f, " ")/2);
 }
-static void draw_1_name(Button *b, void *rast, int x, int y, Names *name)
+static void draw_1_name(Button *b, Raster *rast, int x, int y, Names *name)
 {
 Name_scroller *scr = (Name_scroller *)(b->group);
 

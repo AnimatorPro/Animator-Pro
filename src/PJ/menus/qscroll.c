@@ -41,7 +41,7 @@ static void accept_name(Button *b)
 	if(feel_string_req(b) & STQ_ENTER)
 		mb_gclose_ok(b);
 }
-static void feel_1_scroll(Button *list_sel,void *rast,int x,int y,
+static void feel_1_scroll(Button *list_sel, Raster *rast, int x, int y,
 						  Names *entry, int why)
 {
 	(void)rast;

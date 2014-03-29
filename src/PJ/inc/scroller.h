@@ -5,6 +5,8 @@
 	#include "menus.h"
 #endif
 
+struct raster;
+
 typedef struct name_scroller {
 
 /* items loaded before init_scroller() */
@@ -21,23 +23,24 @@ typedef struct name_scroller {
 	 * NULL and cel is to be blank. MUST be supplied.
 	 * rast is a Clipbox of the list_sel button */
 
-	void (*draw_1_cel)(Button *list_sel,void *rast,int x,int y,Names *entry);
+	void (*draw_1_cel)(Button *list_sel, struct raster *rast,
+			int x, int y, Names *entry);
 
 	/* highlite a cel when clicking on a cel this is called twice
 	 * before the feel_1_cel() with hilite as TRUE the a wait pen up
 	  * and immediately before the feelme with hilite == FALSE 
 	 * rast is a Clipbox of the list_sel button */
 
-	void (*high_1_cel)(Button *list_sel,void *rast,
-					   int x,int y,Names *entry, Boolean highlite);
+	void (*high_1_cel)(Button *list_sel, struct raster *rast,
+			int x, int y, Names *entry, Boolean highlite);
 
 	/* This feelme will be called by feel_scroll_cels() when a right click
 	 * occurrs over the cel. The is_dhit argument will indicate a second
 	 * consecutive hit over the same cel. This function can close the menu 
 	 * or redraw the scroller rast is a Clipbox of the list_sel button */
 
-	void (*feel_1_cel)(Button *list_sel,void *rast,int x,int y,Names *entry,
-					   int why); 
+	void (*feel_1_cel)(Button *list_sel, struct raster *rast,
+			int x, int y, Names *entry, int why);
 	SHORT top_name;     /* current top entry for scroller */
 	SHORT cels_per_row; /* number of cels in a row if 0 will be 1 */
 	SHORT cels_per_col; /* number of cels in a column if 0 will be 1 */

@@ -29,6 +29,7 @@
 #include "picdrive.h"
 #include "picfile.h"
 #include "progids.h"
+#include "scroller.h"
 #include "softmenu.h"
 #include "textedit.h"
 

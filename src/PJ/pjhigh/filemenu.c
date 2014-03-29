@@ -370,7 +370,7 @@ static Errcode new_drawer_with_data(void *data)
 	return new_drawer();
 }
 
-static void feel_1_fname(Button *m,void *rast,int x,int y,Names *entry,
+static void feel_1_fname(Button *m, Raster *rast, int x, int y, Names *entry,
 					  int why)
 {
 char *name;

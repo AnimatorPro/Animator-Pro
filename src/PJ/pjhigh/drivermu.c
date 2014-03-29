@@ -181,7 +181,7 @@ Names *entry;
 	wbg_ncorner_ltext(b);
 	b->datme = entry;
 }
-static void feel_1_scroll(Button *list_sel,void *rast,int x,int y,
+static void feel_1_scroll(Button *list_sel, Raster *rast, int x, int y,
 						  Names *entry, int why)
 {
 	(void)rast;

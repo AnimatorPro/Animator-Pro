@@ -527,8 +527,8 @@ static void refresh_font(void)
 	draw_button(&fmu_she_sel);
 	draw_button(&fmu_unz_sel);
 }
-static void feel_1_font(Button *b,void *rast,int x,int y,Names *entry,
-					    int why)
+static void
+feel_1_font(Button *b, Raster *rast, int x, int y, Names *entry, int why)
 {
 char fpath[PATH_SIZE];
 (void)rast;
