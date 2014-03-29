@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include "jimk.h"
 #include "errcodes.h"
 #include "rastext.h"
@@ -32,7 +33,7 @@ void get_uvfont_name(char *buf)
 	vset_get_path(FONT_PATH,buf);
 }
 
-Errcode load_the_font(char *path)
+static Errcode load_the_font(char *path)
 /* returns error code and will reset name in settings file to match
  * current font. If the path is NULL it will load the one in the settings
  * file path */

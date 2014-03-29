@@ -9,18 +9,9 @@
 	#include "rectang.h"
 #endif
 
-#ifndef WORDWRAP_H
-	#include "wordwrap.h"
-#endif
-
-#ifndef RASTEXT_H
-	#include "rastext.h"
-#endif
-
-#ifndef  MENUS_H
-	#include "menus.h"
-#endif
-
+struct menuhdr;
+struct raster;
+struct vfont;
 
 typedef struct linedata {
 	char *cstart;       /* start of line last time 'round */
@@ -45,11 +36,11 @@ typedef struct text_file
 	SHORT justify_mode;
 	Pixel ccolor;
 	Pixel ucolor;
-	Vfont *font;
-	Raster *raster;
-	void (*undraw_rect)(Raster *r, void *data, 
+	struct vfont *font;
+	struct raster *raster;
+	void (*undraw_rect)(struct raster *r, void *data,
 		int x, int y, int width, int height);
-	void (*undraw_dot)(int x, int y, Raster *r);
+	dotout_func undraw_dot;
 	void *undraw_data;
 	/* scratch stuff used only during a text edit */
 	SHORT text_cursor_color;
@@ -63,7 +54,7 @@ typedef struct text_file
 	char *nlstart;	/* start of line after text cursor */
 	SHORT twypos;		/* line of text window cursor is in */
 	SHORT twxpos;		/* character in line cursor is in */
-	Menuhdr *pull;
+	struct menuhdr *pull;
 	void (*pull_sel)(struct text_file *gf, int menu_ix, int sel_ix);
 	Linedata *ldat;      /* line data buffer */
 	UBYTE overwrite;	/* overwrite mode */
@@ -78,10 +69,16 @@ typedef struct text_file
 	UBYTE fill[18];
 	} Text_file;
 
-extern struct text_file *gtf;		/* titling/text tool editor */
-extern struct text_file *ptf;		/* poco programming editor */
-
-#define MAXTEXTSIZE 32000        /* max size for test buffer */
 #define DTSIZE 16002        /* default size for text buffer */
 
-#endif /* TEXTEDIT_H */
+/* textedit.c */
+extern void free_text_file(Text_file *gf);
+extern Boolean edit_text_file(Text_file *gf);
+extern Errcode get_rub_twin(Text_file *gf, Boolean cutout);
+
+/* textfile.c */
+extern Errcode load_text_file(Text_file *gf, char *name);
+extern Errcode save_text_file(Text_file *gf);
+extern Errcode load_titles(char *title);
+
+#endif

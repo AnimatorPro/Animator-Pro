@@ -121,7 +121,7 @@ int color;
 	}
 }
 
-void qfont_text()
+void qfont_text(void)
 /* Call the font requestor using settings file path and scroller setup */
 {
 Vset_path pinfo;

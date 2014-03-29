@@ -5,6 +5,7 @@
 #include "pentools.h"
 #include "render.h"
 #include "textedit.h"
+#include "wordwrap.h"
 
 /* hi level vpaint specific text routines */
 
@@ -78,16 +79,16 @@ static void ttext_undraw_rect(Raster *r, void *data, int x, int y,
 			 x, y, width, height);
 }
 
-void etext_undraw_rect(Raster *r, void *data, int x, int y,
+static void etext_undraw_rect(Raster *r, void *data, int x, int y,
 	int width, int height)
 {
 	(void)data;
 	pj_set_rect(r, sblack, x, y, width, height);
 }
 
-void etext_undraw_dot(int x, int y, Raster *r)
+static void etext_undraw_dot(SHORT x, SHORT y, void *r)
 {
-pj_put_dot(r, sblack, x, y);
+	pj_put_dot((Raster *)r, sblack, x, y);
 }
 
 void qpwtitles(int paste)

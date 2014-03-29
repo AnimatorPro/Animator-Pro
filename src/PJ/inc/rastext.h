@@ -160,4 +160,12 @@ extern void
 bitmask_to_alpha_channel(Pixel *dest, int shrinker, UBYTE *bitplane,
 		int w, int h, int bpr, int y_fraction);
 
-#endif /* RASTEXT_H */
+/* pjfont.c */
+extern void release_uvfont(void);
+extern void get_uvfont_name(char *buf);
+extern void grab_uvfont(void);
+
+/* qmenu.c */
+extern void qfont_text(void);
+
+#endif

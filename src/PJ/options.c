@@ -16,6 +16,7 @@
 #include "rastext.h"
 #include "scroller.h"
 #include "softmenu.h"
+#include "textedit.h"
 
 extern Minitime_data flxtime_data;
 static Optgroup_data optgroup;

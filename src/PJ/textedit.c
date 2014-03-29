@@ -4,6 +4,7 @@
    works most of the time!  See also textwind.c wordwrap.c and rastext.c */
 
 #include <stdio.h>
+#include <string.h>
 #include "jimk.h"
 #include "commonst.h"
 #include "errcodes.h"
@@ -12,16 +13,15 @@
 #include "softmenu.h"
 #include "textedit.h"
 #include "util.h"
-
-extern char *strstr(char *s1, char *s2);
+#include "wordwrap.h"
 
 static void marqi_twinbox(Text_file *gf);
-static slide_down();
-static slide_up();
-static void scroll_up();
-static void scroll_down();
-static void define_twin();
-static void move_twin();
+static void slide_down(Text_file *gf);
+static void slide_up(Text_file *gf);
+static void scroll_up(Text_file *gf);
+static void scroll_down(Text_file *gf);
+static void define_twin(Text_file *gf);
+static void move_twin(Text_file *gf);
 
 static void clip_cursorp(Text_file *gf)
 /* Make sure cursor is inside defined text area */
@@ -157,7 +157,7 @@ Vfont *font = gf->font;
 return;
 }
 
-static draw_twintext(Text_file *gf, int forceall)
+static void draw_twintext(Text_file *gf, int forceall)
 {
 	wwrefresh(gf, gf->wstart, gf->ldat, gf->twin.x, gf->twin.y, 
 			  gf->twin.width, gf->text_lines_visible, gf->ccolor, 0, forceall);
@@ -179,7 +179,7 @@ static void refresh_twintext(Text_file *gf)
 	fix_overlapped_border(gf);
 }
 
-static void marqtwin(Text_file *gf, void *dotdat, VFUNC pdot)
+static void marqtwin(Text_file *gf, void *dotdat, dotout_func pdot)
 {
 	cline_frame(gf->twin.x - 1, gf->twin.y - 1,
 				gf->twin.x + gf->twin.width,
@@ -279,7 +279,7 @@ char *cstart;
 }
 
 #ifdef OLDWAY
-void hide_text_cursor(Text_file *gf)
+static void hide_text_cursor(Text_file *gf)
 {
 SHORT hgt, top;
 int width;
@@ -306,7 +306,7 @@ int width;
 }
 #endif /* OLDWAY */
 
-void xor_text_cursor(Text_file *gf)
+static void xor_text_cursor(Text_file *gf)
 {
 SHORT hgt, top, top2;
 int width, x;
@@ -376,7 +376,7 @@ do_vertical:
 	gf->cursor_up = !gf->cursor_up;
 }
 
-void hide_text_cursor(Text_file *gf)
+static void hide_text_cursor(Text_file *gf)
 {
 	if(gf->cursor_up)
 		xor_text_cursor(gf);
@@ -405,7 +405,7 @@ else
 	}
 }
 
-cleanup_twin(Text_file *gf)
+static void cleanup_twin(Text_file *gf)
 {
 	pj_gentle_free(gf->ldat);
 	gf->ldat = NULL;
@@ -498,7 +498,7 @@ for (i=0;i<gf->text_lines_visible;i++)
 return(1);
 }
 
-static slide_down(Text_file *gf)
+static void slide_down(Text_file *gf)
 /* if cursor position past end of window, slide it down. */
 {
 SHORT slid = 0;
@@ -512,10 +512,9 @@ while (past_window(gf))
 	}
 if (slid)
 	find_wstart(gf);
-return(slid);
 }
 
-static slide_up(Text_file *gf)
+static void slide_up(Text_file *gf)
 /* if cursor position before start of window slide it up */
 {
 clip_cursorp(gf);
@@ -523,9 +522,7 @@ if (gf->wstart == NULL || gf->tcursor_p < gf->wstart - gf->text_buf)
 	{
 	gf->text_yoff = 0;
 	find_wstart(gf);
-	return(TRUE);
 	}
-return(FALSE);
 }
 
 static Boolean xseek(Text_file *gf, char *p, SHORT x)
@@ -760,7 +757,7 @@ char *cc;
 	update_win(gf,0);
 }
 
-delete_at_cp(Text_file *gf, long dcount)
+static void delete_at_cp(Text_file *gf, long dcount)
 {
 int count;
 
@@ -862,8 +859,7 @@ char *nxtline;
 }
 /* end subroutines for text_edit */
 
-static text_key_edit(Text_file *gf, USHORT inkey)
-
+static Errcode text_key_edit(Text_file *gf, USHORT inkey)
 /* iit is assumed when this is called that the text cursor is hidden */
 {
 int askey = inkey&0xff;
