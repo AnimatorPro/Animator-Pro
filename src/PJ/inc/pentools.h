@@ -129,6 +129,13 @@ gel_tool_loop(
 
 extern void see_gel_brush(struct button *b);
 
+/* hitext.c */
+extern void qplace_titles(void);
+extern void qpwtitles(int paste);
+extern void qedit_titles(void);
+extern void ttool(int paste);
+extern Errcode load_and_paste_text(char *name);
+
 /* sep.c */
 extern int in_cnums(UBYTE color, UBYTE *table, int count);
 extern Errcode do_sep_redo(struct sep_p *sep);

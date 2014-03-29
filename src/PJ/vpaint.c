@@ -32,6 +32,7 @@
 #include "scroller.h"
 #include "softmenu.h"
 #include "textedit.h"
+#include "title.h"
 
 #define UNSAVE_BUFSIZ 80
 

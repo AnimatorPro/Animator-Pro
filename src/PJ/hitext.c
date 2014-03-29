@@ -9,8 +9,6 @@
 
 /* hi level vpaint specific text routines */
 
-extern void qpwtitles(int paste);
-
 static void rendr_twin(Text_file *gf);
 
 #ifdef SLUFFED
@@ -197,7 +195,7 @@ error:
 	return(softerr(err,"edit_window"));
 }
 
-void qedit_titles()
+void qedit_titles(void)
 /* Edit existing text in same colors we use for menus over a blank screen.
    Don't paste the text. */
 {

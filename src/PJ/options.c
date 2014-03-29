@@ -94,7 +94,6 @@ static Button tload_sel = MB_INIT1(
 	NOKEY,
 	0
 	);
-void qedit_titles();
 static Button tedit_sel = MB_INIT1(
 	&tload_sel,
 	NOCHILD,
@@ -107,7 +106,6 @@ static Button tedit_sel = MB_INIT1(
 	NOKEY,
 	0
 	);
-void qplace_titles();
 static Button tplace_sel = MB_INIT1(
 	&tedit_sel,
 	NOCHILD,

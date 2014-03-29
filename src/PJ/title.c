@@ -1,16 +1,20 @@
 /* title.c - The data structures and associated routines for the Titling
    control panel. */
 
+#include <string.h>
 #include "jimk.h"
 #include "auto.h"
 #include "errcodes.h"
 #include "filemenu.h"
 #include "marqi.h"
+#include "pentools.h"
 #include "rastcurs.h"
 #include "render.h"
 #include "softmenu.h"
 #include "textedit.h"
+#include "title.h"
 #include "util.h"
+#include "wordwrap.h"
 
 Errcode check_max_frames(int count);
 
@@ -182,7 +186,7 @@ static Button tit_pla_sel = MB_INIT1(
 	0
 	);
 
-static go_text_files(Button *b)
+static void go_text_files(Button *b)
 {
 	(void)b;
 	go_files(FTP_TEXT);
@@ -200,7 +204,6 @@ static Button tit_loa_sel = MB_INIT1(
 	NOKEY,
 	0
 	);
-extern void qedit_titles();
 static Button tit_edi_sel = MB_INIT1(
 	&tit_loa_sel,
 	NOCHILD,
@@ -286,8 +289,6 @@ static Button tit_tit_sel = MB_INIT1(
 	'q',
 	0
 	);
-
-void seebg_title_back();
 
 static Menuhdr tit_menu = {
 	{320,62,0,137},   /* width, height, x, y */
@@ -601,15 +602,13 @@ switch (vs.tit_move)
 	}
 }
 
-static fresh_load_tf(Text_file *gf)
+static Errcode fresh_load_tf(Text_file *gf)
 {
 	clear_struct(gf);
 	return(load_text_file(gf, text_name));
 }
 
-
-
-Errcode do_titles(Boolean	with_menu)	/* aka do text */
+static Errcode do_titles(Boolean with_menu) /* aka do text */
 {
 int omulti, oh;
 Text_file lgtf;
@@ -670,7 +669,7 @@ static void title_button(void)	/* aka do text */
 	do_titles(TRUE);
 }
 
-static int calc_suggest_frames()
+static int calc_suggest_frames(void)
 /* Figure out how many frames it'd take for the titling effect to
  * have one frame per scroll. */
 {
