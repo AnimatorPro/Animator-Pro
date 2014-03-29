@@ -1,10 +1,10 @@
 #include <string.h>
 #include "linklist.h"
 
-static int cmp_names(Names *l1, Names *l2, void *cmpdat)
+static int cmp_names(void *l1, void *l2, void *cmpdat)
 {
 	(void)cmpdat;
-	return(strcmp(l1->name, l2->name) );
+	return strcmp(((Names *)l1)->name, ((Names *)l2)->name);
 }
 
 Names *sort_names(register Names *list)

@@ -1,8 +1,9 @@
 #include "memory.h"
 #include "linklist.h"
 
-/***********************************************************/
-void *sort_slist(register Slnode *list, FUNC cmp, void *cmpdat)
+void *
+sort_slist(register Slnode *list,
+		int (*cmp)(void *a, void *b, void *cmpdat), void *cmpdat)
 {
 register void **array, **array_pt;
 register Slnode *pt;

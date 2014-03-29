@@ -226,7 +226,7 @@ extern char msg_name[];
 
 typedef struct keyequiv {
 	char *name;
-	VFUNC doit;
+	void (*doit)(void);
 	USHORT flags;
 	SHORT key;
 } Keyequiv;

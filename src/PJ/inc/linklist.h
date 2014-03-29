@@ -102,8 +102,15 @@ LONG 	listlen(Dlheader *list);
 Dlheader *find_header(Dlnode *node);
 void 	insert_compare(Dlnode *node, Dlheader *list, FUNC compare);
 void 	isort_list(Dlheader *list, FUNC compare);
-void	sort_indarray(void **array, LONG count, FUNC cmp, void *cmpdat);
-void	*sort_slist(Slnode *list, FUNC cmp, void *cmpdat);
+
+extern void
+sort_indarray(void **array, LONG count,
+		int (*cmp)(void *a, void *b, void *cmpdat), void *cmpdat);
+
+extern void *
+sort_slist(Slnode *list,
+		int (*cmp)(void *a, void *b, void *cmpdat), void *cmpdat);
+
 Names 	*sort_names(Names *list);
 
 void swap_dl_list(Dlheader *a, Dlheader *b);

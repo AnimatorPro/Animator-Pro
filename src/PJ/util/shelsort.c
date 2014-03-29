@@ -1,7 +1,8 @@
 #include "linklist.h"
 
-void sort_indarray(void **array, LONG count, FUNC cmp, void *cmpdat)
-
+void
+sort_indarray(void **array, LONG count,
+		int (*cmp)(void *a, void *b, void *cmpdat), void *cmpdat)
 /* a little shell on an array of indirect pointers to things.
  * takes a function that is like strcmp() to compare things pointed to */
 {

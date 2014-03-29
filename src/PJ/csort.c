@@ -55,12 +55,12 @@ static void free_ssctable(Csort_dat *cpd)
 		pj_freez(&cpd->ssctable);
 }
 
-static LONG occ_cmp(Occ_map *a, Occ_map *b)
-
+static int occ_cmp(void *a, void *b, void *data)
 /* Comparison routine so can sort histogram by how frequently used a
    color is. */
 {
-return(a->count - b->count);
+	(void)data;
+	return ((Occ_map *)a)->count - ((Occ_map *)b)->count;
 }
 
 static void cluster_to_cflags(UBYTE *cflags)
@@ -340,15 +340,16 @@ Csort_dat cpd;
 	show_mp();
 }
 
-static LONG rccmp(UBYTE *a, UBYTE *b, PLANEPTR cm)
+static int rccmp(void *a, void *b, void *data)
 /* Comparison routine for luminance sort */
 {
-PLANEPTR p1, p2;
-int i;
-long acc;
+	PLANEPTR cm = data;
+	PLANEPTR p1, p2;
+	int i;
+	int acc;
 
-	p1 = cm + 3* (a[0]);
-	p2 = cm + 3* (b[0]);
+	p1 = cm + 3* ((UBYTE *)a)[0];
+	p2 = cm + 3* ((UBYTE *)b)[0];
 	i = 3;
 	acc = 0;
 	while (--i >= 0)

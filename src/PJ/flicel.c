@@ -699,6 +699,11 @@ error:
 	return(cel_cant_clip(err));
 }
 
+void clip_cel1(void)
+{
+	clip_cel();
+}
+
 static Errcode cel_from_rect(Rectangle *rect, Boolean render_only)
 {
 Errcode err;
@@ -726,6 +731,11 @@ Errcode err;
 		err = cel_from_rect(&rect,FALSE);
 
 	return(err);
+}
+
+void cut_out_cel1(void)
+{
+	cut_out_cel();
 }
 
 void qget_changes(void)

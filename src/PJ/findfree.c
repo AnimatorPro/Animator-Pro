@@ -6,10 +6,11 @@
 #include "flx.h"
 #include "linklist.h"
 
-static int cmp_flx(Flx *f1, Flx *f2)
+static int cmp_flx(void *f1, void *f2, void *data)
 /* int value returned for sort_indarray() to compare two Flx */
 {
-return(f1->foff>f2->foff ? -1 : 1);
+	(void)data;
+	return ((Flx *)f1)->foff > ((Flx *)f2)->foff ? -1 : 1;
 }
 
 #ifdef SLUFFED
