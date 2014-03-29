@@ -195,7 +195,8 @@ Boolean bord_was_on;
 	if(PENWNDO == NULL || PENWNDO == &vb.screen->wndo)
 		return;
 
-	if(bord_was_on = (PENWNDO->redraw != NULL))
+	bord_was_on = (PENWNDO->redraw != NULL);
+	if (bord_was_on)
 		fliborder_off();
 	pos.width = PENWNDO->width;
 	pos.height = PENWNDO->height;
