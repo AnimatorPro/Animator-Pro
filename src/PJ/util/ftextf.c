@@ -37,7 +37,7 @@ SHORT offset;
 		switch(FT_TYPE(c))
 		{
 			case FT_INT:
-				offset += ssizeof(int);
+				offset += ssizeof(intptr_t);
 				if(c == FT_STARTYPE)  /* '*' star type int args */
 					continue;
 				break;
