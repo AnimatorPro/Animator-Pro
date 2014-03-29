@@ -522,7 +522,7 @@ Errcode save_redo_edge(Short_xy *p)
 	return(redo());
 }
 
-Errcode save_redo_line(Short_xy *xys[2])
+Errcode save_redo_line(Short_xy *xys)
 {
 	vs.redo.type = REDO_LINE;
 	pj_copy_bytes(xys, &vs.redo.p.line_p, sizeof(vs.redo.p.line_p));

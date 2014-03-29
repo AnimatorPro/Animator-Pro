@@ -108,7 +108,7 @@ extern Errcode save_redo_poly(char curve);
 extern Errcode save_redo_fill(Short_xy *p);
 extern Errcode save_redo_flood(Short_xy p[2]);
 extern Errcode save_redo_edge(Short_xy *p);
-extern Errcode save_redo_line(Short_xy *xys[2]);
+extern Errcode save_redo_line(Short_xy *xys);
 extern Errcode save_redo_spiral(void);
 extern Errcode save_redo_move(Move_p *m);
 extern void clear_redo(void);
