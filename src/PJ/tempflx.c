@@ -269,7 +269,7 @@ Chunkparse_data pd;
 	{
 		switch(pd.type)
 		{
-			case ROOT_CHUNK_TYPE: 
+			case (USHORT)ROOT_CHUNK_TYPE:
 			{
 				if((err = copy_parsed_chunk(&pd, flix.fd)) < Success)
 					goto error;

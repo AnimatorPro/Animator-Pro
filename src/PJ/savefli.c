@@ -254,7 +254,7 @@ Errcode err;
 			case FP_FLIPATH:  /* ignore these */
 			case FP_FREE:
 				break;
-			case ROOT_CHUNK_TYPE: /* save old size */
+			case (USHORT)ROOT_CHUNK_TYPE: /* save old size */
 
 				if((err = copy_parsed_chunk(&pd, flif->fd)) < Success)
 					goto error;

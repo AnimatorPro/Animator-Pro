@@ -263,10 +263,10 @@ static void pget_color(Button *b)
 }
 static void show_ink(Pixel c)
 {
-Rgb3 m;
-static int lastc;
+	static Pixel lastc;
+	Rgb3 m;
 
-	if(c >= 0 && c != lastc)
+	if (c != lastc)
 	{
 		get_color_rgb(c,vb.pencel->cmap,&m);
 		soft_top_textf("!%-3d%-3d%-3d%-3d", "top_color", c, m.r, m.g, m.b);

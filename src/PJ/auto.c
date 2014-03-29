@@ -265,8 +265,7 @@ Rgb3 *rgb;
 	rgb = vb.pencel->cmap->ctab;
 	for (i=0; i<COLORS; i++)
 	{
-		if ((ttable[i] = (rgb->r + rgb->g + rgb->b + 1)/3) > COLORS-1)
-			ttable[i] = COLORS-1;
+		ttable[i] = (rgb->r + rgb->g + rgb->b + 1)/3;
 		++rgb;
 	}
 	rgb = vb.pencel->cmap->ctab;

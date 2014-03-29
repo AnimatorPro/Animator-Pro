@@ -399,7 +399,7 @@ Chunkparse_data pd;
 				if(for_fli_prefix)
 					break;
 			case VSET_PATHARRAY_ID:
-			case ROOT_CHUNK_TYPE:
+			case (USHORT)ROOT_CHUNK_TYPE:
 			case VSET_VS_ID:
 			case VSET_SLOWVS_ID:
 				copy_parsed_chunk(&pd,newfd); /* sets pd.error internally */

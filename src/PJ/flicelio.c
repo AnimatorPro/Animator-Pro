@@ -763,7 +763,7 @@ LONG chunksize;
 		init_chunkparse(&pd,oflif.fd,FCID_PREFIX,sizeof(Fli_head),0,0);
 		while(get_next_chunk(&pd))
 		{
-			if(pd.type == ROOT_CHUNK_TYPE)
+			if (pd.type == (USHORT)ROOT_CHUNK_TYPE)
 			{
 				rootsize = pd.fchunk.size;
 			}

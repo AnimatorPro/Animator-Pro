@@ -173,8 +173,10 @@ Errcode err = Success;
 int open = !closed;
 
 clear_mem(dpoly, sizeof(*dpoly) );
-if ((dpoly->pt_count = ptcount = (ptcount-open)*ir + open) > BIG_SHORT)
+ptcount = (ptcount-open)*ir + open;
+if (ptcount > BIG_SHORT)
 	return(Err_spline_points);
+dpoly->pt_count = ptcount;
 if ((dpoly->clipped_list =	pj_malloc((long)(ptcount+1) * sizeof(LLpoint)))
 	== NULL)	/* alloc one extra to simplify lower level spline loop. */
 	return(Err_no_memory);
