@@ -1,3 +1,4 @@
+#include <string.h>
 #include "errcodes.h"
 #include "imath.h"
 #include "memory.h"
@@ -126,12 +127,9 @@ OUT:
 	return err;
 }
 
-
-
-
-void sample_vertex(Short_xyz *vtx, int vcount, int vsign,
-						   Short_xyz *delta_array,
-						   int scale)
+static void
+sample_vertex(Short_xyz *vtx, int vcount, int vsign,
+		Short_xyz *delta_array, int scale)
 /* Put position along path corresponding to scale into delta_array */
 {
 SHORT samp0, little_scale;
@@ -212,7 +210,7 @@ if (b == 0)
 return(ilcm(a,b));
 }
 
-void init_tw_list(Tw_tlist *twl)
+static void init_tw_list(Tw_tlist *twl)
 {
 clear_struct(twl);
 init_list(&twl->list);

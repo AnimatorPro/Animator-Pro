@@ -10,9 +10,6 @@
 #include "tween.h"
 #include "tweenpul.h"
 
-extern void tween_undraw();
-extern void tween_redraw();
-
 extern void go_multi(), go_zoom_settings(), movefli_tool();
 
 static Button twe_grid_sel = MB_INIT1(
@@ -63,7 +60,7 @@ static Button twe_minipal_sel = MB_INIT1(
 	NOKEY,
 	0
 	);
-Button twe_goinks_sel = MB_INIT1(
+static Button twe_goinks_sel = MB_INIT1(
 	&twe_minipal_sel,
 	NOCHILD,
 	53,9,238,3,
@@ -90,7 +87,6 @@ static Button twe_std1_sel = MB_INIT1(
 	NOKEY,
 	0 /* flags */
 	);
-extern void twe_go_tool(Button *b);
 static Button twe_tool_sel = MB_INIT1(
 	&twe_std1_sel,
 	NOCHILD,

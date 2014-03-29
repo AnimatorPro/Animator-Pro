@@ -23,8 +23,6 @@
 /* draw 1st vertex in PT1COL */
 #define PT1COL vb.screen->SRED
 
-extern Menuhdr twe_menu;
-
 typedef struct tween_cb
 	{
 	Tween_state cur,old;
@@ -35,12 +33,15 @@ typedef struct tween_cb
 	Pixel s_color;
 	Pixel e_color;
 	} Tween_cb;
-Tween_cb *twcb;
+
+static Tween_cb *twcb;
+
+typedef void (*tti_func)(void);
 
 static void twe_disable_refresh(void);
 static void twe_enable_refresh(void);
 
-static Boolean tween_got_both()
+static Boolean tween_got_both(void)
 /* Make sure both end polygons of the tween are present */
 {
 return tween_has_data(&twcb->cur);
@@ -127,7 +128,7 @@ for (link = (Tween_link *)(llist->tails_prev);
 	}
 }
 
-static void twe_see_both_ends()
+static void twe_see_both_ends(void)
 /* Draw start and end polygons, and the link lines.  Draw small grey
    circles over active vertices.  */
 {
@@ -165,26 +166,37 @@ switch (vs.tween_end)
 see_links(&twcb->cur.links,p0,p1);
 }
 
-static redraw_both_ends()
+static void redraw_both_ends(void)
 /* Clear screen and redraw */
 {
 zoom_unundo();
 twe_see_both_ends();
 }
 
-void tween_undraw()
+static void tween_undraw(void)
 {
 zoom_unundo();
 }
 
-void tween_redraw()
+static void tween_undraw_with_data(void *dat)
+{
+	(void)dat;
+	tween_undraw();
+}
+
+static void tween_redraw(void)
 {
 save_undo();
 twe_see_both_ends();
 }
 
+static void tween_redraw_with_data(void *dat)
+{
+	(void)dat;
+	tween_redraw();
+}
 
-static Errcode tween_sv_undo()
+static Errcode tween_sv_undo(void)
 /* Free old state and clone current state into it. */
 {
 Errcode err;
@@ -198,14 +210,13 @@ if ((err = update_poly(&twcb->cur.p0, &twcb->old.p0)) < Success)
 return(update_poly(&twcb->cur.p1, &twcb->old.p1));
 }
 
-static Errcode tween_save_undo()
+static Errcode tween_save_undo(void)
 /* Copy current state to undo and report error */
 {
 return(softerr(tween_sv_undo(),"tween_undo"));
 }
 
-
-static void tween_swap_undo()
+static void tween_swap_undo(void)
 /* Exchange old state and cur state */
 {
 swap_mem(&twcb->cur.p0, &twcb->old.p0, sizeof(twcb->old.p0));
@@ -226,20 +237,19 @@ a_wireframe_tween(&twcb->cur, tr_frames, flix.hdr.speed,
 twe_see_both_ends();
 }
 
-static void wireframe_tween()
+static void wireframe_tween(void)
 /* Play wireframe of cur tween once */
 {
 twtw_wire(TWEEN_ONCE);
 }
 
-static void wireloop_tween()
+static void wireloop_tween(void)
 /* Play wireframe of cur tween forever */
 {
 twtw_wire(TWEEN_LOOP);
 }
 
-
-static Poly *sel_poly()
+static Poly *sel_poly(void)
 /* Select active poly.  If both poly select different one from last time */
 {
 Poly *res;
@@ -259,7 +269,7 @@ switch (vs.tween_end)
 return(res);
 }
 
-static void set_last_made()
+static void set_last_made(void)
 /* record which end made last */
 {
 switch (vs.tween_end)
@@ -313,8 +323,7 @@ free_dl_list(&twcb->cur.links);
 return(err);
 }
 
-
-static void tween_end_to_start()
+static void tween_end_to_start(void)
 /* copy end poly to start poly */
 {
 if (tween_save_undo()<Success)
@@ -323,8 +332,7 @@ softerr(update_poly(&twcb->cur.p1,&twcb->cur.p0),NULL);
 redraw_both_ends();
 }
 
-
-static void tween_swap_ends()
+static void tween_swap_ends(void)
 {
 	if (!tween_got_both())
 		return;
@@ -334,7 +342,7 @@ static void tween_swap_ends()
 	redraw_both_ends();
 }
 
-static void tween_clear()
+static void tween_clear(void)
 /* Delete both ends of tween. */
 {
 if (tween_save_undo()<Success)
@@ -344,7 +352,7 @@ twcb->last_made = TRUE;
 redraw_both_ends();
 }
 
-static rev_ix(int ix, int pcount, Boolean closed)
+static int rev_ix(int ix, int pcount, Boolean closed)
 /* return index if poly were reversed */
 {
 if (closed)
@@ -360,7 +368,7 @@ else
 	}
 }
 
-static void tween_reverse_poly()
+static void tween_reverse_poly(void)
 /* Reverse order of point in active poly, & reverse corresponding links */
 {
 Tween_link *link,*next;
@@ -437,7 +445,7 @@ static char *keys[] = { NULL, "st", "end", "esc", NULL };
 	}
 }
 
-static void save_cur_shape()
+static void save_cur_shape(void)
 /* Save one end of the tween to a .ply file */
 {
 char *path;
@@ -454,7 +462,7 @@ char sbuf[50];
 	}
 }
 
-static void load_cur_shape()
+static void load_cur_shape(void)
 /* Load one end of the tween from a .ply file */
 {
 char *path;
@@ -477,7 +485,7 @@ if ((path = vset_get_filename(stack_string("load_shape", sbuf),
 	}
 }
 
-static void render_tween()
+static void render_tween(void)
 /* Save tween-display state and the do-auto on that tween */
 {
 twe_disable_refresh();
@@ -487,7 +495,7 @@ tween_redraw();
 twe_enable_refresh();
 }
 
-static void render_trails()
+static void render_trails(void)
 {
 static char *keys[] = { "ask", "kp", "vu", "esc", NULL };
 short steps = 16;
@@ -520,8 +528,7 @@ done:
 	return;
 }
 
-
-static void tti_polygon()
+static void tti_polygon(void)
 /* create poly a click at a time */
 {
 Poly *p;
@@ -539,7 +546,7 @@ if ((this = new_poly_point(p)) != NULL)
 	}
 }
 
-static void tti_shape()
+static void tti_shape(void)
 {
 Poly *p;
 Pixel color;
@@ -551,31 +558,31 @@ Pixel color;
 	redraw_both_ends();
 }
 
-static void tti_star()
+static void tti_star(void)
 /* create a star end */
 {
 tween_do_star(sel_poly(),WP_STAR);
 }
 
-static void tti_petal()
+static void tti_petal(void)
 /* create a petal end */
 {
 tween_do_star(sel_poly(),WP_PETAL);
 }
 
-static void tti_rpoly()
+static void tti_rpoly(void)
 /* create a regular poly end */
 {
 tween_do_star(sel_poly(),WP_RPOLY);
 }
 
-static void tti_oval()
+static void tti_oval(void)
 /* create and oval end */
 {
 tween_do_star(sel_poly(),WP_ELLIPSE);
 }
 
-static void tti_mshape()
+static void tti_mshape(void)
 /* move a shape end */
 {
 Poly *poly;
@@ -604,7 +611,7 @@ mp->dit_colors[1] = mp->dot_colors[1] = twcb->e_color;
 return(TRUE);
 }
 
-static void tti_mtween()
+static void tti_mtween(void)
 /* move both ends of tween */
 {
 Mpl_2p m2;
@@ -641,7 +648,7 @@ redraw_both_ends();
 return(err);
 }
 
-static void tti_sshape()
+static void tti_sshape(void)
 /* size shape tween tool */
 {
 Mpl_data mpl;
@@ -660,7 +667,7 @@ mpl.dit_colors = mpl.dot_colors = &color;
 tween_size_polys(&mpl,&p,&q);
 }
 
-static void tti_stween()
+static void tti_stween(void)
 /* size tween tween tool */
 {
 Mpl_2p m2;
@@ -671,8 +678,7 @@ if (!init_2p_mpl(&m2))
 tween_size_polys(&m2.mpl,&p,&q);
 }
 
-
-static void tti_mpoint()
+static void tti_mpoint(void)
 /* move point tween tool */
 {
 Poly *poly;
@@ -709,14 +715,13 @@ report_temp_restore_rcel(&oundo, undof);
 redraw_both_ends();
 }
 
-
-static void tti_magnet()
+static void tti_magnet(void)
 /* inverse squared proportional move points */
 {
 tw_mag(MAG_MAGNET);
 }
 
-static void tti_blow()
+static void tti_blow(void)
 /* inverse linear proportional move points */
 {
 tw_mag(MAG_BLOW);
@@ -725,9 +730,7 @@ tw_mag(MAG_BLOW);
 #undef MAG_MAGNET
 #undef MAG_BLOW
 
-
-
-static void tti_link()
+static void tti_link(void)
 /* link points tween tool */
 {
 Poly *spoly, *epoly;
@@ -768,8 +771,7 @@ OUT:
 	redraw_both_ends();
 }
 
-
-static VFUNC tti_vectors[] = 
+static tti_func tti_vectors[] =
 /* Jump table to dispatch tween-tool */
 	{
 	tti_polygon,
@@ -788,20 +790,19 @@ static VFUNC tti_vectors[] =
 	tti_link,	/* link */
 	};
 
-
-Boolean got_tween()
+Boolean got_tween(void)
 /* return whether tween files are saved. */
 {
 return(pj_exists(tween_name));
 }
 
-Boolean tween_renderable()
+static Boolean tween_renderable(void)
 /* returns whether should grey out 'render' option */
 {
 return(twcb->renderable);
 }
 
-Errcode save_tween_state()
+static Errcode save_tween_state(void)
 /* Save current tween state to temp file */
 {
 if (!tween_got_both())
@@ -810,7 +811,7 @@ return(softerr(save_tween(tween_name, &twcb->cur),
 		"!%s", "tween_sstate",  tween_name));
 }
 
-Errcode load_tween_state()
+static Errcode load_tween_state(void)
 /* Restore tween state from temp file */
 {
 Errcode err;
@@ -992,12 +993,18 @@ switch(hitid)
 show_mp();
 }
 
-twe_tool_func()
+static Errcode twe_tool_func(Pentool *pt, Wndo *w)
 {
+	(void)pt;
+	(void)w;
+
 if (!tti_input())
-	return;
-if (tween_save_undo()>=Success)
+	return Err_nogood;
+if (tween_save_undo()>=Success) {
 	(*(tti_vectors[vs.tween_tool]))();
+	return Success;
+	}
+return Err_nogood;
 }
 
 
@@ -1096,8 +1103,7 @@ tween_pull_disables(mh);
 return(menu_dopull(mh));
 }
 
-
-static twe_set_colors()
+static void twe_set_colors(void)
 {
 	twcb->s_color = vs.inks[1];
 	twcb->e_color = vs.inks[2];
@@ -1114,7 +1120,7 @@ Pixel os, oe;
 	twe_set_colors();
 
 	if(flx_olays_hidden()
-		|| flxtime_data.draw_overlays != tween_redraw)
+		|| flxtime_data.draw_overlays != tween_redraw_with_data)
 	{
 		return;
 	}
@@ -1141,11 +1147,11 @@ static void twe_disable_refresh(void)
 }
 static void twe_enable_refresh(void)
 {
-	flxtime_data.clear_overlays = tween_undraw;
-	flxtime_data.draw_overlays =  tween_redraw;
+	flxtime_data.clear_overlays = tween_undraw_with_data;
+	flxtime_data.draw_overlays = tween_redraw_with_data;
 	add_color_redraw(&twe_color_rn);
 }
-static Boolean tween_menu_keys()
+static Boolean tween_menu_keys(void)
 {
  	if(check_toggle_abort())
 		return(TRUE);

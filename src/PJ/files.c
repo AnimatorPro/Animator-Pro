@@ -16,6 +16,7 @@
 #include "softmenu.h"
 #include "textedit.h"
 #include "timemenu.h"
+#include "tween.h"
 
 /*** Display Functions ***/
 

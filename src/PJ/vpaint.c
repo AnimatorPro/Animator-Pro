@@ -34,6 +34,7 @@
 #include "textedit.h"
 #include "timemenu.h"
 #include "title.h"
+#include "tween.h"
 
 #define UNSAVE_BUFSIZ 80
 

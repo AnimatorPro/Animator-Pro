@@ -1,4 +1,3 @@
-
 #ifndef TWEENPUL_H
 #define TWEENPUL_H
 
@@ -23,15 +22,6 @@ typedef enum tween_tool_ids
 	TTI_STWEEN,
 	TTI_LINK,
 	} Tween_tool_ids;
-
-Boolean tween_got_either();
-Boolean tween_renderable();
-Boolean got_tween();
-void twe_go_tool(Button *b);
-
-void tween_undraw();
-void tween_redraw();
-void twe_init_menu();
 
 #define TWE_PUL	100
 #define TWE_UND_PUL	101
@@ -80,4 +70,4 @@ void twe_init_menu();
 #define ACT_END_PUL	502
 #define ACT_BOT_PUL	503
 
-#endif /* TWEENPUL_H */
+#endif
