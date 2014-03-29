@@ -105,7 +105,7 @@ Boolean check_pen_abort(void)
 }
 Boolean check_toggle_menu(void)
 {
-	if( JSTHIT(KEYHIT) && (UBYTE)icb.inkey == ' '
+	if ((JSTHIT(KEYHIT) && (UBYTE)icb.inkey == ' ')
 		|| (rclick_on_screen()))
 	{
 		toggle_menu();
