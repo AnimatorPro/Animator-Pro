@@ -21,7 +21,7 @@ struct anim_info;
 struct cmap;
 
 /* Old style pic header, Animator 1.0 compatible */
-typedef struct opic_header {
+typedef struct GCC_PACKED opic_header {
 	USHORT type;  	/* type == OPIC_MAGIC */
 	RECT_FIELDS; 	/* width, height, x, y */
 	char d;  		/* pixel depth */
@@ -29,16 +29,16 @@ typedef struct opic_header {
 	LONG csize;    	/* w * h */
 	char reserved[16];
 } Opic_header;
+STATIC_ASSERT(picfile, sizeof(Opic_header) == 32);
 
-
-
-typedef struct pic_header {
+typedef struct GCC_PACKED pic_header {
 	Chunk_id id;      	/* type is PIC_MAGIC */
 	RECT_FIELDS;   	  	/* width; height; x; y; size and positioning info */
 	LONG user_id;      	/* arbitrary id number for user */
 	UBYTE depth;		/* pixel depth needed to represent pic */
 	UBYTE reserved[45]; /* for a total of 64 bytes */
 } Pic_header;
+STATIC_ASSERT(picfile, sizeof(Pic_header) == 64);
 
 /* chunk types after header */
 
