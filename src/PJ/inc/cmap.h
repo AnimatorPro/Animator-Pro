@@ -15,6 +15,7 @@ struct wscreen;
 typedef struct rgb3 {
 	UBYTE r,g,b;
 } Rgb3;
+STATIC_ASSERT(cmap, sizeof(Rgb3) == 3);
 
 typedef struct cmap {
 	LONG num_colors;

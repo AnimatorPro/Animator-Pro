@@ -66,9 +66,9 @@ long bpr;
 		goto error;
 
 	if((screen->type == RT_BYTEMAP || screen->type == RT_BITMAP)
-		&& bpr == screen->hw.bm.bpr) 
+		&& bpr == screen->u.hw.bm.bpr)
 	{
-		if((err = pj_write_ecode(f, screen->hw.bm.bp[0], 
+		if ((err = pj_write_ecode(f, screen->u.hw.bm.bp[0],
 										bpr*pic.height)) < Success)
 		{
 			goto error;

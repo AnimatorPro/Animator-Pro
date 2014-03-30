@@ -33,13 +33,12 @@
 	#include "rcel.h"
 #endif
 
-#ifndef LINKLIST_H
-	#include "linklist.h"
-#endif
-
 #ifndef INPUT_H
 	#include "input.h"
 #endif
+
+#include "ptrmacro.h"
+#include "wndobody.h"
 
 /********  window structure *********/
 
@@ -87,28 +86,16 @@ typedef struct wndo {
  * with an Rcel see rcel.h and the CEL_FIELDS following will be in the
  * right spot */
 
-	union wndobody {
-		Rastbody rb;  /* an Rcel is a raster folowed by CEL_FIELDS */
-		struct {
-			SHORT xmax, ymax;	/* this is another representation of width and 
-							 * height for clipping note this is immediately
-							 * after the RastHdr that makes a ClipRect out of 
-							 * RastHdr RECT_FIELDS and the wndobody !! */
+	#define W_xmax body.wb.xmax
+	#define W_ymax body.wb.ymax
+	#define W_node body.wb.node
+	#define W_screen body.wb.screen
 
-		#define W_xmax body.wb.xmax
-		#define W_ymax body.wb.ymax
+	union {
+		struct wndobody wb;
 
-			Dlnode node; /* node for installation in window screen window list 
-						  * node.next points to window behind
-						  * node.prev points to window in front */
-
-		#define W_node body.wb.node
-
-			struct wscreen *screen; /* the screen window is attached to */
-
-		#define W_screen body.wb.screen
-
-		} wb;
+		/* an Rcel is a raster followed by CEL_FIELDS */
+		char pad[sizeof(Rastbody)];
 	} body;
 
 	CEL_FIELDS; /* colormap etc for cel compatability */
@@ -142,7 +129,8 @@ typedef struct wndo {
 	void *doit_data;	/* data pointer for doit function */
 	LONG for_the_futcha[1];
 } Wndo;
-
+STATIC_ASSERT(wndo, POSTOSET(Wndo, W_ymax) - OFFSET(Wndo, x) == 8);
+STATIC_ASSERT(wndo, OFFSET(Wndo, cmap) == OFFSET(Rcel, cmap));
 
 #define WNDO_MUCOLORS  	0x0001 /* this window wants to use the menucolors */
 #define WNDO_HIDDEN		0x0002 /* window is in "hidden state" */

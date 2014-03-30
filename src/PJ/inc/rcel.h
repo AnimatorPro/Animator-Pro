@@ -15,6 +15,8 @@
 
 struct cmap;
 
+#include "wndobody.h"
+
 /* a minimal drawing cel designed to be compatible with a window and 
  * raster and window screen but smaller
  * and less complicated for use as a memory rendering area and image 
@@ -32,7 +34,12 @@ struct cmap;
 
 typedef struct rcel {
 	RASTHDR_FIELDS;  /* the raster for raster library */
-	Rastbody hw;
+
+	union {
+		Rastbody hw;
+		char pad[sizeof(struct wndobody)];
+	} u;
+
 	CEL_FIELDS;
 } Rcel;
 
