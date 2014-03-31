@@ -18,6 +18,7 @@ static struct mblock *free_list = NULL;
 long mem_free;
 long init_mem_free;
 
+#if defined(__WATCOMC__)
 static long find_dos_free_amount(void)
 /*
  * Figure out how much memory to allocate leaving DOS a little room.
@@ -62,6 +63,16 @@ else
 	}
 return amount;
 }
+#else /* __WATCOMC__ */
+static long find_free_amount(void)
+{
+#if (32 * 1024 * 1024 * 1024L < LONG_MAX)
+	return 32 * 1024 * 1024 * 1024L;
+#else
+	return LONG_MAX;
+#endif
+}
+#endif /* __WATCOMC__ */
 
 Errcode init_mem(long max_mem)
 /*
