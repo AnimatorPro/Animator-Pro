@@ -99,35 +99,20 @@ error:
 
 /************************ tsettings file stuff ************************/
 
-#define FAST_FLUSHFIELDS \
-	Vset_flidef fdef;\
-	Vsettings vs
-
-
-typedef struct tsetflush {	/* fields we flush for flush call */
-	FAST_FLUSHFIELDS;
-} Tfastflush;
-
 #define FAST_FLUSHOFFSET OFFSET(Tsettings_file,fdef)
-
-#define SLOW_FLUSHFIELDS \
-	Slow_vsettings vslow
-
-typedef struct tslowflush {  /* additional fields for slow flush call */
-	SLOW_FLUSHFIELDS;
-} Tslowflush;
-
 #define SLOW_FLUSHOFFSET OFFSET(Tsettings_file,vslow)
 
 typedef struct tsettings_file {
 	Fat_chunk id;
 	Vset_paths vsp;  /* must be the first chunk */
-	FAST_FLUSHFIELDS;
-	SLOW_FLUSHFIELDS;
-} Tsettings_file;
 
-#undef FAST_FLUSHFIELDS
-#undef SLOW_FLUSHFIELDS
+	/* fields we flush for flush call */
+	Vset_flidef fdef;
+	Vsettings vs;
+
+	/* additional fields for slow flush call */
+	Slow_vsettings vslow;
+} Tsettings_file;
 
 static void load_default_paths(Vset_paths *vp_chunk)
 /* initialize and set internal default paths in a patharray chunk */
@@ -231,6 +216,11 @@ Tsettings_file *buf;
 	if((err = read_gulp(tsettings_name, buf, (long)sizeof(*buf))) < Success)
 		goto error;
 
+	if (buf->vs.zoomscale == 0) {
+		err = Err_corrupted;
+		goto error;
+	}
+
 	if(pvs)
 		*pvs = buf->vs;
 	if(fdef)
@@ -247,20 +237,20 @@ static Errcode tset_flush(Vsetfile *vsf, Boolean full_flush)
 /* full flush will flush all the slow stuff too, inkstrengths and menu
  * colors */
 {
-Errcode err;
-union {
-Tfastflush tf;
-Tslowflush tsf;
-} buf;
+	Errcode err;
+	Tsettings_file buf;
 
-	load_flidef(&buf.tf.fdef,(Fli_head *)&flix.hdr);
-	load_vschunk(&buf.tf.vs);
-	err = pj_writeoset(vsf->fd,&buf.tf,FAST_FLUSHOFFSET,sizeof(buf.tf));
+	load_flidef(&buf.fdef, (Fli_head *)&flix.hdr);
+	load_vschunk(&buf.vs);
 
-	if(full_flush && err >= Success)
-	{
-		load_vslow(&buf.tsf.vslow, FALSE);
-		err = pj_writeoset(vsf->fd,&buf.tsf,SLOW_FLUSHOFFSET,sizeof(buf.tsf));
+	err = pj_writeoset(vsf->fd, &buf.fdef, FAST_FLUSHOFFSET,
+			SLOW_FLUSHOFFSET - FAST_FLUSHOFFSET);
+
+	if (full_flush && err >= Success) {
+		load_vslow(&buf.vslow, FALSE);
+
+		err = pj_writeoset(vsf->fd, &buf.vslow, SLOW_FLUSHOFFSET,
+				sizeof(Tsettings_file) - SLOW_FLUSHOFFSET);
 	}
 	return(err);
 }
