@@ -117,7 +117,7 @@ void swork_advance(Swork *swork, int count)
 while (--count >= 0)
 	{
 	swork->look[SWORKLOOK] = swork->look[0];
-	memcpy(swork->look, swork->look+1, SWORKLOOK*sizeof(swork->look[0]));
+	memmove(swork->look, swork->look+1, SWORKLOOK*sizeof(swork->look[0]));
 	swork_read_token(swork,swork->look[SWORKLOOK-1]);
 	}
 }
