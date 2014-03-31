@@ -199,8 +199,12 @@ void *lo_askmem(long nbytes)
 {
 long *pt;
 
-nbytes += 4+7;
-nbytes &= (~0x07);
+/* Store the size before the buffer. */
+nbytes += sizeof(intptr_t);
+
+/* Round up to nearest multiple of 8. */
+nbytes = (nbytes + 7) & (~0x07);
+
 if ((pt = lalloc( nbytes )) == NULL)
 	return(NULL);
 *pt++ = nbytes;
