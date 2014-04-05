@@ -13,9 +13,12 @@
 	#include "raster.h"
 #endif 
 
+struct screen_mode;
+struct wscreen;
 
 extern char pj_mcga_name[]; /* name used by pj_open_ddriver() that opens mcga */
 
+extern Errcode open_screen(struct screen_mode *sm, char *path);
 extern void cleanup_screen(void);
 
 Errcode pj_open_loadable_vdriver(Vdevice **pvd, char *name);
@@ -33,4 +36,6 @@ extern void pj_set_vmode(int mode);
 extern void restore_ivmode(void);
 extern void pj_wait_vsync(void);
 
-#endif /* VDEVCALL_H */
+extern void set_menu_scale(struct wscreen *s);
+
+#endif

@@ -77,7 +77,7 @@ char *name;
 	return(Success);
 }
 
-static void set_menu_scale(Wscreen *s)
+void set_menu_scale(Wscreen *s)
 /* scale all staticly defined menus and menu parts */
 {
 	if (s->wndo.width >= 500)
@@ -120,7 +120,7 @@ Vmode_info mode_info;
 	*height = mode_info.height.min;
 	return(Success);
 }
-static Errcode open_screen(Screen_mode *sm, char *path)
+Errcode open_screen(Screen_mode *sm, char *path)
 {
 Errcode err;
 char pathbuf[PATH_SIZE];

@@ -71,11 +71,16 @@ set(RASTCALL_SRC_FILES
 ## code needed to load drivers this will have to be linked with a syslib
 ## menulib etc to be useable
 set(VDRIVER_SRC_FILES
+	vdrclose.c
 	vdgetmod.c
 	vdrvinfo.c
 	vdverify.c
 	vdrasopn.c
 	vdscropn.c
+	)
+
+set(VDRIVER_SDL_SRC_FILES
+	vdr_sdl.c
 	)
 
 add_library(raster
@@ -85,4 +90,5 @@ add_library(raster
 	${CBOX_SRC_FILES}
 	${RASTCALL_SRC_FILES}
 	${RASTLOW_SRC_FILES}
-	${VDRIVER_SRC_FILES})
+	${VDRIVER_SRC_FILES}
+	${VDRIVER_SDL_SRC_FILES})
