@@ -5,6 +5,7 @@
 #include "errcodes.h"
 #include "jfile.h"
 #include "memory.h"
+#include "tfile.h"
 #include "xfile.h"
 
 #ifdef USE_LFILE
@@ -95,6 +96,12 @@ xfopen(const char *path, const char *mode)
 	xf = pj_malloc(sizeof(*xf));
 	if (!xf)
 		return NULL;
+
+	/* temp file system. */
+	if (path[0] == TDEV_MED && path[1] == DEV_DELIM) {
+		path += 2;
+	}
+
 	xf->rf = real_fopen(path, mode);
 	if (!xf->rf) {
 		pj_free(xf);

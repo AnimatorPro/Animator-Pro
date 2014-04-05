@@ -60,6 +60,7 @@ char odir[PATH_SIZE];
 	return(err);
 }
 
+#if defined(__WATCOMC__)
 static Errcode default_temp_path(char *buf)
 /* Put default temp path into buf.  This will be X:\PAAT;C:\PAAT in most
  * cases, (where X: is the startup drive) but just C:\PAAT if current device 
@@ -77,6 +78,14 @@ else
 	sprintf(buf, "%s:\\PAAT;C:\\PAAT", device);
 return(Success);
 }
+#else /* __WATCOMC__ */
+static Errcode default_temp_path(char *buf)
+{
+	buf[0] = '.';
+	buf[1] = '\0';
+	return Success;
+}
+#endif /* __WATCOMC__ */
 
 Errcode init_config(Boolean force_create)
 

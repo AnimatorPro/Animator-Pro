@@ -19,8 +19,14 @@
 /* string big enough for a wildcard */
 #define WILD_SIZE 16
 
+#if defined(__WATCOMC__)
 #define DIR_DELIM	'\\'
 #define DIR_DELIM_STR	"\\"
+#else /* __WATCOMC__ */
+#define DIR_DELIM	'/'
+#define DIR_DELIM_STR	"/"
+#endif /* __WATCOMC__ */
+
 #define DEV_DELIM	':'
 #define DEV_DELIM_STR	":"
 #define SUFF_DELIM  '.'

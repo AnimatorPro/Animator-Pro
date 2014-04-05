@@ -160,7 +160,7 @@ free_parts(pparts);
 return(terr = err);
 }
 
-
+#if defined(__WATCOMC__)
 Errcode set_temp_path(char *tp)
 /*
  * Input is a semicolon separated list of directories.   This function
@@ -233,6 +233,13 @@ int gooduns = 0;
 	free_parts(&pp);
 	return(aerr);
 }
+#else /* __WATCOMC__ */
+Errcode set_temp_path(char *tp)
+{
+	(void)tp;
+	return Success;
+}
+#endif /* __WATCOMC__ */
 
 #ifdef SLUFFED
 void get_temp_path_head(char *head)
@@ -304,6 +311,7 @@ add_head(&tlist, &tfl->tnod);
 return(tfl);
 }
 
+#if defined(__WATCOMC__)
 Tfile tcreate(const char *name, int mode)
 /*
  * Create a new temporary file.   If it's a =: file most likely it'll
@@ -342,7 +350,26 @@ OUT:
 free_parts(&pp);
 return(result);
 }
+#else /* __WATCOMC__ */
+Tfile tcreate(const char *name, int mode)
+{
+	Tfile result = NULL;
+	Jfile handle;
+	char pname[PATH_SIZE];
 
+	tdelete(name);
+
+	make_tname(pname, name, "./");
+	if ((handle = pj_create(pname, mode)) != JNONE) {
+		if ((result = alloc_tfile(name, "./")) != NULL)
+			result->jhandle = handle;
+		return result;
+	}
+	return NULL;
+}
+#endif /* __WATCOMC__ */
+
+#if defined(__WATCOMC__)
 Tfile topen(const char *name, int mode)
 /*
  * Open a file on the temp device.  This will loop through the temp path
@@ -379,6 +406,22 @@ OUT:
 free_parts(&pp);
 return(result);
 }
+#else /* __WATCOMC__ */
+Tfile topen(const char *name, int mode)
+{
+	Tfile result = NULL;
+	char pname[PATH_SIZE];
+	Jfile handle;
+
+	make_tname(pname, name, "./");
+	if ((handle = pj_open(pname, mode)) != JNONE) {
+		if ((result = alloc_tfile(name, "./")) != NULL)
+			result->jhandle = handle;
+		return result;
+	}
+	return NULL;
+}
+#endif /* __WATCOMC__ */
 
 Errcode tclose(Tfile t)
 /*
@@ -400,7 +443,9 @@ long tread(Tfile t, void *buf, long size)
  * Read a block of data from an open temporary file.
  */
 {
-return(pj_read(t->jhandle,buf,size));
+	if (t != NULL)
+		return pj_read(t->jhandle, buf, size);
+	return 0;
 }
 
 static Errcode oopen_seek(Jfile *phandle, char *name, int mode, long pos)

@@ -31,6 +31,8 @@ char upperc;
 	}
 	return(0);
 }
+
+#ifdef __WATCOMC__
 Errcode get_full_path(char *path, char *fullpath)
 
 /* expands a path to the fully expanded path from device down for the path */
@@ -96,3 +98,11 @@ done:
 	strcpy(fullpath,path);
 	return(Success);
 }
+#else /* __WATCOMC__ */
+Errcode get_full_path(char *path, char *fullpath)
+{
+	if (fullpath != path)
+		strcpy(fullpath, path);
+	return Success;
+}
+#endif /* __WATCOMC__ */

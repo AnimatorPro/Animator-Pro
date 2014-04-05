@@ -35,6 +35,8 @@
 #else /* __WATCOMC__ */
 #include <sys/stat.h>
 #include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 #endif /* __WATCOMC__ */
 
 #include <ctype.h>
@@ -99,7 +101,11 @@ static Errcode ddos_create(Jfl *result, const char *name, int mode)
 			return Err_nogood;
 	}
 
+#ifdef __WATCOMC__
 	result->handle.j = open(name, flags);
+#else /* __WATCOMC__ */
+	result->handle.j = open(name, flags, S_IRWXU);
+#endif /* __WATCOMC__ */
 
 	if (result->handle.j == -1) {
 		return Err_nogood;
