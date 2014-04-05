@@ -16,7 +16,7 @@ DOSO = \
 ## "j" dos device and directory level calls that call dos only 
 
 JFDEVO = \
- jdevget.obj jdevset.obj jdirset.obj jdevlist.obj jdevsget.obj
+ jdevget.obj jdevset.obj jdirset.obj jdevlist.obj jdevsget.obj fs_dos.obj
 
 ## file name parseing modules (string functions etc) ***
 

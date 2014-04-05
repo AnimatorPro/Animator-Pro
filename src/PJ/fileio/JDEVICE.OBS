@@ -3,3 +3,4 @@
 +jdevlist.obj
 +jdevsget.obj
 +jdirset.obj
++fs_dos.obj
