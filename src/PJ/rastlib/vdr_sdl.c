@@ -35,28 +35,39 @@ static struct vdevice_lib sdl_device_library = {
 	NOFUNC, /* show_rast */
 };
 
-static Vmode_info sdl_infos[1] = {
-	{
-		sizeof(Vmode_info),
-		0, /* mode_ix */
-		"SDL",
-		8, /* bits */
-		1, /* planes */
-		{320,320,320,1}, /* width */
-		{200,200,200,1}, /* height */
-		TRUE, TRUE, /* readable, writeable */
-		TRUE, /* displayable */
-		0, /* fields_per_frame */
-		1, /* display_pages */
-		1, /* store_pages */
-		320*200, /* display_bytes */
-		320*200, /* store_bytes */
-		TRUE, /* palette_vblank_only */
-		0, /* screen_swap_vblank_only */
-		70, /* field_rate */
-		0 /* vblank_period */
+#define MAKE_VMODE_INFO(MODE_IX, WIDTH, HEIGHT) \
+	{                                    \
+		sizeof(Vmode_info),              \
+		MODE_IX,                         \
+		"SDL",                           \
+		8, /* bits */                    \
+		1, /* planes */                  \
+		{WIDTH,WIDTH,WIDTH,1},           \
+		{HEIGHT,HEIGHT,HEIGHT,1},        \
+		TRUE, /* readable */             \
+		TRUE, /* writeable */            \
+		TRUE, /* displayable */          \
+		0, /* fields_per_frame */        \
+		1, /* display_pages */           \
+		1, /* store_pages */             \
+		WIDTH*HEIGHT,                    \
+		WIDTH*HEIGHT,                    \
+		TRUE, /* palette_vblank_only */  \
+		0, /* screen_swap_vblank_only */ \
+		70, /* field_rate */             \
+		0 /* vblank_period */            \
 	}
+
+static Vmode_info sdl_infos[] = {
+	MAKE_VMODE_INFO(0,  320,  200),
+	MAKE_VMODE_INFO(1,  640,  480),
+	MAKE_VMODE_INFO(2,  800,  600),
+	MAKE_VMODE_INFO(3, 1024,  768),
+	MAKE_VMODE_INFO(4, 1280,  800),
+	MAKE_VMODE_INFO(5, 1920, 1080),
 };
+
+#undef MAKE_VMODE_INFO
 
 static Vdevice sdl_driver = {
 	{ REX_VDRIVER, VDEV_VERSION, NULL, NULL, NULL, NULL, NULL }, /* hdr */
@@ -123,7 +134,7 @@ sdl_mode_text(Vdevice *vd, USHORT mode)
 }
 
 static void
-sdl_open_raster(Raster *r)
+sdl_open_raster(Raster *r, LONG w, LONG h)
 {
 	static const Rasthdr defaults = {
 		RT_MCGA, /* type */
@@ -142,9 +153,13 @@ sdl_open_raster(Raster *r)
 	};
 
 	*((Rasthdr *)r) = defaults;
-	r->hw.bm = bm;
-	r->hw.bm.segment = 0;
 	r->lib = get_sdl_lib();
+	r->width = w;
+	r->height = h;
+
+	r->hw.bm = bm;
+	r->hw.bm.bpr = w;
+	r->hw.bm.psize = w * h;
 }
 
 static Errcode
@@ -152,16 +167,13 @@ sdl_open_graphics(Vdevice *vd, Raster *r, LONG w, LONG h, USHORT mode)
 {
 	(void)mode;
 
-	if (w != 320 || h != 200)
-		return Err_wrong_res;
-
 	s_surface = SDL_SetVideoMode(w, h, 8, SDL_HWSURFACE | SDL_DOUBLEBUF);
 	if (s_surface == NULL)
 		return Err_no_display;
 
 	SDL_WM_SetCaption("PJ Paint", NULL);
 
-	sdl_open_raster(r);
+	sdl_open_raster(r, w, h);
 	r->hw.bm.bp[0] = s_surface->pixels;
 	r->type = vd->first_rtype;
 
