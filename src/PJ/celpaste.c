@@ -1240,6 +1240,7 @@ SHORT dx,dy,omx,omy;
 				translate_flicel(thecel,dx,dy);
 				draw_flicel(thecel,DRAW_FIRST,NEW_CFIT);
 				save_fcel_undo(thecel);
+				wait_sync();
 			}
 			dirties();
 			check_cel_ccycle();
