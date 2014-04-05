@@ -376,13 +376,13 @@ char *name;
 (void)y;
 
 	name = entry->name;
-	if (name[0] == '\\')	/* a directory */
+	if (name[0] == DIR_DELIM) /* a directory */
 	{
 		if(why == SCR_ARROW)
 			return;
 		strcpy(und_drawer, fq_drawer);
 		make_file_path(fq_drawer,name,fq_drawer);
-		strcat(fq_drawer, "\\");
+		strcat(fq_drawer, DIR_DELIM_STR);
 		init_stq_string(&drawer_stringq);
 		if(new_drawer() < Success)
 		{
@@ -437,13 +437,13 @@ static void fq_new_drawer(void)
 {
 int len;
 
-tr_string(fq_drawer, '/', '\\');	/* convert slash to backslash */
+tr_string(fq_drawer, '/', DIR_DELIM);
 len = strlen(fq_drawer);
 if(len > 0)		/* Insure trailing \ */
 	{			/* unless it's something like a:  or just empty. */
-	if(fq_drawer[len-1] != '\\' && fq_drawer[1] != ':')
+	if(fq_drawer[len-1] != DIR_DELIM && fq_drawer[1] != ':')
 		{
-		fq_drawer[len] = '\\';
+		fq_drawer[len] = DIR_DELIM;
 		fq_drawer[len+1] = 0;
 		}
 	}
@@ -516,7 +516,7 @@ for (;;)
 		goto OUT;
 		}
 	string = sq->string;
-	tr_string(string, '/', '\\');	/* convert slash to backslash */
+	tr_string(string, '/', DIR_DELIM);
 	split_copy_path(string, path_side, file_side);
 	if (name_is_wild(file_side))
 		{

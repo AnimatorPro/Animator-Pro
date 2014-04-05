@@ -202,7 +202,7 @@ int gooduns = 0;
 			aerr = softerr(Err_no_message, "!%s", "tdev_floppy", buf);
 			continue;
 		}
-		if (slen < 3 || buf[2] != '\\')
+		if (slen < 3 || buf[2] != DIR_DELIM)
 		{
 			aerr = softerr(Err_no_message, "!%s", "tdev_delim", buf);
 			continue;
@@ -212,7 +212,7 @@ int gooduns = 0;
 			aerr = softerr(Err_no_message, "!%s", "tdev_root", buf);
 			continue;
 		}
-		if (slen > 3 && buf[slen-1] == '\\')
+		if (slen > 3 && buf[slen-1] == DIR_DELIM)
 			buf[slen-1] = 0;		/* chop off trailing \ */
 		/* make directory (if it doesn't exist) */
 		err = pj_dmake_dir(buf);

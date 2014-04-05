@@ -39,7 +39,7 @@ struct devname { char name[3]; } device;
 
 	/* _lodos_set_dir() can't have trailing '\' but must have it for root */
 
-	if((lastval = *lastbyte) == '\\' && namelen > 0) 
+	if ((lastval = *lastbyte) == DIR_DELIM && namelen > 0)
 		*lastbyte = 0;
 
 	err = pj_mserror(_lodos_set_dir(name));

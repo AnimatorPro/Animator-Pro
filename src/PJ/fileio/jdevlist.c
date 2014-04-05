@@ -67,7 +67,7 @@ int sz;
 strcpy(unslash, dir);
 if ((sz = strlen(unslash)) <= 1)	/* special case for \  */
 	return;
-if (unslash[sz-1] == '\\')		/* ends in slash */
+if (unslash[sz-1] == DIR_DELIM) /* ends in slash */
 	{
 	if (unslash[sz-2] != ':')	/* special case for X:\ */
 		unslash[sz-1] = 0;
