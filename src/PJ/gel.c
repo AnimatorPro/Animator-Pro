@@ -93,6 +93,8 @@ Pos_p rp;
 		}
 		if((err = get_posp(&rp, idata, DT_GEL)) != Success)
 			break;
+
+		wait_sync();
 	}
 
 error:
