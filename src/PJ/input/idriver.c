@@ -6,6 +6,8 @@
 #include "menus.h"
 #include "util.h"
 
+#include "idr_sdl.h"
+
 char key_idriver_name[] = "=key.";
 char mouse_idriver_name[] = "=mouse.";
 char summa_idriver_name[] = "summa.idr";
@@ -41,15 +43,25 @@ Errcode load_idriver(Idriver **pidr,char *iname,UBYTE *modes, SHORT comm_port)
 int i;
 Errcode err;
 Idriver *idr = NULL;
-char *local_name;
 
-	local_name = pj_get_path_name(iname);
-	if(!(txtcmp(local_name,key_idriver_name)))
-		err = alloc_local_idr(init_key_idriver,pidr);
-	else if (!(txtcmp(local_name,mouse_idriver_name)))
-		err = alloc_local_idr(init_mouse_idriver,pidr);
-	else 
-		err = Err_unimpl;
+#if defined(__WATCOMC__)
+	{
+		char *local_name = pj_get_path_name(iname);
+
+		if (!(txtcmp(local_name, key_idriver_name)))
+			err = alloc_local_idr(init_key_idriver, pidr);
+		else if (!(txtcmp(local_name, mouse_idriver_name)))
+			err = alloc_local_idr(init_mouse_idriver, pidr);
+		else
+			err = Err_unimpl;
+	}
+#else
+	{
+		(void)iname;
+
+		err = alloc_local_idr(init_sdl_idriver, pidr);
+	}
+#endif
 
 	if(err < Success)
 		goto error;

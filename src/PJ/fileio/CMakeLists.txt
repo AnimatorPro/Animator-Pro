@@ -82,3 +82,5 @@ add_library(trdfile
 	${JFUTILS_SRC_FILES}
 	${XFILE_SRC_FILES}
 	${FS_UNIX_SRC_FILES})
+
+target_link_libraries(trdfile trdutil)

@@ -11,3 +11,7 @@ set(WNDOLIB_SRC_FILES
 	)
 
 add_library(wndolib ${WNDOLIB_SRC_FILES})
+target_link_libraries(wndolib
+	gfxlib
+	raster
+	trdfile)

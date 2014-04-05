@@ -23,6 +23,7 @@ set(PJHIGH_SRC_FILES
 	gifname.c
 	images.c
 	initcmap.c
+	init_sdl.c
 	jiffycon.c
 	mainret.c
 	mathhost.c
@@ -71,3 +72,5 @@ set(PJHIGH_SRC_FILES
 	)
 
 add_library(pjhigh ${PJHIGH_SRC_FILES})
+
+target_link_libraries(pjhigh fontlib menulib)

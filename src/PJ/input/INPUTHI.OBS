@@ -4,6 +4,7 @@
 +\paa\input\inwtany.obj
 +\paa\input\idriver.obj
 +\paa\input\idrivcfg.obj
++\paa\input\idr_dos.obj
 +\paa\input\keyidr.obj
 +\paa\input\lodos.obj
 +\paa\input\mouseidr.obj

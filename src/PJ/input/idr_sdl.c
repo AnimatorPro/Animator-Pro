@@ -3,6 +3,7 @@
 #include <assert.h>
 #include <SDL/SDL.h>
 #include "jimk.h"
+#include "aaconfig.h"
 #include "errcodes.h"
 #include "idr_sdl.h"
 #include "idriver.h"
@@ -242,5 +243,20 @@ init_sdl_idriver(Idriver *idr)
 	idr->lib = &sdl_idr_library;
 	idr->options = NULL;
 	idr->does_keys = TRUE;
+	return Success;
+}
+
+Errcode
+init_input(void)
+{
+	SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
+	SDL_EnableUNICODE(SDL_ENABLE);
+	SDL_ShowCursor(SDL_DISABLE);
+
+	init_idriver(NULL, vconfg.idr_modes, 0);
+
+	reset_input();
+	enable_textboxes();
+
 	return Success;
 }

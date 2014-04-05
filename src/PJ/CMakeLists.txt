@@ -2,6 +2,9 @@ cmake_minimum_required(VERSION 2.6 FATAL_ERROR)
 
 project(pj C)
 
+find_package(SDL REQUIRED)
+include_directories(${SDL_INCLUDE_DIR})
+
 include_directories("inc")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -W -Wall -Wextra -Wmissing-prototypes")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wold-style-definition")
@@ -91,7 +94,6 @@ set(PJMAIN_SRC_FILES
 	polyrub.c
 	polytool.c
 	pstamp.c
-	qconfig.c
 	qmacro.c
 	qmenu.c
 	quickdat.c
@@ -107,6 +109,7 @@ set(PJMAIN_SRC_FILES
 	sizemenu.c
 	spiral.c
 	spline.c
+	status.c
 	tempflx.c
 	tempname.c
 	test.c
@@ -151,4 +154,6 @@ target_link_libraries(pj
 	minirex
 	softmenu
 	trdutil
-	wndolib)
+	wndolib
+	${SDL_LIBRARY}
+	m)

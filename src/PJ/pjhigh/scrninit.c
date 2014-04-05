@@ -12,38 +12,6 @@
 #include "vdevcall.h"
 #include "vdevinfo.h"
 
-extern char key_idriver_name[], mouse_idriver_name[], summa_idriver_name[];
-
-Errcode init_input(void)
-/* called on startup to initialize the mouse and other input */
-{
-Errcode err;
-static char *idr_names[] = {mouse_idriver_name, 
-							summa_idriver_name,
-							vconfg.idr_name };
-char idr_path[PATH_SIZE];
-char *idr_name;
-
-	idr_name = idr_names[vconfg.dev_type];
-	make_resource_name(idr_name, idr_path);
-
-	if((err = init_idriver(idr_path,vconfg.idr_modes,
-						   vconfg.comm_port)) < Success)
-	{
-		init_idriver(key_idriver_name, vconfg.idr_modes, 0);
-	}
-
-	/* setup input to current icb.input_screen loaded by open_wscreen() */
-
-	reset_input();
-	enable_textboxes();
-
-	if (err < Success)
-	{
-		softerr(err,"!%s","nomouse", idr_name );
-	}
-	return(0);
-}
 
 static Vfont menufont;
 void free_menu_font(void)
@@ -176,8 +144,10 @@ Screen_mode sm;
 Errcode goodret = 0;
 extern char pj_mcga_name[];
 
+#if defined(__WATCOMC__)
 	/* set up GS segment */
 	pj_set_gs();
+#endif /* __WATCOMC__ */
 
 	/* open screen driver and open screen */
 

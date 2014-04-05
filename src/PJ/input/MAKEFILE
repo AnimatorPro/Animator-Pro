@@ -21,6 +21,7 @@ INPUTHIO = \
  inwtany.obj\
  idriver.obj\
  idrivcfg.obj\
+ idr_dos.obj\
  keyidr.obj\
  lodos.obj\
  mouseidr.obj\

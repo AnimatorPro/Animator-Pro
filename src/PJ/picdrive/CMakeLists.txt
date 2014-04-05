@@ -45,3 +45,5 @@ add_library(picdrive
 	${PCX_SRC_FILES}
 	${RIF_SRC_FILES}
 	${TARGA_SRC_FILES})
+
+target_link_libraries(picdrive flilib)
