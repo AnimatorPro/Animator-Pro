@@ -55,7 +55,7 @@ typedef struct idriver
 	LONG *min;		/* 1 for each channel */
 	LONG *max;		/* 1 for each channel */
 	LONG *clipmax;  /* 1 for each channel */
-	LONG *aspect;
+	LONG *aspect;   /* 1 for each channel or NULL. */
 	UBYTE *flags;   /* a set of 8 flags for every channel */
 	} Idriver;
 

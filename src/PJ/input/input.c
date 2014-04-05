@@ -72,7 +72,7 @@ Errcode reset_input(void)
  * and also to reset input and clear buffers when we have opened 
  * or changed the input screen dimensions */
 {
-long ap, aq, xclip, yclip;
+long xclip, yclip;
 long idrw, idrh;
 Raster *screen = (Raster *)(icb.input_screen);
 #define SCREEN_AX	320
@@ -101,21 +101,24 @@ Raster *screen = (Raster *)(icb.input_screen);
 	icb.q[0] = idrw + 1;
 	icb.p[1] = screen->height;
 	icb.q[1] = idrh + 1;
-	ap = icb.idriver->aspect[0]*SCREEN_AY;
-	aq = icb.idriver->aspect[1]*SCREEN_AX;
 
-	if (ap < aq)  /* Y dimension of input device too long */
+	if (icb.idriver->aspect)
 	{
-		icb.p[1] *= aq;
-		icb.q[1] *= ap;
-	}
-	else if (ap > aq)	/* X dimension of input device too long */
-	{
-		icb.p[0] *= ap;
-		icb.q[0] *= aq;
-	}
-	/* else if aspect ratio is the same do nothing. */
+		const long ap = icb.idriver->aspect[0] * SCREEN_AY;
+		const long aq = icb.idriver->aspect[1] * SCREEN_AX;
 
+		if (ap < aq) {
+			/* Y dimension of input device too long */
+			icb.p[1] *= aq;
+			icb.q[1] *= ap;
+		}
+		else if (ap > aq) {
+			/* X dimension of input device too long */
+			icb.p[0] *= ap;
+			icb.q[0] *= aq;
+		}
+		/* else if aspect ratio is the same do nothing. */
+	}
 
 	if((idrw*icb.p[0])/icb.q[0] >= screen->width)
 		xclip = icb.idriver->min[0] + ((screen->width*icb.q[0])/icb.p[0]);
