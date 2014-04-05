@@ -5,10 +5,73 @@
 #include <stdio.h>
 #include <string.h>
 #include <sys/stat.h>
+#include "jimk.h"
 #include "errcodes.h"
 #include "filepath.h"
 #include "memory.h"
 #include "wildlist.h"
+
+/* TODO: do we need pj_change_device and current_device? */
+#include "msfile.h"
+
+long
+pj_ddfree(int device)
+{
+	(void)device;
+	return 32 * 1024 * 1024 * 1024L;
+}
+
+int
+pj_get_devices(UBYTE *devices)
+{
+	(void)devices;
+	return 0;
+}
+
+Errcode
+pj_change_device(char *name)
+{
+	(void)name;
+	return Success;
+}
+
+Errcode
+current_device(char *dstr)
+{
+	*dstr++ = 'C';
+	*dstr = '\0';
+
+	return Success;
+}
+
+Errcode
+change_dir(char *name)
+{
+	(void)name;
+	return Success;
+}
+
+Boolean
+pj_dmake_dir(char *path)
+{
+	(void)path;
+	return FALSE;
+}
+
+Errcode
+pj_dget_dir(int drive, char *dir)
+{
+	(void)drive;
+	(void)dir;
+	return Success;
+}
+
+Errcode
+make_good_dir(char *path)
+{
+	(void)path;
+	return Success;
+}
 
 /*--------------------------------------------------------------*/
 /* Wild list.                                                   */

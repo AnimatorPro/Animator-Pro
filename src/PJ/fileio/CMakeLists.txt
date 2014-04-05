@@ -1,10 +1,6 @@
 ## "j" dos device and directory level calls that call dos only
 set(JFDEV_SRC_FILES
-	jdevget.c
-	jdevset.c
-	jdirset.c
 	jdevlist.c
-	jdevsget.c
 	)
 
 ## file name parsing modules (string functions etc)
