@@ -1,5 +1,0 @@
-#define time_100 "How many frames to insert at current frame?"
-#define time_101 "How many frames to delete?"
-#define time_102 "How many frames do you want in this flic?"
-#define time_103 "This will chop off frames at the end ok?"
-#define time_104 "No more than %d frames!"

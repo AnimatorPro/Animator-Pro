@@ -1,8 +1,0 @@
-#define quickdat_100 "K"
-#define quickdat_101 "M"
-#define quickdat_102 "T"
-#define quickdat_103 "F"
-#define quickdat_104 "UNDO"
-#define quickdat_105 "ZOOM"
-#define quickdat_106 "HOME"
-#define quickdat_107 "color %d rgb %d %d %d"

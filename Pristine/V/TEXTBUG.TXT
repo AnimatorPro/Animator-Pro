@@ -1,8 +1,0 @@
-I wonder how bad this text bug really is?  Can I still get it to happen just by typing in the middle?  Yep, there are still.  
-A couple of bugs really.  First when you are with your cursor before a long word (or really with the cursor over the first letter of a long word) the word wrap on the lines above you doesn't get properly merged with the first word in the current line that happens as soon as you hit a space.  The result is lots of short lines ahead of where you are typeing.  When you move the window then the text wrap gets redone, and you're cursor position becomes irrelevant.
-
-Related to this when you delete text that should cause the first word of the current line to be merged with the previous line this is not done until the window is moved.
-
-There seems to be another bug when deleting the line before the last line in the file.  Probably just a silly off by one thing somewhere.
- 
-There's another problem when it is deleting characters.Do I need more than a screen full of text for it to happen?

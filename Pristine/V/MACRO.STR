@@ -1,8 +1,0 @@
-#define macro_100 "Repeat macro how many times?"
-#define macro_101 "Not a good macro file."
-#define macro_102 "No macro recording defined."
-#define macro_103 "Macro file truncated."
-#define macro_104 "   Stop Macro Playback?   "
-#define macro_105 "Write error on macro file!"
-#define macro_106 "Save a macro recording file?"
-#define macro_108 "Load a macro recording file?"
