@@ -1,2 +1,0 @@
-#define init_100 "Hit <enter> to continue"
-#define init_102 "Not a VGA/MCGA display, sorry\n"
