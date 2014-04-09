@@ -1,3 +1,0 @@
-#define fli_100 "Isn't a FLI file, sorry"
-#define fli_101 "unknown chunk type %d\n"
-#define fli_102 "Bad magic! Not a FLI frame."
