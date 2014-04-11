@@ -5,6 +5,7 @@
 +fastclk.obj
 +i86dswap.obj
 +i86swap.obj
++pjassert.obj
 +ptrenorm.obj
 +stackchk.obj
 +setgs.obj

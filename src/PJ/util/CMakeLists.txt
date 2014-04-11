@@ -5,6 +5,7 @@ set(LOWUTIL_SRC_FILES
 	dosecode.c
 	i86dswap.c
 	i86swap.c
+	pjassert.c
 	ptrenorm.c
 	)
 

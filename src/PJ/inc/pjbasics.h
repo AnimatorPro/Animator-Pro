@@ -5,6 +5,10 @@
 /*** this include file contains basic stuff that is common to all pj 
  * 	 applications that use graphics menus the fileing system and menus */
 
+#ifndef PJASSERT_H
+#include "pjassert.h"
+#endif
+
 #ifndef STDTYPES_H
 	#include "stdtypes.h"
 #endif

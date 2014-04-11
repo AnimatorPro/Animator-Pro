@@ -12,7 +12,7 @@ libs: trdutil.lib cutil.lib
 
 LOWUTILO = \
  dosecode.obj doserror.obj dosmfree.obj dosvideo.obj\
- i86dswap.obj i86swap.obj ptrenorm.obj \
+ i86dswap.obj i86swap.obj pjassert.obj ptrenorm.obj \
  fastclk.obj stackchk.obj setgs.obj
 
 ## tempory file system compatible memory management
