@@ -14,7 +14,7 @@ Font_dev *font_dev_list;
 static void add_font_dev(Font_dev *f)
 /* makes sure it is not in the list then makes sure it is the first element */
 {
-	font_dev_list = (Font_dev *)remove_el(font_dev_list, f);
+	font_dev_list = remove_el((Slnode *)font_dev_list, (Slnode *)f);
 	f->next = font_dev_list;
 	font_dev_list = f;
 }

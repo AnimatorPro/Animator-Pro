@@ -71,15 +71,7 @@ typedef struct dl_header {
 
 /* function prototypes */
 
-
-void 	*slist_el();
-void	*slist_last();
-int 	slist_ix();
-int 	slist_len();
-void 	*join_slists(Slnode *s1, Slnode *s2);
-void 	*remove_el(void *list, void *el);
 void 	*reverse_slist(void *l);
-void 	free_slist(void *l);
 
 Names *name_in_list(char *name, Names *list);
 Names *text_in_list(char *name, Names *list);

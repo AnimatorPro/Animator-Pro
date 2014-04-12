@@ -220,7 +220,7 @@ xffclose(&sm->xf);
 i = sm->class_count;
 while (--i >=0)
 	{
-	free_slist((Names *)(cl->symbols));
+	free_slist((Slnode *)(cl->symbols));
 	cl += 1;
 	}
 pj_freez(&sm->classes);

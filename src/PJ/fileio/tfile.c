@@ -1018,8 +1018,8 @@ OUT:
 		delete_files(copied_list);
 	else
 		delete_files(old_list);
-	free_slist(copied_list);
-	free_slist(old_list);
+	free_slist((Slnode *)copied_list);
+	free_slist((Slnode *)old_list);
 	--tfile_lockmem;	/* reenable low-memory swapping. */
 	return(softerr(err, "!%s", "temp_copy", new_path));
 	}

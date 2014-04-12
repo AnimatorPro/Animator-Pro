@@ -83,14 +83,8 @@ set(LINKLIST_SRC_FILES
 	namein.c
 	namesort.c
 	shelsort.c
-	slfree.c
-	slistel.c
-	slistix.c
-	slistlen.c
-	slremel.c
+	slist.c
 	slrevers.c
-	slstjoin.c
-	slstlast.c
 	slstsort.c
 	textin.c
 	)

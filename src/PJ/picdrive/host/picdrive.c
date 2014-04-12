@@ -15,7 +15,7 @@ static void remove_local_pdr(Local_pdr *lpd)
  *
  ****************************************************************************/
 {
-	local_pdrs = remove_el(local_pdrs, lpd);
+	local_pdrs = remove_el((Slnode *)local_pdrs, (Slnode *)lpd);
 }
 void add_local_pdr(Local_pdr *lpd)
 /*****************************************************************************

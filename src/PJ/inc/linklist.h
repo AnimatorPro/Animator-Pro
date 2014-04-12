@@ -69,17 +69,16 @@ typedef struct dl_header {
 #define is_head(n) ((n)->prev->prev == NULL)
 #define is_tail(n) ((n)->next->next == NULL)
 
-/* function prototypes */
-
+/* slist.c */
+extern void free_slist(Slnode *list);
+extern void *join_slists(Slnode *s1, Slnode *s2);
+extern void *remove_el(Slnode *list, Slnode *el);
 extern void *slist_el(Slnode *list, int ix);
 extern void *slist_last(Slnode *list);
-extern int slist_ix(Slnode *list, Slnode *el);
-extern int slist_len(Slnode *list);
+extern int slist_ix(const Slnode *list, const Slnode *el);
+extern int slist_len(const Slnode *list);
 
-void 	*join_slists(Slnode *s1, Slnode *s2);
-void 	*remove_el(void *list, void *el);
 void 	*reverse_slist(void *l);
-void 	free_slist(void *l);
 
 Names *name_in_list(char *name, Names *list);
 Names *text_in_list(char *name, Names *list);

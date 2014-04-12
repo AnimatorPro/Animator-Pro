@@ -5,63 +5,6 @@
 
 #define SAFETY  
 
-/***** single linked list calls ******/
-
-/*********************************************/
-void *slist_el(register Slnode *list, int ix)
-
-/* given pointer to first element of a list and index returns pointer to 
- * element. NULL if not there */
-{
-	while(list && --ix >= 0)
-		list = list->next;
-	return(list);
-}
-/***********************************************************/
-int slist_ix(register Slnode *list, Slnode *el)
-
-/* given pointer to element and pointer to first in list returns
- * "index" or count away from list element is -1 if not found */
-{
-int ix = 0;
-
-	while(list != NULL)
-	{
-		if (list == el)
-			return(ix);
-		++ix;
-		list = list->next;
-	}
-	return(-1);
-}
-/***********************************************************/
-int slist_len(register Slnode *list)
-{
-register int count = 0;
-
-	while (list)
-	{
-		count++;
-		list = list->next;
-	}
-	return(count);
-}
-/***********************************************************/
-void *join_slists(Slnode *s1, Slnode *s2)
-{
-Slnode *t, *next;
-
-if (s1 == NULL)
-	return(s2);
-if (s2 == NULL)
-	return(s1);
-t = s1;
-while ((next = t->next) != NULL)	/* seek to end of s1 */
-	t = next;
-t->next = s2;
-return(s1);
-}
-
 /***********************************************************/
 /* DOUBLY linked list (dl) calls */
 /***********************************************************/

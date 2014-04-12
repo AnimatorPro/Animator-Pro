@@ -20,13 +20,7 @@
 +namein.obj
 +namesort.obj
 +shelsort.obj
-+slfree.obj
-+slistel.obj
-+slistix.obj
-+slistlen.obj
-+slremel.obj
++slist.obj
 +slrevers.obj
-+slstjoin.obj
-+slstlast.obj
 +slstsort.obj
 +textin.obj

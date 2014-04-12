@@ -56,8 +56,8 @@ LINKLISTO = \
  dlinsbef.obj dlinscmp.obj dlisort.obj dlistlen.obj\
  dlremnod.obj dlseehd.obj dlseetl.obj dlswap.obj dltohead.obj\
  dltotail.obj nalngest.obj namein.obj namesort.obj argparse.obj\
- shelsort.obj slistel.obj slistix.obj slistlen.obj slfree.obj\
- slremel.obj slrevers.obj slstjoin.obj slstlast.obj slstsort.obj textin.obj
+ shelsort.obj slist.obj \
+ slrevers.obj slstsort.obj textin.obj
 
 ## integer and fixed point math utilities
 

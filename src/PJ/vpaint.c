@@ -377,7 +377,7 @@ static void home_help(void)
 			{
 			go_driver_scroller(s.strings[0], help_strings->next, NULL
 			, NOFUNC, NOFUNC, NULL, NULL);
-			free_slist(help_strings);
+			free_slist((Slnode *)help_strings);
 			}
 		smu_free_strings(&s);
 		}

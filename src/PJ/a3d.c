@@ -862,7 +862,7 @@ void ado_clear_pos(void)
 static void ado_free_trans(void)
 /* free optics transform stack */
 {
-	free_slist(vs.move3.next);
+	free_slist((Slnode *)vs.move3.next);
 	vs.move3.next = NULL;
 }
 
