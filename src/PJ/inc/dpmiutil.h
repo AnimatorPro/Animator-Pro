@@ -26,7 +26,7 @@ typedef struct dpmi_memory_info {
 enum {
 	DPMIFLAG_386	 = 0x0001,
 	DPMIFLAG_REALINT = 0x0002,
-	DPMIFLAG_VMM	 = 0x0004,
+	DPMIFLAG_VMM	 = 0x0004
 };
 
 extern Boolean pj_dpmi_present(void);

@@ -184,7 +184,7 @@
 #define Err_too_few_params (POCOERR-26)
 #define Err_function_not_found (POCOERR-27)
 #define Err_too_many_params (POCOERR-28)
-#define Err_poco_exit		(POCOERR-29) // ONLY po_exit() may use this!!!
+#define Err_poco_exit		(POCOERR-29) /* ONLY po_exit() may use this!!! */
 #define Err_poco_out_of_string_space (POCOERR-30)
 /* end POCOERR */
 #endif

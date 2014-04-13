@@ -55,7 +55,6 @@ set(PJMAIN_SRC_FILES
 	files.c
 	findfree.c
 	fli.c
-	fli.c
 	flicel.c
 	flicelio.c
 	flipath.c
