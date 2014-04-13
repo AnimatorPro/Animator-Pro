@@ -15,8 +15,8 @@
 #ifndef LINKLIST_H
 #define LINKLIST_H
 
-#ifndef STDTYPES_H
-#include "stdtypes.h"
+#ifndef PTRMACRO_H
+#include "ptrmacro.h"
 #endif
 
 
@@ -54,6 +54,8 @@ typedef struct dl_header {
 	Dlnode *tail;        /* initialized to 0 */
 	Dlnode *tails_prev;
 } Dlheader;
+STATIC_ASSERT(listlist, POSTOSET(Dlheader, tail) - OFFSET(Dlheader, head) == sizeof(Dlnode));
+STATIC_ASSERT(linklist, POSTOSET(Dlheader, tails_prev) - OFFSET(Dlheader, tail) == sizeof(Dlnode));
 
 /* macro for static declaration of pre-initialized list headers
  *
@@ -85,15 +87,18 @@ Names *text_in_list(char *name, Names *list);
 Errcode new_name(Names **pname, char *s, Names **plist);
 int longest_name(Names *names);
 
-void 	init_list(Dlheader *list);
-void 	add_head(Dlheader *list, Dlnode *node);
-void 	add_tail(Dlheader *list, Dlnode *node);
+/* dlist.c */
+extern Errcode init_list(Dlheader *list);
+extern Errcode free_dl_list(Dlheader *list);
+extern Errcode add_head(Dlheader *list, Dlnode *node);
+extern Errcode add_tail(Dlheader *list, Dlnode *node);
+extern Errcode rem_node(Dlnode *node);
+extern Dlnode *see_head(Dlheader *list);
+extern Dlnode *see_tail(Dlheader *list);
+
 void 	insert_after(Dlnode *node, Dlnode *lnode);
 void 	insert_before(Dlnode *node, Dlnode *lnode);
 Dlnode 	*get_head(Dlheader *list);
-Dlnode 	*see_head(Dlheader *list);
-Dlnode 	*see_tail(Dlheader *list);
-void 	rem_node(Dlnode *node);
 void 	safe_rem_node(Dlnode *node);
 void 	list_tohead( Dlheader *fromlist, Dlheader *tolist);
 void 	list_totail(Dlheader *fromlist, Dlheader *tolist);
@@ -114,7 +119,6 @@ Names 	*sort_names(Names *list);
 
 void swap_dl_list(Dlheader *a, Dlheader *b);
 Errcode clone_dl_list(Dlheader *source, Dlheader *dest, int node_size);
-void free_dl_list(Dlheader *list);
 
 #endif /* LINKLIST_H */
 

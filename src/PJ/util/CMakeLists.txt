@@ -62,20 +62,16 @@ set(FORMATF_SRC_FILES
 ## linked list utilities including a shell sort
 set(LINKLIST_SRC_FILES
 	argparse.c
-	dladhead.c
-	dladtail.c
+	dlist.c
 	dlclone.c
 	dlfndhdr.c
 	dlgethd.c
-	dlinit.c
 	dlinsaft.c
 	dlinsbef.c
 	dlinscmp.c
 	dlisort.c
 	dlistlen.c
 	dlremnod.c
-	dlseehd.c
-	dlseetl.c
 	dlswap.c
 	dltohead.c
 	dltotail.c

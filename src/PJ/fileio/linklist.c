@@ -8,35 +8,6 @@
 /***********************************************************/
 /* DOUBLY linked list (dl) calls */
 /***********************************************************/
-void init_list(list)
-
-Dlheader *list;
-{
-	list->head = (Dlnode *)&(list->tail);
-	list->tail = NULL;
-	list->tails_prev = (Dlnode *)list;
-}
-/***********************************************************/
-void add_head(list,node)
-
-Dlheader *list;
-Dlnode *node;
-{
-	node->prev = (Dlnode *)(&list->head);
-	node->next = list->head;
-	node->next->prev = list->head = node;
-}
-/***********************************************************/
-void add_tail(list,node)
-
-Dlheader *list;
-Dlnode *node;
-{
-	node->next = (Dlnode *)(&list->tail);
-	node->prev = list->tails_prev;
-	node->prev->next = list->tails_prev = node;
-}
-/***********************************************************/
 void insert_after(node,lnode)
 
 register Dlnode *node; /* node to insert after */
@@ -73,13 +44,6 @@ register Dlnode *head;
 	return(head);
 }
 /**********************************************************/
-Dlnode *see_head(register Dlheader *list)
-{
-	if((Dlnode *)list == list->tails_prev)
-		return(NULL);
-	return(list->head);
-}
-/**********************************************************/
 Dlnode *get_tail(register Dlheader *list)
 {
 register Dlnode *tail;
@@ -93,22 +57,6 @@ register Dlnode *tail;
 	tail->next = NULL;
 #endif /* SAFETY */
 	return(tail);
-}
-/**********************************************************/
-Dlnode *see_tail(register Dlheader *list)
-{
-	if((Dlnode *)list == list->tails_prev)
-		return(NULL);
-	return(list->tails_prev);
-}
-/**********************************************************/
-void rem_node(register Dlnode *node)
-{
-	node->prev->next = node->next;
-	node->next->prev = node->prev;
-#ifdef SAFETY  
-	node->next = NULL;
-#endif /* SAFETY */
 }
 /**********************************************************/
 #ifdef SAFETY  
@@ -129,7 +77,6 @@ void safe_rem_node(register Dlnode *node)
 void list_tohead( register Dlheader *fromlist, register Dlheader *tolist)
 {
 Dlnode *fromtail;
-extern Dlnode *see_tail();
 
 	if(NULL == (fromtail = see_tail(fromlist))) /* nothing to move */
 		return;
@@ -153,7 +100,6 @@ extern Dlnode *see_tail();
 void list_totail(Dlheader *fromlist, Dlheader *tolist)
 {
 Dlnode *fromhead;
-extern Dlnode *see_head();
 
 	if(NULL == (fromhead = see_head(fromlist))) /* nothing to move */
 		return;

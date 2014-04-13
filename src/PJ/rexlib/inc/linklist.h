@@ -77,16 +77,10 @@ Names *name_in_list(char *name, Names *list);
 Names *text_in_list(char *name, Names *list);
 Errcode new_name(Names **pname, char *s, Names **plist);
 
-void 	init_list(Dlheader *list);
-void 	add_head(Dlheader *list, Dlnode *node);
-void 	add_tail(Dlheader *list, Dlnode *node);
 void 	insert_after(Dlnode *node, Dlnode *lnode);
 void 	insert_before(Dlnode *node, Dlnode *lnode);
 Dlnode 	*get_head(Dlheader *list);
-Dlnode 	*see_head(Dlheader *list);
 Dlnode 	*get_tail(Dlheader *list);
-Dlnode 	*see_tail(Dlheader *list);
-void 	rem_node(Dlnode *node);
 void 	safe_rem_node(Dlnode *node);
 void 	list_tohead( Dlheader *fromlist, Dlheader *tolist);
 void 	list_totail(Dlheader *fromlist, Dlheader *tolist);
@@ -101,7 +95,6 @@ Names 	*sort_names(Names *list);
 
 void swap_dl_list(Dlheader *a, Dlheader *b);
 Errcode clone_dl_list(Dlheader *source, Dlheader *dest, int node_size);
-void free_dl_list(Dlheader *list);
 
 #endif /* LINKLIST_H */
 
