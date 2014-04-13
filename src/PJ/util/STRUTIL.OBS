@@ -2,6 +2,7 @@
 +parsemi.obj
 +strcrc.obj
 +strclone.obj
++textutil.obj
 +trstring.obj
 +txtcmp.obj
 +txtncmp.obj

@@ -39,6 +39,7 @@ set(STR_SRC_FILES
 	parsemi.c
 	strclone.c
 	strcrc.c
+	textutil.c
 	trstring.c
 	txtcmp.c
 	txtncmp.c

@@ -38,7 +38,7 @@ MEMO = \
 
 STRO = \
  newname.obj parsemi.obj strclone.obj strcrc.obj \
- trstring.obj txtcmp.obj txtncmp.obj \
+ textutil.obj trstring.obj txtcmp.obj txtncmp.obj \
  upc.obj wildcmp.obj
 
 ## string formatting utilities sprintf and the like
