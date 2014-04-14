@@ -54,8 +54,8 @@ LINKLISTO = \
  dlist.obj dlclone.obj \
  dlfndhdr.obj \
  dlinscmp.obj dlisort.obj dlistlen.obj\
- dlremnod.obj dlswap.obj dltohead.obj \
- dltotail.obj nalngest.obj namein.obj namesort.obj argparse.obj\
+ dlremnod.obj dlswap.obj \
+ nalngest.obj namein.obj namesort.obj argparse.obj\
  shelsort.obj slist.obj \
  slrevers.obj slstsort.obj textin.obj
 

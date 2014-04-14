@@ -99,10 +99,10 @@ extern Dlnode *see_head(Dlheader *list);
 extern Dlnode *see_tail(Dlheader *list);
 extern Dlnode *get_head(Dlheader *list);
 extern Dlnode *get_tail(Dlheader *list);
+extern Errcode list_tohead(Dlheader *fromlist, Dlheader *tolist);
+extern Errcode list_totail(Dlheader *fromlist, Dlheader *tolist);
 
 void 	safe_rem_node(Dlnode *node);
-void 	list_tohead( Dlheader *fromlist, Dlheader *tolist);
-void 	list_totail(Dlheader *fromlist, Dlheader *tolist);
 LONG 	listlen(Dlheader *list);
 Dlheader *find_header(Dlnode *node);
 void 	insert_compare(Dlnode *node, Dlheader *list, FUNC compare);

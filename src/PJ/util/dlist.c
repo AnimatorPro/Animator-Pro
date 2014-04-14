@@ -212,3 +212,75 @@ get_tail(Dlheader *list)
 
 	return node;
 }
+
+/*--------------------------------------------------------------*/
+/* Rank 3: list-list.                                           */
+/*--------------------------------------------------------------*/
+
+/* Function: list_tohead
+ *
+ *  Appends fromlist to the head of tolist.
+ */
+Errcode
+list_tohead(Dlheader *fromlist, Dlheader *tolist)
+{
+	Dlnode *fromtail;
+
+	if (!pj_assert(fromlist != NULL)) return Err_bad_input;
+	if (!pj_assert(tolist != NULL)) return Err_bad_input;
+	if (!pj_assert(fromlist->head != NULL)) return Err_internal_pointer;
+	if (!pj_assert(tolist->head != NULL)) return Err_internal_pointer;
+
+	fromtail = see_tail(fromlist);
+
+	/* Nothing to move. */
+	if (fromtail == NULL)
+		return Success;
+
+	/* Link fromtail to tohead. */
+	fromtail->next = tolist->head;
+	tolist->head->prev = fromtail;
+
+	/* Link fromhead onto tolist->head. */
+	tolist->head = fromlist->head;
+	tolist->head->prev = (Dlnode *)&(tolist->head);
+
+	/* Clear fromlist. */
+	init_list(fromlist);
+
+	return Success;
+}
+
+/* Function: list_totail
+ *
+ *  Appends fromlist to the tail of tolist.
+ */
+Errcode
+list_totail(Dlheader *fromlist, Dlheader *tolist)
+{
+	Dlnode *fromhead;
+
+	if (!pj_assert(fromlist != NULL)) return Err_bad_input;
+	if (!pj_assert(tolist != NULL)) return Err_bad_input;
+	if (!pj_assert(fromlist->tails_prev != NULL)) return Err_internal_pointer;
+	if (!pj_assert(tolist->tails_prev != NULL)) return Err_internal_pointer;
+
+	fromhead = see_head(fromlist);
+
+	/* Nothing to move. */
+	if (fromhead == NULL)
+		return Success;
+
+	/* Link fromhead to totail. */
+	fromhead->prev = tolist->tails_prev;
+	fromhead->prev->next = fromhead;
+
+	/* Link fromtail to tolist->tail. */
+	tolist->tails_prev = fromlist->tails_prev;
+	tolist->tails_prev->next = (Dlnode *)&(tolist->tail);
+
+	/* Clear fromlist. */
+	init_list(fromlist);
+
+	return Success;
+}

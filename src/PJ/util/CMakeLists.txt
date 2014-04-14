@@ -71,8 +71,6 @@ set(LINKLIST_SRC_FILES
 	dlistlen.c
 	dlremnod.c
 	dlswap.c
-	dltohead.c
-	dltotail.c
 	nalngest.c
 	namein.c
 	namesort.c

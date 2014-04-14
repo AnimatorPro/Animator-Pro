@@ -78,8 +78,6 @@ Names *text_in_list(char *name, Names *list);
 Errcode new_name(Names **pname, char *s, Names **plist);
 
 void 	safe_rem_node(Dlnode *node);
-void 	list_tohead( Dlheader *fromlist, Dlheader *tolist);
-void 	list_totail(Dlheader *fromlist, Dlheader *tolist);
 LONG 	listlen(Dlheader *list);
 Dlheader *find_header(Dlnode *node);
 Boolean isin_list(Dlnode *testnode,Dlheader *list);

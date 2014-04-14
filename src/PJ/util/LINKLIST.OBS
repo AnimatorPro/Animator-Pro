@@ -7,8 +7,6 @@
 +dlistlen.obj
 +dlremnod.obj
 +dlswap.obj
-+dltohead.obj
-+dltotail.obj
 +nalngest.obj
 +namein.obj
 +namesort.obj

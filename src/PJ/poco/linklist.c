@@ -44,52 +44,6 @@ void safe_rem_node(register Dlnode *node)
 	node->next = NULL;
 }
 #endif /* DLL_SAFETY */
-/**************************************************************/
-/* moves adds all of the fromlists nodes to
- * the head of the tolist the nodes remain in the same order
- * as in the fromlist */
-
-void list_tohead( register Dlheader *fromlist, register Dlheader *tolist)
-{
-Dlnode *fromtail;
-
-	if(NULL == (fromtail = see_tail(fromlist))) /* nothing to move */
-		return;
-
-	/* link fromtail to tohead */
-	fromtail->next = tolist->head;
-	tolist->head->prev = fromtail;
-
-	/* link fromhead onto tolist->head */
-	tolist->head = fromlist->head;
-	tolist->head->prev = (Dlnode *)&tolist->head;
-
-	/* clear fromlist */
-	init_list(fromlist);
-}
-/*************************************************************/
-/* moves adds all of the fromlists nodes to
- * the tail of the tolist the nodes remain in the same order
- * as in the fromlist */
-
-void list_totail(Dlheader *fromlist, Dlheader *tolist)
-{
-Dlnode *fromhead;
-
-	if(NULL == (fromhead = see_head(fromlist))) /* nothing to move */
-		return;
-
-	/* link fromhead to totail */
-	fromhead->prev = tolist->tails_prev;  /* point fromhead back to totail */
-	fromhead->prev->next = fromhead;      /* point totail to fromhead */
-
-	/* link fromtail to tolist->tail */
-	tolist->tails_prev = fromlist->tails_prev;
-	tolist->tails_prev->next = (Dlnode *)&tolist->tail; 	
-
-	/* clear fromlist */
-	init_list(fromlist);
-}
 /***********************************************************/
 /* returns length of doubly linked list */
 
