@@ -8,57 +8,6 @@
 /***********************************************************/
 /* DOUBLY linked list (dl) calls */
 /***********************************************************/
-void insert_after(node,lnode)
-
-register Dlnode *node; /* node to insert after */
-register Dlnode *lnode; /* attached node */
-{
-	node->prev = lnode;
-	node->next = lnode->next;
-	node->next->prev = lnode->next = node;
-}
-/**********************************************************/
-void insert_before(node,lnode)
-
-register Dlnode *node; /* node to insert before */
-register Dlnode *lnode; /* attached node */
-{
-	node->next = lnode;
-	node->prev = lnode->prev;
-	node->prev->next = lnode->prev = node;
-}
-/**********************************************************/
-Dlnode *get_head(register Dlheader *list)
-{
-register Dlnode *head;
-
-	if((Dlnode *)list == list->tails_prev)
-		return(NULL);
-
-	head = list->head;
-	list->head = head->next;
-	list->head->prev = (Dlnode *)(&list->head);
-#ifdef SAFETY  
-	head->next = NULL;
-#endif /* SAFETY */
-	return(head);
-}
-/**********************************************************/
-Dlnode *get_tail(register Dlheader *list)
-{
-register Dlnode *tail;
-
-	if((Dlnode *)list == (tail = list->tails_prev))
-		return NULL;
-
-	list->tails_prev = tail->prev;
-	list->tails_prev->next = (Dlnode *)(&list->tail);
-#ifdef SAFETY  
-	tail->next = NULL;
-#endif /* SAFETY */
-	return(tail);
-}
-/**********************************************************/
 #ifdef SAFETY  
 void safe_rem_node(register Dlnode *node)
 {

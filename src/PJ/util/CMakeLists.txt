@@ -66,9 +66,6 @@ set(LINKLIST_SRC_FILES
 	dlist.c
 	dlclone.c
 	dlfndhdr.c
-	dlgethd.c
-	dlinsaft.c
-	dlinsbef.c
 	dlinscmp.c
 	dlisort.c
 	dlistlen.c

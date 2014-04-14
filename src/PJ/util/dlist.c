@@ -20,6 +20,10 @@
 #define DLIST_SAFETY
 #endif
 
+/*--------------------------------------------------------------*/
+/* Rank 0: list operations.                                     */
+/*--------------------------------------------------------------*/
+
 /* Function: init_list
  *
  *  Initialise a doubly-linked list.
@@ -57,38 +61,42 @@ free_dl_list(Dlheader *list)
 	return init_list(list);
 }
 
-/* Function: add_head
+/*--------------------------------------------------------------*/
+/* Rank 1: node-node.                                           */
+/*--------------------------------------------------------------*/
+
+/* Function: insert_after
  *
- *  Add a node to the head of the list.
+ *  Insert node into the list after lnode.
  */
 Errcode
-add_head(Dlheader *list, Dlnode *node)
+insert_after(Dlnode *node, Dlnode *lnode)
 {
-	if (!pj_assert(list != NULL)) return Err_bad_input;
 	if (!pj_assert(node != NULL)) return Err_bad_input;
-	if (!pj_assert(list->head != NULL)) return Err_internal_pointer;
+	if (!pj_assert(lnode != NULL)) return Err_bad_input;
+	if (!pj_assert(lnode->next != NULL)) return Err_internal_pointer;
 
-	node->prev = (Dlnode *)(&list->head);
-	node->next = list->head;
-	node->next->prev = list->head = node;
+	node->prev = lnode;
+	node->next = lnode->next;
+	node->next->prev = lnode->next = node;
 
 	return Success;
 }
 
-/* Function: add_tail
+/* Function: insert_before
  *
- *  Add a node to the tail of the list.
+ *  Insert node into the list before lnode.
  */
 Errcode
-add_tail(Dlheader *list, Dlnode *node)
+insert_before(Dlnode *node, Dlnode *lnode)
 {
-	if (!pj_assert(list != NULL)) return Err_bad_input;
 	if (!pj_assert(node != NULL)) return Err_bad_input;
-	if (!pj_assert(list->tails_prev != NULL)) return Err_internal_pointer;
+	if (!pj_assert(lnode != NULL)) return Err_bad_input;
+	if (!pj_assert(lnode->prev != NULL)) return Err_internal_pointer;
 
-	node->next = (Dlnode *)(&list->tail);
-	node->prev = list->tails_prev;
-	node->prev->next = list->tails_prev = node;
+	node->next = lnode;
+	node->prev = lnode->prev;
+	node->prev->next = lnode->prev = node;
 
 	return Success;
 }
@@ -113,6 +121,34 @@ rem_node(Dlnode *node)
 #endif
 
 	return Success;
+}
+
+/*--------------------------------------------------------------*/
+/* Rank 2: list-node.                                           */
+/*--------------------------------------------------------------*/
+
+/* Function: add_head
+ *
+ *  Add a node to the head of the list.
+ */
+Errcode
+add_head(Dlheader *list, Dlnode *node)
+{
+	if (!pj_assert(list != NULL)) return Err_bad_input;
+
+	return insert_after(node, (Dlnode *)&(list->head));
+}
+
+/* Function: add_tail
+ *
+ *  Add a node to the tail of the list.
+ */
+Errcode
+add_tail(Dlheader *list, Dlnode *node)
+{
+	if (!pj_assert(list != NULL)) return Err_bad_input;
+
+	return insert_before(node, (Dlnode *)&(list->tail));
 }
 
 /* Function: see_head
@@ -143,4 +179,36 @@ see_tail(Dlheader *list)
 		return NULL;
 
 	return list->tails_prev;
+}
+
+/* Function: get_head
+ *
+ *  Remove and return the head of the list.
+ */
+Dlnode *
+get_head(Dlheader *list)
+{
+	Dlnode *node;
+
+	node = see_head(list);
+	if (node != NULL)
+		rem_node(node);
+
+	return node;
+}
+
+/* Function: get_tail
+ *
+ *  Remove and return the tail of the list.
+ */
+Dlnode *
+get_tail(Dlheader *list)
+{
+	Dlnode *node;
+
+	node = see_tail(list);
+	if (node != NULL)
+		rem_node(node);
+
+	return node;
 }

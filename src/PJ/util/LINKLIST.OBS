@@ -2,9 +2,6 @@
 +dlist.obj
 +dlclone.obj
 +dlfndhdr.obj
-+dlgethd.obj
-+dlinsaft.obj
-+dlinsbef.obj
 +dlinscmp.obj
 +dlisort.obj
 +dlistlen.obj

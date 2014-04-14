@@ -52,8 +52,8 @@ FORMATFO = \
 
 LINKLISTO = \
  dlist.obj dlclone.obj \
- dlfndhdr.obj dlgethd.obj dlinsaft.obj \
- dlinsbef.obj dlinscmp.obj dlisort.obj dlistlen.obj\
+ dlfndhdr.obj \
+ dlinscmp.obj dlisort.obj dlistlen.obj\
  dlremnod.obj dlswap.obj dltohead.obj \
  dltotail.obj nalngest.obj namein.obj namesort.obj argparse.obj\
  shelsort.obj slist.obj \

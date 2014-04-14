@@ -90,15 +90,16 @@ int longest_name(Names *names);
 /* dlist.c */
 extern Errcode init_list(Dlheader *list);
 extern Errcode free_dl_list(Dlheader *list);
+extern Errcode insert_after(Dlnode *node, Dlnode *lnode);
+extern Errcode insert_before(Dlnode *node, Dlnode *lnode);
+extern Errcode rem_node(Dlnode *node);
 extern Errcode add_head(Dlheader *list, Dlnode *node);
 extern Errcode add_tail(Dlheader *list, Dlnode *node);
-extern Errcode rem_node(Dlnode *node);
 extern Dlnode *see_head(Dlheader *list);
 extern Dlnode *see_tail(Dlheader *list);
+extern Dlnode *get_head(Dlheader *list);
+extern Dlnode *get_tail(Dlheader *list);
 
-void 	insert_after(Dlnode *node, Dlnode *lnode);
-void 	insert_before(Dlnode *node, Dlnode *lnode);
-Dlnode 	*get_head(Dlheader *list);
 void 	safe_rem_node(Dlnode *node);
 void 	list_tohead( Dlheader *fromlist, Dlheader *tolist);
 void 	list_totail(Dlheader *fromlist, Dlheader *tolist);

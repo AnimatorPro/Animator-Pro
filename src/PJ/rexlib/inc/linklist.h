@@ -77,10 +77,6 @@ Names *name_in_list(char *name, Names *list);
 Names *text_in_list(char *name, Names *list);
 Errcode new_name(Names **pname, char *s, Names **plist);
 
-void 	insert_after(Dlnode *node, Dlnode *lnode);
-void 	insert_before(Dlnode *node, Dlnode *lnode);
-Dlnode 	*get_head(Dlheader *list);
-Dlnode 	*get_tail(Dlheader *list);
 void 	safe_rem_node(Dlnode *node);
 void 	list_tohead( Dlheader *fromlist, Dlheader *tolist);
 void 	list_totail(Dlheader *fromlist, Dlheader *tolist);

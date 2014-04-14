@@ -33,56 +33,6 @@
 /***********************************************************/
 #ifdef DEADWOOD
 
-/***********************************************************/
-void insert_after(register Dlnode *node, register Dlnode *lnode)
-{
-	node->prev = lnode;
-	node->next = lnode->next;
-	node->next->prev = lnode->next = node;
-}
-/**********************************************************/
-void insert_before(register Dlnode *node, register Dlnode *lnode)
-{
-	node->next = lnode;
-	node->prev = lnode->prev;
-	node->prev->next = lnode->prev = node;
-}
-/**********************************************************/
-Dlnode *get_head(register Dlheader *list)
-{
-register Dlnode *head;
-
-	if((Dlnode *)list == list->tails_prev)
-		return(NULL);
-
-	head = list->head;
-	list->head = head->next;
-	list->head->prev = (Dlnode *)(&list->head);
-#ifdef DLL_SAFETY
-	head->next = NULL;
-#endif /* DLL_SAFETY */
-	return(head);
-}
-/**********************************************************/
-Dlnode *get_tail(register Dlheader *list)
-{
-register Dlnode *tail;
-
-	if((Dlnode *)list == (tail = list->tails_prev))
-		return NULL;
-
-	list->tails_prev = tail->prev;
-	list->tails_prev->next = (Dlnode *)(&list->tail);
-#ifdef DLL_SAFETY
-	tail->next = NULL;
-#endif /* DLL_SAFETY */
-	return(tail);
-}
-
-#endif /* DEADWOOD */
-
-#ifdef DEADWOOD
-
 /**********************************************************/
 #ifdef DLL_SAFETY
 void safe_rem_node(register Dlnode *node)
