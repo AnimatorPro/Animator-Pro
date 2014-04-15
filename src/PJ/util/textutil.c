@@ -15,6 +15,26 @@ enum TextCopyDelim {
 	TEXT_COPY_DELIM_DIRS
 };
 
+/* Function: text_count_until_dir_delim
+ *
+ *  Count the number of bytes up to (excluding) the next directory delimiter.
+ */
+size_t
+text_count_until_dir_delim(const char *s)
+{
+	size_t n = 0;
+
+	while (*s != '\0') {
+		if (*s == DIR_DELIM || *s == DIR_DELIM2)
+			break;
+
+		n++;
+		s++;
+	}
+
+	return n;
+}
+
 /* Function: text_ncopy_delim
  *
  *  Copies at most n bytes from dst to src, stopping at NUL or delim.
