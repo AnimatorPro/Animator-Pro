@@ -118,12 +118,7 @@ int count;
 Names *pocs = NULL;
 Pull *prev = id_to_pull(mh, prev_id);
 
-if((err = change_dir(resource_dir)) < Success)
-	{
-	err = no_resource(err);
-	goto OUT;
-	}
-build_wild_list(&pocs, "*.POC", FALSE);
+build_wild_list(&pocs, resource_dir, "*.POC", FALSE);
 prep_poc_list(pocs);
 if ((count = new_pull_list(&prev->next,
 		pocs, 10, prev_id)) < Success)
@@ -134,7 +129,6 @@ if ((count = new_pull_list(&prev->next,
 id_to_pull(mh, root_id)->children->height += prev->height*count;
 OUT:
 free_wild_list(&pocs);
-change_dir(vb.init_drawer);
 return(softerr(err,"poco_leaf"));
 }
 

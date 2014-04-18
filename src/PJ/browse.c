@@ -36,7 +36,7 @@ static char *bro_wild;
 static void bredraw_cpic(void);
 static int new_bdrawer(void *drawer);
 static void draw_cpi(Button *m);
-static void init_bscroller(int top_name);
+static void init_bscroller(const char *drawer, int top_name);
 static void browse_action(Button *m);
 static void make_browse_cmap(void);
 
@@ -499,11 +499,7 @@ static void bredraw_cpic(void)
 
 static int new_bdrawer(void *drawer)
 {
-Errcode err;
-
-	if((err = change_dir(drawer)) < Success)
-		return(err);
-	init_bscroller(0);
+	init_bscroller(drawer, 0);
 	draw_buttontop(&bro_pat_sel);
 	draw_button(&bro_dev_hanger);
 	redraw_scroller(&bscroller);
@@ -657,7 +653,8 @@ error:
 	return(softerr(err,"!%s","bro_info",title));
 }
 
-static void init_bscroller(int top_name)
+static void
+init_bscroller(const char *drawer, int top_name)
 {
 char *wilds;
 char wild[WILD_SIZE];
@@ -669,7 +666,7 @@ Boolean get_dirs = TRUE;
 	wilds = bro_wild;
 	while(parse_to_semi(&wilds, wild,sizeof(wild)))
 	{
-		if((build_wild_list(&wlist,wild,get_dirs)) < Success)
+		if ((build_wild_list(&wlist, drawer, wild, get_dirs)) < Success)
 			continue;
 		get_dirs = FALSE;
 		bro_wild_list = merge_wild_lists(wlist,bro_wild_list);
@@ -859,16 +856,12 @@ browse_anims(char *inpath, char *outpath, char *title_key, char *loadb_key,
    button for default/accept file radio button */
 {
 Errcode err;
-char odir[PATH_SIZE];
 char drawer[PATH_SIZE];
 char name[PATH_SIZE];
 void *ss = NULL;
 static char panel_key[] = "browse_panel";
 
 	split_copy_path(inpath, drawer, name);
-	get_dir(odir);
-	if ((err = change_dir(drawer)) < Success)
-		softerr(err, "!%s", "cant_find", drawer);
 	make_good_dir(drawer);
 
 	BRO_DRAWER = drawer;
@@ -893,7 +886,7 @@ static char panel_key[] = "browse_panel";
 
 	format_browse_menu();
 	bro_wild = "*.FLC;*.FLI;*.CEL";
-	init_bscroller(*scroll_top - (*scroll_top%bro_xcount));
+	init_bscroller(drawer, *scroll_top - (*scroll_top%bro_xcount));
 	err = do_reqloop(vb.screen,&bro_menu,NULL,NULL,NULL);
 	*scroll_top = bscroller.top_name;
 
@@ -905,7 +898,6 @@ error:
 	see_cmap();
 	rezoom();
 	full_path_name(drawer, name, outpath);
-	change_dir(odir);
 	return(softerr(err,"bro_menu"));
 }
 

@@ -27,10 +27,9 @@ typedef void (*Nameload)(Wild_entry *dst,char *name);
 
 void free_wild_list(Names **pwild_list);
 
-Errcode build_wild_list(Names **pwild_list, const char *pat, Boolean get_dirs);
-
-Errcode build_dir_list(Names **pwild_list, char *pat, 
-					   Boolean get_dirs, char *dir);
+extern Errcode
+build_wild_list(Names **pwild_list,
+		const char *drawer, const char *pat, Boolean get_dirs);
 
 Names *merge_wild_lists(Names *l1, Names *l2); /* merges two sorted lists */
 

@@ -15,13 +15,10 @@ Names *l;
 static SHORT ipos = 0;
 Errcode err;
 
-	get_dir(opath);
 	strcpy(justname,pj_get_path_name(result));
-	if ((err = change_dir(resource_dir)) >= Success)
+	err = build_wild_list(&l, resource_dir, pat, FALSE);
+	if (err >= Success)
 	{
-		build_wild_list(&l, pat, FALSE);
-		change_dir(opath);
-
 		if(l != NULL)
 		{
 			if(qscroller(justname, hailing, l, 10, &ipos))

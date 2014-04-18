@@ -970,9 +970,10 @@ for ( pp = (Path_part *)(old_parts.head);
 	{
 	if (!is_a_part(&new_parts, pp->path))
 		{
-		if ((err = build_dir_list(&wild_list, "*.*", FALSE, pp->path)) 
-			< Success)
+		err = build_wild_list(&wild_list, pp->path, "*.*", FALSE);
+		if (err < Success)
 			goto OUT;
+
 		for (wild_pt = wild_list; wild_pt != NULL; wild_pt = wild_pt->next)
 			{
 			sprintf(opname, "%s%s", pp->path, wild_pt->name);

@@ -548,7 +548,7 @@ char *name;
 	name = pj_get_path_name(qfcb->fpath);
 	saved_c = *name;
 	*name = 0;
-	build_dir_list(&font_scroller.names,"*.*", FALSE, qfcb->fpath);
+	build_wild_list(&font_scroller.names, qfcb->fpath, "*.*", FALSE);
 	*name = saved_c;
 	font_scroller.scroll_sel = &fmu_scr_sel;
 	font_scroller.list_sel = &fmu_lis_sel;

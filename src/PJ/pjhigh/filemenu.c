@@ -347,11 +347,12 @@ static Names *wild_lst;
 
 static Errcode new_drawer(void)
 {
-Errcode err;
+	Errcode err;
 
-	if((err = change_dir(fq_drawer)) < Success)
-		return(errline(err,fq_drawer));
-	get_dir(fq_drawer);
+	err = get_full_path(fq_drawer, fq_drawer);
+	if (err < Success)
+		return err;
+
 	init_fscroller();
 	init_stq_string(&drawer_stringq);
 	draw_buttontop(&fdrawer_sel);
@@ -407,7 +408,7 @@ SHORT tname;
 	clear_struct(&fscroller);
 	fscroller.top_name = tname; /* replace top name */
 
-	build_wild_list(&wild_lst, wild_stringq.string, TRUE);
+	build_wild_list(&wild_lst, fq_drawer, wild_stringq.string, TRUE);
 	fscroller.names = wild_lst;
 	fscroller.scroll_sel = &fscroll_sel;
 	fscroller.list_sel = &flist_sel;
@@ -575,15 +576,11 @@ static Errcode qfile(
 	char **wildcards,  /* list of wildcards (<3) First is default read only */
 	char *wildbuf) /* buffer for wildcard must be at least "WILD_SIZE" long */
 {
-char odir[PATH_SIZE];
 Button *dhanger, *wildb;
 Errcode err;
 void *ss = NULL;
 
 	redisplay_drawer = new_drawer;
-	get_dir(odir);
-	if ((err = change_dir(dir_in)) < Success)
-		softerr(err,"!%s", "cant_find", dir_in);
 	make_good_dir(dir_in);
 
 	fq_drawer = dir_in;
@@ -657,7 +654,6 @@ error:
 	smu_free_scatters(&ss);
 	cleanup_dev_sels(dhanger);
 	free_wild_list(&wild_lst);
-	change_dir(odir);
 	return(softerr(err, NULL));
 }
 

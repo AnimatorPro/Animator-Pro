@@ -3,6 +3,7 @@
 #include <assert.h>
 #include <glob.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
 #include "jimk.h"
@@ -10,6 +11,7 @@
 #include "filepath.h"
 #include "memory.h"
 #include "wildlist.h"
+#include "textutil.h"
 
 /* TODO: do we need pj_change_device and current_device? */
 #include "msfile.h"
@@ -66,11 +68,34 @@ pj_dget_dir(int drive, char *dir)
 	return Success;
 }
 
+/*--------------------------------------------------------------*/
+
+Errcode
+get_full_path(const char *path, char *fullpath)
+{
+	char resolved_path[PATH_MAX];
+
+	if (path == NULL || path[0] == '\0')
+		path = ".";
+
+	/* TODO: need to handle TFILE. */
+
+	if (realpath(path, resolved_path) == NULL)
+		return Err_no_path;
+
+	return text_ncopy(fullpath, resolved_path, PATH_SIZE);
+}
+
 Errcode
 make_good_dir(char *path)
 {
-	(void)path;
-	return Success;
+	if (get_full_path(path, path) >= Success)
+		return Success;
+
+	if (get_full_path(".", path) >= Success)
+		return Success;
+
+	return Err_no_path;
 }
 
 /*--------------------------------------------------------------*/
@@ -94,7 +119,7 @@ add_wild(Names **pwild_list, const char *path, Boolean is_directory)
 	}
 
 	/* Filter out '.' and '..' */
-	if ((name[0] == '.') && (name[1] == '\0' || name[1] == '.'))
+	if (strncmp(name, ".", 2) == 0 || strncmp(name, "..", 3) == 0)
 		return Success;
 
 	/* Note: Wild_entry contains space for a \0. */
@@ -111,23 +136,26 @@ add_wild(Names **pwild_list, const char *path, Boolean is_directory)
 }
 
 static Errcode
-alloc_wild_list(Names **pwild_list, const char *wild, Boolean get_dirs)
+alloc_wild_list(Names **pwild_list,
+		const char *drawer, const char *wild, Boolean get_dirs)
 {
 	Errcode err;
 
-	*pwild_list = NULL;
+	if (!pj_assert(pwild_list != NULL)) return Err_bad_input;
+	if (!pj_assert(drawer != NULL)) return Err_bad_input;
+	if (!pj_assert(wild != NULL)) return Err_bad_input;
 
 	if (wild[0] == '#' && wild[1] == ':') {
 		return Err_nogood;
 	}
 	else {
-		const char *drawer = ".";
 		struct stat s;
-		char pat[1024];
+		char pat[PATH_MAX];
 		glob_t g;
-		size_t nmatches;
 		size_t i;
 		size_t dir_len;
+		Boolean is_reg;
+		Boolean is_dir;
 
 		dir_len = strlen(drawer);
 		if (dir_len <= 0) {
@@ -143,32 +171,23 @@ alloc_wild_list(Names **pwild_list, const char *wild, Boolean get_dirs)
 
 		snprintf(pat + dir_len, sizeof(pat) - dir_len, "%s", wild);
 		glob(pat, GLOB_TILDE, NULL, &g);
-		nmatches = g.gl_pathc;
 
 		if (get_dirs) {
 			snprintf(pat + dir_len, sizeof(pat) - dir_len, "*");
 			glob(pat, GLOB_APPEND | GLOB_TILDE | GLOB_ONLYDIR, NULL, &g);
 		}
 
-		for (i = 0; i < nmatches; i++) {
+		for (i = 0; i < g.gl_pathc; i++) {
 			if (stat(g.gl_pathv[i], &s) != 0)
 				continue;
 
-			if (!S_ISREG(s.st_mode))
+			is_reg = S_ISREG(s.st_mode);
+			is_dir = S_ISDIR(s.st_mode);
+			if ((!is_reg && !is_dir) || (is_dir && !get_dirs))
 				continue;
 
-			if ((err = add_wild(pwild_list, g.gl_pathv[i], FALSE)) != Success)
-				goto error;
-		}
-
-		for (i = nmatches; i < g.gl_pathc; i++) {
-			if (stat(g.gl_pathv[i], &s) != 0)
-				continue;
-
-			if (!S_ISDIR(s.st_mode))
-				continue;
-
-			if ((err = add_wild(pwild_list, g.gl_pathv[i], TRUE)) != Success)
+			err = add_wild(pwild_list, g.gl_pathv[i], is_dir);
+			if (err < Success)
 				goto error;
 		}
 
@@ -178,19 +197,25 @@ alloc_wild_list(Names **pwild_list, const char *wild, Boolean get_dirs)
 	return Success;
 
 error:
-
 	free_wild_list(pwild_list);
 	return err;
 }
 
 Errcode
-build_wild_list(Names **pwild_list, const char *pat, Boolean get_dirs)
+build_wild_list(Names **pwild_list,
+		const char *drawer, const char *pat, Boolean get_dirs)
 {
 	Errcode err;
 
-	if ((err = alloc_wild_list(pwild_list, pat, get_dirs)) >= Success) {
+	if (!pj_assert(pwild_list != NULL)) return Err_bad_input;
+	if (!pj_assert(drawer != NULL)) return Err_bad_input;
+	if (!pj_assert(pat != NULL)) return Err_bad_input;
+
+	*pwild_list = NULL;
+
+	err = alloc_wild_list(pwild_list, drawer, pat, get_dirs);
+	if (err >= Success)
 		*pwild_list = sort_names(*pwild_list);
-	}
 
 	return err;
 }

@@ -14,7 +14,11 @@
 #define FILE_NAME_SIZE (8+1+3+1)
 
 /* size of a string big enough to hold any path/file name */
+#if defined(__WATCOMC__)
 #define PATH_SIZE 80
+#else /* __WATCOMC__ */
+#define PATH_SIZE PATH_MAX
+#endif /* __WATCOMC__ */
 
 /* string big enough for a wildcard */
 #define WILD_SIZE 16
@@ -107,7 +111,7 @@ void pj_set_path_name(char *path, char *name); /* changes, adds name to path */
 Boolean pj_name_in_path(char *path, char *name); /* true if path has name */
 
 Errcode get_path_device(char *path,char *device);
-Errcode get_full_path(char *path, char *fullpath);
+Errcode get_full_path(const char *path, char *fullpath);
 Errcode get_dir(char *path);
 Errcode add_subpath(char *drawer, char *subpath, char *outpath);
 Errcode full_path_name(char *drawer,char *subpath,char *fullpath);
@@ -122,7 +126,7 @@ Errcode dice_file_name(char *path, char *device, char *dir, char *file,
 Errcode split_copy_path(char *path,char *drawer,char *name);
 int pj_inc_filename(char *path);
 
-extern int _fp_get_path_devlen(char *path);
+extern int _fp_get_path_devlen(const char *path);
 extern int _fp_parse_device(char **pfn, char *device);
 extern Errcode _fp_parse_dir(char **pfn, char *dir);
 
