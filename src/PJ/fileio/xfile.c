@@ -2,6 +2,7 @@
 
 #include <assert.h>
 #include <stdarg.h>
+#include "pjassert.h"
 #include "errcodes.h"
 #include "jfile.h"
 #include "memory.h"
@@ -157,7 +158,7 @@ xfwrite(const void *ptr, size_t size, size_t nmemb, XFILE *xf)
 }
 
 int
-xfseek(XFILE *xf, long offset, enum XSEEK_WHENCE whence)
+xfseek(XFILE *xf, long offset, enum XSeekWhence whence)
 {
 	int real_whence;
 
@@ -293,8 +294,12 @@ error:
 }
 
 Errcode
-xffseek(XFILE *xf, long offset, enum XSEEK_WHENCE whence)
+xffseek(XFILE *xf, long offset, enum XSeekWhence whence)
 {
+	if (!pj_assert(xf != NULL)) return Err_bad_input;
+	if (!pj_assert(XSEEK_SET <= whence && whence <= XSEEK_END)) return Err_bad_input;
+	if (!pj_assert(xf->rf != NULL)) return Err_file_not_open;
+
 	if (xfseek(xf, offset, whence))
 		return xffile_error();
 	return Success;

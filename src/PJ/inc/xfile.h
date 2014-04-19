@@ -15,7 +15,7 @@ enum { EOF = -1 };
 STATIC_ASSERT(xfile, EOF == -1);
 #endif
 
-enum XSEEK_WHENCE {
+enum XSeekWhence {
 	XSEEK_SET = 0,
 	XSEEK_CUR = 1,
 	XSEEK_END = 2
@@ -34,7 +34,7 @@ extern int xungetc(int c, XFILE *xf);
 extern int xfflush(XFILE *xf);
 extern size_t xfread(void *ptr, size_t size, size_t nmemb, XFILE *xf);
 extern size_t xfwrite(const void *ptr, size_t size, size_t nmemb, XFILE *xf);
-extern int xfseek(XFILE *xf, long offset, enum XSEEK_WHENCE whence);
+extern int xfseek(XFILE *xf, long offset, enum XSeekWhence whence);
 extern void xrewind(XFILE *xf);
 extern long xftell(XFILE *xf);
 extern int xfprintf(XFILE *xf, const char *format, ...);
@@ -50,7 +50,7 @@ extern void xffclose(XFILE **pfp);
 extern Errcode xffread(XFILE *xf, void *buf, size_t size);
 extern Errcode xffwrite(XFILE *xf, void *buf, size_t size);
 extern Errcode xffwriteoset(XFILE *xf, void *buf, long offset, size_t size);
-extern Errcode xffseek(XFILE *xf, long offset, enum XSEEK_WHENCE whence);
+extern Errcode xffseek(XFILE *xf, long offset, enum XSeekWhence whence);
 extern long xfftell(XFILE *xf);
 extern Errcode xffile_error(void);
 
