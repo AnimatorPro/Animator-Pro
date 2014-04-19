@@ -1203,7 +1203,7 @@ static Errcode type1_load_font(char *file_name, Type1_font **ptcd)
 XFILE *file;
 Errcode err;
 
-if ((file = xfopen(file_name, "rb")) == NULL)
+if ((file = xfopen(file_name, XREADONLY)) == NULL)
 	return xerrno();
 if ((err = read_font(file, ptcd)) >= Success)
 	if ((err = find_ascii_values(*ptcd)) >= Success)
@@ -2914,7 +2914,7 @@ Errcode err;
 
 if (!(suff[1] == 'p' || suff[1] == 'P'))
 	return Err_suffix;
-if ((err = xffopen(name, &f, "rb")) < Success)
+if ((err = xffopen(name, &f, XREADONLY)) < Success)
 	return err;
 err = type1_check_signature(f);
 xffclose(&f);

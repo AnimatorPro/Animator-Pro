@@ -75,7 +75,7 @@ Errcode err, cerr;
 Tween_file_header tfh;
 Tween_link *link, *next;
 
-if ((f = xfopen(name, wb_str)) == NULL)
+if ((f = xfopen(name, XWRITEONLY)) == NULL)
 	return(xerrno());
 
 clear_struct(&tfh);
@@ -120,7 +120,7 @@ Tween_file_header tfh;
 Tween_link *newl;
 long i;
 
-if ((f = xfopen(name, rb_str)) == NULL)
+if ((f = xfopen(name, XREADONLY)) == NULL)
 	return(xerrno());
 if ((xfread(&tfh, 1, sizeof(tfh), f)) < sizeof(tfh))
 	goto IOERR;

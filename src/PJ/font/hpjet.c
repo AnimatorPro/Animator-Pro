@@ -79,7 +79,7 @@ static Errcode check_hpjet_font(char *name)
 Errcode err;
 XFILE *f;
 
-if ((f = xfopen(name, "rb")) == NULL)
+if ((f = xfopen(name, XREADONLY)) == NULL)
 	return xerrno();
 err = verify_hpjet_font(f);
 xfclose(f);
@@ -264,7 +264,7 @@ short head_size;
 int hdif;
 
 /* Load HPJET file */
-if ((f = xfopen(name, "rb")) ==  NULL)
+if ((f = xfopen(name, XREADONLY)) == NULL)
 	return xerrno();
 if ((err = verify_hpjet_font(f)) < Success)
 	goto ERROR;

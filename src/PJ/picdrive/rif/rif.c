@@ -113,7 +113,7 @@ int i;
 if((gf = pj_zalloc(sizeof(*gf))) == NULL)
 	return(Err_no_memory);
 
-if ((f = gf->file = xfopen(path, "rb")) == NULL)
+if ((f = gf->file = xfopen(path, XREADONLY)) == NULL)
 	{
 	err = xerrno();
 	goto ERROR;

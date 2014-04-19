@@ -95,10 +95,12 @@ static void close_file(Image_file **ptf)
 	return;
 }
 
-static Errcode alloc_and_open(Targa_file **ptf, char *path, char *openmode)
-/*****************************************************************************
- * allocate main data structure, open file.
- ****************************************************************************/
+/* Function: alloc_and_open
+ *
+ *  Allocate main data structure, open file.
+ */
+static Errcode
+alloc_and_open(Targa_file **ptf, char *path, enum XReadWriteMode mode)
 {
 	Targa_file	 *tf;
 
@@ -106,7 +108,7 @@ static Errcode alloc_and_open(Targa_file **ptf, char *path, char *openmode)
 		return Err_no_memory;
 	*ptf = tf;
 
-	if (NULL == (tf->file = xfopen(path, openmode)))
+	if (NULL == (tf->file = xfopen(path, mode)))
 		return xerrno();
 
 	return Success;
@@ -127,7 +129,7 @@ static Errcode open_file(Pdr *pd, char *path, Image_file **pif, Anim_info *ainfo
 	 * allocate main data structures, open file.
 	 */
 
-	if (Success != (err = alloc_and_open(&tf, path, "rb")))
+	if (Success != (err = alloc_and_open(&tf, path, XREADONLY)))
 		goto ERROR_EXIT;
 
 	if (Success != (err = read_targa_header(tf)))
@@ -172,7 +174,7 @@ static Errcode create_file(Pdr			*pd,
 	 * allocate main data structures, open file.
 	 */
 
-	if (Success != (err = alloc_and_open(&tf, path, "wb")))
+	if (Success != (err = alloc_and_open(&tf, path, XWRITEONLY)))
 		goto ERROR_EXIT;
 
 	tf->width  = ainfo->width;

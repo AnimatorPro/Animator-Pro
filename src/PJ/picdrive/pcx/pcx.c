@@ -424,9 +424,12 @@ pj_free(gf);
 pcx_files_open = FALSE;
 }
 
-static Errcode pcx_open_ifsub(Pcx_file **pcxile, char *path, char *rwmode)
-/* Check path suffix.  Allocate Pcx_file structure.  Open up a file.  
- * Return Errcode if any problems. */
+/* Function: pcx_open_ifsub
+ *
+ *  Check path suffix.  Allocate Pcx_file.  Open up file.
+ */
+static Errcode
+pcx_open_ifsub(Pcx_file **pcxile, char *path, enum XReadWriteMode mode)
 {
 Errcode err = Success;
 Pcx_file *gf;
@@ -442,7 +445,7 @@ if (!suffix_in(path, ".PCX"))
 if((gf = pj_zalloc(sizeof(Pcx_file))) == NULL)
 	return(Err_no_memory);
 
-if ((gf->file = xfopen(path, rwmode)) == NULL)
+if ((gf->file = xfopen(path, mode)) == NULL)
 	err = xerrno();
 
 pcx_files_open = TRUE;
@@ -463,7 +466,7 @@ Boolean got_cmap;
 
 ppcx = (Pcx_file **)pif;
 
-if((err = pcx_open_ifsub(ppcx, path, "rb")) < Success)
+if ((err = pcx_open_ifsub(ppcx, path, XREADONLY)) < Success)
 	goto error;
 
 if((err = read_pcx_start(*ppcx,&hdr,&((*ppcx)->ainfo),&got_cmap)) < Success)
@@ -489,7 +492,7 @@ Pcx_file **ppcx;
 
 ppcx = (Pcx_file **)pif;
 
-if((err = pcx_open_ifsub(ppcx, path, "wb")) < Success)
+if ((err = pcx_open_ifsub(ppcx, path, XWRITEONLY)) < Success)
 	goto error;
 
 (*ppcx)->ainfo = *ainfo;

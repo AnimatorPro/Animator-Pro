@@ -176,7 +176,7 @@ Errcode err;
 
 	close_macro(); /* will re-initialize everything to zeros */
 
-	if ((err = xffopen(path, &Mcb.xf, "wb+")) < Success)
+	if ((err = xffopen(path, &Mcb.xf, XREADWRITE_CLOBBER)) < Success)
 		goto error;
 
 	Mcb.mh.id.type = MAC_MAGIC;
@@ -308,7 +308,7 @@ static Errcode play_macro(int repeats)
 Errcode err;
 
 	close_macro();
-	if ((err = xffopen(macro_name, &Mcb.xf, rb_str)) < Success)
+	if ((err = xffopen(macro_name, &Mcb.xf, XREADONLY)) < Success)
 		goto error;
 
 	if ((err = xffread(Mcb.xf, &Mcb.mh, sizeof(Mcb.mh))) < Success)

@@ -182,7 +182,7 @@ if ((smu->classes = pj_zalloc(class_count*sizeof(*smu->classes))) == NULL)
 smu->class_count = class_count;
 for (i=0; i<class_count; i++)
 	smu->classes[i].name = class_names[i];
-if ((err = xffopen(resource_file, &smu->xf, rb_str)) < Success)
+if ((err = xffopen(resource_file, &smu->xf, XREADONLY)) < Success)
 	goto OUT;
 if ((err = smu_parse(smu)) < Success)
 	goto OUT;

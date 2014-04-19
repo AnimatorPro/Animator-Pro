@@ -15,6 +15,16 @@ enum { EOF = -1 };
 STATIC_ASSERT(xfile, EOF == -1);
 #endif
 
+enum XReadWriteMode {
+	XUNDEFINED = -1,
+	XREADONLY = 0,      /* rb */
+	XWRITEONLY,         /* wb */
+	XREADONLY_TEXT,     /* r - can we remove this? */
+	XWRITEONLY_TEXT,    /* w - can we remove this? */
+	XREADWRITE_OPEN,    /* rb+ - open existing. */
+	XREADWRITE_CLOBBER  /* wb+ - create or clobber. */
+};
+
 enum XSeekWhence {
 	XSEEK_SET = 0,
 	XSEEK_CUR = 1,
@@ -26,7 +36,7 @@ typedef struct xfl XFILE;
 extern XFILE *xstdout;
 extern XFILE *xstderr;
 
-extern XFILE *xfopen(const char *path, const char *mode);
+extern XFILE *xfopen(const char *path, enum XReadWriteMode mode);
 extern int xfclose(XFILE *xf);
 extern int xfgetc(XFILE *xf);
 extern int xfputc(int c, XFILE *xf);
@@ -45,7 +55,7 @@ extern int xfputs(const char *s, XFILE *xf);
 extern int xferror(XFILE *xf);
 extern int xerrno(void);
 
-extern Errcode xffopen(const char *path, XFILE **pfp, const char *fmode);
+extern Errcode xffopen(const char *path, XFILE **pxf, enum XReadWriteMode mode);
 extern void xffclose(XFILE **pfp);
 extern Errcode xffread(XFILE *xf, void *buf, size_t size);
 extern Errcode xffwrite(XFILE *xf, void *buf, size_t size);

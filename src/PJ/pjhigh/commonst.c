@@ -3,10 +3,6 @@
 
 char empty_str[] = "";
 char space_str[] = " ";
-char r_str[] = "r";
-char w_str[] = "w";
-char rb_str[] = "rb";
-char wb_str[] = "wb";
 char *unnamed_str;
 char *any_continue;
 char *enter_choice;

@@ -815,9 +815,12 @@ static void close_file(Image_file **pif)
 	is_open = FALSE;
 }
 
-static Errcode open_helper(Bmp_image_file **pf, char *path, char *rwmode)
-/* Check path suffix.  Allocate Bmp_image_file structure.  Open up a file.  
- * Return Errcode if any problems. */
+/* Function: open_helper
+ *
+ *  Check path suffix.  Allocate Bmp_image_file.  Open up file.
+ */
+static Errcode
+open_helper(Bmp_image_file **pf, char *path, enum XReadWriteMode mode)
 {
 	Errcode err = Success;
 	Bmp_image_file *f;
@@ -835,7 +838,7 @@ static Errcode open_helper(Bmp_image_file **pf, char *path, char *rwmode)
 	if((f = pj_zalloc(sizeof(*f))) == NULL)
 		return(Err_no_memory);
 
-	if ((f->file = xfopen(path, rwmode)) == NULL)
+	if ((f->file = xfopen(path, mode)) == NULL)
 		err = xerrno();
 
 	is_open = TRUE;
@@ -855,7 +858,7 @@ static Errcode open_file(Pdr *pd, char *path, Image_file **pif,
 
 	pf = (Bmp_image_file **)pif;
 
-	if ((err = open_helper(pf, path, "rb")) < Success)
+	if ((err = open_helper(pf, path, XREADONLY)) < Success)
 		goto ERROR;
 	f = *pf;
 	if ((err = read_head(f->file, &f->bh, &f->bi)) < Success)
@@ -894,7 +897,7 @@ static Errcode create_file(Pdr *pd, char *path, Image_file **pif,
 	(void)pd;
 
 	pf = (Bmp_image_file **)pif;
-	if((err = open_helper(pf, path, "wb")) < Success)
+	if ((err = open_helper(pf, path, XWRITEONLY)) < Success)
 		goto ERROR;
 	f = *pf;
 	init_header(ainfo->width, ainfo->height, &f->bh, &f->bi);

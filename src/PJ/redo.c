@@ -22,7 +22,7 @@ static Errcode _redo_draw(Redo_rec *r);
 
 Errcode start_save_redo_points(void)
 {
-	if ((rbf = xfopen(rbf_name, wb_str)) == NULL)
+	if ((rbf = xfopen(rbf_name, XWRITEONLY)) == NULL)
 		return softerr(xerrno(), "redo_save");
 	return(Success);
 }
@@ -90,7 +90,7 @@ static Errcode redo_draw(Redo_rec *r)
 {
 Errcode err;
 
-	if ((rbf = xfopen(rbf_name, rb_str)) == NULL)
+	if ((rbf = xfopen(rbf_name, XREADONLY)) == NULL)
 		return(Err_abort);
 
 	/* line fill ink would look funky here */
@@ -106,7 +106,7 @@ static Errcode redo_gel(Redo_rec *r)
 Errcode err;
 (void)r;
 
-	if ((rbf = xfopen(rbf_name, rb_str)) == NULL)
+	if ((rbf = xfopen(rbf_name, XREADONLY)) == NULL)
 		return(Err_abort);
 	err = gel_tool_loop(redo_draw_get_pos, rbf);
 	xfclose(rbf);
@@ -118,7 +118,7 @@ static Errcode redo_spray(Redo_rec *r)
 Errcode err;
 (void)r;
 
-	if ((rbf = xfopen(rbf_name, rb_str)) == NULL)
+	if ((rbf = xfopen(rbf_name, XREADONLY)) == NULL)
 		return(Err_abort);
 	err = spray_loop(redo_draw_get_pos, rbf, TRUE);
 	xfclose(rbf);

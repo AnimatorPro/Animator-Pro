@@ -32,7 +32,7 @@ LONG oldsize;
 	gf->text_name = name;
 	if ((oldsize = pj_file_size(name)) < Success)
 		return oldsize;
-	if ((err = xffopen(name, &f, r_str)) < Success)
+	if ((err = xffopen(name, &f, XREADONLY_TEXT)) < Success)
 		return(err);
 	free_text_file(gf);
 	gf->text_alloc = oldsize + DTSIZE;
@@ -57,7 +57,7 @@ XFILE *f;
 
 	if (!gf->text_buf)
 		return(Success);
-	if ((err = xffopen(name, &f, w_str)) < Success)
+	if ((err = xffopen(name, &f, XWRITEONLY_TEXT)) < Success)
 		goto error;
 	if (xfwrite(gf->text_buf, 1, gf->text_size, f) < (size_t)gf->text_size)
 	{

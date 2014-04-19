@@ -741,7 +741,7 @@ Errcode load_a_poly(char *name, Poly *poly)
 Errcode err;
 XFILE *f;
 
-	if ((err = xffopen(name, &f, rb_str)) >= Success)
+	if ((err = xffopen(name, &f, XREADONLY)) >= Success)
 		err = ld_poly(f, poly);
 	xffclose(&f);
 	return(err);
@@ -777,7 +777,7 @@ int save_poly(char *name, Poly *poly)
 Errcode err;
 XFILE *f;
 
-	if ((err = xffopen(name, &f, wb_str)) < Success)
+	if ((err = xffopen(name, &f, XWRITEONLY)) < Success)
 		goto error;
 	err = s_poly(f, poly);
 error:

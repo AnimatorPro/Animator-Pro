@@ -25,10 +25,6 @@ extern char *please_wait_str;
 
 extern char space_str[];
 extern char empty_str[];
-extern char r_str[];
-extern char w_str[];
-extern char rb_str[];
-extern char wb_str[];
 
 extern Errcode init_common_str(struct softmenu *sm);
 extern void default_common_str(void);

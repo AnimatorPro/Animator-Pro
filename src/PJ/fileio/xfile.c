@@ -90,9 +90,20 @@ cleanup_lfiles(void)
 }
 
 XFILE *
-xfopen(const char *path, const char *mode)
+xfopen(const char *path, enum XReadWriteMode mode)
 {
 	XFILE *xf;
+	const char *str;
+
+	switch (mode) {
+		case XREADONLY: str = "rb"; break;
+		case XWRITEONLY: str = "wb"; break;
+		case XREADONLY_TEXT: str = "r"; break;
+		case XWRITEONLY_TEXT: str = "w"; break;
+		case XREADWRITE_OPEN: str = "rb+"; break;
+		case XREADWRITE_CLOBBER: str = "wb+"; break;
+		default: return NULL;
+	}
 
 	xf = pj_malloc(sizeof(*xf));
 	if (!xf)
@@ -103,7 +114,7 @@ xfopen(const char *path, const char *mode)
 		path += 2;
 	}
 
-	xf->rf = real_fopen(path, mode);
+	xf->rf = real_fopen(path, str);
 	if (!xf->rf) {
 		pj_free(xf);
 		return NULL;
@@ -250,9 +261,14 @@ xerrno(void)
 /*--------------------------------------------------------------*/
 
 Errcode
-xffopen(const char *path, XFILE **pfp, const char *fmode)
+xffopen(const char *path, XFILE **pxf, enum XReadWriteMode mode)
 {
-	if ((*pfp = xfopen(path, fmode)) == NULL)
+	if (!pj_assert(path != NULL)) return Err_bad_input;
+	if (!pj_assert(pxf != NULL)) return Err_bad_input;
+	if (!pj_assert(XREADONLY <= mode && mode <= XREADWRITE_CLOBBER)) return Err_bad_input;
+
+	*pxf = xfopen(path, mode);
+	if (*pxf == NULL)
 		return xffile_error();
 	return Success;
 }

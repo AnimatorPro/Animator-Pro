@@ -213,7 +213,8 @@ Gif_file *gf;
 	*gifile = NULL;
 	gif_files_open = FALSE;
 }
-static Errcode gif_open_ifsub(Gif_file **gifile, char *path, char *rwmode)
+static Errcode
+gif_open_ifsub(Gif_file **gifile, char *path, enum XReadWriteMode mode)
 {
 Errcode err = Success;
 Gif_file *gf;
@@ -228,7 +229,7 @@ Gif_file *gf;
 
 	/* gf->hdr.needs_work_cel = FALSE */
 
-	if ((gf->file = xfopen(path, rwmode)) == NULL)
+	if ((gf->file = xfopen(path, mode)) == NULL)
 		err = xerrno();
 
 	gif_files_open = TRUE;
@@ -246,7 +247,7 @@ struct gif_image gimg;
 
 	pgif = (Gif_file **)pif;
 
-	if((err = gif_open_ifsub(pgif, path, "rb")) < Success)
+	if ((err = gif_open_ifsub(pgif, path, XREADONLY)) < Success)
 		goto error;
 
 	if((err = read_gif_start(*pgif,&ghdr,&gimg,
@@ -271,7 +272,7 @@ Gif_file **pgif;
 
 	pgif = (Gif_file **)pif;
 
-	if((err = gif_open_ifsub(pgif, path, "wb")) < Success)
+	if ((err = gif_open_ifsub(pgif, path, XWRITEONLY)) < Success)
 		goto error;
 
 	(*pgif)->ainfo = *ainfo;
