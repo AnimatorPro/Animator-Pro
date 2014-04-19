@@ -27,32 +27,18 @@ typedef struct dsel_group {
 static void go_updir(Button *b)
 /* move up one directory */
 {
-Dsel_group *dg = b->group;
-int len;
-char *d;
+	Dsel_group *dg = b->group;
+	FilePath *filepath;
 
 	hilight(b);
-	d = dg->drawer;
-	len = strlen(d);
-	if (len >= 2) /* move 'd' pointer past device if any */
-	{
-		if (d[1] == DEV_DELIM)
-		{
-			d += 2;
-			len -= 2;
-		}
-	}
-	if(len > 1 && d[len-1] == DIR_DELIM) /* truncate trailing '\\' */
-		d[--len] = 0;
 
-	while(--len >= 0)
-	{
-		if(d[len] == DIR_DELIM)
-		{
-			d[len+1] = 0;
-			break;
-		}
+	filepath = filepath_create_from_string(dg->drawer);
+	if (filepath != NULL) {
+		filepath_drop_tail(filepath);
+		filepath_to_cstr(filepath, DIR_DELIM, dg->drawer, PATH_SIZE);
+		filepath_destroy(filepath);
 	}
+
 	(*dg->on_newdrawer)(dg->on_newd_data);
 	draw_buttontop(b);
 }
