@@ -99,7 +99,7 @@ int pj_dget_drive(void);	/* returns current drive.  0 = A: 1 = B: ... */
 int pj_dcount_floppies(void);
 Boolean pj_dis_drive(int drive);	/* drive 0 = A:  1 = B: True if drive present*/
 long pj_ddfree(int drive);	/* 0 = current.  1 = A:  2 = B: etc. */
-Boolean pj_dmake_dir(char *path);
+Boolean pj_dmake_dir(const char *path);
 Boolean _lodos_set_dir(char *path);
 Boolean pj_dget_dir(int drive, char *dir);	/* 0 = current, 1 = A: for drive */
 long dos_mem_free(void);

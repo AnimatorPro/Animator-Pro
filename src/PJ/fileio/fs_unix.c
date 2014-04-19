@@ -40,14 +40,14 @@ current_device(char *dstr)
 }
 
 Errcode
-change_dir(char *name)
+change_dir(const char *name)
 {
 	(void)name;
 	return Success;
 }
 
 Boolean
-pj_dmake_dir(char *path)
+pj_dmake_dir(const char *path)
 {
 	(void)path;
 	return FALSE;

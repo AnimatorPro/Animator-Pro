@@ -41,7 +41,7 @@ int pj_get_devices(UBYTE *devids);
 /* device level calls */
 
 Errcode get_dir(char *dir);		/* get current directory */
-Errcode change_dir(char *name);
+Errcode change_dir(const char *name);
 
 long pj_file_size(const char *path);
 Errcode pj_is_fixed(const char *device);

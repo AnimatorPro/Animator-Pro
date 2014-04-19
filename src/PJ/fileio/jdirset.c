@@ -4,11 +4,14 @@
 #include "jfile.h"
 #include "msfile.h"
 
-Errcode change_dir(char *name)
-
-/* Hey dos - I want to go to this directory.  Actually this changes
-   both device and directory at once.  eg name could be
-   C:\VPAINT\FISHIES   or C:\VPAINT\FISHIES\ */
+/* Function: change_dir
+ *
+ *  Hey dos - I want to go to this directory.  Actually this changes
+ *  both device and directory at once.  e.g. name could be
+ *  C:\VPAINT\FISHIES or C:\VPAINT\FISHIES\
+ */
+Errcode
+change_dir(const char *name)
 {
 int odevice = -1;
 Errcode err;

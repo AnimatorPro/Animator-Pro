@@ -18,7 +18,7 @@ Doserr pj_dget_err(void); /* - do MS-DOS extended error query. */
 
 /* drive 0 = A: 1 = B: ... */
 extern Errcode current_device(char *devstr);
-extern Errcode pj_change_device(char *device);
+extern Errcode pj_change_device(const char *device);
 
 extern Boolean pj_dis_drive(int drive); /* True if drive present */
 extern int pj_dset_drive(int drive); /* returns # of drives installed */

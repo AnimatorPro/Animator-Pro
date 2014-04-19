@@ -3,10 +3,13 @@
 #include "filepath.h"
 #include "msfile.h"
 
-Errcode pj_change_device(char *name)
-
-/* Hey dos - I want to go to this device. Accepts device name with or without
- * delimitor e: "A" ir "A:" */
+/* Function: pj_change_device
+ *
+ *  Hey dos - I want to go to this device.  Accepts device name with
+ *  or without delimitor: "A" or "A:".
+ */
+Errcode
+pj_change_device(const char *name)
 {
 int d;
 
