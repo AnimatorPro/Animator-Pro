@@ -41,23 +41,34 @@ static Errcode open_config(Jfile *pjf,Boolean create)
 /* re opens config file for readwrite with global name. The path is assumed
  * to be full or is relative to the startup drawer */
 {
-Errcode err;
-char odir[PATH_SIZE];
+	Errcode err;
+	FilePath *filepath;
+	char odir[PATH_SIZE];
+	const char *config_name = vb.config_name;
 
-	if(vb.config_name == NULL)
-		return(Err_abort);
+	if (!pj_assert(vb.config_name != NULL)) return Err_abort;
 
-	get_dir(odir);
-	change_dir(vb.init_drawer);
-	if((*pjf = (*(create?pj_create:pj_open))(vb.config_name, 
-											JREADWRITE)) == JNONE)
-	{
-		err = pj_ioerr();
+	filepath = filepath_create_from_string(vb.init_drawer);
+	if (filepath != NULL) {
+		err = filepath_append(filepath, vb.config_name);
+
+		if (err == Success)
+			err = filepath_to_cstr(filepath, DIR_DELIM, odir, sizeof(odir));
+
+		if (err == Success)
+			config_name = odir;
+
+		filepath_destroy(filepath);
 	}
-	else
-		err = Success;
-	change_dir(odir);
-	return(err);
+
+	if (create) {
+		*pjf = pj_create(config_name, JREADWRITE);
+	}
+	else {
+		*pjf = pj_open(config_name, JREADWRITE);
+	}
+
+	return (*pjf != JNONE) ? Success : pj_ioerr();
 }
 
 #if defined(__WATCOMC__)
