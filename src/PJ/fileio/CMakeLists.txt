@@ -5,6 +5,7 @@ set(JFDEV_SRC_FILES
 
 ## file name parsing modules (string functions etc)
 set(FPARSE_SRC_FILES
+	filepath.c
 	fpaddsub.c
 	fparsdev.c
 	fparsdir.c

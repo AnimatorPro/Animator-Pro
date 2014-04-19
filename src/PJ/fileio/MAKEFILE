@@ -21,6 +21,7 @@ JFDEVO = \
 ## file name parseing modules (string functions etc) ***
 
 FPARSEO = \
+ filepath.obj \
  fpaddsub.obj fparsdev.obj fparsdir.obj fpconcat.obj fpdirlen.obj\
  fpfulfil.obj fpgetdir.obj fpgetful.obj fpgetnam.obj fpincnam.obj\
  fpissuff.obj fpmkfile.obj fpnmerge.obj fpnsplit.obj fppfxlen.obj\

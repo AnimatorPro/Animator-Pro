@@ -24,17 +24,62 @@
 #define WILD_SIZE 16
 
 #if defined(__WATCOMC__)
-#define DIR_DELIM	'\\'
-#define DIR_DELIM_STR	"\\"
+#define DIR_DELIM       '\\'
+#define DIR_DELIM2      '/'
+#define DIR_DELIM_STR   "\\"
 #else /* __WATCOMC__ */
-#define DIR_DELIM	'/'
-#define DIR_DELIM_STR	"/"
+#define DIR_DELIM       '/'
+#define DIR_DELIM2      '\\'
+#define DIR_DELIM_STR   "/"
 #endif /* __WATCOMC__ */
 
 #define DEV_DELIM	':'
 #define DEV_DELIM_STR	":"
 #define SUFF_DELIM  '.'
 #define SUFF_DELIM_STR  "."
+
+enum FilePathType {
+	/* No path prefix.  Current working directory. */
+	FILEPATH_NO_PREFIX,
+
+	/* User's config directory.
+	 * e.g. ~/.config/pjpaint/
+	 */
+	FILEPATH_CONFIG_DIR,
+
+	/* Shared resource directory.  Read only.
+	 * e.g. /usr/local/share/pjpaint/
+	 */
+	FILEPATH_RESOURCE_DIR,
+
+	/* Temporary directory.
+	 * e.g. /dev/shm/pjpaint/
+	 */
+	FILEPATH_TEMP_DIR,
+
+	/* Absolute path without a drive name.
+	 * e.g. / or \
+	 */
+	FILEPATH_ROOT,
+
+	/* Absolute path with a drive name. (DOS)
+	 * e.g. C:\ or C:/
+	 */
+	FILEPATH_DOS,
+
+	FILEPATH_NUM_TYPES
+};
+
+struct filepath;
+typedef struct filepath FilePath;
+
+extern FilePath *filepath_create_from_string(const char *str);
+extern Errcode filepath_destroy(FilePath *filepath);
+extern Errcode filepath_append(FilePath *filepath, const char *str);
+extern Errcode filepath_drop_tail(FilePath *filepath);
+
+extern Errcode
+filepath_to_cstr(const FilePath *filepath, char delim, char *str, size_t n);
 
 #ifdef REXLIB_CODE 
 
