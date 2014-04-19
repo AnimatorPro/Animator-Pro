@@ -552,7 +552,6 @@ Names *ink_devs = NULL;
 error:
 	free_wild_list(&ink_devs);
 done:
-	change_dir(vb.init_drawer);
 	return(err);
 }
 

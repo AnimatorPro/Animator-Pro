@@ -87,7 +87,6 @@ static Errcode clear_vtemps(Boolean reset)
 		pj_delete(ppoly_name);	/* and optics path */
 		}
 	pj_delete(tflxname);	  /* and old tempflx */
-	change_dir(vb.init_drawer);  /* go back to startup-dir */
 	return(Success);
 }
 

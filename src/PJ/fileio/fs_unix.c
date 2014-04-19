@@ -39,13 +39,6 @@ current_device(char *dstr)
 	return Success;
 }
 
-Errcode
-change_dir(const char *name)
-{
-	(void)name;
-	return Success;
-}
-
 Boolean
 pj_dmake_dir(const char *path)
 {

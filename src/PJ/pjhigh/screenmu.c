@@ -211,12 +211,7 @@ Errcode err;
 Mode_entry *mlist;
 Names *wildlist;
 Names *current;
-char opath[PATH_SIZE];
 char sbuf[80];
-
-	get_dir(opath);
-	if((err = change_dir(resource_dir)) < Success)
-		return(no_resource(err));
 
 	hide_mp();
 
@@ -229,7 +224,6 @@ char sbuf[80];
 
 error:
 	free_mode_list(&mlist,&wildlist);
-	change_dir(opath);
 	show_mp();
 	return(err);
 }

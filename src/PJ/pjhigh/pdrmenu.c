@@ -252,15 +252,10 @@ Errcode go_pdr_menu( char *header,	   /* header text for menu */
 {
 struct pick_dat pdat;
 Errcode err;
-char opath[PATH_SIZE];
 Names *namelist;
 Pdr_entry *pdrlist = NULL;
 Pdr_entry *current;
 (void)local_names;
-
-	get_dir(opath);
-	if((err = change_dir(resource_dir)) < Success)
-		return(no_resource(err));
 
 	hide_mp();
 
@@ -284,7 +279,6 @@ Pdr_entry *current;
 
 error:
 	free_wild_list((Names **)&(pdrlist));
-	change_dir(opath);
 	err = softerr(err, "screen_menu");
 	show_mp();
 	return(err);
