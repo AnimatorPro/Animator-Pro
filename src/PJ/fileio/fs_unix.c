@@ -13,7 +13,7 @@
 #include "wildlist.h"
 #include "textutil.h"
 
-/* TODO: do we need pj_change_device and current_device? */
+/* TODO: do we need current_device? */
 #include "msfile.h"
 
 long
@@ -28,13 +28,6 @@ pj_get_devices(UBYTE *devices)
 {
 	(void)devices;
 	return 0;
-}
-
-Errcode
-pj_change_device(char *name)
-{
-	(void)name;
-	return Success;
 }
 
 Errcode

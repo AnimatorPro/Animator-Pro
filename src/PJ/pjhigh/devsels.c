@@ -69,11 +69,15 @@ char *drawer = dg->drawer;
 	(*dg->on_newdrawer)(dg->on_newd_data);
 	draw_buttontop(b);
 }
+
+#if defined(__WATCOMC__)
 static void check_devicewait(char *device)
 {
 	if(!pj_is_fixed(device))
 		soft_put_wait_box("!%s", "wait_fdread", device );
 }
+#endif /* __WATCOMC__ */
+
 static void set_device_group(Dsel_group *dg)
 {
 	current_device(dg->curdev);
@@ -81,10 +85,6 @@ static void set_device_group(Dsel_group *dg)
 }
 static void new_dev(Button *b)
 {
-Dsel_group *dg = b->group;
-char devname[2];
-Errcode err;
-
 	switch(b->identity)
 	{
 		case -2:
@@ -94,21 +94,31 @@ Errcode err;
 			go_rootdir(b);
 			return;
 		default:
-			devname[0] = 'A' + b->identity;
-			devname[1] = 0;
+			break;
+	}
 
-			check_devicewait(devname);
-			if((err = pj_change_device(devname)) < Success)
-				goto cd_error;
+#if defined(__WATCOMC__)
+	{
+		Dsel_group *dg = b->group;
+		char devname[2];
+		Errcode err;
+
+		devname[0] = 'A' + b->identity;
+		devname[1] = 0;
+
+		check_devicewait(devname);
+		err = pj_change_device(devname);
+		if (err >= Success) {
 			set_device_group(b->group);
 			mb_unhi_group(b);
 			err = make_good_dir(dg->drawer);
 			mb_hi_group(b);
-		cd_error:
-			errline(err,"%s:", devname);
-			(*dg->on_newdrawer)(dg->on_newd_data);
-			return;
+		}
+
+		errline(err,"%s:", devname);
+		(*dg->on_newdrawer)(dg->on_newd_data);
 	}
+#endif /* __WATCOMC__ */
 }
 static void hang_dev_sels(Button *b)
 {
