@@ -519,7 +519,6 @@ Errcode init_inks(void)
 {
 Errcode err;
 Ink *ink;
-Names *ink_devs = NULL;
 
 	/* move static inks into ink_list */
 	while(static_inks != NULL)
@@ -542,17 +541,14 @@ Names *ink_devs = NULL;
 			ink->ot.help = RL_KEYTEXT("no_help");
 		ink = ink->ot.next;
 	}
-	if((err = load_option_names((Option_tool *)ink_list, "ink_texts",
-						         &ink_ss, FALSE)) < Success)
-	{
-		goto error;
-	}
+
+	err = load_option_names((Option_tool *)ink_list, "ink_texts",
+			&ink_ss, FALSE);
+	if (err < Success)
+		return err;
+
 	ink_list = (Option_tool *)sort_names((Names *)ink_list);
-	goto done;
-error:
-	free_wild_list(&ink_devs);
-done:
-	return(err);
+	return Success;
 }
 
 void get_default_ink_strengths(UBYTE *inktab)
