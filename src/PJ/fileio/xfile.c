@@ -298,15 +298,27 @@ xffwrite(XFILE *xf, void *buf, size_t size)
 }
 
 Errcode
+xffreadoset(XFILE *xf, void *buf, long offset, size_t size)
+{
+	if (!pj_assert(xf != NULL)) return Err_bad_input;
+	if (!pj_assert(buf != NULL)) return Err_bad_input;
+	if (!pj_assert(xf->rf != NULL)) return Err_file_not_open;
+
+	if (xfseek(xf, offset, XSEEK_SET) != 0)
+		return xffile_error();
+	return xffread(xf, buf, size);
+}
+
+Errcode
 xffwriteoset(XFILE *xf, void *buf, long offset, size_t size)
 {
+	if (!pj_assert(xf != NULL)) return Err_bad_input;
+	if (!pj_assert(buf != NULL)) return Err_bad_input;
+	if (!pj_assert(xf->rf != NULL)) return Err_file_not_open;
+
 	if (xfseek(xf, offset, XSEEK_SET) != 0)
-		goto error;
-	if (real_fwrite(buf, 1, size, xf->rf) != size)
-		goto error;
-	return Success;
-error:
-	return xffile_error();
+		return xffile_error();
+	return xffwrite(xf, buf, size);
 }
 
 Errcode
