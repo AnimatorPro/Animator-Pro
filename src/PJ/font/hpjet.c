@@ -61,29 +61,36 @@ for (;;)
 return(err);
 }
 
-static Errcode verify_hpjet_font(XFILE *f)
 /* Check that file begins with <esc> ) s    signature */
+static Errcode
+verify_hpjet_font(XFILE *xf)
 {
-char buf[3];
+	Errcode err;
+	char buf[3];
 
-if (xfread(buf, 1, sizeof(buf), f) < sizeof(buf))
-	return(Err_truncated);
-if (buf[0] != 0x1b && buf[1] != ')' && buf[2] != 's')
-	return(Err_bad_magic);
-return(Success);
+	err = xffread(xf, buf, sizeof(buf));
+	if (err < Success)
+		return Err_truncated;
+
+	if (buf[0] != 0x1b && buf[1] != ')' && buf[2] != 's')
+		return Err_bad_magic;
+
+	return Success;
 }
 
 static Errcode check_hpjet_font(char *name)
 /* Open font file and check signature */
 {
-Errcode err;
-XFILE *f;
+	Errcode err;
+	XFILE *xf;
 
-if ((f = xfopen(name, XREADONLY)) == NULL)
-	return xerrno();
-err = verify_hpjet_font(f);
-xfclose(f);
-return(err);
+	err = xffopen(name, &xf, XREADONLY);
+	if (err < Success)
+		return err;
+
+	err = verify_hpjet_font(xf);
+	xffclose(&xf);
+	return err;
 }
 
 static Errcode seek_past_first(XFILE *f, char *s, int slen)
@@ -118,39 +125,51 @@ CHECK_FIRSTC:
 	}
 }
 
-static Errcode hpjet_read_chars(XFILE *f, Hfcb *fcb)
+static Errcode
+hpjet_read_chars(XFILE *xf, Hfcb *fcb)
 {
+Errcode err;
 char buf[3];
 static char char_sig[] = {0x1b, '*', 'c'};
 size_t csig1_num;
 size_t csig2_num;
-Errcode err;
 Hpj_letter *let;
 int chars_read = 0;
 
 for (;;)
 	{
-	if (seek_past_first(f, char_sig, 3) < Success)
+	err = seek_past_first(xf, char_sig, 3);
+	if (err < Success)
 		{
-		if (chars_read < 2)		/* figure need at least 2 letters */
-			return(Err_no_record);
-		return(Success);		/* At end of file. */
+		if (chars_read < 2) /* figure need at least 2 letters */
+			return Err_no_record;
+		return Success; /* At end of file. */
 		}
-	if ((err = hpjet_get_number(f, 'E', &csig1_num)) < Success)
-		return(err);
+
+	err = hpjet_get_number(xf, 'E', &csig1_num);
+	if (err < Success)
+		return err;
+
 	if (csig1_num > CMAX)
-		{
-		return(Err_bad_record);
-		}
-	if (xfread(buf, 1, sizeof(buf), f) < sizeof(buf))
-		return(Err_truncated);
+		return Err_bad_record;
+
+	err = xffread(xf, buf, sizeof(buf));
+	if (err < Success)
+		return Err_truncated;
+
 	if (buf[0] != 0x1b && buf[1] != '(' && buf[2] != 'w')
-		return(Err_bad_record);
-	if ((err = hpjet_get_number(f, 'W', &csig2_num)) < Success)
-		return(err);
-	if ((let = pj_malloc(csig2_num)) == NULL)
-		return(Err_no_memory);
-	if (xfread(let, 1, csig2_num, f) < csig2_num)
+		return Err_bad_record;
+
+	err = hpjet_get_number(xf, 'W', &csig2_num);
+	if (err < Success)
+		return err;
+
+	let = pj_malloc(csig2_num);
+	if (let == NULL)
+		return Err_no_memory;
+
+	err = xffread(xf, let, csig2_num);
+	if (err < Success)
 		{
 		err = Err_truncated;
 		goto FREE_ERR;
@@ -178,7 +197,7 @@ for (;;)
 	}
 FREE_ERR:
 pj_free(let);
-return(err);
+return err;
 }
 
 static Errcode fixup_hpjet_font(Hfcb *fcb)
@@ -257,36 +276,46 @@ return(Success);
 
 static Errcode ld_hpjet_font(char *name, Hfcb *fcb)
 {
-XFILE *f;
+XFILE *xf;
 Errcode err;
 size_t sig1_num;
 short head_size;
 int hdif;
 
 /* Load HPJET file */
-if ((f = xfopen(name, XREADONLY)) == NULL)
-	return xerrno();
-if ((err = verify_hpjet_font(f)) < Success)
+err = xffopen(name, &xf, XREADONLY);
+if (err < Success)
+	return err;
+
+err = verify_hpjet_font(xf);
+if (err < Success)
 	goto ERROR;
-if ((err = hpjet_get_number(f, 'W', &sig1_num)) < Success)
+
+err = hpjet_get_number(xf, 'W', &sig1_num);
+if (err < Success)
 	goto ERROR;
-if (xfread(&head_size, 1, sizeof(head_size), f)
-	< sizeof(head_size) )
+
+err = xffread(xf, &head_size, sizeof(head_size));
+if (err < Success)
 	{
 	err = Err_truncated;
 	goto ERROR;
 	}
 intel_swap(&head_size, 1);
-if (xfread(&fcb->head, 1, sizeof(fcb->head), f) < sizeof(fcb->head) )
+
+err = xffread(xf, &fcb->head, sizeof(fcb->head));
+if (err < Success)
 	{
 	err = Err_truncated;
 	goto ERROR;
 	}
+
 if (fcb->head.format != 0)
 	{
 	err = Err_version;
 	goto ERROR;
 	}
+
 intel_swap(&fcb->head.baseline_distance, 3);
 intel_swap(&fcb->head.symbol_set, 4);
 intel_swap(&fcb->head.text_height, 2);
@@ -294,7 +323,8 @@ intel_swap(&fcb->head.text_height, 2);
 hdif = head_size - sizeof(fcb->head) - 2;	/* size of font name */
 while (--hdif >= 0)
 	{
-	if ((err = xfgetc(f)) < Success)
+	err = xfgetc(xf);
+	if (err < Success)
 		goto ERROR;
 	}
 if ((fcb->letters = pj_zalloc(CMAX*sizeof(Hpj_letter *))) == NULL)
@@ -302,17 +332,21 @@ if ((fcb->letters = pj_zalloc(CMAX*sizeof(Hpj_letter *))) == NULL)
 	err = Err_no_memory;
 	goto ERROR;
 	}
-if ((err = hpjet_read_chars(f, fcb)) < Success)
+
+err = hpjet_read_chars(xf, fcb);
+if (err < Success)
 	goto ERROR;
+
 if ((err = fixup_hpjet_font(fcb)) < Success)
 	goto ERROR;
 if ((err = force_hpjet_space(fcb)) < Success)
 	goto ERROR;
-xfclose(f);
-return(Success);
+
+err = Success;
+
 ERROR:
-xfclose(f);
-return(err);
+	xffclose(&xf);
+	return err;
 }
 
 

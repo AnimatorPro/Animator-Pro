@@ -1200,16 +1200,22 @@ static Errcode type1_load_font(char *file_name, Type1_font **ptcd)
  * prepare it for display.
  ****************************************************************************/
 {
-XFILE *file;
-Errcode err;
+	Errcode err;
+	XFILE *file;
 
-if ((file = xfopen(file_name, XREADONLY)) == NULL)
-	return xerrno();
-if ((err = read_font(file, ptcd)) >= Success)
-	if ((err = find_ascii_values(*ptcd)) >= Success)
-		calc_font_bounds(*ptcd);
-xfclose(file);
-return err;
+	err = xffopen(file_name, &file, XREADONLY);
+	if (err < Success)
+		return err;
+
+	err = read_font(file, ptcd);
+	if (err >= Success) {
+		err = find_ascii_values(*ptcd);
+		if (err >= Success)
+			calc_font_bounds(*ptcd);
+	}
+
+	xffclose(&file);
+	return err;
 }
 
 

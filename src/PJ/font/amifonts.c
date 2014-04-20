@@ -2,11 +2,11 @@
 #include "amifonts.h"
 #include "errcodes.h"
 #include "fontdev.h"
-#include "jfile.h"
 #include "memory.h"
 #include "rastcall.h"
 #include "rastext.h"
 #include "util.h"
+#include "xfile.h"
 
 static void free_ami_font(Vfont *vfont)
 {
@@ -41,21 +41,24 @@ return(Success);
 
 static Errcode check_ami_font(char *name)
 {
-Jfile f;
-Afont_head ah;
-Errcode err;
+	Errcode err;
+	XFILE *xf;
+	Afont_head ah;
 
-if ((f = pj_open(name, JREADONLY)) == JNONE)
-	return(pj_ioerr());
-if (pj_read(f, &ah, sizeof(ah)) != sizeof(ah))
-	{
-	err = Err_truncated;
-	goto OUT;
+	err = xffopen(name, &xf, XREADONLY);
+	if (err < Success)
+		return err;
+
+	err = xffread(xf, &ah, sizeof(ah));
+	if (err < Success) {
+		err = Err_truncated;
 	}
-err = verify_ami_head(&ah);
-OUT:
-pj_close(f);
-return(err);
+	else {
+		err = verify_ami_head(&ah);
+	}
+
+	xffclose(&xf);
+	return err;
 }
 
 static int ami_char_width(Vfont *v, UBYTE *s)
@@ -133,7 +136,7 @@ return(Success);
 static Errcode
 load_ami_font(char *title, Vfont *vfont, SHORT height, SHORT unzag_flag)
 {
-Jfile f = 0;
+XFILE *xf = NULL;
 Errcode err;
 Afcb *fcb;
 long image_size;
@@ -143,22 +146,25 @@ long rsz;
 (void)unzag_flag;
 
 clear_struct(vfont);
+
+err = xffopen(title, &xf, XREADONLY);
+if (err < Success)
+	return err;
+
 if ((fcb = pj_zalloc(sizeof(*fcb))) == NULL)
 	{
 	err = Err_no_memory;
 	goto ERROR;
 	}
 vfont->font = fcb;
-if ((f = pj_open(title, JREADONLY)) == JNONE)
-	{
-	err = pj_ioerr();
-	goto ERROR;
-	}
-if (pj_read(f, &fcb->head, sizeof(fcb->head)) != sizeof(fcb->head))
+
+err = xffread(xf, &fcb->head, sizeof(fcb->head));
+if (err < Success)
 	{
 	err = Err_truncated;
 	goto ERROR;
 	}
+
 if ((err = verify_ami_head(&fcb->head)) < Success)
 	goto ERROR;
 image_size = fcb->head.h2.tf_ysize*fcb->head.h2.tf_modulo;
@@ -167,13 +173,14 @@ if ((fcb->image = pj_malloc(image_size)) == NULL)
 	err = Err_no_memory;
 	goto ERROR;
 	}
-pj_seek(f, fcb->head.h2.tf_chardata+AMIF_SEEK_OFF, JSEEK_START);
-if (pj_read(f, fcb->image, image_size) != image_size)
+xfseek(xf, fcb->head.h2.tf_chardata+AMIF_SEEK_OFF, XSEEK_SET);
+err = xffread(xf, fcb->image, image_size);
+if (err < Success)
 	{
 	err = Err_truncated;
 	goto ERROR;
 	}
-pj_seek(f, fcb->head.h2.tf_charloc+AMIF_SEEK_OFF, JSEEK_START);
+xfseek(xf, fcb->head.h2.tf_charloc+AMIF_SEEK_OFF, XSEEK_SET);
 char_count = fcb->head.h2.tf_hichar - fcb->head.h2.tf_lochar + 2;
 rsz = (long)char_count * sizeof(Font_loc);
 if ((fcb->loc = pj_malloc(rsz)) == NULL)
@@ -181,23 +188,28 @@ if ((fcb->loc = pj_malloc(rsz)) == NULL)
 	err = Err_no_memory;
 	goto ERROR;
 	}
-if (pj_read(f, fcb->loc, rsz) != rsz)
+
+err = xffread(xf, fcb->loc, rsz);
+if (err < Success)
 	{
 	err = Err_truncated;
 	goto ERROR;
 	}
+
 intel_swap(fcb->loc, (int)rsz>>1);
 if (fcb->head.h2.tf_charspace != 0)	/* got spacing data */
 	{
 	fcb->is_prop = TRUE;
-	pj_seek(f, fcb->head.h2.tf_charspace+AMIF_SEEK_OFF, JSEEK_START);
+	xfseek(xf, fcb->head.h2.tf_charspace+AMIF_SEEK_OFF, XSEEK_SET);
 	rsz = (long)char_count * sizeof(SHORT);
 	if ((fcb->spacing = pj_malloc(rsz)) == NULL)
 		{
 		err = Err_no_memory;
 		goto ERROR;
 		}
-	if (pj_read(f, fcb->spacing, rsz) != rsz)
+
+	err = xffread(xf, fcb->spacing, rsz);
+	if (err < Success)
 		{
 		err = Err_truncated;
 		goto ERROR;
@@ -207,21 +219,23 @@ if (fcb->head.h2.tf_charspace != 0)	/* got spacing data */
 if (fcb->head.h2.tf_charkern != 0)
 	{
 	fcb->is_kerned = TRUE;
-	pj_seek(f, fcb->head.h2.tf_charkern+AMIF_SEEK_OFF, JSEEK_START);
+	xfseek(xf, fcb->head.h2.tf_charkern+AMIF_SEEK_OFF, XSEEK_SET);
 	rsz = (long)char_count * sizeof(SHORT);
 	if ((fcb->kerning = pj_malloc(rsz)) == NULL)
 		{
 		err = Err_no_memory;
 		goto ERROR;
 		}
-	if (pj_read(f, fcb->kerning, rsz) != rsz)
+
+	err = xffread(xf, fcb->kerning, rsz);
+	if (err < Success)
 		{
 		err = Err_truncated;
 		goto ERROR;
 		}
 	intel_swap(fcb->kerning, (int)rsz>>1);
 	}
-pj_close(f);     
+xffclose(&xf);
 vfont->type = AMIFONT;
 vfont->gftext = ami_gftext;
 vfont->close_vfont = free_ami_font;
@@ -235,11 +249,11 @@ vfont->leading = vfont->default_leading = vfont->image_height/3;
 vfont->line_spacing += vfont->leading;
 scan_init_vfont(vfont);
 return(Success);
+
 ERROR:
-if (f != 0)
-	pj_close(f);     
-free_ami_font(vfont);
-return(err);
+	xffclose(&xf);
+	free_ami_font(vfont);
+	return err;
 }
 
 Font_dev ami_font_dev = {

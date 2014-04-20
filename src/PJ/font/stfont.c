@@ -10,6 +10,7 @@
 #include "rastext.h"
 #include "stfont.h"
 #include "util.h"
+#include "xfile.h"
 
 typedef struct stfcb
 /*
@@ -170,20 +171,27 @@ static Errcode check_st_font(char *title)
  * ST type font file.
  */
 {
-Jfile f;
-struct font_hdr h;
-Errcode err = Success;
+	Errcode err = Success;
+	XFILE *xf;
+	struct font_hdr h;
 
-if (!suffix_in(title, ".FNT"))
-	return(Err_bad_magic);
-if ((f = pj_open(title, 0)) == JNONE)
-	return(pj_ioerr());
-if (pj_read(f, &h, sizeof(h)) == sizeof(h))
-	err = verify_st_head(&h);
-else
-	err = Err_bad_magic;
-pj_close(f);
-return(err);
+	if (!suffix_in(title, ".FNT"))
+		return Err_bad_magic;
+
+	err = xffopen(title, &xf, XREADONLY);
+	if (err < Success)
+		return err;
+
+	err = xffread(xf, &h, sizeof(h));
+	if (err < Success) {
+		err = Err_bad_magic;
+	}
+	else {
+		err = verify_st_head(&h);
+	}
+
+	xffclose(&xf);
+	return err;
 }
 
 static Errcode
@@ -195,27 +203,30 @@ load_st_font(char *title, Vfont *vfont, SHORT height, SHORT unzag_flag)
  */
 {
 Errcode err;
-Jfile fd;
+XFILE *xf;
 Stfcb *fcb = NULL;
 SHORT *cf_offsets;
 UBYTE *cf_data;
 (void)height;
 (void)unzag_flag;
 
-if ((fd = pj_open(title, 0)) == JNONE)
-	{
-	return(pj_ioerr());
-	}
+err = xffopen(title, &xf, XREADONLY);
+if (err < Success)
+	return err;
+
 if ((fcb = pj_zalloc(sizeof(*fcb))) == NULL)
 	{
 	err = Err_no_memory;
 	goto BADEND;
 	}
-if (pj_read(fd, &fcb->cfont, sizeof(fcb->cfont)) < (long)sizeof(fcb->cfont))
+
+err = xffread(xf, &fcb->cfont, sizeof(fcb->cfont));
+if (err < Success)
 	{
 	err = Err_truncated;
 	goto BADEND;
 	}
+
 if ((err = verify_st_head(&fcb->cfont)) < Success)
 	goto BADEND;
 fcb->cf_offset_size = fcb->cfont.ADE_hi - fcb->cfont.ADE_lo + 2;
@@ -230,11 +241,14 @@ if ((cf_offsets = pj_malloc(fcb->cf_offset_size)) == NULL)
 	err = Err_no_memory;
 	goto BADEND;
 	}
-if (pj_read(fd, cf_offsets, fcb->cf_offset_size) < fcb->cf_offset_size )
+
+err = xffread(xf, cf_offsets, fcb->cf_offset_size);
+if (err < Success)
 	{
 	err = Err_truncated;
 	goto BADEND;
 	}
+
 fcb->cf_data_size = fcb->cfont.frm_wdt;
 fcb->cf_data_size *= fcb->cfont.frm_hgt;
 if ((cf_data = pj_malloc(fcb->cf_data_size)) == NULL)
@@ -242,11 +256,14 @@ if ((cf_data = pj_malloc(fcb->cf_data_size)) == NULL)
 	err = Err_no_memory;
 	goto BADEND;
 	}
-if (pj_read(fd, cf_data, fcb->cf_data_size) < fcb->cf_data_size )
+
+err = xffread(xf, cf_data, fcb->cf_data_size);
+if (err < Success)
 	{
 	err = Err_truncated;
 	goto BADEND;
 	}
+
 fcb->cfont.ch_ofst =  (SHORT *)cf_offsets;
 fcb->cfont.fnt_dta = (SHORT *)cf_data;
 if (fcb->cfont.flags & 4)	/* swapped... */
@@ -262,8 +279,9 @@ if (((uint16_t)fcb->cfont.id) == ((uint16_t)0x9000))
 		err = Err_truncated;
 		goto BADEND;
 		}
-	if (pj_read(fd, fcb->cfont.hz_ofst, fcb->cf_offset_size) 
-		< fcb->cf_offset_size )
+
+	err = xffread(xf, fcb->cfont.hz_ofst, fcb->cf_offset_size);
+	if (err < Success)
 		{
 		err = Err_truncated;
 		goto BADEND;
@@ -273,13 +291,14 @@ else if (((uint16_t)fcb->cfont.id) == ((uint16_t)0xB000))
 	fcb->cfont.id = MFIXED;
 else
 	fcb->cfont.id = STPROP;
-pj_close(fd);
+xffclose(&xf);
 init_st_vfont(vfont, &fcb->cfont);
 return(Success);
+
 BADEND:
-_free_st_font(fcb);
-pj_close(fd);
-return(err);
+	_free_st_font(fcb);
+	xffclose(&xf);
+	return err;
 }
 
 typedef union {
