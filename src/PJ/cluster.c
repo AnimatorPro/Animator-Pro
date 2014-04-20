@@ -437,30 +437,38 @@ static int cl_paste1(void)
 
 static void cl_pblend(EFUNC autov)
 {
-long ccut_size;
-unsigned char c;
-Jfile f;
+	Errcode err;
+	long ccut_size;
+	unsigned char c;
+	XFILE *xf;
 
 	ictab = NULL;
-	if ((f = pj_open(cclip_name, 0)) == JNONE)
-	{
+
+	err = xffopen(cclip_name, &xf, XREADONLY);
+	if (err < Success) {
 		cant_find(cclip_name);
-		goto OUT;
+		return;
 	}
-	pj_read(f, &c, 1L);
-	if ((clp_count = c) == 0)
+
+	err = xffread(xf, &c, 1);
+	if (err < Success)
+		goto cleanup;
+
+	clp_count = c;
+	if (clp_count == 0)
 		clp_count = 256;
+
 	ccut_size = clp_count * 3;
-	if ((ictab = begmem(ccut_size)) == NULL)
-	{
-		pj_close(f);
-		goto OUT;
-	}
-	pj_read(f, ictab, ccut_size);
-	pj_close(f);
+	ictab = begmem(ccut_size);
+	if (ictab == NULL)
+		goto cleanup;
+
+	xffread(xf, ictab, ccut_size);
 	uzauto(autov, NULL);
-OUT:
+
+cleanup:
 	pj_gentle_free(ictab);
+	xffclose(&xf);
 }
 
 void cl_paste(void)
