@@ -50,15 +50,14 @@ set(JFUTILS_SRC_FILES
 	jfcpdato.c
 	jfcpfile.c
 	jfcpydat.c
+	jfgulp.c
 	jfinsert.c
 	jfpisfix.c
-	jfrdgulp.c
 	jfreadec.c
 	jfreados.c
 	jfwrite0.c
 	jfwritec.c
 	jfwritos.c
-	jfwrtglp.c
 	unchcopy.c
 	unchread.c
 	unchunk.c

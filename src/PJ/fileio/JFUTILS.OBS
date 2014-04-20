@@ -8,10 +8,9 @@
 +jfcopyin.obj
 +jfcpydat.obj
 +jfcpdato.obj
++jfgulp.obj
 +jfinsert.obj
-+jfrdgulp.obj
 +jfwrite0.obj
-+jfwrtglp.obj
 +unchunk.obj
 +unchcopy.obj
 +unchupd.obj
