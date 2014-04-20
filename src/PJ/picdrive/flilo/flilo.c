@@ -18,26 +18,26 @@ static Errcode flow_i_flush_head(Flifile *flif)
 /* Updates id and flushes header of a Flifile leaves file offset
  * at end of header */
 {
-	return(flow_jwriteoset(flif->fd,&flif->hdr,0,sizeof(flif->hdr)));
+	return xffwriteoset(flif->xf, &flif->hdr, 0, sizeof(flif->hdr));
 }
 
 static Errcode flow_i_add_next_rec(Flifile *flif, Fli_frame *frame )
 {
-Errcode err;
-LONG size = ((Fli_frame *)frame)->size;
+	Errcode err;
+	LONG size = ((Fli_frame *)frame)->size;
 
-	if (pj_write(flif->fd, frame, size) < size)
-	{
-		if((err = pj_ioerr()) == Err_eof)
+	err = xffwrite(flif->xf, frame, size);
+	if (err < Success) {
+		if (err == Err_eof)
 			err = Err_truncated;
 
 		/* attempt flush of header */
 		flow_i_flush_head(flif);
-		return(err);
+		return err;
 	}
 	flif->hdr.size += size;
 	++flif->hdr.frame_count;
-	return(Success);
+	return Success;
 }
 
 static Errcode flow_add_frame1( Flifile *flif, void *cbuf, Rcel *frame1)
@@ -46,11 +46,11 @@ static Errcode flow_add_frame1( Flifile *flif, void *cbuf, Rcel *frame1)
 
 {
 	flow_comp_cel(cbuf, NULL, frame1, FLI_BRUN);
-	flif->hdr.size = pj_tell(flif->fd);
-	if(flif->hdr.size < 0)
-		return((Errcode)flif->hdr.size);
+	flif->hdr.size = xfftell(flif->xf);
+	if (flif->hdr.size < 0)
+		return (Errcode)flif->hdr.size;
 	flif->hdr.frame_count = 0;
-	return(flow_i_add_next_rec(flif,cbuf));
+	return flow_i_add_next_rec(flif, cbuf);
 }
 
 static Errcode flow_add_next( Flifile *flif, void *cbuf,
@@ -123,12 +123,15 @@ static int files_open;
 
 static void close_flow_file(Image_file **pifile)
 {
-Flifile *flif;
+	Flifile *flif;
 
-	if(NULL == (flif = ((Flifile *)(*pifile))))
+	flif = (Flifile *)(*pifile);
+	if (flif == NULL)
 		return;
 
-	pj_close(flif->fd);
+	if (flif->xf != NULL)
+		xffclose(&flif->xf);
+
 	pj_free(flif);
 	*pifile = NULL;
 	--files_open;
@@ -137,20 +140,25 @@ Flifile *flif;
 static Errcode create_flow_file(Pdr *pd, char *path, Image_file **pif,
 								 Anim_info *ainfo )
 {
-Flifile *flif;
-Errcode err;
-(void)pd;
+	Errcode err;
+	Flifile *flif;
+	(void)pd;
 
-	if(files_open)
-		return(Err_too_many_files);
+	if (files_open)
+		return Err_too_many_files;
 
-	if(NULL == (*pif = pj_zalloc(sizeof(Flifile))))
-		return(Err_no_memory);
+	*pif = pj_zalloc(sizeof(Flifile));
+	if (*pif == NULL) {
+		err = Err_no_memory;
+		goto error;
+	}
+
 	flif = (Flifile *)(*pif);
 	++files_open;
 
-	if((flif->fd = pj_create(path,JREADWRITE)) == JNONE)
-		goto jio_error;
+	err = xffopen(path, &flif->xf, XREADWRITE_CLOBBER);
+	if (err < Success)
+		goto error;
 
 	flif->ifile.needs_work_cel = TRUE;
 	flif->hdr.type = FLIH_MAGIC;
@@ -159,15 +167,15 @@ Errcode err;
 	flif->hdr.bits_a_pixel = 8;
 	flif->hdr.speed = ((((long)ainfo->millisec_per_frame)*70L)+500L)/1000L;
 
-	if((err = flow_i_flush_head(flif)) < Success)
+	err = flow_i_flush_head(flif);
+	if (err < Success)
 		goto error;
 
-	return(Success);
-jio_error:
-	err = pj_ioerr();
+	return Success;
+
 error:
 	close_flow_file(pif);
-	return(err);
+	return err;
 }
 
 static Errcode flow_save_frames(Image_file *ifile,

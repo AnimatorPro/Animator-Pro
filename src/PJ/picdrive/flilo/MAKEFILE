@@ -1,6 +1,6 @@
 !include "\paa\inc\make.inc"
 
-OBJ  = compbrun.obj flicomp.obj flilo.obj jfwritos.obj
+OBJ  = compbrun.obj flicomp.obj flilo.obj
 
 flilores.lib: $(OBJ)
 	wlib /n $@ $(OBJ)

@@ -809,7 +809,7 @@ static void close_file(Image_file **pif)
 	if(pf == NULL || (f = *pf) == NULL)
 		return;
 	if(f->file)
-		xfclose(f->file);
+		xffclose(&f->file);
 	pj_free(f);
 	*pf = NULL;
 	is_open = FALSE;
@@ -838,9 +838,7 @@ open_helper(Bmp_image_file **pf, char *path, enum XReadWriteMode mode)
 	if((f = pj_zalloc(sizeof(*f))) == NULL)
 		return(Err_no_memory);
 
-	if ((f->file = xfopen(path, mode)) == NULL)
-		err = xerrno();
-
+	err = xffopen(path, &f->file, mode);
 	is_open = TRUE;
 	*pf = f;
 	return(err);

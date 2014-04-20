@@ -101,7 +101,6 @@ static Errcode open_file(Pdr *pd, char *path, Image_file **pif,
  ****************************************************************************/
 {
 Ifile *gf;
-XFILE *f;
 Errcode err = Success;
 UBYTE *sbuf;
 Riff_head rif;
@@ -113,12 +112,11 @@ int i;
 if((gf = pj_zalloc(sizeof(*gf))) == NULL)
 	return(Err_no_memory);
 
-if ((f = gf->file = xfopen(path, XREADONLY)) == NULL)
-	{
-	err = xerrno();
+err = xffopen(path, &gf->file, XREADONLY);
+if (err < Success)
 	goto ERROR;
-	}
-if (xfread(&rif, sizeof(rif), 1, f) != 1)
+
+if (xfread(&rif, sizeof(rif), 1, gf->file) != 1)
 	{
 	err = Err_truncated;
 	goto ERROR;
@@ -191,7 +189,7 @@ Ifile *gf;
 if(pgf == NULL || (gf = *pgf) == NULL)
 	return;
 if(gf->file)
-	xfclose(gf->file);
+	xffclose(&gf->file);
 if (gf->sbuf != NULL)
 	pj_free(gf->sbuf);
 if (gf->ytable != NULL)

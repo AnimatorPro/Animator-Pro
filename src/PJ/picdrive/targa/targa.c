@@ -102,15 +102,16 @@ static void close_file(Image_file **ptf)
 static Errcode
 alloc_and_open(Targa_file **ptf, char *path, enum XReadWriteMode mode)
 {
+	Errcode err;
 	Targa_file	 *tf;
 
 	if (NULL == (tf = pj_zalloc(sizeof(Targa_file))))
 		return Err_no_memory;
 	*ptf = tf;
 
-	if (NULL == (tf->file = xfopen(path, mode)))
-		return xerrno();
-
+	err = xffopen(path, &tf->file, mode);
+	if (err < Success)
+		return err;
 	return Success;
 }
 

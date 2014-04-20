@@ -12,7 +12,6 @@ set(FLILO_SRC_FILES
 	flilo/compbrun.c
 	flilo/flicomp.c
 	flilo/flilo.c
-	flilo/jfwritos.c
 	)
 
 set(GIF_SRC_FILES

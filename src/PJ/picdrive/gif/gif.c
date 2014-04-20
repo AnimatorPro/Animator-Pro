@@ -208,7 +208,7 @@ Gif_file *gf;
 	if(gifile == NULL || (gf = *gifile) == NULL)
 		return;
 	if(gf->file)
-		xfclose(gf->file);
+		xffclose(&gf->file);
 	pj_free(gf);
 	*gifile = NULL;
 	gif_files_open = FALSE;
@@ -229,9 +229,7 @@ Gif_file *gf;
 
 	/* gf->hdr.needs_work_cel = FALSE */
 
-	if ((gf->file = xfopen(path, mode)) == NULL)
-		err = xerrno();
-
+	err = xffopen(path, &gf->file, mode);
 	gif_files_open = TRUE;
 	*gifile = gf;
 	return(err);

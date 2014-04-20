@@ -9,12 +9,12 @@
 	#include "rcel.h"
 #endif
 
-#ifndef JFILE_H
-	#include "jfile.h"
-#endif
-
 #ifndef PICDRIVE_H
 	#include "picdrive.h"
+#endif
+
+#ifndef XFILE_H
+#include "xfile.h"
 #endif
 
 #define CHUNKID_FIELDS \
@@ -91,7 +91,7 @@ STATIC_ASSERT(flilo, sizeof(Fli_chunk) == 6);
 typedef struct flifile {
 	Image_file ifile;
 	Fli_head hdr;  /* the fli hdr for the fli */
-	Jfile fd;      /* file handle for this fli */
+	XFILE *xf;     /* file handle for this fli */
 } Flifile;
 
 struct raster;
@@ -105,6 +105,4 @@ extern LONG
 flow_comp_cel(void *comp_buf,
 		struct rcel *last_screen, struct rcel *this_screen, SHORT type);
 
-extern Errcode flow_jwriteoset(Jfile f, void *buf, LONG oset, LONG size);
-
-#endif /* FLILO_H */
+#endif

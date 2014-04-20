@@ -418,7 +418,7 @@ Pcx_file *gf;
 if(pcxile == NULL || (gf = *pcxile) == NULL)
 	return;
 if(gf->file)
-	xfclose(gf->file);
+	xffclose(&gf->file);
 pj_free(gf);
 *pcxile = NULL;
 pcx_files_open = FALSE;
@@ -445,9 +445,7 @@ if (!suffix_in(path, ".PCX"))
 if((gf = pj_zalloc(sizeof(Pcx_file))) == NULL)
 	return(Err_no_memory);
 
-if ((gf->file = xfopen(path, mode)) == NULL)
-	err = xerrno();
-
+err = xffopen(path, &gf->file, mode);
 pcx_files_open = TRUE;
 *pcxile = gf;
 return(err);
