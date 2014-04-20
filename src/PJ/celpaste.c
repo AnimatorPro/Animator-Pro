@@ -217,7 +217,7 @@ error:
 }
 
 typedef struct fileolay_dat {
-	Jfile fd;
+	XFILE *xf;
 	LONG size_left;	/* file to go */
 	LONG next_pos;  /* position of next chunk */
 	Chunk_id next_one;
@@ -226,23 +226,23 @@ typedef struct fileolay_dat {
 static Errcode
 render1_file_olay(void *data, int ix, int intween, int scale, Autoarg *aa)
 {
-	Fod *fod = data;
 	Errcode err;
+	Fod *fod = data;
 	Flx_overlay solay; /* stack overlay */
 	(void)ix;
 	(void)intween;
 	(void)scale;
 
 	start_abort_atom();
-	if(aa->cur_frame == 0)
-	{
-		if(JNONE == (fod->fd = pj_open(flxolayname,JREADONLY)))
-		{
-			err = pj_ioerr();
-			goto error;
-		}
-		if((err = pj_read_ecode(fod->fd,&fod->next_one,sizeof(Chunk_id))) < 0)
-			goto error;
+	if (aa->cur_frame == 0) {
+		err = xffopen(flxolayname, &fod->xf, XREADONLY);
+		if (err < Success)
+			goto cleanup;
+
+		err = xffread(fod->xf, &fod->next_one, sizeof(Chunk_id));
+		if (err < Success)
+			goto cleanup;
+
 		fod->size_left = fod->next_one.size - sizeof(Chunk_id);
 		fod->next_pos = sizeof(Chunk_id);
 		goto get_next_chunk; /* only first time */
@@ -250,39 +250,36 @@ render1_file_olay(void *data, int ix, int intween, int scale, Autoarg *aa)
 
 	err = Success;
 
-	if(fod->size_left <= 0)
-		goto out;
+	if (fod->size_left <= 0)
+		goto cleanup;
 
-
-	while(fod->next_one.type <= aa->cur_frame) 
-	{
-		if((err = pj_read_ecode(fod->fd,&solay,POSTOSET(Flx_overlay,cpos))) < 0)
+	while (fod->next_one.type <= aa->cur_frame) {
+		err = xffread(fod->xf, &solay, POSTOSET(Flx_overlay, cpos));
+		if (err < Success)
 			break;
 
 		fod->size_left -= fod->next_one.size;
 
 		solay.next = NULL;
-		if((err = rend_olay(&solay)) < 0)
+		err = rend_olay(&solay);
+		if (err < Success)
 			break;
 
 get_next_chunk:
-		if(fod->size_left <= 0)
-		{
-			pj_close(fod->fd);
-			fod->fd = 0;
+		if (fod->size_left <= 0) {
+			xffclose(&fod->xf);
 			break;
 		}
 
-		if((err = pj_readoset(fod->fd,&fod->next_one,
-							 fod->next_pos,sizeof(Chunk_id))) < 0)
-		{
+		err = xffreadoset(fod->xf, &fod->next_one, fod->next_pos,
+				sizeof(Chunk_id));
+		if (err < Success)
 			break;
-		}
+
 		fod->next_pos += fod->next_one.size;
 	}
 
-error:
-out:
+cleanup:
 	return(errend_abort_atom(err));
 }
 static void render_overlay(Button *b)
@@ -303,7 +300,7 @@ Fod fod;
 void *oovlays;
 SHORT oocount;
 
-	fod.fd = 0;
+	fod.xf = NULL;
 
 	if(vl.ink->ot.id == opq_INKID && !(vs.make_mask || vs.use_mask))
 	{
@@ -387,7 +384,7 @@ SHORT oocount;
 	if(ovpushed)
 		pj_delete(flxolayname);
 
-	pj_close(fod.fd);
+	xffclose(&fod.xf);
 	if(thecel)
 		put_fcelpos(thecel,&opos);
 	apa_realloc_overlays();
@@ -397,7 +394,7 @@ SHORT oocount;
 	mb_gclose_code(b,Err_abort);
 	return;
 error:
-	pj_close(fod.fd);
+	xfclose(fod.xf);
 	if(thecel)
 		put_fcelpos(thecel,&opos);
 	pop_inks();
