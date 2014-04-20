@@ -1570,83 +1570,82 @@ static Errcode load_a3d(char *title)
 {
 Errcode err;
 struct magic_moves mm;
-Jfile fd;
+XFILE *xf;
 int i;
 struct ado_setting *as;
 
 	ado_clear();
-	if((fd = pj_open(title, 0)) == JNONE)
-		return(pj_ioerr());
-	if (pj_read(fd, &mm, (long)sizeof(mm) ) < sizeof(mm) )
-	{
-		goto jio_error;
-	}
-	if (mm.magic != A3D_MAGIC)
-	{
+
+	err = xffopen(title, &xf, XREADONLY);
+	if (err < Success)
+		return err;
+
+	err = xffread(xf, &mm, sizeof(mm));
+	if (err < Success)
+		goto cleanup;
+
+	if (mm.magic != A3D_MAGIC) {
 		err = Err_bad_magic;
-		goto error;
+		goto cleanup;
 	}
+
 	as = NULL;
 	i = mm.moves;
-	while (--i >= 0)
-	{
-		if (pj_read(fd, &vs.move3, (long)sizeof(vs.move3) ) < sizeof(vs.move3) )
-		{
-			goto jio_error;
-		}
+	while (--i >= 0) {
+		err = xffread(xf, &vs.move3, sizeof(vs.move3));
+		if (err < Success)
+			goto cleanup;
+
 		vs.move3.next = as;
-		if (i != 0)
-		{
-			if ((err = do_move_along()) < Success)
-				goto error;
+		if (i != 0) {
+			err = do_move_along();
+			if (err < Success)
+				goto cleanup;
 		}
 		as = vs.move3.next;
 	}
-	err = 0;
-	goto done;
+	err = Success;
 
-jio_error:
-	err = pj_ioerr();
-error:
-done:
-	pj_close(fd);
-	return(err);
+cleanup:
+	xffclose(&xf);
+	return err;
 }
 
 static Errcode well_save_a3d(char *title)
 /* Try and save the transformation stack */
 {
+Errcode err;
 struct magic_moves mm;
-Jfile fd;
+XFILE *xf;
 int i;
 struct ado_setting *as;
 
 	mm.magic = A3D_MAGIC;
 	i = mm.moves = slist_len((Slnode *)&vs.move3);
-	if ((fd = pj_create(title,JWRITEONLY)) == JNONE)
-	{
- 		return(cant_create(pj_ioerr(),title));
-	}
-	if (pj_write(fd, &mm, (long)sizeof(mm)) < sizeof(mm) )
-	{
-		truncated(title);
-		goto jio_error;
-	}
-	while (--i >= 0)
-	{
+
+	err = xffopen(title, &xf, XWRITEONLY);
+	if (err < Success)
+		return cant_create(err, title);
+
+	err = xffwrite(xf, &mm, sizeof(mm));
+	if (err < Success)
+		goto cleanup;
+
+	while (--i >= 0) {
 		as = slist_el((Slnode *)&vs.move3, i);
-		if (pj_write(fd, as, (long)sizeof(vs.move3) ) < sizeof(*as) )
-		{
-			truncated(title);
-			goto jio_error;
-		}
+		err = xffwrite(xf, as, sizeof(vs.move3));
+		if (err < Success)
+			goto cleanup;
 	}
 
-	pj_close(fd);
-	return(0);
-jio_error:
-	pj_close(fd);
-	return(pj_ioerr());
+	err = Success;
+
+cleanup:
+	if (err < Success)
+		truncated(title);
+
+	xffclose(&xf);
+	return err;
 }
 
 static Errcode save_a3d(char *title)
