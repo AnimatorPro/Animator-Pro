@@ -56,7 +56,7 @@ extern int xferror(XFILE *xf);
 extern int xerrno(void);
 
 extern Errcode xffopen(const char *path, XFILE **pxf, enum XReadWriteMode mode);
-extern void xffclose(XFILE **pfp);
+extern Errcode xffclose(XFILE **pfp);
 extern Errcode xffread(XFILE *xf, void *buf, size_t size);
 extern Errcode xffwrite(XFILE *xf, void *buf, size_t size);
 extern Errcode xffreadoset(XFILE *xf, void *buf, long offset, size_t size);

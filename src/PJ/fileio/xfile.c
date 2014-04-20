@@ -1,6 +1,11 @@
-/* xfile.c */
+/* xfile.c
+ *
+ * XFILE routines (xfopen, etc) simply redirect to stdio equivalents.
+ *
+ * XFFILE routines (xffopen, etc.) return an error code and are
+ * generally safer.
+ */
 
-#include <assert.h>
 #include <stdarg.h>
 #include "pjassert.h"
 #include "errcodes.h"
@@ -71,6 +76,8 @@ static XFILE _xstderr;
 XFILE *xstdout = &_xstdout;
 XFILE *xstderr = &_xstderr;
 
+/*--------------------------------------------------------------*/
+
 void
 init_stdfiles(void)
 {
@@ -88,6 +95,10 @@ cleanup_lfiles(void)
 	xfflush(xstdout);
 	xfflush(xstderr);
 }
+
+/*--------------------------------------------------------------*/
+/* XFILE routines.                                              */
+/*--------------------------------------------------------------*/
 
 XFILE *
 xfopen(const char *path, enum XReadWriteMode mode)
@@ -126,8 +137,9 @@ int
 xfclose(XFILE *xf)
 {
 	int ret;
+
 	ret = real_fclose(xf->rf);
-	pj_free(xf);
+	pj_free(xf); /* TODO: really free it? */
 
 	return ret;
 }
@@ -259,6 +271,8 @@ xerrno(void)
 }
 
 /*--------------------------------------------------------------*/
+/* XFFILE routines.                                             */
+/*--------------------------------------------------------------*/
 
 Errcode
 xffopen(const char *path, XFILE **pxf, enum XReadWriteMode mode)
@@ -273,17 +287,30 @@ xffopen(const char *path, XFILE **pxf, enum XReadWriteMode mode)
 	return Success;
 }
 
-void
+Errcode
 xffclose(XFILE **pfp)
 {
-	if (*pfp)
-		xfclose(*pfp);
-	*pfp = NULL;
+	int ret;
+
+	if (!pj_assert(pfp != NULL)) return Err_bad_input;
+	if (!pj_assert((*pfp) != NULL)) return Err_file_not_open;
+	if (!pj_assert((*pfp)->rf != NULL)) return Err_file_not_open;
+
+	ret = xfclose(*pfp);
+	*pfp = NULL; /* TODO: really free it? */
+
+	if (ret != 0)
+		return xffile_error();
+	return Success;
 }
 
 Errcode
 xffread(XFILE *xf, void *buf, size_t size)
 {
+	if (!pj_assert(xf != NULL)) return Err_bad_input;
+	if (!pj_assert(buf != NULL)) return Err_bad_input;
+	if (!pj_assert(xf->rf != NULL)) return Err_file_not_open;
+
 	if (real_fread(buf, 1, size, xf->rf) != size)
 		return xffile_error();
 	return Success;
@@ -292,6 +319,10 @@ xffread(XFILE *xf, void *buf, size_t size)
 Errcode
 xffwrite(XFILE *xf, void *buf, size_t size)
 {
+	if (!pj_assert(xf != NULL)) return Err_bad_input;
+	if (!pj_assert(buf != NULL)) return Err_bad_input;
+	if (!pj_assert(xf->rf != NULL)) return Err_file_not_open;
+
 	if (real_fwrite(buf, 1, size, xf->rf) != size)
 		return xffile_error();
 	return Success;
@@ -336,8 +367,12 @@ xffseek(XFILE *xf, long offset, enum XSeekWhence whence)
 long
 xfftell(XFILE *xf)
 {
-	const long offset = real_ftell(xf->rf);
+	long offset;
 
+	if (!pj_assert(xf != NULL)) return Err_bad_input;
+	if (!pj_assert(xf->rf != NULL)) return Err_file_not_open;
+
+	offset = real_ftell(xf->rf);
 	if (offset < 0)
 		return xffile_error();
 	return offset;
