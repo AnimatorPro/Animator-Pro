@@ -37,9 +37,11 @@ AA_config vconfg = {  /* Ram image of v.cfg containing default values
 	},
 	/* all else is zeros and set by program */
 };					
-static Errcode open_config(Jfile *pjf,Boolean create)
+
 /* re opens config file for readwrite with global name. The path is assumed
  * to be full or is relative to the startup drawer */
+static Errcode
+open_config(XFILE **pxf, Boolean create)
 {
 	Errcode err;
 	FilePath *filepath;
@@ -61,14 +63,8 @@ static Errcode open_config(Jfile *pjf,Boolean create)
 		filepath_destroy(filepath);
 	}
 
-	if (create) {
-		*pjf = pj_create(config_name, JREADWRITE);
-	}
-	else {
-		*pjf = pj_open(config_name, JREADWRITE);
-	}
-
-	return (*pjf != JNONE) ? Success : pj_ioerr();
+	return xffopen(config_name, pxf,
+			create ? XREADWRITE_CLOBBER : XREADWRITE_OPEN);
 }
 
 #if defined(__WATCOMC__)
@@ -109,15 +105,16 @@ Errcode init_config(Boolean force_create)
 {
 Errcode goodret;
 Errcode err;
-Jfile jcf;
+XFILE *xf;
 AA_config incfg;
 
 	goodret = 1; /* optimism */
 
-	if((err = open_config(&jcf,FALSE)) < Success)
+	err = open_config(&xf, FALSE);
+	if (err < Success)
 		goto bad_open;
 
-	if(pj_read_ecode(jcf, &incfg, sizeof(incfg)) < Success)
+	if (xffread(xf, &incfg, sizeof(incfg)) < Success)
 		goto bad_config;
 
 	/* check magic and size fields */
@@ -133,9 +130,7 @@ AA_config incfg;
 	goto done;
 
 bad_open:
-
-	if(!force_create)
-	{
+	if (!force_create) {
 		if(!soft_yes_no_box("!%s","noconfig",vb.config_name))
 			goto reported;
 	}
@@ -145,45 +140,48 @@ bad_open:
 	goto create_it;
 
 bad_config: /* we do not have a valid file. Create a new one? */
-
-	pj_closez(&jcf);
-	if(!force_create)
-	{
+	xffclose(&xf);
+	if (!force_create) {
 		if(!soft_yes_no_box("!%s","badconfig",vb.config_name))
 			goto reported;
 	}
 
 create_it:
-
-	if((err = open_config(&jcf,TRUE)) < Success)
+	err = open_config(&xf, TRUE);
+	if (err < Success)
 		goto fatal_error;
 
 	/* prepare default initial record to write */
-
-	if ((err = default_temp_path(vconfg.temp_path)) < Success)
+	err = default_temp_path(vconfg.temp_path);
+	if (err < Success)
 		goto fatal_error;
 
 	incfg = vconfg; /* defaults or good one read in (won't hurt) */
 
 	/* create and fill paths list with zeros */
-
-	if((err = pj_write_ecode(jcf,&incfg,sizeof(incfg))) < Success)
+	err = xffwrite(xf, &incfg, sizeof(incfg));
+	if (err < Success)
 		goto fatal_error;
 
 done:
-	pj_close(jcf);
-	if((err = set_temp_path(vconfg.temp_path)) < Success)
-		{
-		if ((err = default_temp_path(vconfg.temp_path)) < Success)
+	xffclose(&xf);
+	err = set_temp_path(vconfg.temp_path);
+	if (err < Success) {
+		err = default_temp_path(vconfg.temp_path);
+		if (err < Success)
 			goto fatal_error;
-		if((err = set_temp_path(vconfg.temp_path)) < Success)
+
+		err = set_temp_path(vconfg.temp_path);
+		if (err < Success)
 			goto fatal_error;
-		}
-	return(goodret);
+	}
+	return goodret;
+
 reported:
 	err = Err_reported;
+
 fatal_error:
-	pj_close(jcf);
+	xffclose(&xf);
 	vb.config_name = NULL; /* disable write/open ability */
 	return(softerr(err,"!%s", "fatal_create",vb.config_name));
 }
@@ -191,15 +189,16 @@ Errcode rewrite_config(void)
 /* Copy ram image of configuration file header to config file in startup
  * directory only rewrites header */
 {
-Errcode err;
-Jfile jcf;
+	Errcode err;
+	XFILE *xf;
 
-	if((err = open_config(&jcf,FALSE)) >= Success)
-	{
-		err = pj_write_ecode(jcf,&vconfg,sizeof(vconfg));
-		pj_close(jcf);
+	err = open_config(&xf, FALSE);
+	if (err >= Success) {
+		err = xffwrite(xf, &vconfg, sizeof(vconfg));
+		xffclose(&xf);
 	}
-	return(err);
+
+	return err;
 }
 void cleanup_config(void)
 {
