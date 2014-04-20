@@ -54,16 +54,13 @@ Errcode pj_write_zeros(Jfile f, LONG oset, ULONG bytes);
 Errcode copy_in_file(Jfile file,LONG bytes,LONG soff,LONG doff);
 Errcode pj_copydata(Jfile src, Jfile dest, ULONG size);
 
-/* pj_copyfile copies source to dest file and reports any error except
-    for source not existing. */
-Errcode pj_copyfile(char*source,char*dest);
 	/* Size of block of memory used during copy file */
 #define PJ_COPY_FILE_BLOCK (32*1024L)
 
-/* pj_cpfile copies source to destination.  Does not report error
-   but if there is one returns the error code and sets **perrfile
-   to either source or dest (depending where error was). */
-Errcode pj_cpfile(char *source, char *dest, char **perrfile);
+extern Errcode pj_copyfile(const char *src, const char *dst);
+
+extern Errcode
+pj_cpfile(const char *src, const char *dst, Errcode *opt_errfile);
 
 extern Errcode
 pj_copydata_oset(Jfile src, Jfile dest, LONG soset, LONG doset, ULONG size);

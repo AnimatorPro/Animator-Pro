@@ -46,7 +46,6 @@ set(JFILETR_SRC_FILES
 ## jfile utilities that call jfile functions
 set(JFUTILS_SRC_FILES
 	jfclosez.c
-	jfcopy.c
 	jfcopyin.c
 	jfcpdato.c
 	jfcpfile.c

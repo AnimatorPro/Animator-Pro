@@ -835,7 +835,6 @@ Errcode trd_up_to_ram(char *name)
 char pname[PATH_SIZE];
 char tname[PATH_SIZE];
 Errcode err;
-char *errin;
 LONG size;
 LONG rfree;
 
@@ -850,12 +849,8 @@ LONG rfree;
 	{
 		soft_put_wait_box("!%s%ld%ld", "tfile_toram", pname, size, rfree );
 
-		if ((err = pj_cpfile(pname,tname,&errin)) == Success)
-			pj_delete(pname);
-		else
-		{
-			pj_delete(tname);
-		}
+		err = pj_cpfile(pname, tname, NULL);
+		pj_delete((err >= Success) ? pname : tname);
 	}
 	return(err);
 }
@@ -929,7 +924,6 @@ Dlnode *node;
 Tfile tf;				 /* Temp file handle */
 char opname[PATH_SIZE];	 /* Full path name of temp file */
 char npname[PATH_SIZE];	 /* Full path name of temp file */
-char *errname;
 Path_part *pp, *ppnext;
 Names *wild_list = NULL;
 Names *wild_pt;
@@ -981,8 +975,11 @@ for ( pp = (Path_part *)(old_parts.head);
 				{
 				sprintf(npname, "<:%s", wild_pt->name);
 				soft_put_wait_box("!%s%s", "tfile_move", opname, new_path );
-				if ((err = pj_cpfile(opname, npname, &errname)) < Success)
+
+				err = pj_cpfile(opname, npname, NULL);
+				if (err < Success)
 					goto OUT;
+
 				if ((err = new_name(&name1, npname, &copied_list)) < Success)
 					goto OUT;
 				if ((err = new_name(&name1, opname, &old_list)) < Success)

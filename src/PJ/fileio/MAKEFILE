@@ -51,7 +51,7 @@ JFILETRO = \
 
 JFUTILSO = \
  aasyslib.obj \
- jfcopy.obj   jfcopyin.obj jfcpdato.obj jfcpfile.obj jfcpydat.obj\
+ jfcopyin.obj jfcpdato.obj jfcpfile.obj jfcpydat.obj\
  jfinsert.obj jfpisfix.obj jfrdgulp.obj jfreadec.obj jfreados.obj\
  jfwrite0.obj jfwritec.obj jfwritos.obj jfwrtglp.obj jfclosez.obj\
  unchunk.obj unchcopy.obj unchupd.obj unchread.obj wrtchunk.obj

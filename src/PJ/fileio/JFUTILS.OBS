@@ -5,7 +5,6 @@
 +jfwritos.obj
 +jfclosez.obj
 +jfcpfile.obj
-+jfcopy.obj
 +jfcopyin.obj
 +jfcpydat.obj
 +jfcpdato.obj
