@@ -176,62 +176,65 @@ done:
 	pj_close(tf);
 	return(err);
 }
-Errcode pop_flx_overlays(void)
 
-/* pop the flx overlays back into ram */
+/* Function: pop_flx_overlays
+ *
+ *  Pop the flx overlays back into ram.
+ */
+Errcode
+pop_flx_overlays(void)
 {
-Errcode err;
-Chunk_id fc;
-Jfile tf;
-LONG size_left;
-Flx_overlay *olay = NULL;
-SHORT lastdone;
-
+	Errcode err;
+	Chunk_id fc;
+	XFILE *xf;
+	LONG size_left;
+	Flx_overlay *olay = NULL;
 
 	free_flx_overlays(&flix);
 
-	if(JNONE == (tf = pj_open(flxolayname,JREADONLY)))
-		return(pj_ioerr());
+	err = xffopen(flxolayname, &xf, XREADONLY);
+	if (err < Success)
+		return err;
 
-	if((err = alloc_flx_olaytab(&flix, flix.hdr.frames_in_table)) < 0)
-		return(err);
-
-	if((err = pj_read_ecode(tf,&fc,sizeof(fc))) < 0)
+	err = alloc_flx_olaytab(&flix, flix.hdr.frames_in_table);
+	if (err < Success)
 		goto error;
 
-	if(fc.type != FOVL_MAGIC)
-	{
+	err = xffread(xf, &fc, sizeof(fc));
+	if (err < Success)
+		goto error;
+
+	if (fc.type != FOVL_MAGIC) {
 		err = Err_bad_magic;
 		goto error;
 	}
-	size_left = fc.size - sizeof(fc);
-	lastdone = 0;
 
-	while(size_left)
-	{
-		if((err = pj_read_ecode(tf,&fc,sizeof(fc))) < 0)
+	size_left = fc.size - sizeof(fc);
+	while (size_left > 0) {
+		err = xffread(xf, &fc, sizeof(fc));
+		if (err < Success)
 			goto error;
 
 		size_left -= fc.size;
-
 		fc.size -= sizeof(fc);
-		if(NULL == (olay = pj_malloc(fc.size)))
-		{
+		olay = pj_malloc(fc.size);
+		if (olay == NULL) {
 			err = Err_no_memory;
 			goto error;
 		}
-		if((err = pj_read_ecode(tf,olay,fc.size)) < 0)
+
+		err = xffread(xf, olay, fc.size);
+		if (err < Success)
 			goto error;
 
-		if(fc.type > flix.overlays_in_table
-			|| fc.type < lastdone )
-		{
+		if (fc.type > flix.overlays_in_table) {
 			err = Err_corrupted;
 			goto error;
 		}
+
 		olay->next = NULL;
 
-		if(fc.type == 0)
+		if (fc.type == 0)
 			*flx_olaytail(flix.hdr.frame_count) = olay;
 		else
 			*flx_olaytail(fc.type) = olay;
@@ -244,10 +247,11 @@ SHORT lastdone;
 error:
 	pj_gentle_free(olay);
 	free_flx_overlays(&flix);
+
 done:
+	xffclose(&xf);
 	pj_delete(flxolayname);
-	pj_close(tf);
-	return(err);
+	return err;
 }
 
 
