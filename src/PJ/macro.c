@@ -172,16 +172,18 @@ static UBYTE eoflags[2] = {(MACRO_REC|MR_EOF),(MACRO_REC|MR_EOF)};
 }
 static Errcode create_macro(char *path, Boolean realtime)
 {
-Errcode err;
+	Errcode err;
 
 	close_macro(); /* will re-initialize everything to zeros */
 
-	if ((err = xffopen(path, &Mcb.xf, XREADWRITE_CLOBBER)) < Success)
+	err = xffopen(path, &Mcb.xf, XREADWRITE_CLOBBER);
+	if (err < Success)
 		goto error;
 
 	Mcb.mh.id.type = MAC_MAGIC;
 
-	if ((err = xffwrite(Mcb.xf, &Mcb.mh, sizeof(Mcb.mh))) < Success)
+	err = xffwrite(Mcb.xf, &Mcb.mh, sizeof(Mcb.mh));
+	if (err < Success)
 		goto error;
 
 	icb.macro_clocked = Mcb.mh.realtime = realtime;
@@ -192,11 +194,12 @@ Errcode err;
 	Mcb.last_histate = ~0; /* value that won't exist */
 	Mcb.last_pressure = ~0; /* value that won't exist */
 
-	return(Success);
+	return Success;
+
 error:
 	close_macro();
 	pj_delete(macro_name);
-	return(softerr(err,"!%s", "macro_create", path ));
+	return softerr(err,"!%s", "macro_create", path);
 }
 static Errcode macro_write_error(Errcode err)
 {
@@ -295,46 +298,49 @@ void *macbuf;
 		Flags |= HAS_HISTATE;
 	}
 
-	if ((err = xffwrite(Mcb.xf, buf, SIZE(buf,macbuf))) < Success)
+	err = xffwrite(Mcb.xf, buf, SIZE(buf,macbuf));
+	if (err < Success)
 		macro_write_error(err);
-
-	return(err);
+	return err;
 
 #undef Flags
 }
 
 static Errcode play_macro(int repeats)
 {
-Errcode err;
+	Errcode err;
 
 	close_macro();
-	if ((err = xffopen(macro_name, &Mcb.xf, XREADONLY)) < Success)
+
+	err = xffopen(macro_name, &Mcb.xf, XREADONLY);
+	if (err < Success)
 		goto error;
 
-	if ((err = xffread(Mcb.xf, &Mcb.mh, sizeof(Mcb.mh))) < Success)
+	err = xffread(Mcb.xf, &Mcb.mh, sizeof(Mcb.mh));
+	if (err < Success)
 		goto error;
 
-	if(Mcb.mh.id.type != MAC_MAGIC || Mcb.mh.id.size < sizeof(Machead))
-	{
+	if (Mcb.mh.id.type != MAC_MAGIC || Mcb.mh.id.size < sizeof(Machead)) {
 		err = Err_bad_magic;
 		goto error;
 	}
 
 	/* pre-fetch next record header flags */
-
-	if ((err = xffread(Mcb.xf, &Mcb.next, sizeof(Twobytes))) < Success)
+	err = xffread(Mcb.xf, &Mcb.next, sizeof(Twobytes));
+	if (err < Success)
 		goto error;
 
 	Mcb.sizeleft = Mcb.mh.id.size - (sizeof(Machead)+sizeof(USHORT));
-
 	Mcb.lastmouse = *((Short_xy *)&icb.sx);
 	icb.macro_mode = USE_MACRO;
 	icb.macro_clocked = Mcb.mh.realtime;
 	Mcb.repeats = repeats;
-	return(Success);
+
+	return Success;
+
 error:
 	close_macro();
-	return(err);
+	return err;
 }
 static Errcode poll_macro_abort(void)
 
@@ -425,7 +431,8 @@ USHORT oflags;
 
 		if(Mcb.ioflags & HAS_CCOUNT) /* get previous io state and count */
 		{
-			if ((err = xffread(Mcb.xf, &oflags, sizeof(USHORT))) < Success)
+			err = xffread(Mcb.xf, &oflags, sizeof(USHORT));
+			if (err < Success)
 				goto error;
 
 			Mcb.sizeleft -= sizeof(USHORT);
@@ -459,10 +466,10 @@ USHORT oflags;
 		if((Mcb.sizeleft -= readsize) < 0)
 			readsize -= sizeof(USHORT);	/* end of file, NO next record */
 
-		if( readsize != 0 
-			&& (err = xffread(Mcb.xf, Mcb.mbuf, readsize)) < Success)
-		{
-			goto error;
+		if (readsize != 0) {
+			err = xffread(Mcb.xf, Mcb.mbuf, readsize);
+			if (err < Success)
+				goto error;
 		}
 
 		/* get last short in buffer, this is head of next rec or garbage if
@@ -601,42 +608,39 @@ char buf[50];
 }
 void qload_macro(void)
 {
-Errcode err;
-Machead mh;
-char *title;
-Jfile f;
-char buf[50];
+	Errcode err;
+	Machead mh;
+	char *title;
+	XFILE *xf;
+	char buf[50];
 
-	if ((title =  vset_get_filename(stack_string("load_mac",buf),
-		".REC", load_str,MACRO_PATH,NULL,1)) == NULL)
-	{
+	title = vset_get_filename(stack_string("load_mac", buf),
+			".REC", load_str, MACRO_PATH, NULL, 1);
+	if (title == NULL)
 		return;
-	}
 
 	close_macro();
 
-	if ((f = pj_open(title, JREADONLY)) == JNONE)
-	{
-		err = pj_ioerr();
-		goto error;
+	err = xffopen(title, &xf, XREADONLY);
+	if (err >= Success) {
+		err = xffread(xf, &mh, sizeof(mh));
+		xffclose(&xf);
 	}
-	if((err = pj_read_ecode(f,&mh,(long)sizeof(mh))) < Success)
-	{
-		if(err == Err_eof)
+
+	if (err >= Success) {
+		if (mh.id.type == MAC_MAGIC) {
+			err = pj_copyfile(title, macro_name);
+		}
+		else {
+			err = Err_bad_magic;
+		}
+	}
+	else {
+		if (err == Err_eof)
 			err = Err_truncated;
-		goto error;
 	}
-	if(mh.id.type != MAC_MAGIC)
-	{
-		err = Err_bad_magic;
-		goto error;
-	}
-	pj_close(f);
-	f = JNONE;
-	err = pj_copyfile(title, macro_name);
-error:
-	pj_close(f);
-	softerr(err,"!%s", "macro_load", title);
+
+	softerr(err, "!%s", "macro_load", title);
 }
 
 void qstart_macro(void)
@@ -707,9 +711,11 @@ Abortnest *pan;
 			pan = (void *)(pan->pop);
 		}
 	}
-	if ((err = xffwrite(Mcb.xf, &buf, SIZE(buf,abuf))) < Success)
-		return(macro_write_error(err));
-	return(Success);
+
+	err = xffwrite(Mcb.xf, &buf, SIZE(buf,abuf));
+	if (err < Success)
+		return macro_write_error(err);
+	return Success;
 }
 static Errcode read_abort_rec(void)
 {
@@ -726,8 +732,9 @@ int readsize;
 		Mcb.mab_level = (readsize /= ABORTLEVEL_1) - 1;
 		readsize = (readsize * sizeof(USHORT)) - 1 + sizeof(USHORT);
 
-		if ((err = xffread(Mcb.xf, OPTR(Mcb.ar.counts,1), readsize)) < Success)
-			return(macro_write_error(err));
+		err = xffread(Mcb.xf, OPTR(Mcb.ar.counts,1), readsize);
+		if (err < Success)
+			return macro_write_error(err);
 
 		Mcb.sizeleft -= readsize;
 		Mcb.next.flags = *((USHORT *)(OPTR(&Mcb.ar,readsize)));
@@ -930,8 +937,8 @@ Abortnest *an;
 		{
 			long foffset;
 
-			if ((foffset = xfftell(Mcb.xf)) < 0)
-			{
+			foffset = xfftell(Mcb.xf);
+			if (foffset < 0) {
 				macro_read_error((Errcode)foffset);
 				goto error;
 			}
@@ -949,8 +956,8 @@ Abortnest *an;
 			 * unflag abort done */
 
 			Mcb.ar.flags &= ~AR_ABORTLEVEL; 
-			if ((foffset = xffseek(Mcb.xf, foffset, XSEEK_SET)) < 0)
-			{
+			foffset = xffseek(Mcb.xf, foffset, XSEEK_SET);
+			if (foffset < 0) {
 				macro_read_error(foffset);
 				goto aborted;
 			}
