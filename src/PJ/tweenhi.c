@@ -70,85 +70,97 @@ softerr(err, NULL);
 
 Errcode save_tween(char *name, Tween_state *ts)
 {
-XFILE *f;
-Errcode err, cerr;
-Tween_file_header tfh;
-Tween_link *link, *next;
+	Errcode err;
+	XFILE *f;
+	Errcode cerr;
+	Tween_file_header tfh;
+	Tween_link *link, *next;
 
-if ((f = xfopen(name, XWRITEONLY)) == NULL)
-	return(xerrno());
+	err = xffopen(name, &f, XWRITEONLY);
+	if (err < Success)
+		return err;
 
-clear_struct(&tfh);
-tfh.magic = TWEEN_MAGIC;
-tfh.tcount = 2;
-tfh.link_count = listlen(&ts->links);
-if (xfwrite(&tfh, 1, sizeof(tfh), f) < sizeof(tfh))
-	goto IOERR;
-for (link = (Tween_link *)(ts->links.head);
-	NULL  != (next = (Tween_link *)(link->node.next));
-	link = next)
-	{
-	if (xfwrite(&link->start, 1, 2*sizeof(link->start), f) <
-		2*sizeof(link->start))
-		goto IOERR;
+	clear_struct(&tfh);
+	tfh.magic = TWEEN_MAGIC;
+	tfh.tcount = 2;
+	tfh.link_count = listlen(&ts->links);
+
+	err = xffwrite(f, &tfh, sizeof(tfh));
+	if (err < Success)
+		goto cleanup;
+
+	for (link = (Tween_link *)(ts->links.head);
+			NULL != (next = (Tween_link *)(link->node.next));
+			link = next) {
+		err = xffwrite(f, &link->start, 2*sizeof(link->start));
+		if (err < Success)
+			goto cleanup;
 	}
-if ((err = s_poly(f, &ts->p0)) < Success)
-	goto CLOSEOUT;
-if ((err = s_poly(f, &ts->p1)) <  Success)
-	goto CLOSEOUT;
 
-goto CLOSEOUT;
-IOERR:
-	err = xerrno();
-CLOSEOUT:
-	cerr = xfclose(f);
-	if (cerr < Success)		/* return primary error, not close error */
-		{
-		if (err >= Success)	/* but if close is 1st error return it... */
+	err = s_poly(f, &ts->p0);
+	if (err < Success)
+		goto cleanup;
+
+	err = s_poly(f, &ts->p1);
+	if (err < Success)
+		goto cleanup;
+
+cleanup:
+	cerr = xffclose(&f);
+	if (cerr < Success) { /* return primary error, not close error */
+		if (err >= Success) /* but if close is 1st error return it... */
 			err = cerr;
-		}
+	}
+
 	if (err < Success)
 		pj_delete(name);
-	return(err);
+	return err;
 }
 
 static Errcode ld_tween(char *name, Tween_state *ts)
 {
-XFILE *f;
-Errcode err;
-Tween_file_header tfh;
-Tween_link *newl;
-long i;
+	Errcode err;
+	XFILE *xf;
+	Tween_file_header tfh;
+	Tween_link *newl;
+	long i;
 
-if ((f = xfopen(name, XREADONLY)) == NULL)
-	return(xerrno());
-if ((xfread(&tfh, 1, sizeof(tfh), f)) < sizeof(tfh))
-	goto IOERR;
-if (tfh.magic != TWEEN_MAGIC)
-	{
-	err = Err_bad_magic;
-	goto CLOSEOUT;
-	}
-for (i=0; i<tfh.link_count; i++)
-	{
-	if ((err = news(newl)) < Success)
-		goto CLOSEOUT;
-	if (xfread(&newl->start, 1, 2*sizeof(newl->start), f)
-		< 2*sizeof(newl->start))
-		goto IOERR;
-	add_tail(&ts->links,&newl->node);
-	}
-if ((err = ld_poly(f, &ts->p0)) <  Success)
-	goto CLOSEOUT;
-if ((err = ld_poly(f, &ts->p1)) <  Success)
-	goto CLOSEOUT;
-goto CLOSEOUT;
-IOERR:
-err = xerrno();
+	err = xffopen(name, &xf, XREADONLY);
+	if (err < Success)
+		return err;
 
-CLOSEOUT:
-xfclose(f);
-return(err);
+	err = xffread(xf, &tfh, sizeof(tfh));
+	if (err < Success)
+		goto cleanup;
+
+	if (tfh.magic != TWEEN_MAGIC) {
+		err = Err_bad_magic;
+		goto cleanup;
+	}
+
+	for (i = 0; i < tfh.link_count; i++) {
+		err = news(newl);
+		if (err < Success)
+			goto cleanup;
+
+		err = xffread(xf, &newl->start, 2*sizeof(newl->start));
+		if (err < Success)
+			goto cleanup;
+
+		add_tail(&ts->links,&newl->node);
+	}
+
+	err = ld_poly(xf, &ts->p0);
+	if (err < Success)
+		goto cleanup;
+
+	err = ld_poly(xf, &ts->p1);
+	if (err < Success)
+		goto cleanup;
+
+cleanup:
+	xffclose(&xf);
+	return err;
 }
 
 Errcode load_tween(char *name, Tween_state *ts)
