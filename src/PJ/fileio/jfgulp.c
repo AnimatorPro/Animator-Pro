@@ -20,7 +20,7 @@ read_gulp(const char *name, void *buf, long size)
 	if (!pj_assert(size >= 0)) return Err_range;
 
 	err = xffopen(name, &xf, XREADONLY);
-	if (err != Success)
+	if (err < Success)
 		return err;
 
 	err = xffread(xf, buf, size);
@@ -44,13 +44,13 @@ write_gulp(const char *name, void *buf, long size)
 	if (!pj_assert(size >= 0)) return Err_range;
 
 	err = xffopen(name, &xf, XWRITEONLY);
-	if (err == Success)
+	if (err < Success)
 		return err;
 
 	err = xffwrite(xf, buf, size);
 	xffclose(&xf);
 
-	if (err != Success)
+	if (err < Success)
 		pj_delete(name);
 
 	return err;
