@@ -65,7 +65,7 @@ typedef struct flx_overlay {
 
 typedef struct flxfile {
 	Flx_head hdr;  /* the fli hdr for the flx plus flx fields */
-	Jfile fd;      /* file handle for this flx */
+	XFILE *xf; /* file handle for this flx */
 
 	Flicomp comp_type; /* compression type for this file always set to 
 						* fli_comp_ani */
@@ -77,7 +77,7 @@ typedef struct flxfile {
 } Flxfile;
 
 /* make sure fd and comp_type fields are in the same position as in a flifile */
-STATIC_ASSERT(flx, OFFSET(Flifile, fd) == OFFSET(Flxfile, fd));
+STATIC_ASSERT(flx, OFFSET(Flifile, xf) == OFFSET(Flxfile, xf));
 STATIC_ASSERT(flx, OFFSET(Flifile, comp_type) == OFFSET(Flxfile, comp_type));
 
 extern Flxfile flix;

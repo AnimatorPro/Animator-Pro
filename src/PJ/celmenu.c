@@ -1067,11 +1067,13 @@ Errcode err;
 			toolid = CELPT_MOVE;
 		}
 	}
-	if(thecel)
-	{
-		if((err = reopen_fcelio(thecel, JREADONLY)) < 0)
+
+	if (thecel) {
+		err = reopen_fcelio(thecel, XREADONLY);
+		if (err < Success)
 			goto error;
 	}
+
 	id_set_cel_tool(toolid);
 	err = Success;
 error:

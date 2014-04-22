@@ -1,16 +1,24 @@
 #include "animinfo.h"
+#include "errcodes.h"
 #include "memory.h"
 #include "picfile.h"
+#include "pjassert.h"
 
-Errcode pic_anim_info(char *name, Anim_info *pinfo)
+Errcode
+pic_anim_info(char *name, Anim_info *pinfo)
 {
-Errcode err;
-Jfile f;
-Pic_header pic;
+	Errcode err;
+	XFILE *xf;
+	Pic_header pic;
 
-	if ((f = pj_open(name, JREADONLY)) == JNONE)
-		return(pj_ioerr());
-	if((err = pj_read_pichead(f,&pic)) < Success)
+	if (!pj_assert(pinfo != NULL)) return Err_bad_input;
+
+	err = xffopen(name, &xf, XREADONLY);
+	if (err < Success)
+		return err;
+
+	err = pj_read_pichead(xf, &pic);
+	if (err < Success)
 		goto error;
 
 	clear_struct(pinfo);
@@ -22,6 +30,6 @@ Pic_header pic;
 	pinfo->num_frames = 1;
 
 error:
-	pj_close(f);
-	return(err);
+	xffclose(&xf);
+	return err;
 }

@@ -2,50 +2,58 @@
 #include "errcodes.h"
 #include "fli.h"
 #include "imath.h"
+#include "pjassert.h"
 
-Errcode pj_fli_read_head(char *title, Fli_head *flih, Jfile *pfd,
-						  	  int jmode)
-/* open the file, read in the FLI header and verify that it has the,
- * right magic number and generally is a fli file.
+/* Function: pj_fli_read_head
  *
- * Returns Success and leaves file open in mode "jmode" if it is a fli.
- * Returns error code result and leaves
- * file closed if it is not a fli or there was a file system error. */
+ *  Open the file, read in the FLI header and verify that it has the
+ *  right magic number and generally is a fli file.
+ *
+ *  Returns Success and leaves file open in mode if it is a fli.
+ *  Returns error code result and leaves file closed if it is not a
+ *  fli or there was a file system error.
+ */
+Errcode
+pj_fli_read_head(const char *title, Fli_head *flih,
+		XFILE **pxf, enum XReadWriteMode mode)
 {
-Jfile fd;
-Errcode err;
+	Errcode err;
+	XFILE *xf;
 
-	if((fd = pj_open(title, jmode)) == JNONE)
-		goto jio_error;
+	if (!pj_assert(pxf != NULL)) return Err_bad_input;
 
-	/* read in fli header and check it's magic number */
-	if (pj_read(fd,flih,sizeof(*flih)) < (long)sizeof(*flih))
-		goto jio_error;
+	*pxf = NULL;
 
-	if(flih->type == FLIH_MAGIC)
-	{
+	err = xffopen(title, &xf, mode);
+	if (err != Success)
+		return err;
+
+	/* Read in fli header and check its magic number. */
+	err = xffread(xf, flih, sizeof(*flih));
+	if (err < Success)
+		goto error;
+
+	if (flih->type == FLIH_MAGIC) {
 		flih->speed = pj_uscale_by(((Fhead_1_0 *)flih)->jiffy_speed,1000,70);
 	}
-	else if (flih->type != FLIHR_MAGIC)
-	{
+	else if (flih->type != FLIHR_MAGIC) {
 		err = Err_bad_magic;
 		goto error;
 	}
+
 	/* do a little data checking */
-	if(flih->bits_a_pixel == 0)
+	if (flih->bits_a_pixel == 0)
 		flih->bits_a_pixel = 8;
-	if(flih->aspect_dx == 0 || flih->aspect_dy == 0)
+	if (flih->aspect_dx == 0 || flih->aspect_dy == 0)
 		flih->aspect_dx = flih->aspect_dy = 1;
 
-	*pfd = fd;
-	return(Success);
+	*pxf = xf;
+	return Success;
 
-jio_error:
-	err = pj_ioerr();
 error:
-	if(err == Err_eof)
+	if (err == Err_eof)
 		err = Err_truncated;
-	pj_close(fd);
-	*pfd = 0;
-	return(err);
+
+	xffclose(&xf);
+	return err;
 }

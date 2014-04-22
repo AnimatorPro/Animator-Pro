@@ -178,7 +178,7 @@ extern const Flicomp
 
 typedef struct flifile {
 	Fli_head hdr;  /* the fli hdr for the fli */
-	Jfile fd;	   /* file handle for this fli */
+	XFILE *xf; /* file handle for this fli */
 	Flicomp comp_type;	/* compression type if this fli is a created fli */
 } Flifile;
 
@@ -195,12 +195,18 @@ Errcode pj_fli_cel_alloc_cbuf(Fli_frame **pcbuf, struct rcel *cel);
 
 /* Flifile header checking open and close */
 
-Errcode pj_fli_read_head(char *title, Fli_head *flih, Jfile *pfd,int jmode);
+extern Errcode
+pj_fli_read_head(const char *title, Fli_head *flih,
+		XFILE **pxf, enum XReadWriteMode mode);
+
 Errcode pj_fli_info(char *path, struct anim_info *ainfo);
 Errcode pj_fli_info_open(Flifile *flif, char *path, struct anim_info *ainfo);
 
-Errcode pj_fli_open(char *path, Flifile *flif, int jmode);
-Errcode squawk_open_flifile(char *path, Flifile *flif, int jmode);
+extern Errcode
+pj_fli_open(char *path, Flifile *flif, enum XReadWriteMode mode);
+
+extern Errcode
+squawk_open_flifile(char *path, Flifile *flif, enum XReadWriteMode mode);
 
 Errcode pj_fli_create(char *path, Flifile *flif);
 
@@ -259,7 +265,7 @@ pj_fli_comp_frame1(void *cbuf, struct rcel *this_screen, Flicomp comp_type);
 extern Errcode
 pj_write_one_frame_fli(char *name, Flifile *flif, struct rcel *screen);
 
-extern Errcode jwrite_chunk(Jfile f, void *data, LONG size, SHORT type);
+extern Errcode jwrite_chunk(XFILE *xf, void *data, LONG size, SHORT type);
 
 /* reading and decompression */
 

@@ -17,6 +17,10 @@
 	#include "vmagics.h"
 #endif
 
+#ifndef XFILE_H
+#include "xfile.h"
+#endif
+
 struct anim_info;
 struct cmap;
 
@@ -50,11 +54,11 @@ enum pic_chunks {
 
 /* "pic" file io calls */
 
-Errcode pic_anim_info(char *ifname, struct anim_info *ainfo);
-Errcode pj_read_pichead(Jfile f,Pic_header *pic);
+Errcode pic_anim_info(char *name, struct anim_info *ainfo);
+Errcode pj_read_pichead(XFILE *f, Pic_header *pic);
 
 extern Errcode
-pj_read_picbody(Jfile f, Pic_header *pic, Raster *cel, struct cmap *cmap);
+pj_read_picbody(XFILE *xf, Pic_header *pic, Raster *cel, struct cmap *cmap);
 
 Errcode load_pic(char *name,Rcel *rcel,LONG check_id, Boolean load_colors);
 Errcode save_pic(char *name,Rcel *screen,LONG id, Boolean save_colors);

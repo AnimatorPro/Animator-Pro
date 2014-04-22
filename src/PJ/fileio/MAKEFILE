@@ -1,7 +1,7 @@
 #CFLAGS= -d2
 !include "\paa\make.inc"
 
-libs: trdfile.lib doslfile.lib dosfile.lib 
+libs: trdfile.lib
 	 @cd
  	 @echo libs made
 
@@ -11,7 +11,7 @@ DOSO = \
  dosctflp.obj dosdfree.obj\
  dosetdir.obj dosetdta.obj dosfirst.obj dosgetdr.obj dosgtdir.obj\
  dosisdev.obj dosmkdir.obj dosnext.obj\
- dossetdr.obj dostell.obj dosetdri.obj
+ dossetdr.obj dosetdri.obj
 
 ## "j" dos device and directory level calls that call dos only 
 
@@ -35,7 +35,7 @@ FPARSEO = \
 
 JFILEDO = \
  dfdelete.obj dfexists.obj dfile.obj dfisfixd.obj dfread.obj dfrename.obj\
- dfrwmode.obj dfseek.obj dfsize.obj dfstdio.obj dftell.obj dftrdmem.obj\
+ dfseek.obj dfsize.obj dfstdio.obj dftell.obj dftrdmem.obj\
  dftrdumm.obj dfwrite.obj dfgetdrv.obj
 
 ## jfile io modules that have ram disk temp file handling and temp file handing
@@ -45,16 +45,15 @@ JFILEDO = \
 ## handling
 
 JFILETRO = \
- jfile.obj rfile.obj tfile.obj fpgetdrv.obj
+ jfile.obj tfile.obj fpgetdrv.obj
 
 ## jfile utilities that call jfile functions ****
 
 JFUTILSO = \
  aasyslib.obj \
- jfcopyin.obj jfcpdato.obj jfcpfile.obj jfcpydat.obj\
- jfgulp.obj jfinsert.obj jfpisfix.obj jfreadec.obj jfreados.obj\
- jfwrite0.obj jfwritec.obj jfwritos.obj jfclosez.obj\
- unchunk.obj unchcopy.obj unchupd.obj unchread.obj wrtchunk.obj
+ jfchunk.obj jfcopyin.obj jfcpdat.obj jfcpfile.obj \
+ jfgulp.obj jfinsert.obj jfpisfix.obj \
+ jfwrite0.obj
  
 ## ansi spec standard io file system that calls jfile low level routines **** 
 
@@ -66,46 +65,6 @@ LFILEO = \
 ## ffile shels around ansi file routines that handle errors and have
 ## other niceties we like in pj *****
 
-## around lstdio.h **** 
-
-FLFILEO = \
- flopen.obj flread.obj flreados.obj flseek.obj fltell.obj\
- flwrite.obj flwriteo.obj flstdiol.obj
-
-flopen.obj:	ffopen.c\
-			$(IL)lstdio.h
-	 $(CC) ffopen.c $(CPF) -dUSE_LFILE -fo=$*.obj
-
-flread.obj:	ffread.c\
- 			$(IL)lstdio.h
-	$(CC) ffread.c $(CPF) -dUSE_LFILE -fo=$*.obj
-
-flreados.obj: ffreados.c\
-			$(IL)lstdio.h
- 	$(CC) ffreados.c $(CPF) -dUSE_LFILE -fo=$*.obj
-
-flseek.obj:	ffseek.c\
-			$(IL)lstdio.h
-	 $(CC) ffseek.c $(CPF) -dUSE_LFILE -fo=$*.obj
-
-fltell.obj:	fftell.c\
-			$(IL)lstdio.h
-	 $(CC) fftell.c $(CPF) -dUSE_LFILE -fo=$*.obj
-
-flwrite.obj:	ffwrite.c\
-				$(IL)lstdio.h
-	 $(CC) ffwrite.c $(CPF) -dUSE_LFILE -fo=$*.obj
-
-flwriteo.obj:	ffwriteo.c\
-				$(IL)lstdio.h
-	 $(CC) ffwriteo.c $(CPF) -dUSE_LFILE -fo=$*.obj
-
-flstdiol.obj: ffstdiol.c\
-				$(IL)lstdio.h
-	 $(CC) ffstdiol.c $(CPF) -dUSE_LFILE -fo=$*.obj
-
-## around stdio.h io fopen etc ******
-
 FFILEO = \
  fferrno.obj \
  ffopen.obj ffread.obj ffreados.obj ffseek.obj fftell.obj\
@@ -115,7 +74,7 @@ FFILEO = \
 XFILEO = xfile.obj
 
 xfile.obj: xfile.c
-	 $(CC) xfile.c $(CPF) -dUSE_LFILE -fo=$*.obj
+	 $(CC) xfile.c $(CPF) -fo=$*.obj
 
 #** library with temp and ram file handling file system and all utilities *
 
@@ -125,11 +84,10 @@ trdfile.lib: makefile\
 			 $(FPARSEO) fparse.obs\
 			 $(JFILETRO) jfiletrd.obs\
 			 $(JFUTILSO) jfutils.obs\
-			 $(LFILEO) lfile.obs\
 			 $(XFILEO) xfile.obs
  wlib /n trdfile.lib \
 	@dos.obs @jdevice.obs @fparse.obs @jfiletrd.obs \
-	@jfutils.obs @lfile.obs @xfile.obs
+	@jfutils.obs @xfile.obs
 
 #** library with dos and lstdio file system and all utilities *
 

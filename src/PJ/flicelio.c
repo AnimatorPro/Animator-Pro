@@ -29,7 +29,8 @@ char *path;
 
 	fc->cpath->fid = fc->flif.hdr.id; /* update cpath id from cel fli header */
 
-	if((err = pj_fli_create(path,&flif)) < Success)
+	err = pj_fli_create(path, &flif);
+	if (err < Success)
 		goto error;
 
 	flif.hdr.width = fc->flif.hdr.width;
@@ -40,27 +41,29 @@ char *path;
 	fchunk.size = sizeof(Celdata) + fc->cpath->id.size;
 	fchunk.type = FCID_PREFIX;
 
-	if((err = pj_write_ecode(flif.fd,&fchunk,sizeof(fchunk))) < Success)
+	err = xffwrite(flif.xf, &fchunk, sizeof(fchunk));
+	if (err < Success)
 		goto error;
 
-	if((err = pj_write_ecode(flif.fd,&fc->cd,sizeof(Celdata))) < Success)
+	err = xffwrite(flif.xf, &fc->cd, sizeof(Celdata));
+	if (err < Success)
 		goto error;
 
-	if((err = pj_write_ecode(flif.fd,fc->cpath,
-							fc->cpath->id.size)) < Success)
-	{
+	err = xffwrite(flif.xf, fc->cpath, fc->cpath->id.size);
+	if (err < Success)
 		goto error;
-	}
 
-	if((err = pj_i_flush_head(&flif)) < Success)
+	err = pj_i_flush_head(&flif);
+	if (err < Success)
 		goto error;
 
 	pj_fli_close(&flif);
-	return(Success);
+	return Success;
+
 error:
 	pj_fli_close(&flif);
 	pj_delete(path);
-	return(err);
+	return err;
 }
 Errcode create_celfli_start(char *tempname, char *fliname, 
 							Flicel **pfcel, Rcel *rc)
@@ -209,14 +212,14 @@ char device[DEV_NAME_LEN];
 
 	/* attempth to open fli requested as cel */
 
-	if(make_flicopy)
-	{
-		if((err = pj_fli_open(flipath,&flif,JREADONLY)) < Success)
+	if (make_flicopy) {
+		err = pj_fli_open(flipath, &flif, XREADONLY);
+		if (err < Success)
 			goto error;
 	}
-	else
-	{
-		if((err = pj_fli_open(flipath,&flif,JREADWRITE)) < Success)
+	else {
+		err = pj_fli_open(flipath, &flif, XREADWRITE_OPEN);
+		if (err < Success)
 			goto error;
 
 		/* we've got to have a valid update time ! */
@@ -228,7 +231,7 @@ char device[DEV_NAME_LEN];
 	}
 
 	found_celdata = FALSE;
-	init_chunkparse(&pd,flif.fd,FCID_PREFIX,sizeof(Fli_head),0,0);
+	init_chunkparse(&pd, flif.xf, FCID_PREFIX, sizeof(Fli_head), 0, 0);
 	while(get_next_chunk(&pd))
 	{
 		if(pd.type == FP_CELDATA)
@@ -279,14 +282,15 @@ char device[DEV_NAME_LEN];
 
 		chunksize = flif.hdr.size - flif.hdr.frame1_oset;
 
-		if((err = pj_copydata_oset(flif.fd, fc->flif.fd,
-					   flif.hdr.frame1_oset, 
-					   fc->flif.hdr.frame1_oset, chunksize )) < Success)
-		{
-			softerr(err,"first_ok");
+		err = pj_copydata_oset(flif.xf, fc->flif.xf,
+				flif.hdr.frame1_oset, fc->flif.hdr.frame1_oset, chunksize);
+		if (err < Success) {
+			softerr(err, "first_ok");
 			err = 0;
 		}
-		if((fc->flif.hdr.size = pj_tell(fc->flif.fd)) < Success)
+
+		fc->flif.hdr.size = xfftell(fc->flif.xf);
+		if (fc->flif.hdr.size < 0)
 		{
 			err = fc->flif.hdr.size;
 			goto error;
@@ -331,29 +335,30 @@ void close_fcelio(Flicel *fc)
 {
 	pj_fli_close(&fc->flif);
 }
-Errcode reopen_fcelio(Flicel *fc, int jmode)
 
 /* for an extant fli cel reopen and verify it's file in read only mode */
+Errcode
+reopen_fcelio(Flicel *fc, enum XReadWriteMode mode)
 {
 Errcode err;
 char *path;
 Flifile flif;
 Fli_id oid;
 
-	if(fc->flags & FCEL_RAMONLY
-		|| get_jmode(fc->flif.fd) == jmode) /* already open */
-	{
-		return(Success);
-	}
+	if (fc->flags & FCEL_RAMONLY)
+		return Success;
 
-	pj_fli_close(&fc->flif);
+	if (fc->flif.xf != NULL)
+		pj_fli_close(&fc->flif);
+
 	if(!fc->cpath)
 		return(Err_bad_input);
 
 	path = fc->cpath->path;
 	oid = fc->cpath->fid;
 
-	if((err = pj_fli_open(path, &flif, jmode)) < Success)
+	err = pj_fli_open(path, &flif, mode);
+	if (err < Success)
 		goto error;
 
 	if(memcmp(&oid,&flif.hdr.id,sizeof(Fli_id))
@@ -379,16 +384,17 @@ int i;
 Errcode err;
 LONG frame_oset;
 Rcel *rc;
-Boolean reopened;
+Boolean was_closed;
 Boolean allocd = FALSE;
 
 	if(fc->flags & FCEL_RAMONLY) /* no seeking on ram cel frames */
 		return(Success);
 
-	if(0 != (reopened = (fc->flif.fd == JNONE)))
-	{
+	was_closed = (fc->flif.xf == NULL);
+	if (was_closed) {
 		/* note that this reports errors */
-		if((err = reopen_fcelio(fc,JREADONLY)) < Success)
+		err = reopen_fcelio(fc, XREADONLY);
+		if (err < Success)
 			goto error;
 	}
 
@@ -438,8 +444,8 @@ Boolean allocd = FALSE;
 		allocd = TRUE;
 	}
 
-	if((frame_oset = pj_seek(fc->flif.fd,frame_oset,JSEEK_START)) < Success)
-	{
+	frame_oset = xffseek_tell(fc->flif.xf, frame_oset, XSEEK_SET);
+	if (frame_oset < 0) {
 		err = frame_oset;
 		goto error;
 	}
@@ -451,9 +457,9 @@ Boolean allocd = FALSE;
 
 		if(i >= fc->flif.hdr.frame_count)
 		{
-			if((frame_oset = pj_seek(fc->flif.fd,
-						   fc->flif.hdr.frame2_oset,JSEEK_START)) < Success)
-			{
+			frame_oset = xffseek_tell(fc->flif.xf,
+					fc->flif.hdr.frame2_oset, XSEEK_SET);
+			if (frame_oset < 0) {
 				err = frame_oset;
 				goto error;
 			}
@@ -476,7 +482,7 @@ done:
 error:
 	if(allocd)
 		pj_freez(&cbuf);
-	if(reopened)
+	if (was_closed)
 		close_fcelio(fc);
 	return(err);
 }
@@ -520,9 +526,9 @@ Errcode load_temp_fcel(char *tempname, Flicel **pfc)
 /* loads a cel stored away with a temp file extant as a newly allocated 
  * flicel */
 {
-Errcode err;
-Fat_chunk fchunk;
-Flicel *fc;
+	Errcode err;
+	Fat_chunk fchunk;
+	Flicel *fc;
 
 	if((err = alloc_fcel(pfc)) < Success)
 		return(err);
@@ -534,14 +540,14 @@ Flicel *fc;
 		goto error;
 	}
 
-	if((err = pj_fli_open(tempname, &fc->flif, JREADONLY)) < Success)
+	err = pj_fli_open(tempname, &fc->flif, XREADONLY);
+	if (err < Success)
 		goto error;
 
-	if((err = pj_readoset(fc->flif.fd,&fc->cd, CELDATA_OFFSET,
-						 sizeof(Celdata)) < sizeof(Celdata)) < Success)
-	{
+	err = xffreadoset(fc->flif.xf, &fc->cd, CELDATA_OFFSET, sizeof(Celdata));
+	if (err < Success)
 		goto error;
-	}
+
 	if(fc->cd.id.type != FP_CELDATA)
 	{
 		err = Err_corrupted;
@@ -550,7 +556,8 @@ Flicel *fc;
 	if ((err = alloc_fcel_raster(fc)) < Success)
 		goto error;
 
-	if((err = pj_read_ecode(fc->flif.fd,&fchunk,sizeof(fchunk))) < Success)
+	err = xffread(fc->flif.xf, &fchunk, sizeof(fchunk));
+	if (err < Success)
 		goto error;
 
 	if(fchunk.type != FP_FLIPATH)
@@ -564,23 +571,20 @@ Flicel *fc;
 		goto error;
 	}
 	thecel->cpath->id = fchunk;
-	if((err = pj_read_ecode(fc->flif.fd,
-						  OPTR(fc->cpath,sizeof(fchunk)),
-						  fchunk.size - sizeof(fchunk))) < Success)
-	{
+
+	err = xffread(fc->flif.xf, OPTR(fc->cpath,sizeof(fchunk)),
+			fchunk.size - sizeof(fchunk));
+	if (err < Success)
 		goto error;
-	}
 
 	/* close temp file and open fli pointed to and 
 	 * verify it's the right one */
 
 	pj_fli_close(&fc->flif);
 
-	if((err = pj_fli_open(fc->cpath->path, 
-							&fc->flif, JREADONLY)) < Success)
-	{
+	err = pj_fli_open(fc->cpath->path, &fc->flif, XREADONLY);
+	if (err < Success)
 		goto error;
-	}
 
 	if(memcmp(&thecel->cpath->fid,&thecel->flif.hdr.id,sizeof(Fli_id))
 		|| thecel->flif.hdr.width != thecel->rc->width
@@ -748,8 +752,8 @@ LONG chunksize;
 	{
 		/* we are re-writing (updating only the cel chunk) 
 		 * in a file pointed to */
-
-		if((err = pj_fli_open(celpath,&oflif,JREADWRITE)) < Success)
+		err = pj_fli_open(celpath, &oflif, XREADWRITE_OPEN);
+		if (err < Success)
 			goto error;
 
 		if(memcmp(&oflif.hdr.id,&thecel->cpath->fid,sizeof(Fli_id)))
@@ -760,7 +764,7 @@ LONG chunksize;
 		}
 
 		added_size = 0;
-		init_chunkparse(&pd,oflif.fd,FCID_PREFIX,sizeof(Fli_head),0,0);
+		init_chunkparse(&pd, oflif.xf, FCID_PREFIX, sizeof(Fli_head), 0, 0);
 		while(get_next_chunk(&pd))
 		{
 			if (pd.type == (USHORT)ROOT_CHUNK_TYPE)
@@ -772,11 +776,12 @@ LONG chunksize;
 				if(pd.fchunk.size != sizeof(Celdata))
 				{
 					pd.fchunk.type = FP_FREE; /* declare it empty */
-					if((err = pj_writeoset(pd.fd,&pd.fchunk,pd.chunk_offset,
-										 sizeof(Chunk_id))) < Success)
-					{
+
+					err = xffwriteoset(pd.xf, &pd.fchunk,
+							pd.chunk_offset, sizeof(Chunk_id));
+					if (err < Success)
 						goto error;
-					}
+
 					pd.error = Success; /* Oh well, we put in a new one */
 					break;
 				}
@@ -810,27 +815,22 @@ LONG chunksize;
 				added_size = sizeof(Celdata);
 
 			insert_celchunk:
-
-				if((err = pj_insert_space(oflif.fd, sizeof(Fli_head), 
-										  			added_size)) < Success)
-				{
+				err = pj_insert_space(oflif.xf, sizeof(Fli_head), added_size);
+				if (err < Success)
 					goto error;
-				}
 
 				/* write or rewrite PREFIX fchunk */
 				pd.fchunk.size += added_size;
 				pd.fchunk.type = FCID_PREFIX;
-				if((err = pj_write_ecode(oflif.fd,&pd.fchunk,
-									     sizeof(Chunk_id))) < Success)
-				{
+				err = xffwrite(oflif.xf, &pd.fchunk, sizeof(Chunk_id));
+				if (err < Success)
 					goto error;
-				}
+
 				/* write cel chunk */
-				if((err = pj_write_ecode(oflif.fd,
-								      &thecel->cd,sizeof(Celdata))) < Success)
-				{
+				err = xffwrite(oflif.xf, &thecel->cd, sizeof(Celdata));
+				if (err < Success)
 					goto error;
-				}
+
 				break;
 			}
 			default: /* err < Success */
@@ -856,11 +856,12 @@ LONG chunksize;
 overwrite_it:
 
 	/* not the same file */
-
-	if((err = pj_fli_open(celpath,&thecel->flif,JREADONLY)) < Success)
+	err = pj_fli_open(celpath, &thecel->flif, XREADONLY);
+	if (err < Success)
 		goto error;
 
-	if((err = pj_fli_create(path,&oflif)) < Success)
+	err = pj_fli_create(path, &oflif);
+	if (err < Success)
 		goto error;
 
 	/* fudge to save out cel aspect the same as current screen window */
@@ -869,14 +870,12 @@ overwrite_it:
 	thecel->flif.hdr.aspect_dy = vb.pencel->aspect_dy;
 	oflif.hdr = thecel->flif.hdr;
 
-	if((err = jwrite_chunk(oflif.fd,&thecel->cd,
-						   sizeof(Celdata),FCID_PREFIX)) < Success)
-	{
+	err = jwrite_chunk(oflif.xf, &thecel->cd, sizeof(Celdata), FCID_PREFIX);
+	if (err < Success)
 		goto error;
-	}
 
-	if((oflif.hdr.frame1_oset = pj_tell(oflif.fd)) < Success)
-	{
+	oflif.hdr.frame1_oset = xfftell(oflif.xf);
+	if (err < Success) {
 		err = oflif.hdr.frame1_oset;
 		goto error;
 	}
@@ -887,13 +886,11 @@ overwrite_it:
 	chunksize = thecel->flif.hdr.size - thecel->flif.hdr.frame1_oset;
 
 	/* copy all frames to output fli file */
-
-	if((err = pj_copydata_oset(thecel->flif.fd, oflif.fd,
-				   			 thecel->flif.hdr.frame1_oset, 
-				   			 oflif.hdr.frame1_oset, chunksize )) < Success)
-	{
+	err = pj_copydata_oset(thecel->flif.xf, oflif.xf,
+			thecel->flif.hdr.frame1_oset, oflif.hdr.frame1_oset, chunksize);
+	if (err < Success)
 		goto error;
-	}
+
 	oflif.hdr.size = oflif.hdr.frame1_oset + chunksize;
 	if((err = pj_i_flush_head(&oflif)) < Success)
 	{

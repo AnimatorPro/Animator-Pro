@@ -44,7 +44,7 @@ Font_dev *fd;
 	}
 
 	if(!pj_exists(title))
-		return(pj_ioerr());
+		return Err_no_file;
 
 	fd = font_dev_list;
 	while (fd != NULL)

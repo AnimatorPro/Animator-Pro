@@ -2,13 +2,17 @@
 #include "memory.h"
 #include "picfile.h"
 
-Errcode pj_read_pichead(Jfile f,Pic_header *pic)
+Errcode
+pj_read_pichead(XFILE *xf, Pic_header *pic)
 {
-Opic_header *opic;
-Rectangle orect;
+	Errcode err;
+	Opic_header *opic;
+	Rectangle orect;
 
-	if (pj_read(f, pic, sizeof(*pic)) < (long)sizeof(*pic) )
-		return(pj_ioerr());
+	err = xffread(xf, pic, sizeof(*pic));
+	if (err < Success)
+		return err;
+
 	if (pic->id.type != PIC_MAGIC)
 	{
 		opic = (Opic_header *)pic;

@@ -68,33 +68,37 @@ static void load_vschunk(Vsettings *pvs)
 
 static void close_vsetfile(Vsetfile *vsf)
 {
-	pj_closez(&(vsf->fd));
+	xffclose(&vsf->xf);
 }
-static Errcode open_vsetfile(char *path,int jmode, Vsetfile *vsf)
-{
-Errcode err;
 
-	if((vsf->fd = pj_open(path,jmode)) == JNONE)
-		return(pj_ioerr());
-	if((err = pj_read_ecode(vsf->fd,&vsf->id,
-							POSTOSET(Vsetfile,paths_id))) < Success)
-	{
+static Errcode
+open_vsetfile(char *path, enum XReadWriteMode mode, Vsetfile *vsf)
+{
+	Errcode err;
+
+	err = xffopen(path, &vsf->xf, mode);
+	if (err < Success)
+		return err;
+
+	err = xffread(vsf->xf, &vsf->id, POSTOSET(Vsetfile,paths_id));
+	if (err < Success)
 		goto error;
-	}
-	if(vsf->id.type != VSETFILE_MAGIC)
-	{
+
+	if (vsf->id.type != VSETFILE_MAGIC) {
 		err = Err_bad_magic;
 		goto error;
 	}
-	if(vsf->id.version != VSETCHUNK_VERSION)
-	{
+
+	if (vsf->id.version != VSETCHUNK_VERSION) {
 		err = Err_version;
 		goto error;
 	}
-	return(Success);
+
+	return Success;
+
 error:
 	close_vsetfile(vsf);
-	return(err);
+	return err;
 }
 
 /************************ tsettings file stuff ************************/
@@ -190,19 +194,22 @@ Tsettings_file *buf;
 
 static Errcode reopen_tsettings(Vsetfile *vsf)
 {
-Errcode err;
+	Errcode err;
 
-	if((err = open_vsetfile(tsettings_name,JREADWRITE,vsf)) < Success)
-		return(err);
-	if(vsf->paths_id.type != VSET_PATHARRAY_ID)
-	{
+	err = open_vsetfile(tsettings_name, XREADWRITE_OPEN, vsf);
+	if (err < Success)
+		return err;
+
+	if (vsf->paths_id.type != VSET_PATHARRAY_ID) {
 		err = Err_version;
 		goto error;
 	}
-	return(Success);
+
+	return Success;
+
 error:
 	close_vsetfile(vsf);
-	return(err);
+	return err;
 }
 
 Errcode reload_tsettings(Vsettings *pvs,Vset_flidef *fdef)
@@ -243,16 +250,17 @@ static Errcode tset_flush(Vsetfile *vsf, Boolean full_flush)
 	load_flidef(&buf.fdef, (Fli_head *)&flix.hdr);
 	load_vschunk(&buf.vs);
 
-	err = pj_writeoset(vsf->fd, &buf.fdef, FAST_FLUSHOFFSET,
+	err = xffwriteoset(vsf->xf, &buf.fdef, FAST_FLUSHOFFSET,
 			SLOW_FLUSHOFFSET - FAST_FLUSHOFFSET);
 
 	if (full_flush && err >= Success) {
 		load_vslow(&buf.vslow, FALSE);
 
-		err = pj_writeoset(vsf->fd, &buf.vslow, SLOW_FLUSHOFFSET,
+		err = xffwriteoset(vsf->xf, &buf.vslow, SLOW_FLUSHOFFSET,
 				sizeof(Tsettings_file) - SLOW_FLUSHOFFSET);
 	}
-	return(err);
+
+	return err;
 }
 
 Errcode flush_tsettings(Boolean full_flush)
@@ -285,7 +293,7 @@ Vsetfile vsf;
 	if(((unsigned int)ptype) < VSET_NUM_PATHS
 		&& (err = reopen_tsettings(&vsf)) >= Success)
 	{
-		err = pj_readoset(vsf.fd,pathinfo,path_type_offset(&vsf,ptype),
+		err = xffreadoset(vsf.xf, pathinfo, path_type_offset(&vsf,ptype),
 						  sizeof(Vset_path));
 		close_vsetfile(&vsf);
 	}
@@ -346,11 +354,10 @@ char save_name[PATH_SIZE];
 	else
 		strcpy(name,save_name);
 
-	if((err = reopen_tsettings(&vsf)) >= Success)
-	{
-
-		err = pj_writeoset(vsf.fd,pathinfo,path_type_offset(&vsf,ptype),
-						  sizeof(Vset_path));
+	err = reopen_tsettings(&vsf);
+	if (err >= Success) {
+		err = xffwriteoset(vsf.xf, pathinfo, path_type_offset(&vsf,ptype),
+				sizeof(Vset_path));
 		close_vsetfile(&vsf);
 	}
 	strcpy(name,save_name);
@@ -366,9 +373,13 @@ Vset_path vsp;
 	return(vset_set_pathinfo(ptype,&vsp));
 }
 
-static Errcode write_settings_chunk(Jfile newfd, SHORT id_type, LONG offset,
-									Cmap *cmap, Boolean for_fli_prefix )
-/* writes out a settings chunk. leaves file at start of chunk */
+/* Function: write_settings_chunk
+ *
+ *  Writes out a settings chunk.  Leaves file at start of chunk.
+ */
+static Errcode
+write_settings_chunk(XFILE *newxf, SHORT id_type, LONG offset,
+		Cmap *cmap, Boolean for_fli_prefix)
 {
 Errcode err;
 Vsetfile vsf;
@@ -380,7 +391,7 @@ Chunkparse_data pd;
 	if((err = tset_flush(&vsf,TRUE)) < Success)
 		goto error;
 
-	init_chunkparse(&pd,vsf.fd,VSETFILE_MAGIC,0,sizeof(Fat_chunk),0);
+	init_chunkparse(&pd, vsf.xf, VSETFILE_MAGIC, 0, sizeof(Fat_chunk), 0);
 	while(get_next_chunk(&pd))
 	{
 		switch(pd.type)
@@ -392,7 +403,7 @@ Chunkparse_data pd;
 			case (USHORT)ROOT_CHUNK_TYPE:
 			case VSET_VS_ID:
 			case VSET_SLOWVS_ID:
-				copy_parsed_chunk(&pd,newfd); /* sets pd.error internally */
+				copy_parsed_chunk(&pd, newxf); /* sets pd.error internally */
 				break;
 		}
 	}
@@ -400,17 +411,17 @@ Chunkparse_data pd;
 		goto error;
 
 	if((!for_fli_prefix) && cmap)
-		err = pj_write_palchunk(newfd,cmap,VSET_CMAP_ID);
+		err = pj_write_palchunk(newxf, cmap, VSET_CMAP_ID);
 
 	/* flush header chunk with final file size */
 
 	pd.fchunk.type = id_type;
-	pd.fchunk.size = pj_tell(newfd) - offset;
-	if((err = pj_writeoset(newfd,&pd.fchunk.size,
-						   offset,sizeof(Chunk_id))) < Success)
-	{
+	pd.fchunk.size = xfftell(newxf) - offset;
+
+	err = xffwriteoset(newxf, &pd.fchunk.size, offset, sizeof(Chunk_id));
+	if (err < Success)
 		goto error;
-	}
+
 	err = pd.fchunk.size;
 error:
 	close_vsetfile(&vsf);
@@ -419,17 +430,20 @@ error:
 
 static Errcode save_settings_file(char *path, Boolean full_defaults)
 {
-Errcode err;
-Jfile newfd;
+	Errcode err;
+	XFILE *newxf;
 
-	if((newfd = pj_create(path,JREADWRITE)) == JNONE)
-		return(pj_ioerr());
-	err = write_settings_chunk(newfd, VSETFILE_MAGIC, 0,
-							   full_defaults?vb.pencel->cmap:NULL, FALSE);
-	pj_close(newfd);
-	if(err < Success)
+	err = xffopen(path, &newxf, XREADWRITE_CLOBBER);
+	if (err < Success)
+		return err;
+
+	err = write_settings_chunk(newxf, VSETFILE_MAGIC, 0,
+			full_defaults ? vb.pencel->cmap : NULL, FALSE);
+	xffclose(&newxf);
+	if (err < Success)
 		pj_delete(path);
-	return(err);
+
+	return err;
 }
 
 void save_default_settings(void)
@@ -440,36 +454,41 @@ char path[PATH_SIZE];
 	softerr(save_settings_file(path,TRUE),"!%s", "cant_save", path );
 }
 
-Errcode write_fli_settings(Jfile fd, SHORT chunk_id)
+Errcode write_fli_settings(XFILE *xf, SHORT chunk_id)
 /* called by fli saver to load prefix settings in new fli file */
 {
-Errcode err;
-LONG offset;
+	Errcode err;
+	long offset;
 
-	if((offset = pj_tell(fd)) < 0)
-		return(offset);
-	if((err = write_settings_chunk(fd, chunk_id, offset, NULL, TRUE)) >= 0)
-		return(pj_seek(fd,offset+err,JSEEK_START));
-	return(err);
+	offset = xfftell(xf);
+	if (offset < 0)
+		return (Errcode)offset;
+
+	err = write_settings_chunk(xf, chunk_id, offset, NULL, TRUE);
+	if (err < Success)
+		return err;
+
+	return xffseek(xf, offset+err, XSEEK_SET);
 }
 
 Errcode load_default_flidef(Vset_flidef *fdef)
 /* used by flisize menu to load the flidef fields in the buttons */
 {
-Chunkparse_data pd;
-Jfile fd;
-char path[PATH_SIZE];
+	Errcode err;
+	Chunkparse_data pd;
+	XFILE *xf;
+	char path[PATH_SIZE];
 
 	make_file_path(vb.init_drawer,default_name,path);
-	if((fd = pj_open(path,JREADONLY)) == JNONE)
-		return(pj_ioerr());
-	init_chunkparse(&pd,fd,VSETFILE_MAGIC,0,sizeof(Fat_chunk),0);
-	while(get_next_chunk(&pd))
-	{
-		if(pd.type == VSET_FLIDEF_ID)
-		{
-			if(pd.fchunk.version == VSET_FLIDEF_VERS)
-			{
+
+	err = xffopen(path, &xf, XREADONLY);
+	if (err < Success)
+		return err;
+
+	init_chunkparse(&pd, xf, VSETFILE_MAGIC, 0, sizeof(Fat_chunk), 0);
+	while (get_next_chunk(&pd)) {
+		if (pd.type == VSET_FLIDEF_ID) {
+			if (pd.fchunk.version == VSET_FLIDEF_VERS) {
 				pd.error = read_parsed_chunk(&pd,fdef,sizeof(*fdef));
 				fdef->id.size = sizeof(*fdef); /* keep host size the same */
 			}
@@ -478,11 +497,13 @@ char path[PATH_SIZE];
 			goto done;
 		}
 	}
-	if(pd.error >= Success)
+
+	if (pd.error >= Success)
 		pd.error = Err_no_chunk;
+
 done:
-	pj_close(fd);
-	return(pd.error);
+	xffclose(&xf);
+	return pd.error;
 }
 
 static void chop_default_paths(Vset_paths *vsp)
@@ -501,14 +522,16 @@ Vset_path *vp;
 	}
 }
 
-static Errcode load_settings_chunk(Jfile fd, Fat_chunk *id, LONG offset,
-								   Vset_flidef *fdef,
-								   Cmap *cmap, Boolean load_mucolors,
-								   Boolean as_defaults)
-
-/* this will load the global vsettings if there is no error and will re-load
- * the tsettings file with the input settings. It will load the color map
- * even in some error cases, as it will the flidef */
+/* Function: load_settings_chunk
+ *
+ *  This will load the global vsettings if there is no error and will
+ *  re-load the tsettings file with the input settings. It will load
+ *  the colour map even in some error cases, as it will the flidef.
+ */
+static Errcode
+load_settings_chunk(XFILE *xf, Fat_chunk *id, LONG offset,
+		Vset_flidef *fdef, Cmap *cmap,
+		Boolean load_mucolors, Boolean as_defaults)
 {
 Errcode err;
 Chunkparse_data pd;
@@ -526,7 +549,8 @@ Boolean load_inkstrengths;
 
 	load_init_tsettings(tset); /* start out with defaults */
 
-	init_chunkparse(&pd,fd,DONT_READ_ROOT,offset,sizeof(Fat_chunk),id->size);
+	init_chunkparse(&pd, xf, DONT_READ_ROOT, offset, sizeof(Fat_chunk),
+			id->size);
 
 	while(get_next_chunk(&pd))
 	{
@@ -560,13 +584,11 @@ Boolean load_inkstrengths;
 									  * still have the same size NOT inputs */
 				break;
 			case VSET_CMAP_ID:
-				if(cmap)
-				{
-					if((err = pj_read_palchunk(pd.fd,
-									&pd.fchunk, cmap)) < Success)
-					{
+				if (cmap) {
+					err = pj_read_palchunk(pd.xf, &pd.fchunk, cmap);
+					if (err < Success)
 						goto error;
-					}
+
 					cmap = NULL;
 				}
 				break;
@@ -612,30 +634,34 @@ done:
 
 static Errcode load_fli_settings(char *path,Cmap *cmap)
 {
-Errcode err;
-Flifile flif;
-Chunkparse_data pd;
-(void)cmap;
+	Errcode err;
+	Flifile flif;
+	Chunkparse_data pd;
+	(void)cmap;
 
-	if((err = pj_fli_open(path,&flif,JREADONLY)) < Success)
-		return(err);
-	init_chunkparse(&pd,flif.fd,FCID_PREFIX,sizeof(Fli_head),0,0);
-	for(;;)
-	{
-		if(get_next_chunk(&pd))
-		{
-			if(pd.type != FP_VSETTINGS)
+	err = pj_fli_open(path, &flif, XREADONLY);
+	if (err < Success)
+		return err;
+
+	init_chunkparse(&pd, flif.xf, FCID_PREFIX, sizeof(Fli_head), 0, 0);
+	for (;;) {
+		if (get_next_chunk(&pd)) {
+			if (pd.type != FP_VSETTINGS)
 				continue;
-			err = load_settings_chunk(flif.fd, &pd.fchunk,
-									pd.chunk_offset, NULL, NULL, TRUE, FALSE);
+
+			err = load_settings_chunk(flif.xf, &pd.fchunk,
+					pd.chunk_offset, NULL, NULL, TRUE, FALSE);
 			break;
 		}
-		if((err = pd.error) >= Success)
+
+		err = pd.error;
+		if (err >= Success)
 			err = Err_no_chunk;
 		break;
 	}
+
 	pj_fli_close(&flif);
-	return(err);
+	return err;
 }
 
 static Errcode load_file_settings(char *path,Vset_flidef *fdef,
@@ -643,43 +669,48 @@ static Errcode load_file_settings(char *path,Vset_flidef *fdef,
 /* note this will not corrupt data in *vset unless read and version verify
  * is successful does not re-load settings */
 {
-Errcode err;
-Jfile fd;
-Fat_chunk id;
+	Errcode err;
+	XFILE *xf;
+	Fat_chunk id;
 
-	if((fd = pj_open(path,JREADONLY)) == JNONE)
-		return(pj_ioerr());
-	if((err = pj_read_ecode(fd, &id, sizeof(id))) < Success)
+	err = xffopen(path, &xf, XREADONLY);
+	if (err < Success)
+		return err;
+
+	err = xffread(xf, &id, sizeof(id));
+	if (err < Success)
 		goto error;
 
-	if(id.type == VSETFILE_MAGIC)
-	{
-		err = load_settings_chunk(fd, &id, 0, fdef,
-								  default_reset?vb.pencel->cmap:NULL,
-								  TRUE, default_reset );
+	if (id.type == VSETFILE_MAGIC) {
+		err = load_settings_chunk(xf, &id, 0, fdef,
+				default_reset ? vb.pencel->cmap : NULL,
+				TRUE, default_reset);
 	}
-	else if(default_reset)
-	{
+	else if (default_reset) {
 		err = Err_bad_magic;
 	}
-	else switch(id.type)
-	{
-		case FLIHR_MAGIC:
-			pj_closez(&fd);
-			err = load_fli_settings(path, NULL);
-			break;
-		case FLIH_MAGIC:
-			err = Err_version;
-			goto error;
-		default:
-			err = Err_bad_magic;
-			goto error;
+	else {
+		switch (id.type) {
+			case FLIHR_MAGIC:
+				xffclose(&xf);
+				err = load_fli_settings(path, NULL);
+				break;
+			case FLIH_MAGIC:
+				err = Err_version;
+				goto error;
+			default:
+				err = Err_bad_magic;
+				goto error;
+		}
 	}
-	if(err >= Success)
-		rewrite_config();  /* save new loaded menu colors in config file */
+
+	/* Save new loaded menu colours in config file. */
+	if (err >= Success)
+		rewrite_config();
+
 error:
-	pj_closez(&fd);
-	return(err);
+	xffclose(&xf);
+	return err;
 }
 
 static Errcode load_vsettings(char *path)

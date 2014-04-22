@@ -4,19 +4,22 @@
 #include "fli.h"
 #include "animinfo.h"
 
-Errcode pj_fli_info_open(Flifile *flif, char *path, Anim_info *ainfo)
-
-/* opens and verifies a fli file reads in "Anim_info" data if OK,
- * and returns, will leave file open if successful.  Used by linked in PDR */ 
-
+/* Function: pj_fli_info_open
+ *
+ *  Opens and verifies a fli file. reads in "Anim_info" data if OK,
+ *  and returns.  Will leave file open if successful.  Used by linked
+ *  in PDR.
+ */
+Errcode
+pj_fli_info_open(Flifile *flif, char *path, Anim_info *ainfo)
 {
-Errcode err;
+	Errcode err;
 
-	if((err = pj_fli_open(path, flif, JREADONLY)) < Success)
-		return(err);
+	err = pj_fli_open(path, flif, XREADONLY);
+	if (err < Success)
+		return err;
 
-	if(ainfo)
-	{
+	if (ainfo != NULL) {
 		memset(ainfo, 0, sizeof(*ainfo));
 		ainfo->width = flif->hdr.width;
 		ainfo->height = flif->hdr.height;
@@ -26,5 +29,6 @@ Errcode err;
 		ainfo->aspect_dx = flif->hdr.aspect_dx;
 		ainfo->aspect_dy = flif->hdr.aspect_dy;
 	}
-	return(Success);
+
+	return Success;
 }

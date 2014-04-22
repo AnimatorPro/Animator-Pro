@@ -8,7 +8,7 @@ Errcode save_pic(char *name,Rcel *screen,LONG id, Boolean save_colors)
 /* if save_colors is FALSE it may save a raster without a cmap */
 {
 Errcode err;
-Jfile f;
+XFILE *xf;
 SHORT y;
 Pic_header pic;
 Chunk_id chunk;
@@ -18,12 +18,9 @@ long lct;
 long bufsize;
 long bpr;
 
-
-	if((f = pj_create(name,JWRITEONLY)) == JNONE)
-	{
-		err = pj_ioerr();
-		goto error;
-	}
+	err = xffopen(name, &xf, XWRITEONLY);
+	if (err < Success)
+		return err;
 
 	/* load pic header data and write initial version ***/
 
@@ -33,12 +30,14 @@ long bpr;
 	pic.user_id = id;
 	pic.depth = screen->pdepth;
 
-	if((err = pj_write_ecode(f, &pic, (long)sizeof(pic))) < Success)
+	err = xffwrite(xf, &pic, sizeof(pic));
+	if (err < Success)
 		goto error;
 
-	if(save_colors)  /* if save colors is true write out a color map chunk */
-	{
-		if((err = pj_write_palchunk(f, screen->cmap, PIC_CMAP)) < Success)	
+	/* if save colours is true write out a colour map chunk. */
+	if (save_colors) {
+		err = pj_write_palchunk(xf, screen->cmap, PIC_CMAP);
+		if (err < Success)
 			goto error;
 	}
 
@@ -62,17 +61,16 @@ long bpr;
 	}
 
 	chunk.size = (bpr*pic.height) + sizeof(chunk);
-	if((err = pj_write_ecode(f,&chunk,sizeof(chunk))) < Success)
+	err = xffwrite(xf, &chunk, sizeof(chunk));
+	if (err < Success)
 		goto error;
 
 	if((screen->type == RT_BYTEMAP || screen->type == RT_BITMAP)
 		&& bpr == screen->u.hw.bm.bpr)
 	{
-		if ((err = pj_write_ecode(f, screen->u.hw.bm.bp[0],
-										bpr*pic.height)) < Success)
-		{
+		err = xffwrite(xf, screen->u.hw.bm.bp[0], bpr*pic.height);
+		if (err < Success)
 			goto error;
-		}
 	}
 	else /* note this doesnt handle writing low pixel depth items yet */
 	{
@@ -90,25 +88,31 @@ long bpr;
 				lct = lines;
 			pj_get_rectpix(screen,lbuf,0,y,screen->width,lct);
 			bufsize = lct * screen->width;
-			if((err = pj_write_ecode(f, lbuf, bufsize)) < Success)
+
+			err = xffwrite(xf, lbuf, bufsize);
+			if (err < Success)
 				goto error;
+
 			y += lct;
 		}
 	}
 
-	if((pic.id.size = pj_tell(f)) < 0)
-	{
+	pic.id.size = xfftell(xf);
+	if (pic.id.size < 0) {
 		err = pic.id.size;
 		goto error;
 	}
+
 	/* flush final header */
-	err = pj_writeoset(f,&pic,0,sizeof(pic));
+	err = xffwriteoset(xf, &pic, 0, sizeof(pic));
 
 error:
 	pj_gentle_free(lbuf);
-	pj_close(f);
-	if(err < Success)
+	xffclose(&xf);
+
+	if (err < Success)
 		pj_delete(name);
-	return(err);
+
+	return err;
 }
 

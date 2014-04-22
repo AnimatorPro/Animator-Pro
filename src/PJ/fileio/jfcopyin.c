@@ -2,9 +2,9 @@
 #include "memory.h"
 #include "errcodes.h"
 
-Errcode copy_in_file(Jfile file, LONG bytes, LONG soff, LONG doff)
-
 /* Move a piece of a file from one place to another. */
+Errcode
+copy_in_file(XFILE *xf, LONG bytes, LONG soff, LONG doff)
 {
 char sbuf[1024];	/* stack buffer */
 char *buf;
@@ -30,12 +30,12 @@ LONG expand;
 		doff += bytes;
 
 		/* check size of whole file against destination offset */
-
-		if((fsize = pj_seek(file,0,JSEEK_END)) < 0)
-		{
+		fsize = xffseek_tell(xf, 0, XSEEK_END);
+		if (fsize < 0) {
 			err = fsize;
 			goto error;
 		}
+
 		/* Expand file if need be.  A bit inefficient since we may write
 		 * to file twice. */
 
@@ -49,8 +49,11 @@ LONG expand;
 		{
 			if(expand < fsize)
 				fsize = expand;
-			if((err = pj_write_ecode(file,buf,fsize)) < Success)
+
+			err = xffwrite(xf, buf, fsize);
+			if (err < Success)
 				goto error;
+
 			expand -= fsize;
 		}
 	}
@@ -64,10 +67,15 @@ LONG expand;
 			soff -= blocksize;
 			doff -= blocksize;
 		}
-		if((err = pj_readoset(file,buf,soff,blocksize)) < Success)
+
+		err = xffreadoset(xf, buf, soff, blocksize);
+		if (err < Success)
 			goto error;
-		if((err = pj_writeoset(file,buf,doff,blocksize)) < Success)
+
+		err = xffwriteoset(xf, buf, doff, blocksize);
+		if (err < Success)
 			goto error;
+
 		if(!backwards)
 		{
 			soff += blocksize;

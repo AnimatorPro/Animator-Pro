@@ -39,30 +39,19 @@ set(FPARSE_SRC_FILES
 set(JFILETR_SRC_FILES
 	fpgetdrv.c
 	jfile.c
-	rfile.c
 	tfile.c
 	)
 
 ## jfile utilities that call jfile functions
 set(JFUTILS_SRC_FILES
-	jfclosez.c
+	jfchunk.c
 	jfcopyin.c
-	jfcpdato.c
+	jfcpdat.c
 	jfcpfile.c
-	jfcpydat.c
 	jfgulp.c
 	jfinsert.c
 	jfpisfix.c
-	jfreadec.c
-	jfreados.c
 	jfwrite0.c
-	jfwritec.c
-	jfwritos.c
-	unchcopy.c
-	unchread.c
-	unchunk.c
-	unchupd.c
-	wrtchunk.c
 	)
 
 set(XFILE_SRC_FILES

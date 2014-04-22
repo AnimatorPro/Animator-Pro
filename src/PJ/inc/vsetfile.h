@@ -108,7 +108,7 @@ typedef struct slow_vsettings {
 typedef struct vsetfile {
 	Fat_chunk id;
 	Fat_chunk paths_id;
-	Jfile fd;
+	XFILE *xf;
 } Vsetfile;
 
 /* vpsubs.c */
@@ -129,7 +129,7 @@ extern Errcode vset_get_path(int ptype, char *path);
 extern Errcode vset_set_pathinfo(int ptype, Vset_path *cpath);
 extern Errcode vset_set_path(int ptype, char *path);
 extern void save_default_settings(void);
-extern Errcode write_fli_settings(Jfile fd, SHORT chunk_id);
+extern Errcode write_fli_settings(XFILE *xf, SHORT chunk_id);
 extern Errcode load_default_flidef(Vset_flidef *fdef);
 extern void qsave_vsettings(void);
 extern void qload_vsettings(void);

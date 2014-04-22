@@ -1,48 +1,48 @@
-#include "jfile.h"
+/* jfwrite0.c */
+
 #include "errcodes.h"
+#include "jfile.h"
 #include "memory.h"
+#include "pjassert.h"
 
-Errcode pj_write_zeros(Jfile file, LONG oset, ULONG bytes)
+/* Function: pj_write_zeros */
+Errcode
+pj_write_zeros(XFILE *xf, LONG oset, ULONG bytes)
 {
-Errcode err;
-char sbuf[256];	/* static buffer */
-char *buf;
-ULONG blocksize;
+	Errcode err;
+	char sbuf[256];	/* stack buffer */
+	char *buf = NULL;
+	size_t blocksize;
 
-	if(bytes <= sizeof(sbuf))
-	{
+	if (!pj_assert(xf != NULL)) return Err_bad_input;
+
+	blocksize = 16L*1024;
+	if (blocksize > bytes)
 		blocksize = bytes;
+
+	if (blocksize > sizeof(sbuf))
+		buf = pj_zalloc(blocksize);
+
+	if (buf == NULL) {
 		buf = sbuf;
-		clear_mem(buf,blocksize);
-	}
-	else
-	{
-		if(bytes < 16*1024)
-			blocksize = bytes;
-		else
-			blocksize = 16*1024;	
-
-		if((buf = pj_zalloc(blocksize)) == NULL)
-		{
-			blocksize = sizeof(sbuf);
-			buf = sbuf;
-			clear_mem(sbuf,sizeof(sbuf));
-		}
+		blocksize = sizeof(sbuf);
+		clear_mem(sbuf, sizeof(sbuf));
 	}
 
-	while(bytes > 0)
-	{
-		if((err = pj_writeoset(file,buf,oset,blocksize)) < Success)
-			goto error;
-		oset += blocksize;
-		if(bytes < blocksize)
-			blocksize = bytes;
-		else
-			bytes -= blocksize;
-	}
 	err = Success;
-error:
-	if(buf != &sbuf[0])
+	while (bytes > 0) {
+		if (blocksize > bytes)
+			blocksize = bytes;
+
+		err = xffwriteoset(xf, buf, oset, blocksize);
+		if (err < Success)
+			break;
+
+		oset += blocksize;
+		bytes -= blocksize;
+	}
+
+	if (buf != sbuf)
 		pj_free(buf);
-	return(err);
+	return err;
 }

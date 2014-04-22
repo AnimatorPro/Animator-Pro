@@ -11,5 +11,4 @@
 +dfdelete.obj
 +dfexists.obj
 +dfrename.obj
-+dfrwmode.obj
 +dfstdio.obj

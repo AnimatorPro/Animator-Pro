@@ -189,7 +189,7 @@ extern Errcode
 load_fli_fcel(char *flipath, char *tempname, char *celfli_name, Flicel **pfc);
 
 extern void close_fcelio(Flicel *fc);
-extern Errcode reopen_fcelio(Flicel *fc, int jmode);
+extern Errcode reopen_fcelio(Flicel *fc, enum XReadWriteMode mode);
 
 extern Errcode
 gb_seek_fcel_frame(Flicel *fc, SHORT frame, Fli_frame *cbuf,

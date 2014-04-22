@@ -95,11 +95,9 @@ Frame_rec *psframe;
 	if((size = flif->hdr.frame2_oset - flif->hdr.frame1_oset) > sizeof(frec))
 		size = sizeof(frec);
 
-	if((err = pj_readoset(flif->fd,&frec,
-						  flif->hdr.frame1_oset, size)) < Success)
-	{
+	err = xffreadoset(flif->xf, &frec, flif->hdr.frame1_oset, size);
+	if (err < Success)
 		goto error;
-	}
 
 	if(frec.ff.type != FCID_FRAME)
 	{
@@ -130,11 +128,10 @@ Frame_rec *psframe;
 			goto error;
 		}
 		*psframe = frec;
-		if((err = pj_read_ecode(flif->fd, psframe + 1,
-								size - sizeof(*psframe))) < Success)
-		{
+
+		err = xffread(flif->xf, psframe + 1, size - sizeof(*psframe));
+		if (err < Success)
 			goto error;
-		}
 	}
 
 	/* if not a pstamp record or just a translation table we need the actual
@@ -188,10 +185,14 @@ error:
 
 	return(err);
 }
-static Errcode get_pic_pstamp(Rcel *smallcel,Jfile f,Pic_header *pic,
-							  SHORT stampw, SHORT stamph)
 
-/* this is here to handle the old obsolete animator 1.0 cel type files */
+/* Function: get_pic_pstamp
+ *
+ *  This is here to handle the old obsolete animator 1.0 cel type files.
+ */
+static Errcode
+get_pic_pstamp(Rcel *smallcel, XFILE *xf, Pic_header *pic,
+		SHORT stampw, SHORT stamph)
 {
 Errcode err;
 Rcel *pcel;
@@ -200,7 +201,8 @@ UBYTE xlat[256];
 	if ((err = valloc_ramcel(&pcel, pic->width, pic->height)) < Success)
 		goto error;
 
-	if((err = pj_read_picbody(f,pic,(Raster *)pcel,pcel->cmap)) < Success)
+	err = pj_read_picbody(xf, pic, (Raster *)pcel, pcel->cmap);
+	if (err < Success)
 		goto error;
 
 	pj_scale_blit(pcel,0,0,pic->width,pic->height,
@@ -217,30 +219,33 @@ Errcode postage_stamp(Raster *r, char *name,
 					  SHORT x,SHORT y,USHORT width, USHORT height,
 					  Rectangle *actual)
 {
-Jfile jf;
+Errcode err;
+XFILE *xf;
 union picfile {
 	Flifile flif;
 	Pic_header pic;
 } pf;
 Boolean isafli;
-Errcode err;
 SHORT stampw, stamph;
 Rcel *ramcel = NULL;
 
-	if((err = pj_fli_open(name, &pf.flif, JREADONLY)) >= Success)
-	{
+	err = pj_fli_open(name, &pf.flif, XREADONLY);
+	if (err >= Success) {
 		isafli = TRUE;
 		stampw = pf.flif.hdr.width;
 		stamph = pf.flif.hdr.height;
 	}
-	else
-	{
+	else {
 		isafli = FALSE;
-		if ((jf = pj_open(name, JREADONLY)) == JNONE)
-			return(pj_ioerr());
+
+		err = xffopen(name, &xf, XREADONLY);
+		if (err < Success)
+			return err;
+
 		/* note we return error for fli open above on failure */
-		if(pj_read_pichead(jf,&pf.pic) < 0)
+		if (pj_read_pichead(xf, &pf.pic) < Success)
 			goto error;
+
 		stampw = pf.pic.width;
 		stamph = pf.pic.height;
 	}
@@ -258,10 +263,12 @@ Rcel *ramcel = NULL;
 	ramcel->x = x + ((width - stampw)>>1);
 	ramcel->y = y + ((height - stamph)>>1);
 
-	if(isafli)
+	if (isafli) {
 		err = get_fli_pstamp(ramcel, &pf.flif, stampw, stamph);
-	else
-		err = get_pic_pstamp(ramcel,jf,&pf.pic,stampw,stamph);
+	}
+	else {
+		err = get_pic_pstamp(ramcel, xf, &pf.pic, stampw, stamph);
+	}
 
 	if(err < Success)
 		goto error;
@@ -272,12 +279,13 @@ Rcel *ramcel = NULL;
 		copy_rectfields(ramcel,actual);
 
 error:
-	if(isafli)
+	if (isafli) {
 		pj_fli_close(&pf.flif);
-	else
-		pj_close(jf);
+	}
+	else {
+		xffclose(&xf);
+	}
 
 	pj_rcel_free(ramcel);
-	return(err);
+	return err;
 }
-

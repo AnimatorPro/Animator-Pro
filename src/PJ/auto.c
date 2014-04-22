@@ -749,12 +749,12 @@ void auto_setup(Autoarg *aa)
 
 	if((aa->flags & AUTO_USESCEL) && thecel)
 	{
-		if(thecel->flif.fd)
-			aa->celjmode = JREADONLY;
+		if (thecel->flif.xf != NULL)
+			aa->celjmode = XREADONLY;
 		else
-			aa->celjmode = JUNDEFINED;
+			aa->celjmode = XUNDEFINED;
 
-		reopen_fcelio(thecel,JREADONLY);
+		reopen_fcelio(thecel, XREADONLY);
 		get_fcelpos(thecel,&aa->cpos);
 		aa->cframe = thecel->cd.cur_frame;
 	}
@@ -771,7 +771,7 @@ Errcode auto_restores(Autoarg *aa,Errcode err)
 			maybe_ref_flicel_pos(thecel);
 			seek_fcel_frame(thecel,aa->cframe);
 		}
-		if(aa->celjmode == JUNDEFINED)
+		if (aa->celjmode == XUNDEFINED)
 			close_fcelio(thecel);
 	}
 
@@ -913,7 +913,7 @@ static Errcode dall(Autoarg *aa)
  * ecode */
 {
 Errcode err;
-Jfile new_tflx = JNONE;    /* zeros for error out */
+XFILE *new_tflx = NULL;
 Flx *new_flx = NULL;
 void *cbuf = NULL;
 int i;
@@ -948,7 +948,7 @@ Boolean abort_atom_nested;
 	maybe_push_most();
 	err = pj_fli_cel_alloc_cbuf((Fli_frame **)&cbuf, vb.pencel);
 	maybe_pop_most();
-	if(err < 0)
+	if (err < Success)
 		goto error;
 
 	tsize = flix.hdr.frames_in_table*sizeof(Flx);
@@ -957,23 +957,22 @@ Boolean abort_atom_nested;
 
 	pj_freez(&cbuf);
 
-	if ((new_tflx = pj_create(auto_tflx_name,JREADWRITE))==JNONE)
-	{
-		err = pj_ioerr();
+	err = xffopen(auto_tflx_name, &new_tflx, XREADWRITE_CLOBBER);
+	if (err < Success)
 		goto newflx_error;
-	}
 
 	/* copy all data (header and prefix chunks) 
 	 * before index to new flx file */
 
 	flush_tflx();
-	if((err = pj_copydata_oset(flix.fd,new_tflx,0,0,flix.hdr.index_oset)) < 0)
+
+	err = pj_copydata_oset(flix.xf, new_tflx, 0, 0, flix.hdr.index_oset);
+	if (err < Success)
 		goto newflx_error;
-	if(pj_write(new_tflx, new_flx, tsize) < tsize)
-	{
-		err = pj_ioerr();
+
+	err = xffwrite(new_tflx, new_flx, tsize);
+	if (err < Success)
 		goto newflx_error;
-	}
 
 	do_compress = TRUE; /* for non overlay case */
 
@@ -1081,11 +1080,11 @@ Boolean abort_atom_nested;
 			ssize = pj_fli_comp_cel(cbuf,xf,vb.pencel,
 								 COMP_DELTA_FRAME,flix.comp_type);
 
-		if(pj_i_is_empty_rec(cbuf))
+		if (pj_i_is_empty_rec(cbuf)) {
 			err = Success; 
-		else
-		{
-			err = pj_write_ecode(new_tflx, cbuf, ssize);
+		}
+		else {
+			err = xffwrite(new_tflx, cbuf, ssize);
 			(new_flx[i]).foff = acc;
 			(new_flx[i]).fsize = ssize;
 			acc += ssize;
@@ -1109,11 +1108,9 @@ Boolean abort_atom_nested;
 	if ((cbuf = pj_malloc(cbufsz)) == NULL)
 		goto nomem_error;
 
-	if((err = pj_readoset(new_tflx,cbuf,(new_flx[0]).foff,
-									  (new_flx[0]).fsize )) < 0)
-	{
+	err = xffreadoset(new_tflx, cbuf, (new_flx[0]).foff, (new_flx[0]).fsize);
+	if (err < Success)
 		goto newflx_error;
-	}
 
 	/* and make delta between last and first frame */
 
@@ -1126,7 +1123,8 @@ Boolean abort_atom_nested;
 
 	if(!pj_i_is_empty_rec(cbuf))
 	{
-		if((err = pj_writeoset(new_tflx,cbuf,acc,ssize)) < 0)
+		err = xffwriteoset(new_tflx, cbuf, acc, ssize);
+		if (err < Success)
 			goto newflx_error;
 
 		/* allocated cleared 0 if not set */
@@ -1135,16 +1133,15 @@ Boolean abort_atom_nested;
 	}
 
 	/* flush index */
-
-	if((err = pj_writeoset(new_tflx,new_flx,flix.hdr.index_oset,tsize)) < 0)
+	err = xffwriteoset(new_tflx, new_flx, flix.hdr.index_oset, tsize);
+	if (err < Success)
 		goto newflx_error;
-
 
 	pj_freez(&cbuf);
 	if(xf != undof)
 		pj_rcel_free(xf);
 	pj_free(new_flx);
-	pj_close(new_tflx);
+	xffclose(&new_tflx);
 	close_tflx();
 	pj_delete(tflxname);
 	pj_rename(auto_tflx_name, tflxname);
@@ -1171,9 +1168,8 @@ errout:
 		pj_rcel_free(xf);
 	pj_gentle_free(new_flx);
 	pj_gentle_free(cbuf);
-	if(new_tflx)
-	{
-		pj_close(new_tflx);
+	if (new_tflx != NULL) {
+		xffclose(&new_tflx);
 		pj_delete(auto_tflx_name);
 	}
 

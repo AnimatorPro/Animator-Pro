@@ -36,7 +36,7 @@ LONG ospeed;
 		((Fhead_1_0 *)(&flif->hdr))->jiffy_speed
 					= ((((long)flif->hdr.speed)*70L)+500L)/1000L;
 	}
-	err = pj_writeoset(flif->fd,&flif->hdr,0,sizeof(flif->hdr));
+	err = xffwriteoset(flif->xf, &flif->hdr, 0, sizeof(flif->hdr));
 	flif->hdr.speed = ospeed;
 	return(err);
 }

@@ -1,15 +1,22 @@
 #include "palchunk.h"
 
-Errcode pj_col_save(char *name, struct cmap *cmap)
-/* Save color map file */
+/* Function: pj_col_save
+ *
+ *  Save colour map file.
+ */
+Errcode
+pj_col_save(const char *name, struct cmap *cmap)
 {
-Errcode err;
-Jfile fd; 
+	Errcode err;
+	XFILE *xf;
 
-	if((fd = pj_create(name, JREADWRITE)) == JNONE)
-		return(pj_ioerr());
-	err = pj_write_palchunk(fd,cmap,CMAP_MAGIC);
-	pj_close(fd);
-	return(err);
+	err = xffopen(name, &xf, XREADWRITE_CLOBBER);
+	if (err < Success)
+		return err;
+
+	err = pj_write_palchunk(xf, cmap, CMAP_MAGIC);
+
+	xffclose(&xf);
+	return err;
 }
 

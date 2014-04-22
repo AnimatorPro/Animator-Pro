@@ -116,7 +116,8 @@ Boolean overlay_fit;
 	if((err = save_pic(screen_name, vb.pencel,0,TRUE)) < 0)
 		goto error;
 
-	if((err = pj_fli_open(title,&flif,JREADONLY)) < 0)
+	err = pj_fli_open(title, &flif, XREADONLY);
+	if (err < Success)
 		goto error;
 
 	/* allocate fli size cel to hold fli frame(s) */

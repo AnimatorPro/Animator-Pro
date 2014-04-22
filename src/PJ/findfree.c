@@ -154,29 +154,33 @@ LONG oset, addsize;
 		if(overwrite)
 			flxidx->foff = flxidx->fsize = 0; /* declare this one "free" */
 
-		if((oset = ff_tflx(size, 0, NULL)) < 0)
-			goto oset_error; /* still recoverable */
+		oset = ff_tflx(size, 0, NULL);
+		if (oset < 0) {
+			err = oset;
+			goto error; /* still recoverable */
+		}
 
 		/* not rewriting same area write whole new one */
 		if(oset != oflx.foff)  
 		{
-			if((err = pj_writeoset(flx->fd,newdata,oset,size)) < Success)
+			err = xffwriteoset(flx->xf, newdata, oset, size);
+			if (err < Success)
 				goto error; /* recoverable, old data not overwritten */
+
 			oflx.foff = oset;
 			oflx.fsize = size;
 			goto done;
 		}
 
-		if(size > oflx.fsize) /* if bigger than old record but in same space
-							   * try writing expanded area out first */
-		{
+		/* If bigger than old record but in same space try writing
+		 * expanded area out first.
+		 */
+		if (size > oflx.fsize) {
 			addsize = size - oflx.fsize;
 			size = oflx.fsize;
-			if((err = pj_writeoset(flx->fd,OPTR(newdata,size),
-								 oset+size,addsize))<Success)
-			{
+			err = xffwriteoset(flx->xf, OPTR(newdata,size), oset+size, addsize);
+			if (err < Success)
 				goto error; /* still recoverable */
-			}
 		}
 	}
 	else
@@ -186,29 +190,25 @@ LONG oset, addsize;
 
 	/* seek to start of old record */
 
-	if((oset = pj_seek(flx->fd,oset,JSEEK_START)) < 0)
-		goto oset_error; /* still recoverable we hope */
+	err = xffseek(flx->xf, oset, XSEEK_SET);
+	if (err < Success)
+		goto error; /* still recoverable we hope */
 
 	/* write remainder of record out, NOT recoverable, so put length actually
 	 * written in index */
 
-	if((oflx.fsize = pj_write(flx->fd,newdata,size)) != size)
-	{
-		err = pj_ioerr();
+	oflx.fsize = (long)xfwrite(newdata, 1, size, flx->xf);
+	if (oflx.fsize != size) {
+		err = xffile_error();
 	}
-	else
-	{
+	else {
 		err = Success;
 		oflx.fsize += addsize; /* add expanded size if any */
 	}
 
-	goto done;
-
-oset_error:
-	err = oset;
 done:
 error:
 	*flxidx = oflx; /* will have old data unless Non recoverable or success */
-	return(err);
+	return err;
 }
 

@@ -13,9 +13,5 @@ Errcode pj_fli_seek_first(Flifile *flif)
  *		(see errcodes.h)
  *************************************************************************/
 {
-LONG oset;
-
-	if((oset = pj_seek(flif->fd,flif->hdr.frame1_oset,JSEEK_START)) < 0)
-		return((Errcode)oset);
-	return(Success);
+	return xffseek(flif->xf, flif->hdr.frame1_oset, XSEEK_SET);
 }

@@ -30,20 +30,25 @@ Cursorcel *c;
 }
 static Errcode get_filecursor(char *name, Cursorcel **pcurs,Rectangle *maxsave)
 {
-Jfile file;
-Errcode err;
-Pic_header pic;
-Cursorcel *curs;
+	Errcode err;
+	XFILE *xf;
+	Pic_header pic;
+	Cursorcel *curs;
 
 	*pcurs = NULL;
-	if ((file = pj_open(name, JREADONLY)) == JNONE)
-		goto jio_error;
-	if(NULL == (curs = pj_zalloc(sizeof(*curs))))
-	{
+
+	err = xffopen(name, &xf, XREADONLY);
+	if (err < Success)
+		return err;
+
+	curs = pj_zalloc(sizeof(*curs));
+	if (curs == NULL) {
 		err = Err_no_memory;
 		goto error;
 	}
-	if((err = pj_read_pichead(file,&pic)) < Success)
+
+	err = pj_read_pichead(xf, &pic);
+	if (err < Success)
 		goto error;
 	*pcurs = curs;
 
@@ -51,9 +56,12 @@ Cursorcel *curs;
 	curs->width = pic.width;
 	curs->height = pic.height;
 
-	if((err = pj_open_bytemap((Rasthdr *)curs,(Bytemap *)curs)) < Success)
+	err = pj_open_bytemap((Rasthdr *)curs, (Bytemap *)curs);
+	if (err < Success)
 		goto error;
-	if((err = pj_read_picbody(file,&pic,(Raster *)curs,NULL)) < Success)
+
+	err = pj_read_picbody(xf, &pic, (Raster *)curs, NULL);
+	if (err < Success)
 		goto error;
 
 	if(maxsave->width < pic.width)
@@ -64,15 +72,13 @@ Cursorcel *curs;
 	curs->x = pic.x;
 	curs->y = pic.y;
 
-	pj_close(file);
-	return(0);
+	xffclose(&xf);
+	return Success;
 
-jio_error:
-	err = pj_ioerr();
 error:
 	free_cursorcel(pcurs);
-	pj_close(file);
-	return(err);
+	xffclose(&xf);
+	return err;
 }
 
 #ifdef SLUFFED

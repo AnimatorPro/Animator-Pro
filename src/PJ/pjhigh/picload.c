@@ -5,8 +5,9 @@
 #include "picfile.h"
 #include "unchunk.h"
 
-static Errcode read_pic_pixels(Jfile f,Pic_header *pic,Raster *cel,
-							   SHORT chunk_type, LONG offset, LONG data_size)
+static Errcode
+read_pic_pixels(XFILE *xf, Pic_header *pic, Raster *cel,
+		SHORT chunk_type, LONG offset, LONG data_size)
 {
 Errcode err;
 LONG bufsize;
@@ -47,8 +48,8 @@ assert(data_size >= 0);
 			/* Note this is dependent on a Bytemap and Bitmap being the 
 			 * same structure */
 
-			return(pj_readoset(f,((Bytemap *)cel)->bm.bp[0],
-								 offset, ((Bytemap *)cel)->bm.psize));
+			return xffreadoset(xf, ((Bytemap *)cel)->bm.bp[0], offset,
+					((Bytemap *)cel)->bm.psize);
 
 		default:
 			return Err_nogood;
@@ -77,11 +78,10 @@ assert(data_size >= 0);
 		offset += toposet;
 		y = 0;
 	}
-	if((offset = pj_seek(f,offset,JSEEK_START)) < 0)
-	{
-		err = offset;
+
+	err = xffseek(xf, offset, XSEEK_SET);
+	if (err < Success)
 		goto error;
-	}
 
 	err = Success;
 	for (;;)
@@ -97,8 +97,11 @@ assert(data_size >= 0);
 			err = Err_corrupted;
 			break;
 		}
-		if((err = pj_read_ecode(f, rr.bm.bp[0], bufsize)) < Success)
+
+		err = xffread(xf, rr.bm.bp[0], bufsize);
+		if (err < Success)
 			break;
+
 		pj_blitrect(&rr, 0, 0, cel, x, y, rr.width, lct); /* this clips!! */
 		y += lct;
 	}
@@ -106,35 +109,37 @@ error:
 	pj_close_raster(&rr);
 	return(err);
 }
-Errcode pj_read_picbody(Jfile f,Pic_header *pic,Raster *cel, Cmap *cmap)
 
-/* from the file position just beyond the pic header will read a pic
- * into an Rcel it will truncate the pic if the cel is smaller and
- * center it otherwise */
+/* Function: pj_read_picbody
+ *
+ *  From the file position just beyond the pic header will read a pic
+ *  into an Rcel it will truncate the pic if the cel is smaller and
+ *  center it otherwise.
+ */
+Errcode
+pj_read_picbody(XFILE *xf, Pic_header *pic, Raster *cel, Cmap *cmap)
 {
 Errcode err = Err_nogood;
 Chunkparse_data pd;
 
 	if(pic->id.type == OPIC_MAGIC)
 	{
-		if(cmap)
-		{
-			if((err = pj_readoset(f,cmap->ctab,sizeof(Opic_header),
-										  COLORS*3)) < Success)
-			{
+		if (cmap != NULL) {
+			err = xffreadoset(xf, cmap->ctab, sizeof(Opic_header), COLORS*3);
+			if (err < Success)
 				goto error;
-			}
+
 			pj_shift_cmap((const UBYTE *)cmap->ctab, (UBYTE *)cmap->ctab,
 					COLORS*3);
 			pj_cmap_load(cel,cmap);
 		}
-		return(read_pic_pixels(f,pic,cel,PIC_BYTEPIXELS,
-								   	sizeof(Opic_header)+(COLORS*3), 
-									pic->width * pic->height ));
+		return read_pic_pixels(xf, pic, cel, PIC_BYTEPIXELS,
+				sizeof(Opic_header)+(COLORS*3), pic->width * pic->height);
 	}
 
+	init_chunkparse(&pd, xf,
+			DONT_READ_ROOT, 0, sizeof(Pic_header), pic->id.size);
 
-	init_chunkparse(&pd,f,DONT_READ_ROOT,0,sizeof(Pic_header),pic->id.size);
 	while(get_next_chunk(&pd))
 	{
 		switch(pd.type)
@@ -142,19 +147,22 @@ Chunkparse_data pd;
 			case PIC_CMAP:
 				if(!cmap)
 					break;
-				if((err = pj_read_palchunk(f,&pd.fchunk,cmap)) < Success)
+
+				err = pj_read_palchunk(xf,&pd.fchunk,cmap);
+				if (err < Success)
 					goto error;
+
 				pj_cmap_load(cel,cmap);
 				cmap = NULL; /* flag done */
 				break;
 			case PIC_BITPIXELS:
 			case PIC_BYTEPIXELS:
-				if((err = read_pic_pixels(f,pic,cel,pd.type,
+				err = read_pic_pixels(xf, pic, cel, pd.type,
 							  pd.chunk_offset + sizeof(Chunk_id),
-							  pd.fchunk.size - sizeof(Chunk_id))) < Success)
-				{
+							  pd.fchunk.size - sizeof(Chunk_id));
+				if (err < Success)
 					goto error;
-				}
+
 				if(!cmap)
 					goto done;
 			default:
@@ -181,27 +189,31 @@ Errcode load_pic(char *name,Rcel *rcel,LONG check_id, Boolean do_colors)
 
 /* if do_colors is FALSE it may load a raster without a cmap */
 {
-Errcode err;
-Jfile f;
-Pic_header pic;
+	Errcode err;
+	XFILE *xf;
+	Pic_header pic;
 
-	if ((f = pj_open(name, JREADONLY)) == JNONE)
-		return(pj_ioerr());
-	if((err = pj_read_pichead(f,&pic)) < 0)
+	err = xffopen(name, &xf, XREADONLY);
+	if (err < Success)
+		return err;
+
+	err = pj_read_pichead(xf, &pic);
+	if (err < Success)
 		goto error;
-	if(check_id && check_id != pic.user_id)
-	{
+
+	if (check_id && check_id != pic.user_id) {
 		err = Err_invalid_id;
 		goto error;
 	}
-	if((err = pj_read_picbody(f,&pic,(Raster *)rcel,
-							  do_colors?rcel->cmap:NULL)) < 0)
-	{
+
+	err = pj_read_picbody(xf, &pic, (Raster *)rcel,
+			do_colors ? rcel->cmap : NULL);
+	if (err < Success)
 		goto error;
-	}
+
 error:
-	pj_close(f);
-	return(err);
+	xffclose(&xf);
+	return err;
 }
 
 

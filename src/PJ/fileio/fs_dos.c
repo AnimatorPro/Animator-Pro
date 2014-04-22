@@ -9,6 +9,18 @@
 #include "tfile.h"
 #include "wildlist.h"
 
+/* this is the data structure used by pj_dfirst() pj_dnext() in
+ * searching directories.
+ */
+typedef struct fndata {
+	char reserved[21];
+	char attribute;
+	USHORT time, date;
+	long size;
+	char name[13];
+	char fordos[128-43];
+} Fndata;
+
 typedef struct wild_data {
 	Names **plist; /* pointer to name list start */
 	char prefix[4];

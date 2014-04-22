@@ -27,8 +27,10 @@ static void close_flx(Flxfile *flx)
 {
 	pj_gentle_free(flx->idx);
 	free_flx_overlays(flx);
-	if(flx->fd)
-		pj_close(flx->fd);
+
+	if (flx->xf != NULL)
+		xffclose(&flx->xf);
+
 	clear_mem(flx,sizeof(*flx)); 
 	flx->comp_type = pj_fli_comp_ani;
 }
@@ -38,36 +40,41 @@ static Errcode alloc_flx_index(Flx **flx,int num_entries)
 		return(Err_no_memory);
 	return(0);
 }
-static Errcode open_flx(char *path, Flxfile *flx,int jmode)
 
 /* opens an existing flx file for read write */
+static Errcode
+open_flx(char *path, Flxfile *flx, enum XReadWriteMode mode)
 {
 LONG err;
 long acc;
 
 	clear_struct(flx);
-	if ((flx->fd = pj_open(path,jmode)) == JNONE)
-		return(pj_ioerr());
 
-	if (pj_read(flx->fd, &flx->hdr, (long)sizeof(Flx_head)) < sizeof(Flx_head))
-		goto jio_error;
-	if(flx->hdr.type != FLIX_MAGIC)
-	{
+	err = xffopen(path, &flx->xf, mode);
+	if (err < Success)
+		return err;
+
+	err = xffread(flx->xf, &flx->hdr, sizeof(Flx_head));
+	if (err < Success)
+		goto error;
+
+	if (flx->hdr.type != FLIX_MAGIC) {
 		err = Err_bad_magic;
 		goto error;
 	}
+
 	acc = flx->hdr.frames_in_table; 
 	if((err = alloc_flx_index(&flx->idx,acc)) < Success)
 		goto error;
 	acc *= sizeof(Flx);
 
-	if((err = pj_readoset(flx->fd, flx->idx, flx->hdr.index_oset, acc)) < 0)
+	err = xffreadoset(flx->xf, flx->idx, flx->hdr.index_oset, acc);
+	if (err < Success)
 		goto error;
 
 	flx->comp_type = pj_fli_comp_ani;
 	return(Success);
-jio_error:
-	err = pj_ioerr();
+
 error:
 	if(err == Err_eof)
 		truncated(path);
@@ -80,27 +87,29 @@ static Errcode flush_flx_index(Flxfile *flx)
 
 /* flushes or writes index of flx file leaves file position at end of index */
 {
-	return(pj_writeoset(flx->fd, flx->idx, flx->hdr.index_oset, 
-					  flx->hdr.frames_in_table*sizeof(Flx)));
+	return xffwriteoset(flx->xf, flx->idx, flx->hdr.index_oset,
+			flx->hdr.frames_in_table*sizeof(Flx));
 }
 Errcode flush_flx_hidx(Flxfile *flx)
 
 /* (re-)writes the header, settings chunk, and index of a flx file */
 {
-LONG err;
+	Errcode err;
 
 	update_flx_id(flx);
-	if((err = pj_writeoset(flx->fd,&flx->hdr,0,sizeof(flx->hdr))) < 0)
-		goto error;	
-	return(flush_flx_index(flx));
-error:
-	return(err);
+
+	err = xffwriteoset(flx->xf, &flx->hdr, 0, sizeof(flx->hdr));
+	if (err < Success)
+		return err;
+
+	return flush_flx_index(flx);
 }
 
 void flush_tflx(void)
 {
-	if(!flix.fd)
+	if (flix.xf == NULL)
 		return;
+
 	flush_tsettings(FALSE);
 	flush_flx_hidx(&flix);
 }
@@ -121,11 +130,9 @@ Chunk_id fchunk;
 	fchunk.type = FCID_PREFIX;
 	fchunk.size = sizeof(fchunk) + sizeof(Flipath);
 
-	if((err = pj_writeoset(flx->fd,&fchunk,
-						 sizeof(Flx_head),sizeof(fchunk)) < Success))
-	{
-		return(err);
-	}
+	err = xffwriteoset(flx->xf, &fchunk, sizeof(Flx_head), sizeof(fchunk));
+	if (err < Success)
+		return err;
 
 	flx->hdr.path_oset = sizeof(Flx_head) + sizeof(fchunk);
 	if((err = update_flx_path(flx, flid, fliname)) < 0)
@@ -172,7 +179,7 @@ long itable;
 	if((err = new_flx_prefix(flx,NULL,NULL)) < 0)
 		goto error;
 
-	flx->hdr.index_oset = pj_tell(flx->fd);
+	flx->hdr.index_oset = xfftell(flx->xf);
 	if((err = flush_flx_index(flx)) < 0) /* flush (write) new index */ 
 		goto error;
 
@@ -215,15 +222,17 @@ error:
 
 Errcode otempflx(void)
 {
-Errcode err;
+	Errcode err;
 
 	close_tflx();
-	if((err = open_flx(tflxname,&flix,JREADWRITE)) >= Success)
-	{
-		if((err = reload_tsettings(&vs,NULL)) < Success)
+	err = open_flx(tflxname,&flix, XREADWRITE_OPEN);
+	if (err >= Success) {
+		err = reload_tsettings(&vs, NULL);
+		if (err < Success)
 			close_tflx();
 	}
-	return(err);
+
+	return err;
 }
 
 Errcode open_tempflx(Boolean reload_settings)
@@ -264,17 +273,20 @@ Chunkparse_data pd;
 
 	/** copy any relevant prefix chunks from the fli (most of them) */
 
-	init_chunkparse(&pd,flif->fd,FCID_PREFIX,sizeof(Fli_head),0,0);
+	init_chunkparse(&pd, flif->xf, FCID_PREFIX, sizeof(Fli_head), 0, 0);
 	while(get_next_chunk(&pd))
 	{
 		switch(pd.type)
 		{
 			case (USHORT)ROOT_CHUNK_TYPE:
 			{
-				if((err = copy_parsed_chunk(&pd, flix.fd)) < Success)
+				err = copy_parsed_chunk(&pd, flix.xf);
+				if (err < Success)
 					goto error;
-				flix.hdr.path_oset = pj_tell(flix.fd);
-				if((err = update_flx_path(&flix,&flif->hdr.id,fliname)) < 0)
+
+				flix.hdr.path_oset = xfftell(flix.xf);
+				err = update_flx_path(&flix, &flif->hdr.id, fliname);
+				if (err < Success)
 					goto error;
 				break;
 			}
@@ -297,22 +309,20 @@ Chunkparse_data pd;
 	if((err = pd.error) >= Success) /* we matched and parsed a PREFIX chunk */
 	{
 		/* set size of copied PREFIX chunk and flush */
-
-		flix.hdr.index_oset = pj_tell(flix.fd);
+		flix.hdr.index_oset = xfftell(flix.xf);
 
 		pd.fchunk.type = FCID_PREFIX;
 		pd.fchunk.size = flix.hdr.index_oset - sizeof(Flx_head);
-		if((err = pj_writeoset(flix.fd,&pd.fchunk,
-							 sizeof(Flx_head),sizeof(Chunk_id))) < Success)
-		{
+		err = xffwriteoset(flix.xf, &pd.fchunk,
+				sizeof(Flx_head), sizeof(Chunk_id));
+		if (err < Success)
 			goto error;
-		}
 	}
 	else if(err == Err_no_chunk)
 	{
 		if((err = new_flx_prefix(&flix,&flif->hdr.id,fliname)) < 0)
 			goto error;
-		flix.hdr.index_oset = pj_tell(flix.fd);
+		flix.hdr.index_oset = xfftell(flix.xf);
 	}
 	else
 		goto error;
@@ -407,8 +417,9 @@ Fli_frame *frame = NULL;
 	close_tflx();
 	cleans();
 
-	if((err = squawk_open_flifile(name,&flif,JREADONLY)) < 0)
-		return(err);
+	err = squawk_open_flifile(name, &flif, XREADONLY);
+	if (err < Success)
+		return err;
 
 	if (flif.hdr.width != vb.pencel->width
 		|| flif.hdr.height != vb.pencel->height)

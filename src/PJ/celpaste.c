@@ -495,8 +495,7 @@ SHORT oix;
 Errcode err;
 
 	oix = vs.frame_ix;
-	if(!flix.fd)
-	{
+	if (flix.xf == NULL) {
 		err = Err_not_found;
 		goto error;
 	}

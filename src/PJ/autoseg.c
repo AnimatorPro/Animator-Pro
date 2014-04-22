@@ -88,8 +88,8 @@ Abortbuf abuf;
 
 				if(!pj_i_is_empty_rec(cbuf))
 				{
-					if((err = pj_writeoset(flix.fd,cbuf,offset,size))< Success)
-					{
+					err = xffwriteoset(flix.xf, cbuf, offset, size);
+					if (err < Success) {
 						maybe_pop_most();
 						pj_free(cbuf);
 						goto GETOUT;

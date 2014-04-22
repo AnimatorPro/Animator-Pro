@@ -25,16 +25,19 @@ pj_cpfile(const char *src, const char *dst, Errcode *opt_errfile)
 	char *buf = sbuf;
 	size_t blocksize;
 
+	if (!pj_assert(src != NULL)) return Err_bad_input;
+	if (!pj_assert(dst != NULL)) return Err_bad_input;
+
 	err = xffopen(src, &s, XREADONLY);
-	if (err != Success)
+	if (err < Success)
 		goto read_error;
 
 	err = xffopen(dst, &d, XWRITEONLY);
-	if (err != Success)
+	if (err < Success)
 		goto write_error;
 
 	blocksize = PJ_COPY_FILE_BLOCK;
-	buf = trd_laskmem(blocksize);
+	buf = pj_malloc(blocksize);
 	if (buf == NULL) {
 		blocksize = sizeof(sbuf);
 		buf = sbuf;
@@ -44,7 +47,7 @@ pj_cpfile(const char *src, const char *dst, Errcode *opt_errfile)
 		size = xfread(buf, 1, blocksize, s);
 
 		err = xffwrite(d, buf, size);
-		if (err < 0)
+		if (err < Success)
 			goto write_error;
 
 		if (size < blocksize)
@@ -75,7 +78,7 @@ cleanup:
 		xffclose(&d);
 
 	if (buf != sbuf)
-		trd_freemem(buf);
+		pj_free(buf);
 
 	return err;
 }
@@ -90,8 +93,11 @@ pj_copyfile(const char *src, const char *dst)
 	Errcode err;
 	Errcode errfile;
 
+	if (!pj_assert(src != NULL)) return Err_bad_input;
+	if (!pj_assert(dst != NULL)) return Err_bad_input;
+
 	err = pj_cpfile(src, dst, &errfile);
-	if (err != Success && err != Err_no_file)
+	if (err < Success && err != Err_no_file)
 		err = errline(err, "%s", (errfile == Err_read) ? src : dst);
 
 	return err;

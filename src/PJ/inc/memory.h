@@ -79,6 +79,10 @@ extern void pj_xlate(const uint8_t *table, uint8_t *xs, unsigned int n);
 extern long mem_free, init_mem_free;
 extern long pj_mem_used, pj_max_mem_used;
 
+/* memclow.c */
+extern void *c_askmem(long nbytes);
+extern long c_freemem(void *pt);
+
 /* memtrd.c */
 extern void *trd_askmem(unsigned int count);
 extern void *trd_laskmem(long count);

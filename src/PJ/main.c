@@ -17,8 +17,6 @@
 #include "progids.h"
 #include "rastcurs.h"
 #include "resource.h"
-#include "rfile.h"
-#include "tfile.h"
 #include "vdevcall.h"
 #include "zoom.h"
 
@@ -360,9 +358,6 @@ static void cleanup(Boolean save_state)
 	if (save_state) {
 		/* move files from memory to filing system */
 		push_pics_id(flix.hdr.id.update_time);
-
-		softerr(trd_ram_to_files(), "!%s", "temp_copy", get_temp_path());
-		rcompact(); /* free blocks used for ram-disk */
 	}
 	else {
 		delete_file_list(state_temp_files);

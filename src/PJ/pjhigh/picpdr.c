@@ -10,45 +10,51 @@
 typedef struct picfile {
 	Image_file ifile;
 	Pic_header pic;
-	Jfile fd;
+	XFILE *xf;
 } Picfile;
-
 
 static void close_picfile(Image_file **pif)
 {
-Picfile *pf;
+	Picfile *pf;
 
-	if((pf = (Picfile *)(*pif)) == NULL)
-		return;
-	pj_close(pf->fd);
+	if (!pj_assert(pif != NULL)) return;
+	if (!pj_assert(*pif != NULL)) return;
+
+	pf = (Picfile *)(*pif);
+	xffclose(&pf->xf);
 	pj_freez(pif);
 }
 static Errcode pic_read_first(Image_file *imf, Rcel *screen)
 {
-Picfile *pf = (Picfile *)imf;
+	Picfile *pf = (Picfile *)imf;
 
-	return(pj_read_picbody(pf->fd,&pf->pic,(Raster *)screen,screen->cmap));
+	return pj_read_picbody(pf->xf, &pf->pic, (Raster *)screen,screen->cmap);
 }
 
-static Errcode open_picfile(Pdr *pd, char *path, Image_file **pif, 
-						  Anim_info *ainfo )
+static Errcode
+open_picfile(Pdr *pd, char *path, Image_file **pif, Anim_info *ainfo)
 {
-Picfile *pf;
-Errcode err;
-(void)pd;
+	Picfile *pf;
+	Errcode err;
+	(void)pd;
 
-	if(NULL == (*pif = pj_zalloc(sizeof(Picfile))))
-		return(Err_no_memory);
-	pf = (Picfile *)(*pif);
+	if (!pj_assert(pif != NULL)) return Err_bad_input;
 
-	if ((pf->fd = pj_open(path, JREADONLY)) == JNONE)
-		err = pj_ioerr();
+	*pif = NULL;
 
-	if((err = pj_read_pichead(pf->fd,&pf->pic)) < Success)
+	pf = pj_zalloc(sizeof(*pf));
+	if (pf == NULL)
+		return Err_no_memory;
+
+	err = xffopen(path, &pf->xf, XREADONLY);
+	if (err < Success)
 		goto error;
 
-	if(ainfo)
-	{
+	err = pj_read_pichead(pf->xf, &pf->pic);
+	if (err < Success)
+		goto error;
+
+	if (ainfo) {
 		clear_struct(ainfo);
 		ainfo->x = pf->pic.x;
 		ainfo->y = pf->pic.y;
@@ -58,10 +64,15 @@ Errcode err;
 		ainfo->num_frames = 1;
 	}
 
-	return(Success);
+	*pif = &pf->ifile;
+	return Success;
+
 error:
-	close_picfile(pif);
-	return(err);
+	if (pf->xf != NULL)
+		xffclose(&pf->xf);
+
+	pj_free(pf);
+	return err;
 }
 
 static char title_info[] = "\"PIC\" Uncompressed picture file.";

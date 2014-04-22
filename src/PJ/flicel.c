@@ -338,7 +338,6 @@ Rcel clipcel;
 Flicel *fc;
 Rcel *rc;
 Fli_frame *cbuf = NULL;
-LONG oset;
 (void)ix;
 (void)it;
 
@@ -406,11 +405,9 @@ LONG oset;
 
 				/* go back to end of file and write ring frame and finish */
 
-				if((oset = pj_seek(fc->flif.fd,0,JSEEK_END)) < 0)
-				{
-					err = oset;
+				err = xffseek(fc->flif.xf, 0, XSEEK_END);
+				if (err < Success)
 					goto error;
-				}
 			}
 			if((err = pj_fli_add_ring(cd->fliname, &fc->flif, cbuf,
 									   &clipcel, fc->rc)) < Success)

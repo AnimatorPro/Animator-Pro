@@ -120,8 +120,7 @@ xfopen(const char *path, enum XReadWriteMode mode)
 	if (!xf)
 		return NULL;
 
-	/* temp file system. */
-	if (path[0] == TDEV_MED && path[1] == DEV_DELIM) {
+	if (is_tdrive(path)) {
 		path += 2;
 	}
 
@@ -376,6 +375,17 @@ xfftell(XFILE *xf)
 	if (offset < 0)
 		return xffile_error();
 	return offset;
+}
+
+long
+xffseek_tell(XFILE *xf, long offset, enum XSeekWhence whence)
+{
+	Errcode err;
+
+	err = xffseek(xf, offset, whence);
+	if (err != Success)
+		return err;
+	return xfftell(xf);
 }
 
 Errcode

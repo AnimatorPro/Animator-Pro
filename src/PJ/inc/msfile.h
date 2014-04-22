@@ -5,10 +5,6 @@
 	#include "stdtypes.h"
 #endif
 
-#ifndef FILEMODE_H
-	#include "filemode.h"
-#endif
-
 typedef int Doserr;
 
 #define Dsuccess 0

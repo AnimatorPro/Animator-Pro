@@ -16,9 +16,9 @@ Errcode pj_i_add_next_rec(char *name, /* name for error reporting
 Errcode err;
 LONG size = ((Fli_frame *)frame)->size;
 
-	if (pj_write(flif->fd, frame, size) < size)
-	{
-		if((err = pj_ioerr()) == Err_eof)
+	err = xffwrite(flif->xf, frame, size);
+	if (err < Success) {
+		if (err == Err_eof)
 			err = Err_truncated;
 
 		err = fli_write_error(err,name);
@@ -41,7 +41,7 @@ Errcode pj_i_add_frame1_rec(char *name, /* name for error reporting
 {
 Errcode err;
 
-	flif->hdr.size = flif->hdr.frame1_oset = pj_tell(flif->fd);
+	flif->hdr.size = flif->hdr.frame1_oset = xfftell(flif->xf);
 	if(flif->hdr.size < 0)
 		return(fli_write_error((Errcode)flif->hdr.size,name));
 	flif->hdr.frame_count = 0;

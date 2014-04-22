@@ -13,6 +13,7 @@
 #include "menus.h"
 #include "picdrive.h"
 #include "picfile.h"
+#include "pjassert.h"
 #include "ptrmacro.h"
 #include "softmenu.h"
 #include "unchunk.h"
@@ -92,7 +93,7 @@ SHORT undoix;
 Boolean overwrite;
 Flx ocurflx;
 
-	if (!flix.fd)
+	if (flix.xf == NULL)
 		return(Err_bad_input);
 
 	flx_clear_olays(); /* undraw cels cursors etc */
@@ -190,8 +191,10 @@ Flx ocurflx;
 		/* re read old record from its old file slot */
 		if(!overwrite && ocurflx.fsize > sizeof(Fli_frame))
 		{
-			if((err = pj_readoset(flix.fd,cbuf,ocurflx.foff,ocurflx.fsize))<0)
+			err = xffreadoset(flix.xf, cbuf, ocurflx.foff, ocurflx.fsize);
+			if (err < Success)
 				goto error;
+
 			if(cbuf->type != FCID_FRAME)
 			{
 				err = Err_bad_magic;
@@ -246,7 +249,7 @@ static Errcode copy_flx_prefix(Flxfile *flx, Flifile *flif)
 Chunkparse_data pd;
 Errcode err;
 
-	init_chunkparse(&pd,flx->fd,FCID_PREFIX,sizeof(Flx_head),0,0);
+	init_chunkparse(&pd, flx->xf, FCID_PREFIX, sizeof(Flx_head), 0, 0);
 	while(get_next_chunk(&pd))
 	{
 		switch(pd.type)
@@ -255,20 +258,18 @@ Errcode err;
 			case FP_FREE:
 				break;
 			case (USHORT)ROOT_CHUNK_TYPE: /* save old size */
-
-				if((err = copy_parsed_chunk(&pd, flif->fd)) < Success)
+				err = copy_parsed_chunk(&pd, flif->xf);
+				if (err < Success)
 					goto error;
 
 				/* install a settings chunk following prefix chunk */
-
-				if((err = write_fli_settings(flif->fd,
-											FP_VSETTINGS)) < Success)
-				{
+				err = write_fli_settings(flif->xf, FP_VSETTINGS);
+				if (err < Success)
 					goto error;
-				}
 				break;
 			default:
-				if((err = copy_parsed_chunk(&pd, flif->fd)) < Success)
+				err = copy_parsed_chunk(&pd, flif->xf);
+				if (err < Success)
 					goto error;
 				break;
 		}
@@ -282,17 +283,16 @@ Errcode err;
 
 	/* install prefix size write it and re-seek to end of prefix */
 
-	pd.fchunk.size = pj_tell(flif->fd) - sizeof(Fli_head);
+	pd.fchunk.size = xfftell(flif->xf) - sizeof(Fli_head);
 	pd.fchunk.type = FCID_PREFIX;
 
-	if((err = pj_writeoset(flif->fd,&pd.fchunk,
-						   sizeof(Fli_head),sizeof(Chunk_id))) < Success)
-	{
+	err = xffwriteoset(flif->xf, &pd.fchunk,
+			sizeof(Fli_head), sizeof(Chunk_id));
+	if (err < Success)
 		goto error;
-	}
 
 	/* back to end of file */
-	err = pj_seek(flif->fd,pd.fchunk.size+sizeof(Fli_head),JSEEK_START);
+	err = xffseek(flif->xf, pd.fchunk.size+sizeof(Fli_head), XSEEK_SET);
 
 error:
 	return(err);
@@ -328,8 +328,8 @@ Fli_frame *cbuf;
 Flifile flif;    /* output fli */
 Errcode err;
 
-	if(!flix.fd)
-		return(Err_bad_input);
+	if (!pj_assert(flix.xf != NULL)) return Err_bad_input;
+
 	clear_struct(&flif);
 
 	scrub_cur_frame();
@@ -588,8 +588,7 @@ char pdr_name[PATH_SIZE];
 Boolean fli_format;
 SHORT oframe_ix;
 
-	if(!flix.fd)
-		return(Err_bad_input);
+	if (!pj_assert(flix.xf != NULL)) return Err_bad_input;
 
 	if(sstart >= flix.hdr.frame_count)
 		sstart = flix.hdr.frame_count-1;

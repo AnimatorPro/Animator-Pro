@@ -24,16 +24,18 @@ Flipath fp;
 
 	if((err = set_flipath(fliname,flid,&fp)) < Success)
 		return(err);
-	return(pj_writeoset(flx->fd,&fp,flx->hdr.path_oset,fp.id.size));
+
+	return xffwriteoset(flx->xf, &fp, flx->hdr.path_oset, fp.id.size);
 }
 Errcode read_flx_path(Flxfile *flx, Flipath *fp)
 {
-Errcode err;
+	Errcode err;
 
-	err = pj_readoset(flx->fd,fp,flx->hdr.path_oset,sizeof(*fp));
-	if(err >= Success && fp->id.type != FP_FLIPATH)
+	err = xffreadoset(flx->xf, fp, flx->hdr.path_oset, sizeof(*fp));
+	if (err >= Success && fp->id.type != FP_FLIPATH)
 		err = Err_bad_magic;
-	return(err);
+
+	return err;
 }
 Errcode create_flxfile(char *path, Flxfile *flx)
 /* this will always leave file position at end of header and path record */
@@ -80,8 +82,10 @@ LONG size = ((Fli_frame *)frame)->size;
 	}
 	else
 	{
-		if((err = pj_writeoset(flix.fd,frame,flx->foff,size)) < Success)
+		err = xffwriteoset(flix.xf, frame, flx->foff, size);
+		if (err < Success)
 			goto error;
+
 		flx->fsize = size;
 		(flx + 1)->foff = flx->foff + size;
 	}

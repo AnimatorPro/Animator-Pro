@@ -63,6 +63,7 @@ extern Errcode xffreadoset(XFILE *xf, void *buf, long offset, size_t size);
 extern Errcode xffwriteoset(XFILE *xf, void *buf, long offset, size_t size);
 extern Errcode xffseek(XFILE *xf, long offset, enum XSeekWhence whence);
 extern long xfftell(XFILE *xf);
+extern long xffseek_tell(XFILE *xf, long offset, enum XSeekWhence whence);
 extern Errcode xffile_error(void);
 
 /* Check inclusion of deprecated file wrappers. */

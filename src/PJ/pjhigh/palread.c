@@ -3,25 +3,28 @@
 #include "palchunk.h"
 #include "ptrmacro.h"
 
-Errcode pj_read_palchunk(Jfile fd, Fat_chunk *id,Cmap *cmap)
-
-/* assuming leading fat_chunk is read in already this reads the rest of the
- * data.  Designed for use with chunk parser, will not neccessarily read 
- * all the data */
+/* Function: pj_read_palchunk
+ *
+ *  Assuming leading fat_chunk is read in already, this reads the rest
+ *  of the data.  Designed for use with chunk parser, will not
+ *  necessarily read all the data.
+ */
+Errcode
+pj_read_palchunk(XFILE *xf, Fat_chunk *id, Cmap *cmap)
 {
-LONG ssize;
-LONG dsize;
+	LONG ssize;
+	LONG dsize;
 
-	if(id->version != PAL_RGB256_VERS)
-		return(Err_version);
+	if (id->version != PAL_RGB256_VERS)
+		return Err_version;
 
 	ssize = id->size - sizeof(Fat_chunk);
 	if (ssize < (LONG)sizeof(Rgb3) || (ssize % sizeof(Rgb3)) != 0)
-		return(Err_corrupted);
+		return Err_corrupted;
 
 	dsize = cmap->num_colors * sizeof(Rgb3);
-	if(ssize > dsize)
+	if (ssize > dsize)
 		ssize = dsize;
-	return(pj_read_ecode(fd,cmap->ctab,dsize));
-}
 
+	return xffread(xf, cmap->ctab, dsize);
+}

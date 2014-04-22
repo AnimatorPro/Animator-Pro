@@ -328,13 +328,14 @@ int i;
 	 * start of new data is beyond end of existing data make sure file is
 	 * big enough for seek to data start */
 
-	if(fend <= doff) 
-	{
-		if((err = pj_write_zeros(flix.fd, fend, doff - fend + 1)) < Success)
+	if (fend <= doff) {
+		err = pj_write_zeros(flix.xf, fend, doff - fend + 1);
+		if (err < Success)
 			goto error;
 	}
 
-	if((err = copy_in_file(flix.fd, fend-datoset, datoset, doff)) < Success)
+	err = copy_in_file(flix.xf, fend-datoset, datoset, doff);
+	if (err < Success)
 	  	goto error;
 
 	i = flix.hdr.frame_count;

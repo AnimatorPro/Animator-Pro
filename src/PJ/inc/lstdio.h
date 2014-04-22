@@ -9,10 +9,6 @@
 	#include "stdtypes.h"
 #endif 
 
-#ifndef FILEMODE_H
-	#include "filemode.h"
-#endif
-
 #ifndef  ERRCODES_H
 	#include "errcodes.h"
 #endif 

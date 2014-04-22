@@ -19,23 +19,21 @@ static Errcode load_fli(char *title);
 
 Errcode read_flx_frame(Flxfile *flx, Fli_frame *frame, int ix)
 {
-Errcode err;
+	Errcode err;
 
-	if(flx->idx[ix].fsize <= sizeof(Fli_frame))
-	{
+	if (flx->idx[ix].fsize <= sizeof(Fli_frame)) {
 		pj_i_get_empty_rec(frame);
-		return(Success);
+		return Success;
 	}
-	if((err = pj_readoset(flx->fd,frame,
-						flx->idx[ix].foff,flx->idx[ix].fsize)) < Success)
-	{
-		return(softerr(err, "tflx_read1"));
-	}
-	if(frame->type != FCID_FRAME || frame->size != flx->idx[ix].fsize)
-	{
-		return(softerr(Err_bad_magic,"tflx_frame"));
-	}
-	return(Success);
+
+	err = xffreadoset(flx->xf, frame, flx->idx[ix].foff, flx->idx[ix].fsize);
+	if (err < Success)
+		return softerr(err, "tflx_read1");
+
+	if (frame->type != FCID_FRAME || frame->size != flx->idx[ix].fsize)
+		return softerr(Err_bad_magic, "tflx_frame");
+
+	return Success;
 }
 Errcode gb_unfli_flx_frame(Flxfile *flx, Rcel *screen,int ix,
 						   int wait,Fli_frame *frame)
@@ -324,8 +322,9 @@ void last_frame(void *data)
 {
 	(void)data;
 
-	if (!flix.fd)
+	if (flix.xf == NULL)
 		return;
+
 	flx_clear_olays();
 	if (vs.frame_ix == flix.hdr.frame_count-1)
 		return;	/* already there... */
@@ -342,7 +341,7 @@ void last_frame(void *data)
 void flx_seek_frame(SHORT frame)
 /* scrub the cur-frame, and do a tseek */
 {
-	if(!flix.fd)
+	if (flix.xf == NULL)
 		return;
 	flx_clear_olays();
 	frame = wrap_frame(frame);
@@ -394,8 +393,9 @@ void first_frame(void *data)
 {
 	(void)data;
 
-	if (!flix.fd)
+	if (flix.xf == NULL)
 		return;
+
 	flx_clear_olays();
 	scrub_cur_frame();
 	if(unfli(undof,0,1) >= 0)
@@ -412,8 +412,9 @@ void next_frame(void *data)
 	int undoix;
 	(void)data;
 
-	if (!flix.fd)
+	if (flix.xf == NULL)
 		return;
+
 	flx_clear_olays();
 	oix = vs.frame_ix;
 	undoix = scrub_cur_frame()-1;
@@ -436,12 +437,11 @@ void next_frame(void *data)
 static Errcode vp_playit(LONG frames)
 /* Ya, go play dem frames.  Replay temp file */
 {
-ULONG clock;
-Errcode err;
+	Errcode err;
+	ULONG clock;
 
 	flx_clear_olays(); /* undraw cels cursors etc */
-	if(flix.fd)
-	{
+	if (flix.xf != NULL) {
 		clock = pj_clock_1000();
 		hide_mouse();
 		for (;;)

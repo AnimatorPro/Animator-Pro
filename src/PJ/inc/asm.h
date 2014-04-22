@@ -18,6 +18,7 @@
 #include "gfx.h"
 #endif /* GFX_H */
 
+struct fndata;
 
 #ifdef __FOOLISH__
 
@@ -91,7 +92,7 @@ void jcomm(union abcd_regs *comm_regs);
 int pj_key_is(void);
 int pj_key_in(void);
 int dos_key_shift(void);
-void pj_dset_dta(Fndata *dta);
+void pj_dset_dta(struct fndata *dta);
 Boolean pj_dfirst(char *pattern, int attributes);
 Boolean pj_dnext(void);
 int pj_dset_drive(int drive); /* 0 = A: 1 = B: ... returns # of drives installed*/

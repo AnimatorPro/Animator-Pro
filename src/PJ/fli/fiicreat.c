@@ -6,10 +6,11 @@ Errcode pj_i_create(char *path, Flifile *flif)
 /* subroutine to fli_create() used in animator code 
  * by create_flxfile() */
 {
-Errcode err;
+	Errcode err;
 
-	if((flif->fd = pj_create(path,JREADWRITE)) == JNONE)
-		goto jio_error;
+	err = xffopen(path, &flif->xf, XREADWRITE_CLOBBER);
+	if (err < Success)
+		goto error;
 
 	pj_i_update_id(flif);
 	flif->hdr.id.create_time = flif->hdr.id.update_time;
@@ -19,10 +20,9 @@ Errcode err;
 	if((err = pj_i_flush_head(flif)) < Success)
 		goto error;
 
-	return(Success);
-jio_error:
-	err = pj_ioerr();
+	return Success;
+
 error:
 	pj_fli_close(flif);
-	return(err);
+	return err;
 }

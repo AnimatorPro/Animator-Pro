@@ -32,12 +32,12 @@ Errcode pj_fli_read_uncomp(char *fname, Flifile *flif, Rcel *fscreen,
  *				  was sending it data such that x/y ended up 0 anyway.
  *************************************************************************/
 {
-long size_left;
-Errcode err;
+	Errcode err;
+	long size_left;
 
-
-	if (pj_read(flif->fd, ff, sizeof(*ff)) < (long)sizeof(*ff))
-		goto jio_error;
+	err = xffread(flif->xf, ff, sizeof(*ff));
+	if (err != Success)
+		goto error;
 
 	if (ff->type != FCID_FRAME)
 	{
@@ -50,16 +50,17 @@ Errcode err;
 		goto error;
 	}
 	size_left = ff->size - sizeof(*ff);
-	if (pj_read(flif->fd,ff+1,size_left) < size_left)
-		goto jio_error;
+
+	err = xffread(flif->xf, ff+1, size_left);
+	if (err < Success)
+		goto error;
+
 	if(fscreen)
 	{
 		pj_fli_uncomp_frame(fscreen,ff,colors);
 	}
 	return(Success);
 
-jio_error:
-	err = pj_ioerr();
 error:
 	if(err == Err_eof)
 		err = Err_truncated;

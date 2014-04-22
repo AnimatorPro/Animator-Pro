@@ -106,75 +106,88 @@ Errcode alloc_flx_olaytab(Flxfile *flx, int tablesize)
 	flx->overlays_in_table = tablesize;
 	return(Success);
 }
-static Errcode write_olaylist(Jfile fd, int frame)
 
-/* writes a list of overlays for a frame out to a file with ring frame as
- * first frame 0 */
+/* Function: write_olaylist
+ *
+ *  Writes a list of overlays for a frame out to a file with ring
+ *  frame as first frame 0.
+ */
+static Errcode
+write_olaylist(XFILE *xf, int frame)
 {
-Errcode err;
-LONG size;
-Flx_overlay *olay;
+	Errcode err;
+	LONG size;
+	Flx_overlay *olay;
 
-	if(frame == 0)
+	if (frame == 0)
 		olay = flix.overlays[flix.hdr.frame_count];
 	else
 		olay = flix.overlays[frame];
 
-	while(olay)
-	{
-		if(olay->flags & FOVL_FLIF)
+	while (olay != NULL) {
+		if (olay->flags & FOVL_FLIF)
 			size = OFFSET(Flx_overlay,overlay) + olay->overlay.size;
 		else
 			size = POSTOSET(Flx_overlay,cpos);
-		if((err = jwrite_chunk(fd,olay,size,frame)) < 0)
-			return(err);
+
+		err = jwrite_chunk(xf, olay, size, frame);
+		if (err < Success)
+			return err;
+
 		olay = olay->next;
 	}
-	return(Success);
+
+	return Success;
 }
-Errcode push_flx_overlays(void)
 
-/* push the flx overlays into a temp file the Chunk_id type field is the
- * the frame number for the overlay, they are stored in sequential order */
+/* Function: push_flx_overlays
+ *
+ *  Push the flx overlays into a temp file.  The Chunk_id type field
+ *  is the the frame number for the overlay.  They are stored in
+ *  sequential order.
+ */
+Errcode
+push_flx_overlays(void)
 {
-Errcode err;
-Chunk_id fc;
-Jfile tf;
-SHORT frame;
+	Errcode err;
+	Chunk_id fc;
+	XFILE *xf;
+	SHORT frame;
 
-	if(!flix.overlays)
-	{
+	if (!flix.overlays) {
 		pj_delete(flxolayname);
-		return(Success);
+		return Success;
 	}
 
- 	if(JNONE == (tf = pj_create(flxolayname,JREADWRITE)))
-	{
-		err = pj_ioerr();
-		goto error;
-	}
-	if((err = pj_write_ecode(tf,&fc,sizeof(fc))) < 0)
+	err = xffopen(flxolayname, &xf, XREADWRITE_CLOBBER);
+	if (err < Success)
+		return err;
+
+	err = xffwrite(xf, &fc, sizeof(fc));
+	if (err < Success)
 		goto error;
 
-	for(frame = 0;frame < flix.hdr.frame_count; ++frame)
-	{
-		if((err = write_olaylist(tf,frame)) < 0)
+	for (frame = 0; frame < flix.hdr.frame_count; frame++) {
+		err = write_olaylist(xf, frame);
+		if (err < Success)
 			goto error;
 	}
 
-	fc.size = pj_tell(tf);
+	fc.size = xfftell(xf);
 	fc.type = FOVL_MAGIC;
 
-	if((err = pj_writeoset(tf,&fc,0,sizeof(fc))) < 0)
+	err = xffwriteoset(xf, &fc, 0, sizeof(fc));
+	if (err < Success)
 		goto error;
 
 	free_flx_overlays(&flix);
-	goto done;
+	xffclose(&xf);
+	return Success;
+
 error:
+	xffclose(&xf);
 	pj_delete(flxolayname);
-done:
-	pj_close(tf);
-	return(err);
+	return err;
 }
 
 /* Function: pop_flx_overlays

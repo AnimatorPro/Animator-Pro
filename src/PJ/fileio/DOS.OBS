@@ -8,6 +8,5 @@
 +dosisdev.obj
 +dosmkdir.obj
 +dosnext.obj
-+dostell.obj
 +dossetdr.obj
 +dosetdri.obj

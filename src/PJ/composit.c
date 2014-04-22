@@ -214,7 +214,8 @@ Boolean force_read;
 	if(NULL == (cbuf = pj_malloc(cbufsize)))
 		goto nomem_error;
 
-	if((err = reopen_fcelio(src, JREADONLY)) < Success)
+	err = reopen_fcelio(src, XREADONLY);
+	if (err < Success)
 		goto error;
 
 	if((err = gb_seek_fcel_frame(src, start, cbuf, force_read)) < Success)
@@ -525,9 +526,13 @@ Celcfit blend_cfit;
 	}
 
 	init_celcfit(&blend_cfit);
-	if((err = reopen_fcelio(ccb.start_cel, JREADONLY)) < Success)
+
+	err = reopen_fcelio(ccb.start_cel, XREADONLY);
+	if (err < Success)
 		goto error;
-	if((err = reopen_fcelio(ccb.end_cel, JREADONLY)) < Success)
+
+	err = reopen_fcelio(ccb.end_cel, XREADONLY);
+	if (err < Success)
 		goto error;
 
 	cbufsize = pj_fli_cel_cbuf_size(pfd.dest);
@@ -1188,7 +1193,7 @@ Ucoor width, height;
 static Errcode init_flicel_mask(Pframedat *pfd)
 {
 	init_masked_pframe(pfd);
-	return(reopen_fcelio(ccb.mask_cel,JREADONLY));
+	return reopen_fcelio(ccb.mask_cel, XREADONLY);
 }
 static void cleanup_flicel_mask(Pframedat *pfd)
 {

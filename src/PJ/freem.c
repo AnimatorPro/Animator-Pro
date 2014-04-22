@@ -13,7 +13,6 @@
 #include "mask.h"
 #include "memory.h"
 #include "pentools.h"
-#include "rfile.h"
 #include "tfile.h"
 #include "zoom.h"
 
@@ -222,65 +221,10 @@ Errcode err;
 		return(err);
 	return(push_screen_id(time_id));
 }
-static void to_trd_maxmem(void)
-/* make sure temp file system leaves enough for compression buffer and 
- * extra screen */
+
+void
+set_trd_maxmem(void)
 {
-void *cbuf;
-void *extra_screen;
-long size;
-long cbuf_size;
-Jfile ofd;
-long ooset;
-Boolean got_bufs;
-
-	if((ofd = flix.fd) != JNONE)
-	{
-		ooset = pj_tell(ofd);
-		pj_close(flix.fd);
-		flix.fd = JNONE;
-	}
-
-	/* maximum of fli or cel compression buffer */
-	cbuf_size = pj_fli_cel_cbuf_size(vb.pencel);
-	if(thecel)
-	{
-		if((size = pj_fli_cel_cbuf_size(thecel->rc)) > cbuf_size)
-			cbuf_size = size;
-	}
-	/* make sure that buf is big enough for copyfile operation */
-	if (cbuf_size < PJ_COPY_FILE_BLOCK)
-		cbuf_size = PJ_COPY_FILE_BLOCK;
-	cbuf = trd_askmem(cbuf_size);
-	extra_screen = trd_askmem(pj_fli_cel_cbuf_size(vb.pencel));
-	got_bufs = (cbuf != NULL && extra_screen != NULL);
-
-	rdisk_set_max_to_avail(); /* set to max ram available */
-	/* if all is currently popped we try to move tempflx back to ram */
-
-	trd_freez(&cbuf);			/* free up memory for file copy */
-	trd_freez(&extra_screen);
-
-	if(got_bufs && pushed_mask <= 0 && pushed_alt <= 0 && pushed_cel <= 0)
-	{
-		trd_up_to_ram(tflxname); /* move file to ram if not there yet */
-	}
-
-	if(ofd != JNONE)
-	{
-		if((flix.fd = pj_open(tflxname,JREADWRITE)) == JNONE)
-		{
-			softerr(pj_ioerr(),"tflx_reopen");
-			empty_tempflx(1);
-		}
-		else
-			pj_seek(flix.fd,ooset,JSEEK_START);
-	}
-}
-void set_trd_maxmem(void)
-{
-	rem_check_tflx_toram();
-	to_trd_maxmem();
 }
 
 /*** checker "task" called from within input loop installed by doauto() ***/
@@ -295,15 +239,12 @@ static int trdtask_func(Waitask *wt)
 		|| pushed_alt > 0 
 		|| pushed_cel > 0
 		|| pushed_mask > 0
-		|| flix.fd == JNONE    /* wait till file is open */
+		|| flix.xf == NULL     /* wait till file is open */
 		|| cgroup_hidden(vb.screen) /* wait till menus are shown */
 		|| zoom_hidden()) /* wait till rezoomed */
 	{
 		return(0);
 	}
-
-	if(!is_ram_file(flix.fd)) /* Only if it is no in ram already */
-		to_trd_maxmem();
 
 	return(TRUE); /* done with it */
 }
@@ -314,8 +255,6 @@ void rem_check_tflx_toram(void)
 void add_check_tflx_toram(void)
 {
 	if(WT_ISATTACHED(&trdtask))
-		return;
-	if(is_ram_file(flix.fd)) /* it is in ram already, forget it */
 		return;
 	init_waitask(&trdtask,trdtask_func,NULL,WT_KILLCURSOR);
 	add_waitask(&trdtask);

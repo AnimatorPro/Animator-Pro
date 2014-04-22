@@ -9,10 +9,6 @@
 	#include "rexlib.h" 
 #endif
 
-#ifndef FILEMODE_H
-	#include "filemode.h"
-#endif
-
 typedef struct syslib
 	{
 	Libhead hdr;

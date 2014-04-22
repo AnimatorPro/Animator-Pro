@@ -18,6 +18,7 @@ Errcode init_mem(long max_mem)
 /* this is actually optional in the cmem library but the mem_free vars will
  * not be accurate and there will be no system overhead cushion */
 {
+#if 0
 register long size;
 char *pool;
 
@@ -32,6 +33,10 @@ char *pool;
 		}
 	mem_free = size;
 	return(1);
+#else
+	(void)max_mem;
+	return Success;
+#endif
 }
 
 void *c_askmem(long nbytes)

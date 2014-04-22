@@ -32,7 +32,7 @@ typedef struct autoarg {
 	SHORT doing_overlays;
 	Fcelpos cpos;  /* cel position for restore on abort */
 	SHORT cframe;    /* cel frame for restore on abort */
-	SHORT celjmode;
+	SHORT celjmode;  /* XReadWriteMode. */
 } Autoarg;
 
 #define AUTO_READONLY	0x0001  /* doesn't need to save screen only reads 

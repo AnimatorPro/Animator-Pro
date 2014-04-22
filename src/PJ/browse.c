@@ -519,8 +519,8 @@ Rcel stack_cel;	/* (clipped) cel to play fli */
 Rcel *cel;
 int i;
 
-	if((err = pj_fli_open(name, &flif, JREADONLY)) < Success)
-	{
+	err = pj_fli_open(name, &flif, XREADONLY);
+	if (err < Success) {
 		pj_clear_rast(screen);
 		if((err = load_pic(name,screen,0,TRUE)) >= Success)
 		{
@@ -537,7 +537,7 @@ int i;
 	if (cel->width < screen->width || cel->height < screen->height)
 		pj_clear_rast(screen);
 
-	pj_seek(flif.fd, flif.hdr.frame1_oset, JSEEK_START);
+	xffseek(flif.xf, flif.hdr.frame1_oset, XSEEK_SET);
 	clock = pj_clock_1000();
 	hide_mouse();
 
@@ -554,9 +554,8 @@ int i;
 			if (clock > pj_clock_1000())
 				clock = pj_clock_1000();
 		}
-		if (loop)
-		{
-			pj_seek(flif.fd, flif.hdr.frame2_oset, JSEEK_START);
+		if (loop) {
+			xfseek(flif.xf, flif.hdr.frame2_oset, XSEEK_SET);
 			i = 1; /* got first frame already last ringed it */
 		}
 	}
@@ -614,33 +613,30 @@ Rectangle brect;
 
 static Errcode show_fli_info(char *title)
 {
-Errcode err;
-Fli_head fh;
-Jfile fd = JNONE;
-Pic_header pic;
-LONG size;
+	Errcode err;
+	Fli_head fh;
+	XFILE *xf;
+	Pic_header pic;
+	LONG size;
 
-
-	if((err = pj_fli_read_head(title, &fh, &fd, JREADONLY)) >= Success)
-	{
+	err = pj_fli_read_head(title, &fh, &xf, XREADONLY);
+	if (err >= Success) {
 		soft_continu_box( "!%s%d%ld%ld%d%d%d", "browse_info",
 						  title, fh.frame_count, fh.size,
 						  fh.size/(fh.frame_count+1),
 						  millisec_to_jiffies(fh.speed), fh.width, fh.height );
 	}
-	else
-	{
-		if ((fd = pj_open(title, JREADONLY)) == JNONE)
-		{
-			err = pj_ioerr();
-			goto error;
-		}
-		if(pj_read_pichead(fd,&pic) < Success) /* note use error code above */ 
+	else {
+		err = xffopen(title, &xf, XREADONLY);
+		if (err < Success)
 			goto error;
 
-  		if((size = pj_seek(fd,0,JSEEK_END)) < 0)
-		{
-			err = fh.size;
+		if (pj_read_pichead(xf, &pic) < Success) /* note use error code above */
+			goto error;
+
+		size = xffseek_tell(xf, 0, XSEEK_END);
+		if (size < 0) {
+			err = size;
 			goto error;
 		}
 
@@ -648,9 +644,12 @@ LONG size;
 						  title, size, pic.width, pic.height );
 	}
 	err = Success;
+
 error:
-	pj_close(fd);
-	return(softerr(err,"!%s","bro_info",title));
+	if (xf != NULL)
+		xffclose(&xf);
+
+	return softerr(err, "!%s", "bro_info", title);
 }
 
 static void

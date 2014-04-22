@@ -1,4 +1,4 @@
-add_definitions(-DTRD_MEMORY)
+add_definitions(-DCLIB_MEMORY)
 
 ## very low level utilities, assembler interfaces etc
 set(LOWUTIL_SRC_FILES
@@ -10,10 +10,10 @@ set(LOWUTIL_SRC_FILES
 	)
 
 ## temporary file system compatible memory management
-set(MEMTRD_SRC_FILES
+set(MEMC_SRC_FILES
 	memalloc.c
-	memtrd.c
-	memtrdlo.c
+	memcask.c
+	memclow.c
 	)
 
 ## basic memory oriented utilities
@@ -110,6 +110,6 @@ add_library(trdutil
 	${IMATH_SRC_FILES}
 	${LINKLIST_SRC_FILES}
 	${LOWUTIL_SRC_FILES}
-	${MEMTRD_SRC_FILES}
+	${MEMC_SRC_FILES}
 	${MEM_SRC_FILES}
 	${STR_SRC_FILES})

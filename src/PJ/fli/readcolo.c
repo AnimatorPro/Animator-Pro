@@ -15,8 +15,9 @@ LONG oset;
 
 	oset = flif->hdr.frame1_oset;
 
-	if((err = pj_readoset(flif->fd,&ff,oset,sizeof(ff))) < 0)
-		return(err);
+	err = xffreadoset(flif->xf, &ff, oset, sizeof(ff));
+	if (err < Success)
+		return err;
 
 	if((err=pj_fli_alloc_cbuf((void *)&chunk,16,16,cmap->num_colors))<0)
 		return(err);
@@ -29,8 +30,10 @@ LONG oset;
 		if (ff.size < (long)sizeof(Chunk_id))
 			goto corrupted;
 
-		if((err = pj_readoset(flif->fd,chunk,oset,sizeof(Chunk_id))) < 0)
+		err = xffreadoset(flif->xf, chunk, oset, sizeof(Chunk_id));
+		if (err < Success)
 			goto out;
+
 		if((ff.size -= chunk->size) < 0)
 			goto corrupted;
 		oset += chunk->size;
@@ -43,11 +46,10 @@ LONG oset;
 			case FLI_COLOR256:
 				uncomp = pj_fcuncomp;
 			readit:
-				if((err = pj_read_ecode(flif->fd,chunk,
-									  chunk->size - sizeof(Chunk_id))) < 0)
-				{
+				err = xffread(flif->xf, chunk, chunk->size - sizeof(Chunk_id));
+				if (err < Success)
 					goto out;
-				}
+
 				(*uncomp)((const UBYTE *)chunk, cmap->ctab);
 				goto out;
 			default:

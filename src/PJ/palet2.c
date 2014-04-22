@@ -407,7 +407,7 @@ autoarg_func how;
 
 	if((err = pj_col_load(title, new_cmap)) < Success)
 	{
-		if(pj_fli_open(title,&flif,JREADONLY) < Success)
+		if (pj_fli_open(title, &flif, XREADONLY) < Success)
 			goto error;
 
 		if((fliret = fli_read_colors(&flif,new_cmap)) < Success)
