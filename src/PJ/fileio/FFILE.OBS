@@ -1,8 +1,0 @@
-+fferrno.obj
-+ffopen.obj
-+ffread.obj
-+ffreados.obj
-+ffwrite.obj
-+ffwriteo.obj
-+ffseek.obj
-+fftell.obj

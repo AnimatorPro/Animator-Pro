@@ -55,21 +55,6 @@ JFUTILSO = \
  jfgulp.obj jfinsert.obj jfpisfix.obj \
  jfwrite0.obj
  
-## ansi spec standard io file system that calls jfile low level routines **** 
-
-LFILEO = \
- lflush.obj lfgetc.obj lfgets.obj lfile.obj lfprintf.obj lfputc.obj\
- lfputs.obj lfread.obj lfrewind.obj lfseek.obj lfsoprtf.obj lfstdfil.obj\
- lftell.obj lfungetc.obj lfvprtf.obj lfwrite.obj
- 
-## ffile shels around ansi file routines that handle errors and have
-## other niceties we like in pj *****
-
-FFILEO = \
- fferrno.obj \
- ffopen.obj ffread.obj ffreados.obj ffseek.obj fftell.obj\
- ffwrite.obj ffwriteo.obj
-
 ## XFILE
 XFILEO = xfile.obj
 
@@ -88,31 +73,3 @@ trdfile.lib: makefile\
  wlib /n trdfile.lib \
 	@dos.obs @jdevice.obs @fparse.obs @jfiletrd.obs \
 	@jfutils.obs @xfile.obs
-
-#** library with dos and lstdio file system and all utilities *
-
-doslfile.lib:	makefile\
-				$(DOSO) dos.obs\
-				$(JFDEVO) jdevice.obs\
-				$(FPARSEO) fparse.obs\
-				$(JFILEDO) jfiledos.obs\
-				$(JFUTILSO) jfutils.obs\
-				$(LFILEO) lfile.obs\
-				$(FLFILEO) flfile.obs
- wlib /n doslfile.lib \
-	@dos.obs @jdevice.obs @fparse.obs @jfiledos.obs \
-	@jfutils.obs @lfile.obs @flfile.obs
-
-#** library with dos and stdio (no lfile) file system and all utilities *
-
-dosfile.lib:	makefile\
-				$(DOSO) dos.obs\
-				$(JFDEVO) jdevice.obs\
-				$(FPARSEO) fparse.obs\
-				$(JFILEDO) jfiledos.obs\
-				$(JFUTILSO) jfutils.obs\
-		   		$(FFILEO) ffile.obs
- wlib /n dosfile.lib \
-	@dos.obs @jdevice.obs @fparse.obs @jfiledos.obs \
-	@jfutils.obs @ffile.obs
-
