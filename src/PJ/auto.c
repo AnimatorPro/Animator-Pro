@@ -725,7 +725,6 @@ void auto_setup(Autoarg *aa)
 
 /* undo stuff and common setup stuff before executing auto drawer */
 {
-	rem_check_tflx_toram();
 	flx_clear_olays();
 	if(aa->flags & AUTO_HIDEMP)
 		hide_mp();
@@ -795,8 +794,6 @@ Errcode auto_restores(Autoarg *aa,Errcode err)
 		show_mp();
 	set_abort_verify(NULL, NULL);
 	flx_draw_olays();
-	if(!aa->in_preview)
-		add_check_tflx_toram();
 	see_cmap();  /* some error cases may not sync colormap! */
 	return(err);
 }

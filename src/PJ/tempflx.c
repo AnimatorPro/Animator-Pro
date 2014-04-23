@@ -115,7 +115,6 @@ void flush_tflx(void)
 }
 void close_tflx(void)
 {
-	rem_check_tflx_toram(); /* fudgy but this will take it out */
 	vs.frame_ix = 0;
 	close_flx(&flix);
 }

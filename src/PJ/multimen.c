@@ -461,7 +461,6 @@ static Button *disabtab[] = {
 	menu_to_cursor(vb.screen, &mum_menu);
 	err = do_reqloop(vb.screen,&mum_menu,NULL,NULL,NULL);
 	vl.undoit = oundo;
-	add_check_tflx_toram(); /* something here may have forced it out */
 
 error:
 	smu_free_scatters(&ss);

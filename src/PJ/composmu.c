@@ -848,8 +848,6 @@ error:
 early_error:
 	smu_free_scatters(&ss);
 	softerr(err,"join_menu");
-	add_check_tflx_toram();
-	return;
 }
 void qdo_composite(void)
 {

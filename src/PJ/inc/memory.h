@@ -108,8 +108,6 @@ extern Errcode pop_cel(void);
 extern Errcode push_most(void);
 extern Errcode push_pics_id(LONG time_id);
 extern void set_trd_maxmem(void);
-extern void rem_check_tflx_toram(void);
-extern void add_check_tflx_toram(void);
 extern void pop_most(void);
 extern void maybe_push_most(void);
 extern void maybe_pop_most(void);

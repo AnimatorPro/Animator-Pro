@@ -229,36 +229,6 @@ set_trd_maxmem(void)
 
 /*** checker "task" called from within input loop installed by doauto() ***/
 
-static Waitask trdtask;
-
-static int trdtask_func(Waitask *wt)
-{
-	(void)wt;
-
-	if(pushed_mask > 0  	   /* wait till all is popped */
-		|| pushed_alt > 0 
-		|| pushed_cel > 0
-		|| pushed_mask > 0
-		|| flix.xf == NULL     /* wait till file is open */
-		|| cgroup_hidden(vb.screen) /* wait till menus are shown */
-		|| zoom_hidden()) /* wait till rezoomed */
-	{
-		return(0);
-	}
-
-	return(TRUE); /* done with it */
-}
-void rem_check_tflx_toram(void)
-{
-	rem_waitask(&trdtask);
-}
-void add_check_tflx_toram(void)
-{
-	if(WT_ISATTACHED(&trdtask))
-		return;
-	init_waitask(&trdtask,trdtask_func,NULL,WT_KILLCURSOR);
-	add_waitask(&trdtask);
-}
 void pop_most(void)
 {
 	grab_uvfont();
