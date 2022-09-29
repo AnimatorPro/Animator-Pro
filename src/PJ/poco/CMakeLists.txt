@@ -3,4 +3,4 @@ set(POCO_SRC_FILES
 	token.c
 	)
 
-add_library(poco ${POCO_SRC_FILES})
+add_library(libpoco ${POCO_SRC_FILES})

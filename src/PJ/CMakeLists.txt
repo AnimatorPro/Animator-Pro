@@ -148,7 +148,7 @@ target_link_libraries(pj
 	menulib
 	picdrive
 	pjhigh
-	poco
+	libpoco
 	raster
 	minirex
 	softmenu
