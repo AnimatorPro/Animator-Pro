@@ -9,5 +9,9 @@ CompactNamespaces: 'false'
 IndentWidth: '4'
 TabWidth: '4'
 UseTab: Always
+DerivePointerAlignment: false
+PointerAlignment: Left
+AlwaysBreakAfterReturnType: None
+AlwaysBreakAfterDefinitionReturnType: None
 
 ...
