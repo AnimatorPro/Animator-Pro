@@ -1,9 +1,6 @@
-cmake_minimum_required(VERSION 2.6 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.16 FATAL_ERROR)
 
 project(pj C)
-
-find_package(SDL REQUIRED)
-include_directories(${SDL_INCLUDE_DIR})
 
 include_directories("inc")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -W -Wall -Wextra -Wmissing-prototypes")
@@ -154,5 +151,6 @@ target_link_libraries(pj
 	softmenu
 	trdutil
 	wndolib
-	${SDL_LIBRARY}
+	SDL2-static
+	SDL2main
 	m)

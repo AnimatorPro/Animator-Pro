@@ -1,0 +1,13 @@
+﻿---
+BasedOnStyle: Mozilla
+AlignAfterOpenBracket: Align
+AlignConsecutiveAssignments: 'true'
+AlignEscapedNewlines: Left
+BreakConstructorInitializers: BeforeComma
+ColumnLimit: '100'
+CompactNamespaces: 'false'
+IndentWidth: '4'
+TabWidth: '4'
+UseTab: Always
+
+...
