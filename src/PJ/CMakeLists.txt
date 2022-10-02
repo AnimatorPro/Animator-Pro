@@ -15,6 +15,7 @@ add_subdirectory(menus)
 add_subdirectory(picdrive)
 add_subdirectory(pjhigh)
 add_subdirectory(poco)
+add_subdirectory(pj_sdl)
 add_subdirectory(rastlib)
 add_subdirectory(rexlib)
 add_subdirectory(softmenu)
@@ -145,6 +146,7 @@ target_link_libraries(pj
 	menulib
 	picdrive
 	pjhigh
+	pj_sdl
 	libpoco
 	raster
 	minirex

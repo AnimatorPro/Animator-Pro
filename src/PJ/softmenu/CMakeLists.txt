@@ -15,4 +15,4 @@ set(SOFTMENU_SRC_FILES
 
 add_library(softmenu ${SOFTMENU_SRC_FILES})
 
-target_link_libraries(softmenu poco)
+target_link_libraries(softmenu libpoco)

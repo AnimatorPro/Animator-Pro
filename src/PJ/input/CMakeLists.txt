@@ -24,3 +24,5 @@ add_library(macinput
 	${INPUTHI_SRC_FILES}
 	${MACINPUT_SRC_FILES}
 	${IDRIVER_SDL_SRC_FILES})
+
+target_link_libraries(macinput PUBLIC pj_sdl)

@@ -1,6 +1,6 @@
 /* io_sdl.c */
 
-#include <SDL/SDL.h>
+#include <SDL.h>
 #include "io_.h"
 #include "io_sdl.h"
 

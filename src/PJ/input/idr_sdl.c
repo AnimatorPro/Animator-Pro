@@ -1,17 +1,20 @@
 /* idr_sdl.c */
-
+#include <SDL.h>
 #include <assert.h>
-#include <SDL/SDL.h>
-#include "jimk.h"
+#include <stdint.h>
+
+#include "idr_sdl.h"
 #include "aaconfig.h"
 #include "errcodes.h"
-#include "idr_sdl.h"
 #include "idriver.h"
+#include "jimk.h"
 
-static Errcode sdl_idr_detect(Idriver *idr);
-static Errcode sdl_idr_inquire(Idriver *idr);
-static Errcode sdl_idr_input(Idriver *idr);
-static Errcode sdl_idr_setclip(Idriver *idr, short channel, long clipmax);
+#include "pj_sdl.h"
+
+static Errcode sdl_idr_detect(Idriver* idr);
+static Errcode sdl_idr_inquire(Idriver* idr);
+static Errcode sdl_idr_input(Idriver* idr);
+static Errcode sdl_idr_setclip(Idriver* idr, short channel, long clipmax);
 
 static Idr_library sdl_idr_library = {
 	sdl_idr_detect,
@@ -26,20 +29,16 @@ static Idr_library sdl_idr_library = {
  *
  *  Return the number of elapsed milliseconds since the program was started.
  */
-ULONG
-pj_clock_1000(void)
+
+uint32_t pj_clock_1000(void)
 {
 	return SDL_GetTicks();
 }
 
-static SHORT
-sdl_key_event_to_ascii(const SDL_Event *ev)
+static int16_t sdl_key_event_to_ascii(const SDL_Event* ev)
 {
-	static const SHORT fnkey[12] = {
-		FKEY1,  FKEY2, FKEY3, FKEY4, FKEY5,
-		FKEY6,  FKEY7, FKEY8, FKEY9, FKEY10,
-		FKEY11, FKEY12
-	};
+	static const int16_t fnkey[12] = { FKEY1, FKEY2, FKEY3, FKEY4,	FKEY5,	FKEY6,
+									   FKEY7, FKEY8, FKEY9, FKEY10, FKEY11, FKEY12 };
 
 	assert(ev->type == SDL_KEYDOWN);
 
@@ -47,26 +46,36 @@ sdl_key_event_to_ascii(const SDL_Event *ev)
 		return fnkey[ev->key.keysym.sym - SDLK_F1];
 
 	switch (ev->key.keysym.sym) {
-		case SDLK_UP:       return UARROW;
-		case SDLK_DOWN:     return DARROW;
-		case SDLK_LEFT:     return LARROW;
-		case SDLK_RIGHT:    return RARROW;
+		case SDLK_UP:
+			return UARROW;
+		case SDLK_DOWN:
+			return DARROW;
+		case SDLK_LEFT:
+			return LARROW;
+		case SDLK_RIGHT:
+			return RARROW;
 
-		case SDLK_INSERT:   return INSERTKEY;
-		case SDLK_DELETE:   return DELKEY;
-		case SDLK_HOME:     return HOMEKEY;
-		case SDLK_END:      return ENDKEY;
-		case SDLK_PAGEUP:   return PAGEUP;
-		case SDLK_PAGEDOWN: return PAGEDN;
+		case SDLK_INSERT:
+			return INSERTKEY;
+		case SDLK_DELETE:
+			return DELKEY;
+		case SDLK_HOME:
+			return HOMEKEY;
+		case SDLK_END:
+			return ENDKEY;
+		case SDLK_PAGEUP:
+			return PAGEUP;
+		case SDLK_PAGEDOWN:
+			return PAGEDN;
 
-		default: break;
+		default:
+			break;
 	}
 
-	return ev->key.keysym.unicode;
+	return ev->key.keysym.scancode;
 }
 
-SHORT
-dos_wait_key(void)
+int16_t dos_wait_key(void)
 {
 	for (;;) {
 		SDL_Event ev;
@@ -79,20 +88,17 @@ dos_wait_key(void)
 	}
 }
 
-int
-pj_key_is(void)
+int pj_key_is(void)
 {
 	return 0;
 }
 
-int
-pj_key_in(void)
+int pj_key_in(void)
 {
 	return 0;
 }
 
-int
-dos_key_shift(void)
+int dos_key_shift(void)
 {
 	return 0;
 }
@@ -101,24 +107,21 @@ dos_key_shift(void)
 /* sdl_idr_library.                                             */
 /*--------------------------------------------------------------*/
 
-static Errcode
-sdl_idr_detect(Idriver *idr)
+static Errcode sdl_idr_detect(Idriver* idr)
 {
 	(void)idr;
 	return Success;
 }
 
-static Errcode
-sdl_idr_inquire(Idriver *idr)
+static Errcode sdl_idr_inquire(Idriver* idr)
 {
-	idr->button_count = 2;
+	idr->button_count  = 2;
 	idr->channel_count = 2;
 
 	return Success;
 }
 
-static Errcode
-sdl_idr_input(Idriver *idr)
+static Errcode sdl_idr_input(Idriver* idr)
 {
 	SDL_Event ev;
 	unsigned int mb;
@@ -139,10 +142,9 @@ sdl_idr_input(Idriver *idr)
 
 			case SDL_MOUSEBUTTONDOWN:
 			case SDL_MOUSEBUTTONUP:
-				mb = (ev.button.button == SDL_BUTTON_LEFT) ? 1
-					: (ev.button.button == SDL_BUTTON_RIGHT) ? 2
-					: 0;
-
+				mb = (ev.button.button == SDL_BUTTON_LEFT)	  ? 1
+					 : (ev.button.button == SDL_BUTTON_RIGHT) ? 2
+															  : 0;
 				if (ev.type == SDL_MOUSEBUTTONDOWN)
 					idr->buttons |= mb;
 				else if (ev.type == SDL_MOUSEBUTTONUP)
@@ -153,13 +155,12 @@ sdl_idr_input(Idriver *idr)
 	return Success;
 }
 
-static Errcode
-sdl_idr_setclip(Idriver *idr, short channel, long clipmax)
+static Errcode sdl_idr_setclip(Idriver* idr, short channel, long clipmax)
 {
-	if ((USHORT)channel > idr->channel_count)
+	if ((uint16_t)channel > idr->channel_count)
 		return Err_bad_input;
 
-	if ((ULONG)clipmax > (ULONG)idr->max[channel])
+	if ((uint32_t)clipmax > (uint32_t)idr->max[channel])
 		idr->clipmax[channel] = idr->max[channel];
 	else
 		idr->clipmax[channel] = clipmax;
@@ -169,14 +170,15 @@ sdl_idr_setclip(Idriver *idr, short channel, long clipmax)
 
 /*--------------------------------------------------------------*/
 
-static Errcode
-sdl_idr_open(Idriver *idr)
+static Errcode sdl_idr_open(Idriver* idr)
 {
 	sdl_idr_inquire(idr);
 
 	if (idr->channel_count > 0) {
-		const SDL_Surface *surface = SDL_GetVideoSurface();
-		const int naxes = idr->channel_count;
+		int screen_width, screen_height;
+		pj_sdl_get_video_size(&screen_width, &screen_height);
+
+		const int naxes			   = idr->channel_count;
 		assert(surface != NULL);
 		assert(naxes == 2);
 
@@ -192,8 +194,8 @@ sdl_idr_open(Idriver *idr)
 
 		idr->max = malloc(naxes * sizeof(idr->max[0]));
 		assert(idr->max != NULL);
-		idr->max[0] = surface->w - 1;
-		idr->max[1] = surface->h - 1;
+		idr->max[0] = screen_width - 1;
+		idr->max[1] = screen_height - 1;
 
 		idr->clipmax = malloc(naxes * sizeof(idr->clipmax[0]));
 		assert(idr->clipmax != NULL);
@@ -211,8 +213,7 @@ sdl_idr_open(Idriver *idr)
 	return Success;
 }
 
-static Errcode
-sdl_idr_close(Idriver *idr)
+static Errcode sdl_idr_close(Idriver* idr)
 {
 	free(idr->pos);
 	idr->pos = NULL;
@@ -235,22 +236,19 @@ sdl_idr_close(Idriver *idr)
 	return Success;
 }
 
-Errcode
-init_sdl_idriver(Idriver *idr)
+Errcode init_sdl_idriver(Idriver* idr)
 {
-	idr->hdr.init = sdl_idr_open;
+	idr->hdr.init	 = sdl_idr_open;
 	idr->hdr.cleanup = sdl_idr_close;
-	idr->lib = &sdl_idr_library;
-	idr->options = NULL;
-	idr->does_keys = TRUE;
+	idr->lib		 = &sdl_idr_library;
+	idr->options	 = NULL;
+	idr->does_keys	 = TRUE;
 	return Success;
 }
 
-Errcode
-init_input(void)
+Errcode init_input(void)
 {
-	SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
-	SDL_EnableUNICODE(SDL_ENABLE);
+//	SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
 	SDL_ShowCursor(SDL_DISABLE);
 
 	init_idriver(NULL, vconfg.idr_modes, 0);

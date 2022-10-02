@@ -1,7 +1,7 @@
 /* vdr_sdl.c */
 
 #include <assert.h>
-#include <SDL/SDL.h>
+#include <SDL.h>
 #define VDEV_INTERNALS
 #include "errcodes.h"
 #include "libdummy.h"
@@ -10,6 +10,9 @@
 #include "rastcall.h"
 #include "rastlib.h"
 #include "vdevcall.h"
+
+// shared space for all the SDL structures and queries
+#include "pj_sdl.h"
 
 #define REX_VDRIVER     0x0101U
 #define VDEV_VERSION    0
@@ -78,10 +81,9 @@ static Vdevice sdl_driver = {
 	&sdl_device_library, /* lib */
 	NULL, /* grclib */
 	NUM_LIB_CALLS, /* rast_lib_count */
+	{0}
 };
 
-/* TODO: should be part of sdl_raster. */
-static SDL_Surface *s_surface;
 
 /*--------------------------------------------------------------*/
 
@@ -167,11 +169,25 @@ sdl_open_graphics(Vdevice *vd, Raster *r, LONG w, LONG h, USHORT mode)
 {
 	(void)mode;
 
-	s_surface = SDL_SetVideoMode(w, h, 8, SDL_HWSURFACE | SDL_DOUBLEBUF);
-	if (s_surface == NULL)
-		return Err_no_display;
+	SDL_Window *window = SDL_CreateWindow("PJ Paint",
+	                                      SDL_WINDOWPOS_UNDEFINED,
+	                                      SDL_WINDOWPOS_UNDEFINED,
+	                                      w, h,
+	                                      0);
 
-	SDL_WM_SetCaption("PJ Paint", NULL);
+	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC);
+
+	// don't kill my beautiful pixels
+	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
+	SDL_RenderSetLogicalSize(renderer, w, h);
+
+	texture = SDL_CreateTexture(renderer,
+	                               SDL_PIXELFORMAT_ARGB8888,
+	                               SDL_TEXTUREACCESS_STREAMING,
+	                               w, h);
+
+	if (texture == NULL)
+		return Err_no_display;
 
 	sdl_open_raster(r, w, h);
 	r->hw.bm.bp[0] = s_surface->pixels;
@@ -212,16 +228,20 @@ sdl_set_colors(Raster *r, LONG start, LONG count, void *cbuf)
 		col[c].b = cmap[3 * c + 2];
 	}
 
-	SDL_SetPalette(s_surface, SDL_LOGPAL | SDL_PHYSPAL, col, start, count);
+//!TODO:
+//	SDL_SetPalette(s_surface, SDL_LOGPAL | SDL_PHYSPAL, col, start, count);
 }
 
 static void
 sdl_wait_vsync(Raster *r)
 {
-	/* TODO: dodgy. */
 	(void)r;
-	SDL_Delay(5);
-	SDL_Flip(s_surface);
+//	SDL_Delay(5);
+//	SDL_Flip(s_surface);
+
+	SDL_RenderClear(renderer);
+	SDL_RenderCopy(renderer, texture, NULL, NULL);
+	SDL_RenderPresent(renderer);
 }
 
 static Rastlib *

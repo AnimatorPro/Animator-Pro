@@ -2,7 +2,7 @@
 
 #include <assert.h>
 #include <string.h>
-#include <SDL/SDL.h>
+#include <SDL.h>
 #include "jimk.h"
 #include "fs.h"
 #include "io_.h"

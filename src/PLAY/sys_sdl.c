@@ -1,7 +1,7 @@
 /* sys_sdl.c */
 
 #include <assert.h>
-#include <SDL/SDL.h>
+#include <SDL.h>
 #include "init.str"
 #include "io_.h"
 #include "io_sdl.h"

@@ -16,6 +16,10 @@
 /* TODO: do we need current_device? */
 #include "msfile.h"
 
+#ifdef __APPLE__
+	#define GLOB_ONLYDIR 0
+#endif
+
 long
 pj_ddfree(int device)
 {

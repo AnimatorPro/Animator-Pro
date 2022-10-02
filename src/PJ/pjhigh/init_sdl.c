@@ -2,7 +2,7 @@
 
 #define SCRNINIT_CODE
 #define VDEV_INTERNALS
-#include <SDL/SDL.h>
+#include <SDL.h>
 
 #include <assert.h>
 #include <ctype.h>

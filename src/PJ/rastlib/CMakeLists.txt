@@ -92,3 +92,5 @@ add_library(raster
 	${RASTLOW_SRC_FILES}
 	${VDRIVER_SRC_FILES}
 	${VDRIVER_SDL_SRC_FILES})
+
+target_link_libraries(raster PUBLIC pj_sdl)
