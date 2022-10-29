@@ -13,6 +13,13 @@
 #ifndef NDEBUG
 #if defined(__GNUC__) || defined(__clang__)
 
+#if defined(_MSC_VER)
+	#define __ASSERT_FUNCTION __FUNCTION__
+#else
+	#define __ASSERT_FUNCTION __func__
+#endif
+
+
 #define pj_assert(expr)             \
 	pj_assert_fail((expr) ? 1 : 0,  \
 			__FILE__, __LINE__, __ASSERT_FUNCTION, __STRING(expr))
