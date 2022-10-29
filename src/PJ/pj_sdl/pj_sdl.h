@@ -6,10 +6,10 @@
 #define ANIMATOR_PRO_PJ_SDL_H
 
 /*--------------------------------------------------------------*/
-extern SDL_Surface *s_surface;
-extern SDL_Window *window;
-extern SDL_Renderer *renderer;
-extern SDL_Texture *texture;
+extern SDL_Surface*  s_surface;
+extern SDL_Surface*  s_buffer;
+extern SDL_Window*   window;
+extern SDL_Surface*  s_window_surface;
 
 
 int pj_sdl_get_video_size(LONG* width, LONG* height);

@@ -10,7 +10,7 @@
 
 int main()
 {
-	const int scale = 4;
+	const int scale = 5;
 	const int w		= 320;
 	const int h		= 200;
 	const int win_w = w * scale;

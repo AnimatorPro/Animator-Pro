@@ -135,68 +135,77 @@ sdl_mode_text(Vdevice *vd, USHORT mode)
 	return "";
 }
 
-static void
-sdl_open_raster(Raster *r, LONG w, LONG h)
+static void sdl_open_raster(Raster* r, LONG w, LONG h)
 {
 	static const Rasthdr defaults = {
-		RT_MCGA, /* type */
-		8, /* effective bit depth */
-		NULL, /* lib */
-		6,5, /* aspect ratio */
-		{0,0}, /* reserved */
-		320,200,0,0 /* w,h,x,y rectangle */
+		RT_MCGA,			/* type */
+		8,					/* effective bit depth */
+		NULL,				/* lib */
+		6,		  5,		/* aspect ratio */
+		{ 0, 0 },			/* reserved */
+		320,	  200, 0, 0 /* w,h,x,y rectangle */
 	};
 	static const Bmap bm = {
-		0, /* realmem seg descriptor, filled in at runtime */
-		1, /* number of bplanes at least 1 */
-		Bytemap_bpr(320), /* rowbytes */
-		Byteplane_size(320,200), /* size of plane (saves code) */
-		{ NULL }, /* at least one plane, the pixelated data */
+		0,						  /* realmem seg descriptor, filled in at runtime */
+		1,						  /* number of bplanes at least 1 */
+		Bytemap_bpr(320),		  /* rowbytes */
+		Byteplane_size(320, 200), /* size of plane (saves code) */
+		{ NULL },				  /* at least one plane, the pixelated data */
 	};
 
-	*((Rasthdr *)r) = defaults;
-	r->lib = get_sdl_lib();
-	r->width = w;
-	r->height = h;
+	*((Rasthdr*)r) = defaults;
+	r->lib		   = get_sdl_lib();
+	r->width	   = w;
+	r->height	   = h;
 
-	r->hw.bm = bm;
-	r->hw.bm.bpr = w;
+	r->hw.bm	   = bm;
+	r->hw.bm.bpr   = w;
 	r->hw.bm.psize = w * h;
 }
 
-static Errcode
-sdl_open_graphics(Vdevice *vd, Raster *r, LONG w, LONG h, USHORT mode)
+static Errcode sdl_open_graphics(Vdevice* vd, Raster* r, LONG w, LONG h, USHORT mode)
 {
 	(void)mode;
 
-	SDL_Window *window = SDL_CreateWindow("PJ Paint",
-	                                      SDL_WINDOWPOS_UNDEFINED,
-	                                      SDL_WINDOWPOS_UNDEFINED,
-	                                      w, h,
-	                                      0);
+	/* kiki note: Not using SDL_Renderer because we want to grab the
+	 * window surface directly, and creating a renderer makes
+	 * SDL_GetWindowSurface() return NULL. */
 
-	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC);
+	const LONG video_scale = 4;
 
-	// don't kill my beautiful pixels
-	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
-	SDL_RenderSetLogicalSize(renderer, w, h);
+	SDL_Window* window = SDL_CreateWindow("PJ Paint",
+										  SDL_WINDOWPOS_UNDEFINED,
+										  SDL_WINDOWPOS_UNDEFINED,
+										  w * video_scale,
+										  h * video_scale,
+										  0);
 
-	texture = SDL_CreateTexture(renderer,
-	                               SDL_PIXELFORMAT_ARGB8888,
-	                               SDL_TEXTUREACCESS_STREAMING,
-	                               w, h);
-
-	if (texture == NULL)
+	s_window_surface = SDL_GetWindowSurface(window);
+	if (!s_window_surface) {
 		return Err_no_display;
+	}
+
+	// don't kill my beautiful pixels with smoothing
+	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
+
+	s_surface = SDL_CreateRGBSurface(0, w, h, 8, 0, 0, 0, 0);
+	if (!s_surface) {
+		return Err_no_display;
+	}
+
+	s_buffer = SDL_CreateRGBSurface(0, w, h, 32, 0, 0, 0, 0);
+	if (!s_buffer) {
+		return Err_no_display;
+	}
 
 	sdl_open_raster(r, w, h);
 	r->hw.bm.bp[0] = s_surface->pixels;
-	r->type = vd->first_rtype;
+	r->type		   = vd->first_rtype;
 
 	return Success;
 }
 
-static Errcode sdl_close_graphics(Vdevice *vd)
+static Errcode sdl_close_graphics(Vdevice* vd)
 {
 	(void)vd;
 	return Success;
@@ -206,8 +215,7 @@ static Errcode sdl_close_graphics(Vdevice *vd)
 /* SDL Rastlib.                                                 */
 /*--------------------------------------------------------------*/
 
-static Errcode
-sdl_close_rast(Raster *r)
+static Errcode sdl_close_rast(Raster* r)
 {
 	(void)r;
 	return Success;
@@ -217,35 +225,43 @@ static void
 sdl_set_colors(Raster *r, LONG start, LONG count, void *cbuf)
 {
 	const uint8_t *cmap = cbuf;
-	SDL_Colour col[256];
+	SDL_Colour colors[256];
 	int c;
+
 	(void)r;
+	(void)start;
+
 	assert(0 < count && count <= 256);
 
 	for (c = 0; c < count; c++) {
-		col[c].r = cmap[3 * c + 0];
-		col[c].g = cmap[3 * c + 1];
-		col[c].b = cmap[3 * c + 2];
+		colors[c].r = cmap[3 * c + 0];
+		colors[c].g = cmap[3 * c + 1];
+		colors[c].b = cmap[3 * c + 2];
 	}
 
-//!TODO:
-//	SDL_SetPalette(s_surface, SDL_LOGPAL | SDL_PHYSPAL, col, start, count);
+	SDL_SetPaletteColors(s_surface->format->palette, colors, 0, 256);
 }
 
 static void
 sdl_wait_vsync(Raster *r)
 {
 	(void)r;
-//	SDL_Delay(5);
-//	SDL_Flip(s_surface);
 
-	SDL_RenderClear(renderer);
-	SDL_RenderCopy(renderer, texture, NULL, NULL);
-	SDL_RenderPresent(renderer);
+	/* SDL_BlitScaled doesn't work from 8 bit to screen,
+		 * so I'm copying to a second buffer first and then
+		 * doing my stretched blit. */
+	SDL_BlitSurface(s_surface, NULL, s_buffer, NULL);
+
+	/* Draw to the window surface, scaled */
+	SDL_BlitScaled(s_buffer, &s_buffer->clip_rect, s_window_surface, &s_window_surface->clip_rect);
+
+	SDL_UpdateWindowSurface(window);
+//	SDL_RenderClear(renderer);
+//	SDL_RenderCopy(renderer, texture, NULL, NULL);
+//	SDL_RenderPresent(renderer);
 }
 
-static Rastlib *
-get_sdl_lib(void)
+static Rastlib* get_sdl_lib(void)
 {
 	static Rastlib sdl_lib;
 	static Boolean loaded = FALSE;
@@ -255,8 +271,8 @@ get_sdl_lib(void)
 
 		sdl_lib.close_raster = sdl_close_rast;
 
-		sdl_lib.set_colors  = sdl_set_colors;
-		sdl_lib.wait_vsync  = sdl_wait_vsync;
+		sdl_lib.set_colors = sdl_set_colors;
+		sdl_lib.wait_vsync = sdl_wait_vsync;
 
 		sdl_lib.get_rectpix = NULL; /* don't use bytemap call */
 		sdl_lib.put_rectpix = NULL; /* don't use bytemap call */
@@ -270,7 +286,6 @@ get_sdl_lib(void)
 }
 
 /*--------------------------------------------------------------*/
-
 /**
  * Function: sdl_open_vdriver
  *

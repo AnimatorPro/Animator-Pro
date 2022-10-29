@@ -179,7 +179,7 @@ static Errcode sdl_idr_open(Idriver* idr)
 		pj_sdl_get_video_size(&screen_width, &screen_height);
 
 		const int naxes			   = idr->channel_count;
-		assert(surface != NULL);
+		assert(s_surface != NULL);
 		assert(naxes == 2);
 
 		idr->pos = malloc(naxes * sizeof(idr->pos[0]));

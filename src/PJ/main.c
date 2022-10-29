@@ -28,9 +28,9 @@ extern Errcode builtin_err;
 
 static Errcode set_flisize(Rectangle *newsize);
 
-static Errcode init_after_screen(void *data)
 /* initializes and allocs every thing that has to be done after the screen
  * and before the dynamic stuff (tempflx) and push/pop stuff is opened */
+static Errcode init_after_screen(void *data)
 {
 	(void)data;
 
@@ -135,8 +135,6 @@ Errcode err;
 Rectangle oldsize;
 Screen_mode oldmode;
 Cmap ocolors;
-
-
 
 	oldmode = vconfg.smode;
 	copy_rectfields(vb.pencel,&oldsize);
@@ -415,8 +413,8 @@ static Argparse_list apl[] = {
 
 	vs = default_vs; /* copy in default settings */
 
-
-	if((err = open_pj_startup_screen(init_after_screen)) < Success)
+	err = open_pj_startup_screen(init_after_screen);
+	if(err < Success)
 		goto error;
 
 	if(!oldconfig)

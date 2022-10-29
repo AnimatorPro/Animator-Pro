@@ -81,7 +81,7 @@ open_pj_startup_screen(Errcode (*init_with_screen)(void *data), void *data)
 	Screen_mode *open_mode;
 	Screen_mode *alt_mode;
 
-	SDL_Init(SDL_INIT_TIMER | SDL_INIT_VIDEO);
+	SDL_Init(SDL_INIT_EVERYTHING);
 
 	open_mode = &vconfg.smode;
 	alt_mode = NULL;
