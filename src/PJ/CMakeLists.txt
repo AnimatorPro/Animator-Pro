@@ -134,10 +134,10 @@ set(PJMAIN_SRC_FILES
 	zoom.c
 	)
 
-add_executable(pj WIN32
+add_executable(ani
 	${PJMAIN_SRC_FILES})
 
-target_link_libraries(pj
+target_link_libraries(ani
 	trdfile
 	flilib
 	fontlib
@@ -156,3 +156,6 @@ target_link_libraries(pj
 	SDL2-static
 	SDL2main
 	m)
+
+INSTALL(TARGETS ani DESTINATION ./)
+INSTALL(DIRECTORY resource/ DESTINATION ./resource)
