@@ -29,6 +29,9 @@ int main()
 
 	SDL_Color colors[2] = { { 0, 0, 255, 255 }, { 255, 0, 0, 255 } };
 	SDL_SetPaletteColors(surface->format->palette, colors, 0, 2);
+
+	int frame = 0;
+
 	while (true) {
 		SDL_Event event;
 		while (SDL_PollEvent(&event) > 0) {
@@ -37,11 +40,16 @@ int main()
 					return EXIT_SUCCESS;
 			}
 		}
+
+		int offset = frame % 2;
+		frame = !frame;
+
 		uint8_t* offscreen = (uint8_t*)surface->pixels;
+
 		for (int i = 0; i < h; i++) {
 			for (int j = 0; j < w / 2; j++) {
-				offscreen[j * 2 + 0] = 0;
-				offscreen[j * 2 + 1] = 1;
+				offscreen[j * 2 + 0] = 0 + offset;
+				offscreen[j * 2 + 1] = 1 - offset;
 			}
 			offscreen += surface->pitch;
 		}
@@ -56,6 +64,6 @@ int main()
 		SDL_BlitScaled(buffer, &source_rect, screen, &target_rect);
 
 		SDL_UpdateWindowSurface(window);
-		SDL_Delay(100);
+		SDL_Delay(250);
 	}
 }

@@ -171,14 +171,22 @@ static Errcode sdl_open_graphics(Vdevice* vd, Raster* r, LONG w, LONG h, USHORT 
 	 * window surface directly, and creating a renderer makes
 	 * SDL_GetWindowSurface() return NULL. */
 
-	const LONG video_scale = 4;
+	const LONG video_scale = pj_sdl_get_display_scale();
 
-	SDL_Window* window = SDL_CreateWindow("PJ Paint",
-										  SDL_WINDOWPOS_UNDEFINED,
-										  SDL_WINDOWPOS_UNDEFINED,
-										  w * video_scale,
-										  h * video_scale,
-										  0);
+	/* kiki note: on video resize, the app calls open_graphics
+	 * again-- need to make sure this window is dead. */
+
+	if (window) {
+		SDL_DestroyWindow(window);
+		window = NULL;
+	}
+
+	window = SDL_CreateWindow("PJ Paint",
+							  SDL_WINDOWPOS_UNDEFINED,
+							  SDL_WINDOWPOS_UNDEFINED,
+							  w * video_scale,
+							  h * video_scale,
+							  0);
 
 	s_window_surface = SDL_GetWindowSurface(window);
 	if (!s_window_surface) {
@@ -195,6 +203,7 @@ static Errcode sdl_open_graphics(Vdevice* vd, Raster* r, LONG w, LONG h, USHORT 
 
 	s_buffer = SDL_CreateRGBSurface(0, w, h, 32, 0, 0, 0, 0);
 	if (!s_buffer) {
+		fprintf(stderr, "%s\n", SDL_GetError());
 		return Err_no_display;
 	}
 
@@ -229,7 +238,7 @@ sdl_set_colors(Raster *r, LONG start, LONG count, void *cbuf)
 	int c;
 
 	(void)r;
-	(void)start;
+//	(void)start;
 
 	assert(0 < count && count <= 256);
 
@@ -239,26 +248,25 @@ sdl_set_colors(Raster *r, LONG start, LONG count, void *cbuf)
 		colors[c].b = cmap[3 * c + 2];
 	}
 
-	SDL_SetPaletteColors(s_surface->format->palette, colors, 0, 256);
+	SDL_SetPaletteColors(s_surface->format->palette, colors, start, 256);
 }
 
-static void
-sdl_wait_vsync(Raster *r)
+static void sdl_wait_vsync(Raster* r)
 {
 	(void)r;
 
 	/* SDL_BlitScaled doesn't work from 8 bit to screen,
-		 * so I'm copying to a second buffer first and then
-		 * doing my stretched blit. */
+	 * so I'm copying to a second buffer first and then
+	 * doing my stretched blit. */
 	SDL_BlitSurface(s_surface, NULL, s_buffer, NULL);
 
 	/* Draw to the window surface, scaled */
 	SDL_BlitScaled(s_buffer, &s_buffer->clip_rect, s_window_surface, &s_window_surface->clip_rect);
 
 	SDL_UpdateWindowSurface(window);
-//	SDL_RenderClear(renderer);
-//	SDL_RenderCopy(renderer, texture, NULL, NULL);
-//	SDL_RenderPresent(renderer);
+	//	SDL_RenderClear(renderer);
+	//	SDL_RenderCopy(renderer, texture, NULL, NULL);
+	//	SDL_RenderPresent(renderer);
 }
 
 static Rastlib* get_sdl_lib(void)

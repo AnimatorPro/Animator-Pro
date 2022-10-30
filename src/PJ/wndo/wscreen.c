@@ -43,35 +43,35 @@ Wndo *w;
 	pj_gentle_free(s->wndo.rasts);
 	pj_free(s);
 }
-Errcode open_wscreen(Wscreen **ps, WscrInit *si)
 
 /* this will open a wscreen if the input_screen is NULL it will set the opened
  * one to the current input screen. close will set to input_screen to null if
  * it is equal to the input_screen.  Unless there are multiple screens up
  * one should not have to do explicit calls to set_input_screen() */
+Errcode open_wscreen(Wscreen** ps, WscrInit* si)
 {
-Errcode err;
-Wscreen *s;
-int allocsize;
+	Errcode err;
+	Wscreen* s;
+	int allocsize;
 
-	if(si->cel_a == NULL)
-		return(Err_bad_input);
+	if (si->cel_a == NULL)
+		return (Err_bad_input);
 
-	if(si->flags & WS_NOMENUS) /* if flagged dont alloc menu part */
-		allocsize = OFFSET(Wscreen,WS_FIRST_MENUFIELD);
+	if (si->flags & WS_NOMENUS) /* if flagged dont alloc menu part */
+		allocsize = OFFSET(Wscreen, WS_FIRST_MENUFIELD);
 	else
 		allocsize = sizeof(Wscreen);
 
-	if((s = pj_zalloc(allocsize)) == NULL)
+	if ((s = pj_zalloc(allocsize)) == NULL)
 		goto nomem_error;
 
 	s->flags = si->flags & ~(WS_MUCOLORS_UP);
 
 	init_list(&s->wilist);
 
-	if((s->max_wins = si->max_wins) <= 0)
+	if ((s->max_wins = si->max_wins) <= 0)
 		s->max_wins = 1;
-	else if(s->max_wins > MAX_WNDOS)
+	else if (s->max_wins > MAX_WNDOS)
 		s->max_wins = MAX_WNDOS;
 
 	s->dispvd = si->disp_driver;
@@ -88,56 +88,54 @@ int allocsize;
 
 	/* alloc rasts array 1 for screen and 1 for every window */
 
-	if((s->wndo.rasts 
-			= pj_zalloc((s->max_wins + 1) * sizeof(Raster *))) == NULL)
-	{
+	if ((s->wndo.rasts = pj_zalloc((s->max_wins + 1) * sizeof(Raster*))) == NULL) {
 		goto nomem_error;
 	}
 
 	/* set up screen window and raster 0 visible screen */
-	s->wndo.rasts[SCREEN_RASTID] = (Raster *)(s->viscel); 
-	s->wndo.rasts[NULL_RASTID] = &(s->wndo.behind);
-	s->wndo.cmap = s->viscel->cmap;
+	s->wndo.rasts[SCREEN_RASTID] = (Raster*)(s->viscel);
+	s->wndo.rasts[NULL_RASTID]	 = &(s->wndo.behind);
+	s->wndo.cmap				 = s->viscel->cmap;
 
 	{
-	WndoInit wi;
+		WndoInit wi;
 
-		clear_mem(&wi,sizeof(wi));
+		clear_mem(&wi, sizeof(wi));
 
-		copy_rectfields(s->viscel,&wi)
-		wi.maxw = wi.width;
-		wi.maxh = wi.height;
-		wi.screen = s;  
-		wi.flags = WNDO_BACKDROP;
+		copy_rectfields(s->viscel, &wi) wi.maxw = wi.width;
+		wi.maxh									= wi.height;
+		wi.screen								= s;
+		wi.flags								= WNDO_BACKDROP;
 
-		if((err = open_wndo(NULL,&wi)) < 0)
+		if ((err = open_wndo(NULL, &wi)) < 0)
 			goto error;
 	}
 
 	/* setup menu colors */
 
 	s->mc_ideals = default_mc_ideals;
-	copy_mem(s->mc_ideals,s->mc_lastrgbs,sizeof(s->mc_lastrgbs));
-	copy_mem(default_mc_colors,s->mc_colors,sizeof(s->mc_colors));
-	s->mc_lastalt = 0xFF;  /* this will force menucolors to be found */
+	copy_mem(s->mc_ideals, s->mc_lastrgbs, sizeof(s->mc_lastrgbs));
+	copy_mem(default_mc_colors, s->mc_colors, sizeof(s->mc_colors));
+	s->mc_lastalt = 0xFF; /* this will force menucolors to be found */
 
 	{
 		s->mufont = get_sys_font();
 	}
 
-	if(icb.input_screen == NULL)
+	if (icb.input_screen == NULL)
 		set_input_screen(s);
 
 	*ps = s;
-	return(0);
+	return (0);
 
 nomem_error:
 	err = Err_no_memory;
 error:
 	close_wscreen(s);
 	*ps = NULL;
-	return(err);
+	return (err);
 }
+
 static void set_input_screen(Wscreen *ws)
 {
 	icb.input_screen = ws;

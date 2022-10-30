@@ -129,15 +129,21 @@ static Errcode sdl_idr_input(Idriver* idr)
 	SDL_PumpEvents();
 	idr->key_code = 0;
 
+	const LONG display_scale = pj_sdl_get_display_scale();
+
 	while (SDL_PollEvent(&ev)) {
 		switch (ev.type) {
 			case SDL_KEYDOWN:
 				idr->key_code = sdl_key_event_to_ascii(&ev);
+				if (idr->key_code == SDL_SCANCODE_B) {
+					SDL_SaveBMP(s_buffer, "/tmp/dump.bmp");
+					fprintf(stderr, "Wrote dump file to /tmp/dump.bmp.\n");
+				}
 				return Success;
 
 			case SDL_MOUSEMOTION:
-				idr->pos[0] = ev.motion.x;
-				idr->pos[1] = ev.motion.y;
+				idr->pos[0] = ev.motion.x / display_scale;
+				idr->pos[1] = ev.motion.y / display_scale;
 				break;
 
 			case SDL_MOUSEBUTTONDOWN:
@@ -178,7 +184,7 @@ static Errcode sdl_idr_open(Idriver* idr)
 		int screen_width, screen_height;
 		pj_sdl_get_video_size(&screen_width, &screen_height);
 
-		const int naxes			   = idr->channel_count;
+		const int naxes = idr->channel_count;
 		assert(s_surface != NULL);
 		assert(naxes == 2);
 
