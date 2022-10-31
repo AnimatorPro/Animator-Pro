@@ -7,6 +7,13 @@ if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 	set(CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}/bin" CACHE PATH "Install top-level directory" FORCE)
 endif()
 
+if(DEFINED PLATFORM)
+	if(EQUALS ${PLATFORM} "OS64")
+		set(CMAKE_TOOLCHAIN_FILE "thirdparty/ios-cmake/ios.toolchain.cmake")
+	endif()
+endif()
+
+
 add_compile_options(
 	-Wno-deprecated-declarations
 	-Wno-incompatible-pointer-types
