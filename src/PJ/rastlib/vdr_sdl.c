@@ -209,6 +209,7 @@ static Errcode sdl_open_graphics(Vdevice* vd, Raster* r, LONG w, LONG h, USHORT 
 
 	sdl_open_raster(r, w, h);
 	r->hw.bm.bp[0] = s_surface->pixels;
+	r->hw.bm.bpr   = s_surface->pitch;
 	r->type		   = vd->first_rtype;
 
 	return Success;
@@ -217,6 +218,7 @@ static Errcode sdl_open_graphics(Vdevice* vd, Raster* r, LONG w, LONG h, USHORT 
 static Errcode sdl_close_graphics(Vdevice* vd)
 {
 	(void)vd;
+
 	return Success;
 }
 
@@ -253,8 +255,6 @@ sdl_set_colors(Raster *r, LONG start, LONG count, void *cbuf)
 
 static void sdl_wait_vsync(Raster* r)
 {
-	(void)r;
-
 	/* SDL_BlitScaled doesn't work from 8 bit to screen,
 	 * so I'm copying to a second buffer first and then
 	 * doing my stretched blit. */

@@ -9,13 +9,16 @@
 #include "rastcall.h"
 #include "rastlib.h"
 
-static void _grc_put_hseg(Raster *v, Pixel *pixbuf,
-	Coor x, Coor y, Ucoor width)
 /* Move pixels from memory to a horizontal line of destination raster. */
 /* (Unclipped) */
+static void _grc_put_hseg(Raster* v, Pixel* pixbuf, Coor x, Coor y, Ucoor width)
 {
-while (width-- > 0)
-	PUT_DOT(v, *pixbuf++, x++, y);
+	while (width > 0) {
+		PUT_DOT(v, *pixbuf, x, y);
+		pixbuf++;
+		x += 1;
+		width -= 1;
+	}
 }
 
 static void grc_put_rectpix(Raster *v, Pixel *pixbuf,
@@ -29,7 +32,7 @@ assert(x >= 0 && y >= 0);
 while(height--)
 	{
 	pj_put_hseg(v,pixbuf,x,y++,width);
-	pixbuf = OPTR(pixbuf,width);
+	pixbuf = OPTR(pixbuf, width);
 	}
 }
 
@@ -61,44 +64,44 @@ static void grc_set_rast(Raster *v, Pixel color)
 	SET_RECT(v,color,0,0,v->width,v->height);
 }
 
-static void grc_unbrun_rect(Raster *v, void *ucbuf, LONG pixsize,
-	Coor xorg, Coor yorg, Ucoor width, Ucoor height)
 /* Uncompress data into a rectangular area inside raster using
    byte-run-length compression scheme used in Autodesk Animator 1.0
    for the first frame of a FLI. */
 /* Note the width/height passed to this currently must be the same
    as the width/height in the fli header. */
 /* (Unclipped.) */
+static void grc_unbrun_rect(Raster* v,
+							void* ucbuf,
+							LONG pixsize,
+							Coor xorg,
+							Coor yorg,
+							Ucoor width,
+							Ucoor height)
 {
-Coor x,y;
-BYTE psize;
-BYTE *cpt;
-Coor end;
-(void)pixsize;
+	Coor x, y;
+	BYTE psize;
+	BYTE* cpt;
+	Coor end;
+	(void)pixsize;
 
-	y = yorg;
+	y	= yorg;
 	cpt = ucbuf;
 	end = xorg + width;
-	while (height-- > 0)
-	{
+	while (height-- > 0) {
 		x = xorg;
-		cpt += 1;	/* skip over obsolete opcount byte */
+		cpt += 1; /* skip over obsolete opcount byte */
 		psize = 0;
-		while ((x+=psize) < end)
-		{
+		while ((x += psize) < end) {
 			psize = *cpt++;
-			if (psize >= 0)
-			{
+			if (psize >= 0) {
 				SET_HLINE(v, *cpt++, x, y, psize);
-			}
-			else
-			{
+			} else {
 				psize = -psize;
-				PUT_HSEG(v, (Pixel *)cpt, x, y, psize);
+				PUT_HSEG(v, (Pixel*)cpt, x, y, psize);
 				cpt += psize;
 			}
 		}
-	y++;
+		y++;
 	}
 }
 

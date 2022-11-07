@@ -6,7 +6,12 @@
 
 #include <assert.h>
 #include <ctype.h>
+#include <errno.h>
+#include <libgen.h>
 #include <stdio.h>
+#include <unistd.h>
+#include <sys/stat.h>
+
 #include "jimk.h"
 #include "aaconfig.h"
 #include "argparse.h"
@@ -18,6 +23,7 @@
 #include "rastlib.h"
 #include "resource.h"
 #include "vdevcall.h"
+#include "pj_sdl.h"
 
 short pj_crit_errval = 1 - 19;
 
@@ -34,6 +40,23 @@ void
 new_config(void)
 {
 }
+
+/*--------------------------------------------------------------*/
+static int dir_exists(const char* const path)
+{
+    struct stat info;
+
+    int statRC = stat( path, &info );
+    if( statRC != 0 )
+    {
+        if (errno == ENOENT)  { return 0; } // something along the path does not exist
+        if (errno == ENOTDIR) { return 0; } // something in path prefix is not a dir
+        return -1;
+    }
+
+    return ( info.st_mode & S_IFDIR ) ? 1 : 0;
+}
+
 
 /*--------------------------------------------------------------*/
 
@@ -56,10 +79,41 @@ init_pj_startup(Argparse_list *more_args, Do_aparse do_others,
 	init_mem(0);
 
 	/* init_resource_path(char *path); */
-	snprintf(resource_dir, sizeof(resource_dir), "resource/");
 
-	if ((err = init_menu_resource(menufile_name)) < Success)
+	char resource_paths[3][PATH_MAX];
+	int resource_paths_count = 2;
+
+
+	#ifdef IS_BUNDLE
+		// try the bundle directory first
+		fprintf(stderr, "Checking bundle...\n");
+		snprintf(resource_paths[2], PATH_MAX, "%s", mac_resources_path());
+		resource_paths_count += 1;
+	#endif
+
+
+	getcwd(resource_paths[0], PATH_MAX);
+	snprintf(resource_paths[0], PATH_MAX, "%s/resource/", resource_paths[0]);
+
+	snprintf(resource_paths[1], PATH_MAX, "%s/resource/", dirname(argv[0]));
+
+
+	err = Failure;
+
+	for (int i = 0; i < resource_paths_count; i++) {
+		if (dir_exists(resource_paths[i])) {
+			snprintf(resource_dir, PATH_MAX, resource_paths[i]);
+			err = init_menu_resource(menufile_name);
+			if (err == Success) {
+				fprintf(stderr, "+ Resources folder: %s\n", resource_dir);
+				break;
+			}
+		}
+	}
+
+	if (err < Success) {
 		return err;
+	}
 
 	if (vb.config_name == NULL) {
 		force_config = TRUE;
@@ -69,7 +123,8 @@ init_pj_startup(Argparse_list *more_args, Do_aparse do_others,
 		force_config = FALSE;
 	}
 
-	if ((err = init_config(force_config)) < Success)
+	err = init_config(force_config);
+	if (err < Success)
 		return err;
 
 	return Success;

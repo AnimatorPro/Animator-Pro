@@ -4,4 +4,7 @@ cmake-build-*
 *.dylib
 .idea
 bin
+ios
+xcode
+.DS_Store
 

@@ -369,14 +369,14 @@ static void outofhere(Boolean save_state)
 	exit(0);
 }
 
-int main(int argc, char **argv)
+int main(int argc, char** argv)
 {
-Errcode err;
-UBYTE oldconfig;
-static Argparse_list apl[] = {
-	ARGP(apl,0,"-flic",get_flic_arg),
-	ARGP(apl,APLAST,"-poc",get_poco_arg),
-};
+	Errcode err;
+	UBYTE oldconfig;
+	static Argparse_list apl[] = {
+		ARGP(apl, 0, "-flic", get_flic_arg),
+		ARGP(apl, APLAST, "-poc", get_poco_arg),
+	};
 
 	if((err = init_pj_startup(apl,get_rest_of_command_line,argc,argv,
 							  "pj_help","aa.mu")) < Success)

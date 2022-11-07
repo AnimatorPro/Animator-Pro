@@ -15,4 +15,8 @@ extern SDL_Renderer* renderer;
 int pj_sdl_get_video_size(LONG* width, LONG* height);
 LONG pj_sdl_get_display_scale();
 
+#ifdef __APPLE__
+const char* mac_resources_path();
+#endif // __APPLE__
+
 #endif // ANIMATOR_PRO_PJ_SDL_H

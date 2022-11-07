@@ -15,6 +15,8 @@ SDL_Window* window			  = NULL;
 SDL_Surface* s_window_surface = NULL;
 SDL_Renderer* renderer		  = NULL;
 
+unsigned char* video_buffer   = NULL;
+
 /*--------------------------------------------------------------*/
 int pj_sdl_get_video_size(LONG* width, LONG* height)
 {

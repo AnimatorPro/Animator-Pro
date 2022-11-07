@@ -73,4 +73,4 @@ set(PJHIGH_SRC_FILES
 
 add_library(pjhigh ${PJHIGH_SRC_FILES})
 
-target_link_libraries(pjhigh fontlib menulib)
+target_link_libraries(pjhigh fontlib menulib pj_sdl)

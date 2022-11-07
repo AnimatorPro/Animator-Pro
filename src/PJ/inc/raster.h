@@ -135,8 +135,8 @@ typedef struct raster {
 typedef Raster McgaRast;
 
 /* these types are used by raster oriented graphics calls */
-typedef unsigned long Ucoor;
-typedef long Coor;
+typedef uint32_t Ucoor;
+typedef int32_t Coor;
 
 /* A little item that when made defines a clip box on a raster which itself
  * can be referenced as a "raster" its x and y will be a relative offset

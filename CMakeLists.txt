@@ -1,18 +1,29 @@
 cmake_minimum_required(VERSION 3.16 FATAL_ERROR)
 
-project(animator-pro LANGUAGES C CXX)
+project(animator-pro)
+
+if (PLATFORM STREQUAL "OS64")
+	## iOS-specific
+	message("Building for platform iOS.")
+endif()
+
+if (CMAKE_GENERATOR STREQUAL "Xcode")
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D IS_BUNDLE")
+endif()
+
+option(USE_ASAN "Use Clang Memory Address Sanitizer" OFF)
+
+
+if (USE_ASAN)
+	set(CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   -fsanitize=address -g")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address -g")
+endif()
+
 
 if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 	# will not take effect without FORCE
 	set(CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}/bin" CACHE PATH "Install top-level directory" FORCE)
 endif()
-
-if(DEFINED PLATFORM)
-	if(EQUALS ${PLATFORM} "OS64")
-		set(CMAKE_TOOLCHAIN_FILE "thirdparty/ios-cmake/ios.toolchain.cmake")
-	endif()
-endif()
-
 
 add_compile_options(
 	-Wno-deprecated-declarations

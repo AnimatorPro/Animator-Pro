@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.16 FATAL_ERROR)
 
-project(pj C)
+project(ani C)
+
+set(CMAKE_C_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 
 include_directories("inc")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -W -Wall -Wextra -Wmissing-prototypes")
@@ -134,28 +137,61 @@ set(PJMAIN_SRC_FILES
 	zoom.c
 	)
 
-add_executable(ani
-	${PJMAIN_SRC_FILES})
+add_executable(
+	${PROJECT_NAME}
+		${PJMAIN_SRC_FILES}
+)
 
-target_link_libraries(ani
-	trdfile
-	flilib
-	fontlib
-	gfxlib
-	macinput
-	menulib
-	picdrive
-	pjhigh
-	pj_sdl
-	libpoco
-	raster
-	minirex
-	softmenu
-	trdutil
-	wndolib
-	SDL2-static
-	SDL2main
-	m)
+target_link_libraries(
+	${PROJECT_NAME}
+		trdfile
+		flilib
+		fontlib
+		gfxlib
+		macinput
+		menulib
+		picdrive
+		pjhigh
+		pj_sdl
+		libpoco
+		raster
+		minirex
+		softmenu
+		trdutil
+		wndolib
+		SDL2-static
+		SDL2main
+		m
+)
 
-INSTALL(TARGETS ani DESTINATION ./)
-INSTALL(DIRECTORY resource/ DESTINATION ./resource)
+
+if (CMAKE_GENERATOR STREQUAL "Xcode")
+	set_target_properties(
+		${PROJECT_NAME}
+		PROPERTIES
+			MACOSX_BUNDLE YES
+			XCODE_ATTRIBUTE_CLANG_ENABLE_OBJC_ARC YES
+			XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER "com.skeletonheavy.animator-pro"
+	)
+
+	if (PLATFORM STREQUAL "OS64")
+		set_target_properties(
+			${PROJECT_NAME}
+			PROPERTIES
+				XCODE_ATTRIBUTE_TARGETED_DEVICE_FAMILY "1,2" ## iPhone / iPad
+		)
+	endif()
+
+		## pre-build required or signing will fail
+	add_custom_command(
+		TARGET ${PROJECT_NAME}
+		PRE_BUILD
+			COMMAND ${CMAKE_COMMAND} -E copy_directory
+			"${CMAKE_CURRENT_SOURCE_DIR}/resource" "$<TARGET_FILE_DIR:${PROJECT_NAME}>/../Resources"
+	)
+else()
+	INSTALL(TARGETS ${PROJECT_NAME} DESTINATION ./)
+	INSTALL(DIRECTORY resource/ DESTINATION ./resource)
+endif()
+
+
