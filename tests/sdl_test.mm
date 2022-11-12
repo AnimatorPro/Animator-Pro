@@ -1,6 +1,9 @@
 #include <SDL.h>
 #include <iostream>
 
+#import <Foundation/NSFileManager.h>
+
+
 /*
  * SDL2_PALETTE_TEST.CC
  *
@@ -15,6 +18,30 @@ int main()
 	const int h		= 200;
 	const int win_w = w * scale;
 	const int win_h = h * scale;
+
+    char preferences_folder[4096];
+    
+    NSError* error = nil;
+
+    @autoreleasepool {
+        NSFileManager* file_manager = [NSFileManager defaultManager];
+        NSURL* result_url = [file_manager
+    //                            URLForDirectory:NSDocumentDirectory
+                                URLForDirectory:NSApplicationSupportDirectory
+                                inDomain:NSUserDomainMask
+                                appropriateForURL:nil
+                                create:NO
+                                error:nil];
+        result_url = [result_url URLByAppendingPathComponent:@"com.skeletonheavy.animator-pro"];
+//        NSLog(@"%@", result_url);
+        if (![file_manager createDirectoryAtURL:result_url withIntermediateDirectories:YES attributes:nil error:nil])
+        {
+            NSLog(@"Unable to create directory: %s.", [[result_url path] UTF8String]);
+        }
+        
+        sprintf(preferences_folder, [[result_url path] UTF8String]);
+        fprintf(stderr, "%s\n", preferences_folder);
+    }
 
 	SDL_Init(SDL_INIT_VIDEO);
 	SDL_Window* window =

@@ -42,6 +42,24 @@ new_config(void)
 }
 
 /*--------------------------------------------------------------*/
+// from config.c
+Errcode default_temp_path(char *buf);
+
+const char* get_default_config_name() {
+	static char config_name[PATH_MAX];
+	static int initialized = 0;
+
+	if (!initialized) {
+		default_temp_path(config_name);
+		sprintf(config_name, "%s%s%s",
+				 config_name, SEP, default_config_name);
+		initialized = 1;
+	}
+
+	return config_name;
+}
+
+/*--------------------------------------------------------------*/
 static int dir_exists(const char* const path)
 {
     struct stat info;
@@ -117,7 +135,7 @@ init_pj_startup(Argparse_list *more_args, Do_aparse do_others,
 
 	if (vb.config_name == NULL) {
 		force_config = TRUE;
-		vb.config_name = default_config_name;
+		vb.config_name = get_default_config_name();
 	}
 	else {
 		force_config = FALSE;

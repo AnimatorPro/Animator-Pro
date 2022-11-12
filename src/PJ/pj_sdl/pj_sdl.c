@@ -8,6 +8,7 @@
 
 #include "pj_sdl.h"
 
+
 /*--------------------------------------------------------------*/
 SDL_Surface* s_surface		  = NULL;
 SDL_Surface* s_buffer		  = NULL;
@@ -15,7 +16,13 @@ SDL_Window* window			  = NULL;
 SDL_Surface* s_window_surface = NULL;
 SDL_Renderer* renderer		  = NULL;
 
-unsigned char* video_buffer   = NULL;
+
+#ifdef _WIN32
+	const char* SEP = "\\";
+#else
+	const char* SEP = "/";
+#endif
+
 
 /*--------------------------------------------------------------*/
 int pj_sdl_get_video_size(LONG* width, LONG* height)

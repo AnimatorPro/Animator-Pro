@@ -1,9 +1,9 @@
 
 cmake_minimum_required(VERSION 3.16)
-project(TestApp C)
+project(TestApp OBJC CXX)
 
 set(SOURCES
-		sdl_test.cc
+		sdl_test.mm
 )
 
 add_executable(${PROJECT_NAME} "${SOURCES}")
@@ -22,6 +22,6 @@ add_custom_command(
 	TARGET ${PROJECT_NAME}
 	PRE_BUILD
 		COMMAND ${CMAKE_COMMAND} -E copy_directory
-			"${CMAKE_CURRENT_SOURCE_DIR}/resource" "$<TARGET_FILE_DIR:${PROJECT_NAME}>/resource"
+			"${CMAKE_CURRENT_SOURCE_DIR}/resource" "$<TARGET_FILE_DIR:${PROJECT_NAME}>/../Resources"
 )
 
