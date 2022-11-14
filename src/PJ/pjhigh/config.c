@@ -11,13 +11,13 @@
 #include "jimk.h"
 #include "aaconfig.h"
 #include "errcodes.h"
-#include "msfile.h"
 #include "reqlib.h"
 #include "tfile.h"
-#include "util.h"
 
 #include "pj_sdl.h"
 
+
+static char default_config_name[] = "aa.cfg";
 
 AA_config vconfg = {  /* Ram image of v.cfg containing default values
 					* for startup if file not found */
@@ -46,25 +46,9 @@ AA_config vconfg = {  /* Ram image of v.cfg containing default values
 static Errcode
 open_config(XFILE **pxf, Boolean create)
 {
-	Errcode err;
-	FilePath *filepath;
-	char odir[PATH_SIZE];
 	const char *config_name = vb.config_name;
 
 	if (!pj_assert(vb.config_name != NULL)) return Err_abort;
-
-//	filepath = filepath_create_from_string(vb.init_drawer);
-//	if (filepath != NULL) {
-//		err = filepath_append(filepath, vb.config_name);
-//
-//		if (err == Success)
-//			err = filepath_to_cstr(filepath, DIR_DELIM, odir, sizeof(odir));
-//
-//		if (err == Success)
-//			config_name = odir;
-//
-//		filepath_destroy(filepath);
-//	}
 
 	return xffopen(config_name, pxf,
 			create ? XREADWRITE_CLOBBER : XREADWRITE_OPEN);
@@ -81,6 +65,21 @@ Errcode default_temp_path(char *buf)
 	buf[1] = '\0';
 #endif
 	return Success;
+}
+
+
+const char* get_default_config_name() {
+	static char config_name[PATH_MAX];
+	static int initialized = 0;
+
+	if (!initialized) {
+		default_temp_path(config_name);
+		sprintf(config_name, "%s%s%s",
+				config_name, SEP, default_config_name);
+		initialized = 1;
+	}
+
+	return config_name;
 }
 
 

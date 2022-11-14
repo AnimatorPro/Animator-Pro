@@ -94,6 +94,8 @@ set(PJMAIN_SRC_FILES
 	polyrub.c
 	polytool.c
 	pstamp.c
+#	qpoco.c
+#	qpocoed.c
 	qmacro.c
 	qmenu.c
 	quickdat.c

@@ -40,6 +40,8 @@ static Errcode init_after_screen(void *data)
 	set_cursor_ccolor((Pixel *)(&vs.ccolor)); /* only works with 80x86 */
 	return(init_brushes());
 }
+
+
 static void close_init_after(void *data)
 {
 	(void)data;
@@ -48,13 +50,13 @@ static void close_init_after(void *data)
 	cleanup_cursors();
 }
 
-static Errcode force_temp_files(void)
 
 /* Check for a tempflx file on current scratch device.	If it's there
    set up to use it.  Otherwise check for a default settings file in
    temp file directory and start up program with color map and settings
    from that. if window open fails give user option of using smaller
    size and abandoning tflx, If this doesn't work give up and return error. */
+static Errcode force_temp_files(void)
 {
 Errcode err;
 Rectangle flxsize;
@@ -369,6 +371,7 @@ static void outofhere(Boolean save_state)
 	exit(0);
 }
 
+
 int main(int argc, char** argv)
 {
 	Errcode err;
@@ -389,7 +392,6 @@ int main(int argc, char** argv)
 	set_hotkey_func(do_pj_hotkey); /* set input hot key function */
 
 	/* initialize pj resource files */
-
 	if((err = init_pj_resources()) < Success)
 		goto error;
 

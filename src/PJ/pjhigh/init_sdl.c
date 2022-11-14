@@ -27,7 +27,6 @@
 
 short pj_crit_errval = 1 - 19;
 
-static char default_config_name[] = "aa.cfg";
 char pj_mcga_name[] = "=SDL.DRV";
 
 Doserr
@@ -39,24 +38,6 @@ pj_dget_err(void)
 void
 new_config(void)
 {
-}
-
-/*--------------------------------------------------------------*/
-// from config.c
-Errcode default_temp_path(char *buf);
-
-const char* get_default_config_name() {
-	static char config_name[PATH_MAX];
-	static int initialized = 0;
-
-	if (!initialized) {
-		default_temp_path(config_name);
-		sprintf(config_name, "%s%s%s",
-				 config_name, SEP, default_config_name);
-		initialized = 1;
-	}
-
-	return config_name;
 }
 
 /*--------------------------------------------------------------*/

@@ -178,6 +178,10 @@ struct ado_setting
 	Short_xyz move;
 	};
 
+
+Errcode default_temp_path(char *buf);
+const char* get_default_config_name();
+
 /* names of all our temp files */
 
 extern char alt_name[];
