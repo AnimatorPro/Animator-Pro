@@ -38,10 +38,17 @@ char po_current_program_path[PATH_SIZE] = "";
 
 char po_chainto_program_path[PATH_SIZE];
 
-static void set_current_program_path(char *progpath)
+// forward declarations for new compilers
+static Errcode qls_poco(char *pbuf,char *prompt, char *button, int qls_mode, int path_type);
+static Errcode qload_poco(char *pbuf);
+static Errcode qsave_poco(char *pbuf);
+Errcode quse_poco();
+
+
 /*****************************************************************************
  * store the path of the current poco program into the global path var.
  ****************************************************************************/
+static void set_current_program_path(char *progpath)
 {
 if (Success <= get_full_path(progpath, po_current_program_path))
 	{
@@ -280,10 +287,10 @@ return(compile_poco(&cl_pev, name, poco_err_name,
 }
 
 
-Errcode do_cl_poco(char *name)
 /*****************************************************************************
  *
  ****************************************************************************/
+Errcode do_cl_poco(char *name)
 {
 Errcode err = Success;
 long	err_line;
@@ -315,7 +322,6 @@ CHAIN_ANOTHER_PROGRAM:
 	return err;
 }
 
-void qrun_pocofile(char *poco_path, Boolean editable)
 /*****************************************************************************
  * save current poco program path, run program, restore current path.
  *
@@ -324,6 +330,7 @@ void qrun_pocofile(char *poco_path, Boolean editable)
  *	program in the editor (if any) is preserved across the run.
  *	(hey -- kludge is my middle name.)
  ****************************************************************************/
+void qrun_pocofile(char *poco_path, Boolean editable)
 {
 	char save_path[PATH_SIZE];
 
@@ -333,11 +340,11 @@ void qrun_pocofile(char *poco_path, Boolean editable)
 	strcpy(po_current_program_path,save_path);
 }
 
-static void insure_changes(char *poco_file, char *poco_path)
 /*****************************************************************************
  * Make sure user has a chance to save his changes to the program before
  * he loads in a new program or starts a fresh one.
  ****************************************************************************/
+static void insure_changes(char *poco_file, char *poco_path)
 {
 if (!poco_text_changed)
 	return;
@@ -357,10 +364,10 @@ else
 	}
 }
 
-void go_pgmn()
 /*****************************************************************************
  *  The main loop for the Poco programming menu.
  ****************************************************************************/
+void go_pgmn()
 {
 int choice;
 char pbuf[PATH_SIZE];
@@ -427,12 +434,11 @@ return;
 #define QLS_SAVE 1
 #define QLS_USE 2
 
-static Errcode qls_poco(char *pbuf,char *prompt, char *button, int qls_mode,
-	int path_type)
 /*****************************************************************************
  * Put up a file requestor to load, save, or use a poco program (depending
  * on qls_mode variable).	Then take appropriate load/save/use action.
  ****************************************************************************/
+static Errcode qls_poco(char *pbuf,char *prompt, char *button, int qls_mode, int path_type)
 {
 Boolean got_it = FALSE;
 Errcode err = Success;
@@ -488,10 +494,10 @@ else
 return(err);
 }
 
-static Errcode qload_poco(char *pbuf)
 /*****************************************************************************
  *
  ****************************************************************************/
+static Errcode qload_poco(char *pbuf)
 {
 char sbuf[50];
 
@@ -499,10 +505,10 @@ return(qls_poco(pbuf,stack_string("load_poco",sbuf),
 	load_str, QLS_LOAD, POCO_PATH));
 }
 
-static Errcode qsave_poco(char *pbuf)
 /*****************************************************************************
  *
  ****************************************************************************/
+static Errcode qsave_poco(char *pbuf)
 {
 char sbuf[50];
 
@@ -510,10 +516,10 @@ return(qls_poco(pbuf,stack_string("save_poco",sbuf),
 	save_str, QLS_SAVE, POCO_PATH));
 }
 
-Errcode quse_poco()
 /*****************************************************************************
  *
  ****************************************************************************/
+Errcode quse_poco()
 {
 char pbuf[PATH_SIZE];
 char sbuf[50];

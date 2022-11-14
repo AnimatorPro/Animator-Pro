@@ -107,14 +107,15 @@
  * #include's used by most everything in poco...
  ****************************************************************************/
 
+#include <stdio.h>
 #include <string.h>
+
+#ifndef stricmp
+#define stricmp strcasecmp
+#endif
 
 #ifndef STDTYPES_H
   #include "stdtypes.h"
-#endif
-
-#ifndef LOSTDIO_H
-  #include "lostdio.h"
 #endif
 
 #ifndef TOKEN_H
