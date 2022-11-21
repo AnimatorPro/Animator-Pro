@@ -13,6 +13,10 @@
 	#include "rastrans.h"
 #endif
 
+#ifndef CMAP_H
+	#include "cmap.h"
+#endif
+
 struct flipath;
 
 /* the celdata fli chunk */

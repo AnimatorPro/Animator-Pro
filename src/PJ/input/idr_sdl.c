@@ -126,25 +126,23 @@ static Errcode sdl_idr_input(Idriver* idr)
 	SDL_Event ev;
 	unsigned int mb;
 
+	float winscale_x, winscale_y;
+
 	SDL_PumpEvents();
 	idr->key_code = 0;
 
-	const LONG display_scale = pj_sdl_get_display_scale();
+	pj_sdl_get_window_scale(&winscale_x, &winscale_y);
 
 	while (SDL_PollEvent(&ev)) {
 		switch (ev.type) {
 			case SDL_KEYDOWN:
 				idr->key_code = sdl_key_event_to_ascii(&ev);
-				if (idr->key_code == SDL_SCANCODE_B) {
-					SDL_SaveBMP(s_buffer, "/tmp/dump.bmp");
-					fprintf(stderr, "Wrote dump file to /tmp/dump.bmp.\n");
-				}
 				return Success;
 
 			case SDL_MOUSEMOTION:
-				idr->pos[0] = ev.motion.x / display_scale;
-				idr->pos[1] = ev.motion.y / display_scale;
-				break;
+				idr->pos[0] = ev.motion.x / winscale_x;
+				idr->pos[1] = ev.motion.y / winscale_y;
+				return Success;
 
 			case SDL_MOUSEBUTTONDOWN:
 			case SDL_MOUSEBUTTONUP:
@@ -155,6 +153,24 @@ static Errcode sdl_idr_input(Idriver* idr)
 					idr->buttons |= mb;
 				else if (ev.type == SDL_MOUSEBUTTONUP)
 					idr->buttons &= ~mb;
+				return Success;
+
+			//!TODO: figure out a better event loop for SDL where
+			//       not everything is done inside IDR?
+
+			case SDL_WINDOWEVENT:
+				switch(ev.window.event) {
+					case SDL_WINDOWEVENT_RESIZED:
+					case SDL_WINDOWEVENT_SIZE_CHANGED:
+						s_window_surface = SDL_GetWindowSurface(window);
+						return Success;
+
+					default:
+						return Success;
+				}
+
+			default:
+				return Failure;
 		}
 	}
 
