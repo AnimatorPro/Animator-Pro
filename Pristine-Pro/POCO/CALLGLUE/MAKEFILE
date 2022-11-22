@@ -1,8 +1,0 @@
-!include "make.inc"
-
-O = test.obj pococall.obj
-
-test: $(O)
-	@echo objlib made
-
-

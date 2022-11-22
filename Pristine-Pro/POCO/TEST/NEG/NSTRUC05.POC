@@ -1,9 +1,0 @@
-/* This tests for struct keyword used where it shouldn't be */
-#pragma poco echo "expect>malformed name for struct/union/enum..."
-
-main()
-{
-int struct;
-
-puts("This shouldn't compile");
-}

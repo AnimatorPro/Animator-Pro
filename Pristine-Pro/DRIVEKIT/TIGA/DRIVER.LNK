@@ -1,7 +1,0 @@
-device.obj
-output.obj
-raster.obj
--l ..\lib\aasyslib.lib
--l ..\lib\stdiolib.lib
--l hcai.lib
--DOSORDER

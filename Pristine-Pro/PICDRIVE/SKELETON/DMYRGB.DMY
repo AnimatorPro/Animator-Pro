@@ -1,9 +1,0 @@
-A dummy pic file of type .DMY.	If you select this file while the
-SKELETON.PDR is available to the host, the skeleton pdr will 'load'
-this image.  Which is to say, it just clears the screen, and displays
-the sequence of calls it would go through if it were really loading
-an image.
-
-This file, because it has 'dmyrgb' in the name, will cause skeleton.pdr
-to use its RGB read logic instead of the normal read logic.
-

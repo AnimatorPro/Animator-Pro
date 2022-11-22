@@ -1,7 +1,0 @@
-#setdef PUBLIC_CODE def
-#setdef PRIVATE_CODE undef
-
-/* remove includes of "rectangle.h" and replace RECT_FIELDS */
-
-#setdef RECTANG_H def 	
-#define RECT_FIELDS USHORT width, height; SHORT x, y

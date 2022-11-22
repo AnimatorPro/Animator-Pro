@@ -1,7 +1,0 @@
-main()
-{
-int sw, sh;
-
-GetSize(&sw, &sh);
-Circle(sw/2, sh/2, sh/3);
-}

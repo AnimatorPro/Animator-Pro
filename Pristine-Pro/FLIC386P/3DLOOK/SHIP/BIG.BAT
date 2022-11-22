@@ -1,1 +1,0 @@
-3dlook @big.txt

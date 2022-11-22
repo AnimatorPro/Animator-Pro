@@ -1,5 +1,0 @@
-CelRelease()
-CelClip()
-SwapRelease()
-LoadAPic("name",screen)
-SaveAPic("name",screen)
