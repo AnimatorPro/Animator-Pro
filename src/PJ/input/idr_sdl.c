@@ -72,7 +72,8 @@ static int16_t sdl_key_event_to_ascii(const SDL_Event* ev)
 			break;
 	}
 
-	return ev->key.keysym.scancode;
+//	return ev->key.keysym.scancode;
+	return ev->key.keysym.sym;
 }
 
 int16_t dos_wait_key(void)
@@ -125,12 +126,12 @@ static Errcode sdl_idr_input(Idriver* idr)
 {
 	SDL_Event ev;
 	unsigned int mb;
-
 	float winscale_x, winscale_y;
 
 	SDL_PumpEvents();
 	idr->key_code = 0;
 
+	SDL_Rect rect = pj_sdl_fit_surface(s_buffer, s_window_surface);
 	pj_sdl_get_window_scale(&winscale_x, &winscale_y);
 
 	while (SDL_PollEvent(&ev)) {
@@ -140,8 +141,24 @@ static Errcode sdl_idr_input(Idriver* idr)
 				return Success;
 
 			case SDL_MOUSEMOTION:
-				idr->pos[0] = ev.motion.x / winscale_x;
-				idr->pos[1] = ev.motion.y / winscale_y;
+				idr->pos[0] = ev.motion.x - rect.x;
+				idr->pos[1] = ev.motion.y - rect.y;
+				/*
+				 * Scale the mouse motion by the video buffer size.
+				 * Remember that the aspect scaling of the buffer
+				 * changes depending on whether the x or y axis
+				 * matches between buffer and window, so scale mouse
+				 * coords accordingly.
+				 */
+				if (rect.x == 0) {
+					idr->pos[0] /= winscale_x;
+					idr->pos[1] /= winscale_x;
+				}
+				else {
+					idr->pos[0] /= winscale_y;
+					idr->pos[1] /= winscale_y;
+				}
+
 				return Success;
 
 			case SDL_MOUSEBUTTONDOWN:
@@ -163,6 +180,8 @@ static Errcode sdl_idr_input(Idriver* idr)
 					case SDL_WINDOWEVENT_RESIZED:
 					case SDL_WINDOWEVENT_SIZE_CHANGED:
 						s_window_surface = SDL_GetWindowSurface(window);
+						// make sure the resize is live
+						pj_sdl_flip_window_surface();
 						return Success;
 
 					default:
@@ -271,7 +290,7 @@ Errcode init_sdl_idriver(Idriver* idr)
 Errcode init_input(void)
 {
 //	SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
-	SDL_ShowCursor(SDL_DISABLE);
+//	SDL_ShowCursor(SDL_DISABLE);
 
 	init_idriver(NULL, vconfg.idr_modes, 0);
 

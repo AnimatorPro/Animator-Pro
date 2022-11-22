@@ -258,53 +258,7 @@ sdl_set_colors(Raster *r, LONG start, LONG count, void *cbuf)
 static void sdl_wait_vsync(Raster* r)
 {
 	(void)r;
-
-	/* SDL_BlitScaled doesn't work from 8 bit to screen,
-	 * so I'm copying to a second buffer first and then
-	 * doing my stretched blit. */
-	SDL_BlitSurface(s_surface, NULL, s_buffer, NULL);
-
-	/* With window scaling, we want to center the target rect. */
-	SDL_Rect target_rect;
-	const float aspect = ((float)s_window_surface->w) / ((float)s_window_surface->h);
-
-	//!TODO: use aspect!
-
-	const int width_is_longest = s_window_surface->w > s_window_surface->h ? 1 : 0;
-	// converting to int here to deliberately round
-	const int surf_scaled_w = s_surface->w * (s_window_surface->w / s_surface->w);
-	const int surf_scaled_h = s_surface->h * (s_window_surface->h / s_surface->h);
-
-	if (width_is_longest) {
-		// width is greater -- height straight copy
-		target_rect.y = 0;
-		target_rect.h = s_window_surface->h;
-
-//		float delta = (((float)s_window_surface->w) - surf_scaled_w) * 0.5;
-
-		target_rect.x = (s_window_surface->w - surf_scaled_w) / 2;
-		target_rect.w = surf_scaled_w;
-	}
-	else {
-		// height is greater - width straight copy
-		target_rect.x = 0;
-		target_rect.w = s_window_surface->w;
-
-//		float delta = (((float)s_window_surface->h) - surf_scaled_h) * 0.5;
-
-		target_rect.y = (s_window_surface->h - surf_scaled_h) / 2;
-		target_rect.h = surf_scaled_h;
-	}
-
-	/* Draw to the window surface, scaled */
-	//!FIXME: Only clear the parts that aren't drawn from the scaled blit
-	SDL_FillRect(s_window_surface, NULL, 0x000000);
-	SDL_BlitScaled(s_buffer, &s_buffer->clip_rect, s_window_surface, &target_rect);
-
-	SDL_UpdateWindowSurface(window);
-	//	SDL_RenderClear(renderer);
-	//	SDL_RenderCopy(renderer, texture, NULL, NULL);
-	//	SDL_RenderPresent(renderer);
+	pj_sdl_flip_window_surface();
 }
 
 static Rastlib* get_sdl_lib(void)
