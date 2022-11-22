@@ -179,9 +179,8 @@ static Errcode sdl_idr_input(Idriver* idr)
 				switch(ev.window.event) {
 					case SDL_WINDOWEVENT_RESIZED:
 					case SDL_WINDOWEVENT_SIZE_CHANGED:
+						// Update the target surface so drawing works!
 						s_window_surface = SDL_GetWindowSurface(window);
-						// make sure the resize is live
-						pj_sdl_flip_window_surface();
 						return Success;
 
 					default:
