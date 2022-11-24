@@ -577,7 +577,6 @@ Boolean outside = FALSE;
 	*((Rasthdr *)cb) = *((Rasthdr *)r);
 
 	/* check if the rect overlaps the raster at least a little bit */
-
 	if(x < 0)
 	{
 		if(width <= -x)
@@ -617,82 +616,10 @@ Boolean outside = FALSE;
 	cb->height = height;
 	cb->root = r;
 
-	return(1);
+	return 1;
+
 clipout:
 	cb->lib = pj_get_null_lib();
-	return(0);
+	return 0;
 }
 
-#ifdef NEVER
-Boolean pj_clipbox_make(Clipbox *cb, Raster *r,
-					 Coor x,Coor y,Coor width,Coor height)
-
-/* makes a clip box usable, returns 0 if clipped out 0 if some part of it
- * is on the raster puts a null lib in cbox if clipped out may be called
- * repeatedly for moving the box */
-{
-Boolean outside = FALSE;
-
-	*((Rasthdr *)cb) = *((Rasthdr *)r);
-
-	/* check if the rect overlaps the raster at least a little bit */
-
-	if(x < 0)
-	{
-		if(width <= -x)
-			goto clipout;
-		outside = TRUE;
-		cb->left_border = -x;
-	}
-	else
-	{
-		if( x > r->width)
-			goto clipout;
-		cb->left_border = 0;
-	}
-
-	if(y < 0)
-	{
-		if(height <= -y)
-			goto clipout;
-		outside = TRUE;
-		cb->top_border = -y;
-	}
-	else
-	{
-		if( y > r->height)
-			goto clipout;
-		cb->top_border = 0;
-	}
-
-	if((cb->right_border = (x + width) - r->width) < 0)
-		cb->right_border = 0;
-
-	if((cb->bot_border = (y + height) - r->height) < 0)
-		cb->bot_border = 0;
-
-	/* if the clip rectangle extends outside the root raster we have to install
-	 * the library to force clip for the root raster as well */
-
-	if(outside || cb->right_border || cb->bot_border)
-	{
-		cb->lib = get_safecbox_lib();
-	}
-	else
-	{
-		cb->lib = get_cbox_lib();
-	}
-
-	cb->type = RT_CLIPBOX;
-	cb->x = x;
-	cb->y = y;
-	cb->width = width;
-	cb->height = height;
-	cb->root = r;
-
-	return(1);
-clipout:
-	cb->lib = pj_get_null_lib();
-	return(0);
-}
-#endif

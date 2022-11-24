@@ -7,7 +7,6 @@
 #include "rastcall.h"
 #include "zoom.h"
 
-
 /* Find closest colors in this color map to cel's color map, and then
    remap cel's pixels appropriately. */
 void cfit_rcel(Rcel* c, Cmap* dcmap)
@@ -18,7 +17,6 @@ void cfit_rcel(Rcel* c, Cmap* dcmap)
 	xlat_rast(c, ctable, 1);
 }
 
-
 void refit_rcel(Rcel* c, Cmap* ncmap, Cmap* ocmap)
 {
 	UBYTE cvtab[COLORS];
@@ -26,7 +24,6 @@ void refit_rcel(Rcel* c, Cmap* ncmap, Cmap* ocmap)
 	nz_fitting_ctable(ocmap->ctab, ncmap->ctab, cvtab);
 	xlat_rast(c, cvtab, 1);
 }
-
 
 /* Plop down a cel on screen */
 static void see_a_cel(Rcel* cl)
@@ -39,13 +36,11 @@ static void see_a_cel(Rcel* cl)
 	zoom_cel(cl);
 }
 
-
 /* Erase cel image (presuming undo screen's been saved). */
 static void unsee_a_cel(Rcel* c)
 {
 	zoom_undo_rect(c->x, c->y, c->width, c->height);
 }
-
 
 /* map everything but clearc to destc */
 void set_one_val(Rcel* rc, UBYTE clearc, UBYTE destc)
@@ -56,7 +51,6 @@ void set_one_val(Rcel* rc, UBYTE clearc, UBYTE destc)
 	table[clearc] = clearc;
 	xlat_rast(rc, table, 1);
 }
-
 
 void show_cel_a_sec(Rcel* cel)
 {
@@ -76,12 +70,10 @@ void show_cel_a_sec(Rcel* cel)
 	}
 }
 
-
 void zoom_cel(Rcel* c)
 {
 	rect_zoom_it(c->x, c->y, c->width, c->height);
 }
-
 
 /* this will clip to source bounds, returns Err_clipped if clipped out
  * in which case there is no cel */
@@ -94,9 +86,8 @@ Errcode clip_celrect(Rcel* src, Rectangle* rect, Rcel** clip)
 		return (Err_clipped);
 	if ((*clip = clone_rcel(&clipcel)) == NULL)
 		return (Err_no_memory);
-	return (0);
+	return 0;
 }
-
 
 /* Move an rcel while minimizing horrible screen flashing.  */
 static void delta_move_rcel(Rcel* c, SHORT dx, SHORT dy, Tcolxldat* txl, Boolean fit_cel)
@@ -116,7 +107,6 @@ static void delta_move_rcel(Rcel* c, SHORT dx, SHORT dy, Tcolxldat* txl, Boolean
 		zoom_cel(c);
 	}
 }
-
 
 /* moves and rcel over the vb.pencel using the undo buffer to refresh,
  * undo must be saved before this is called */
@@ -175,11 +165,9 @@ out:
 	return (err);
 }
 
-
 /********************************************************/
 /* blitfuncs for cel blitting and moving returned by get_celblit and
  * get_celmove() */
-
 
 /* blits a rectangle fron source to dest */
 static void celblit(Rcel* src,
@@ -196,7 +184,6 @@ static void celblit(Rcel* src,
 	pj_blitrect((Raster*)src, sx, sy, (Raster*)dest, dx, dy, w, h);
 }
 
-
 /* xlate blits a rectangle from source to dest */
 static void celblitxl(Rcel* src,
 					  SHORT sx,
@@ -210,7 +197,6 @@ static void celblitxl(Rcel* src,
 {
 	xlatblit((Rcel*)src, sx, sy, (Rcel*)dest, dx, dy, w, h, xld->xlat);
 }
-
 
 /* "T" blits a rectangle from source to dest */
 static void celtblit(Rcel* src,
@@ -226,7 +212,6 @@ static void celtblit(Rcel* src,
 	pj_tblitrect((Raster*)src, sx, sy, (Raster*)dest, dx, dy, w, h, xld->tcolor);
 }
 
-
 /* xlate "T" blits a rectangle from source to dest */
 static void celtblitxl(Rcel* src,
 					   SHORT sx,
@@ -240,7 +225,6 @@ static void celtblitxl(Rcel* src,
 {
 	procblit((Raster*)src, sx, sy, (Raster*)dest, dx, dy, w, h, tbli_xlatline, xld);
 }
-
 
 /* "U" blits a rectangle from source to dest */
 static void celublit(Rcel* src,
@@ -256,7 +240,6 @@ static void celublit(Rcel* src,
 	ublitrect((Raster*)src, sx, sy, (Raster*)dest, dx, dy, w, h, xld->tcolor);
 }
 
-
 /* xlate "U" blits a rectangle from source to dest */
 static void celublitxl(Rcel* src,
 					   SHORT sx,
@@ -271,7 +254,6 @@ static void celublitxl(Rcel* src,
 	procblit((Raster*)src, sx, sy, (Raster*)dest, dx, dy, w, h, ubli_xlatline, xld);
 }
 
-
 static void celabtblit(Rcel* src,
 					   SHORT sx,
 					   SHORT sy,
@@ -285,7 +267,6 @@ static void celabtblit(Rcel* src,
 	Raster* src_b = (Raster*)undof;
 	abprocblit((Raster*)src, sx, sy, (Raster*)dest, dx, dy, w, h, src_b, dx, dy, pj_tbli_line, xld);
 }
-
 
 static void celabtxlblit(Rcel* src,
 						 SHORT sx,
@@ -302,7 +283,6 @@ static void celabtxlblit(Rcel* src,
 	  (Raster*)src, sx, sy, (Raster*)dest, dx, dy, w, h, src_b, dx, dy, tbli_xlatline, xld);
 }
 
-
 static void celabublit(Rcel* src,
 					   SHORT sx,
 					   SHORT sy,
@@ -316,7 +296,6 @@ static void celabublit(Rcel* src,
 	Raster* src_b = (Raster*)undof;
 	abprocblit((Raster*)src, sx, sy, (Raster*)dest, dx, dy, w, h, src_b, dx, dy, ubli_line, xld);
 }
-
 
 static void celabuxlblit(Rcel* src,
 						 SHORT sx,
@@ -332,7 +311,6 @@ static void celabuxlblit(Rcel* src,
 	abprocblit(
 	  (Raster*)src, sx, sy, (Raster*)dest, dx, dy, w, h, src_b, dx, dy, ubli_xlatline, xld);
 }
-
 
 Celblit get_celmove(Boolean cfit)
 {
@@ -351,7 +329,6 @@ Celblit get_celmove(Boolean cfit)
 	return celblit;
 }
 
-
 Celblit get_celblit(Boolean cfit)
 {
 	if (vs.render_under) {
@@ -369,7 +346,6 @@ Celblit get_celblit(Boolean cfit)
 	return celblit;
 }
 
-
 Procline get_celprocline(Boolean cfit)
 {
 	if (vs.render_under) {
@@ -382,5 +358,5 @@ Procline get_celprocline(Boolean cfit)
 			return (tbli_xlatline);
 		return (pj_tbli_line);
 	}
-	return (NULL); /* straight blit no processing required (may need cfit) */
+	return NULL; /* straight blit no processing required (may need cfit) */
 }

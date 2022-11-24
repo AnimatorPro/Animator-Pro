@@ -45,7 +45,7 @@ typedef struct aa_config {
 	char temp_path[PATH_SIZE*2];		/* semicolon separated path */
 } AA_config;
 
-extern AA_config vconfg;		/* in pjhigh.lib(config.c) */
+extern AA_config vconfg;		/* in pjhigh.lib (config.c) */
 
 extern Errcode init_config(Boolean force_create);
 extern Errcode rewrite_config(void);

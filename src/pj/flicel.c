@@ -43,10 +43,12 @@ static void free_fcel_cfit(Flicel* fc)
 static Errcode alloc_fcel_cfit(Flicel* fc)
 {
 	free_fcel_cfit(fc);
-	if (NULL == (fc->cfit = pj_malloc(sizeof(Celcfit))))
-		return (Err_no_memory);
+	fc->cfit = pj_malloc(sizeof(Celcfit));
+	if (fc->cfit == NULL) {
+		return Err_no_memory;
+	}
 	fc->flags |= FCEL_OWNS_CFIT;
-	return (Success);
+	return Success;
 }
 
 void free_fcel_raster(Flicel* fc)
@@ -63,21 +65,24 @@ Errcode alloc_fcel_raster(Flicel* fc)
 {
 	Errcode err;
 
-	if (fc->rc && (fc->flags & FCEL_OWNS_RAST))
-		return (Success);
+	if (fc->rc && (fc->flags & FCEL_OWNS_RAST)) {
+		return Success;
+	}
 	fc->frame_loaded = !fc->cd.cur_frame; /* force reseek from start */
-	err				 = valloc_ramcel(&fc->rc, fc->flif.hdr.width, fc->flif.hdr.height);
+	err = valloc_ramcel(&fc->rc, fc->flif.hdr.width, fc->flif.hdr.height);
 	if (err >= Success)
 		fc->flags |= FCEL_OWNS_RAST;
-	return (err);
+	return err;
 }
 
 void free_fcel(Flicel** pfc)
 {
-	Flicel* fc;
+	Flicel* fc = *pfc;
 
-	if ((fc = *pfc) == NULL)
+	if (fc == NULL) {
 		return;
+	}
+
 	free_fcel_raster(fc);	 /* only does if alloc'd and owned */
 	pj_fli_close(&fc->flif); /* only does if open */
 	free_flipath(&fc->cpath);
@@ -101,8 +106,9 @@ static void noask_delete_the_cel(void)
 
 void delete_the_cel(void)
 {
-	if (soft_yes_no_box("cel_del"))
+	if (soft_yes_no_box("cel_del")) {
 		noask_delete_the_cel();
+	}
 }
 
 /* Try to find room on the heap for a flicel
@@ -112,7 +118,8 @@ Errcode alloc_fcel(Flicel** pcel)
 	Flicel* fc;
 	Errcode err;
 
-	if (NULL == (*pcel = pj_zalloc(sizeof(Flicel)))) {
+	*pcel = pj_zalloc(sizeof(Flicel));
+	if (*pcel == NULL) {
 		err = Err_no_memory;
 		goto error;
 	}
@@ -120,10 +127,14 @@ Errcode alloc_fcel(Flicel** pcel)
 	init_celchunk(&fc->cd);
 	init_xformspec(&fc->xf);
 	fc->frame_loaded = -1;
-	if ((err = alloc_fcel_cfit(fc)) < Success)
-		goto error;
 
-	return (Success);
+	err = alloc_fcel_cfit(fc);
+	if (err < Success) {
+		goto error;
+	}
+
+	return Success;
+
 error:
 	free_fcel(pcel);
 	return (err);
@@ -291,13 +302,18 @@ static Errcode clip_from_fli(char* tempname, char* fliname, Flicel** pfcel, Rect
 	Errcode err;
 	Rcel* clip;
 
-	if ((err = clip_celrect(vb.pencel, rect, &clip)) < 0)
+	err = clip_celrect(vb.pencel, rect, &clip);
+	if (err < 0) {
 		goto error;
+	}
 
-	if ((err = make1_flicel(tempname, fliname, pfcel, clip)) < 0)
+	err = make1_flicel(tempname, fliname, pfcel, clip);
+	if (err < 0) {
 		goto error;
+	}
 
-	return (0);
+	return 0;
+
 error:
 	pj_rcel_free(clip);
 	*pfcel = NULL;
@@ -604,11 +620,11 @@ error:
 
 static Errcode cel_cant_clip(Errcode err)
 {
-	return (softerr(err, vs.multi ? "cel_mfclip" : "cel_clip"));
+	return softerr(err, vs.multi ? "cel_mfclip" : "cel_clip");
 }
 
-/* Put the bits of screen not the key color into THE cel
- * returns ecode if can't do */
+/* Put the bits of screen (not the key color) into THE cel
+ * returns Errcode if unable */
 Errcode clip_cel(void)
 {
 	Rectangle bounds;
@@ -649,19 +665,21 @@ Errcode clip_cel(void)
 
 single_frame:
 
-	if ((err = find_clip(vb.pencel, &bounds, vs.inks[0])) < 0)
+	err = find_clip(vb.pencel, &bounds, vs.inks[0]);
+	if (err < 0)
 		goto error;
 
 	if (bounds.height) {
 		free_the_cel();
-		if ((err = clip_from_fli(cel_name, cel_fli_name, &thecel, &bounds)) < 0)
+		err = clip_from_fli(cel_name, cel_fli_name, &thecel, &bounds);
+		if (err < 0)
 			goto error;
 		show_cel_a_sec(thecel->rc);
 	}
 
 error:
 	flx_draw_olays();
-	return (cel_cant_clip(err));
+	return cel_cant_clip(err);
 }
 
 void clip_cel1(void)
