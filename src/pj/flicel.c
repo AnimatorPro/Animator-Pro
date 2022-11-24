@@ -689,10 +689,12 @@ Errcode cut_out_cel(void)
 	Rectangle rect;
 	Errcode err;
 
-	if ((err = cut_out_rect(&rect)) >= Success)
+	err = cut_out_rect(&rect);
+	if (err >= Success) {
 		err = cel_from_rect(&rect, FALSE);
+	}
 
-	return (err);
+	return err;
 }
 
 void cut_out_cel1(void)
