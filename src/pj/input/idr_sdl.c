@@ -138,7 +138,6 @@ static Errcode sdl_idr_input(Idriver* idr)
 		switch (ev.type) {
 			case SDL_KEYDOWN:
 				idr->key_code = sdl_key_event_to_ascii(&ev);
-				return Success;
 
 			case SDL_MOUSEMOTION:
 				idr->pos[0] = ev.motion.x - rect.x;
@@ -158,19 +157,20 @@ static Errcode sdl_idr_input(Idriver* idr)
 					idr->pos[0] /= winscale_y;
 					idr->pos[1] /= winscale_y;
 				}
-
-				return Success;
+				break;
 
 			case SDL_MOUSEBUTTONDOWN:
 			case SDL_MOUSEBUTTONUP:
 				mb = (ev.button.button == SDL_BUTTON_LEFT)	  ? 1
 					 : (ev.button.button == SDL_BUTTON_RIGHT) ? 2
 															  : 0;
-				if (ev.type == SDL_MOUSEBUTTONDOWN)
+				if (ev.type == SDL_MOUSEBUTTONDOWN) {
 					idr->buttons |= mb;
-				else if (ev.type == SDL_MOUSEBUTTONUP)
+				}
+				else if (ev.type == SDL_MOUSEBUTTONUP) {
 					idr->buttons &= ~mb;
-				return Success;
+				}
+				break;
 
 			//!TODO: figure out a better event loop for SDL where
 			//       not everything is done inside IDR?
@@ -181,14 +181,14 @@ static Errcode sdl_idr_input(Idriver* idr)
 					case SDL_WINDOWEVENT_SIZE_CHANGED:
 						// Update the target surface so drawing works!
 						s_window_surface = SDL_GetWindowSurface(window);
-						return Success;
+					break;
 
 					default:
-						return Success;
+						break;
 				}
 
 			default:
-				return Failure;
+				break;
 		}
 	}
 
