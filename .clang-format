@@ -13,5 +13,5 @@ DerivePointerAlignment: false
 PointerAlignment: Left
 AlwaysBreakAfterReturnType: None
 AlwaysBreakAfterDefinitionReturnType: None
-
+SeparateDefinitionBlocks: Always
 ...
