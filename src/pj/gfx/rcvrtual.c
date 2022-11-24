@@ -1,13 +1,12 @@
 #include "gfx.h"
 
-Boolean pj_rcel_make_virtual(Rcel *subcel, Rcel *root, Rectangle *toclip)
-/************************************************************************* 
+/*************************************************************************
  * This makes a cel that is a rectangular piece of a potentially larger
  * cel.  It also forces all drawing and fli-playing routines to clip
- * to the bounds of the cel. 
+ * to the bounds of the cel.
  *
- * The raster and colormap in the new, clipped cel (subcel) are really the 
- * items in the root and if altered will alter the root.  DO NOT call 
+ * The raster and colormap in the new, clipped cel (subcel) are really the
+ * items in the root and if altered will alter the root.  DO NOT call
  * free_rcel() or close_rcel() on this or you will be in BIG trouble.
  *
  * Parameters:
@@ -24,11 +23,12 @@ Boolean pj_rcel_make_virtual(Rcel *subcel, Rcel *root, Rectangle *toclip)
  *			hence amounts to nothing at all).
  *
  *************************************************************************/
+Boolean pj_rcel_make_virtual(Rcel* subcel, Rcel* root, Rectangle* toclip)
 {
-Boolean ret;
+	Boolean ret;
 
-	ret = pj_clipbox_make((Clipbox *)subcel,(Raster *)root, 
-				  toclip->x,toclip->y,toclip->width,toclip->height);
+	ret = pj_clipbox_make(
+	  (Clipbox*)subcel, (Raster*)root, toclip->x, toclip->y, toclip->width, toclip->height);
 	subcel->cmap = root->cmap;
-	return(ret);
+	return (ret);
 }

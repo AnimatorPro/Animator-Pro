@@ -19,7 +19,7 @@ typedef struct option_tool {
 	SHORT type;
 	SHORT id;
 	char *help;  /* this may be a RL_KEYTEXT if it is a softmenu key */
-	Button *options;
+	struct button *options;
 	void (*closeit)(struct option_tool *ot);
 } Option_tool;
 
@@ -41,7 +41,7 @@ extern Option_tool *ptool_list;
 typedef struct optgroup_data {
 	SHORT *optid;   /* pointer to SHORT containing current option id # */
 	Option_tool *tlist; 	/* list options available in */
-	Button *optb;        /* button options sub system initiated from */
+	struct button *optb;        /* button options sub system initiated from */
 	SHORT topname;
 } Optgroup_data;
 
