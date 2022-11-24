@@ -500,47 +500,60 @@ Errcode load_temp_fcel(char* tempname, Flicel** pfc)
 	Fat_chunk fchunk;
 	Flicel* fc;
 
-	if ((err = alloc_fcel(pfc)) < Success)
-		return (err);
+	err = alloc_fcel(pfc);
+	if (err < Success)
+		return err;
+
 	fc = *pfc;
 
-	if (NULL == (fc->tpath = clone_string(tempname))) {
+	fc->tpath = clone_string(tempname);
+	if (fc->tpath == NULL) {
 		err = Err_no_memory;
 		goto error;
 	}
 
 	err = pj_fli_open(tempname, &fc->flif, XREADONLY);
-	if (err < Success)
+	if (err < Success) {
 		goto error;
+	}
 
 	err = xffreadoset(fc->flif.xf, &fc->cd, CELDATA_OFFSET, sizeof(Celdata));
-	if (err < Success)
+	if (err < Success) {
 		goto error;
+	}
 
 	if (fc->cd.id.type != FP_CELDATA) {
 		err = Err_corrupted;
 		goto error;
 	}
-	if ((err = alloc_fcel_raster(fc)) < Success)
+
+	err = alloc_fcel_raster(fc);
+	if (err < Success) {
 		goto error;
+	}
 
 	err = xffread(fc->flif.xf, &fchunk, sizeof(fchunk));
-	if (err < Success)
+	if (err < Success) {
 		goto error;
+	}
 
 	if (fchunk.type != FP_FLIPATH) {
 		err = Err_corrupted;
 		goto error;
 	}
-	if ((thecel->cpath = pj_malloc(fchunk.size)) == NULL) {
+
+	thecel->cpath = pj_malloc(fchunk.size);
+	if (thecel->cpath == NULL) {
 		err = Err_no_memory;
 		goto error;
 	}
+
 	thecel->cpath->id = fchunk;
 
 	err = xffread(fc->flif.xf, OPTR(fc->cpath, sizeof(fchunk)), fchunk.size - sizeof(fchunk));
-	if (err < Success)
+	if (err < Success) {
 		goto error;
+	}
 
 	/* close temp file and open fli pointed to and
 	 * verify it's the right one */
@@ -548,8 +561,9 @@ Errcode load_temp_fcel(char* tempname, Flicel** pfc)
 	pj_fli_close(&fc->flif);
 
 	err = pj_fli_open(fc->cpath->path, &fc->flif, XREADONLY);
-	if (err < Success)
+	if (err < Success) {
 		goto error;
+	}
 
 	if (memcmp(&thecel->cpath->fid, &thecel->flif.hdr.id, sizeof(Fli_id)) ||
 		thecel->flif.hdr.width != thecel->rc->width ||
@@ -559,15 +573,18 @@ Errcode load_temp_fcel(char* tempname, Flicel** pfc)
 	}
 	refresh_flicel_pos(thecel);
 	thecel->frame_loaded = -1;
-	if ((err = seek_fcel_frame(thecel, thecel->cd.cur_frame)) < Success)
+	err = seek_fcel_frame(thecel, thecel->cd.cur_frame);
+	if (err < Success) {
 		goto error;
+	}
 
 	pj_fli_close(&thecel->flif);
-	return (Success);
+	return Success;
+
 error:
 	softerr(err, "!%s", "fcel_temp", tempname);
 	free_fcel(pfc);
-	return (err);
+	return err;
 }
 
 /* attempts to load a pic file as a flicel with one frame putting pic
