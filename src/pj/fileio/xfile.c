@@ -14,6 +14,7 @@
 #include "pjassert.h"
 #include "tfile.h"
 #include <stdarg.h>
+#include <string.h>
 
 
 #ifdef USE_LFILE
@@ -146,12 +147,11 @@ XFILE* xfopen(const char* path, enum XReadWriteMode mode)
 		return NULL;
 
 	if (is_tdrive(path)) {
-		//! TODO: Append temp path!
 		path += 2;
 		sprintf(real_path, "%s%s%s", vconfg.temp_path, SEP, path);
 	}
 	else {
-		sprintf(real_path, "%s", path);
+		strcpy(real_path, path);
 	}
 
 	xf->rf = real_fopen(real_path, str);
