@@ -1,6 +1,0 @@
-#setdef PUBLIC_CODE def
-#setdef PRIVATE_CODE undef
-#setdef REXLIB_CODE def
-#setdef REXLIB_INTERNALS def
-#setdef RASTCALL_INTERNALS undef
-#setdef CLIPBOX_C undef

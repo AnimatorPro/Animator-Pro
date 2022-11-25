@@ -1,8 +1,0 @@
-!include ..\inc\make.inc
-
-EXE  = targa.pdr
-OBJ  = targa.obj tgareadf.obj tgawritf.obj
-LOBJ = targa.obj,tgareadf.obj,tgawritf.obj
-
-$(EXE): $(OBJ)
-	wlink @pdr.lnk FILE $(LOBJ) NAME $(EXE)

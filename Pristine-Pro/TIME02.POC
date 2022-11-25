@@ -1,4 +1,0 @@
-main()
-{
-while (!Qquestion("Time is %d, quit?", Clock1000()));
-}

@@ -1,6 +1,0 @@
-#define CelTurnFix	(16.0*360.0/1024.0)
-
-main()
-{
-Qtext("Version %d CelTurnFix %f", PocoVersion(), CelTurnFix);
-}

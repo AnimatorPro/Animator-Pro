@@ -1,9 +1,0 @@
-!include ..\inc\make.inc
-
-EXE  = flilores.pdr
-OBJ  = compbrun.obj complcc.obj compskip.obj fccomp.obj flicomp.obj &
-	   flilo.obj jfwritos.obj membcont.obj membcopy.obj membcomp.obj &
-	   membsame.obj memwcomp.obj ptrenorm.obj
-
-$(EXE): $(OBJ)
-	wlink @pdr.lnk NAME $(EXE) FILE @flilo.lnk

@@ -1,3 +1,0 @@
-!include "..\..\inc\make.inc"
-
-rexentry.obj: rexentry.i

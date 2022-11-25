@@ -1,9 +1,0 @@
-!include "..\inc\make.inc"
-
-EXE  = pcx.pdr
-OBJ  = pcx.obj membsame.obj
-LOBJ = pcx.obj,membsame.obj
-
-$(EXE): $(OBJ)
-	wlink @pdr.lnk FILE $(LOBJ) NAME $(EXE)
-	copy $(EXE) \paa\resource

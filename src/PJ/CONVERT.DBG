@@ -1,5 +1,0 @@
-set source /add {convert\*.c}
-set source /add {fli\*.c}
-set source /add {pjhigh\*.c}
-set source /add {util\*.c}
-set source /add {util\*.asm}

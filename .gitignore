@@ -1,0 +1,11 @@
+cmake-build-*
+*.o
+*.so
+*.dylib
+.idea
+bin
+ios
+xcode
+.DS_Store
+.vscode
+

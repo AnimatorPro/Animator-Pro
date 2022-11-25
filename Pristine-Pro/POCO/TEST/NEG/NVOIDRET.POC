@@ -1,7 +1,0 @@
-#pragma poco echo "expect>can't return something from a void function"
-
-void main(void)
-{
-	return 0;
-}
-
