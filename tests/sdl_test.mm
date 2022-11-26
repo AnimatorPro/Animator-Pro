@@ -32,7 +32,7 @@ int main()
                                 appropriateForURL:nil
                                 create:NO
                                 error:nil];
-        result_url = [result_url URLByAppendingPathComponent:@"com.skeletonheavy.animator-pro"];
+        result_url = [result_url URLByAppendingPathComponent:@"com.vpaint.animator-pro"];
 //        NSLog(@"%@", result_url);
         if (![file_manager createDirectoryAtURL:result_url withIntermediateDirectories:YES attributes:nil error:nil])
         {

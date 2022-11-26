@@ -14,7 +14,7 @@ set_target_properties(
 	PROPERTIES
 		MACOSX_BUNDLE YES
 		XCODE_ATTRIBUTE_CLANG_ENABLE_OBJC_ARC YES
-		XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER "com.skeletonheavy.test-app"
+		XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER "com.vpaint.test-app"
 )
 
 ## pre-build required or signing will fail

@@ -31,7 +31,7 @@ const char* mac_preferences_path() {
 													 create:NO
 													  error:nil];
 
-		result_url = [result_url URLByAppendingPathComponent:@"com.skeletonheavy.animator-pro"];
+		result_url = [result_url URLByAppendingPathComponent:@"com.vpaint.animator-pro"];
 
 		if (![file_manager createDirectoryAtURL:result_url withIntermediateDirectories:YES attributes:nil error:nil])
 		{
