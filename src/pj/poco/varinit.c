@@ -34,7 +34,7 @@ typedef struct init_control {
 
 extern int po_scoped_address_op[2];
 
-void anytype_init(Poco_cb *pcb, InitControl *ctl, Type_info *ti, int doff);
+static void anytype_init(Poco_cb *pcb, InitControl *ctl, Type_info *ti, int doff);
 
 /*----------------------------------------------------------------------------
  * code...

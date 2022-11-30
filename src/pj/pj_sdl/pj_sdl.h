@@ -24,8 +24,6 @@ LONG pj_sdl_get_display_scale(void);
 SDL_Rect pj_sdl_fit_surface(const SDL_Surface* rect, const SDL_Surface* target);
 void pj_sdl_flip_window_surface(void);
 
-extern const char* SEP;
-
 #ifdef __APPLE__
 const char* mac_resources_path();
 const char* mac_preferences_path();

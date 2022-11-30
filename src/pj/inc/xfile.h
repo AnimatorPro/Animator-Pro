@@ -15,6 +15,10 @@ enum { EOF = -1 };
 STATIC_ASSERT(xfile, EOF == -1);
 #endif
 
+// separator for directories
+extern const char* SEP;
+
+
 enum XReadWriteMode {
 	XUNDEFINED = -1,
 	XREADONLY = 0,      /* rb */
@@ -35,6 +39,10 @@ typedef struct xfl XFILE;
 
 extern XFILE *xstdout;
 extern XFILE *xstderr;
+
+extern void init_stdfiles(void);
+extern void cleanup_lfiles(void);
+
 
 extern XFILE *xfopen(const char *path, enum XReadWriteMode mode);
 extern int xfclose(XFILE *xf);

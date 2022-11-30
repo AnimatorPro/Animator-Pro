@@ -44,8 +44,8 @@ typedef struct mblk_ctl 		/* This structure is used to track blocks of*/
 	{							/* memory we have aquired from our parent.	*/
 	struct mblk_ctl 			/* Each block starts with one of these, to	*/
 			*next;				/* link it to the next aquired block. This	*/
-	long	used;				/* allows us to easily free all aquired mem */
-	long	unused; 			/* during error handling.  Used/unused space*/
+	unsigned long	used;		/* allows us to easily free all aquired mem */
+	unsigned long	unused; 	/* during error handling.  Used/unused space*/
 	} Mblk_ctl; 				/* has meaning only for the current block.	*/
 
 static Mblk_ctl *mblk_cur;		/* This outlives PCB, must live in BSS mem. */
@@ -100,8 +100,8 @@ static void init_cache_ctl(Cache_ctl *pctl, char *pmem, SHORT numslots, SHORT sl
  * init a cache_ctl structure.
  ****************************************************************************/
 {
-pctl->inuse 	= pmem; 							/* inuse table at start */
-pctl->pbase 	= pmem + numslots;					/* of block, data area	*/
+pctl->inuse 	= (UBYTE*)pmem; 							/* inuse table at start */
+pctl->pbase 	= ((UBYTE*)(pmem + numslots));					/* of block, data area	*/
 pctl->slot_size = slotsize + sizeof(Cache_cookie);	/* follows inuse table. */
 pctl->num_slots = numslots;
 pctl->nxt_slot	= 0;

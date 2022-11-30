@@ -69,12 +69,11 @@
  *				this existed in the tokenizer, but it wasn't being used.
  ****************************************************************************/
 
-#include <string.h>
-#include <setjmp.h>
-#include "poco.h"
-#include "errcodes.h"
 #include "pocoface.h"
-#include "pocorex.h"
+#include "errcodes.h"
+#include "poco.h"
+#include <setjmp.h>
+#include <string.h>
 
 /*****************************************************************************
  * some global vars...
@@ -82,11 +81,11 @@
  *	 the poco compiler.  the other globals are shared with the host.
  ****************************************************************************/
 
-jmp_buf po_compile_errhandler;	/* Global jump buffer for compile errors.	*/
-int 	po_version_number = VRSN_NUM; /* Global version number for PJ's use.    */
-extern Errcode builtin_err; 	/* External library/floating point error.	*/
+jmp_buf po_compile_errhandler;	  /* Global jump buffer for compile errors.	*/
+int po_version_number = VRSN_NUM; /* Global version number for PJ's use.    */
+extern Errcode builtin_err;		  /* External library/floating point error.	*/
 
-static Poco_run_env *porunenv;	/* -> run env; valid only when poco pgm running */
+static Poco_run_env* porunenv; /* -> run env; valid only when poco pgm running */
 
 #ifdef DEBUG
 void po_show_basic_sizes()
@@ -94,97 +93,91 @@ void po_show_basic_sizes()
  *
  ****************************************************************************/
 {
-boxf(
-	"Symbol.......%5d\n"
-	"Type_info....%5d\n"
-	"Code_buf.....%5d\n"
-	"Exp_frame....%5d\n"
-	"Func_frame...%5d\n"
-	"Poco_frame...%5d\n"
-	"Tstack.......%5d\n"
-	"Token........%5d\n"
-	"Poco_cb......%5d\n",
-		sizeof(Symbol),
-		sizeof(Type_info),
-		sizeof(Code_buf),
-		sizeof(Exp_frame)+HASH_SIZE*sizeof(Symbol *),
-		sizeof(Func_frame),
-		sizeof(Poco_frame),
-		sizeof(Tstack),
-		sizeof(Token),
-		sizeof(Poco_cb)
-	);
+	boxf("Symbol.......%5d\n"
+		 "Type_info....%5d\n"
+		 "Code_buf.....%5d\n"
+		 "Exp_frame....%5d\n"
+		 "Func_frame...%5d\n"
+		 "Poco_frame...%5d\n"
+		 "Tstack.......%5d\n"
+		 "Token........%5d\n"
+		 "Poco_cb......%5d\n",
+		 sizeof(Symbol),
+		 sizeof(Type_info),
+		 sizeof(Code_buf),
+		 sizeof(Exp_frame) + HASH_SIZE * sizeof(Symbol*),
+		 sizeof(Func_frame),
+		 sizeof(Poco_frame),
+		 sizeof(Tstack),
+		 sizeof(Token),
+		 sizeof(Poco_cb));
 }
 #endif /* DEBUG */
 
-static FILE *must_fmake(Poco_cb *pcb, char *fn)
 /*****************************************************************************
  * create a file, complain if it fails.
  ****************************************************************************/
+static FILE* must_fmake(Poco_cb* pcb, char* fn)
 {
-FILE *new;
+	FILE* fp = fopen(fn, "w");
 
-if ((new = fopen(fn, "w")) == NULL)
-	{
-	fprintf(pcb->t.err_file, "Can't make %s\n", fn);
+	if (fp == NULL) {
+		fprintf(pcb->t.err_file, "Can't make %s\n", fn);
 	}
-return(new);
+	return fp;
 }
 
-static Errcode wanna_make(Poco_cb *pcb, FILE **f, char *fn)
 /*****************************************************************************
  * create a file unless the name is NULL, die if it fails.
  ****************************************************************************/
+static Errcode wanna_make(Poco_cb* pcb, FILE** f, char* fn)
 {
 
-if (fn != NULL)
-	if ( (*f = must_fmake(pcb, fn)) == NULL)
-		return(Err_create);
-return(Success);
+	if (fn != NULL)
+		if ((*f = must_fmake(pcb, fn)) == NULL)
+			return (Err_create);
+	return (Success);
 }
 
-static void gentle_fclose(FILE *f)
 /*****************************************************************************
  * close a file if it's open, and if it's not a device file.
  ****************************************************************************/
+static void gentle_fclose(FILE* f)
 {
-if (f != NULL && f != stdout && f != stderr)
-	fclose(f);
+	if (f != NULL && f != stdout && f != stderr)
+		fclose(f);
 }
 
-static void po_pev_free_data(Poco_run_env *pev)
 /*****************************************************************************
  * free a poco_run_env, and the associate stack and data areas.
  ****************************************************************************/
+static void po_pev_free_data(Poco_run_env* pev)
 {
-if (pev != NULL)
-	{
-	pj_freez(&pev->data);		/* this gets allocated from PJ, freez() */
+	if (pev != NULL) {
+		pj_freez(&pev->data); /* this gets allocated from PJ, freez() */
 	}
 }
 
-static Errcode po_pev_alloc_data(Poco_run_env *pev)
 /*****************************************************************************
  * alloc poco_run_env, and stack and data areas. run data init code.
  * this routine should only be called after a successfull compile.
  ****************************************************************************/
+static Errcode po_pev_alloc_data(Poco_run_env* pev)
 {
 	Errcode err;
 
-	if (pev->data_size > 0)
-		{
-		if ((pev->data = pj_zalloc(pev->data_size)) == NULL)
-			{
+	if (pev->data_size > 0) {
+		if ((pev->data = pj_zalloc(pev->data_size)) == NULL) {
 			err = Err_no_memory;
 			goto ERR;
-			}
 		}
+	}
 	if (pev->stack_size == 0)
 		pev->stack_size = POCO_STACKSIZE_DEFAULT;
 
 	if ((err = po_run_ops(pev, pev->fff->code_pt, NULL)) < Success)
 		goto ERR;
-	return(Success);
+	return (Success);
 
 ERR:
 
@@ -192,102 +185,91 @@ ERR:
 	return err;
 }
 
-static Func_frame *find_fuf(Poco_run_env *pev, char  *name)
 /*****************************************************************************
  * find a fuf for a function with a given name.
  * (linear search...slow, slow.  added first-char quick check to help a bit).
  ****************************************************************************/
+static Func_frame* find_fuf(Poco_run_env* pev, char* name)
 {
-Func_frame *f;
+	Func_frame* f;
 
-f = pev->fff;
-while (f != NULL)
-	{
-	if (f->name[0] == *name)
-		if (po_eqstrcmp(f->name, name) == 0)
-			break;
-	f = f->next;
+	f = pev->fff;
+	while (f != NULL) {
+		if (f->name[0] == *name)
+			if (po_eqstrcmp(f->name, name) == 0)
+				break;
+		f = f->next;
 	}
-return(f);
+	return (f);
 }
 
-static Errcode run_file(Poco_run_env *pev, char *entry)
 /*****************************************************************************
  * run a given function from a compiled poco program.
  * (at this point in development, the 'given function' had better be 'main'!)
  ****************************************************************************/
+static Errcode run_file(Poco_run_env* pev, char* entry)
 {
-Errcode err;
-Func_frame *f;
+	Errcode err;
+	Func_frame* f;
 
-if ((f = find_fuf(pev, entry)) == NULL)
-	return(Err_no_main);
-if ((err = po_pev_alloc_data(pev)) >= Success)
-	err = po_run_ops(pev, f->code_pt, NULL);
-po_pev_free_data(pev);
-return(err);
+	if ((f = find_fuf(pev, entry)) == NULL)
+		return (Err_no_main);
+	if ((err = po_pev_alloc_data(pev)) >= Success)
+		err = po_run_ops(pev, f->code_pt, NULL);
+	po_pev_free_data(pev);
+	return (err);
 }
 
-static Errcode lib_run_file(Poco_run_env *pev, char *entry)
 /*****************************************************************************
  * run a given function from a poco program after init'ing the libs.
  ****************************************************************************/
+static Errcode lib_run_file(Poco_run_env* pev, char* entry)
 {
-Errcode err = Success;
+	Errcode err = Success;
 
-if ((err = po_init_libs(pev->lib)) >= Success)
-	{
-	if ((err = po_init_libs(pev->loaded_libs)) >= Success)
-		err = run_file(pev, entry);
-	po_cleanup_libs(pev->loaded_libs);
+	if ((err = po_init_libs(pev->lib)) >= Success) {
+		if ((err = po_init_libs(pev->loaded_libs)) >= Success)
+			err = run_file(pev, entry);
+		po_cleanup_libs(pev->loaded_libs);
 	}
-po_cleanup_libs(pev->lib);
-return(err);
+	po_cleanup_libs(pev->lib);
+	return (err);
 }
 
-
-
-static Errcode print_one_lib(FILE *f, Lib_proto *lib, int lib_size)
 /*****************************************************************************
  * print a list of function names in a poco lib.
  ****************************************************************************/
+static Errcode print_one_lib(FILE* f, Lib_proto* lib, int lib_size)
 {
-while (--lib_size >= 0)
-	{
-	fprintf(f, "%s\n", lib->proto);
-	lib+=1;
+	while (--lib_size >= 0) {
+		fprintf(f, "%s\n", lib->proto);
+		lib += 1;
 	}
-return(Success);
+	return (Success);
 }
 
-
-Errcode print_pocolib(char *filename, Poco_lib *lib)
 /*****************************************************************************
  * print the names of all functions in all poco libs.
  ****************************************************************************/
+Errcode print_pocolib(char* filename, Poco_lib* lib)
 {
-FILE *f;
-Errcode err = Success;
+	FILE* f;
+	Errcode err = Success;
 
-if ((f = fopen(filename, "w")) != NULL)
-	{
-	while (lib != NULL)
-		{
-		fprintf(f, "/********* %s library ***********/\n", lib->name);
-		if ((err = print_one_lib(f, lib->lib, lib->count)) < Success)
-			break;
-		lib = lib->next;
+	if ((f = fopen(filename, "w")) != NULL) {
+		while (lib != NULL) {
+			fprintf(f, "/********* %s library ***********/\n", lib->name);
+			if ((err = print_one_lib(f, lib->lib, lib->count)) < Success)
+				break;
+			lib = lib->next;
 		}
+	} else {
+		err = Err_create;
 	}
-else
-	{
-	err = Err_create;
-	}
-fclose(f);
-return(err);
+	fclose(f);
+	return (err);
 }
 
-int po_findpoe(char *libname, Lib_proto **plibreturn)
 /*****************************************************************************
  * find a library or loaded poe module.
  * returns a pointer to its Lib_protos via *plibreturn and count of protos.
@@ -308,47 +290,45 @@ int po_findpoe(char *libname, Lib_proto **plibreturn)
  *		  IS NOT intended for use by PJ internally -- it can only return
  *		  valid results while a poco program is currently executing!
  ****************************************************************************/
+int po_findpoe(char* libname, Lib_proto** plibreturn)
 {
-	static Poco_lib *listnext = NULL;
-	Poco_lib		*ll;
+	static Poco_lib* listnext = NULL;
+	Poco_lib* ll;
 
 	/*------------------------------------------------------------------------
 	 * first make sure we don't get crashed by a naughty caller...
 	 *----------------------------------------------------------------------*/
 
 	if (NULL == plibreturn)
-		return Err_null_ref;	/* defensive programming */
+		return Err_null_ref; /* defensive programming */
 
 	if (NULL == porunenv)
-		goto ERROR_EXIT;		/* "can't happen" */
+		goto ERROR_EXIT; /* "can't happen" */
 
 	/*------------------------------------------------------------------------
 	 * if the libname pointer is NULL, the caller wants the next library in
 	 * the linked list, go return it...
 	 *----------------------------------------------------------------------*/
 
-	if (NULL == libname)
-		{
+	if (NULL == libname) {
 		ll = listnext;
 		goto RETURN_LIST_ITEM;
-		}
+	}
 
 	/*------------------------------------------------------------------------
 	 * if the requested name is poco$builtin or poco$loaded, the caller wants
 	 * to start a series of calls to walk the corresponding list...
 	 *----------------------------------------------------------------------*/
 
-	if (0 == stricmp(libname, "poco$builtin"))
-		{
+	if (0 == stricmp(libname, "poco$builtin")) {
 		ll = porunenv->lib;
 		goto RETURN_LIST_ITEM;
-		}
+	}
 
-	if (0 == stricmp(libname, "poco$loaded"))
-		{
+	if (0 == stricmp(libname, "poco$loaded")) {
 		ll = porunenv->loaded_libs;
 		goto RETURN_LIST_ITEM;
-		}
+	}
 
 	/*------------------------------------------------------------------------
 	 * if we get to here, the caller wants a specific library, look for it...
@@ -366,45 +346,41 @@ ERROR_EXIT:
 RETURN_LIST_ITEM:
 
 	if (NULL == ll)
-		goto ERROR_EXIT;		/* return not-found/end-of-list status */
+		goto ERROR_EXIT; /* return not-found/end-of-list status */
 
-	listnext = ll->next;		/* reset list ptr for next call */
+	listnext = ll->next; /* reset list ptr for next call */
 
 GOOD_EXIT:
 
 	*plibreturn = ll->lib;
 	return ll->count;
-
 }
 
-Poco_lib *po_open_library(Poco_cb *pcb, char *libname, char *id_string)
 /*****************************************************************************
  *
  ****************************************************************************/
+Poco_lib* po_open_library(Poco_cb* pcb, char* libname, char* id_string)
 {
-Errcode err;
-Poco_lib *ll;
+	Errcode err;
+	Poco_lib* ll;
 
 	if (0 == po_eqstrcmp("poco$builtin", libname))
 		return pcb->builtin_lib;
-	else
-	{
+	else {
 #ifndef __TURBOC__
-		if ((err = pj_load_pocorex(&ll, libname, id_string)) < Success)
-		{
+		if ((err = pj_load_pocorex(&ll, libname, id_string)) < Success) {
 			errline(err, "can't load poco lib.");
-			return(NULL);
+			return (NULL);
 		}
-		ll->next = pcb->run.loaded_libs;
+		ll->next			 = pcb->run.loaded_libs;
 		pcb->run.loaded_libs = ll;
-		return(ll);
+		return (ll);
 #else
-		return(NULL);
+		return (NULL);
 #endif /* __TURBOC__ */
 	}
 }
 
-char *po_get_libproto_line(Poco_cb *pcb)
 /*****************************************************************************
  * get the next line of library proto data, return NULL if at end of lib(s).
  *	this is called from the preprocessor, which is now the single source of
@@ -439,242 +415,223 @@ char *po_get_libproto_line(Poco_cb *pcb)
  *			means that POCOLIB.H has gotten out of sync with our builtin
  *			libs code (POCO*.C in the root), or we have a sick POE module.
  ****************************************************************************/
+char* po_get_libproto_line(Poco_cb* pcb)
 {
-File_stack	*fs = pcb->t.file_stack;
-Poco_lib	*pl = fs->source.lib;
-Lib_proto	*pp;
+	File_stack* fs = pcb->t.file_stack;
+	Poco_lib* pl   = fs->source.lib;
+	Lib_proto* pp;
 
-	if(fs->line_count >= pl->count)
-		{
-		if (NULL != pcb->run.loaded_libs || NULL == (pl = pl->next))
-			{
+	if (fs->line_count >= pl->count) {
+		if (NULL != pcb->run.loaded_libs || NULL == (pl = pl->next)) {
 			pcb->libfunc = NULL;
 			return NULL;
-			}
+		}
 		fs->source.lib = pl;
 		fs->line_count = 0;
-		}
-	pp = &pl->lib[fs->line_count++];
+	}
+	pp			 = &pl->lib[fs->line_count++];
 	pcb->libfunc = pp->func;
 
 	if (pp->proto == NULL) {
 		pcb->global_err = Err_poco_internal;
-		po_say_fatal(pcb, "NULL prototype string pointer in library %s",
-			pl->name);
+		po_say_fatal(pcb, "NULL prototype string pointer in library %s", pl->name);
 	}
 
 	return pp->proto;
 }
 
-
-Errcode compile_poco(
-	void	 **ppexe,		/* returns executable pexe on Success */
-	char	 *source_name,	/* name of source file */
-	char	 *errors_name,	/* error file or NULL for stderr */
-	char	 *dump_name,	/* disassembly file or NULL for none */
-	Poco_lib *lib,			/* for built-in function library */
-	char	 *err_file, 	/* file where error detected */
-	long	 *err_line, 	/* line where error detected */
-	int 	 *err_char, 	/* character in line where err detected */
-	Names	 *include_dirs	/* include search path */
-	)
 /*****************************************************************************
  * compile a poco program.	entry point to the compiler from PJ.
  ****************************************************************************/
+Errcode compile_poco(void** ppexe,		 /* returns executable pexe on Success */
+					 char* source_name,	 /* name of source file */
+					 char* errors_name,	 /* error file or NULL for stderr */
+					 char* dump_name,	 /* disassembly file or NULL for none */
+					 Poco_lib* lib,		 /* for built-in function library */
+					 char* err_file,	 /* file where error detected */
+					 long* err_line,	 /* line where error detected */
+					 int* err_char,		 /* character in line where err detected */
+					 Names* include_dirs /* include search path */
+)
 {
-Poco_cb 	 *pcb;
-Errcode 	 err;
-Poco_run_env *pev;
-File_stack	 *fs;
+	Poco_cb* pcb;
+	Errcode err;
+	Poco_run_env* pev;
+	File_stack* fs;
 
-*ppexe = NULL;
+	*ppexe = NULL;
 
-if (Success != (err = setjmp(po_compile_errhandler)))
-	{
-	err = Err_in_err_file; /* Got here via longjmp */
-	}
-else
-	{
-	if (Success != (err = po_init_memory_management(&pcb)))
-		return Err_no_memory;	/* MUST return immediately if init fails. */
+	if (Success != (err = setjmp(po_compile_errhandler))) {
+		err = Err_in_err_file; /* Got here via longjmp */
+	} else {
+		if (Success != (err = po_init_memory_management(&pcb)))
+			return Err_no_memory; /* MUST return immediately if init fails. */
 
-	pcb->stack_bottom = ((char *)&ppexe) - MAX_STACK;
+		pcb->stack_bottom = ((char*)&ppexe) - MAX_STACK;
 
-	pcb->t.err_file 	= stdout;
-	pcb->t.include_dirs = include_dirs;
+		pcb->t.err_file		= stdout;
+		pcb->t.include_dirs = include_dirs;
 
-	pcb->libfunc	 = NULL;
-	pcb->builtin_lib = lib;
+		pcb->libfunc	 = NULL;
+		pcb->builtin_lib = lib;
 
-	if (Success != (err = wanna_make(pcb, &pcb->t.err_file, errors_name)))
-		goto OUT;
+		if (Success != (err = wanna_make(pcb, &pcb->t.err_file, errors_name)))
+			goto OUT;
 
-	if (dump_name != NULL)
-		pcb->po_dump_file = fopen(dump_name, "w");
+		if (dump_name != NULL)
+			pcb->po_dump_file = fopen(dump_name, "w");
 
-	if (Success != (err = po_compile_file(pcb, source_name)))
-		{
+		if (Success != (err = po_compile_file(pcb, source_name))) {
 
 #ifdef DEVELOPMENT /* all errs s/b via longjump, not return value...*/
-		fprintf(stdout,"\ncompile_poco: got a non-zero return from po_compile_file!!!\n");
+			fprintf(stdout, "\ncompile_poco: got a non-zero return from po_compile_file!!!\n");
 #endif
 
-		err = Err_in_err_file;		/* we reported it in error file */
-		goto OUT;
+			err = Err_in_err_file; /* we reported it in error file */
+			goto OUT;
 		}
 
-	if (NULL == (pev = pj_zalloc((long)sizeof(*pev))))
-		{
-		err = Err_no_memory;
-		goto OUT;
+		if (NULL == (pev = pj_zalloc((long)sizeof(*pev)))) {
+			err = Err_no_memory;
+			goto OUT;
 		}
 
-	pcb->run.lib = lib;
-	*pev = pcb->run;
-	*ppexe = pev;
+		pcb->run.lib = lib;
+		*pev		 = pcb->run;
+		*ppexe		 = pev;
 	}
 
 OUT:
 
-gentle_fclose(pcb->po_dump_file);
-gentle_fclose(pcb->t.err_file);
+	gentle_fclose(pcb->po_dump_file);
+	gentle_fclose(pcb->t.err_file);
 
-if (err == Success)
-	{
-	if (errors_name != NULL)
-		pj_delete(errors_name);
-	po_free_compile_memory();
-	}
-else	/* Post-error cleanup goes goes here... */
+	if (err == Success) {
+		if (errors_name != NULL)
+			pj_delete(errors_name);
+		po_free_compile_memory();
+	} else /* Post-error cleanup goes goes here... */
 	{
 
-	/*
-	 * let caller know where the err was
-	 *	 if no files are open (eg, error was unexpected EOF) we say that.
-	 *	 otherwise the error line number comes from the global error line
-	 *	 number that is set by the error reporter in the parser or preprocessor.
-	 *	 if the error happened in a library, and the library was included from
-	 *	 a file, we report the filename and line number of the #pragma
-	 *	 poco library statement that included the library.
-	 */
+		/*
+		 * let caller know where the err was
+		 *	 if no files are open (eg, error was unexpected EOF) we say that.
+		 *	 otherwise the error line number comes from the global error line
+		 *	 number that is set by the error reporter in the parser or preprocessor.
+		 *	 if the error happened in a library, and the library was included from
+		 *	 a file, we report the filename and line number of the #pragma
+		 *	 poco library statement that included the library.
+		 */
 
-	*err_char = 0;
-	fs = pcb->t.file_stack;
-	if (fs == NULL || fs->line_count == 0)
-		{
-		*err_line = 0;
-		strcpy(err_file, "<no files open>");
-		}
-	else
-		{
-		if ((fs->flags & FSF_ISLIB) && fs->pred != NULL)
-			{
-			*err_line = fs->pred->line_count;
-			strcpy(err_file, fs->pred->name);
-			}
-		else
-			{
-			*err_line = pcb->error_line_number;
-			*err_char = pcb->error_char_number;
-			strcpy(err_file, fs->name);
+		*err_char = 0;
+		fs		  = pcb->t.file_stack;
+		if (fs == NULL || fs->line_count == 0) {
+			*err_line = 0;
+			strcpy(err_file, "<no files open>");
+		} else {
+			if ((fs->flags & FSF_ISLIB) && fs->pred != NULL) {
+				*err_line = fs->pred->line_count;
+				strcpy(err_file, fs->pred->name);
+			} else {
+				*err_line = pcb->error_line_number;
+				*err_char = pcb->error_char_number;
+				strcpy(err_file, fs->name);
 			}
 		}
 
-	/*
-	 * close all files.
-	 *	 changed this to a call to po_free_pp() - it contains the loop
-	 *	 to close all the files.
-	 */
+		/*
+		 * close all files.
+		 *	 changed this to a call to po_free_pp() - it contains the loop
+		 *	 to close all the files.
+		 */
 
-	po_free_pp(pcb);
+		po_free_pp(pcb);
 
-	/*
-	 * free all memory allocated since the compile started...
-	 */
+		/*
+		 * free all memory allocated since the compile started...
+		 */
 
-	po_free_all_memory();
+		po_free_all_memory();
 
-	/*
-	 * free any libraries from #pragma poco library "xxx"
-	 */
+		/*
+		 * free any libraries from #pragma poco library "xxx"
+		 */
 
-	pj_free_pocorexes(&pcb->run.loaded_libs);
+		pj_free_pocorexes(&pcb->run.loaded_libs);
 
 	} /* end of post-error cleanup handling */
 
-return(err);
+	return (err);
 }
 
-Errcode run_poco(void **ppexe,
-				 char *trace_file,
-				 Boolean (*check_abort)(void *),
-				 void *check_abort_data,
-				 long *err_line)
 /*****************************************************************************
  * run a poco program compiled earlier using compile_poco. exe entry from PJ.
  ****************************************************************************/
+Errcode run_poco(void** ppexe,
+				 char* trace_file,
+				 Boolean (*check_abort)(void*),
+				 void* check_abort_data,
+				 long* err_line)
 {
 
-if ((porunenv = *ppexe) == NULL)
-	return(Err_not_found);
+	if ((porunenv = *ppexe) == NULL)
+		return (Err_not_found);
 
-porunenv->enable_debug_trace = TRUE;
-porunenv->check_abort		 = check_abort;
-porunenv->check_abort_data	 = check_abort_data;
-porunenv->trace_file		 = trace_file;
-porunenv->err_line			 = err_line;
+	porunenv->enable_debug_trace = TRUE;
+	porunenv->check_abort		 = check_abort;
+	porunenv->check_abort_data	 = check_abort_data;
+	porunenv->trace_file		 = trace_file;
+	porunenv->err_line			 = err_line;
 
-return(lib_run_file(porunenv, "main"));
+	return lib_run_file(porunenv, "main");
 }
 
-void free_poco(void **ppexe)
 /*****************************************************************************
  * free runtime resources used by a poco program.
  ****************************************************************************/
+void free_poco(void** ppexe)
 {
-Poco_run_env *pp;
+	Poco_run_env* pp;
 
-if ((pp = *ppexe) != NULL)
-	{
-	po_pev_free_data(pp);
-	po_free_run_env(pp);
-	pj_free_pocorexes(&pp->loaded_libs);
-	pj_free(pp);	/* this is allocated from PJ, free back to PJ. */
-	*ppexe = NULL;
+	if ((pp = *ppexe) != NULL) {
+		po_pev_free_data(pp);
+		po_free_run_env(pp);
+		pj_free_pocorexes(&pp->loaded_libs);
+		pj_free(pp); /* this is allocated from PJ, free back to PJ. */
+		*ppexe = NULL;
 	}
-po_free_all_memory();
+	po_free_all_memory();
 }
 
-char *po_fuf_name(void *fuf)
 /*****************************************************************************
  * return pointer to name of function associated with a given fuf.
  ****************************************************************************/
+char* po_fuf_name(void* fuf)
 {
-return(((Func_frame *)fuf)->name);
+	return (((Func_frame*)fuf)->name);
 }
 
-void *po_fuf_code(void *fuf)
 /*****************************************************************************
  * return pointer to code buffer associated with a given fuf.
  ****************************************************************************/
+void* po_fuf_code(void* fuf)
 {
-return(((Func_frame *)fuf)->code_pt);
+	return (((Func_frame*)fuf)->code_pt);
 }
 
-
-Errcode po_file_to_stdout(char *name)
 /*****************************************************************************
  * used by PJ when run as 'PJ filename.POC' and an error occurs.
  ****************************************************************************/
+Errcode po_file_to_stdout(char* name)
 {
-FILE *f;
-int c;
+	FILE* f;
+	int c;
 
-if ((f = fopen(name, "r")) == NULL)
-	return(Err_create);
-while ((c = fgetc(f)) != EOF)
-	fputc(c,stdout);
-fputc('\n',stdout);
-fclose(f);
-return Success;
+	if ((f = fopen(name, "r")) == NULL)
+		return (Err_create);
+	while ((c = fgetc(f)) != EOF)
+		fputc(c, stdout);
+	fputc('\n', stdout);
+	fclose(f);
+	return Success;
 }

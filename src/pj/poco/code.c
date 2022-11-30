@@ -46,37 +46,38 @@
  *				OP_xPUSH, we'd glitch out completely; so now we don't try.
  ****************************************************************************/
 
-#include <string.h>
 #include "poco.h"
+#include <string.h>
 
-#define EXPANDCBUF 2	/* Make code buffer 2 times larger on re-alloc */
+#define EXPANDCBUF 2 /* Make code buffer 2 times larger on re-alloc */
 
-void po_init_code_buf(Poco_cb *pcb, Code_buf *c)
 /*****************************************************************************
  * init pre-allocated code buffer (set sizes and pointers for the small
  * embedded code buffer).
  ****************************************************************************/
+void po_init_code_buf(Poco_cb* pcb, Code_buf* c)
 {
-	c->cryptic = CCRYPTIC;
+	(void)pcb;
+
+	c->cryptic	= CCRYPTIC;
 	c->code_buf = c->code_pt = c->cbuf;
-	c->alloced_end = c->cbuf + sizeof(c->cbuf);
+	c->alloced_end			 = c->cbuf + sizeof(c->cbuf);
 }
 
-void po_trash_code_buf(Poco_cb *pcb, Code_buf *c)
 /*****************************************************************************
  * free codebuf (if code buffer pointer is to malloc'd block, free the block.)
  ****************************************************************************/
+void po_trash_code_buf(Poco_cb* pcb, Code_buf* c)
 {
 
 #ifdef DEVELOPMENT
-	if (c->cryptic != CCRYPTIC)
-		{
+	if (c->cryptic != CCRYPTIC) {
 		if (c->cryptic == CTRASHED)
 			po_say_internal(pcb, "trashing code_buf twice");
 		else
 			po_say_internal(pcb, "trashing uninitted code_buf");
 		return;
-		}
+	}
 #endif /* DEVELOPMENT */
 
 	c->cryptic = CTRASHED;
@@ -84,48 +85,40 @@ void po_trash_code_buf(Poco_cb *pcb, Code_buf *c)
 		po_freemem(c->code_buf);
 }
 
-static
-Boolean add_code(Poco_cb *pcb, Code_buf *cbuf, void *ops, SHORT op_size)
 /*****************************************************************************
  * add code to buffer, expand buffer if needed.
  ****************************************************************************/
+static Boolean add_code(Poco_cb* pcb, Code_buf* cbuf, void* ops, SHORT op_size)
 {
-	Code	*next_op;
+	Code* next_op;
 	register unsigned int ropsize = op_size;
 
 #ifdef DEVELOPMENT
-	if (ropsize <= 0)
-		{
+	if (ropsize <= 0) {
 		po_say_internal(pcb, "add_code called with ropsize == 0!");
-		}
-	if (cbuf->cryptic != CCRYPTIC)
-		{
+	}
+	if (cbuf->cryptic != CCRYPTIC) {
 		po_say_internal(pcb, "add_code using uninitialized code_buf");
-		return(FALSE);
-		}
+		return (FALSE);
+	}
 #endif
 
 	next_op = OPTR(cbuf->code_pt, ropsize);
 
-	if (next_op > cbuf->alloced_end)		/* if we ran out of space... */
-		{
-		Code	*new_buf,
-				*old_buf;
-		long	old_used,
-				new_size;
+	if (next_op > cbuf->alloced_end) /* if we ran out of space... */
+	{
+		Code *new_buf, *old_buf;
+		long old_used, new_size;
 
-		old_buf  = cbuf->code_buf;
-		old_used = (UBYTE *)cbuf->code_pt - (UBYTE *)old_buf;
-		if (old_buf == cbuf->cbuf && old_used+ropsize < SMALLBLK_CACHE_SIZE)
-			{
+		old_buf	 = cbuf->code_buf;
+		old_used = (UBYTE*)cbuf->code_pt - (UBYTE*)old_buf;
+		if (old_buf == cbuf->cbuf && old_used + ropsize < SMALLBLK_CACHE_SIZE) {
 			new_size = SMALLBLK_CACHE_SIZE;
-			new_buf  = po_cache_malloc(pcb, &pcb->smallblk_cache);
-			}
-		else
-			{
-			new_size = ropsize + EXPANDCBUF * ((UBYTE *)cbuf->alloced_end - (UBYTE *)old_buf);
-			new_buf = po_memalloc(pcb, new_size);
-			}
+			new_buf	 = po_cache_malloc(pcb, &pcb->smallblk_cache);
+		} else {
+			new_size = ropsize + EXPANDCBUF * ((UBYTE*)cbuf->alloced_end - (UBYTE*)old_buf);
+			new_buf	 = po_memalloc(pcb, new_size);
+		}
 		poco_copy_bytes(old_buf, new_buf, (size_t)old_used);
 		cbuf->code_buf	  = new_buf;
 		cbuf->alloced_end = new_buf + new_size;
@@ -133,110 +126,106 @@ Boolean add_code(Poco_cb *pcb, Code_buf *cbuf, void *ops, SHORT op_size)
 		if (old_buf != cbuf->cbuf)
 			po_freemem(old_buf);
 		next_op = OPTR(cbuf->code_pt, ropsize);
-		}
+	}
 
-	switch(ropsize) 	/* try to do small common-sized copies fast... */
-		{
+	switch (ropsize) /* try to do small common-sized copies fast... */
+	{
 		case sizeof(short):
-			*(unsigned short *)cbuf->code_pt = *(unsigned short *)ops;
+			*(unsigned short*)cbuf->code_pt = *(unsigned short*)ops;
 			break;
 		case sizeof(long):
-			*(unsigned long *)cbuf->code_pt = *(unsigned long *)ops;
+			*(unsigned long*)cbuf->code_pt = *(unsigned long*)ops;
 			break;
 		default:
 			poco_copy_bytes(ops, cbuf->code_pt, ropsize);
 			break;
-		}
+	}
 
 	cbuf->code_pt = next_op;
-	return(TRUE);
+	return (TRUE);
 }
 
-Boolean po_add_op(Poco_cb *pcb, Code_buf *cbuf,
-				int op, void *data, SHORT data_size)
 /*****************************************************************************
  * Add a new opcode, and optional data for the op.
  ****************************************************************************/
+Boolean po_add_op(Poco_cb* pcb, Code_buf* cbuf, int op, void* data, SHORT data_size)
 {
 #ifdef DEVELOPMENT
-	if (op <= OP_BAD || op >= OP_PAST_LAST)
-		{
-		po_say_fatal(pcb, "Trying to code invalid opcode %d (not %d-%d)"
-		, op, OP_BAD, OP_PAST_LAST);
-		}
+	if (op <= OP_BAD || op >= OP_PAST_LAST) {
+		po_say_fatal(pcb, "Trying to code invalid opcode %d (not %d-%d)", op, OP_BAD, OP_PAST_LAST);
+	}
 #endif /* DEVELOPMENT */
 	if (!add_code(pcb, cbuf, &op, sizeof(op)))
-		return(FALSE);
+		return (FALSE);
 	if (data_size > 0)
-		return(add_code(pcb, cbuf, data, data_size) );
+		return (add_code(pcb, cbuf, data, data_size));
 	else
-		return(TRUE);
+		return (TRUE);
 }
 
-void po_backup_code(Poco_cb *pcb, Code_buf *cb, int op_size)
 /*****************************************************************************
  * move code pointer back by op_size.
  ****************************************************************************/
+void po_backup_code(Poco_cb* pcb, Code_buf* cb, int op_size)
 {
 
 #ifdef DEVELOPMENT
-	if (cb->code_pt - cb->code_buf < op_size)	/* should never happen */
+	if (cb->code_pt - cb->code_buf < op_size) /* should never happen */
 		po_say_internal(pcb, "error in po_backup_code");
 	else
 #endif
 		cb->code_pt -= op_size;
 }
 
-long po_cbuf_code_size(Code_buf *c)
 /*****************************************************************************
  * return size of code currently in buffer.
  ****************************************************************************/
+long po_cbuf_code_size(Code_buf* c)
 {
-	return(c->code_pt - c->code_buf);
+	return (c->code_pt - c->code_buf);
 }
 
-Boolean po_cat_code(Poco_cb *pcb, Code_buf *dest, Code_buf *end)
 /*****************************************************************************
  * concatenate two chunks of code...
  ****************************************************************************/
+Boolean po_cat_code(Poco_cb* pcb, Code_buf* dest, Code_buf* end)
 {
-SHORT size;
+	SHORT size;
 
 	if (0 == (size = end->code_pt - end->code_buf))
 		return TRUE;
-	return(add_code(pcb, dest, end->code_buf, size));
+	return (add_code(pcb, dest, end->code_buf, size));
 }
 
-Boolean po_copy_code(Poco_cb *pcb, Code_buf *source, Code_buf *dest)
 /*****************************************************************************
  * make dest a copy of source
  ****************************************************************************/
+Boolean po_copy_code(Poco_cb* pcb, Code_buf* source, Code_buf* dest)
 {
-SHORT size;
+	SHORT size;
 
-	dest->code_pt = dest->code_buf; 	/* reset dest code pt. back to start */
+	dest->code_pt = dest->code_buf; /* reset dest code pt. back to start */
 	if (0 == (size = source->code_pt - source->code_buf))
 		return TRUE;
-	return(add_code(pcb, dest, source->code_buf, size));
+	return (add_code(pcb, dest, source->code_buf, size));
 }
 
-void po_code_op(Poco_cb *pcb, Code_buf *cbuf, int op)
 /*****************************************************************************
  * code an op with no data
  ****************************************************************************/
+void po_code_op(Poco_cb* pcb, Code_buf* cbuf, int op)
 {
 	po_add_op(pcb, cbuf, op, NULL, 0);
 }
 
-void po_add_code_fixup(Poco_cb *pcb, Code_buf *cbuf, int fixup)
 /*****************************************************************************
  * Add fixup offset to a code-buf
  ****************************************************************************/
+void po_add_code_fixup(Poco_cb* pcb, Code_buf* cbuf, int fixup)
 {
 	add_code(pcb, cbuf, &fixup, sizeof(fixup));
 }
 
-void po_code_pop(Poco_cb *pcb, Code_buf *cbuf, int op, int pushop)
 /*****************************************************************************
  * code a pop instruction.
  *
@@ -247,154 +236,148 @@ void po_code_pop(Poco_cb *pcb, Code_buf *cbuf, int op, int pushop)
  *	 happen.  If the previous op has some data that happens to be
  *	 the same value as the pushop instruction this could get nasty!
  ****************************************************************************/
+void po_code_pop(Poco_cb* pcb, Code_buf* cbuf, int op, int pushop)
 {
-	po_add_op(pcb, cbuf, op, NULL, 0);		/* couldn't optimize it away. */
+	po_add_op(pcb, cbuf, op, NULL, 0); /* couldn't optimize it away. */
 	return;
 }
 
-
-void po_code_void_pt(Poco_cb *pcb, Code_buf *cbuf, int op, void *val)
 /*****************************************************************************
  * code op with a void pointer
  ****************************************************************************/
+void po_code_void_pt(Poco_cb* pcb, Code_buf* cbuf, int op, void* val)
 {
 	po_add_op(pcb, cbuf, op, &val, sizeof(val));
 }
 
-void po_code_double(Poco_cb *pcb, Code_buf *cbuf, int op, double val)
 /*****************************************************************************
  * code op with double data
  ****************************************************************************/
+void po_code_double(Poco_cb* pcb, Code_buf* cbuf, int op, double val)
 {
 	po_add_op(pcb, cbuf, op, &val, sizeof(double));
 }
 
-void po_code_long(Poco_cb *pcb, Code_buf *cbuf, int op, long val)
 /*****************************************************************************
  * code op with long data
  ****************************************************************************/
+void po_code_long(Poco_cb* pcb, Code_buf* cbuf, int op, long val)
 {
 	po_add_op(pcb, cbuf, op, &val, sizeof(val));
 }
 
-void po_code_address(Poco_cb *pcb, Code_buf *cbuf, int op,
-	int doff, long dsize)
 /*****************************************************************************
  * code an op plus an address (offset and size info)
  ****************************************************************************/
+void po_code_address(Poco_cb* pcb, Code_buf* cbuf, int op, int doff, long dsize)
 {
-	struct int_long {int i;long l;} il;
+	struct int_long
+	{
+		int i;
+		long l;
+	} il;
 
 	il.i = doff;
 	il.l = dsize;
-	po_add_op(pcb,cbuf, op, &il, sizeof(il) );
+	po_add_op(pcb, cbuf, op, &il, sizeof(il));
 }
 
-
-long po_code_int(Poco_cb *pcb, Code_buf *cbuf, int op, int val)
 /*****************************************************************************
  * code op with int data, return fixup position.
  ****************************************************************************/
+long po_code_int(Poco_cb* pcb, Code_buf* cbuf, int op, int val)
 {
 	long fixup_pos;
 
 	fixup_pos = cbuf->code_pt - cbuf->code_buf + sizeof(op);
 	po_add_op(pcb, cbuf, op, &val, sizeof(val));
-	return(fixup_pos);
+	return (fixup_pos);
 }
 
-void po_code_popot(Poco_cb *pcb, Code_buf *cbuf,
-	int op, void *min, void *max, void *pt)
 /*****************************************************************************
  * Code an op plus a protected poco pointer (min max and value)
  ****************************************************************************/
+void po_code_popot(Poco_cb* pcb, Code_buf* cbuf, int op, void* min, void* max, void* pt)
 {
 	Popot ppt;
 
 	ppt.min = min;
 	ppt.max = max;
-	ppt.pt = pt;
+	ppt.pt	= pt;
 	po_add_op(pcb, cbuf, op, &ppt, sizeof(ppt));
 }
 
-void po_int_fixup(Code_buf *cbuf, long fixup_pos, int val)
 /*****************************************************************************
  * add offset at fixup_pos
  ****************************************************************************/
+void po_int_fixup(Code_buf* cbuf, long fixup_pos, int val)
 {
-	((int *)OPTR(cbuf->code_buf, fixup_pos))[0] += val;
+	((int*)OPTR(cbuf->code_buf, fixup_pos))[0] += val;
 }
 
-static
-Boolean resolve_labels(Poco_cb *pcb, Poco_frame *pf)
 /*****************************************************************************
  * Scan through label references and add offset where label declared.
  ****************************************************************************/
+static Boolean resolve_labels(Poco_cb* pcb, Poco_frame* pf)
 {
-	Code_label	*cl,
-				*cnext;
-	Use_label	*ul,
-				*unext;
-	long		offset;
-	Code		*cbuf;
-	Boolean 	retval = TRUE;
+	Code_label *cl, *cnext;
+	Use_label *ul, *unext;
+	long offset;
+	Code* cbuf;
+	Boolean retval = TRUE;
 
-	cbuf = pf->fcd.code_buf;
+	cbuf  = pf->fcd.code_buf;
 	cnext = pf->labels;
-	while ((cl = cnext) != NULL)
-		{
-		if (cl->lvar != NULL && cl->code_pos == 0)
-			{
+	while ((cl = cnext) != NULL) {
+		if (cl->lvar != NULL && cl->code_pos == 0) {
 			po_undefined(pcb, cl->lvar->name);
 			retval = FALSE;
-			}
+		}
 		unext = cl->uses;
-		while ((ul = unext) != NULL)
-			{
-			offset = cl->code_pos - ul->code_pos;
-			((int *)(cbuf+ul->code_pos))[0] = offset;
-			unext = ul->next;
+		while ((ul = unext) != NULL) {
+			offset							 = cl->code_pos - ul->code_pos;
+			((int*)(cbuf + ul->code_pos))[0] = offset;
+			unext							 = ul->next;
 			po_freemem(ul);
-			}
+		}
 		cnext = cl->next;
 		po_freemem(cl);
-		}
-	return(retval);
+	}
+	return (retval);
 }
 
-Boolean po_compress_func(Poco_cb *pcb, Poco_frame *pf, Func_frame *new)
 /*****************************************************************************
  * convert a poco-frame to the smaller func_frame;
  *	Copies code to buffer that's just the right size
  *	and convert local-symbol-list to parameter-only-list.
  *	Resolve labels. Then append func_frame to pcb->run.fff.
  ****************************************************************************/
+Boolean po_compress_func(Poco_cb* pcb, Poco_frame* pf, Func_frame* new)
 {
 	long csize;
 
 	if (!resolve_labels(pcb, pf))
-		return(FALSE);
+		return (FALSE);
 
 #ifdef STRING_EXPERIMENT
-	po_free_local_string_list(pcb,pf);
+	po_free_local_string_list(pcb, pf);
 #endif /* STRING_EXPERIMENT */
 	/* Move code to place just big enough to fit */
 
-	csize = ((UBYTE *)(pf->fcd.code_pt)) - ((UBYTE *)(pf->fcd.code_buf));
+	csize = ((UBYTE*)(pf->fcd.code_pt)) - ((UBYTE*)(pf->fcd.code_buf));
 	if (csize == 0)
 		new->code_pt = NULL;
-	else
-		{
+	else {
 		new->code_pt = po_memalloc(pcb, csize);
 		poco_copy_bytes(pf->fcd.code_buf, new->code_pt, csize);
-		}
-	new->type = pf->type;
+	}
+	new->type	   = pf->type;
 	new->code_size = csize;
-	new->ld = pf->ld;
-	if (!po_compress_line_data(pcb,new->ld))
-		return(FALSE);
-	new->next = pcb->run.fff;
+	new->ld		   = pf->ld;
+	if (!po_compress_line_data(pcb, new->ld))
+		return (FALSE);
+	new->next	 = pcb->run.fff;
 	pcb->run.fff = new;
-	pf->ld = NULL;
-	return(TRUE);
+	pf->ld		 = NULL;
+	return (TRUE);
 }

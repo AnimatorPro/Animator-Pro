@@ -70,8 +70,11 @@ typedef FILE REAL_FILE;
 #endif /* USE_LFILE */
 
 
-// from pj_sdl.c
-extern const char* SEP;
+#ifdef _WIN32
+const char* SEP = "\\";
+#else
+const char* SEP = "/";
+#endif
 
 
 struct xfl

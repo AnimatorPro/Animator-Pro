@@ -24,10 +24,10 @@ if (ivmode != -1)
 	pj_set_vmode(ivmode);
 }
 
-Errcode boxf(char *fmt,...)
-/* this puts up a formated textbox for debugging etc bypassing input calls 
+/* this puts up a formated textbox for debugging etc bypassing input calls
  * this only does printf() style formats */
 /* (aa_stdiolib wants this) */
+Errcode boxf(char *fmt,...)
 {
 Errcode err;
 va_list args;

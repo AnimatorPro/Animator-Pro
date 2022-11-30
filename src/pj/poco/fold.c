@@ -98,10 +98,12 @@ Boolean po_is_static_init_const(Poco_cb *pcb, Code_buf *cb)
 	void			*code;
 	Boolean 		rv = TRUE;
 
+	(void)pcb;
+
 //	printf("\nTesting is_static_init_const on this code:\n");
 //	po_dump_codebuf(pcb, cb);
 
-	for (code = cb->code_buf; code < cb->code_pt; /* nothing */) {
+	for (code = cb->code_buf; code < (void*)cb->code_pt; /* nothing */) {
 		op = *(int *)code;
 		if (pta[op].op_flags & OFL_NOTCON) {
 			rv = FALSE;

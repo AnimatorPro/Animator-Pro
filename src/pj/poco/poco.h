@@ -107,6 +107,7 @@
  * #include's used by most everything in poco...
  ****************************************************************************/
 
+#include <memory.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -148,7 +149,7 @@
  ****************************************************************************/
 
 #define VRSN_TO_STR(a) #a
-#define VRSN_STR	   VRSN_TO_STR(VRSN_NUM)
+#define VRSN_STR	   (VRSN_TO_STR(VRSN_NUM))
 
 #define MAX_STACK		14336	/* 14k stack, used in overflow checking */
 #define HASH_SIZE		256 	/* hash table size, must change pocoutil.asm if this changes!!! */
@@ -772,8 +773,8 @@ void	po_get_function(Poco_cb *pcb, Exp_frame *e);
 
 /* in main.c */
 
-void	*pj_malloc(unsigned i);
-void	*pj_zalloc(unsigned size);
+void	*pj_malloc(size_t i);
+void	*pj_zalloc(size_t size);
 void	pj_free(void *v);
 void	pj_gentle_free(void *p);
 void	pj_freez(void *p);
@@ -987,6 +988,13 @@ Boolean po_sr_ge_and_clean(String_ref *a, String_ref *b);
 Boolean po_sr_le_and_clean(String_ref *a, String_ref *b);
 String_ref *po_sr_cat_and_clean(String_ref *a, String_ref *b);
 #endif /* STRING_EXPERIMENT */
+
+#ifdef __APPLE__
+/* from poco_unix.c */
+char getch(void);
+char getche(void);
+#endif
+
 /* end of protos */
 
 #endif /* POCO_H */

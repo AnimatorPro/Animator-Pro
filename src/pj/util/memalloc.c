@@ -267,7 +267,7 @@ Dlnode *next;
 #endif /* COOKIES */
 #endif /* ALLOCLIST */
 
-void *pj_malloc(unsigned size)
+void *pj_malloc(size_t size)
 {
 register Memchunk *chunk;
 long lastsize;

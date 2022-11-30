@@ -139,7 +139,7 @@ if (copy_type_flag != NOCOPY_TYPE)
 
 void po_get_binop_expression(Poco_cb *pcb, Exp_frame *e)
 /*****************************************************************************
-/* Put binary expression into e.
+ * Put binary expression into e.
  ****************************************************************************/
 {
 Exp_frame 	*exp_buf[PREC_COUNT],

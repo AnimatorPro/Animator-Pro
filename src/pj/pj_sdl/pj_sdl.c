@@ -19,13 +19,6 @@ SDL_Surface* s_window_surface = NULL;
 SDL_Renderer* renderer		  = NULL;
 
 
-#ifdef _WIN32
-	const char* SEP = "\\";
-#else
-	const char* SEP = "/";
-#endif
-
-
 /*--------------------------------------------------------------*/
 int pj_sdl_get_video_size(LONG* width, LONG* height)
 {

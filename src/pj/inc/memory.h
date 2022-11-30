@@ -13,8 +13,8 @@ int pj_get_stack_used();
 extern void *pj_enorm_pointer(void *);	/* WORD-alligns pointer */
 extern void *begmem(unsigned);
 extern void *lbegmem(long);
-extern void *pj_malloc(unsigned);
-extern void *pj_zalloc(unsigned);
+extern void *pj_malloc(size_t);
+extern void *pj_zalloc(size_t);
 	/* return pointer to cleared buffer of size long, or NULL */
 Errcode ealloc(void **pt, long size);
 	/* allocate cleared buffer of size into *pt.

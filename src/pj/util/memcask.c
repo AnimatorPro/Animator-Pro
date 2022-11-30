@@ -1,7 +1,7 @@
 #include "memory.h"
 
-void *pj_zalloc(unsigned size)
-/* same as laskmem bu returns it cleared "c" */
+void *pj_zalloc(size_t size)
+/* same as laskmem but returns it cleared "c" */
 {
 void *mem;
 

@@ -98,7 +98,7 @@ typedef struct rnode		/* Used for resource tracking in builtin libs */
  *	Popot_make_null 	- Set a Popot to NULL.
  ****************************************************************************/
 
-#define Popot_bufsize(p)			((char *)((p)->max)-(char *)((p)->pt)+1)
+#define Popot_bufsize(p)			((size_t)((char *)((p)->max)-(char *)((p)->pt)+1))
 #define Popot_bufcheck(p,length)	(builtin_err = (((p)->pt == NULL) ?\
 										Err_null_ref :\
 										((Popot_bufsize((p)) < (length)) ? \

@@ -2,11 +2,13 @@
    Frees them on poco program exit.   Does a bit of sanity
    checking on file-function parameters. */
 
-#include  "poco.h"
-#include "pocolib.h"
-#include "lostdio.h"
+#include <errno.h>
+#include <stdio.h>
 #include <stdarg.h>
 #include <string.h>
+
+#include "poco.h"
+#include "pocolib.h"
 #include "ptrmacro.h"
 #include "errcodes.h"
 #include "linklist.h"
@@ -20,14 +22,15 @@ extern Errcode builtin_err;
 
 extern Poco_lib po_FILE_lib, po_mem_lib;
 
+
 /*****************************************************************************
  * file functions...
  ****************************************************************************/
 
-static void free_safe_files(Poco_lib *lib)
 /*****************************************************************************
  *
  ****************************************************************************/
+static void free_safe_files(Poco_lib *lib)
 {
 	Dlheader *sfi = &lib->resources;
 	Dlnode *node, *next;
@@ -40,10 +43,10 @@ static void free_safe_files(Poco_lib *lib)
 	init_list(sfi); /* just defensive programming */
 }
 
-Rnode *po_in_rlist(Dlheader *sfi, void *f)
 /*****************************************************************************
  *
  ****************************************************************************/
+Rnode *po_in_rlist(Dlheader *sfi, void *f)
 {
 	Dlnode *node, *next;
 
@@ -55,10 +58,10 @@ Rnode *po_in_rlist(Dlheader *sfi, void *f)
 	return NULL;
 }
 
-static Errcode safe_file_check(Popot *fp, Popot *bp, int size)
 /*****************************************************************************
  *
  ****************************************************************************/
+static Errcode safe_file_check(Popot *fp, Popot *bp, size_t size)
 {
 	if (NULL == fp->pt)
 		return builtin_err = Err_null_ref;
@@ -75,10 +78,10 @@ static Errcode safe_file_check(Popot *fp, Popot *bp, int size)
 	return Success;
 }
 
-static int po_fread(Popot buf, unsigned size, unsigned n, Popot f)
 /*****************************************************************************
  * int fread(void *buf, int size, int count, FILE *f)
  ****************************************************************************/
+static int po_fread(Popot buf, unsigned size, unsigned n, Popot f)
 {
 	if (Success != safe_file_check(&f, &buf, size*n))
 		return 0;
@@ -86,10 +89,10 @@ static int po_fread(Popot buf, unsigned size, unsigned n, Popot f)
 	return fread(buf.pt, size, n, f.pt);
 }
 
-static po_fwrite(Popot buf, unsigned size, unsigned n, Popot f)
 /*****************************************************************************
  * int fwrite(void *buf, int size, int count, FILE *f)
  ****************************************************************************/
+static size_t po_fwrite(Popot buf, unsigned size, unsigned n, Popot f)
 {
 	if (Success != safe_file_check(&f, &buf, size*n))
 		return 0;
@@ -98,10 +101,10 @@ static po_fwrite(Popot buf, unsigned size, unsigned n, Popot f)
 }
 
 
-static Popot po_fopen(Popot name, Popot mode)
 /*****************************************************************************
  * FILE *fopen(char *name, char *mode)
  ****************************************************************************/
+static Popot po_fopen(Popot name, Popot mode)
 {
 	Rnode *sn;
 	Popot f;
@@ -110,27 +113,27 @@ static Popot po_fopen(Popot name, Popot mode)
 	if (name.pt == NULL || mode.pt == NULL)
 		{
 		builtin_err = Err_null_ref;
-		goto OUT;
+		return f;
 		}
 	if ((f.pt = fopen(name.pt, mode.pt)) == NULL)
-		goto OUT;
+		return f;
 	if ((sn = pj_zalloc(sizeof(*sn))) == NULL)
 		{
 		fclose(f.pt);
 		f.pt = NULL;
 		builtin_err = Err_no_memory;
-		goto OUT;
+		return f;
 		}
 	add_head(&po_FILE_lib.resources,&sn->node);
 	sn->resource = f.pt;
-OUT:
+
 	return f;
 }
 
-static void po_fclose(Popot f)
 /*****************************************************************************
  * void fclose(FILE *f)
  ****************************************************************************/
+static void po_fclose(Popot f)
 {
 	Rnode *sn;
 
@@ -144,50 +147,30 @@ static void po_fclose(Popot f)
 	pj_free(sn);
 }
 
-static int po_fseek(Popot f, long offset, int whence)
 /*****************************************************************************
  * int fseek(FILE *f, long offset, int mode)
  ****************************************************************************/
+static int po_fseek(Popot f, long offset, int whence)
 {
 	if (Success != safe_file_check(&f, NULL, 0))
 		return builtin_err;
 	return fseek(f.pt,offset,whence);
 }
 
-static long po_ftell(Popot f)
 /*****************************************************************************
  * long ftell(FILE *f)
  ****************************************************************************/
+static long po_ftell(Popot f)
 {
 	if (Success != safe_file_check(&f, NULL, 0))
 		return builtin_err;
 	return ftell(f.pt);
 }
 
-#ifdef __TURBOC__
-static int po_fprintf(long vargcount, long vargsize, Popot f, Popot format, ...)
 /*****************************************************************************
  * int fprintf(FILE *f, char *format, ...)
  ****************************************************************************/
-{
-#undef vfprintf
-int 	rv;
-va_list args;
-
-if (f.pt == NULL || format.pt == NULL)
-	return builtin_err = Err_null_ref;
-va_start(args, format);
-rv = vfprintf(f.pt, format.pt, args);
-va_end(args);
-return rv;
-}
-
-#else	/* __TURBOC__ */
-
 static int po_fprintf(long vargcount, long vargsize, Popot f, Popot format, ...)
-/*****************************************************************************
- * int fprintf(FILE *f, char *format, ...)
- ****************************************************************************/
 {
 	Errcode   err;
 	va_list   args;
@@ -210,12 +193,11 @@ static int po_fprintf(long vargcount, long vargsize, Popot f, Popot format, ...)
 	va_end(args);
 	return fa.count - 1;
 }
-#endif /* __TURBOC__ */
 
-static int po_getc(Popot f)
 /*****************************************************************************
  * int getc(FILE *f)
  ****************************************************************************/
+static int po_getc(Popot f)
 {
 	if (Success != safe_file_check(&f, NULL, 0))
 		return builtin_err;
@@ -223,10 +205,10 @@ static int po_getc(Popot f)
 	return getc((FILE *)(f.pt));
 }
 
-static int po_putc(int c, Popot f)
 /*****************************************************************************
  * int putc(int c, FILE *f)
  ****************************************************************************/
+static int po_putc(int c, Popot f)
 {
 	if (Success != safe_file_check(&f, NULL, 0))
 		return builtin_err;
@@ -234,10 +216,10 @@ static int po_putc(int c, Popot f)
 	return putc(c,(FILE *)(f.pt));
 }
 
-static int po_fputs(Popot string, Popot f)
 /*****************************************************************************
  * int fputs(char *s, FILE *f)
  ****************************************************************************/
+static int po_fputs(Popot string, Popot f)
 {
 	if (Success != safe_file_check(&f, &string, 0))
 		return builtin_err;
@@ -245,10 +227,10 @@ static int po_fputs(Popot string, Popot f)
 	return fputs(string.pt, f.pt);
 }
 
-static Popot po_fgets(Popot string, int maxlen, Popot f)
 /*****************************************************************************
  * char *fgets(char *s, int maxlen, FILE *f)
  ****************************************************************************/
+static Popot po_fgets(Popot string, int maxlen, Popot f)
 {
 	Popot rv = {NULL,NULL,NULL};
 
@@ -260,10 +242,10 @@ static Popot po_fgets(Popot string, int maxlen, Popot f)
 	return rv;
 }
 
-static int po_fflush(Popot f)
 /*****************************************************************************
  * int fflush(FILE *f)
  ****************************************************************************/
+static int po_fflush(Popot f)
 {
 	if (Success != safe_file_check(&f, NULL, 0))
 		return builtin_err;
@@ -271,13 +253,12 @@ static int po_fflush(Popot f)
 	return fflush(f.pt);
 }
 
-static Popot po_get_errno_pointer(void)
 /*****************************************************************************
  * used with the #define errno in the libprotos below to access errno.
  ****************************************************************************/
+static Popot po_get_errno_pointer(void)
 {
-	Popot	rv = {&errno, &errno, OPTR(&errno, sizeof(int)-1)};
-
+	Popot rv = {&errno, &errno, OPTR(&errno, sizeof(int)-1)};
 	return rv;
 }
 
@@ -285,17 +266,16 @@ static Popot po_get_errno_pointer(void)
 /*****************************************************************************
  * memory functions...
  ****************************************************************************/
-
 typedef struct mem_node
 	{
 	RNODE_FIELDS
 	long size;
 	} Mem_node;
 
-Popot poco_lmalloc(long size)
 /*****************************************************************************
  *
  ****************************************************************************/
+Popot poco_lmalloc(long size)
 {
 	Popot	pp = {NULL,NULL,NULL};
 	Mem_node *sn;
@@ -320,26 +300,26 @@ Popot poco_lmalloc(long size)
 	return pp;
 }
 
-Popot po_malloc(int size)
 /*****************************************************************************
  * void *malloc(int size)
  ****************************************************************************/
+Popot po_malloc(int size)
 {
 	return poco_lmalloc(size);
 }
 
-static Popot po_calloc(int size_el, int el_count)
 /*****************************************************************************
  * void *calloc(int size_el, int el_count)
  ****************************************************************************/
+Popot po_calloc(int size_el, int el_count)
 {
 	return poco_lmalloc(size_el*el_count);
 }
 
-static void free_safe_mem(Poco_lib *lib)
 /*****************************************************************************
  *
  ****************************************************************************/
+static void free_safe_mem(Poco_lib *lib)
 {
 	Dlheader *sfi = &lib->resources;
 	Dlnode *node, *next;
@@ -353,10 +333,10 @@ static void free_safe_mem(Poco_lib *lib)
 }
 
 
-void po_free(Popot ppt)
 /*****************************************************************************
  * void free(void *pt)
  ****************************************************************************/
+void po_free(Popot ppt)
 {
 	Mem_node *sn;
 
@@ -374,10 +354,10 @@ void po_free(Popot ppt)
 		}
 }
 
-static Errcode po_memchk(Popot *d, Popot *s, int size)
 /*****************************************************************************
  *
  ****************************************************************************/
+static Errcode po_memchk(Popot *d, Popot *s, int size)
 {
 	if (s->pt == NULL || d->pt == NULL)
 		return builtin_err = Err_null_ref;
@@ -386,80 +366,81 @@ static Errcode po_memchk(Popot *d, Popot *s, int size)
 	return Success;
 }
 
-Popot po_memcpy(Popot d, Popot s, int size)
 /*****************************************************************************
  * void *memcpy(void *dest, void *source, int size)
  ****************************************************************************/
+Popot po_memcpy(Popot d, Popot s, int size)
 {
-	if (po_memchk(&d,&s,size) < Success)
-		goto OUT;
+	if (po_memchk(&d,&s,size) < Success) {
+		return d;
+	}
+
 	poco_copy_bytes(s.pt, d.pt, size);
-OUT:
 	return d;
 }
 
-Popot po_memmove(Popot d, Popot s, int size)
 /*****************************************************************************
  * void *memmove(void *dest, void *source, int size)
  ****************************************************************************/
+Popot po_memmove(Popot d, Popot s, int size)
 {
-	if (po_memchk(&d,&s,size) < Success)
-		goto OUT;
+	if (po_memchk(&d,&s,size) < Success) {
+		return d;
+	}
 	memmove(d.pt, s.pt, size);
-OUT:
 	return d;
 }
 
-int po_memcmp(Popot d, Popot s, int size)
 /*****************************************************************************
  * int memcmp(void *a, void *b, int size)
  ****************************************************************************/
+int po_memcmp(Popot d, Popot s, int size)
 {
-	if (po_memchk(&d,&s,size) < Success)
+	if (po_memchk(&d,&s,size) < Success) {
 		return builtin_err;
+	}
 	return memcmp(d.pt, s.pt, size);
 }
 
-Popot po_memset(Popot d, int c, int length)
 /*****************************************************************************
  * void *memset(void *dest, int source, int size)
  ****************************************************************************/
+Popot po_memset(Popot d, int c, int length)
 {
 if (d.pt == NULL)
 		{
 		builtin_err = Err_null_ref;
-		goto OUT;
+		return d;
 		}
 	if (Popot_bufsize(&d) < length)
 		{
 		builtin_err = Err_buf_too_small;
-		goto OUT;
+		return d;
 		}
+
 	memset(d.pt, c, length);
-OUT:
 	return d;
 }
 
-Popot po_memchr(Popot d, int c, int length)
 /*****************************************************************************
  * void *memchr(void *a, int c, int size)
  ****************************************************************************/
+Popot po_memchr(Popot d, int c, int length)
 {
 	if (d.pt == NULL)
 		{
 		builtin_err = Err_null_ref;
-		goto OUT;
+		return d;
 		}
 	if (Popot_bufsize(&d) < length)
 		{
 		builtin_err = Err_buf_too_small;
-		goto OUT;
+		return d;
 		}
 	if (NULL == (d.pt = memchr(d.pt, c, length))) {
 		d.min = d.max = NULL;
 	}
 
-OUT:
 	return d;
 }
 

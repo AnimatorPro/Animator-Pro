@@ -79,7 +79,7 @@ if (op >= 0 && op < po_ins_table_els)
 				((long *)OPTR(code,sizeof(int)))[0]);
 			break;
 		case OEX_LONG:
-			fprintf(f, "\t%ld", ((LONG *)code)[0] );
+			fprintf(f, "\t%d", ((LONG *)code)[0] );
 			break;
 		case OEX_POINTER:
 			fprintf(f, "\tmin 0x%p max 0x%p pt 0x%p",
