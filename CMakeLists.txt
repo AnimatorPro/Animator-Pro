@@ -13,12 +13,12 @@ endif()
 
 option(USE_ASAN "Use Clang Memory Address Sanitizer" OFF)
 
-
 if (USE_ASAN)
 	set(CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   -fsanitize=address -g")
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address -g")
 endif()
 
+option(WITH_POCO "Build with the Poco scripting language." ON)
 
 if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 	# will not take effect without FORCE
@@ -37,6 +37,10 @@ add_compile_options(
 ## thirdparty dependencies
 add_subdirectory(thirdparty/sdl2)
 include_directories(thirdparty/sdl2/include)
+if (WITH_POCO)
+	add_subdirectory(thirdparty/libffi)
+endif()
+
 
 ## main
 add_subdirectory(src/PJ)

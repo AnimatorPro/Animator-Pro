@@ -1,3 +1,13 @@
+
+cmake_minimum_required(VERSION 3.16 FATAL_ERROR)
+
+project(poco C)
+
+if(CMAKE_BUILD_TYPE STREQUAL "debug")
+	add_compile_definitions(-DDEVELOPMENT=1 -DDEBUG=1)
+endif()
+
+
 set(LIBPOCO_SRC_FILES
 		bcrcall.c
 		bcutil.c
@@ -38,6 +48,12 @@ set(LIBPOCO_SRC_FILES
 		struct.h
 		)
 
+list(TRANSFORM
+		LIBPOCO_SRC_FILES
+	PREPEND
+		"${CMAKE_CURRENT_SOURCE_DIR}/"
+)
+
 #set(LIBPOCO_SRC_FILES
 #		bcutil.c
 #		pocoface.c
@@ -49,6 +65,7 @@ set(LIBPOCO_SRC_FILES
 
 add_library(libpoco ${LIBPOCO_SRC_FILES})
 target_include_directories(libpoco PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/../inc")
+target_link_libraries(libpoco PUBLIC ffi)
 set_target_properties(libpoco PROPERTIES PREFIX "")
 
 set(POCO_MAIN_SRC_FILES main.c)
@@ -58,4 +75,10 @@ endif()
 
 add_executable(poco ${POCO_MAIN_SRC_FILES})
 target_link_libraries(poco libpoco trdfile)
+INSTALL(TARGETS poco DESTINATION ./)
+
+## cscope 
+set(ALL_POCO_FILES ${LIBPOCO_SRC_FILES} ${POCO_MAIN_SRC_FILES})
+string(REPLACE ";" "\n" ALL_POCO_FILES "${ALL_POCO_FILES}")
+file(WRITE ${CMAKE_CURRENT_SOURCE_DIR}/cscope.files "${ALL_POCO_FILES}")
 

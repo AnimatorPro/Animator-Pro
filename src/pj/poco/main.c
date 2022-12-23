@@ -347,6 +347,7 @@ int po_puts(Popot s)
 	return result;
 }
 
+
 /****************************************************************************
  *
  ***************************************************************************/
@@ -367,6 +368,7 @@ int po_printf(long vargcount, long vargsize, Popot format, ...)
 	va_end(args);
 	return result;
 }
+
 
 /****************************************************************************
  *
@@ -392,6 +394,8 @@ void po_qtext(long vargcount, long vargsize, Popot format, ...)
 	getch();
 }
 
+
+/****************************************************************************/
 static Lib_proto proto_lines[] = {
 	/*	{tryme, 	"int ptryme(int (*v)(long a, long b, long c));"}, */
 	{ po_puts, "int puts(char *s);" },
@@ -420,6 +424,7 @@ static Poco_lib* poco_libs[] = {
 	&po_main_lib, &po_str_lib, &po_mem_lib, &po_FILE_lib, &po_math_lib, &po_dummy_lib,
 };
 
+
 /****************************************************************************
  *
  ***************************************************************************/
@@ -440,6 +445,7 @@ static Poco_lib* get_poco_libs(void)
 FILE redirection_save;
 FILE* f;
 
+
 /*****************************************************************************
  * this routine fools the PJ lfile library into thinking it is writing to
  * stdout but the stuff really goes into a file.
@@ -455,6 +461,7 @@ static Errcode open_redirect_stdout(char* fname)
 	return Success;
 }
 
+
 /*****************************************************************************
  * this un-directs stdout from a file back to the screen.
  ****************************************************************************/
@@ -464,6 +471,7 @@ static void close_redirect_stdout(void)
 	fclose(f);					/* close file */
 	*stdout = redirection_save; /* restore stdout state */
 }
+
 
 Errcode builtin_err; /* Error status for libraries. */
 
@@ -475,10 +483,10 @@ extern Boolean po_trace_flag;
 #endif /* DEVELOPMENT */
 
 
-int main(int argc, char* argv[])
 /****************************************************************************
  *
  ***************************************************************************/
+int main(int argc, char* argv[])
 {
 	char err_file[100];
 	long err_line;
@@ -492,6 +500,7 @@ int main(int argc, char* argv[])
 	char* argp;
 	int counter;
 	Poco_lib* builtin_libs;
+	int do_debug_dump = FALSE;
 
 	builtin_libs = get_poco_libs();
 
@@ -513,10 +522,7 @@ int main(int argc, char* argv[])
 					break;
 #endif					  /* DEVELOPMENT */
 				case 'D': /* Dump file name...        */
-					if (*++argp != '\0')
-						dfname = argp;
-					else
-						dfname = "DUMP.";
+					do_debug_dump = TRUE;
 					break;
 				case 'O': /* Redirection file name... */
 					if (*++argp != 0)
@@ -558,6 +564,10 @@ int main(int argc, char* argv[])
 #ifdef DEVELOPMENT
 		po_run_protos = (((Poco_run_env*)pexe)->protos); /* for trace */
 #endif													 /* DEVELOPMENT */
+		if (do_debug_dump) {
+			po_disassemble_program((Poco_run_env*)pexe, stdout);
+		}
+
 		if (runflag) {
 			err = run_poco(&pexe, NULL, check_abort, NULL, &err_line);
 		}
