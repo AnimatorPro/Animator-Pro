@@ -239,6 +239,7 @@ Errcode poco_cont_ops(void* code_pt, Pt_num* pret, int arglength, ...)
 				stack->inty	 = acc.ret.inty;
 				break;
 			case OP_PPT_TO_CPT:
+				// convert popot pointer to void*
 				acc.ret.p = stack->ppt.pt;
 				stack	  = OPTR(stack, sizeof(stack->ppt) - sizeof(stack->ppt.pt));
 				stack->p  = acc.ret.p;
@@ -251,6 +252,7 @@ Errcode poco_cont_ops(void* code_pt, Pt_num* pret, int arglength, ...)
 				break;
 #endif /* STRING_EXPERIMENT */
 			case OP_CPT_TO_PPT:
+				// convert void* to popot pointer
 				acc.ret.p	   = stack->p;
 				stack		   = OPTR(stack, sizeof(stack->p) - sizeof(stack->ppt));
 				stack->ppt.min = stack->ppt.max = stack->ppt.pt = acc.ret.p;

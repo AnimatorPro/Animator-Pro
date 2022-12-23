@@ -49,278 +49,246 @@
 
 #include "poco.h"
 
-int po_get_param_size(Poco_cb *pcb, SHORT ido_type)
 /*****************************************************************************
  * return the size in bytes of a parameter to a function.
  ****************************************************************************/
+int po_get_param_size(Poco_cb* pcb, SHORT ido_type)
 {
-int psize;
+	int psize;
 
-switch (ido_type)
-	{
-	case IDO_INT:
-		psize = sizeof(int);
-		break;
-	case IDO_LONG:
-		psize = sizeof(long);
-		break;
-	case IDO_DOUBLE:
-		psize = sizeof(double);
-		break;
-	case IDO_POINTER:
-		psize = sizeof(Popot);
-		break;
-	case IDO_CPT:
-		psize = sizeof(void *);
-		break;
+	switch (ido_type) {
+		case IDO_INT:
+			psize = sizeof(int);
+			break;
+		case IDO_LONG:
+			psize = sizeof(long);
+			break;
+		case IDO_DOUBLE:
+			psize = sizeof(double);
+			break;
+		case IDO_POINTER:
+			psize = sizeof(Popot);
+			break;
+		case IDO_CPT:
+			psize = sizeof(void*);
+			break;
 #ifdef STRING_EXPERIMENT
-	case IDO_STRING:
-		psize = sizeof(PoString);
-		break;
+		case IDO_STRING:
+			psize = sizeof(PoString);
+			break;
 #endif /* STRING_EXPERIMENT */
-	case IDO_VPT:
-		po_say_fatal(pcb, "missing '*' in parameter to function??");
-		break;
-	default:
-		po_say_fatal(pcb, "cannot pass structure by value (perhaps missing '*'?)");
-		break;
+		case IDO_VPT:
+			po_say_fatal(pcb, "missing '*' in parameter to function??");
+			break;
+		default:
+			po_say_fatal(pcb, "cannot pass structure by value (perhaps missing '*'?)");
+			break;
 	}
-return(psize);
+	return (psize);
 }
 
 
-static void mk_function_call(Poco_cb *pcb, Exp_frame *e,
-	Func_frame *fff, SHORT ftype)
 /*****************************************************************************
  * generate code to push parms to stack and make call to function.
  ****************************************************************************/
+static void mk_function_call(Poco_cb* pcb, Exp_frame* e, Func_frame* fff, SHORT ftype)
 {
-Symbol		*param;
-SHORT		expected_count;
-SHORT		idot;
-SHORT		param_count = 0;
-int 		param_size = 0;
-SHORT		varg_param_count = 0;
-int 		varg_param_size = 0;
-int 		this_param_size;
-Boolean 	is_cvarg_call = FALSE;
-Exp_frame	*param_exps = NULL;
-Exp_frame	*exp;
-Code_buf	callcode;
+	(void)ftype;
 
-po_init_code_buf(pcb, &callcode);
-param = fff->parameters;
-expected_count = fff->pcount;
-for (;;)
-	{
-	if (param == NULL)
-		break;
-	if (po_is_next_token(pcb, TOK_RPAREN))
-		break;
+	Symbol* param;
+	SHORT expected_count;
+	SHORT idot;
+	SHORT param_count	   = 0;
+	int param_size		   = 0;
+	SHORT varg_param_count = 0;
+	int varg_param_size	   = 0;
+	int this_param_size;
+	Boolean is_cvarg_call = FALSE;
+	Exp_frame* param_exps = NULL;
+	Exp_frame* exp;
+	Code_buf callcode;
 
-	exp = po_new_expframe(pcb);
-	exp->next = param_exps;
-	param_exps = exp;
-	po_get_expression(pcb, exp);
+	po_init_code_buf(pcb, &callcode);
+	param		   = fff->parameters;
+	expected_count = fff->pcount;
+	for (;;) {
+		if (param == NULL)
+			break;
+		if (po_is_next_token(pcb, TOK_RPAREN))
+			break;
 
-	if (param->flags & SFL_ELLIP)
-		{
-		if (fff->type == CFF_C)
-			{ /* ptr parms passed to c functions get un-poco-pointerized */
-			if (po_is_pointer(&exp->ctc) || po_is_array(&exp->ctc))
-				{
-				po_code_op(pcb, &exp->ecd, OP_PPT_TO_CPT);
-				exp->ctc.comp[exp->ctc.comp_count-1] = TYPE_CPT;
-				exp->ctc.ido_type = IDO_CPT;
+		exp		   = po_new_expframe(pcb);
+		exp->next  = param_exps;
+		param_exps = exp;
+		po_get_expression(pcb, exp);
+
+		if (param->flags & SFL_ELLIP) {
+			if (fff->type == CFF_C) { /* ptr parms passed to c functions get un-poco-pointerized */
+				if (po_is_pointer(&exp->ctc) || po_is_array(&exp->ctc)) {
+					po_code_op(pcb, &exp->ecd, OP_PPT_TO_CPT);
+					exp->ctc.comp[exp->ctc.comp_count - 1] = TYPE_CPT;
+					exp->ctc.ido_type					   = IDO_CPT;
 				}
 #ifdef STRING_EXPERIMENT
-			else if (po_is_string(&exp->ctc))
-				{
-				po_code_op(pcb, &exp->ecd, OP_STRING_TO_CPT);
-				exp->ctc.comp[0] = TYPE_CHAR;
-				exp->ctc.comp[1] = TYPE_CPT;
-				exp->ctc.ido_type = IDO_CPT;
+				else if (po_is_string(&exp->ctc)) {
+					po_code_op(pcb, &exp->ecd, OP_STRING_TO_CPT);
+					exp->ctc.comp[0]  = TYPE_CHAR;
+					exp->ctc.comp[1]  = TYPE_CPT;
+					exp->ctc.ido_type = IDO_CPT;
 				}
 #endif /* STRING_EXPERIMENT */
+				this_param_size = po_get_param_size(pcb, exp->ctc.ido_type);
+				varg_param_size += this_param_size;
+				++varg_param_count;
+			}
+		} else {
+			po_coerce_expression(pcb, exp, param->ti, FALSE);
 			this_param_size = po_get_param_size(pcb, exp->ctc.ido_type);
-			varg_param_size += this_param_size;
-			++varg_param_count;
-			}
-		}
-	else
-		{
-		po_coerce_expression(pcb, exp, param->ti, FALSE);
-		this_param_size = po_get_param_size(pcb, exp->ctc.ido_type);
 		}
 
-	++param_count;
-	param_size += this_param_size;
+		++param_count;
+		param_size += this_param_size;
 
-	if (!(param->flags & SFL_ELLIP))
-		param = param->link;
+		if (!(param->flags & SFL_ELLIP))
+			param = param->link;
 
-	po_need_token(pcb);
+		po_need_token(pcb);
 
-	if (param != NULL)
-		{
-		if (param->flags&SFL_ELLIP)
-			{
-			if (pcb->t.toktype != ',')
-				{
-				if ( pcb->t.toktype != ')')
-					po_expecting_got(pcb, ", or )");
-				else
-					pushback_token(&pcb->t);
+		if (param != NULL) {
+			if (param->flags & SFL_ELLIP) {
+				if (pcb->t.toktype != ',') {
+					if (pcb->t.toktype != ')')
+						po_expecting_got(pcb, ", or )");
+					else
+						pushback_token(&pcb->t);
+				}
+			} else {
+				if (pcb->t.toktype != ',') {
+					if (pcb->t.toktype == ')')
+						goto NOT_ENOUGH_PARMS;
+					else
+						po_expecting_got(pcb, ",");
 				}
 			}
-		else
-			{
-			if (pcb->t.toktype != ',')
-				{
-				if (pcb->t.toktype == ')')
-					goto NOT_ENOUGH_PARMS;
-				else
-					po_expecting_got(pcb, ",");
-				}
-			}
-		}
-	else
-		{
-		pushback_token(&pcb->t);
+		} else {
+			pushback_token(&pcb->t);
 		}
 	}
 
-if (param != NULL && (param->flags & SFL_ELLIP))
-	{
-	--expected_count;
-	if (fff->type == CFF_C)
-		is_cvarg_call = TRUE;
+	if (param != NULL && (param->flags & SFL_ELLIP)) {
+		--expected_count;
+		if (fff->type == CFF_C)
+			is_cvarg_call = TRUE;
 	}
 
-if (param_count < expected_count)
-	{
-NOT_ENOUGH_PARMS:
-	po_say_fatal(pcb, "not enough parameters in call to function '%s'",fff->name);
+	if (param_count < expected_count) {
+	NOT_ENOUGH_PARMS:
+		po_say_fatal(pcb, "not enough parameters in call to function '%s'", fff->name);
 	}
 
-if (pcb->t.toktype == ',')
-	{
-	po_say_fatal(pcb, "too many parameters in call to function '%s'", fff->name);
+	if (pcb->t.toktype == ',') {
+		po_say_fatal(pcb, "too many parameters in call to function '%s'", fff->name);
 	}
 
-po_eat_rparen(pcb);
+	po_eat_rparen(pcb);
 
-/* Ok, currently the parameters are (backwards) in the param_exps list and
-	the function calling code is in e.	Must reorder things so parameters
-	go first in e and then the calling code. */
+	/* Ok, currently the parameters are (backwards) in the param_exps list and
+		the function calling code is in e.	Must reorder things so parameters
+		go first in e and then the calling code. */
 
-if (e->left_complex)
-	po_copy_code(pcb, &e->ecd, &callcode);
+	if (e->left_complex)
+		po_copy_code(pcb, &e->ecd, &callcode);
 
-clear_code_buf(pcb, &e->ecd);
+	clear_code_buf(pcb, &e->ecd);
 
-exp = param_exps;
-while (exp != NULL)
-	{
-	po_cat_code(pcb, &e->ecd, &exp->ecd);
-	exp = exp->next;
+	exp = param_exps;
+	while (exp != NULL) {
+		po_cat_code(pcb, &e->ecd, &exp->ecd);
+		exp = exp->next;
 	}
 
-if (is_cvarg_call)
-	{
-	po_code_long(pcb, &e->ecd, OP_LCON, varg_param_size);
-	po_code_long(pcb, &e->ecd, OP_LCON, varg_param_count);
-	param_size += 2*sizeof(long); /* for stack cleanup instruction later */
+	if (is_cvarg_call) {
+		po_code_long(pcb, &e->ecd, OP_LCON, varg_param_size);
+		po_code_long(pcb, &e->ecd, OP_LCON, varg_param_count);
+		param_size += 2 * sizeof(long); /* for stack cleanup instruction later */
 	}
 
-po_cat_code(pcb, &e->ecd, &callcode);
+	po_cat_code(pcb, &e->ecd, &callcode);
 
-idot = e->ctc.ido_type;
-if (e->left_complex)
-	{
-	po_code_op(pcb, &e->ecd, OP_CALLI);
-	}
-else
-	{
-	if (fff->type == CFF_C)
-		{
-		po_code_void_pt(pcb, &e->ecd, po_ccall_ops[idot],
-			((C_frame *)fff)->code_pt);
-		}
-	else
-		{
-		po_code_void_pt(pcb, &e->ecd, OP_PCALL, fff);
+	idot = e->ctc.ido_type;
+	if (e->left_complex) {
+		po_code_op(pcb, &e->ecd, OP_CALLI);
+	} else {
+		if (fff->type == CFF_C) {
+			po_code_void_pt(pcb, &e->ecd, po_ccall_ops[idot], ((C_frame*)fff)->code_pt);
+		} else {
+			po_code_void_pt(pcb, &e->ecd, OP_PCALL, fff);
 		}
 	}
 
-if (param_size > 0)
-	{
-	po_code_int(pcb, &e->ecd, OP_ADD_STACK, param_size);
+	if (param_size > 0) {
+		po_code_int(pcb, &e->ecd, OP_ADD_STACK, param_size);
 	}
 
-if (idot != IDO_VOID)	/* non-void type */
+	if (idot != IDO_VOID) /* non-void type */
 	{
-	po_code_op(pcb, &e->ecd, po_find_push_op(pcb,&e->ctc));
+		po_code_op(pcb, &e->ecd, po_find_push_op(pcb, &e->ctc));
 	}
 
-e->includes_function = TRUE;
-while (param_exps != NULL)
-	{
-	exp = param_exps->next;
-	po_dispose_expframe(pcb, param_exps);
-	param_exps = exp;
+	e->includes_function = TRUE;
+	while (param_exps != NULL) {
+		exp = param_exps->next;
+		po_dispose_expframe(pcb, param_exps);
+		param_exps = exp;
 	}
-po_trash_code_buf(pcb, &callcode);
+	po_trash_code_buf(pcb, &callcode);
 }
 
-void po_get_function(Poco_cb *pcb, Exp_frame *e)
+
 /*****************************************************************************
  * entry point from statement parsing.	find function, then code the call.
  *	upon entry, we've seen the opening paren of the function call, and
  *	the expression frame (e) already holds the code to access the symbol
  *	which is the name of the function.
  *
- * if we have a pointer to a function, that wasn't explicitly dereferenced,
- * we code the dereference part first, and adjust the expression type.
+ * if we have a pointer to a function that wasn't explicitly dereferenced,
+ * we code the dereference part first and adjust the expression type.
  * (allows function calls as either "(*ptr)()" or "ptr()".  in the former
  * case, the deref has already been coded, we handle the latter case here.)
  *
  ****************************************************************************/
+void po_get_function(Poco_cb* pcb, Exp_frame* e)
 {
-Type_info	*ti = &e->ctc;
-int 		end_type = ti->comp[ti->comp_count-1];
-Func_frame	*fuf;
+	Type_info* ti = &e->ctc;
+	int end_type  = ti->comp[ti->comp_count - 1];
+	Func_frame* fuf;
 
-
-	if (end_type == TYPE_POINTER &&
-		ti->comp_count > 2 &&
-		ti->comp[ti->comp_count-2] == TYPE_FUNCTION)
-		{
+	if (end_type == TYPE_POINTER && ti->comp_count > 2 &&
+		ti->comp[ti->comp_count - 2] == TYPE_FUNCTION) {
 		e->ctc.comp_count -= 1;
-		end_type = ti->comp[ti->comp_count-1];
+		end_type = ti->comp[ti->comp_count - 1];
 		po_set_ido_type(&e->ctc);
-		po_make_deref(pcb,e);
-		}
+		po_make_deref(pcb, e);
+	}
 
-	if (end_type != TYPE_FUNCTION)
-		{
+	if (end_type != TYPE_FUNCTION) {
 		po_say_fatal(pcb, "trying to call something that's not a function");
 		return;
-		}
+	}
 
-	fuf = ti->sdims[ti->comp_count-1].pt;
+	fuf = ti->sdims[ti->comp_count - 1].pt;
 
 	e->ctc.comp_count -= 1;
 	po_set_ido_type(&e->ctc);
-	end_type = ti->comp[ti->comp_count-1];
+	end_type = ti->comp[ti->comp_count - 1];
 
 	mk_function_call(pcb, e, fuf, end_type);
 
-	clear_code_buf(pcb, &e->left);	/* if we had code in the left side, nuke  */
-	e->left_complex = FALSE;		/* it, we've now processed it into a call.*/
+	clear_code_buf(pcb, &e->left);         /* if we had code in the left side, nuke  */
+	e->left_complex = FALSE;	           /* it, we've now processed it into a call.*/
 
-	if (end_type == TYPE_POINTER)			/* if function returns a pointer  */
-		{									/* put a NOP into the left buffer,*/
-		po_code_op(pcb, &e->left, OP_NOP);	/* to signal we do have an lval.  */
-		}									/* if it gets deref'd the NOP gets*/
-}											/* replaced by the call code later*/
+	if (end_type == TYPE_POINTER)		   /* if function returns a pointer  */
+	{									   /* put a NOP into the left buffer,*/
+		po_code_op(pcb, &e->left, OP_NOP); /* to signal we do have an lval.  */
+	}									   /* if it gets deref'd the NOP gets*/
+}                                          /* replaced by the call code later*/

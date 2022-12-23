@@ -12,19 +12,18 @@
  *				(for, if, while, do) are using it now.
  ****************************************************************************/
 
-#include <string.h>
 #include "poco.h"
-
+#include <string.h>
 
 /*----------------------------------------------------------------------------
  * Tweakable defines...
  *--------------------------------------------------------------------------*/
 
-#define MBLK_SIZE 65500L		/* Live version of Poco uses bigger chunks. */
+#define MBLK_SIZE 65500L /* Live version of Poco uses bigger chunks. */
 
-#define NUM_SBLK	16			/* Number of small blocks in cache. 		*/
-#define NUM_EXPF	32			/* Number of expression frames in cache.	*/
-#define NUM_POCF	 4			/* Number of poco frames in cache.			*/
+#define NUM_SBLK 16 /* Number of small blocks in cache. 		*/
+#define NUM_EXPF 32 /* Number of expression frames in cache.	*/
+#define NUM_POCF 4	/* Number of poco frames in cache.			*/
 
 /*----------------------------------------------------------------------------
  * defines and data used by memory management routines...
@@ -33,37 +32,36 @@
  *	po_freemem() works!)
  *--------------------------------------------------------------------------*/
 
-typedef struct cache_cookie 	/* When we hand out a block from a struct	*/
-	{							/* cache it gets prefixed with one of these.*/
-	Cache_ctl	*pctl;			/* When po_freemem() sees the MBLK_CACHED  */
-	SHORT		cache_slot; 	/* cookie_val, it uses the rest of the info */
-	USHORT		cookie_val; 	/* in this structure to free the block back */
-	} Cache_cookie; 			/* to the cache it came from.				*/
+typedef struct cache_cookie /* When we hand out a block from a struct	*/
+{							/* cache it gets prefixed with one of these.*/
+	Cache_ctl* pctl;		/* When po_freemem() sees the MBLK_CACHED  */
+	SHORT cache_slot;		/* cookie_val, it uses the rest of the info */
+	USHORT cookie_val;		/* in this structure to free the block back */
+} Cache_cookie;				/* to the cache it came from.				*/
 
-typedef struct mblk_ctl 		/* This structure is used to track blocks of*/
-	{							/* memory we have aquired from our parent.	*/
-	struct mblk_ctl 			/* Each block starts with one of these, to	*/
-			*next;				/* link it to the next aquired block. This	*/
-	unsigned long	used;		/* allows us to easily free all aquired mem */
-	unsigned long	unused; 	/* during error handling.  Used/unused space*/
-	} Mblk_ctl; 				/* has meaning only for the current block.	*/
+typedef struct mblk_ctl	  /* This structure is used to track blocks of*/
+{						  /* memory we have aquired from our parent.	*/
+	struct mblk_ctl		  /* Each block starts with one of these, to	*/
+	  * next;			  /* link it to the next aquired block. This	*/
+	unsigned long used;	  /* allows us to easily free all aquired mem */
+	unsigned long unused; /* during error handling.  Used/unused space*/
+} Mblk_ctl;				  /* has meaning only for the current block.	*/
 
-static Mblk_ctl *mblk_cur;		/* This outlives PCB, must live in BSS mem. */
-static Poco_cb	*ppcb;			/* Used in error handling, must live in BSS.*/
+static Mblk_ctl* mblk_cur; /* This outlives PCB, must live in BSS mem. */
+static Poco_cb* ppcb;	   /* Used in error handling, must live in BSS.*/
 
-#define MBLK_CACHED 0x0402		/* Magic #: Block came from struct cache.	*/
-#define MBLK_ALLOCD 0x1126		/* Magic #: Block came from regular memory. */
-#define MBLK_FREED	0xDEAD		/* Magic #: Block has already been free'd.  */
+#define MBLK_CACHED 0x0402 /* Magic #: Block came from struct cache.	*/
+#define MBLK_ALLOCD 0x1126 /* Magic #: Block came from regular memory. */
+#define MBLK_FREED 0xDEAD  /* Magic #: Block has already been free'd.  */
 
-#define SIZ_SBLK	SMALLBLK_CACHE_SIZE 			   /* Defined in poco.h */
-#define SIZ_EXPF	(sizeof(Exp_frame))
-#define SIZ_POCF	(sizeof(Poco_frame)+(HASH_SIZE*sizeof(Symbol *)))
+#define SIZ_SBLK SMALLBLK_CACHE_SIZE /* Defined in poco.h */
+#define SIZ_EXPF (sizeof(Exp_frame))
+#define SIZ_POCF (sizeof(Poco_frame) + (HASH_SIZE * sizeof(Symbol*)))
 
-#define TOT_SBLK	(NUM_SBLK+(NUM_SBLK*(sizeof(Cache_cookie)+SIZ_SBLK)))
-#define TOT_EXPF	(NUM_EXPF+(NUM_EXPF*(sizeof(Cache_cookie)+SIZ_EXPF)))
-#define TOT_POCF	(NUM_POCF+(NUM_POCF*(sizeof(Cache_cookie)+SIZ_POCF)))
+#define TOT_SBLK (NUM_SBLK + (NUM_SBLK * (sizeof(Cache_cookie) + SIZ_SBLK)))
+#define TOT_EXPF (NUM_EXPF + (NUM_EXPF * (sizeof(Cache_cookie) + SIZ_EXPF)))
+#define TOT_POCF (NUM_POCF + (NUM_POCF * (sizeof(Cache_cookie) + SIZ_POCF)))
 
-static Errcode new_mblk(Poco_cb *pcb)
 /*****************************************************************************
  * routine to aquire a new mblk memory block from parent's memory allocator.
  * this is now the only point at which we have to check for an out-of-memory
@@ -73,41 +71,41 @@ static Errcode new_mblk(Poco_cb *pcb)
  * between a po_memalloc and po_memzalloc call, because we know the memory has been
  * cleared.  TPROF says this is a big win in terms of time spent in memset.
  ****************************************************************************/
+static Errcode new_mblk(Poco_cb* pcb)
 {
-Mblk_ctl *new;
+	Mblk_ctl* new;
 
-if (NULL == (new = pj_malloc(MBLK_SIZE)))		/* get memory	 */
+	if (NULL == (new = pj_malloc(MBLK_SIZE))) /* get memory	 */
 	{
-	if (pcb != NULL)	/* If pcb is NULL, we are doing initial setup, we	*/
-		{				/* don't have a pcb yet, so we just return err code.*/
-		pcb->global_err = Err_no_memory;
-		po_say_fatal(pcb, "poco: out of memory");
+		if (pcb != NULL) /* If pcb is NULL, we are doing initial setup, we	*/
+		{				 /* don't have a pcb yet, so we just return err code.*/
+			pcb->global_err = Err_no_memory;
+			po_say_fatal(pcb, "poco: out of memory");
 		}
-	return Err_no_memory;
+		return Err_no_memory;
 	}
 
-poco_zero_bytes(new,MBLK_SIZE);
-new->next	= mblk_cur;
-mblk_cur	= new;
-new->used	= sizeof(Mblk_ctl);
-new->unused = MBLK_SIZE - sizeof(Mblk_ctl);
+	poco_zero_bytes(new, MBLK_SIZE);
+	new->next	= mblk_cur;
+	mblk_cur	= new;
+	new->used	= sizeof(Mblk_ctl);
+	new->unused = MBLK_SIZE - sizeof(Mblk_ctl);
 
-return Success;
+	return Success;
 }
 
-static void init_cache_ctl(Cache_ctl *pctl, char *pmem, SHORT numslots, SHORT slotsize)
 /*****************************************************************************
  * init a cache_ctl structure.
  ****************************************************************************/
+static void init_cache_ctl(Cache_ctl* pctl, char* pmem, SHORT numslots, SHORT slotsize)
 {
-pctl->inuse 	= (UBYTE*)pmem; 							/* inuse table at start */
-pctl->pbase 	= ((UBYTE*)(pmem + numslots));					/* of block, data area	*/
-pctl->slot_size = slotsize + sizeof(Cache_cookie);	/* follows inuse table. */
-pctl->num_slots = numslots;
-pctl->nxt_slot	= 0;
+	pctl->inuse		= (UBYTE*)pmem;					   /* inuse table at start */
+	pctl->pbase		= ((UBYTE*)(pmem + numslots));	   /* of block, data area	*/
+	pctl->slot_size = slotsize + sizeof(Cache_cookie); /* follows inuse table. */
+	pctl->num_slots = numslots;
+	pctl->nxt_slot	= 0;
 }
 
-Errcode po_init_memory_management(Poco_cb **pcb)
 /*****************************************************************************
  * init the compile-only memory, struct caches, and the first mblk cache area.
  * this routine inits memory that we **know** does not need to live beyond
@@ -117,51 +115,51 @@ Errcode po_init_memory_management(Poco_cb **pcb)
  * so that later we can free the entire chunk, either at the end of a
  * successfull compile, or during error cleanup handling.
  ****************************************************************************/
+Errcode po_init_memory_management(Poco_cb** pcb)
 {
-char	*pmem;
+	char* pmem;
 
-if (NULL == (pmem = pj_zalloc(sizeof(Poco_cb) +  /* if new caches are added  */
-							 TOT_SBLK + 		/* add their TOT_xxxx names */
-							 TOT_EXPF + 		/* to this list.			*/
-							 TOT_POCF)))
-	return Err_no_memory;
+	if (NULL == (pmem = pj_zalloc(sizeof(Poco_cb) + /* if new caches are added  */
+								  TOT_SBLK +		/* add their TOT_xxxx names */
+								  TOT_EXPF +		/* to this list.			*/
+								  TOT_POCF)))
+		return Err_no_memory;
 
-/*
- * set up the poco_cb area, remember its location so we can free it later...
- */
+	/*
+	 * set up the poco_cb area, remember its location so we can free it later...
+	 */
 
-*pcb = ppcb = (Poco_cb *)pmem;
-pmem += sizeof(Poco_cb);
+	*pcb = ppcb = (Poco_cb*)pmem;
+	pmem += sizeof(Poco_cb);
 
-/*
- * set up each of the struct caching areas.  if new caches are added,
- * another pair of lines for each needs to be added here...
- */
+	/*
+	 * set up each of the struct caching areas.  if new caches are added,
+	 * another pair of lines for each needs to be added here...
+	 */
 
-init_cache_ctl(&ppcb->smallblk_cache, pmem, NUM_SBLK, SIZ_SBLK);
-pmem += TOT_SBLK;
+	init_cache_ctl(&ppcb->smallblk_cache, pmem, NUM_SBLK, SIZ_SBLK);
+	pmem += TOT_SBLK;
 
-init_cache_ctl(&ppcb->expf_cache, pmem, NUM_EXPF, SIZ_EXPF);
-pmem += TOT_EXPF;
+	init_cache_ctl(&ppcb->expf_cache, pmem, NUM_EXPF, SIZ_EXPF);
+	pmem += TOT_EXPF;
 
-init_cache_ctl(&ppcb->pocf_cache, pmem, NUM_POCF, SIZ_POCF);
-pmem += TOT_POCF;
+	init_cache_ctl(&ppcb->pocf_cache, pmem, NUM_POCF, SIZ_POCF);
+	pmem += TOT_POCF;
 
-return new_mblk(NULL);
+	return new_mblk(NULL);
 }
 
-void po_free_compile_memory(void)
 /*****************************************************************************
  * free transient memory used only during the compile phase.
  * all this type of memory is alloc'd in one block.  the first item in the
  * block is the pcb, which we keep a pointer to solely for use in this routine.
  ****************************************************************************/
+void po_free_compile_memory(void)
 {
-pj_gentle_free(ppcb);
-ppcb = NULL;
+	pj_gentle_free(ppcb);
+	ppcb = NULL;
 }
 
-void po_free_all_memory(void)
 /*****************************************************************************
  * free all mblk memory blocks.  must be called after final run of poco pgm.
  * may also be called as part of error handling, the implication is mainly
@@ -169,22 +167,21 @@ void po_free_all_memory(void)
  * recompile it.  the memory freed here is that which is used at compile time
  * only & that used during compile and run time.
  ****************************************************************************/
+void po_free_all_memory(void)
 {
-Mblk_ctl *cur, *next;
+	Mblk_ctl *cur, *next;
 
-cur = mblk_cur;
-while (cur != NULL)
-	{
-	next = cur->next;
-	pj_free(cur);
-	cur = next;
+	cur = mblk_cur;
+	while (cur != NULL) {
+		next = cur->next;
+		pj_free(cur);
+		cur = next;
 	}
-mblk_cur = NULL;
+	mblk_cur = NULL;
 
-po_free_compile_memory();
+	po_free_compile_memory();
 }
 
-void po_freemem(void *pt)
 /*****************************************************************************
  * routine to free memory aquired via po_memalloc, po_memzalloc, or pbegcache.
  * there is a little trickyness to watch out for here:	if memory is handed
@@ -199,62 +196,60 @@ void po_freemem(void *pt)
  * they won't really be part of the cookie, they'll be memory belonging to
  * someone else.
  ****************************************************************************/
+void po_freemem(void* pt)
 {
-register Cache_cookie *pc = pt;
-register Cache_ctl	  *pctl;
+	register Cache_cookie* pc = pt;
+	register Cache_ctl* pctl;
 
-pc--;					/* Back up from start of block to start of cookie.	*/
+	pc--; /* Back up from start of block to start of cookie.	*/
 
-switch(pc->cookie_val)
-	{
-	case MBLK_CACHED:
-		pctl = pc->pctl;
-		pctl->inuse[pc->cache_slot] = 0;
-		if (pc->cache_slot < pctl->nxt_slot)
-			pctl->nxt_slot = pc->cache_slot;
-		break;
-	case MBLK_ALLOCD:
-		pc->cookie_val = MBLK_FREED;
-		break;
+	switch (pc->cookie_val) {
+		case MBLK_CACHED:
+			pctl						= pc->pctl;
+			pctl->inuse[pc->cache_slot] = 0;
+			if (pc->cache_slot < pctl->nxt_slot)
+				pctl->nxt_slot = pc->cache_slot;
+			break;
+		case MBLK_ALLOCD:
+			pc->cookie_val = MBLK_FREED;
+			break;
 
 #ifdef DEVELOPEMENT
 
-	case MBLK_FREED:
-		fprintf(stdout,"\npoc_freemem: freeing memory twice!!!\n");
-		break;
-	default:
-		fprintf(stdout,"\npoc_freemem: unknown magic cookie!!!\n");
-		break;
+		case MBLK_FREED:
+			fprintf(stdout, "\npoc_freemem: freeing memory twice!!!\n");
+			break;
+		default:
+			fprintf(stdout, "\npoc_freemem: unknown magic cookie!!!\n");
+			break;
 #endif
-
 	}
 }
 
-void *po_memalloc(Poco_cb *pcb, register long size)
 /*****************************************************************************
  * return a chunk of memory from the current mblk, get a new mblk if needed.
  * from this routine's point of view, we can't be out of memory.  either
  * there is already memory available in the current mblk, or new_mblk() will
  * never return because of the longjmp in po_say_fatal.
  ****************************************************************************/
+void* po_memalloc(Poco_cb* pcb, register long size)
 {
-USHORT *pt;
+	USHORT* pt;
 
-size += sizeof(*pt);
+	size += sizeof(*pt);
 
-if (size > mblk_cur->unused)
-	new_mblk(pcb);
+	if (size > mblk_cur->unused)
+		new_mblk(pcb);
 
-pt = (USHORT *)( ((char *)mblk_cur) + mblk_cur->used );
-mblk_cur->used	 += size;
-mblk_cur->unused -= size;
+	pt = (USHORT*)(((char*)mblk_cur) + mblk_cur->used);
+	mblk_cur->used += size;
+	mblk_cur->unused -= size;
 
-*pt++ = MBLK_ALLOCD;
+	*pt++ = MBLK_ALLOCD;
 
-return pt;
+	return pt;
 }
 
-void *po_memzalloc(Poco_cb *pcb, register size_t size)
 /*****************************************************************************
  * return a chunk of memory from the current mblk, get a new mblk if needed.
  * from this routine's point of view, we can't be out of memory.  either
@@ -265,24 +260,24 @@ void *po_memzalloc(Poco_cb *pcb, register size_t size)
  * Watcom it is better to zero-out little blocks individually rather than
  * zapping each big mblk as it is allocated.
  ****************************************************************************/
+void* po_memzalloc(Poco_cb* pcb, register size_t size)
 {
-USHORT *pt;
+	USHORT* pt;
 
-size += sizeof(*pt);
+	size += sizeof(*pt);
 
-if (size > mblk_cur->unused)
-	new_mblk(pcb);
+	if (size > mblk_cur->unused)
+		new_mblk(pcb);
 
-pt = (USHORT *)( ((char *)mblk_cur) + mblk_cur->used );
-mblk_cur->used	 += size;
-mblk_cur->unused -= size;
+	pt = (USHORT*)(((char*)mblk_cur) + mblk_cur->used);
+	mblk_cur->used += size;
+	mblk_cur->unused -= size;
 
-*pt++ = MBLK_ALLOCD;
+	*pt++ = MBLK_ALLOCD;
 
-return pt;
+	return pt;
 }
 
-void *po_cache_malloc(Poco_cb *pcb, register Cache_ctl *pctl)
 /*****************************************************************************
  * get an item from a struct cache area, or via po_memalloc if the cache is full.
  * we always start searching the inuse table for the cache at the 'nxt_slot'
@@ -296,36 +291,33 @@ void *po_cache_malloc(Poco_cb *pcb, register Cache_ctl *pctl)
  * 32 items might hit a point of diminishing returns unless it is known in
  * advance that slots will be freed in exact reverse order of allocation.
  ****************************************************************************/
+void* po_cache_malloc(Poco_cb* pcb, register Cache_ctl* pctl)
 {
-SHORT		 cache_slot;
-Cache_cookie *pmem;
+	SHORT cache_slot;
+	Cache_cookie* pmem;
 
-for (cache_slot = pctl->nxt_slot; cache_slot < pctl->num_slots; ++cache_slot)
-	{
-	if (pctl->inuse[cache_slot] == 0)
-		{
-		pctl->inuse[cache_slot] = 1;
-		pctl->nxt_slot = cache_slot + 1;
-		pmem = (Cache_cookie *)( pctl->pbase + cache_slot * pctl->slot_size);
-		pmem->pctl		 = pctl;
-		pmem->cache_slot = cache_slot;
-		pmem->cookie_val = MBLK_CACHED;
-		++pmem;
-		goto OUT;
+	for (cache_slot = pctl->nxt_slot; cache_slot < pctl->num_slots; ++cache_slot) {
+		if (pctl->inuse[cache_slot] == 0) {
+			pctl->inuse[cache_slot] = 1;
+			pctl->nxt_slot			= cache_slot + 1;
+			pmem					= (Cache_cookie*)(pctl->pbase + cache_slot * pctl->slot_size);
+			pmem->pctl				= pctl;
+			pmem->cache_slot		= cache_slot;
+			pmem->cookie_val		= MBLK_CACHED;
+			++pmem;
+			goto OUT;
 		}
 	}
 
-pctl->nxt_slot = pctl->num_slots;
+	pctl->nxt_slot = pctl->num_slots;
 
-pmem = po_memalloc(pcb, pctl->slot_size);
+	pmem = po_memalloc(pcb, pctl->slot_size);
 
 OUT:
 
-return pmem;
-
+	return pmem;
 }
 
-char *po_clone_string(Poco_cb *pcb, char *s)
 /*****************************************************************************
  * clone a string, return a pointer to it.
  * (Note to self:
@@ -334,12 +326,13 @@ char *po_clone_string(Poco_cb *pcb, char *s)
  * string twice, to get its length and then to copy.  seems like we could
  * do it all at once, but we also have to account for a nearly-full mblk.)
  ****************************************************************************/
+char* po_clone_string(Poco_cb* pcb, char* s)
 {
-int size;
-char *d;
+	int size;
+	char* d;
 
-size = strlen(s)+1;
-d = po_memalloc(pcb, size);
-poco_copy_bytes(s, d, size);
-return(d);
+	size = strlen(s) + 1;
+	d	 = po_memalloc(pcb, size);
+	poco_copy_bytes(s, d, size);
+	return (d);
 }

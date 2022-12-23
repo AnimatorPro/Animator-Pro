@@ -695,7 +695,7 @@ static void free_token_lists(Poco_cb* pcb)
  *	  token list.  the number of entries added should be one more than the
  *	  maximum number of lookahead items supported.
  *	> this is the routine responsible for concatenating adjacent string
- *	  litterals.  if a line of input ends on a string token, we'll loop to
+ *	  literals.  if a line of input ends on a string token, we'll loop to
  *	  read the next line.
  *	> one day we will support reading a pre-tokenized file. this is probably
  *	  the point at which we would decided whether to read tokens from a file
@@ -2745,6 +2745,7 @@ static Boolean init_reserved_words(Poco_cb* pcb)
  ****************************************************************************/
 static void free_cframes(Poco_cb* pcb, C_frame** cframes)
 {
+	(void)pcb;
 	C_frame *next, *cf;
 
 	cf = *cframes;

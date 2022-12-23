@@ -372,7 +372,7 @@ Poco_lib* po_open_library(Poco_cb* pcb, char* libname, char* id_string)
 			errline(err, "can't load poco lib.");
 			return (NULL);
 		}
-		ll->next			 = pcb->run.loaded_libs;
+		ll->next = pcb->run.loaded_libs;
 		pcb->run.loaded_libs = ll;
 		return (ll);
 #else

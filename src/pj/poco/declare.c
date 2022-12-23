@@ -464,23 +464,6 @@ if (pcb->t.toktype != TOK_RPAREN)
 	transfer_params(pcb, rf, proto);
 	if (rf->fsif != NULL)
 		po_move_sifs_to_parent(pcb);
-
-#ifdef DEADWOOD
-			/* move any new structure declarations to root frame */
-			if ((sifs = rf->fsif) != NULL)
-				{
-				while (sifs->next != NULL)
-					sifs = sifs->next;
-				/* put root frame in rr */
-				rr = rf;
-				while (rr->next != NULL)
-					rr = rr->next;
-				/* and concatinate root's struct-info list with ours */
-				sifs->next = rr->fsif;
-				rr->fsif = rf->fsif;
-				rf->fsif = NULL;
-				}
-#endif
 	po_old_frame(pcb);
 	}
 
