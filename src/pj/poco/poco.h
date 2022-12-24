@@ -569,7 +569,7 @@ typedef struct file_stack
 	union
 	{
 		FILE* file;
-		Poco_lib* licd b;
+		Poco_lib* lib;
 	} source;
 
 	char* name;
