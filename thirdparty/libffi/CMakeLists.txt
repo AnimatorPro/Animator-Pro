@@ -11,12 +11,12 @@ project(libffi)
 
 include(ExternalProject)
 ExternalProject_Add(
-  libffi
-  SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/main
-  CONFIGURE_COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/main/configure --prefix=${CMAKE_CURRENT_SOURCE_DIR}
-  PREFIX ${CMAKE_CURRENT_SOURCE_DIR}
-  BUILD_COMMAND make
-  BUILD_IN_SOURCE 1
+	libffi
+		SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/main
+		CONFIGURE_COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/main/autogen.sh COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/main/configure --prefix=${CMAKE_CURRENT_SOURCE_DIR} --disable-shared --disable-docs
+		PREFIX ${CMAKE_CURRENT_SOURCE_DIR}
+		BUILD_COMMAND make
+		BUILD_IN_SOURCE YES
 )
 
 add_library(ffi_static INTERFACE)

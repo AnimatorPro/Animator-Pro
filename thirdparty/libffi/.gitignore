@@ -1,3 +1,6 @@
 tmp/
 src/
-
+build/
+include/
+lib/
+share/
