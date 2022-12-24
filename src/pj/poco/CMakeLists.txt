@@ -77,8 +77,8 @@ add_executable(poco ${POCO_MAIN_SRC_FILES})
 target_link_libraries(poco libpoco trdfile)
 INSTALL(TARGETS poco DESTINATION ./)
 
-## cscope 
-set(ALL_POCO_FILES ${LIBPOCO_SRC_FILES} ${POCO_MAIN_SRC_FILES})
-string(REPLACE ";" "\n" ALL_POCO_FILES "${ALL_POCO_FILES}")
-file(WRITE ${CMAKE_CURRENT_SOURCE_DIR}/cscope.files "${ALL_POCO_FILES}")
+## cscope
+#set(ALL_POCO_FILES ${LIBPOCO_SRC_FILES} ${POCO_MAIN_SRC_FILES})
+#string(REPLACE ";" "\n" ALL_POCO_FILES "${ALL_POCO_FILES}")
+#file(WRITE ${CMAKE_CURRENT_SOURCE_DIR}/cscope.files "${ALL_POCO_FILES}")
 
