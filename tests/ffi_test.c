@@ -1,7 +1,40 @@
 #include <stdio.h>
 #include <ffi.h>
 
-int main()
+#include <ffi.h>
+#include <stdio.h>
+
+ffi_arg test_printf()
+{
+	ffi_cif cif;
+	void *args[4];
+	ffi_type *arg_types[4];
+
+	char *format = "%.5g, %d\n";
+	double doubleArg = 3.14159;
+	signed int sintArg = 7;
+	ffi_arg res = 0;
+
+	arg_types[0] = &ffi_type_pointer;
+	arg_types[1] = &ffi_type_double;
+	arg_types[2] = &ffi_type_sint;
+	arg_types[3] = NULL;
+
+	/* This printf call is variadic */
+	ffi_prep_cif_var(&cif, FFI_DEFAULT_ABI, 1, 3, &ffi_type_sint, arg_types);
+
+	args[0] = &format;
+	args[1] = &doubleArg;
+	args[2] = &sintArg;
+	args[3] = NULL;
+
+	ffi_call(&cif, FFI_FN(printf), &res, args);
+
+	return res;
+}
+
+
+void hello_world()
 {
 	ffi_cif cif;
 	ffi_type *args[1];
@@ -27,7 +60,15 @@ int main()
 		s = "This is cool!";
 		ffi_call(&cif, puts, &rc, values);
 	}
+}
 
-	return 0;
+
+int main(int argc, char** argv) {
+	(void)argc;
+	(void)argv;
+
+	hello_world();
+	ffi_arg result = test_printf();
+	return (int)result;
 }
 

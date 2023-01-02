@@ -562,12 +562,17 @@ Symbol* po_new_symbol(Poco_cb* pcb, char* name)
 	Symbol* s;
 	Poco_frame* rf = pcb->rframe;
 
-	if ((s = new_symbol(pcb, name, PTOK_UNDEF)) == NULL)
-		return (FALSE);
+	s = new_symbol(pcb, name, PTOK_UNDEF);
+
+	if (s == NULL) {
+		return NULL;
+	}
+
 	s->link		= rf->symbols;
 	s->scope	= rf->scope;
 	rf->symbols = s;
-	return (s);
+
+	return s;
 }
 
 /*****************************************************************************

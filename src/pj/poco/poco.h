@@ -143,6 +143,10 @@
 #include "pocoface.h"
 #endif
 
+#ifndef LIBFFI_H
+#include <ffi.h>
+#endif
+
 /*****************************************************************************
  * miscellanious macros...
  *	 these could also be considered tweakable, but do it with care.
@@ -488,6 +492,36 @@ typedef struct loop_frame
 	int svar_offset;
 } Loop_frame;
 
+
+/*----------------------------------------------------------------------------
+ * FFI structures -- bindings to compiled C functions
+ *--------------------------------------------------------------------------*/
+
+#define FFI_MAX_ARGS 16
+
+typedef struct po_ffi {
+	ffi_cif interface;
+	unsigned int arg_count;       // number of fixed arguments
+	void** args;                  // array of pointers into data for argument passing
+	ffi_type** arg_types;         // array of pointers to libffi argument types
+	size_t* arg_sizes;            // array of pointers to libffi argument types
+	IdoType* arg_ido_types;       // copies of original types
+	ffi_arg result;               // storage for returns for non-void functions
+	ffi_type* result_type;
+	char* name;
+	void* function;               // pointer to the actual function to call
+	void* data;                   // block of memory for parameter passing
+	size_t data_size;             // size of data in bytes
+	void* data_variadic;          // block of memory for variadic param passing
+	size_t data_variadic_size;    // size of data_variadic in bytes
+	uint64_t flags;
+} Po_FFI;
+
+enum {
+	PO_FFI_VARIADIC = (1<<0)
+};
+
+
 /*----------------------------------------------------------------------------
  * expression parsing structures...
  *--------------------------------------------------------------------------*/
@@ -544,9 +578,10 @@ typedef struct poco_frame
 } Poco_frame;
 
 typedef struct func_frame
-{		   /* what's left of a poco_frame after    */
-	struct /* a function is all compiled...		*/
-	  func_frame* next;
+{
+	/* what's left of a poco_frame after    */
+	/* a function is all compiled...		*/
+	struct func_frame* next;
 	CFF_FIELDS
 	long magic;
 	Code* code_pt;
@@ -640,6 +675,15 @@ typedef struct token
 } Token;
 
 /*----------------------------------------------------------------------------
+ * the ffi runtime structure
+ *--------------------------------------------------------------------------*/
+
+typedef struct poco_ffi_runtime {
+
+} Poco_ffi_runtime;
+
+
+/*----------------------------------------------------------------------------
  * the run environment structure...
  *--------------------------------------------------------------------------*/
 
@@ -659,6 +703,7 @@ typedef struct poco_run_env
 	long* err_line;
 	Func_frame* protos;
 	Poco_lib* loaded_libs; /* loaded (from disk via pragma) libraries */
+	Poco_ffi_runtime* ffi_runtime;  /* for C function calls */
 	PoBoolean enable_debug_trace;
 	char pad[24];
 } Poco_run_env;
@@ -1020,6 +1065,12 @@ void po_print_trace(Poco_run_env* pe,
 
 void po_var_init(Poco_cb* pcb, Exp_frame* e, Symbol* var, SHORT frame_type);
 
+/* in poco_ffi.c */
+int po_ffi_build_structures(Poco_run_env* env);
+Po_FFI* po_ffi_new(const C_frame* frame);
+void po_ffi_delete(Po_FFI* binding);
+void po_ffi_call(Poco_run_env* env, Po_FFI* binding);
+
 #ifdef STRING_EXPERIMENT
 /* in postring.c */
 void po_add_local_string(Poco_cb* pcb, Poco_frame* pf, Symbol* symbol);
@@ -1050,5 +1101,8 @@ char getche(void);
 #endif
 
 /* end of protos */
+
+// kiki additions
+#define plural(x) (x == 1 ? "" : "s")
 
 #endif /* POCO_H */

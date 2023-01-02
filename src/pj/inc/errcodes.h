@@ -186,6 +186,10 @@
 #define Err_too_many_params (POCOERR-28)
 #define Err_poco_exit		(POCOERR-29) /* ONLY po_exit() may use this!!! */
 #define Err_poco_out_of_string_space (POCOERR-30)
+
+#define POCOERR_FFI (POCOERR-50)
+#define Err_poco_ffi_no_protos (POCOERR_FFI-1)  /* Runtime env has no library protos */
+
 /* end POCOERR */
 #endif
 

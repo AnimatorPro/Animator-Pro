@@ -73,6 +73,7 @@ int po_puts(Popot s);
 int po_printf(long vargcount, long vargsize, Popot format, ...);
 void po_qtext(long vargcount, long vargsize, Popot format, ...);
 
+
 /****************************************************************************
  *
  ***************************************************************************/
@@ -442,14 +443,14 @@ static Poco_lib* get_poco_libs(void)
 	return (list);
 }
 
-FILE redirection_save;
-FILE* f;
-
 
 /*****************************************************************************
  * this routine fools the PJ lfile library into thinking it is writing to
  * stdout but the stuff really goes into a file.
  ****************************************************************************/
+FILE redirection_save;
+FILE* f;
+
 static Errcode open_redirect_stdout(char* fname)
 {
 	if (NULL == (f = fopen(fname, "w"))) /* create the file */
@@ -483,6 +484,62 @@ extern Boolean po_trace_flag;
 #endif /* DEVELOPMENT */
 
 
+/****************************************************************************/
+char* ido_type_to_str(IdoType ido_type)
+{
+	switch (ido_type) {
+		case IDO_INT:
+			return "int";
+		case IDO_LONG:
+			return "long";
+		case IDO_DOUBLE:
+			return "double";
+		case IDO_POINTER:
+			return "pointer";
+		case IDO_CPT:
+			return "C pointer";
+		case IDO_VOID:
+			return "void";
+		case IDO_VPT:
+			return "void*";
+
+#ifdef STRING_EXPERIMENT
+		case IDO_STRING:
+			return "string";
+#endif
+
+		default:
+			fprintf(stderr, "-- Bad IdoType: %d\n", ido_type);
+			return "void";
+	}
+}
+
+
+/****************************************************************************/
+void dump_func_frame(const char* name, const Func_frame* frame_in) {
+	char msg[16];
+	Func_frame* frame = frame_in;
+
+	printf("[ func frames - %s ]\n", name);
+
+	while (frame) {
+		if (frame->return_type) {
+			sprintf(msg, "%s", ido_type_to_str(frame->return_type->ido_type));
+		}
+		else {
+			sprintf(msg, "void");
+		}
+
+		printf("func: %s (%d params) -> %s\n",
+			   frame->name,
+			   frame->pcount,
+			   msg);
+
+		frame = frame->next;
+	}
+}
+
+
 /****************************************************************************
  *
  ***************************************************************************/
@@ -492,6 +549,7 @@ int main(int argc, char* argv[])
 	long err_line;
 	int err_char;
 	int err;
+	int compile_status;
 	void* pexe;
 	char* efname	= NULL; /* Errors file name.	*/
 	char* sfname	= NULL; /* Source file name.	*/
@@ -544,29 +602,55 @@ int main(int argc, char* argv[])
 		}
 	}
 
-	if (NULL == sfname) {
+	if (sfname == NULL) {
 		//!TODO: Print usage instead of attempting to run this
 		sfname = "test.poc";
 	}
 
-	if (NULL == strchr(sfname, '.')) /* If no '.' in name, tack on .POC */
+	if (strchr(sfname, '.') == NULL) {
+		/* If no '.' in name, tack on .POC */
 		strcat(sfname, ".poc");
+	}
 
-	if (NULL != efname)
-		if (Success != (err = open_redirect_stdout(efname))) {
+	if (efname != NULL) {
+		err = open_redirect_stdout(efname);
+		if (err != Success) {
 			fprintf(stdout, "Error attempting to redirect stdout to '%s'\n", efname);
 			exit(-1);
 		}
+	}
 
-	if (Success ==
-		(err = compile_poco(
-		   &pexe, sfname, NULL, dfname, builtin_libs, err_file, &err_line, &err_char, incdirs))) {
-#ifdef DEVELOPMENT
+	compile_status = compile_poco(
+	  &pexe, sfname, NULL, dfname, builtin_libs, err_file, &err_line, &err_char, incdirs);
+
+	if (compile_status == Success) {
+		#ifdef DEVELOPMENT
 		po_run_protos = (((Poco_run_env*)pexe)->protos); /* for trace */
-#endif													 /* DEVELOPMENT */
+		#endif													 /* DEVELOPMENT */
+
 		if (do_debug_dump) {
 			po_disassemble_program((Poco_run_env*)pexe, stdout);
 		}
+
+		Poco_run_env* env = (Poco_run_env*)pexe;
+
+		C_frame* cf_printf = env->protos->next->mlink;
+		while (cf_printf) {
+			if (strcmp(cf_printf->name, "printf") == 0) {
+				break;
+			}
+			cf_printf = cf_printf->mlink;
+		}
+
+		Po_FFI* binding = po_ffi_new(cf_printf);
+		printf("[FFI] %s binding has %d parameter%s\n",
+			   binding->name,
+			   binding->arg_count,
+			   plural(binding->arg_count));
+
+		char* msg = "testing\n";
+		void* args[1] = {&msg};
+		ffi_call(&binding->interface, FFI_FN(binding->function), &binding->result, args);
 
 		if (runflag) {
 			err = run_poco(&pexe, NULL, check_abort, NULL, &err_line);
