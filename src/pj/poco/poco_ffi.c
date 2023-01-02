@@ -34,7 +34,7 @@ extern void free();
 /*
  * Convert a poco type to an FFI type.
  */
-static ffi_type* po_get_ffi_type(IdoType ido_type) {
+static inline ffi_type* po_get_ffi_type(IdoType ido_type) {
 	switch(ido_type) {
 		case IDO_INT:
 			return &ffi_type_sint;
@@ -159,22 +159,9 @@ Po_FFI* po_ffi_new(const C_frame* frame) {
 		index += 1;
 	}
 
-	/* Allocate now that we have the adjusted size. */
-	/* Note: libffi needs a NULL pointer as the last argument so some are +1! */
-	binding->args          = calloc(binding->arg_count+1, sizeof(void*));
-	binding->arg_types     = calloc(binding->arg_count+1, sizeof(ffi_type*));
-	binding->arg_sizes     = calloc(binding->arg_count, sizeof(size_t*));
-	binding->arg_ido_types = calloc(binding->arg_count, sizeof(IdoType*));
-
-	if (!binding->args || !binding->arg_types || !binding->arg_sizes || !binding->arg_ido_types) {
-		fprintf(stderr, "po_ffi_new: '%s' unable to allocate argument storage.\n",
-				binding->name);
-		po_ffi_delete(binding);
-		return NULL;
-	}
-
 	/* second loop -- set everything */
 	param = frame->parameters;
+	index = 0;
 	while (param) {
 		if (param->ti->comp_count && param->ti->comp[0] == TYPE_ELLIPSIS) {
 			param = param->link;
@@ -227,7 +214,7 @@ Po_FFI* po_ffi_new(const C_frame* frame) {
 						 binding->arg_count,
 						 binding->arg_count,
 						 binding->result_type,
-						 binding->arg_types) != FFI_OK) {
+						 &binding->arg_types) != FFI_OK) {
 			fprintf(stderr, "po_ffi_new: '%s' couldn't create variadic CIF.\n", binding->name);
 			po_ffi_delete(binding);
 			return NULL;

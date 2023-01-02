@@ -497,23 +497,24 @@ typedef struct loop_frame
  * FFI structures -- bindings to compiled C functions
  *--------------------------------------------------------------------------*/
 
+// FFI_MAX_ARGS is 16+1 -- the last argument has to be a NULL pointer for libffi
 #define FFI_MAX_ARGS 16
 
 typedef struct po_ffi {
 	ffi_cif interface;
-	unsigned int arg_count;       // number of fixed arguments
-	void** args;                  // array of pointers into data for argument passing
-	ffi_type** arg_types;         // array of pointers to libffi argument types
-	size_t* arg_sizes;            // array of pointers to libffi argument types
-	IdoType* arg_ido_types;       // copies of original types
-	ffi_arg result;               // storage for returns for non-void functions
+	unsigned int arg_count;                // number of fixed arguments
+	void* args[FFI_MAX_ARGS+1];            // array of pointers into data for argument passing
+	ffi_type* arg_types[FFI_MAX_ARGS+1];   // array of pointers to libffi argument types
+	size_t arg_sizes[FFI_MAX_ARGS+1];      // array of pointers to libffi argument types
+	IdoType arg_ido_types[FFI_MAX_ARGS+1]; // copies of original types
+	ffi_arg result;                        // storage for returns for non-void functions
 	ffi_type* result_type;
-	char* name;
-	void* function;               // pointer to the actual function to call
-	void* data;                   // block of memory for parameter passing
-	size_t data_size;             // size of data in bytes
-	void* data_variadic;          // block of memory for variadic param passing
-	size_t data_variadic_size;    // size of data_variadic in bytes
+	char*  name;
+	void*  function;                       // pointer to the actual function to call
+	void*  data;                           // block of memory for parameter passing
+	size_t data_size;                      // size of data in bytes
+	void*  data_variadic;                  // block of memory for variadic param passing
+	size_t data_variadic_size;             // size of data_variadic in bytes
 	uint64_t flags;
 } Po_FFI;
 
