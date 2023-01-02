@@ -245,18 +245,6 @@ Po_FFI* po_ffi_new(const C_frame* frame) {
 void po_ffi_delete(Po_FFI* binding) {
 	assert(binding != NULL);
 
-	if (binding->args) {
-		free(binding->args);
-	}
-	if (binding->arg_types) {
-		free(binding->arg_types);
-	}
-	if (binding->arg_sizes) {
-		free(binding->arg_sizes);
-	}
-	if (binding->arg_ido_types) {
-		free(binding->arg_ido_types);
-	}
 	if (binding->data) {
 		free(binding->data);
 	}

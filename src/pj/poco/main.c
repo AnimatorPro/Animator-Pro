@@ -400,7 +400,7 @@ void po_qtext(long vargcount, long vargsize, Popot format, ...)
 static Lib_proto proto_lines[] = {
 	/*	{tryme, 	"int ptryme(int (*v)(long a, long b, long c));"}, */
 	{ po_puts, "int puts(char *s);" },
-	{ po_printf, "int printf(char *format, ...);" },
+	{ printf, "int printf(char *format, ...);" },
 	{ po_qtext, "int Qtext(char *format, ...);" },
 };
 
@@ -648,7 +648,7 @@ int main(int argc, char* argv[])
 			   binding->arg_count,
 			   plural(binding->arg_count));
 
-		char* msg = "testing\n";
+		char* msg = "[FFI::printf] This call is coming from FFI\n";
 		void* args[1] = {&msg};
 		ffi_call(&binding->interface, FFI_FN(binding->function), &binding->result, args);
 
