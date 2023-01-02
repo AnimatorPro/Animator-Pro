@@ -1,4 +1,5 @@
 cmake-build-*
+build
 *.o
 *.so
 *.dylib

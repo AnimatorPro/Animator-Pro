@@ -1,6 +1,7 @@
 tmp/
 src/
 build/
-include/
-lib/
 share/
+artifacts/
+main/bootstrap.sh
+
