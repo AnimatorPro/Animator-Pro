@@ -139,61 +139,64 @@ set(PJMAIN_SRC_FILES
 	zoom.c
 	)
 
-add_executable(
-	${PROJECT_NAME}
-		${PJMAIN_SRC_FILES}
-)
-
-target_link_libraries(
-	${PROJECT_NAME}
-		trdfile
-		flilib
-		fontlib
-		gfxlib
-		macinput
-		menulib
-		picdrive
-		pjhigh
-		pj_sdl
-		libpoco
-		raster
-		minirex
-		softmenu
-		trdutil
-		wndolib
-		SDL2-static
-		SDL2main
-		m
-)
-
-
-if (CMAKE_GENERATOR STREQUAL "Xcode")
-	set_target_properties(
+if (WITH_ANI)
+	
+	add_executable(
 		${PROJECT_NAME}
-		PROPERTIES
-			MACOSX_BUNDLE YES
-			XCODE_ATTRIBUTE_CLANG_ENABLE_OBJC_ARC YES
-			XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER "com.vpaint.animator-pro"
+			${PJMAIN_SRC_FILES}
 	)
-
-	if (PLATFORM STREQUAL "OS64")
+	
+	target_link_libraries(
+		${PROJECT_NAME}
+			trdfile
+			flilib
+			fontlib
+			gfxlib
+			macinput
+			menulib
+			picdrive
+			pjhigh
+			pj_sdl
+			libpoco
+			raster
+			minirex
+			softmenu
+			trdutil
+			wndolib
+			SDL2-static
+			SDL2main
+			m
+	)
+	
+	
+	if (CMAKE_GENERATOR STREQUAL "Xcode")
 		set_target_properties(
 			${PROJECT_NAME}
 			PROPERTIES
-				XCODE_ATTRIBUTE_TARGETED_DEVICE_FAMILY "1,2" ## iPhone / iPad
+				MACOSX_BUNDLE YES
+				XCODE_ATTRIBUTE_CLANG_ENABLE_OBJC_ARC YES
+				XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER "com.vpaint.animator-pro"
 		)
+	
+		if (PLATFORM STREQUAL "OS64")
+			set_target_properties(
+				${PROJECT_NAME}
+				PROPERTIES
+					XCODE_ATTRIBUTE_TARGETED_DEVICE_FAMILY "1,2" ## iPhone / iPad
+			)
+		endif()
+	
+			## pre-build required or signing will fail
+		add_custom_command(
+			TARGET ${PROJECT_NAME}
+			PRE_BUILD
+				COMMAND ${CMAKE_COMMAND} -E copy_directory
+				"${CMAKE_CURRENT_SOURCE_DIR}/resource" "$<TARGET_FILE_DIR:${PROJECT_NAME}>/../Resources"
+		)
+	else()
+		INSTALL(TARGETS ${PROJECT_NAME} DESTINATION ./)
+		INSTALL(DIRECTORY resource/ DESTINATION ./resource)
 	endif()
-
-		## pre-build required or signing will fail
-	add_custom_command(
-		TARGET ${PROJECT_NAME}
-		PRE_BUILD
-			COMMAND ${CMAKE_COMMAND} -E copy_directory
-			"${CMAKE_CURRENT_SOURCE_DIR}/resource" "$<TARGET_FILE_DIR:${PROJECT_NAME}>/../Resources"
-	)
-else()
-	INSTALL(TARGETS ${PROJECT_NAME} DESTINATION ./)
-	INSTALL(DIRECTORY resource/ DESTINATION ./resource)
+	
 endif()
-
 

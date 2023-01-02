@@ -28,6 +28,7 @@ set(LIBPOCO_SRC_FILES
 		pocoop.c
 		pocotype.c
 		postring.c
+		poco_ffi.c
 		pp.c
 		ppeval.c
 		runops.c
@@ -65,7 +66,7 @@ list(TRANSFORM
 
 add_library(libpoco ${LIBPOCO_SRC_FILES})
 target_include_directories(libpoco PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/../inc")
-target_link_libraries(libpoco PUBLIC ffi)
+target_link_libraries(libpoco PUBLIC ffi_static)
 set_target_properties(libpoco PROPERTIES PREFIX "")
 
 set(POCO_MAIN_SRC_FILES main.c)
@@ -74,7 +75,7 @@ if (APPLE OR UNIX)
 endif()
 
 add_executable(poco ${POCO_MAIN_SRC_FILES})
-target_link_libraries(poco libpoco trdfile)
+target_link_libraries(poco libpoco trdfile ffi_static)
 INSTALL(TARGETS poco DESTINATION ./)
 
 ## cscope
