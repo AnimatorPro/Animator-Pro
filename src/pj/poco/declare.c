@@ -14,7 +14,7 @@
  *				because the fuf's are a singly-linked list, and there is
  *				no routine right now to delete just one of them.
  *	08/25/90	(Ian)
- *				Changed all occurances of freemem() and gentle_freemem() to
+ *				Changed all occurrences of freemem() and gentle_freemem() to
  *				po_freemem() and poc_gentle_freemem().
  *	09/01/90	(Ian)
  *				Combined reverse_comps() and reverse_dims() into one routine.
@@ -27,15 +27,15 @@
  *	10/04/90	(Ian)
  *				Added support of static vars, and enforcement of the ANSI
  *				requirement that array/struct/static initializers be
- *				constant expressions.  This required changing some occurances
+ *				constant expressions.  This required changing some occurrences
  *				of var->scope to var->storage_scope.  A change was made to
  *				gather_params() to ensure that function params are always
  *				classified as local storage scope.	A change was made to
- *				based_decs() to propogate the new flags element from the base
+ *				based_decs() to propagate the new flags element from the base
  *				type_info to the new one being built for the variable. Changes
  *				were made in po_var_init() to enforce the need for constant init
  *				expressions().	This relies, in part, on a fix made in the
- *				make_assign() routine in poco.c that propogates the pure_const
+ *				make_assign() routine in poco.c that propagates the pure_const
  *				element from the value expression to the assignment expression.
  *	10/04/90	(Ian)
  *				Fixed a bug in check_dupe_proto() that was reporting a return
@@ -95,43 +95,36 @@
  *				Moved var_init() function to its own module, VARINIT.C.
  ****************************************************************************/
 
-#include <string.h>
 #include "poco.h"
+#include <string.h>
 
-static void 		dirdcl(Poco_cb *pcb, Poco_frame *pf, Type_info *ti,
-						Symbol **name, Symbol **osym);
-static void 		dcl(Poco_cb *pcb, Poco_frame *pf, Type_info *ti,
-						Symbol **name, Symbol **osym);
-static Errcode		func_proto(Poco_cb *pcb, Poco_frame *pf, Type_info *ti,
-						char *name);
-static void 		array_decl(Poco_cb *pcb, Type_info *ti);
-static void 		one_dec(Poco_cb *pcb, Poco_frame *pf, Type_info *base_ti,
-						Symbol **pvar);
-static Type_info	*rev_type_info(Poco_cb *pcb, Type_info *old);
+static void dirdcl(Poco_cb* pcb, Poco_frame* pf, Type_info* ti, Symbol** name, Symbol** osym);
+static void dcl(Poco_cb* pcb, Poco_frame* pf, Type_info* ti, Symbol** name, Symbol** osym);
+static Errcode func_proto(Poco_cb* pcb, Poco_frame* pf, Type_info* ti, char* name);
+static void array_decl(Poco_cb* pcb, Type_info* ti);
+static void one_dec(Poco_cb* pcb, Poco_frame* pf, Type_info* base_ti, Symbol** pvar);
+static Type_info* rev_type_info(Poco_cb* pcb, Type_info* old);
 
-
-static void dcl(Poco_cb *pcb, Poco_frame *pf, Type_info *ti,
-	Symbol **name, Symbol **osym)
 /*****************************************************************************
  * parse a declarator (this routine responsible for handling stars)
  ****************************************************************************/
+static void dcl(Poco_cb* pcb, Poco_frame* pf, Type_info* ti, Symbol** name, Symbol** osym)
 {
-int ns = 0;
+	int ns = 0;
 
-for (;;)	/* count stars */
+	for (;;) /* count stars */
 	{
-	lookup_token(pcb);
-	if (pcb->t.toktype == '*')
-		ns += 1;
-	else
-		break;
+		lookup_token(pcb);
+		if (pcb->t.toktype == '*')
+			ns += 1;
+		else
+			break;
 	}
-dirdcl(pcb,pf,ti,name,osym);
-while (ns-- > 0)
-	po_append_type(pcb, ti, TYPE_POINTER, 0, NULL);
+	dirdcl(pcb, pf, ti, name, osym);
+	while (ns-- > 0)
+		po_append_type(pcb, ti, TYPE_POINTER, 0, NULL);
 }
 
-static Symbol *force_local_symbol(Poco_cb *pcb, Symbol *s, Symbol **osym)
 /*****************************************************************************
  * if symbol exists at a more global scope, make a new locally-scoped symbol.
  *
@@ -140,29 +133,23 @@ static Symbol *force_local_symbol(Poco_cb *pcb, Symbol *s, Symbol **osym)
  * the duplicate back out of the linked list before someone sees it. Strange.)
  * jk - horrible kludge #103.
  ****************************************************************************/
+static Symbol* force_local_symbol(Poco_cb* pcb, Symbol* s, Symbol** osym)
 {
-*osym = NULL;
-if (s->scope < pcb->rframe->scope)
-	{
-	s = po_new_symbol(pcb, s->name);
-	}
-else
-	{
-	if (s->tok_type != PTOK_UNDEF)
-		{
-		*osym = s;
+	*osym = NULL;
+	if (s->scope < pcb->rframe->scope) {
 		s = po_new_symbol(pcb, s->name);
+	} else {
+		if (s->tok_type != PTOK_UNDEF) {
+			*osym = s;
+			s	  = po_new_symbol(pcb, s->name);
 		}
 	}
-if (s != NULL)
-	{
-	s->tok_type = PTOK_VAR;
+	if (s != NULL) {
+		s->tok_type = PTOK_VAR;
 	}
-return(s);
+	return (s);
 }
 
-static void dirdcl(Poco_cb *pcb, Poco_frame *pf, Type_info *ti,
-	Symbol **name, Symbol **osym)
 /*****************************************************************************
  * parse a direct declarator.
  * (direct implies stars have been removed at this level of paren nesting).
@@ -174,79 +161,69 @@ static void dirdcl(Poco_cb *pcb, Poco_frame *pf, Type_info *ti,
  * strangeness involving pushback_token when doing a typename, due to the
  * difference in the call paths for normal and typename processing.
  ****************************************************************************/
+static void dirdcl(Poco_cb* pcb, Poco_frame* pf, Type_info* ti, Symbol** name, Symbol** osym)
 {
-if (pcb->t.toktype == TOK_LPAREN)	 /* ( dcl ) */
+	if (pcb->t.toktype == TOK_LPAREN) /* ( dcl ) */
 	{
-	dcl(pcb,pf,ti,name,osym);
-	if (pcb->t.toktype == TOK_RPAREN)	 /* ( dcl ) */
-		pcb->t.reuse = FALSE; /* for typenames: eat it if a reuse is pending. */
-	else
-		po_unmatched_paren(pcb);
-	}
-else if (pcb->curtoken->is_symbol)
-	{
-	if (name == NULL)						/* for typenames... */
-		po_say_fatal(pcb, "declaration of '%s' not allowed in this expression",
-					pcb->curtoken->val.symbol->name);
-	else									/* for regular declarations... */
-		*name = force_local_symbol(pcb,pcb->curtoken->val.symbol,osym);
-	}
-else
-	{
-	if (name == NULL)						/* for typenames... */
-		pushback_token(&pcb->t);
-	else if (pcb->rframe->is_proto_frame)	/* for prototypes...*/
+		dcl(pcb, pf, ti, name, osym);
+		if (pcb->t.toktype == TOK_RPAREN) /* ( dcl ) */
+			pcb->t.reuse = FALSE;		  /* for typenames: eat it if a reuse is pending. */
+		else
+			po_unmatched_paren(pcb);
+	} else if (pcb->curtoken->is_symbol) {
+		if (name == NULL) /* for typenames... */
+			po_say_fatal(pcb,
+						 "declaration of '%s' not allowed in this expression",
+						 pcb->curtoken->val.symbol->name);
+		else /* for regular declarations... */
+			*name = force_local_symbol(pcb, pcb->curtoken->val.symbol, osym);
+	} else {
+		if (name == NULL) /* for typenames... */
+			pushback_token(&pcb->t);
+		else if (pcb->rframe->is_proto_frame) /* for prototypes...*/
 		{
-		pushback_token(&pcb->t);
-		*name = po_new_symbol(pcb, "");
-		(*name)->tok_type = PTOK_VAR;
-		*osym = NULL;
-		}
-	else									/* for regular declarations... */
-		po_expecting_got(pcb, "name in declaration");
+			pushback_token(&pcb->t);
+			*name			  = po_new_symbol(pcb, "");
+			(*name)->tok_type = PTOK_VAR;
+			*osym			  = NULL;
+		} else /* for regular declarations... */
+			po_expecting_got(pcb, "name in declaration");
 	}
 
-for (;;)
-	{
-	lookup_token(pcb);
-	if (pcb->t.toktype == TOK_LPAREN)
-		{
-		if (name == NULL)	/* for typenames, we just eat the prototype */
-			func_proto(pcb, pf, ti, "noname");
-		else			/* for regular declarations, we build a prototype... */
-			func_proto(pcb,pf,ti,(*name)->name);
-		}
-	else if (pcb->t.toktype == '[')
-		array_decl(pcb,ti);
-	else
-		{
-		if (name == NULL) /* for typenames...*/
-			pushback_token(&pcb->t);
-		break;
+	for (;;) {
+		lookup_token(pcb);
+		if (pcb->t.toktype == TOK_LPAREN) {
+			if (name == NULL) /* for typenames, we just eat the prototype */
+				func_proto(pcb, pf, ti, "noname");
+			else /* for regular declarations, we build a prototype... */
+				func_proto(pcb, pf, ti, (*name)->name);
+		} else if (pcb->t.toktype == '[')
+			array_decl(pcb, ti);
+		else {
+			if (name == NULL) /* for typenames...*/
+				pushback_token(&pcb->t);
+			break;
 		}
 	}
 }
 
-static void array_decl(Poco_cb *pcb, Type_info *ti)
 /*****************************************************************************
  * figure out the dimension of an array declaration.
  ****************************************************************************/
+static void array_decl(Poco_cb* pcb, Type_info* ti)
 {
-int 		dim;
-Exp_frame	ef;
-short		datatype = TYPE_ARRAY;
+	int dim;
+	Exp_frame ef;
+	short datatype = TYPE_ARRAY;
 
 	lookup_token(pcb);
-	if (pcb->t.toktype == ']')
-		{
+	if (pcb->t.toktype == ']') {
 		if (pcb->rframe->is_proto_frame)
 			datatype = TYPE_POINTER;
 		else if (!po_is_next_token(pcb, '='))
 			po_say_fatal(pcb, "size of array cannot be zero");
 		dim = 0;
-		}
-	else
-		{
+	} else {
 		if (pcb->rframe->is_proto_frame)
 			datatype = TYPE_POINTER;
 		pushback_token(&pcb->t);
@@ -257,105 +234,96 @@ short		datatype = TYPE_ARRAY;
 		po_force_num_exp(pcb, &ef.ctc);
 		po_coerce_numeric_exp(pcb, &ef, IDO_INT);
 		po_eat_rbracket(pcb);
-		dim = ((int *)(ef.ecd.code_buf+OPY_SIZE))[0];
+		dim = ((int*)(ef.ecd.code_buf + OPY_SIZE))[0];
 		po_trash_expframe(pcb, &ef);
-
-		}
+	}
 
 	po_append_type(pcb, ti, datatype, dim, NULL);
 }
 
-static Symbol *get_param(Poco_cb *pcb, Poco_frame *pf, SHORT pcount, long *poff)
 /*****************************************************************************
  * get one param (type and name) from a function prototype.
  * the size of the param is also obtained, so our caller can calc offsets.
  ****************************************************************************/
+static Symbol* get_param(Poco_cb* pcb, Poco_frame* pf, SHORT pcount, long* poff)
 {
-Itypi tip;
-Type_info *ti;
-Symbol *var;
+	Itypi tip;
+	Type_info* ti;
+	Symbol* var;
 
-ti = po_typi_type(&tip);
-if (pcb->t.toktype == PTOK_ELLIPSIS)
-	{
-	if ((var = po_new_symbol(pcb, "...")) == NULL)
-		return(NULL);
-	var->tok_type = PTOK_VAR;
-	var->flags |= SFL_ELLIP;
-	po_append_type(pcb, ti, TYPE_ELLIPSIS, 0L, NULL);
-	if ((var->ti = po_new_type_info(pcb, ti, 0)) == NULL)
-		return(NULL);
-	return(var);
+	ti = po_typi_type(&tip);
+	if (pcb->t.toktype == PTOK_ELLIPSIS) {
+		if ((var = po_new_symbol(pcb, "...")) == NULL)
+			return (NULL);
+		var->tok_type = PTOK_VAR;
+		var->flags |= SFL_ELLIP;
+		po_append_type(pcb, ti, TYPE_ELLIPSIS, 0L, NULL);
+		if ((var->ti = po_new_type_info(pcb, ti, 0)) == NULL)
+			return (NULL);
+		return (var);
 	}
-if (po_get_base_type(pcb,pf,ti))
-	{
-	/*
-	 * hack-ola dept:
-	 *	if the only thing inside the parens of the prototype is the word
-	 *	'void', return NULL as a signal that no vars are defined here. our
-	 *	 caller (gather_params) recognizes the NULL return as an indication
-	 *	 that no params are specified in the prototype.  we have to handle
-	 *	 this here instead of in gather_params because it takes two tokens
-	 *	 worth of lookahead from there to figure out (void) was specified.
-	 */
-	if (pcount == 0 && ti->comp_count == 1 && ti->comp[0] == TYPE_VOID)
-		{
-		lookup_token(pcb);
-		if (pcb->t.toktype == TOK_RPAREN)
-			return NULL;
-		else
-			pushback_token(&pcb->t);
+	if (po_get_base_type(pcb, pf, ti)) {
+		/*
+		 * hack-ola dept:
+		 *	if the only thing inside the parens of the prototype is the word
+		 *	'void', return NULL as a signal that no vars are defined here. our
+		 *	 caller (gather_params) recognizes the NULL return as an indication
+		 *	 that no params are specified in the prototype.  we have to handle
+		 *	 this here instead of in gather_params because it takes two tokens
+		 *	 worth of lookahead from there to figure out (void) was specified.
+		 */
+		if (pcount == 0 && ti->comp_count == 1 && ti->comp[0] == TYPE_VOID) {
+			lookup_token(pcb);
+			if (pcb->t.toktype == TOK_RPAREN)
+				return NULL;
+			else
+				pushback_token(&pcb->t);
 		}
-	one_dec(pcb,pf,ti,&var);
-	var->symval.doff = *poff;
-	var->storage_scope = SCOPE_LOCAL;
-	*poff += po_get_param_size(pcb, var->ti->ido_type);
-	return(var);
-	}
-else
-	{
-	po_expecting_got(pcb,"type in function parameter list");
-	return NULL;
+		one_dec(pcb, pf, ti, &var);
+		var->symval.doff   = *poff;
+		var->storage_scope = SCOPE_LOCAL;
+		*poff += po_get_param_size(pcb, var->ti->ido_type);
+		return (var);
+	} else {
+		po_expecting_got(pcb, "type in function parameter list");
+		return NULL;
 	}
 }
 
-static void gather_params(Poco_cb *pcb, Func_frame *proto)
 /*****************************************************************************
  * get all params (types and names) from a function prototype.
  * assign stack offsets to params as we go.
  ****************************************************************************/
+static void gather_params(Poco_cb* pcb, Func_frame* proto)
 {
-#define STACK_EL_SIZE (sizeof(void *))
-#define HARD_FRAME_SIZE (2*STACK_EL_SIZE)
+#define STACK_EL_SIZE (sizeof(void*))
+#define HARD_FRAME_SIZE (2 * STACK_EL_SIZE)
 
-long poff = HARD_FRAME_SIZE;
-Symbol *var;
+	long poff = HARD_FRAME_SIZE;
+	Symbol* var;
 
 	if (pcb->t.toktype == TOK_RPAREN)
 		return;
-	for (;;)
-		{
+	for (;;) {
 		if (NULL == (var = get_param(pcb, pcb->rframe, proto->pcount, &poff)))
-			goto DONE;	/* only param was the word 'void', ie, no params */
+			goto DONE; /* only param was the word 'void', ie, no params */
 
 		proto->pcount += 1;
-		if (var->ti->comp[0] == TYPE_ELLIPSIS)
-			{
+		if (var->ti->comp[0] == TYPE_ELLIPSIS) {
 			po_eat_rparen(pcb);
 			goto DONE;
-			}
+		}
 
-		switch (pcb->t.toktype)
-			{
+		switch (pcb->t.toktype) {
 			case TOK_RPAREN:
 				goto DONE;
 			case ',':
 				break;
 			default:
 				po_expecting_got(pcb, ", or ) in function parameter list");
-			}
-		lookup_token(pcb);
 		}
+		lookup_token(pcb);
+	}
 
 DONE:
 	return;
@@ -364,7 +332,6 @@ DONE:
 #undef HARD_FRAME_SIZE
 }
 
-static Errcode transfer_params(Poco_cb *pcb, Poco_frame *pf, Func_frame *ff)
 /*****************************************************************************
  * Parameters symbols get transfered from pf to ff.  Other symbols stay.
  * Side effect of reversing order of symbols that stay.
@@ -376,38 +343,32 @@ static Errcode transfer_params(Poco_cb *pcb, Poco_frame *pf, Func_frame *ff)
  * couldn't think of another way without redoing a lot of other stuff.
  * Probably best to think about it for a while before taking action.
  ****************************************************************************/
+static Errcode transfer_params(Poco_cb* pcb, Poco_frame* pf, Func_frame* ff)
 {
-Symbol *plist = NULL;		/* new pf->symbols */
-Symbol *flist = NULL;		/* new ff->parameters */
-Symbol *pt, *link;
-int pcount = 0;
-Errcode err = Success;
+	Symbol* plist = NULL; /* new pf->symbols */
+	Symbol* flist = NULL; /* new ff->parameters */
+	Symbol *pt, *link;
+	int pcount	= 0;
+	Errcode err = Success;
 
-link = pf->symbols;
-while ((pt = link) != NULL)
-	{
-	link = pt->link;
-	if (pt->tok_type == PTOK_VAR)
-		{
-		pt->link = flist;
-		flist = pt;
-		pcount += 1;
-		}
-	else
-		{
-		pt->link = plist;
-		plist = pt;
+	link = pf->symbols;
+	while ((pt = link) != NULL) {
+		link = pt->link;
+		if (pt->tok_type == PTOK_VAR) {
+			pt->link = flist;
+			flist	 = pt;
+			pcount += 1;
+		} else {
+			pt->link = plist;
+			plist	 = pt;
 		}
 	}
-ff->pcount = pcount;
-ff->parameters = flist;
-pf->symbols = plist;
-return(err);
+	ff->pcount	   = pcount;
+	ff->parameters = flist;
+	pf->symbols	   = plist;
+	return (err);
 }
 
-
-static Errcode func_proto(Poco_cb *pcb, Poco_frame *pf,
-	Type_info *ti, char *name)
 /*****************************************************************************
  * process a function prototype.
  * (Note to self, for future investigation...
@@ -421,77 +382,70 @@ static Errcode func_proto(Poco_cb *pcb, Poco_frame *pf,
  * if it's avoidable to build the prototype.  Certainly we do have to
  * check that the proto's are logically the same.
  ****************************************************************************/
+static Errcode func_proto(Poco_cb* pcb, Poco_frame* pf, Type_info* ti, char* name)
 {
-Func_frame *proto = NULL;
-Poco_frame *rf;
+	Func_frame* proto = NULL;
+	Poco_frame* rf;
 
-lookup_token(pcb);
-proto = po_memzalloc(pcb, sizeof(*proto));
+	lookup_token(pcb);
+	proto = po_memzalloc(pcb, sizeof(*proto));
 
-/*
- * if we are doing a library proto (indicated by a non-NULL libfunc pointer
- * in the pcb structure), make the connection now between the
- * library function's code address and the proto we are processing.  note
- * that this is only done if we are at the root level -- a proto within a
- * proto won't grab an address (since that's a meaningless concept).
- *
- * note that this MUST be done before we start processing the prototype,
- * because by the time we reach the end of the prototype, the multi-token
- * lookahead logic will have advanced us to the next prototype from the
- * library, and we would end up pointing to the wrong function.
- */
+	/*
+	 * if we are doing a library proto (indicated by a non-NULL libfunc pointer
+	 * in the pcb structure), make the connection now between the
+	 * library function's code address and the proto we are processing.  note
+	 * that this is only done if we are at the root level -- a proto within a
+	 * proto won't grab an address (since that's a meaningless concept).
+	 *
+	 * note that this MUST be done before we start processing the prototype,
+	 * because by the time we reach the end of the prototype, the multi-token
+	 * lookahead logic will have advanced us to the next prototype from the
+	 * library, and we would end up pointing to the wrong function.
+	 */
 
-if (pcb->libfunc != NULL && pf->frame_type == FTY_GLOBAL)
-	{
-	proto->code_pt	= pcb->libfunc;
-	proto->got_code = TRUE;
-	proto->type 	= CFF_C;
-	proto->magic	= FUNC_MAGIC;  /* helps detect wild pointers at runtime */
-	}
-else
-	{
-	proto->code_pt	= NULL;
-	proto->got_code = FALSE;
-	proto->type 	= CFF_POCO;
+	if (pcb->libfunc != NULL && pf->frame_type == FTY_GLOBAL) {
+		proto->code_pt	= pcb->libfunc;
+		proto->got_code = TRUE;
+		proto->type		= CFF_C;
+		proto->magic	= FUNC_MAGIC; /* helps detect wild pointers at runtime */
+	} else {
+		proto->code_pt	= NULL;
+		proto->got_code = FALSE;
+		proto->type		= CFF_POCO;
 	}
 
-if (pcb->t.toktype != TOK_RPAREN)
-	{
-	po_new_frame(pcb, pf->scope+1, name, FTY_STRUCT);
-	rf = pcb->rframe;
-	rf->is_proto_frame = TRUE;
-	gather_params(pcb, proto);
-	transfer_params(pcb, rf, proto);
-	if (rf->fsif != NULL)
-		po_move_sifs_to_parent(pcb);
-	po_old_frame(pcb);
+	if (pcb->t.toktype != TOK_RPAREN) {
+		po_new_frame(pcb, pf->scope + 1, name, FTY_STRUCT);
+		rf				   = pcb->rframe;
+		rf->is_proto_frame = TRUE;
+		gather_params(pcb, proto);
+		transfer_params(pcb, rf, proto);
+		if (rf->fsif != NULL)
+			po_move_sifs_to_parent(pcb);
+		po_old_frame(pcb);
 	}
 
-proto->name = po_clone_string(pcb, name);
-po_append_type(pcb, ti, TYPE_FUNCTION, 0L, proto);
-proto->mlink = pcb->run.protos;
-pcb->run.protos = proto;
+	proto->name = po_clone_string(pcb, name);
+	po_append_type(pcb, ti, TYPE_FUNCTION, 0L, proto);
+	proto->mlink	= pcb->run.protos;
+	pcb->run.protos = proto;
 
-return(Success);
+	return Success;
 }
 
-static void reverse_comps(TypeComp *oldc, TypeComp *newc,
-						  Pt_long	*oldd, Pt_long	 *newd,
-						  int count)
 /*****************************************************************************
  * reverse elements in type_info type_comps and sdims arrays.
  ****************************************************************************/
+static void reverse_comps(TypeComp* oldc, TypeComp* newc, Pt_long* oldd, Pt_long* newd, int count)
 {
-newc += count;
-newd += count;
-while (--count >= 0)
-	{
-	*(--newc) = *oldc++;
-	*(--newd) = *oldd++;
+	newc += count;
+	newd += count;
+	while (--count >= 0) {
+		*(--newc) = *oldc++;
+		*(--newd) = *oldd++;
 	}
 }
 
-static Type_info *rev_type_info(Poco_cb *pcb, Type_info *old)
 /*****************************************************************************
  * alloc new type_info, init it, copy comp and sdims arrays to it in reverse.
  * this routine is the main allocator of type_comps for others.  after a
@@ -500,36 +454,34 @@ static Type_info *rev_type_info(Poco_cb *pcb, Type_info *old)
  * the real type_info struct (and associated arrays) that will be linked to
  * the symbol which is being processed.
  ****************************************************************************/
+static Type_info* rev_type_info(Poco_cb* pcb, Type_info* old)
 {
-Type_info *newt;
-int lsize,csize;
+	Type_info* newt;
+	int lsize, csize;
 
-lsize = old->comp_count*sizeof(Pt_long);
-csize = old->comp_count*sizeof(TypeComp);
-newt = po_memzalloc(pcb, sizeof(*newt) + lsize + csize);
-*newt = *old;
-newt->comp_count = newt->comp_alloc = old->comp_count;
-newt->sdims = OPTR(newt,(sizeof(*newt)));
-newt->comp	= OPTR(newt,(sizeof(*newt)+lsize));
-reverse_comps(old->comp,  newt->comp,
-			  old->sdims, newt->sdims,
-			  old->comp_count);
-po_set_ido_type(newt);
-return(newt);
+	lsize			 = old->comp_count * sizeof(Pt_long);
+	csize			 = old->comp_count * sizeof(TypeComp);
+	newt			 = po_memzalloc(pcb, sizeof(*newt) + lsize + csize);
+	*newt			 = *old;
+	newt->comp_count = newt->comp_alloc = old->comp_count;
+	newt->sdims							= OPTR(newt, (sizeof(*newt)));
+	newt->comp							= OPTR(newt, (sizeof(*newt) + lsize));
+	reverse_comps(old->comp, newt->comp, old->sdims, newt->sdims, old->comp_count);
+	po_set_ido_type(newt);
+	return (newt);
 }
 
-Func_frame *po_sym_to_fuf(Symbol *s)
 /*****************************************************************************
  * return a pointer to the fuf associated with a TYPE_FUNCTION symbol.
  ****************************************************************************/
+Func_frame* po_sym_to_fuf(Symbol* s)
 {
-Type_info *ti;
+	Type_info* ti;
 
-ti = s->ti;
-return(ti->sdims[ti->comp_count-1].pt);
+	ti = s->ti;
+	return (ti->sdims[ti->comp_count - 1].pt);
 }
 
-static Errcode check_params_same(Poco_cb *pcb, Func_frame *f1, Func_frame *f2)
 /*****************************************************************************
  * compare the type_info for each param in a pair of prototypes.
  * note that this is used only in handling prototype declarations, it is not
@@ -537,47 +489,42 @@ static Errcode check_params_same(Poco_cb *pcb, Func_frame *f1, Func_frame *f2)
  * the routine po_fuf_types_same() in pocotype.c).	a single routine can't be
  * used because at code-gen time we have to handle the ellipsis differently.
  ****************************************************************************/
+static Errcode check_params_same(Poco_cb* pcb, Func_frame* f1, Func_frame* f2)
 {
-int count;
-int i;
-Symbol *p1, *p2;
-Errcode err = Success;
+	int count;
+	int i;
+	Symbol *p1, *p2;
+	Errcode err = Success;
 
-if ((count=f1->pcount) != f2->pcount)
-	{
-	po_say_fatal(pcb,"argument count disagrees in redeclaration of %s", f1->name);
-	}
-else
-	{
-	p1 = f1->parameters;
-	p2 = f2->parameters;
-	for (i=0; i<count; i++)
-		{
-		if (!po_types_same(p1->ti, p2->ti, 0))
-			{
-			po_say_fatal(pcb, "type mismatch for argument %d in redeclaration of %s",
-				i+1, f1->name);
+	if ((count = f1->pcount) != f2->pcount) {
+		po_say_fatal(pcb, "argument count disagrees in redeclaration of %s", f1->name);
+	} else {
+		p1 = f1->parameters;
+		p2 = f2->parameters;
+		for (i = 0; i < count; i++) {
+			if (!po_types_same(p1->ti, p2->ti, 0)) {
+				po_say_fatal(
+				  pcb, "type mismatch for argument %d in redeclaration of %s", i + 1, f1->name);
 			}
-		p1 = p1->link;
-		p2 = p2->link;
+			p1 = p1->link;
+			p2 = p2->link;
 		}
 	}
-return(err);
+	return (err);
 }
 
-static void part_free_proto(Poco_cb *pcb, Symbol *s, Func_frame *proto)
 /*****************************************************************************
  * free symbols from a duplicate proto's fuf, and remove the fuf's symbol
  * from the global poco_frame.	(The symbol will actually be a duplicate
  * of a symbol already in the global frame, because of the way func_proto()
  * works.  If func_proto() is fixed, this routine needs fixing too.)
  ****************************************************************************/
+static void part_free_proto(Poco_cb* pcb, Symbol* s, Func_frame* proto)
 {
-po_free_symbol_list(&proto->parameters);
-po_unhash_symbol(pcb,s);
+	po_free_symbol_list(&proto->parameters);
+	po_unhash_symbol(pcb, s);
 }
 
-static void check_dupe_proto(Poco_cb *pcb, Symbol *osym, Symbol *nsym)
 /*****************************************************************************
  * check that 2 prototypes are identical in all respects execpt param names.
  * if not, complain and die.  if so, keep the fuf from the old prototype,
@@ -586,286 +533,257 @@ static void check_dupe_proto(Poco_cb *pcb, Symbol *osym, Symbol *nsym)
  * ensures that the param names from the most recent definition are used.
  * (a concept which is significant when the proto has a code block after it!)
  ****************************************************************************/
+static void check_dupe_proto(Poco_cb* pcb, Symbol* osym, Symbol* nsym)
 {
-Func_frame *ofuf = po_sym_to_fuf(osym);
-Func_frame *nfuf = po_sym_to_fuf(nsym);
+	Func_frame* ofuf = po_sym_to_fuf(osym);
+	Func_frame* nfuf = po_sym_to_fuf(nsym);
 
-if (check_params_same(pcb,ofuf,nfuf) >= Success)
-	{
-	if (!po_types_same(osym->ti, nsym->ti, 0))
-		{
-		po_say_fatal(pcb, "return type mismatch in redeclaration of %s", osym->name);
-		}
-	else if (ofuf->got_code &&
-				(ofuf->type == CFF_C || pcb->t.toktype == TOK_LBRACE))
-		{
-		po_redefined(pcb, nsym->name);
-		}
-	else
-		{
-		part_free_proto(pcb, nsym, ofuf);
-		ofuf->parameters = nfuf->parameters;
-		nfuf->parameters = NULL;
+	if (check_params_same(pcb, ofuf, nfuf) >= Success) {
+		if (!po_types_same(osym->ti, nsym->ti, 0)) {
+			po_say_fatal(pcb, "return type mismatch in redeclaration of %s", osym->name);
+		} else if (ofuf->got_code && (ofuf->type == CFF_C || pcb->t.toktype == TOK_LBRACE)) {
+			po_redefined(pcb, nsym->name);
+		} else {
+			part_free_proto(pcb, nsym, ofuf);
+			ofuf->parameters = nfuf->parameters;
+			nfuf->parameters = NULL;
 		}
 	}
 }
 
-static void one_dec(Poco_cb *pcb, Poco_frame *pf, Type_info *base_ti,
-	Symbol **pvar)
 /*****************************************************************************
  * process one declaration (er, everything up to a ',' or ';', I think).
  ****************************************************************************/
+static void one_dec(Poco_cb* pcb, Poco_frame* pf, Type_info* base_ti, Symbol** pvar)
 {
-Symbol *var;
-Itypi tip;
-Type_info *ti;
-Symbol *osym;
-Boolean po_is_func;
+	Symbol* var;
+	Itypi tip;
+	Type_info* ti;
+	Symbol* osym;
+	Boolean po_is_func;
 
-ti = po_typi_type(&tip);
-dcl(pcb, pf,ti, &var, &osym);
+	ti = po_typi_type(&tip);
+	dcl(pcb, pf, ti, &var, &osym);
 
-if (!po_cat_type(pcb,ti,base_ti))
-	return;
-ti->flags = base_ti->flags;
+	if (!po_cat_type(pcb, ti, base_ti))
+		return;
+	ti->flags = base_ti->flags;
 
-ti = var->ti = rev_type_info(pcb, ti);
-if ((po_is_func = (ti->comp[ti->comp_count-1] == TYPE_FUNCTION)) == TRUE)
-	{
-	if (pf->frame_type != FTY_GLOBAL)
-		{
-		po_say_fatal(pcb,
-			"function prototypes only allowed outside function declarations.");
+	ti = var->ti = rev_type_info(pcb, ti);
+	if ((po_is_func = (ti->comp[ti->comp_count - 1] == TYPE_FUNCTION)) == TRUE) {
+		if (pf->frame_type != FTY_GLOBAL) {
+			po_say_fatal(pcb, "function prototypes only allowed outside function declarations.");
 		}
 	}
-if (osym != NULL)
-	{
-	if (!po_is_func)
+	if (osym != NULL) {
+		if (!po_is_func) {
+			po_redefined(pcb, var->name);
+		} else /* check prototypes the same... */
 		{
-		po_redefined(pcb, var->name);
-		}
-	else	/* check prototypes the same... */
-		{
-		check_dupe_proto(pcb,osym,var);
-		var = osym;
+			check_dupe_proto(pcb, osym, var);
+			var = osym;
 		}
 	}
-*pvar = var;
+	*pvar = var;
 }
 
-Func_frame *po_get_proto(Type_info *ti)
 /*****************************************************************************
  * given a pointer to a type_info, return the pointer to a fuf.
  ****************************************************************************/
+Func_frame* po_get_proto(Type_info* ti)
 {
-return(ti->sdims[ti->comp_count-1].pt);
+	return (ti->sdims[ti->comp_count - 1].pt);
 }
 
-static void get_body(Poco_cb *pcb, Poco_frame *pf, Symbol *fvar)
 /*****************************************************************************
  * parse and code-gen from just past opening '{' of function until '}'.
  ****************************************************************************/
+static void get_body(Poco_cb* pcb, Poco_frame* pf, Symbol* fvar)
 {
-Poco_frame *rf;
-Func_frame *proto;
-long enter_fixup;
-int local_space;
-int errparm;
+	Poco_frame* rf;
+	Func_frame* proto;
+	long enter_fixup;
+	int local_space;
+	int errparm;
 #ifdef STRING_EXPERIMENT
-Symbol *params;
+	Symbol* params;
 #endif /* STRING_EXPERIMENT */
 
-if (po_new_frame(pcb,pf->scope+1,fvar->name,FTY_FUNC))
-	{
-	proto = po_get_proto(fvar->ti);
-	rf = pcb->rframe;
-	rf->parameters = proto->parameters;
-	/* Put parameter strings in list to clean up on function exit.
-	 * (This doesn't handle parameters past the ... in variable
-	 * argument functions - that must be coped with in funccall.c */
+	if (po_new_frame(pcb, pf->scope + 1, fvar->name, FTY_FUNC)) {
+		proto		   = po_get_proto(fvar->ti);
+		rf			   = pcb->rframe;
+		rf->parameters = proto->parameters;
+		/* Put parameter strings in list to clean up on function exit.
+		 * (This doesn't handle parameters past the ... in variable
+		 * argument functions - that must be coped with in funccall.c */
 #ifdef STRING_EXPERIMENT
-	params = rf->parameters;
-	while (params != NULL)
-		{
-		po_add_local_string(pcb,rf,params);
-		params = params->link;
+		params = rf->parameters;
+		while (params != NULL) {
+			po_add_local_string(pcb, rf, params);
+			params = params->link;
 		}
 #endif /* STRING_EXPERIMENT */
-	rf->pcount = proto->pcount;
-	rf->return_type = proto->return_type;
-	/* Transfer parameters to local symbol table */
-	if (0 != (errparm = po_rehash(pcb, proto->parameters)))
-		po_say_fatal(pcb, "missing name for parameter %d of function %s",
-						errparm, fvar->name);
-	enter_fixup = po_code_int(pcb, &rf->fcd, OP_ENTER, 0);
-	po_get_block(pcb, rf);
-	local_space = -rf->doff;
-	po_int_fixup(&rf->fcd, enter_fixup, local_space);
+		rf->pcount		= proto->pcount;
+		rf->return_type = proto->return_type;
+		/* Transfer parameters to local symbol table */
+		if (0 != (errparm = po_rehash(pcb, proto->parameters)))
+			po_say_fatal(pcb, "missing name for parameter %d of function %s", errparm, fvar->name);
+		enter_fixup = po_code_int(pcb, &rf->fcd, OP_ENTER, 0);
+		po_get_block(pcb, rf);
+		local_space = -rf->doff;
+		po_int_fixup(&rf->fcd, enter_fixup, local_space);
 #ifdef STRING_EXPERIMENT
-	po_code_free_string_ops(pcb, rf);
+		po_code_free_string_ops(pcb, rf);
 #endif /* STRING_EXPERIMENT */
-	po_code_op(pcb, &rf->fcd, OP_LEAVE);
-	po_code_op(pcb, &rf->fcd, OP_RET);
-	po_compress_func(pcb, rf, proto);
-	proto->got_code = TRUE;
-	proto->magic	= FUNC_MAGIC;  /* helps detect wild pointers at runtime */
-	po_old_frame(pcb);
+		po_code_op(pcb, &rf->fcd, OP_LEAVE);
+		po_code_op(pcb, &rf->fcd, OP_RET);
+		po_compress_func(pcb, rf, proto);
+		proto->got_code = TRUE;
+		proto->magic	= FUNC_MAGIC; /* helps detect wild pointers at runtime */
+		po_old_frame(pcb);
 	}
 }
 
-void po_pop_off_result(Poco_cb *pcb, Exp_frame *e)
 /*****************************************************************************
  * gen code to pop off result of current expression.
  ****************************************************************************/
+void po_pop_off_result(Poco_cb* pcb, Exp_frame* e)
 {
-if (e->ctc.ido_type != IDO_VOID)
-	po_code_pop(pcb, &e->ecd
-	,po_find_clean_op(pcb, &e->ctc), po_find_push_op(pcb, &e->ctc));
+	if (e->ctc.ido_type != IDO_VOID)
+		po_code_pop(pcb, &e->ecd, po_find_clean_op(pcb, &e->ctc), po_find_push_op(pcb, &e->ctc));
 }
 
-void po_get_typedef(Poco_cb *pcb, Poco_frame *pf)
 /*****************************************************************************
  * parse type_info for typedef, add sym to global frame as PTOK_USER_TYPE.
  ****************************************************************************/
+void po_get_typedef(Poco_cb* pcb, Poco_frame* pf)
 {
-Symbol *var;
-Itypi tip;
-Type_info *ti;
-Type_info *rti;
+	Symbol* var;
+	Itypi tip;
+	Type_info* ti;
+	Type_info* rti;
 
-
-lookup_token(pcb);
-ti = po_typi_type(&tip);
-if (!po_get_base_type(pcb,pf,ti))
-	{
-	po_say_fatal(pcb, "no type in typedef");
-	goto OUT;
+	lookup_token(pcb);
+	ti = po_typi_type(&tip);
+	if (!po_get_base_type(pcb, pf, ti)) {
+		po_say_fatal(pcb, "no type in typedef");
+		goto OUT;
 	}
-one_dec(pcb,pf,ti,&var);
-var->tok_type = PTOK_USER_TYPE;
-/* reverse type info so it will read as if it were being parsed */
-if ((rti = rev_type_info(pcb, var->ti)) == NULL)
-	goto OUT;
-po_freemem(var->ti);
-var->ti = rti;
+	one_dec(pcb, pf, ti, &var);
+	var->tok_type = PTOK_USER_TYPE;
+	/* reverse type info so it will read as if it were being parsed */
+	if ((rti = rev_type_info(pcb, var->ti)) == NULL)
+		goto OUT;
+	po_freemem(var->ti);
+	var->ti = rti;
 OUT:
-return;
+	return;
 }
 
-static void fill_in_return_type(Poco_cb *pcb, Symbol *var)
 /*****************************************************************************
  * fill in the type_info for the return value of a function.
  ****************************************************************************/
+static void fill_in_return_type(Poco_cb* pcb, Symbol* var)
 {
-Type_info *ti;
-Func_frame *fuf;
+	Type_info* ti;
+	Func_frame* fuf;
 
-ti = var->ti;
-fuf = ti->sdims[ti->comp_count-=1].pt;
-if (fuf->return_type == NULL)
-	{
-	fuf->return_type = po_new_type_info(pcb, ti, 0);
-	po_set_ido_type(fuf->return_type);
+	ti	= var->ti;
+	fuf = ti->sdims[ti->comp_count -= 1].pt;
+	if (fuf->return_type == NULL) {
+		fuf->return_type = po_new_type_info(pcb, ti, 0);
+		po_set_ido_type(fuf->return_type);
 	}
-ti->comp_count += 1;
+	ti->comp_count += 1;
 }
 
-static void based_decs(Poco_cb *pcb, Poco_frame *pf, Type_info *base_ti)
 /*****************************************************************************
  * get declarations of the same base type. loop until ';' or '{stuff}' seen.
  * (handles 'int a,b,*c;', etc)
  ****************************************************************************/
+static void based_decs(Poco_cb* pcb, Poco_frame* pf, Type_info* base_ti)
 {
-Poco_frame	*rf;
-Symbol		*var;
-Exp_frame	eee;
-SHORT		frame_type;
-Boolean 	is_fu;
+	Poco_frame* rf;
+	Symbol* var;
+	Exp_frame eee;
+	SHORT frame_type;
+	Boolean is_fu;
 
-loop:
-	{
-	one_dec(pcb,pf,base_ti, &var);
-	if ((is_fu = po_is_func(var->ti)) == TRUE)
-		{
+loop : {
+	one_dec(pcb, pf, base_ti, &var);
+	if ((is_fu = po_is_func(var->ti)) == TRUE) {
 		fill_in_return_type(pcb, var);
-		}
-	else
-		{
+	} else {
 		po_new_var_space(pcb, var);
 #ifdef STRING_EXPERIMENT
 		if (pf->frame_type == FTY_FUNC)
 			po_add_local_string(pcb, pf, var);
 #endif /* STRING_EXPERIMENT */
-		}
-	if (pcb->t.toktype == '=')  /* it's an assignment, whoopie */
-		{
-		if ((frame_type = pf->frame_type) == FTY_STRUCT)
-			{
+	}
+	if (pcb->t.toktype == '=') /* it's an assignment, whoopie */
+	{
+		if ((frame_type = pf->frame_type) == FTY_STRUCT) {
 			po_say_fatal(pcb, "= not allowed inside structure definitions");
 			goto end;
-			}
+		}
 		rf = pf;
-		if (var->storage_scope == SCOPE_GLOBAL)
-			{
+		if (var->storage_scope == SCOPE_GLOBAL) {
 			while (rf->frame_type != FTY_GLOBAL)
 				rf = rf->next;
 			frame_type = FTY_GLOBAL;
-			}
+		}
 		po_init_expframe(pcb, &eee);
-		po_copy_type(pcb,var->ti, &eee.ctc);
+		po_copy_type(pcb, var->ti, &eee.ctc);
 		po_var_init(pcb, &eee, var, frame_type);
 		po_cat_code(pcb, &rf->fcd, &eee.ecd);
 		po_trash_expframe(pcb, &eee);
 		lookup_token(pcb);
-		}
-	switch (pcb->t.toktype)
-		{
+	}
+	switch (pcb->t.toktype) {
 		case ',':
 			goto loop;
 		case ';':
 			pushback_token(&pcb->t);
 			goto end;
 		case TOK_LBRACE:
-			if (pf->scope != SCOPE_GLOBAL || !is_fu)
-				{
+			if (pf->scope != SCOPE_GLOBAL || !is_fu) {
 				goto wanna;
-				}
+			}
 			get_body(pcb, pf, var);
 			goto end;
 		default:
-wanna:
+		wanna:
 			po_expecting_got(pcb, ", or ;");
 			goto end;
-		}
 	}
+}
 end:
-return;
+	return;
 }
 
-void po_get_typename(Poco_cb *pcb, Type_info *ti)
 /*****************************************************************************
  * get a typename (per K&R2 A.8.8).  called from use_sizeof() and make_cast().
  ****************************************************************************/
+void po_get_typename(Poco_cb* pcb, Type_info* ti)
 {
-Itypi		tip;
-Type_info	*ti_temp;
-Poco_frame *pf = pcb->rframe;
+	Itypi tip;
+	Type_info* ti_temp;
+	Poco_frame* pf = pcb->rframe;
 
-po_eat_lparen(pcb);
-po_need_token(pcb);
+	po_eat_lparen(pcb);
+	po_need_token(pcb);
 
 #ifdef DEVELOPMENT
-	if (FALSE == po_get_base_type(pcb,pf,ti))
+	if (FALSE == po_get_base_type(pcb, pf, ti))
 		po_say_internal(pcb, "bad return from po_get_base_type detected in po_get_typename");
 #else
 	po_get_base_type(pcb, pf, ti);
 #endif
 
-	if (po_is_next_token(pcb, ')'))
-		{
+	if (po_is_next_token(pcb, ')')) {
 		po_eat_rparen(pcb);
 		return;
-		}
+	}
 
 	ti_temp = po_typi_type(&tip);
 
@@ -876,35 +794,26 @@ po_need_token(pcb);
 	po_cat_type(pcb, ti_temp, ti);
 	ti->comp_count = ti_temp->comp_count;
 
-	reverse_comps(ti_temp->comp,  ti->comp,
-				  ti_temp->sdims, ti->sdims,
-				  ti_temp->comp_count);
+	reverse_comps(ti_temp->comp, ti->comp, ti_temp->sdims, ti->sdims, ti_temp->comp_count);
 	po_set_ido_type(ti);
-
 }
 
-void po_get_declaration(Poco_cb *pcb, Poco_frame *pf)
 /*****************************************************************************
  * main entry point to declaration parser. called from statement().
  ****************************************************************************/
+void po_get_declaration(Poco_cb* pcb, Poco_frame* pf)
 {
-Itypi tip;
-Type_info *ti;
+	Itypi tip;
+	Type_info* ti;
 
-
-ti = po_typi_type(&tip);
-if (po_get_base_type(pcb,pf,ti))
-	{
-	if (po_is_next_token(pcb, ';'))
-		{
-		return;
+	ti = po_typi_type(&tip);
+	if (po_get_base_type(pcb, pf, ti)) {
+		if (po_is_next_token(pcb, ';')) {
+			return;
 		}
-	based_decs(pcb, pf, ti);
-	}
-else
-	{
-	po_set_base_type(pcb, ti, TYPE_INT, 0L, NULL);
-	based_decs(pcb, pf, ti);
+		based_decs(pcb, pf, ti);
+	} else {
+		po_set_base_type(pcb, ti, TYPE_INT, 0L, NULL);
+		based_decs(pcb, pf, ti);
 	}
 }
-

@@ -475,17 +475,19 @@ Errcode compile_poco(void** ppexe,		 /* returns executable pexe on Success */
 		pcb->libfunc	 = NULL;
 		pcb->builtin_lib = lib;
 
-		if (Success != (err = wanna_make(pcb, &pcb->t.err_file, errors_name)))
+		if (Success != (err = wanna_make(pcb, &pcb->t.err_file, errors_name))) {
 			goto OUT;
+		}
 
-		if (dump_name != NULL)
+		if (dump_name != NULL) {
 			pcb->po_dump_file = fopen(dump_name, "w");
+		}
 
-		if (Success != (err = po_compile_file(pcb, source_name))) {
-
-#ifdef DEVELOPMENT /* all errs s/b via longjump, not return value...*/
+		err = po_compile_file(pcb, source_name);
+		if (err != Success) {
+			#ifdef DEVELOPMENT /* all errs s/b via longjump, not return value...*/
 			fprintf(stdout, "\ncompile_poco: got a non-zero return from po_compile_file!!!\n");
-#endif
+			#endif
 
 			err = Err_in_err_file; /* we reported it in error file */
 			goto OUT;
@@ -502,17 +504,17 @@ Errcode compile_poco(void** ppexe,		 /* returns executable pexe on Success */
 	}
 
 OUT:
-
 	gentle_fclose(pcb->po_dump_file);
 	gentle_fclose(pcb->t.err_file);
 
 	if (err == Success) {
-		if (errors_name != NULL)
+		if (errors_name != NULL) {
 			pj_delete(errors_name);
+		}
 		po_free_compile_memory();
-	} else /* Post-error cleanup goes goes here... */
-	{
-
+	} 
+	/* Post-error cleanup goes goes here... */
+	else {
 		/*
 		 * let caller know where the err was
 		 *	 if no files are open (eg, error was unexpected EOF) we say that.
@@ -544,24 +546,26 @@ OUT:
 		 *	 changed this to a call to po_free_pp() - it contains the loop
 		 *	 to close all the files.
 		 */
-
 		po_free_pp(pcb);
 
 		/*
 		 * free all memory allocated since the compile started...
 		 */
-
 		po_free_all_memory();
 
 		/*
 		 * free any libraries from #pragma poco library "xxx"
 		 */
-
 		pj_free_pocorexes(&pcb->run.loaded_libs);
 
 	} /* end of post-error cleanup handling */
 
-	return (err);
+	/* kiki addition: libffi integration */
+	if (err == Success) {
+		err = po_ffi_build_structures(pev);
+	}
+
+	return err;
 }
 
 /*****************************************************************************

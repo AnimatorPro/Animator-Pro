@@ -83,7 +83,7 @@ void* po_disasm(FILE* f, void* code, C_frame* cframes)
 				pp_code = (Popot*)code;
 				fprintf(f,
 //						"\tmin %p max %p pt %p (%llu bytes)",
-						"\tpointer: %p (%llu bytes)",
+						"\tpointer: %p (%lu bytes)",
 						pp_code->pt,
 						pp_code->max - pp_code->min);
 				break;
@@ -105,7 +105,7 @@ void* po_disasm(FILE* f, void* code, C_frame* cframes)
 		fprintf(f, "Wild op %d 0x%d\n", op);
 		code = OPTR(code, sizeof(op));
 	}
-	return (code);
+	return code;
 }
 
 
