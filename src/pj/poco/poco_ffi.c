@@ -149,8 +149,10 @@ Po_FFI* po_ffi_new(const C_frame* frame) {
 		}
 
 		if (param->ti->comp_count && param->ti->comp[0] == TYPE_ELLIPSIS) {
-			/* Remove argument index for the ellipsis. */
-			binding->arg_count -= 1;
+			/* Remove argument index for the ellipsis, but add two for the count and size params.
+			 * Writing it out long like this to remind myself why. 
+			 */
+			binding->arg_count = binding->arg_count + 2 - 1;
 			binding->flags |= PO_FFI_VARIADIC;
 			break;
 		}
@@ -162,6 +164,17 @@ Po_FFI* po_ffi_new(const C_frame* frame) {
 	/* second loop -- set everything */
 	param = frame->parameters;
 	index = 0;
+
+	if (po_ffi_is_variadic(binding)) {
+		/* Add in the count / size parameters */
+		binding->arg_ido_types[0] = binding->arg_ido_types[1] = IDO_LONG;
+		binding->arg_types[0]     = binding->arg_types[1]     = &ffi_type_slong;
+		/* near as I can tell, every param is a full pointer in size regardless of data */
+		binding->arg_sizes[0]     = binding->arg_sizes[1]     = sizeof(void*);
+		total_data_size  = sizeof(void*) * 2;
+		index = 2;
+	}
+
 	while (param) {
 		if (param->ti->comp_count && param->ti->comp[0] == TYPE_ELLIPSIS) {
 			param = param->link;

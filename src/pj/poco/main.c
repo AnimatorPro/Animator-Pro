@@ -70,7 +70,7 @@ int matherr(void);
 Errcode boxf(char* fmt, ...);
 
 int po_puts(Popot s);
-int po_printf(long vargcount, long vargsize, Popot format, ...);
+int po_printf(long vargcount, long vargsize, char* format, ...);
 void po_qtext(long vargcount, long vargsize, Popot format, ...);
 
 
@@ -352,7 +352,7 @@ int po_puts(Popot s)
 /****************************************************************************
  *
  ***************************************************************************/
-int po_printf(long vargcount, long vargsize, Popot format, ...)
+int po_printf(long vargcount, long vargsize, char* format, ...)
 {
 	va_list args;
 	int result;
@@ -360,12 +360,12 @@ int po_printf(long vargcount, long vargsize, Popot format, ...)
 	(void)vargcount;
 	(void)vargsize;
 
-	if (format.pt == NULL) {
+	if (format == NULL) {
 		return builtin_err = Err_null_ref;
 	}
 
 	va_start(args, format);
-	result = vfprintf(stdout, format.pt, args);
+	result = vfprintf(stdout, format, args);
 	va_end(args);
 	return result;
 }
@@ -399,9 +399,9 @@ void po_qtext(long vargcount, long vargsize, Popot format, ...)
 /****************************************************************************/
 static Lib_proto proto_lines[] = {
 	/*	{tryme, 	"int ptryme(int (*v)(long a, long b, long c));"}, */
-	{ po_puts, "int puts(char *s);" },
-	{ printf, "int printf(char *format, ...);" },
-	{ po_qtext, "int Qtext(char *format, ...);" },
+	{ po_puts,   "int puts(char *s);" },
+	{ po_printf, "int printf(char *format, ...);" },
+	{ po_qtext,  "int Qtext(char *format, ...);" },
 };
 
 Poco_lib po_main_lib = { .next		 = NULL,
@@ -649,7 +649,8 @@ int main(int argc, char* argv[])
 			   plural(binding->arg_count));
 
 		char* msg = "[FFI::printf] This call is coming from FFI\n";
-		void* args[1] = {&msg};
+		long arg_count = 0, arg_size = 0;
+		void* args[3] = {&arg_count, &arg_size, &msg};
 		ffi_call(&binding->interface, FFI_FN(binding->function), &binding->result, args);
 
 		if (runflag) {
