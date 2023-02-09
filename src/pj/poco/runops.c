@@ -144,14 +144,17 @@ Errcode poco_cont_ops(void* code_pt, Pt_num* pret, int arglength, ...)
 	UBYTE* stack_area;
 	Eax acc;
 	int op;
+	Po_FFI* binding = NULL;
 
 	Popot empty_popot = {NULL, NULL, NULL};
 
 #define STACK_OVERFLOW(limit) ((UBYTE*)stack < (stack_area + (limit)))
 
 	if (pe->stack == NULL) {
-		if (NULL == (stack_area = pj_malloc(pe->stack_size)))
+		stack_area = pj_malloc(pe->stack_size);
+		if (stack_area == NULL) {
 			return Err_no_memory;
+		}
 	} else {
 		stack_area = (UBYTE*)pe->stack;
 	}
@@ -293,11 +296,22 @@ Errcode poco_cont_ops(void* code_pt, Pt_num* pret, int arglength, ...)
 					goto DEBUG;
 				}
 //				acc.ret.i = IC_call(stack, ip->func);
-				acc.ret.i = 0;
-				if (builtin_err < Success)
+				binding = po_ffi_find_binding(pe, ip->func);
+				if (!binding) {
+					fprintf(stderr, "-- OP_ICCALL unable to find function.\n");
+					acc.ret.i = 0;
+					break;
+				}
+
+				po_ffi_call(binding, stack);
+
+				acc.ret.i = *((int*)&binding->result);
+				  if (builtin_err < Success) {
 					goto ERR_IN_LIBROUTINE;
+				}
 				ip = OPTR(ip, sizeof(ip->func));
 				break;
+
 			case OP_LCCALL: /* call long valued C function */
 				if (STACK_OVERFLOW(MIN_CCALL_STACK)) {
 					err = Err_stack;
@@ -309,6 +323,7 @@ Errcode poco_cont_ops(void* code_pt, Pt_num* pret, int arglength, ...)
 					goto ERR_IN_LIBROUTINE;
 				ip = OPTR(ip, sizeof(ip->func));
 				break;
+
 			case OP_DCCALL: /* call double valued C function */
 				if (STACK_OVERFLOW(MIN_CCALL_STACK)) {
 					err = Err_stack;
@@ -320,6 +335,7 @@ Errcode poco_cont_ops(void* code_pt, Pt_num* pret, int arglength, ...)
 					goto ERR_IN_LIBROUTINE;
 				ip = OPTR(ip, sizeof(ip->func));
 				break;
+
 			case OP_PCCALL: /* call (popot) pointer valued C function */
 				if (STACK_OVERFLOW(MIN_CCALL_STACK)) {
 					err = Err_stack;
@@ -331,6 +347,7 @@ Errcode poco_cont_ops(void* code_pt, Pt_num* pret, int arglength, ...)
 					goto ERR_IN_LIBROUTINE;
 				ip = OPTR(ip, sizeof(ip->func));
 				break;
+
 			case OP_CVCCALL: /* call void valued C function */
 				if (STACK_OVERFLOW(MIN_CCALL_STACK)) {
 					err = Err_stack;
@@ -341,6 +358,7 @@ Errcode poco_cont_ops(void* code_pt, Pt_num* pret, int arglength, ...)
 					goto ERR_IN_LIBROUTINE;
 				ip = OPTR(ip, sizeof(ip->func));
 				break;
+
 #ifdef STRING_EXPERIMENT
 			case OP_STRING_CCALL: /* call string valued C function */
 				if (STACK_OVERFLOW(MIN_CCALL_STACK)) {

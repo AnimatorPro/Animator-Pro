@@ -44,6 +44,7 @@ endif()
 
 if (WITH_POCO)
 	add_subdirectory(thirdparty/libffi)
+	add_subdirectory(thirdparty/hashmap)
 endif()
 
 

@@ -1,7 +1,9 @@
 
 cmake_minimum_required(VERSION 3.16 FATAL_ERROR)
 
-project(poco C)
+project(poco LANGUAGES C)
+
+set (CMAKE_C_STANDARD 99)
 
 if(CMAKE_BUILD_TYPE STREQUAL "debug")
 	add_compile_definitions(-DDEVELOPMENT=1 -DDEBUG=1)
@@ -55,19 +57,11 @@ list(TRANSFORM
 		"${CMAKE_CURRENT_SOURCE_DIR}/"
 )
 
-#set(LIBPOCO_SRC_FILES
-#		bcutil.c
-#		pocoface.c
-#		token.c
-#
-#		poco.h
-#		)
-
 
 add_library(libpoco ${LIBPOCO_SRC_FILES})
-target_include_directories(libpoco PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/../inc")
-target_link_libraries(libpoco PUBLIC ffi_static)
 set_target_properties(libpoco PROPERTIES PREFIX "")
+target_include_directories(libpoco PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/../inc")
+target_link_libraries(libpoco PUBLIC ffi_static hashmap)
 
 set(POCO_MAIN_SRC_FILES main.c)
 if (APPLE OR UNIX)
@@ -75,11 +69,6 @@ if (APPLE OR UNIX)
 endif()
 
 add_executable(poco ${POCO_MAIN_SRC_FILES})
-target_link_libraries(poco libpoco trdfile ffi_static)
+target_link_libraries(poco libpoco trdfile ffi_static hashmap)
 INSTALL(TARGETS poco DESTINATION ./)
-
-## cscope
-#set(ALL_POCO_FILES ${LIBPOCO_SRC_FILES} ${POCO_MAIN_SRC_FILES})
-#string(REPLACE ";" "\n" ALL_POCO_FILES "${ALL_POCO_FILES}")
-#file(WRITE ${CMAKE_CURRENT_SOURCE_DIR}/cscope.files "${ALL_POCO_FILES}")
 

@@ -497,8 +497,25 @@ typedef struct loop_frame
  * FFI structures -- bindings to compiled C functions
  *--------------------------------------------------------------------------*/
 
-// FFI_MAX_ARGS is 16+1 -- the last argument has to be a NULL pointer for libffi
+// FFI_MAX_ARGS is really 16+1 -- the last argument has to be a NULL pointer for libffi
 #define FFI_MAX_ARGS 16
+
+/* Wrapper for HashMap, forward declaraton */
+struct po_func_map;
+typedef struct po_func_map Po_FuncMap;
+
+typedef union po_ffi_data /* Overlap popular datatypes in the same space */
+{
+	int i;
+	short s;
+	UBYTE* bpt;
+	char c;
+	long l;
+	ULONG ul;
+	float f;
+	double d;
+	void* p;
+} Po_FFI_Data;
 
 typedef struct po_ffi {
 	ffi_cif interface;
@@ -511,7 +528,7 @@ typedef struct po_ffi {
 	ffi_type* result_type;
 	char*  name;
 	void*  function;                       // pointer to the actual function to call
-	void*  data;                           // block of memory for parameter passing
+	Po_FFI_Data data[FFI_MAX_ARGS+1];      // block of memory for parameter passing
 	size_t data_size;                      // size of data in bytes
 	void*  data_variadic;                  // block of memory for variadic param passing
 	size_t data_variadic_size;             // size of data_variadic in bytes
@@ -704,7 +721,7 @@ typedef struct poco_run_env
 	long* err_line;
 	Func_frame* protos;
 	Poco_lib* loaded_libs; /* loaded (from disk via pragma) libraries */
-	Poco_ffi_runtime* ffi_runtime;  /* for C function calls */
+	Po_FuncMap* func_map;  /* for fast lookups of C function calls */
 	PoBoolean enable_debug_trace;
 	char pad[24];
 } Poco_run_env;
@@ -1068,9 +1085,12 @@ void po_var_init(Poco_cb* pcb, Exp_frame* e, Symbol* var, SHORT frame_type);
 
 /* in poco_ffi.c */
 int po_ffi_build_structures(Poco_run_env* env);
+Po_FFI* po_ffi_find_binding(const Poco_run_env* env, const void* key);
+Po_FFI* po_ffi_find_binding_by_name(const Poco_run_env* env, const char* name);
 Po_FFI* po_ffi_new(const C_frame* frame);
 void po_ffi_delete(Po_FFI* binding);
-void po_ffi_call(Poco_run_env* env, Po_FFI* binding);
+void po_ffi_call(Po_FFI* binding, const Pt_num* stack_in);
+
 
 #ifdef STRING_EXPERIMENT
 /* in postring.c */

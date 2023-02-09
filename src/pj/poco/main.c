@@ -632,27 +632,6 @@ int main(int argc, char* argv[])
 			po_disassemble_program((Poco_run_env*)pexe, stdout);
 		}
 
-		Poco_run_env* env = (Poco_run_env*)pexe;
-
-		C_frame* cf_printf = env->protos->next->mlink;
-		while (cf_printf) {
-			if (strcmp(cf_printf->name, "printf") == 0) {
-				break;
-			}
-			cf_printf = cf_printf->mlink;
-		}
-
-		Po_FFI* binding = po_ffi_new(cf_printf);
-		printf("[FFI] %s binding has %d parameter%s\n",
-			   binding->name,
-			   binding->arg_count,
-			   plural(binding->arg_count));
-
-		char* msg = "[FFI::printf] This call is coming from FFI\n";
-		long arg_count = 0, arg_size = 0;
-		void* args[3] = {&arg_count, &arg_size, &msg};
-		ffi_call(&binding->interface, FFI_FN(binding->function), &binding->result, args);
-
 		if (runflag) {
 			err = run_poco(&pexe, NULL, check_abort, NULL, &err_line);
 		}

@@ -188,7 +188,9 @@
 #define Err_poco_out_of_string_space (POCOERR-30)
 
 #define POCOERR_FFI (POCOERR-50)
-#define Err_poco_ffi_no_protos (POCOERR_FFI-1)  /* Runtime env has no library protos */
+#define Err_poco_ffi_no_protos   (POCOERR_FFI-1)    /* Runtime env has no library protos */
+#define Err_poco_ffi_no_func_map (POCOERR_FFI-2)    /* Could not allocate function map */
+#define Err_poco_ffi_no_map_insert (POCOERR_FFI-3)  /* Could not insert entry into function map */
 
 /* end POCOERR */
 #endif

@@ -43,5 +43,5 @@ if (37)
 if (38)
 if (39)
 if (40)
-	printf("Success");
+	printf("\n\nSuccess!\n\n");
 }

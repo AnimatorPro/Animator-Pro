@@ -9,7 +9,6 @@ set(PJ_SDL_SOURCES
 )
 
 
-
 add_library(pj_sdl STATIC "${PJ_SDL_SOURCES}")
 target_include_directories(pj_sdl PUBLIC
 		INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}"
