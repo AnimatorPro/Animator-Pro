@@ -6,6 +6,7 @@
 	#include "pocolib.h"
 #endif
 
+//!TODO: Determine if these sizes are enough for modern use
 #define POCO_STACKSIZE_MIN		(6*1024L)
 #define POCO_STACKSIZE_MAX		(64*1024L)
 #define POCO_STACKSIZE_DEFAULT	(10*1024L) /* default poco runtime stacksize */

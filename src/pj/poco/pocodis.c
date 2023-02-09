@@ -102,7 +102,7 @@ void* po_disasm(FILE* f, void* code, C_frame* cframes)
 		code = OPTR(code, pta->op_size);
 		fprintf(f, "\n");
 	} else {
-		fprintf(f, "Wild op %d 0x%d\n", op);
+		fprintf(f, "Wild op 0x%d\n", op);
 		code = OPTR(code, sizeof(op));
 	}
 	return code;
