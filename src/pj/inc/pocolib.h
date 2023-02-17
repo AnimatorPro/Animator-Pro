@@ -26,6 +26,8 @@ typedef struct popot /* The poco bounds-checked pointer type */
 	void* max;
 } Popot;
 
+extern Popot empty_popot;
+
 typedef struct string_ref
 {
 	Dlnode node;

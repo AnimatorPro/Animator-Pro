@@ -526,12 +526,11 @@ typedef struct po_ffi {
 	IdoType arg_ido_types[FFI_MAX_ARGS+1]; // copies of original types
 	ffi_arg result;                        // storage for returns for non-void functions
 	ffi_type* result_type;
+	IdoType result_ido_type;
 	char*  name;
 	void*  function;                       // pointer to the actual function to call
 	Po_FFI_Data data[FFI_MAX_ARGS+1];      // block of memory for parameter passing
 	size_t data_size;                      // size of data in bytes
-	void*  data_variadic;                  // block of memory for variadic param passing
-	size_t data_variadic_size;             // size of data_variadic in bytes
 	uint64_t flags;
 } Po_FFI;
 
@@ -723,6 +722,7 @@ typedef struct poco_run_env
 	Poco_lib* loaded_libs; /* loaded (from disk via pragma) libraries */
 	Po_FuncMap* func_map;  /* for fast lookups of C function calls */
 	PoBoolean enable_debug_trace;
+	Pt_num result;
 	char pad[24];
 } Poco_run_env;
 
@@ -1089,7 +1089,7 @@ Po_FFI* po_ffi_find_binding(const Poco_run_env* env, const void* key);
 Po_FFI* po_ffi_find_binding_by_name(const Poco_run_env* env, const char* name);
 Po_FFI* po_ffi_new(const C_frame* frame);
 void po_ffi_delete(Po_FFI* binding);
-void po_ffi_call(Po_FFI* binding, const Pt_num* stack_in);
+Pt_num po_ffi_call(Po_FFI* binding, const Pt_num* stack_in);
 
 
 #ifdef STRING_EXPERIMENT

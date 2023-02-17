@@ -20,6 +20,7 @@
 #include <assert.h>
 
 #include "poco.h"
+#include "pocolib.h"
 #include "pocoface.h"
 #include "ptrmacro.h"
 
@@ -241,6 +242,7 @@ Po_FFI* po_ffi_new(const C_frame* frame) {
 	}
 
 	/* Set result type, or default to void if it doesn't exist. */
+	binding->result_ido_type = frame->return_type ? frame->return_type->ido_type : IDO_VOID;
 	binding->result_type = (frame->return_type ? po_ffi_type_from_ido_type(frame->return_type->ido_type) :
 							&ffi_type_void);
 
@@ -377,6 +379,9 @@ Po_FFI* po_ffi_find_binding(const Poco_run_env* env, const void* key) {
 	}
 
 	Po_FFI* binding = hashmap_get(&env->func_map->map, key);
+	if (!binding) {
+		builtin_err = Err_poco_ffi_func_not_found;
+	}
 	return binding;
 }
 
@@ -476,26 +481,27 @@ int po_ffi_build_structures(Poco_run_env* env) {
 	Call the C function specified by the binding, grabbing
 	passed parameters from the stack.
 
-	Note that the return value, if it exists, is returned
-	through the binding itself.
+	Returns a Pt_num for acc.ret in runops.c.
 */
 
-void po_ffi_call(Po_FFI* binding, const Pt_num* stack_in)
+Pt_num po_ffi_call(Po_FFI* binding, const Pt_num* stack_in)
 {
+	Pt_num result;
+	Popot_make_null(&result.ppt);
+
+	if (!binding) {
+		builtin_err = Err_poco_ffi_func_not_found;
+		return result;
+	}
+
 	const int variadic_args = po_ffi_is_variadic(binding) ? -2 : 0;
 	const unsigned int real_arg_count = binding->arg_count + variadic_args;
-
-	printf("Calling %s - %d parameter%s, returns %s\n",
-		   binding->name,
-		   real_arg_count,
-		   plural(real_arg_count),
-		   po_ffi_name_for_type(binding->result_type));
 
 	// data for the function is already allocated at
 	// binding creation time-- set the values
 	long arg_count = 0;
 	long arg_size  = 0;
-	int arg_index = 0;
+	unsigned int arg_index = 0;
 	Pt_num* stack = stack_in;
 
 	if (variadic_args) {
@@ -548,5 +554,32 @@ void po_ffi_call(Po_FFI* binding, const Pt_num* stack_in)
 
 	binding->result = 0;
 	ffi_call(&binding->interface, FFI_FN(binding->function), &binding->result, binding->args);
+
+	switch(binding->result_ido_type) {
+		case IDO_INT:
+			result.i = *((int*)&binding->result);
+			break;
+		case IDO_LONG:
+			result.l = *((long*)&binding->result);
+			break;
+		case IDO_DOUBLE:
+			result.d = *((double*)&binding->result);
+			break;
+		case IDO_POINTER:
+		case IDO_CPT:
+			result.p = (void*)(*((UBYTE*)&binding->result));
+			break;
+
+#ifdef STRING_EXPERIMENT
+		case IDO_STRING:
+			psize = sizeof(PoString);
+			break;
+#endif /* STRING_EXPERIMENT */
+
+		default:
+			break;
+	}
+
+	return result;
 }
 

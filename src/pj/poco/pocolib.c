@@ -17,6 +17,8 @@
 
 extern Errcode builtin_err;
 
+Popot empty_popot = { NULL, NULL, NULL };
+
 Errcode po_init_libs(Poco_lib *lib)
 /*****************************************************************************
  *

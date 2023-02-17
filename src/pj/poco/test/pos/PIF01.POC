@@ -1,7 +1,7 @@
 /* Test deeply nested if's */
 #pragma poco echo "expect>Success"
 
-main()
+int main()
 {
 if (1)
 if (2)
@@ -42,6 +42,12 @@ if (36)
 if (37)
 if (38)
 if (39)
-if (40)
-	printf("\n\nSuccess!\n\n");
+
+	if (40) {
+		float value = sin(0.5);
+		printf("\n\nSuccess! %.03f\n\n", value);
+		return 25;
+	}
+
+	return -1;
 }

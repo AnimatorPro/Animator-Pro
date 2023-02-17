@@ -146,7 +146,18 @@ Errcode poco_cont_ops(void* code_pt, Pt_num* pret, int arglength, ...)
 	int op;
 	Po_FFI* binding = NULL;
 
-	Popot empty_popot = {NULL, NULL, NULL};
+#define PO_FFI_CALL(x)                           \
+	if (STACK_OVERFLOW(MIN_CCALL_STACK)) {       \
+		err = Err_stack;                         \
+		goto DEBUG;                              \
+	}                                            \
+	binding = po_ffi_find_binding(pe, ip->func); \
+	if (builtin_err < Success) {                 \
+		goto ERR_IN_LIBROUTINE;                  \
+	}                                            \
+                                                 \
+	acc.ret = po_ffi_call(binding, stack);       \
+	ip		= OPTR(ip, sizeof(ip->func));
 
 #define STACK_OVERFLOW(limit) ((UBYTE*)stack < (stack_area + (limit)))
 
@@ -291,72 +302,23 @@ Errcode poco_cont_ops(void* code_pt, Pt_num* pret, int arglength, ...)
 				 *--------------------------------------------------------------------------*/
 
 			case OP_ICCALL: /* call int valued C function */
-				if (STACK_OVERFLOW(MIN_CCALL_STACK)) {
-					err = Err_stack;
-					goto DEBUG;
-				}
-//				acc.ret.i = IC_call(stack, ip->func);
-				binding = po_ffi_find_binding(pe, ip->func);
-				if (!binding) {
-					fprintf(stderr, "-- OP_ICCALL unable to find function.\n");
-					acc.ret.i = 0;
-					break;
-				}
-
-				po_ffi_call(binding, stack);
-
-				acc.ret.i = *((int*)&binding->result);
-				  if (builtin_err < Success) {
-					goto ERR_IN_LIBROUTINE;
-				}
-				ip = OPTR(ip, sizeof(ip->func));
+				PO_FFI_CALL(OP_ICCALL);
 				break;
 
 			case OP_LCCALL: /* call long valued C function */
-				if (STACK_OVERFLOW(MIN_CCALL_STACK)) {
-					err = Err_stack;
-					goto DEBUG;
-				}
-//				acc.ret.l = LC_call(stack, ip->func);
-				acc.ret.l = 0;
-				if (builtin_err < Success)
-					goto ERR_IN_LIBROUTINE;
-				ip = OPTR(ip, sizeof(ip->func));
+				PO_FFI_CALL(OP_LCCALL);
 				break;
 
 			case OP_DCCALL: /* call double valued C function */
-				if (STACK_OVERFLOW(MIN_CCALL_STACK)) {
-					err = Err_stack;
-					goto DEBUG;
-				}
-//				acc.ret.d = DC_call(stack, ip->func);
-				acc.ret.d = 0.0;
-				if (builtin_err < Success)
-					goto ERR_IN_LIBROUTINE;
-				ip = OPTR(ip, sizeof(ip->func));
+				PO_FFI_CALL(OP_DCCALL);
 				break;
 
 			case OP_PCCALL: /* call (popot) pointer valued C function */
-				if (STACK_OVERFLOW(MIN_CCALL_STACK)) {
-					err = Err_stack;
-					goto DEBUG;
-				}
-//				acc.ret.ppt = PC_call(stack, ip->func);
-				acc.ret.ppt = empty_popot;
-				if (builtin_err < Success)
-					goto ERR_IN_LIBROUTINE;
-				ip = OPTR(ip, sizeof(ip->func));
+				PO_FFI_CALL(OP_PCCALL);
 				break;
 
 			case OP_CVCCALL: /* call void valued C function */
-				if (STACK_OVERFLOW(MIN_CCALL_STACK)) {
-					err = Err_stack;
-					goto DEBUG;
-				}
-//				VC_call(stack, ip->func);
-				if (builtin_err < Success)
-					goto ERR_IN_LIBROUTINE;
-				ip = OPTR(ip, sizeof(ip->func));
+				PO_FFI_CALL(OP_CVCCALL);
 				break;
 
 #ifdef STRING_EXPERIMENT
@@ -1462,29 +1424,35 @@ Errcode poco_cont_ops(void* code_pt, Pt_num* pret, int arglength, ...)
 
 			case OP_IPOP:
 				acc.ret.inty = stack->inty;
+				pe->result = acc.ret;
 				stack		 = OPTR(stack, sizeof(stack->inty));
 				break;
 			case OP_LPOP:
 			case OP_CPPOP:
 				acc.ret.l = stack->l;
+				pe->result = acc.ret;
 				stack	  = OPTR(stack, sizeof(stack->l));
 				break;
 			case OP_DPOP:
 				acc.ret.d = stack->d;
+				pe->result = acc.ret;
 				stack	  = OPTR(stack, sizeof(stack->d));
 				break;
 			case OP_PPOP:
 				acc.ret.ppt = stack->ppt;
+				pe->result = acc.ret;
 				stack		= OPTR(stack, sizeof(stack->ppt));
 				break;
 #ifdef STRING_EXPERIMENT
 			case OP_STRING_POP:
 				acc.ret.postring = stack->postring;
+				pe->result = acc.ret;
 				stack			 = OPTR(stack, sizeof(stack->postring));
 				break;
 			case OP_CLEAN_STRING: /* Pop string and dec reference count */
 				acc.ret.postring = stack->postring;
 				po_sr_clean_ref(acc.ret.postring);
+				pe->result = acc.ret;
 				stack = OPTR(stack, sizeof(stack->postring));
 				break;
 #endif /* STRING_EXPERIMENT */
