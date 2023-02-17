@@ -37,10 +37,9 @@ add_compile_options(
 )
 
 ## thirdparty dependencies
-if (WITH_ANI)
-	add_subdirectory(thirdparty/sdl2)
-	include_directories(thirdparty/sdl2/include)
-endif()
+add_subdirectory(thirdparty/sdl2)
+include_directories(thirdparty/sdl2/include)
+
 
 if (WITH_POCO)
 	add_subdirectory(thirdparty/libffi)

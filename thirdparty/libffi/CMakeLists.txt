@@ -12,8 +12,13 @@ project(libffi)
 include(ExternalProject)
 
 ## add a dummy file until this library gets built or Cmake breaks
-file(WRITE "${CMAKE_CURRENT_SOURCE_DIR}/artifacts/lib/libffi.a" "temporary")
-file(WRITE "${CMAKE_CURRENT_SOURCE_DIR}/artifacts/include/.placeholder" "temporary")
+if (NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/artifacts/lib/libffi.a")
+	file(WRITE "${CMAKE_CURRENT_SOURCE_DIR}/artifacts/lib/libffi.a" "temporary")
+endif()
+
+if (NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/artifacts/include/.placeholder")
+	file(WRITE "${CMAKE_CURRENT_SOURCE_DIR}/artifacts/include/.placeholder" "temporary")
+endif()
 
 
 string(TOLOWER "${CMAKE_BUILD_TYPE}" FFI_BUILD_TYPE)
