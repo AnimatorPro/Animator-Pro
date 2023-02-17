@@ -71,7 +71,10 @@ Errcode boxf(char* fmt, ...);
 
 int po_puts(Popot s);
 int po_printf(long vargcount, long vargsize, char* format, ...);
-void po_qtext(long vargcount, long vargsize, Popot format, ...);
+void po_qtext(long vargcount, long vargsize, Popot åformat, ...);
+
+char* ido_type_to_str(IdoType ido_type);
+void dump_func_frame(const char* name, const Func_frame* frame_in);
 
 
 /****************************************************************************
@@ -626,7 +629,7 @@ int main(int argc, char* argv[])
 	if (compile_status == Success) {
 		#ifdef DEVELOPMENT
 		po_run_protos = (((Poco_run_env*)pexe)->protos); /* for trace */
-		#endif													 /* DEVELOPMENT */
+		#endif	/* DEVELOPMENT */
 
 		if (do_debug_dump) {
 			po_disassemble_program((Poco_run_env*)pexe, stdout);
@@ -636,6 +639,7 @@ int main(int argc, char* argv[])
 			err = run_poco(&pexe, NULL, check_abort, NULL, &err_line);
 		}
 
+		fprintf(stderr, "Return value: %d\n", ((Poco_run_env*)pexe)->result.i);
 		free_poco(&pexe);
 	}
 

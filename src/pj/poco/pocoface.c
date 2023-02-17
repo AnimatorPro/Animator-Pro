@@ -228,8 +228,9 @@ static Errcode lib_run_file(Poco_run_env* pev, char* entry)
 	Errcode err = Success;
 
 	if ((err = po_init_libs(pev->lib)) >= Success) {
-		if ((err = po_init_libs(pev->loaded_libs)) >= Success)
+		if ((err = po_init_libs(pev->loaded_libs)) >= Success) {
 			err = run_file(pev, entry);
+		}
 		po_cleanup_libs(pev->loaded_libs);
 	}
 	po_cleanup_libs(pev->lib);
@@ -364,10 +365,10 @@ Poco_lib* po_open_library(Poco_cb* pcb, char* libname, char* id_string)
 	Errcode err;
 	Poco_lib* ll;
 
-	if (0 == po_eqstrcmp("poco$builtin", libname))
+	if (0 == po_eqstrcmp("poco$builtin", libname)) {
 		return pcb->builtin_lib;
+	}
 	else {
-#ifndef __TURBOC__
 		if ((err = pj_load_pocorex(&ll, libname, id_string)) < Success) {
 			errline(err, "can't load poco lib.");
 			return (NULL);
@@ -375,9 +376,6 @@ Poco_lib* po_open_library(Poco_cb* pcb, char* libname, char* id_string)
 		ll->next = pcb->run.loaded_libs;
 		pcb->run.loaded_libs = ll;
 		return (ll);
-#else
-		return (NULL);
-#endif /* __TURBOC__ */
 	}
 }
 
