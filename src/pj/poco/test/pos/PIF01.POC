@@ -45,6 +45,7 @@ if (39)
 
 	if (40) {
 		float value = sin(0.5);
+		printf("\n\nSuccess! %.03f\n\n");
 		printf("\n\nSuccess! %.03f\n\n", value);
 		return 25;
 	}
