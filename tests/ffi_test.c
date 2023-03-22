@@ -4,6 +4,19 @@
 #include <ffi.h>
 #include <stdio.h>
 
+typedef union po_ffi_data /* Overlap popular datatypes in the same space */
+{
+	int i;
+	short s;
+//	UBYTE* bpt;
+	char c;
+	long l;
+//	ULONG ul;
+	float f;
+	double d;
+	void* p;
+} Po_FFI_Data;
+
 ffi_arg test_printf()
 {
 	ffi_cif cif;
@@ -37,18 +50,26 @@ ffi_arg test_printf()
 void hello_world()
 {
 	ffi_cif cif;
-	ffi_type *args[1];
-	void *values[1];
+	ffi_type* arg_types[4];
+	void *values[4];
 	char *s;
+	const char *sub_string = "bunnies";
 	ffi_arg rc;
 
+	const double fvalue[1] = {3.14};
+
 	/* Initialize the argument info vectors */
-	args[0] = &ffi_type_pointer;
+	arg_types[0] = &ffi_type_pointer;
 	values[0] = &s;
+	arg_types[1] = &ffi_type_double;
+	values[1] = (void*)fvalue;
+
+	arg_types[2] = NULL;
+	values[2] = NULL;
 
 	/* Initialize the cif */
 	if (ffi_prep_cif(&cif, FFI_DEFAULT_ABI, 1,
-					 &ffi_type_sint, args) == FFI_OK)
+					 &ffi_type_sint, arg_types) == FFI_OK)
 	{
 		s = "Hello World!";
 		ffi_call(&cif, puts, &rc, values);
@@ -59,6 +80,28 @@ void hello_world()
 		   value of s */
 		s = "This is cool!";
 		ffi_call(&cif, puts, &rc, values);
+	}
+	else {
+		printf("-- Could not create cif for regular function.\n");
+	}
+
+	if (ffi_prep_cif_var(&cif, FFI_DEFAULT_ABI,
+						 1,
+						 2,
+					     &ffi_type_sint, arg_types) == FFI_OK)
+	{
+		s = "Hello, %s!\n";
+		ffi_call(&cif, FFI_FN(printf), &rc, values);
+		/* rc now holds the result of the call to puts */
+
+		/* values holds a pointer to the function's arg, so to
+		   call puts() again all we need to do is change the
+		   value of s */
+		s = "This is cool, %.3f!\n";
+		ffi_call(&cif, FFI_FN(printf), &rc, values);
+	}
+	else {
+		printf("-- Could not create cif for variadic function.\n");
 	}
 }
 
