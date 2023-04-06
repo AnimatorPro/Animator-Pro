@@ -5,7 +5,7 @@ append_type po_append_type
 assign_after_equals po_assign_after_equals
 backup_code po_backup_code
 bop_expression po_get_binop_expression
-cat_code po_cat_code
+cat_code po_concatenate_code
 cat_exp po_cat_exp
 cat_type po_cat_type
 cbuf_code_size po_cbuf_code_size

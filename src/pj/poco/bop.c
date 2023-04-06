@@ -119,7 +119,7 @@ void po_init_qbop_table(Poco_cb* pcb)
  ****************************************************************************/
 static void cat_exp(Poco_cb* pcb, Exp_frame* dest, Exp_frame* tail, short copy_type_flag)
 {
-	po_cat_code(pcb, &(dest->ecd), &(tail->ecd));
+	po_concatenate_code(pcb, &(dest->ecd), &(tail->ecd));
 
 	dest->pure_const &= tail->pure_const;
 	dest->includes_function += tail->includes_function;
@@ -267,6 +267,6 @@ void po_get_binop_expression(Poco_cb* pcb, Exp_frame* e)
 ALLDONE:
 	exp0 = *exp_stack;
 	cat_exp(pcb, e, exp0, COPY_TYPE);
-	po_cat_code(pcb, &e->left, &exp0->left);
+	po_concatenate_code(pcb, &e->left, &exp0->left);
 	po_dispose_expframe(pcb, exp0);
 }

@@ -735,7 +735,7 @@ loop : {
 		po_init_expframe(pcb, &eee);
 		po_copy_type(pcb, var->ti, &eee.ctc);
 		po_var_init(pcb, &eee, var, frame_type);
-		po_cat_code(pcb, &rf->fcd, &eee.ecd);
+		po_concatenate_code(pcb, &rf->fcd, &eee.ecd);
 		po_trash_expframe(pcb, &eee);
 		lookup_token(pcb);
 	}

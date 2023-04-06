@@ -195,6 +195,23 @@ OP_FREE_STRING, 	/* Free a string */
 OP_CLEAN_STRING,	/* Discard a string value... */
 OP_STRING_CAT,		/* Concatenate two strings... */
 #endif /* STRING_EXPERIMENT */
+
+/* Support for variadic function calls through libffi */
+OP_FFI_POP_ALL,       // pop / clear all type pointers
+OP_FFI_PUSH_VOID,     // ffi_type_void
+OP_FFI_PUSH_UINT8,    // ffi_type_uint8
+OP_FFI_PUSH_SINT8,    // ffi_type_sint8
+OP_FFI_PUSH_UINT16,   // ffi_type_uint16
+OP_FFI_PUSH_SINT16,   // ffi_type_sint16
+OP_FFI_PUSH_UINT32,   // ffi_type_uint32
+OP_FFI_PUSH_SINT32,   // ffi_type_sint32
+OP_FFI_PUSH_UINT64,   // ffi_type_uint64
+OP_FFI_PUSH_SINT64,   // ffi_type_sint64
+OP_FFI_PUSH_FLOAT,    // ffi_type_float
+OP_FFI_PUSH_DOUBLE,   // ffi_type_double
+OP_FFI_PUSH_POINTER,  // ffi_type_pointer
+OP_FFI_PUSH_NULL,     // push a NULL pointer on the types stack
+
 OP_PAST_LAST,		/* One past last legal op (for error checking) */
 };
 

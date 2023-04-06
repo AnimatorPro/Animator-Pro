@@ -141,7 +141,7 @@ Pdr *pd;
 			pdr_get_title(pd,titlebuf,titlesize);
 	}
 
-	strcpy(cpdr->save_suffi,sufbuf);
+	strcpy(cpdr->save_suffi, sufbuf);
 	cpdr->suffi_loaded = TRUE;
 error:
 	free_pdr(&pd);

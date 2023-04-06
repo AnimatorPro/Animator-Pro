@@ -15,7 +15,7 @@
  *				In po_add_op(), two calls were always made to add_code().  Now
  *				the second call is only made if there is data to be coded.
  *	08/22/90	(Ian)
- *				Fixed po_cat_code() and po_copy_code() so that they can't call
+ *				Fixed po_concatenate_code() and po_copy_code() so that they can't call
  *				add_code() with a size of zero.  This allows elimination of
  *				the test in add_code(), and reduces the # of calls to it.
  *	08/25/90	(Ian)
@@ -155,12 +155,14 @@ Boolean po_add_op(Poco_cb* pcb, Code_buf* cbuf, int op, void* data, SHORT data_s
 		po_say_fatal(pcb, "Trying to code invalid opcode %d (not %d-%d)", op, OP_BAD, OP_PAST_LAST);
 	}
 #endif /* DEVELOPMENT */
-	if (!add_code(pcb, cbuf, &op, sizeof(op)))
-		return (FALSE);
-	if (data_size > 0)
-		return (add_code(pcb, cbuf, data, data_size));
-	else
-		return (TRUE);
+	if (!add_code(pcb, cbuf, &op, sizeof(op))) {
+		return FALSE;
+	}
+	if (data_size > 0) {
+		return add_code(pcb, cbuf, data, data_size);
+	}
+
+	return TRUE;
 }
 
 /*****************************************************************************
@@ -188,7 +190,7 @@ long po_cbuf_code_size(Code_buf* c)
 /*****************************************************************************
  * concatenate two chunks of code...
  ****************************************************************************/
-Boolean po_cat_code(Poco_cb* pcb, Code_buf* dest, Code_buf* end)
+Boolean po_concatenate_code(Poco_cb* pcb, Code_buf* dest, Code_buf* end)
 {
 	SHORT size;
 

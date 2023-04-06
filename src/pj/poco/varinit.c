@@ -394,7 +394,7 @@ void po_var_init(Poco_cb *pcb, Exp_frame *e, Symbol *var, SHORT frame_type)
 		next = exp->next;
 		fixword = OPTR(exp->ecd.code_buf, exp->doff);
 		*fixword += fixup_offset;
-		po_cat_code(pcb, &e->ecd, &exp->ecd);
+		po_concatenate_code(pcb, &e->ecd, &exp->ecd);
 		po_dispose_expframe(pcb, exp);
 	}
 }

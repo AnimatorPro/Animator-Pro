@@ -451,8 +451,9 @@ int po_hashfunc(UBYTE* s)
 	int c;
 
 	acc = *s++;
-	while ((c = *s++) != 0)
+	while ((c = *s++) != 0) {
 		acc = (acc /* <<1 */) + c;
+	}
 	return (acc & (HASH_SIZE - 1));
 }
 
@@ -464,11 +465,13 @@ Symbol* po_unlink_el(Symbol* list, Symbol* el)
 {
 	Symbol* next;
 
-	if (list == el)
+	if (list == el) {
 		return (el->next);
+	}
 	next = list;
-	while (next->next != el)
+	while (next->next != el) {
 		next = next->next;
+	}
 	next->next = el->next;
 	return (list);
 }
@@ -622,7 +625,7 @@ int po_link_len(Symbol* l)
 		count += 1;
 		l = l->link;
 	}
-	return (count);
+	return count;
 }
 
 /*****************************************************************************
@@ -1198,10 +1201,10 @@ Ido_table po_ido_table[] =
 static Boolean po_check_ido_table(Poco_cb* pcb)
 {
 #ifdef DEVELOPMENT
-	int i;
+	size_t i;
 
 	for (i = 0; i < Array_els(po_ido_table); i++) {
-		if (i != po_ido_table[i].ido_type) {
+		if (i != (size_t)po_ido_table[i].ido_type) {
 			fprintf(pcb->t.err_file, "%d != %d\n", i, po_ido_table[i].ido_type);
 			po_say_internal(pcb, "po_ido_table doesn't check");
 			return (FALSE);
@@ -1472,8 +1475,8 @@ static void get_array(Poco_cb* pcb, Exp_frame* e)
 	po_code_elsize(pcb, &iex, el_size);
 	po_code_op(pcb, &iex.ecd, po_add_offset_ops[iex.ctc.ido_type]);
 	/* have computed parts of array expression common to left and right side... */
-	po_cat_code(pcb, &e->left, &iex.ecd); /* this is all for left side */
-	po_cat_code(pcb, &e->ecd, &iex.ecd);  /* Right side still needs a OP_XREF */
+	po_concatenate_code(pcb, &e->left, &iex.ecd); /* this is all for left side */
+	po_concatenate_code(pcb, &e->ecd, &iex.ecd);  /* Right side still needs a OP_XREF */
 	if ((op = ref_op(pcb, ti)) < 0)
 		goto TRASHIT;
 	po_code_op(pcb, &e->ecd, op);
@@ -1614,7 +1617,7 @@ static void get_member(Poco_cb* pcb, Exp_frame* e)
 		if (po_is_array(msym->ti)) /* move left side (OP_XXX_ADDRESS) */
 		{						   /* to right side.				   */
 			e->ecd.code_pt = OPTR(e->ecd.code_pt, -(OPY_SIZE + sizeof(int)));
-			po_cat_code(pcb, &e->ecd, &e->left);
+			po_concatenate_code(pcb, &e->ecd, &e->left);
 		} else {
 			patch  = OPTR(e->ecd.code_pt, -(OPY_SIZE + sizeof(int)));
 			*patch = find_use_op(pcb, vsym, &e->ctc); /* update OP_XXX_XVAR */
@@ -2343,7 +2346,7 @@ static void get_address(Poco_cb* pcb, Exp_frame* e)
 	}
 	po_copy_type(pcb, &ex.ctc, &e->ctc);
 	po_append_type(pcb, &e->ctc, TYPE_POINTER, 0, NULL);
-	po_cat_code(pcb, &e->ecd, &ex.left);
+	po_concatenate_code(pcb, &e->ecd, &ex.left);
 	e->pure_const &= ex.pure_const;
 	clear_code_buf(pcb, &e->left);
 OUT:
@@ -2430,7 +2433,7 @@ void po_get_unop_expression(Poco_cb* pcb, Exp_frame* e)
 static void assign_after_value(Poco_cb* pcb, Exp_frame* e, Symbol* var)
 {
 	if (e->left_complex) {
-		po_cat_code(pcb, &e->ecd, &e->left);
+		po_concatenate_code(pcb, &e->ecd, &e->left);
 		po_code_op(pcb, &e->ecd, ind_op(pcb, &e->ctc));
 	} else {
 		po_code_int(pcb, &e->ecd, po_find_assign_op(pcb, var, &e->ctc), e->doff);
@@ -2446,7 +2449,7 @@ static void make_assign(Poco_cb* pcb, Exp_frame* e, Exp_frame* val_exp, Symbol* 
 	TypeComp obase = e->ctc.comp[0];
 
 	po_coerce_expression(pcb, val_exp, &e->ctc, FALSE);
-	po_cat_code(pcb, &e->ecd, &val_exp->ecd);
+	po_concatenate_code(pcb, &e->ecd, &val_exp->ecd);
 	e->ctc.comp[0] = obase;
 	assign_after_value(pcb, e, var);
 	clear_code_buf(pcb, &e->left);
@@ -2516,7 +2519,7 @@ static void plus_equals(Poco_cb* pcb,
 			po_fold_const(pcb, e);
 		}
 		po_code_op(pcb, &val_eee.ecd, op_group[e->ctc.ido_type]);
-		po_cat_code(pcb, &e->ecd, &val_eee.ecd);
+		po_concatenate_code(pcb, &e->ecd, &val_eee.ecd);
 		assign_after_value(pcb, e, var);
 	} else {
 		po_coerce_numeric_exp(pcb, &val_eee, e->ctc.ido_type);
@@ -2815,8 +2818,9 @@ Boolean po_compile_file(Poco_cb* pcb, char* name)
 
 	if (po_new_frame(pcb, SCOPE_GLOBAL, name, FTY_GLOBAL)) {
 		pf = pcb->rframe;
-		if (init_reserved_words(pcb) < Success)
+		if (init_reserved_words(pcb) < Success) {
 			goto BADOUT;
+		}
 
 		memset(&dummy_token, 0, sizeof(dummy_token));
 		pcb->curtoken	 = &dummy_token;
@@ -2825,18 +2829,21 @@ Boolean po_compile_file(Poco_cb* pcb, char* name)
 
 		po_get_statements(pcb, pf); /* returns on EOF or unexpected RBRACE */
 		lookup_token(pcb);
-		if (pcb->t.toktype != TOK_EOF)
+		if (pcb->t.toktype != TOK_EOF) {
 			po_say_fatal(pcb, "unexpected '}'");
+		}
 
 		po_code_op(pcb, &pf->fcd, OP_END);
 		fuf				= po_memzalloc(pcb, sizeof(*fuf));
 		fuf->name		= po_clone_string(pcb, name);
 		fuf->mlink		= pcb->run.protos;
 		pcb->run.protos = fuf;
-		if (!po_compress_func(pcb, pf, fuf))
+		if (!po_compress_func(pcb, pf, fuf)) {
 			goto BADOUT;
-		if (!po_check_undefined_funcs(pcb, pf->symbols))
+		}
+		if (!po_check_undefined_funcs(pcb, pf->symbols)) {
 			goto BADOUT;
+		}
 		po_dump_file(pcb);
 		pcb->run.data_size = -pf->doff;
 	}
@@ -2847,8 +2854,9 @@ BADOUT:
 
 	po_free_symbol_list(&pf->parameters); /* free res. words */
 
-	if (fuf != NULL)
+	if (fuf != NULL) {
 		fuf->parameters = NULL; /* we just freed these above! */
+	}
 
 	po_old_frame(pcb);
 

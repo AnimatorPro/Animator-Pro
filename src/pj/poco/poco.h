@@ -723,6 +723,10 @@ typedef struct poco_run_env
 	Po_FuncMap* func_map;  /* for fast lookups of C function calls */
 	PoBoolean enable_debug_trace;
 	Pt_num result;
+
+	ffi_type* variadic_types[FFI_MAX_ARGS+1]; /* special storage for variadic argument types for libffi */
+	int variadic_type_index; /* the target for OP_FFI_PUSH_* opcodes */
+
 	char pad[24];
 } Poco_run_env;
 
@@ -829,7 +833,7 @@ Boolean po_add_op(Poco_cb* pcb, Code_buf* cbuf, int op, void* data, SHORT data_s
 void po_no_code(Poco_cb* pcb, Code_buf* cb);
 void po_backup_code(Poco_cb* pcb, Code_buf* cb, int op_size);
 long po_cbuf_code_size(Code_buf* c);
-Boolean po_cat_code(Poco_cb* pcb, Code_buf* dest, Code_buf* end);
+Boolean po_concatenate_code(Poco_cb* pcb, Code_buf* dest, Code_buf* end);
 Boolean po_copy_code(Poco_cb* pcb, Code_buf* source, Code_buf* dest);
 void po_code_op(Poco_cb* pcb, Code_buf* cbuf, int op);
 void po_add_code_fixup(Poco_cb* pcb, Code_buf* cbuf, int fixup);
@@ -1084,12 +1088,15 @@ void po_print_trace(Poco_run_env* pe,
 void po_var_init(Poco_cb* pcb, Exp_frame* e, Symbol* var, SHORT frame_type);
 
 /* in poco_ffi.c */
+ffi_type* po_ffi_type_from_ido_type(IdoType ido_type);
+const char* po_ffi_name_for_type(const ffi_type* type);
 int po_ffi_build_structures(Poco_run_env* env);
 Po_FFI* po_ffi_find_binding(const Poco_run_env* env, const void* key);
 Po_FFI* po_ffi_find_binding_by_name(const Poco_run_env* env, const char* name);
 Po_FFI* po_ffi_new(const C_frame* frame);
 void po_ffi_delete(Po_FFI* binding);
-Pt_num po_ffi_call(Po_FFI* binding, const Pt_num* stack_in);
+Pt_num po_ffi_call(Po_FFI* binding, const Pt_num* stack_in, const ffi_type* variadic_types);
+Boolean po_ffi_is_variadic(const Po_FFI* binding);
 
 
 #ifdef STRING_EXPERIMENT

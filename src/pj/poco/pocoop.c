@@ -214,6 +214,23 @@ Poco_op_table po_ins_table[] = {
 { "OP_CLEAN_STRING",   0,              OFL_NONE,   OEX_NONE,      OP_CLEAN_STRING,},
 { "OP_STRING_CAT",     0,              OFL_NOTCON, OEX_NONE,      OP_STRING_CAT,},
 #endif /* STRING_EXPERIMENT */
+
+/* Support for variadic function calls through libffi */
+{ "OP_FFI_POP_ALL",       0,           OFL_NONE,   OEX_NONE,      OP_FFI_POP_ALL,},
+{ "OP_FFI_PUSH_VOID",     0,           OFL_NONE,   OEX_NONE,      OP_FFI_PUSH_VOID,},
+{ "OP_FFI_PUSH_UINT8",    0,           OFL_NONE,   OEX_NONE,      OP_FFI_PUSH_UINT8,},
+{ "OP_FFI_PUSH_SINT8",    0,           OFL_NONE,   OEX_NONE,      OP_FFI_PUSH_SINT8,},
+{ "OP_FFI_PUSH_UINT16",   0,           OFL_NONE,   OEX_NONE,      OP_FFI_PUSH_UINT16,},
+{ "OP_FFI_PUSH_SINT16",   0,           OFL_NONE,   OEX_NONE,      OP_FFI_PUSH_SINT16,},
+{ "OP_FFI_PUSH_UINT32",   0,           OFL_NONE,   OEX_NONE,      OP_FFI_PUSH_UINT32,},
+{ "OP_FFI_PUSH_SINT32",   0,           OFL_NONE,   OEX_NONE,      OP_FFI_PUSH_SINT32,},
+{ "OP_FFI_PUSH_UINT64",   0,           OFL_NONE,   OEX_NONE,      OP_FFI_PUSH_UINT64,},
+{ "OP_FFI_PUSH_SINT64",   0,           OFL_NONE,   OEX_NONE,      OP_FFI_PUSH_SINT64,},
+{ "OP_FFI_PUSH_FLOAT",    0,           OFL_NONE,   OEX_NONE,      OP_FFI_PUSH_FLOAT,},
+{ "OP_FFI_PUSH_DOUBLE",   0,           OFL_NONE,   OEX_NONE,      OP_FFI_PUSH_DOUBLE,},
+{ "OP_FFI_PUSH_POINTER",  0,           OFL_NONE,   OEX_NONE,      OP_FFI_PUSH_POINTER,},
+{ "OP_FFI_PUSH_NULL",  0,              OFL_NONE,   OEX_NONE,      OP_FFI_PUSH_NULL,},
+
 };
 int po_ins_table_els = Array_els(po_ins_table);
 

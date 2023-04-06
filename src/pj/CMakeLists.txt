@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.16 FATAL_ERROR)
 
 project(ani C)
 
-set(CMAKE_C_STANDARD 11)
+set(CMAKE_C_STANDARD 99)
 set(CMAKE_CXX_STANDARD 17)
 
 include_directories("inc")
@@ -17,7 +17,6 @@ add_subdirectory(input)
 add_subdirectory(menus)
 add_subdirectory(picdrive)
 add_subdirectory(pjhigh)
-add_subdirectory(poco)
 add_subdirectory(pj_sdl)
 add_subdirectory(rastlib)
 add_subdirectory(rexlib)
@@ -25,7 +24,11 @@ add_subdirectory(softmenu)
 add_subdirectory(util)
 add_subdirectory(wndo)
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-sign-compare")
+if (WITH_POCO)
+	add_subdirectory(poco)
+endif()
+	
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-sign-compare")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-pointer-sign")
 
 set(PJMAIN_SRC_FILES
@@ -157,7 +160,6 @@ if (WITH_ANI)
 			picdrive
 			pjhigh
 			pj_sdl
-			libpoco
 			raster
 			minirex
 			softmenu
@@ -168,6 +170,9 @@ if (WITH_ANI)
 			m
 	)
 	
+	if (WITH_POCO)
+		target_link_libraries(${PROJECT_NAME} libpoco)
+	endif()
 	
 	if (CMAKE_GENERATOR STREQUAL "Xcode")
 		set_target_properties(

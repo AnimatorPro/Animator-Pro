@@ -108,66 +108,84 @@ static void mk_function_call(Poco_cb* pcb, Exp_frame* e, Func_frame* fff, SHORT 
 	Exp_frame* exp;
 	Code_buf callcode;
 
+	ffi_type* parameter_types[FFI_MAX_ARGS];
+	int parameter_index = 0;
+	memset(&parameter_types, 0, sizeof(ffi_type*) * FFI_MAX_ARGS);
+
 	po_init_code_buf(pcb, &callcode);
 	param		   = fff->parameters;
 	expected_count = fff->pcount;
-	for (;;) {
-		if (param == NULL)
-			break;
-		if (po_is_next_token(pcb, TOK_RPAREN))
-			break;
 
-		exp		   = po_new_expframe(pcb);
+	for (;;) {
+		if (param == NULL) {
+			break;
+		}
+		if (po_is_next_token(pcb, TOK_RPAREN)) {
+			break;
+		}
+
+		exp        = po_new_expframe(pcb);
 		exp->next  = param_exps;
 		param_exps = exp;
 		po_get_expression(pcb, exp);
 
 		if (param->flags & SFL_ELLIP) {
+			// this is a variadic parameter
 			if (fff->type == CFF_C) { /* ptr parms passed to c functions get un-poco-pointerized */
 				if (po_is_pointer(&exp->ctc) || po_is_array(&exp->ctc)) {
 					po_code_op(pcb, &exp->ecd, OP_PPT_TO_CPT);
 					exp->ctc.comp[exp->ctc.comp_count - 1] = TYPE_CPT;
 					exp->ctc.ido_type					   = IDO_CPT;
 				}
-#ifdef STRING_EXPERIMENT
+				#ifdef STRING_EXPERIMENT
 				else if (po_is_string(&exp->ctc)) {
 					po_code_op(pcb, &exp->ecd, OP_STRING_TO_CPT);
 					exp->ctc.comp[0]  = TYPE_CHAR;
 					exp->ctc.comp[1]  = TYPE_CPT;
 					exp->ctc.ido_type = IDO_CPT;
 				}
-#endif /* STRING_EXPERIMENT */
+				#endif /* STRING_EXPERIMENT */
 				this_param_size = po_get_param_size(pcb, exp->ctc.ido_type);
 				varg_param_size += this_param_size;
-				++varg_param_count;
+				varg_param_count += 1;
+
+				parameter_types[parameter_index] = po_ffi_type_from_ido_type(exp->ctc.ido_type);
+				parameter_index += 1;
 			}
-		} else {
+		} 
+		else {
+			// regular parameter
 			po_coerce_expression(pcb, exp, param->ti, FALSE);
 			this_param_size = po_get_param_size(pcb, exp->ctc.ido_type);
+			parameter_types[parameter_index] = po_ffi_type_from_ido_type(exp->ctc.ido_type);
+			parameter_index += 1;
 		}
 
 		++param_count;
 		param_size += this_param_size;
 
-		if (!(param->flags & SFL_ELLIP))
+		if (!(param->flags & SFL_ELLIP)) {
 			param = param->link;
+		}
 
 		po_need_token(pcb);
 
 		if (param != NULL) {
 			if (param->flags & SFL_ELLIP) {
 				if (pcb->t.toktype != ',') {
-					if (pcb->t.toktype != ')')
+					if (pcb->t.toktype != ')') {
 						po_expecting_got(pcb, ", or )");
-					else
+					} else {
 						pushback_token(&pcb->t);
+					}
 				}
 			} else {
 				if (pcb->t.toktype != ',') {
-					if (pcb->t.toktype == ')')
+					if (pcb->t.toktype == ')') {
 						goto NOT_ENOUGH_PARMS;
-					else
+					} else {
 						po_expecting_got(pcb, ",");
+					}
 				}
 			}
 		} else {
@@ -177,8 +195,9 @@ static void mk_function_call(Poco_cb* pcb, Exp_frame* e, Func_frame* fff, SHORT 
 
 	if (param != NULL && (param->flags & SFL_ELLIP)) {
 		--expected_count;
-		if (fff->type == CFF_C)
+		if (fff->type == CFF_C) {
 			is_cvarg_call = TRUE;
+		}
 	}
 
 	if (param_count < expected_count) {
@@ -196,14 +215,15 @@ static void mk_function_call(Poco_cb* pcb, Exp_frame* e, Func_frame* fff, SHORT 
 		the function calling code is in e.	Must reorder things so parameters
 		go first in e and then the calling code. */
 
-	if (e->left_complex)
+	if (e->left_complex) {
 		po_copy_code(pcb, &e->ecd, &callcode);
+	}
 
 	clear_code_buf(pcb, &e->ecd);
 
 	exp = param_exps;
 	while (exp != NULL) {
-		po_cat_code(pcb, &e->ecd, &exp->ecd);
+		po_concatenate_code(pcb, &e->ecd, &exp->ecd);
 		exp = exp->next;
 	}
 
@@ -211,9 +231,38 @@ static void mk_function_call(Poco_cb* pcb, Exp_frame* e, Func_frame* fff, SHORT 
 		po_code_long(pcb, &e->ecd, OP_LCON, varg_param_size);
 		po_code_long(pcb, &e->ecd, OP_LCON, varg_param_count);
 		param_size += 2 * sizeof(long); /* for stack cleanup instruction later */
+
+		/* new for libffi compat-- add ops for the variable types*/
+		// clear current stack of parameter types
+		po_code_op(pcb, &e->ecd, OP_FFI_POP_ALL);
+
+		 for (int i = parameter_index - 1; i >= 0; i--) {
+		 	const ffi_type* type = parameter_types[i];
+		 	int op = 0;
+
+		 	if (type == &ffi_type_sint32) {
+		 		op = OP_FFI_PUSH_SINT32;
+		 	}
+		 	else if (type == &ffi_type_double) {
+		 		op = OP_FFI_PUSH_DOUBLE;
+		 	}
+		 	else if (type == &ffi_type_pointer) {
+		 		op = OP_FFI_PUSH_POINTER;
+		 	}
+		 	else {
+		 		fprintf(stderr, "-- Invalid CFFI variadic argument type (%s: %s --> bad %s)!\n",
+		 				fff->name, param->name, po_ffi_name_for_type(type));
+		 	}
+		 	if (op) {
+		 		po_code_op(pcb, &e->ecd, op);
+		 	}
+		 }
+
+		 // finish off the list with a NULL pointer
+		 po_code_op(pcb, &e->ecd, OP_FFI_PUSH_NULL);
 	}
 
-	po_cat_code(pcb, &e->ecd, &callcode);
+	po_concatenate_code(pcb, &e->ecd, &callcode);
 
 	idot = e->ctc.ido_type;
 	if (e->left_complex) {

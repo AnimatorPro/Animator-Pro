@@ -416,20 +416,25 @@ int main(int argc, char** argv)
 	vs = default_vs; /* copy in default settings */
 
 	err = open_pj_startup_screen(init_after_screen);
-	if(err < Success)
+	if(err < Success) {
 		goto error;
+	}
 
-	if(!oldconfig)
+	if(!oldconfig) {
 		soft_continu_box("newconfig");
+	}
 
-	if (cl_flic_name != NULL)
-		pj_delete(tflxname);	  /* Delete old tempflx */
+	if (cl_flic_name != NULL) {
+		pj_delete(tflxname); /* Delete old tempflx */
+	}
 
-	if((err = force_temp_files()) < Success)
+	if((err = force_temp_files()) < Success) {
 		goto error;
+	}
 
-	if (cl_flic_name != NULL)
+	if (cl_flic_name != NULL) {
 		resize_load_fli(cl_flic_name);
+	}
 
 	err = go_vpaint();
 
@@ -448,10 +453,12 @@ int main(int argc, char** argv)
 				break;
 			case RESET_DEFAULT_FLX:
 				push_close_toscreen();
-				if((err = clear_vtemps(TRUE)) < 0)
+				if((err = clear_vtemps(TRUE)) < 0) {
 					goto error;
-				if((err = open_default_flx()) < 0)
+				}
+				if((err = open_default_flx()) < 0) {
 					goto error;
+				}
 			case RESTART_VPAINT:
 				err = go_vpaint();
 				break;

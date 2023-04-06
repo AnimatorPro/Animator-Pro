@@ -491,7 +491,8 @@ Errcode compile_poco(void** ppexe,		 /* returns executable pexe on Success */
 			goto OUT;
 		}
 
-		if (NULL == (pev = pj_zalloc((long)sizeof(*pev)))) {
+		pev = pj_zalloc((long)sizeof(*pev));
+		if (pev == NULL) {
 			err = Err_no_memory;
 			goto OUT;
 		}
@@ -579,11 +580,13 @@ Errcode run_poco(void** ppexe,
 	if ((porunenv = *ppexe) == NULL)
 		return (Err_not_found);
 
-	porunenv->enable_debug_trace = TRUE;
-	porunenv->check_abort		 = check_abort;
-	porunenv->check_abort_data	 = check_abort_data;
-	porunenv->trace_file		 = trace_file;
-	porunenv->err_line			 = err_line;
+	porunenv->enable_debug_trace  = TRUE;
+	porunenv->check_abort		  = check_abort;
+	porunenv->check_abort_data	  = check_abort_data;
+	porunenv->trace_file		  = trace_file;
+	porunenv->err_line			  = err_line;
+
+	porunenv->variadic_type_index = 0;
 
 	return lib_run_file(porunenv, "main");
 }

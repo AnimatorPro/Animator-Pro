@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.16 FATAL_ERROR)
 
 project(animator-pro)
 
+cmake_policy(SET CMP0114 NEW)
+
 if (PLATFORM STREQUAL "OS64")
 	## iOS-specific
 	message("Building for platform iOS.")

@@ -258,7 +258,7 @@ static void get_while(Poco_cb* pcb, Poco_frame* pf)
 	if (!po_eat_rparen(pcb))
 		goto OUT;
 	po_coerce_to_boolean(pcb, ef);
-	if (!po_cat_code(pcb, &pf->fcd, &ef->ecd))
+	if (!po_concatenate_code(pcb, &pf->fcd, &ef->ecd))
 		goto OUT;
 	cpos = po_cbuf_code_size(&pf->fcd) + OPY_SIZE;
 	if (new_use(pcb, lf->end, cpos) == NULL)
@@ -311,7 +311,7 @@ static void get_do(Poco_cb* pcb, Poco_frame* pf)
 
 	/* generate code for the conditional expression and the branches */
 	po_coerce_to_boolean(pcb, ef);
-	if (!po_cat_code(pcb, &pf->fcd, &ef->ecd))
+	if (!po_concatenate_code(pcb, &pf->fcd, &ef->ecd))
 		goto OUT;
 
 	cpos = po_cbuf_code_size(&pf->fcd) + OPY_SIZE;
@@ -367,7 +367,7 @@ static void get_switch(Poco_cb* pcb, Poco_frame* pf)
 	lf->con_type = &ef.ctc;
 
 	/* push the initial expression */
-	if (!po_cat_code(pcb, &pf->fcd, &ef.ecd))
+	if (!po_concatenate_code(pcb, &pf->fcd, &ef.ecd))
 		goto OUT;
 
 	/* assign it to a temporary */
@@ -432,7 +432,7 @@ static void get_case_after(Poco_cb* pcb, Poco_frame* pf, Loop_frame* lf)
 	po_code_int(pcb, &pf->fcd, po_find_local_use(pcb, lft), lf->svar_offset);
 	po_code_op(pcb, &ef.ecd, po_eq_ops[lft->ido_type]);
 	po_coerce_to_boolean(pcb, &ef);
-	if (!po_cat_code(pcb, &pf->fcd, &ef.ecd))
+	if (!po_concatenate_code(pcb, &pf->fcd, &ef.ecd))
 		goto OUT;
 	/* now issue goto next case... */
 	lf->last_case_beq = po_cbuf_code_size(&pf->fcd) + OPY_SIZE;
@@ -514,7 +514,7 @@ static void get_if(Poco_cb* pcb, Poco_frame* pf)
 	if (!po_eat_rparen(pcb))
 		goto OUT;
 	po_coerce_to_boolean(pcb, ef);
-	if (!po_cat_code(pcb, &pf->fcd, &ef->ecd))
+	if (!po_concatenate_code(pcb, &pf->fcd, &ef->ecd))
 		goto OUT;
 	cpos = po_cbuf_code_size(&pf->fcd) + OPY_SIZE;
 	if (new_use(pcb, false, cpos) == NULL)
@@ -564,7 +564,7 @@ static void get_return(Poco_cb* pcb, Poco_frame* pf)
 		po_get_expression(pcb, &ef);
 		po_coerce_expression(pcb, &ef, pf->return_type, FALSE);
 		po_code_op(pcb, &ef.ecd, po_find_pop_op(pcb, &ef.ctc));
-		po_cat_code(pcb, &pf->fcd, &ef.ecd);
+		po_concatenate_code(pcb, &pf->fcd, &ef.ecd);
 		po_trash_expframe(pcb, &ef);
 		po_eat_semi(pcb);
 	}
@@ -590,7 +590,7 @@ static void get_comma(Poco_cb* pcb, Exp_frame* e)
 			po_get_expression(pcb, &ef);
 			po_pop_off_result(pcb, &ef);
 			/* po_code_op(pcb, &ef.ecd, po_find_pop_op(pcb, &ef.ctc)); ~~~*/
-			po_cat_code(pcb, &e->ecd, &ef.ecd);
+			po_concatenate_code(pcb, &e->ecd, &ef.ecd);
 			po_trash_expframe(pcb, &ef);
 			clear_code_buf(pcb, &e->left);
 		} else {
@@ -643,11 +643,11 @@ static void get_for(Poco_cb* pcb, Poco_frame* pf)
 	}
 	if (!po_eat_rparen(pcb))
 		goto OUT;
-	if (!po_cat_code(pcb, &pf->fcd, &efstart->ecd))
+	if (!po_concatenate_code(pcb, &pf->fcd, &efstart->ecd))
 		goto OUT;
 	lf->start->code_pos = po_cbuf_code_size(&pf->fcd);
 	if (got_cond) {
-		if (!po_cat_code(pcb, &pf->fcd, &efcond->ecd))
+		if (!po_concatenate_code(pcb, &pf->fcd, &efcond->ecd))
 			goto OUT;
 		cpos = po_cbuf_code_size(&pf->fcd) + OPY_SIZE;
 		if (new_use(pcb, lf->end, cpos) == NULL)
@@ -656,7 +656,7 @@ static void get_for(Poco_cb* pcb, Poco_frame* pf)
 	}
 	statement(pcb, pf);
 	po_add_line_data(pcb, pf->ld, po_cbuf_code_size(&pf->fcd), for_line);
-	if (!po_cat_code(pcb, &pf->fcd, &efend->ecd))
+	if (!po_concatenate_code(pcb, &pf->fcd, &efend->ecd))
 		goto OUT;
 	cpos = po_cbuf_code_size(&pf->fcd) + OPY_SIZE;
 	if (new_use(pcb, lf->start, cpos) == NULL)
@@ -802,7 +802,7 @@ void po_exp_statement(Poco_cb* pcb, Poco_frame* pf)
 	po_get_expression(pcb, &eee);
 	po_pop_off_result(pcb, &eee);
 	po_eat_semi(pcb);
-	po_cat_code(pcb, &pf->fcd, &eee.ecd);
+	po_concatenate_code(pcb, &pf->fcd, &eee.ecd);
 	po_trash_expframe(pcb, &eee);
 }
 

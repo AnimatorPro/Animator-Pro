@@ -53,7 +53,7 @@ int po_ffi_func_compare(const void* left, const void* right);
 /*
  * Convert a poco type to an FFI type.
  */
-static inline ffi_type* po_ffi_type_from_ido_type(IdoType ido_type) {
+ffi_type* po_ffi_type_from_ido_type(IdoType ido_type) {
 	//!TODO: Handle sub types?
 
 	switch(ido_type) {
@@ -95,10 +95,16 @@ static inline ffi_type* po_ffi_type_from_ido_type(IdoType ido_type) {
  * Return a string name for a specified FFI type.
  */
 
-const char* po_ffi_name_for_type(ffi_type* type) {
+const char* po_ffi_name_for_type(const ffi_type* type) {
 	/* Can't switch on a pointer, but this is fine for now. */
 	if (type == &ffi_type_sint) {
 		return "int";
+	}
+	if (type == &ffi_type_uint) {
+		return "unsigned int";
+	}
+	else if (type == &ffi_type_uint32) {
+		return "unsigned long";
 	}
 	else if (type == &ffi_type_sint32) {
 		return "long";
@@ -112,7 +118,27 @@ const char* po_ffi_name_for_type(ffi_type* type) {
 	else if (type == &ffi_type_void) {
 		return "void";
 	}
-
+	else if (type == &ffi_type_uint8) {
+		return "uint8";
+	}
+	else if (type == &ffi_type_sint8) {
+		return "sint8";
+	}
+	else if (type == &ffi_type_uint16) {
+		return "uint16";
+	}
+	else if (type == &ffi_type_sint16) {
+		return "sint16";
+	}
+	else if (type == &ffi_type_uint64) {
+		return "uint64";
+	}
+	else if (type == &ffi_type_sint64) {
+		return "sint64";
+	}
+	else if (type == &ffi_type_float) {
+		return "float";
+	}
 	return "unknown type";
 }
 
@@ -149,7 +175,7 @@ static size_t po_ffi_ido_type_size(IdoType ido_type) {
 
 
 // ===============================================================
-static bool po_ffi_is_variadic(Po_FFI* binding) {
+Boolean po_ffi_is_variadic(const Po_FFI* binding) {
 	return binding->flags & PO_FFI_VARIADIC;
 }
 
@@ -575,7 +601,7 @@ int po_ffi_build_structures(Poco_run_env* env) {
 	Returns a Pt_num for acc.ret in runops.c.
 */
 
-Pt_num po_ffi_call(Po_FFI* binding, const Pt_num* stack_in)
+Pt_num po_ffi_call(Po_FFI* binding, const Pt_num* stack_in, const ffi_type* variadic_types)
 {
 	Po_FFI* binding_variadic = NULL;
 	Po_FFI* exec_binding = binding;
