@@ -420,9 +420,10 @@ int main(int argc, char** argv)
 		goto error;
 	}
 
-	if(!oldconfig) {
-		soft_continu_box("newconfig");
-	}
+	// kiki note: don't need this any more
+//	if(!oldconfig) {
+//		soft_continu_box("newconfig");
+//	}
 
 	if (cl_flic_name != NULL) {
 		pj_delete(tflxname); /* Delete old tempflx */
