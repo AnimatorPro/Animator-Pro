@@ -4,6 +4,11 @@ project(animator-pro)
 
 cmake_policy(SET CMP0114 NEW)
 
+if(APPLE)
+	## fixes issues with nativefiledialog-extended
+	enable_language(OBJC)
+endif()
+
 if (PLATFORM STREQUAL "OS64")
 	## iOS-specific
 	message("Building for platform iOS.")
@@ -41,6 +46,8 @@ add_compile_options(
 ## thirdparty dependencies
 add_subdirectory(thirdparty/sdl2)
 include_directories(thirdparty/sdl2/include)
+add_subdirectory(thirdparty/nativefiledialog)
+include_directories(thirdparty/nativefiledialog/src/include)
 
 
 if (WITH_POCO)

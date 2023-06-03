@@ -167,6 +167,7 @@ if (WITH_ANI)
 			wndolib
 			SDL2-static
 			SDL2main
+			nfd
 			m
 	)
 	
