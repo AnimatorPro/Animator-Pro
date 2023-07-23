@@ -1,5 +1,4 @@
 #include <SDL.h>
-#include <iostream>
 
 #import <Foundation/NSFileManager.h>
 
@@ -47,8 +46,7 @@ int main()
                                 error:nil];
         result_url = [result_url URLByAppendingPathComponent:@"com.vpaint.animator-pro"];
 //        NSLog(@"%@", result_url);
-        if (![file_manager createDirectoryAtURL:result_url withIntermediateDirectories:YES attributes:nil error:nil])
-        {
+        if (![file_manager createDirectoryAtURL:result_url withIntermediateDirectories:YES attributes:nil error:nil]) {
             NSLog(@"Unable to create directory: %s.", [[result_url path] UTF8String]);
         }
         

@@ -30,7 +30,7 @@ TestVirtualJoystick(void *arg)
     desc.naxes = SDL_CONTROLLER_AXIS_MAX;
     desc.nbuttons = SDL_CONTROLLER_BUTTON_MAX;
     desc.vendor_id = USB_VENDOR_NVIDIA;
-    desc.product_id = USB_PRODUCT_NVIDIA_SHIELD_CONTROLLER;
+    desc.product_id = USB_PRODUCT_NVIDIA_SHIELD_CONTROLLER_V104;
     desc.name = "Virtual NVIDIA SHIELD Controller";
     device_index = SDL_JoystickAttachVirtualEx(&desc);
     SDLTest_AssertCheck(device_index >= 0, "SDL_JoystickAttachVirtualEx()");
@@ -72,11 +72,12 @@ TestVirtualJoystick(void *arg)
 /* ================= Test References ================== */
 
 /* Joystick routine test cases */
-static const SDLTest_TestCaseReference joystickTest1 =
-        { (SDLTest_TestCaseFp)TestVirtualJoystick, "TestVirtualJoystick", "Test virtual joystick functionality", TEST_ENABLED };
+static const SDLTest_TestCaseReference joystickTest1 = {
+    (SDLTest_TestCaseFp)TestVirtualJoystick, "TestVirtualJoystick", "Test virtual joystick functionality", TEST_ENABLED
+};
 
 /* Sequence of Joystick routine test cases */
-static const SDLTest_TestCaseReference *joystickTests[] =  {
+static const SDLTest_TestCaseReference *joystickTests[] = {
     &joystickTest1,
     NULL
 };

@@ -27,11 +27,13 @@ LDFLAGS = @BUILD_LDFLAGS@
 EXTRA_LDFLAGS = @EXTRA_LDFLAGS@
 LIBTOOL = @LIBTOOL@
 INSTALL = @INSTALL@
+FGREP	= @FGREP@
 AR	= @AR@
 RANLIB	= @RANLIB@
 RC	= @RC@
 LINKER = @LINKER@
 LIBTOOLLINKERTAG = @LIBTOOLLINKERTAG@
+SDL_VENDOR_INFO = @SDL_VENDOR_INFO@
 
 TARGET  = libSDL2.la
 OBJECTS = @OBJECTS@
@@ -129,7 +131,7 @@ HDRS = \
 	begin_code.h \
 	close_code.h
 
-SDLTEST_HDRS = $(shell ls $(srcdir)/include | fgrep SDL_test)
+SDLTEST_HDRS = $(shell ls $(srcdir)/include | $(FGREP) SDL_test)
 
 LT_AGE      = @LT_AGE@
 LT_CURRENT  = @LT_CURRENT@
@@ -152,7 +154,7 @@ $(objects)/.created:
 	touch $@
 
 update-revision:
-	$(SHELL) $(auxdir)/updaterev.sh
+	$(SHELL) $(auxdir)/updaterev.sh --vendor "$(SDL_VENDOR_INFO)"
 
 .PHONY: all update-revision install install-bin install-hdrs install-lib install-data uninstall uninstall-bin uninstall-hdrs uninstall-lib uninstall-data clean distclean dist $(OBJECTS:.lo=.d)
 
@@ -252,7 +254,8 @@ dist $(distfile):
 	    -name '.#*' \) \
 	    -exec rm -f {} \;
 	if test -f $(distdir)/test/Makefile; then (cd $(distdir)/test && make distclean); fi
-	(cd $(distdir); build-scripts/updaterev.sh)
+	# Intentionally no vendor suffix: that's a property of the build, not the source
+	(cd $(distdir); $(srcdir)/build-scripts/updaterev.sh --dist)
 	tar cvf - $(distdir) | gzip --best >$(distfile)
 	rm -rf $(distdir)
 
