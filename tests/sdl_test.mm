@@ -11,6 +11,8 @@
  * more involved with SDL2.  This test is for creating palettized drawing.
  */
 
+#include <nfd.h>
+
 int main()
 {
 	const int scale = 5;
@@ -20,7 +22,18 @@ int main()
 	const int win_h = h * scale;
 
     char preferences_folder[4096];
-    
+
+	NFD_Init();
+	nfdchar_t *outPath;
+	nfdfilteritem_t filterItem[2] = { { "Source code", "c,cpp,cc" }, { "Headers", "h,hpp" } };
+	nfdresult_t result = NFD_OpenDialog(&outPath, filterItem, 2, NULL);
+	if (result == NFD_OKAY) {
+		printf("%s\n", outPath);
+		NFD_FreePath(outPath);
+		NFD_Quit();
+		exit(0);
+	}
+
     NSError* error = nil;
 
     @autoreleasepool {

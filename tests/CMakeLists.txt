@@ -7,7 +7,14 @@ set(SDL_TEST_SOURCES
 )
 
 add_executable(sdl_test "${SDL_TEST_SOURCES}")
-target_link_libraries(sdl_test SDL2-static SDL2main m)
+target_link_libraries(sdl_test
+		SDL2-static
+		SDL2main
+		m
+		nfd
+		"-framework AppKit"
+		"-framework UniformTypeIdentifiers"
+)
 
 set_target_properties(
 		sdl_test
