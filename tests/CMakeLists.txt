@@ -36,9 +36,19 @@ add_custom_command(
 ## ffi test
 if (WITH_POCO)
 	set(FFI_TEST_SOURCES
-			ffi_test.c
-	)
+		ffi_test.c
+    )
 
 	add_executable(ffi_test "${FFI_TEST_SOURCES}")
 	target_link_libraries(ffi_test ffi_static)
 endif()
+
+
+## nativefiledialogextended test
+set(NFD_TEST_SOURCES
+	nfd_test.c
+)
+
+add_executable(nfd_test "${NFD_TEST_SOURCES}")
+target_link_libraries(nfd_test nfd)
+
