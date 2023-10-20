@@ -59,9 +59,6 @@ AA_config vconfg;
  * (simulation of the facilities available in PJ)
  ***************************************************************************/
 
-extern void* malloc();
-extern void free();
-
 #define MMAG 0x1253
 #define FMAG 0x2291
 
@@ -221,6 +218,7 @@ Errcode boxf(char* fmt, ...)
 	return (err);
 }
 
+
 /****************************************************************************
  *
  ***************************************************************************/
@@ -230,6 +228,7 @@ int check_abort(void* nobody)
 	(void)nobody;
 	return FALSE;
 }
+
 
 /****************************************************************************
  *
@@ -244,10 +243,11 @@ void errline(int err, char* fmt, ...)
 	fprintf(stdout, "\nerr code %d", err);
 }
 
+
 /****************************************************************************
  *
  ***************************************************************************/
-int get_errtext(Errcode err, char* buf)
+size_t get_errtext(Errcode err, char* buf)
 {
 	buf[0] = 0;
 	if (err < Success) {
@@ -305,36 +305,9 @@ int get_errtext(Errcode err, char* buf)
 				break;
 		}
 	}
-	return (strlen(buf));
+	return strlen(buf);
 }
 
-#ifdef I_DIED
-
-int tryme(Popot v)
-/****************************************************************************
- *
- ***************************************************************************/
-{
-	Func_frame* f;
-	Pt_num ret;
-	long i;
-	Errcode err;
-
-	fprintf(stdout, "going to tryme %p %p %p\n", v.pt, v.min, v.max);
-	f = v.pt;
-	fprintf(stdout, "should I try %s?\n", f->name);
-	if (poco_param_left() < 6 * sizeof(i))
-		return (builtin_err = Err_stack);
-	i = 3;
-	while (--i >= 0)
-		po_add_param(&i, sizeof(i));
-	err = builtin_err = poco_cont_ops(f->code_pt, &ret);
-	po_cleanup_param(3 * sizeof(i));
-	fprintf(stdout, "err = %d ret = %d\n", err, ret.i);
-ERR:
-	return (err);
-}
-#endif /* I_DIED */
 
 /****************************************************************************
  *
@@ -546,6 +519,42 @@ void dump_func_frame(const char* name, const Func_frame* frame_in) {
 /****************************************************************************
  *
  ***************************************************************************/
+static void print_version() {
+	printf("poco version %d\n", VRSN_NUM);
+}
+
+
+/****************************************************************************
+ *
+ ***************************************************************************/
+static void usage() {
+
+}
+
+
+/****************************************************************************
+ *
+ ***************************************************************************/
+void replace_file_extension(char *dest, const char* buffer, 
+						   size_t max_len, const char* new_ext)
+{
+	const char* dot = strrchr(buffer, '.');
+	if (dot == NULL) {
+		// No dot found-- assume file and add the dot at the end
+		snprintf(dest, max_len, "%s.%s", buffer, new_ext);
+	}
+	else {
+		// Dot found-- replace the extension
+		memcpy(dest, buffer, max(strlen(buffer), max_len-1));
+		dest[(size_t)(dot-buffer)] = '\0';
+		snprintf(dest, max_len, "%s.%s", dest, new_ext);
+	}
+}
+
+
+/****************************************************************************
+ *
+ ***************************************************************************/
 int main(int argc, char* argv[])
 {
 	char err_file[100];
@@ -573,27 +582,33 @@ int main(int argc, char* argv[])
 		argp = argv[counter];
 		if (*argp == '-') {
 			switch (toupper(*++argp)) {
+				case 'c': /* Compile-only switch...   */
 				case 'C': /* Compile-only switch...   */
 					runflag = FALSE;
 					break;
 #ifdef DEVELOPMENT
+				case 't': /* Trace... */
 				case 'T': /* Trace... */
 					po_trace_flag = TRUE;
 					po_trace_file = stdout;
 					break;
 #endif					  /* DEVELOPMENT */
+				case 'd': /* Dump file name...        */
 				case 'D': /* Dump file name...        */
 					do_debug_dump = TRUE;
 					break;
+				case 'o': /* Redirection file name... */
 				case 'O': /* Redirection file name... */
 					if (*++argp != 0)
 						efname = argp;
 					else
 						efname = "stdout.txt";
 					break;
+				case 'l': /* punt builtin libs...*/
 				case 'L': /* punt builtin libs...*/
 					builtin_libs = NULL;
 					break;
+				case 'v':
 				case 'V':
 					fprintf(stdout, "poco version %d\n", VRSN_NUM);
 					break;
@@ -633,6 +648,18 @@ int main(int argc, char* argv[])
 
 		if (do_debug_dump) {
 			po_disassemble_program((Poco_run_env*)pexe, stdout);
+			char dump_file_name[FILENAME_MAX];
+			replace_file_extension(dump_file_name, sfname, FILENAME_MAX, "dump");
+			printf("==> Dumping to %s ...\n", dump_file_name);
+			FILE* fp = fopen(dump_file_name, "w");
+			if (fp) {
+				po_disassemble_program((Poco_run_env*)pexe, fp);
+				fclose(fp);
+			}
+			else {
+				fprintf(stderr, "-- Unable to open dump file for writing: %s\n",
+						dump_file_name);
+			}
 		}
 
 		if (runflag) {

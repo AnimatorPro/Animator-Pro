@@ -2,6 +2,7 @@
 #define ERRCODES_H
 
 /* errcode values used by our routines */
+#include <stddef.h>
 
 /* no error */
 #define Success (0)
@@ -245,7 +246,7 @@
 #define Err_integ	(FATALERR -0) /* data integrity error */
 #define Err_swap	(FATALERR -1) /* can't restore context of file we swapped */
 
-int get_errtext(int err, char *buf);
+size_t get_errtext(int err, char *buf);
 	/* buf must be ERRTEXT_SIZE */
 #define ERRTEXT_SIZE 128
 
