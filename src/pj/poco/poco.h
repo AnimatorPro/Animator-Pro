@@ -151,6 +151,19 @@
  * miscellanious macros...
  *	 these could also be considered tweakable, but do it with care.
  ****************************************************************************/
+#define max(a,b)             \
+({                           \
+    __typeof__ (a) _a = (a); \
+    __typeof__ (b) _b = (b); \
+    _a > _b ? _a : _b;       \
+})
+
+#define min(a,b)             \
+({                           \
+    __typeof__ (a) _a = (a); \
+    __typeof__ (b) _b = (b); \
+    _a < _b ? _a : _b;       \
+})
 
 #define VRSN_TO_STR(a) #a
 #define VRSN_STR (VRSN_TO_STR(VRSN_NUM))
@@ -885,8 +898,7 @@ int pj_delete(char* name);
 int pj_ioerr(void);
 void upc(char* s);
 void errline(int err, char* fmt, ...);
-int get_errtext(Errcode err, char* buf);
-int tryme(Popot v);
+size_t get_errtext(Errcode err, char* buf);
 
 /* in pocmemry.c */
 

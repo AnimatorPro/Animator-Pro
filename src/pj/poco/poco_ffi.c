@@ -619,22 +619,26 @@ Pt_num po_ffi_call(Po_FFI* binding, const Pt_num* stack_in, const ffi_type* vari
 	// binding creation time-- set the values
 	long arg_count = 0;
 	long arg_size  = 0;
-	unsigned int arg_index = 0;
 	Pt_num* stack = stack_in;
 
 	if (is_variadic) {
 		arg_count = stack->l;
-		binding->data[arg_index].l = arg_count;
 		stack = OPTR(stack, sizeof(long));
-		arg_index += 1;
+		// binding->data[arg_index].l = arg_count;
+		// arg_index += 1;
 
 		arg_size  = stack->l;
-		binding->data[arg_index].l = arg_size;
 		stack = OPTR(stack, sizeof(long));
-		arg_index += 1;
+		// binding->data[arg_index].l = arg_size;
+		// arg_index += 1;
 	}
 
-	for (; arg_index < binding->arg_count; arg_index++) {
+	/* This first part only copies the initial binding's argument values! 
+	 * The variadic parameters need to be copied in po_ffi_copy_variadic. */
+//!FIXME: THIS!!!!
+	raise Exception
+	
+	for (unsigned int arg_index = 0; arg_index < binding->arg_count; arg_index++) {
 		switch(binding->arg_ido_types[arg_index]) {
 			case IDO_INT:
 				binding->data[arg_index].i = stack->i;

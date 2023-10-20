@@ -145,6 +145,7 @@ static void mk_function_call(Poco_cb* pcb, Exp_frame* e, Func_frame* fff, SHORT 
 					exp->ctc.ido_type = IDO_CPT;
 				}
 				#endif /* STRING_EXPERIMENT */
+
 				this_param_size = po_get_param_size(pcb, exp->ctc.ido_type);
 				varg_param_size += this_param_size;
 				varg_param_count += 1;
@@ -232,11 +233,12 @@ static void mk_function_call(Poco_cb* pcb, Exp_frame* e, Func_frame* fff, SHORT 
 		po_code_long(pcb, &e->ecd, OP_LCON, varg_param_count);
 		param_size += 2 * sizeof(long); /* for stack cleanup instruction later */
 
-		/* new for libffi compat-- add ops for the variable types*/
+		/* new for libffi compat-- add ops for the variable types */
 		// clear current stack of parameter types
 		po_code_op(pcb, &e->ecd, OP_FFI_POP_ALL);
 
-		 for (int i = parameter_index - 1; i >= 0; i--) {
+		//  for (int i = parameter_index - 1; i >= 0; i--) {
+		 for (int i = 0; i < parameter_index; i++) {
 		 	const ffi_type* type = parameter_types[i];
 		 	int op = 0;
 
@@ -253,6 +255,7 @@ static void mk_function_call(Poco_cb* pcb, Exp_frame* e, Func_frame* fff, SHORT 
 		 		fprintf(stderr, "-- Invalid CFFI variadic argument type (%s: %s --> bad %s)!\n",
 		 				fff->name, param->name, po_ffi_name_for_type(type));
 		 	}
+
 		 	if (op) {
 		 		po_code_op(pcb, &e->ecd, op);
 		 	}
