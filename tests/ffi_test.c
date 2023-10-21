@@ -90,15 +90,20 @@ void hello_world()
 						 2,
 					     &ffi_type_sint, arg_types) == FFI_OK)
 	{
-		s = "Hello, %s!\n";
-		ffi_call(&cif, FFI_FN(printf), &rc, values);
-		/* rc now holds the result of the call to puts */
-
 		/* values holds a pointer to the function's arg, so to
 		   call puts() again all we need to do is change the
 		   value of s */
 		s = "This is cool, %.3f!\n";
 		ffi_call(&cif, FFI_FN(printf), &rc, values);
+
+		arg_types[1] = &ffi_type_pointer;
+		char* msg = "poco";
+		values[1] = (void*)&msg;
+
+		s = "Hello, %s!\n";
+		ffi_call(&cif, FFI_FN(printf), &rc, values);
+		/* rc now holds the result of the call to puts */
+
 	}
 	else {
 		printf("-- Could not create cif for variadic function.\n");
