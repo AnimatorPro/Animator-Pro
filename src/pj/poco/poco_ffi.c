@@ -31,6 +31,9 @@
 #include <float.h>
 #endif
 
+#define assertm(exp, msg) assert(((void)msg, exp))
+
+
 extern void* malloc();
 extern void free();
 
@@ -335,18 +338,18 @@ static char* po_ffi_status_str(const ffi_status status) {
 }
 
 // ===============================================================
-static char* po_ffi_argtype_str(const ffi_type* type) {
-	if (type == &ffi_type_void) return "ffi_type_void";
-	if (type == &ffi_type_uint8) return "ffi_type_uint8";
-	if (type == &ffi_type_sint8) return "ffi_type_sint8";
-	if (type == &ffi_type_uint16) return "ffi_type_uint16";
-	if (type == &ffi_type_sint16) return "ffi_type_sint16";
-	if (type == &ffi_type_uint32) return "ffi_type_uint32";
-	if (type == &ffi_type_sint32) return "ffi_type_sint32";
-	if (type == &ffi_type_uint64) return "ffi_type_uint64";
-	if (type == &ffi_type_sint64) return "ffi_type_sint64";
-	if (type == &ffi_type_float) return "ffi_type_float";
-	if (type == &ffi_type_double) return "ffi_type_double";
+static inline char* po_ffi_argtype_str(const ffi_type* type) {
+	if (type == &ffi_type_void)    return "ffi_type_void";
+	if (type == &ffi_type_uint8)   return "ffi_type_uint8";
+	if (type == &ffi_type_sint8)   return "ffi_type_sint8";
+	if (type == &ffi_type_uint16)  return "ffi_type_uint16";
+	if (type == &ffi_type_sint16)  return "ffi_type_sint16";
+	if (type == &ffi_type_uint32)  return "ffi_type_uint32";
+	if (type == &ffi_type_sint32)  return "ffi_type_sint32";
+	if (type == &ffi_type_uint64)  return "ffi_type_uint64";
+	if (type == &ffi_type_sint64)  return "ffi_type_sint64";
+	if (type == &ffi_type_float)   return "ffi_type_float";
+	if (type == &ffi_type_double)  return "ffi_type_double";
 	if (type == &ffi_type_pointer) return "ffi_type_pointer";
 
 	return "";
@@ -354,71 +357,79 @@ static char* po_ffi_argtype_str(const ffi_type* type) {
 
 
 // ===============================================================
+static size_t po_ffi_argtype_size(const ffi_type* type) {
+	if (type == &ffi_type_void)    return sizeof(void*);
+	if (type == &ffi_type_uint8)   return sizeof(uint8_t);
+	if (type == &ffi_type_sint8)   return sizeof(int8_t);
+	if (type == &ffi_type_uint16)  return sizeof(uint16_t);
+	if (type == &ffi_type_sint16)  return sizeof(int16_t);
+	if (type == &ffi_type_uint32)  return sizeof(uint32_t);
+	if (type == &ffi_type_sint32)  return sizeof(int32_t);
+	if (type == &ffi_type_uint64)  return sizeof(uint64_t);
+	if (type == &ffi_type_sint64)  return sizeof(int64_t);
+	if (type == &ffi_type_float)   return sizeof(float);
+	if (type == &ffi_type_double)  return sizeof(double);
+	if (type == &ffi_type_pointer) return sizeof(void*);
+
+	assertm(0, "Invalid FFI argument type!");
+	return 0;
+}
+
+
+// ===============================================================
 /*
-	Make a copy of a Po_FFI struct, and fill in the other varadic
-    values from the stack pointer.
+	Fill in variadic parameter values and types from the stack pointer.
 */
-static Po_FFI* po_ffi_copy_variadic(const Po_FFI* binding, const long var_arg_count, const void* in_stack) {
-	int i;
+static void po_ffi_assign_variadic_parameters(Po_FFI* binding, const long var_arg_count,
+									          const void* in_stack, const ffi_type** variadic_types)
+{
+	unsigned int i;
 	void* stack = in_stack;
-	Po_FFI* out = calloc(1, sizeof(Po_FFI));
 
-	out->name            = binding->name;
-	out->function        = binding->function;
-	out->arg_count       = binding->arg_count;
-	out->result_ido_type = binding->result_ido_type;
-	out->result_type     = binding->result_type;
+	/* Note: we adjusted the parameters outside in po_ffi_call(),
+	 * so we don't need to worry here about the extra two parameters
+	 * poco generates for variadic functions. */
 
-	for(i = 0; i < out->arg_count; i++) {
-		out->data[i]          = binding->data[i];
-		out->arg_ido_types[i] = binding->arg_ido_types[i];
-		out->arg_types[i]     = binding->arg_types[i];
-		out->arg_sizes[i]     = binding->arg_sizes[i];
-	}
+//	for(i = 0; i < out->arg_count; i++) {
+//		out->data[i]          = binding->data[i];
+//		out->arg_ido_types[i] = binding->arg_ido_types[i];
+//		out->arg_types[i]     = binding->arg_types[i];
+//		out->arg_sizes[i]     = binding->arg_sizes[i];
+//	}
 
-	if (stack) {
-		for (int i = 0; i < var_arg_count; i++) {
-			out->data[out->arg_count].p = stack;
-			out->arg_types[out->arg_count] = &ffi_type_pointer;
-			out->arg_sizes[out->arg_count] = sizeof(void*);
+	if (var_arg_count) {
+		for (i = 0; i < var_arg_count; i++) {
+			const size_t argtype_size = po_ffi_argtype_size(variadic_types[i]);
+			const char* argtype_name = po_ffi_argtype_str(variadic_types[i]);
+			binding->data[binding->arg_count+i].p = stack;
+			binding->args[binding->arg_count+i] = &binding->data[binding->arg_count+i];
+			binding->arg_types[binding->arg_count+i] = variadic_types[i];
+			binding->arg_sizes[binding->arg_count+i] = argtype_size;
 			// No need to worry about IDO types-- this structure
 			// won't last long enough to be queried.
-			stack = OPTR(stack, sizeof(void*));
-			out->arg_count += 1;
+			stack = OPTR(stack, argtype_size);
+			binding->arg_count += 1;
 		}
 	}
 
-	out->arg_types[out->arg_count] = NULL;
-	out->data[out->arg_count].p = NULL;
+	binding->arg_types[binding->arg_count] = NULL;
+	binding->data[binding->arg_count].p = NULL;
 
-	// make sure all the arg pointers are correct
-	void* current = (void*)out->data;
-	for (i = 0; i < out->arg_count; i++) {
-		out->args[i] = current;
-		current = OPTR(current, out->arg_sizes[i]);
-//		printf("\t+ ArgType %d: %s\n", i, po_ffi_argtype_str(out->arg_types[i]));
-	}
-
-	// memset(&out->interface, 0, sizeof(ffi_cif*));
-
-	ffi_status status = ffi_prep_cif_var(
-						 &out->interface,
-						 FFI_DEFAULT_ABI,
-						 binding->arg_count,
-						 out->arg_count,
-						 out->result_type,
-						 &out->arg_types);
-
-	if (status != FFI_OK) {
-		fprintf(stderr, "po_ffi_copy_variadic: '%s' couldn't create variadic CIF-- %s.\n", 
-				out->name, po_ffi_status_str(status));
-	}
+//	// finally, make sure all the arg pointers are correct
+//	void* current = (void*)binding->data;
+//	for (i = 0; i < original_arg_count; i++) {
+//		binding->args[i] = current;
+//		// current = OPTR(current, binding->arg_sizes[i]);
+//		current = OPTR(current, sizeof(Po_FFI_Data));
+//		fprintf(stderr, "\t+ ArgType %d: %s\n", i, po_ffi_argtype_str(binding->arg_types[i]));
+//	}
 }
+
 
 // ===============================================================
 /*
 	Fully deallocate a Po_FFI struct pointer created by po_ffi_new
-	or po_ffi_copy_variadic.
+	or po_ffi_assign_variadic_parameters.
 */
 void po_ffi_delete(Po_FFI* binding) {
 	assert(binding != NULL);
@@ -449,7 +460,7 @@ int po_ffi_func_compare(const void* left, const void* right) {
 /*
  * Create a new hashmap for functions with the wrapper struct.
  */
-Po_FuncMap* po_ffi_funcmap_new() {
+static Po_FuncMap* po_ffi_funcmap_new() {
 	Po_FuncMap* result = malloc(sizeof(Po_FuncMap));
 	if (!result) {
 		return NULL;
@@ -465,7 +476,7 @@ Po_FuncMap* po_ffi_funcmap_new() {
 /*
  * Destroys a function hashmap and deallocates its data.
  */
-void po_ffi_funcmap_delete(Po_FuncMap* func_map) {
+static void po_ffi_funcmap_delete(Po_FuncMap* func_map) {
 	Po_FFI* binding = NULL;
 	void* key       = NULL;
 	char* name      = NULL;
@@ -506,6 +517,7 @@ Po_FFI* po_ffi_find_binding(const Poco_run_env* env, const void* key) {
 	}
 	return binding;
 }
+
 
 /*
  * 	Look up the function binding by name instead of func pointer.
@@ -600,11 +612,9 @@ int po_ffi_build_structures(Poco_run_env* env) {
 
 	Returns a Pt_num for acc.ret in runops.c.
 */
-
-Pt_num po_ffi_call(Po_FFI* binding, const Pt_num* stack_in, const ffi_type* variadic_types)
+Pt_num po_ffi_call(const Po_FFI* binding, const Pt_num* stack_in, const ffi_type** variadic_types)
 {
-	Po_FFI* binding_variadic = NULL;
-	Po_FFI* exec_binding = binding;
+	Po_FFI exec_binding;
 	Pt_num result;
 	Popot_make_null(&result.ppt);
 
@@ -613,53 +623,62 @@ Pt_num po_ffi_call(Po_FFI* binding, const Pt_num* stack_in, const ffi_type* vari
 		return result;
 	}
 
-	const int is_variadic = po_ffi_is_variadic(binding) ? -2 : 0;
+	memcpy(&exec_binding, binding, sizeof(Po_FFI));
+	const unsigned int original_arg_count = binding->arg_count;
 
-	// data for the function is already allocated at
-	// binding creation time-- set the values
+	const int is_variadic = po_ffi_is_variadic(&exec_binding) ? 2 : 0;
+
+	/* These don't change for non-variadics, or for variadics
+	 * with no extra passed parameters. */
 	long arg_count = 0;
 	long arg_size  = 0;
 	Pt_num* stack = stack_in;
 
 	if (is_variadic) {
+		/* Poco passes in an argument count and a length in bytes
+		 * of the argument data passed.  We have to pop those here
+		 * in order to get to the good data for our functions. */
 		arg_count = stack->l;
 		stack = OPTR(stack, sizeof(long));
-		// binding->data[arg_index].l = arg_count;
-		// arg_index += 1;
 
 		arg_size  = stack->l;
 		stack = OPTR(stack, sizeof(long));
-		// binding->data[arg_index].l = arg_size;
-		// arg_index += 1;
 	}
 
 	/* This first part only copies the initial binding's argument values! 
-	 * The variadic parameters need to be copied in po_ffi_copy_variadic. */
-//!FIXME: THIS!!!!
-	raise Exception
+	 * The variadic parameters need to be copied in po_ffi_assign_variadic_parameters,
+	 * if they exist.
+	 *
+	 * Variadic functions always have two extra parameters inserted by the
+	 * system before the real parameters, as the old system wrapped those
+	 * calls in binding functions; we're skipping them here. */
 	
-	for (unsigned int arg_index = 0; arg_index < binding->arg_count; arg_index++) {
+	for (unsigned int arg_index = is_variadic; arg_index < binding->arg_count; arg_index++) {
+		const unsigned int true_arg_index = arg_index - is_variadic;
 		switch(binding->arg_ido_types[arg_index]) {
 			case IDO_INT:
-				binding->data[arg_index].i = stack->i;
+				exec_binding.data[true_arg_index].i = stack->i;
+				exec_binding.args[true_arg_index] = &exec_binding.data[true_arg_index].i;
 				stack = OPTR(stack, sizeof(int));
 				break;
 			case IDO_LONG:
-				binding->data[arg_index].l = stack->l;
+				exec_binding.data[true_arg_index].l = stack->l;
+				exec_binding.args[true_arg_index] = &exec_binding.data[true_arg_index].l;
 				stack = OPTR(stack, sizeof(long));
 				break;
 			case IDO_DOUBLE:
-				binding->data[arg_index].d = stack->d;
+				exec_binding.data[true_arg_index].d = stack->d;
+				exec_binding.args[true_arg_index] = &exec_binding.data[true_arg_index].d;
 				stack = OPTR(stack, sizeof(double));
 				break;
 			case IDO_POINTER:
-				binding->data[arg_index].p = stack->p;
-				//!TODO: is this right?
+				exec_binding.data[true_arg_index].p = stack->p;
+				exec_binding.args[true_arg_index] = &exec_binding.data[true_arg_index].p;
 				stack = OPTR(stack, sizeof(Popot));
 				break;
 			case IDO_CPT:
-				binding->data[arg_index].p = stack->p;
-				//!TODO: is this right?
+				exec_binding.data[true_arg_index].p = stack->p;
+				exec_binding.args[true_arg_index] = &exec_binding.data[true_arg_index].p;
 				stack = OPTR(stack, sizeof(void*));
 				break;
 
@@ -674,30 +693,63 @@ Pt_num po_ffi_call(Po_FFI* binding, const Pt_num* stack_in, const ffi_type* vari
 		}
 	}
 
+	// important!
+	exec_binding.arg_count -= is_variadic;
+
 	if (is_variadic && arg_count) {
 		// make the new interface objet with the new data
-		exec_binding = po_ffi_copy_variadic(binding, arg_count, (void*)stack);
+		po_ffi_assign_variadic_parameters(&exec_binding, arg_count, (void*)stack, variadic_types);
+	}
+
+	/* At this point all the binding types and sizes are set,
+	 * but we still need to assign the data pointers.
+	 *
+	 * This seems strange, but the function requires us to pass
+	 * a memory location, even if it's for POD data.  For pointers,
+	 * we need the memory location of the pointer, not the location
+	 * of the data it's pointing to! */
+
+	// for(int i = 0; i < exec_binding.arg_count; i++) {
+	// 	exec_binding.args[i] = (void*)&exec_binding.data[i].p;
+	// }
+
+	// Null-pad the last argument
+	exec_binding.args[exec_binding.arg_count] = NULL;
+	exec_binding.arg_types[exec_binding.arg_count] = NULL;
+
+	ffi_status status = ffi_prep_cif_var(
+	  &exec_binding.interface,
+	  FFI_DEFAULT_ABI,
+	  original_arg_count - is_variadic,  // note that we are comparing the base arg count
+	  exec_binding.arg_count,            // vs the total arguments passed in
+	  exec_binding.result_type,
+	  exec_binding.arg_types);
+
+	if (status != FFI_OK) {
+		fprintf(stderr, "po_ffi_call: '%s' couldn't prep variadic CIF-- %s.\n",
+				exec_binding.name, po_ffi_status_str(status));
+		return result;
 	}
 
 	/* We store the ffi_arg result value in the binding itself, but
 	 * we break the amount out for a proper return below. */
-	exec_binding->result = 0;
-	ffi_call(&exec_binding->interface, FFI_FN(exec_binding->function), 
-			 &exec_binding->result, &exec_binding->args);
+	exec_binding.result = 0;
+	ffi_call(&exec_binding.interface, FFI_FN(exec_binding.function),
+			 &exec_binding.result, &exec_binding.args);
 
-	switch(exec_binding->result_ido_type) {
+	switch(exec_binding.result_ido_type) {
 		case IDO_INT:
-			result.i = *((int*)&exec_binding->result);
+			result.i = *((int*)&exec_binding.result);
 			break;
 		case IDO_LONG:
-			result.l = *((long*)&exec_binding->result);
+			result.l = *((long*)&exec_binding.result);
 			break;
 		case IDO_DOUBLE:
-			result.d = *((double*)&exec_binding->result);
+			result.d = *((double*)&exec_binding.result);
 			break;
 		case IDO_POINTER:
 		case IDO_CPT:
-			result.p = (void*)(*((UBYTE*)&exec_binding->result));
+			result.p = (void*)(*((UBYTE*)&exec_binding.result));
 			break;
 
 #ifdef STRING_EXPERIMENT
@@ -708,11 +760,6 @@ Pt_num po_ffi_call(Po_FFI* binding, const Pt_num* stack_in, const ffi_type* vari
 
 		default:
 			break;
-	}
-
-	if (exec_binding != binding) {
-		// free variadic func allocation
-		free(exec_binding);
 	}
 
 	return result;

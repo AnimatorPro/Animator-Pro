@@ -76,18 +76,18 @@
  * Watcom C.
  */
 /* prototypes for functions in runccall.asm... */
-//extern void po_vccall(void* stack, void* func);
-//extern int po_iccall(void* stack, void* func);
-//extern long po_lccall(void* stack, void* func);
-//extern double po_dccall(void* stack, void* func);
-//extern Popot po_pccall(void* stack, void* func);
-//extern PoString po_string_ccall(void* stack, void* func);
-//#define VC_call(s, f) po_vccall(s, f)
-//#define IC_call(s, f) po_iccall(s, f)
-//#define LC_call(s, f) po_lccall(s, f)
-//#define DC_call(s, f) po_dccall(s, f)
-//#define PC_call(s, f) po_pccall(s, f)
-//#define STRING_C_call(s, f) po_string_ccall(s, f)
+// extern void po_vccall(void* stack, void* func);
+// extern int po_iccall(void* stack, void* func);
+// extern long po_lccall(void* stack, void* func);
+// extern double po_dccall(void* stack, void* func);
+// extern Popot po_pccall(void* stack, void* func);
+// extern PoString po_string_ccall(void* stack, void* func);
+// #define VC_call(s, f) po_vccall(s, f)
+// #define IC_call(s, f) po_iccall(s, f)
+// #define LC_call(s, f) po_lccall(s, f)
+// #define DC_call(s, f) po_dccall(s, f)
+// #define PC_call(s, f) po_pccall(s, f)
+// #define STRING_C_call(s, f) po_string_ccall(s, f)
 #define VC_call(s, f) ((void)((*f)(s)))
 #define IC_call(s, f) ((int)((*f)(s)))
 #define LC_call(s, f) ((long)((*f)(s)))
@@ -119,10 +119,17 @@ Boolean po_trace_flag = FALSE;
 #endif /* DEVELOPMENT */
 
 /* libffi helpers */
-#define CHECK_VAR_TYPE_INDEX() if (pe->variadic_type_index == FFI_MAX_ARGS) { err = Err_poco_ffi_variadic_overflow; goto ERR_IN_FFI; break; }
-#define INC_VAR_TYPE_INDEX() (pe->variadic_type_index += pe->variadic_type_index < FFI_MAX_ARGS ? 1 : 0)
-#define CHECK_AND_INC_VAR_TYPE() CHECK_VAR_TYPE_INDEX(); INC_VAR_TYPE_INDEX()
-
+#define CHECK_VAR_TYPE_INDEX()                     \
+	if (pe->variadic_type_index == FFI_MAX_ARGS) { \
+		err = Err_poco_ffi_variadic_overflow;      \
+		goto ERR_IN_FFI;                           \
+		break;                                     \
+	}
+#define INC_VAR_TYPE_INDEX() \
+	(pe->variadic_type_index += pe->variadic_type_index < FFI_MAX_ARGS ? 1 : 0)
+#define CHECK_AND_INC_VAR_TYPE() \
+	CHECK_VAR_TYPE_INDEX();      \
+	INC_VAR_TYPE_INDEX()
 
 /*****************************************************************************
  * used as a dummy check_abort function when none is provided.
@@ -151,23 +158,9 @@ Errcode poco_cont_ops(void* code_pt, Pt_num* pret, int arglength, ...)
 	int op;
 	Po_FFI* binding = NULL;
 
-/*
- * Small macro to wrap the call for each available type
- */
-#define PO_FFI_CALL()                            \
-	if (STACK_OVERFLOW(MIN_CCALL_STACK)) {       \
-		err = Err_stack;                         \
-		goto DEBUG;                              \
-	}                                            \
-	binding = po_ffi_find_binding(pe, ip->func); \
-	if (builtin_err < Success) {                 \
-		goto ERR_IN_LIBROUTINE;                  \
-	}                                                           \
-                                                                \
-	acc.ret = po_ffi_call(binding, stack, pe->variadic_types);  \
-	ip		= OPTR(ip, sizeof(ip->func));
 
 #define STACK_OVERFLOW(limit) ((UBYTE*)stack < (stack_area + (limit)))
+
 
 	if (pe->stack == NULL) {
 		stack_area = pj_malloc(pe->stack_size);
@@ -214,6 +207,7 @@ Errcode poco_cont_ops(void* code_pt, Pt_num* pret, int arglength, ...)
 			}
 		}
 #endif /* DEVELOPMENT */
+
 		op = ip->inty;
 		ip = OPTR(ip, OPY_SIZE);
 		switch (op) {
@@ -321,12 +315,22 @@ Errcode poco_cont_ops(void* code_pt, Pt_num* pret, int arglength, ...)
 				  goto ABORT;
 			*/
 
-			case OP_ICCALL: /* call int valued C function */
-			case OP_LCCALL: /* call long valued C function */
-			case OP_DCCALL: /* call double valued C function */
-			case OP_PCCALL: /* call (popot) pointer valued C function */
+			case OP_ICCALL:	 /* call int valued C function */
+			case OP_LCCALL:	 /* call long valued C function */
+			case OP_DCCALL:	 /* call double valued C function */
+			case OP_PCCALL:	 /* call (popot) pointer valued C function */
 			case OP_CVCCALL: /* call void valued C function */
-				PO_FFI_CALL();
+				if (STACK_OVERFLOW(MIN_CCALL_STACK)) {
+					err = Err_stack;
+					goto DEBUG;
+				}
+				binding = po_ffi_find_binding(pe, ip->func);
+				if (builtin_err < Success) {
+					goto ERR_IN_LIBROUTINE;
+				}
+
+				acc.ret = po_ffi_call(binding, stack, pe->variadic_types);
+				ip		= OPTR(ip, sizeof(ip->func));
 				break;
 
 #ifdef STRING_EXPERIMENT
@@ -357,23 +361,27 @@ Errcode poco_cont_ops(void* code_pt, Pt_num* pret, int arglength, ...)
 						switch (acc.f->return_type->ido_type) {
 							// #!FIXME: This!
 							case IDO_INT:
-//								acc.ret.i = IC_call(stack, acc.f->code_pt);
+								//								acc.ret.i = IC_call(stack,
+								//acc.f->code_pt);
 								acc.ret.i = 0;
 								break;
 							case IDO_LONG:
-//								acc.ret.l = LC_call(stack, acc.f->code_pt);
+								//								acc.ret.l = LC_call(stack,
+								//acc.f->code_pt);
 								acc.ret.l = 0;
 								break;
 							case IDO_DOUBLE:
-//								acc.ret.d = DC_call(stack, acc.f->code_pt);
+								//								acc.ret.d = DC_call(stack,
+								//acc.f->code_pt);
 								acc.ret.d = 0.0;
 								break;
 							case IDO_POINTER:
-//								acc.ret.ppt = PC_call(stack, acc.f->code_pt);
+								//								acc.ret.ppt = PC_call(stack,
+								//acc.f->code_pt);
 								acc.ret.ppt = empty_popot;
 								break;
 							case IDO_VOID:
-//								VC_call(stack, acc.f->code_pt);
+								//								VC_call(stack, acc.f->code_pt);
 								break;
 							default:
 								err = Err_unimpl;
@@ -1433,36 +1441,36 @@ Errcode poco_cont_ops(void* code_pt, Pt_num* pret, int arglength, ...)
 
 			case OP_IPOP:
 				acc.ret.inty = stack->inty;
-				pe->result = acc.ret;
+				pe->result	 = acc.ret;
 				stack		 = OPTR(stack, sizeof(stack->inty));
 				break;
 			case OP_LPOP:
 			case OP_CPPOP:
-				acc.ret.l = stack->l;
+				acc.ret.l  = stack->l;
 				pe->result = acc.ret;
-				stack	  = OPTR(stack, sizeof(stack->l));
+				stack	   = OPTR(stack, sizeof(stack->l));
 				break;
 			case OP_DPOP:
-				acc.ret.d = stack->d;
+				acc.ret.d  = stack->d;
 				pe->result = acc.ret;
-				stack	  = OPTR(stack, sizeof(stack->d));
+				stack	   = OPTR(stack, sizeof(stack->d));
 				break;
 			case OP_PPOP:
 				acc.ret.ppt = stack->ppt;
-				pe->result = acc.ret;
+				pe->result	= acc.ret;
 				stack		= OPTR(stack, sizeof(stack->ppt));
 				break;
 #ifdef STRING_EXPERIMENT
 			case OP_STRING_POP:
 				acc.ret.postring = stack->postring;
-				pe->result = acc.ret;
+				pe->result		 = acc.ret;
 				stack			 = OPTR(stack, sizeof(stack->postring));
 				break;
 			case OP_CLEAN_STRING: /* Pop string and dec reference count */
 				acc.ret.postring = stack->postring;
 				po_sr_clean_ref(acc.ret.postring);
 				pe->result = acc.ret;
-				stack = OPTR(stack, sizeof(stack->postring));
+				stack	   = OPTR(stack, sizeof(stack->postring));
 				break;
 #endif /* STRING_EXPERIMENT */
 
@@ -1522,7 +1530,7 @@ Errcode poco_cont_ops(void* code_pt, Pt_num* pret, int arglength, ...)
 				break;
 			case OP_MOVE:
 				poco_copy_bytes(
-				stack->ppt.pt, ((Popot*)OPTR(stack, sizeof(stack->ppt)))->pt, ip->l);
+				  stack->ppt.pt, ((Popot*)OPTR(stack, sizeof(stack->ppt)))->pt, ip->l);
 				ip	  = OPTR(ip, sizeof(ip->l));
 				stack = OPTR(stack, 2 * sizeof(stack->ppt));
 				break;
@@ -1534,19 +1542,19 @@ Errcode poco_cont_ops(void* code_pt, Pt_num* pret, int arglength, ...)
 #endif /* STRING_EXPERIMENT */
 
 			/*----------------------------------------------------------------------------
-			 * LIBFFI HELPERS
+//			 * LIBFFI HELPERS
 			 *--------------------------------------------------------------------------*/
 			case OP_FFI_POP_ALL:
 				pe->variadic_type_index = 0;
-				pe->variadic_types[0] = NULL;
+				pe->variadic_types[0]	= NULL;
 				break;
 
-			/* 
-				kiki note:
+				/*
+					kiki note:
 
-				To avoid if checks and runtime errors, we're just overwriting the final
-				ffi_type in release mode.
-			*/
+					To avoid if checks and runtime errors, we're just overwriting the final
+					ffi_type in release mode.
+				*/
 
 			case OP_FFI_PUSH_POINTER:
 				pe->variadic_types[pe->variadic_type_index] = &ffi_type_pointer;
@@ -1632,8 +1640,7 @@ DEBUG:
 
 		if (pe->trace_file == NULL) {
 			tfile = stdout;
-		}
-		else if ((tfile = fopen(pe->trace_file, "w")) == NULL) {
+		} else if ((tfile = fopen(pe->trace_file, "w")) == NULL) {
 			goto DEALLOC_AND_EXIT;
 		}
 
@@ -1672,5 +1679,5 @@ Errcode po_run_ops(Poco_run_env* p, Code* code_pt, Pt_num* pret)
 	if (pret == NULL)
 		pret = &dummy_ret;
 
-	return (poco_cont_ops(code_pt, pret, 0));
+	return poco_cont_ops(code_pt, pret, 0);
 }

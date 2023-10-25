@@ -3,7 +3,7 @@
 #include "ftextf.h"
 #include "softmenu.h"
 
-int get_errtext(Errcode err, char *buf)
+size_t get_errtext(Errcode err, char *buf)
 /* this loads a buffer with text for an error returns length of string */
 {
 extern long pj_mem_last_fail;

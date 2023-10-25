@@ -87,7 +87,6 @@ int po_get_param_size(Poco_cb* pcb, SHORT ido_type)
 	return (psize);
 }
 
-
 /*****************************************************************************
  * generate code to push parms to stack and make call to function.
  ****************************************************************************/
@@ -137,14 +136,14 @@ static void mk_function_call(Poco_cb* pcb, Exp_frame* e, Func_frame* fff, SHORT 
 					exp->ctc.comp[exp->ctc.comp_count - 1] = TYPE_CPT;
 					exp->ctc.ido_type					   = IDO_CPT;
 				}
-				#ifdef STRING_EXPERIMENT
+#ifdef STRING_EXPERIMENT
 				else if (po_is_string(&exp->ctc)) {
 					po_code_op(pcb, &exp->ecd, OP_STRING_TO_CPT);
 					exp->ctc.comp[0]  = TYPE_CHAR;
 					exp->ctc.comp[1]  = TYPE_CPT;
 					exp->ctc.ido_type = IDO_CPT;
 				}
-				#endif /* STRING_EXPERIMENT */
+#endif /* STRING_EXPERIMENT */
 
 				this_param_size = po_get_param_size(pcb, exp->ctc.ido_type);
 				varg_param_size += this_param_size;
@@ -153,11 +152,10 @@ static void mk_function_call(Poco_cb* pcb, Exp_frame* e, Func_frame* fff, SHORT 
 				parameter_types[parameter_index] = po_ffi_type_from_ido_type(exp->ctc.ido_type);
 				parameter_index += 1;
 			}
-		} 
-		else {
+		} else {
 			// regular parameter
 			po_coerce_expression(pcb, exp, param->ti, FALSE);
-			this_param_size = po_get_param_size(pcb, exp->ctc.ido_type);
+			this_param_size					 = po_get_param_size(pcb, exp->ctc.ido_type);
 			parameter_types[parameter_index] = po_ffi_type_from_ido_type(exp->ctc.ido_type);
 			parameter_index += 1;
 		}
@@ -237,32 +235,32 @@ static void mk_function_call(Poco_cb* pcb, Exp_frame* e, Func_frame* fff, SHORT 
 		// clear current stack of parameter types
 		po_code_op(pcb, &e->ecd, OP_FFI_POP_ALL);
 
-		//  for (int i = parameter_index - 1; i >= 0; i--) {
-		 for (int i = 0; i < parameter_index; i++) {
-		 	const ffi_type* type = parameter_types[i];
-		 	int op = 0;
+		//		for (int i = parameter_index - 1; i >= 0; i--) {
+		for (int i = 0; i < parameter_index; i++) {
+			const ffi_type* type = parameter_types[i];
+			int op = 0;
 
-		 	if (type == &ffi_type_sint32) {
-		 		op = OP_FFI_PUSH_SINT32;
-		 	}
-		 	else if (type == &ffi_type_double) {
-		 		op = OP_FFI_PUSH_DOUBLE;
-		 	}
-		 	else if (type == &ffi_type_pointer) {
-		 		op = OP_FFI_PUSH_POINTER;
-		 	}
-		 	else {
-		 		fprintf(stderr, "-- Invalid CFFI variadic argument type (%s: %s --> bad %s)!\n",
-		 				fff->name, param->name, po_ffi_name_for_type(type));
-		 	}
+			if (type == &ffi_type_sint32) {
+				op = OP_FFI_PUSH_SINT32;
+			} else if (type == &ffi_type_double) {
+				op = OP_FFI_PUSH_DOUBLE;
+			} else if (type == &ffi_type_pointer) {
+				op = OP_FFI_PUSH_POINTER;
+			} else {
+				fprintf(stderr,
+						"-- Invalid CFFI variadic argument type (%s: %s --> bad %s)!\n",
+						fff->name,
+						param->name,
+						po_ffi_name_for_type(type));
+			}
 
-		 	if (op) {
-		 		po_code_op(pcb, &e->ecd, op);
-		 	}
-		 }
+			if (op) {
+				po_code_op(pcb, &e->ecd, op);
+			}
+		}
 
-		 // finish off the list with a NULL pointer
-		 po_code_op(pcb, &e->ecd, OP_FFI_PUSH_NULL);
+		// finish off the list with a NULL pointer
+		po_code_op(pcb, &e->ecd, OP_FFI_PUSH_NULL);
 	}
 
 	po_concatenate_code(pcb, &e->ecd, &callcode);
@@ -295,7 +293,6 @@ static void mk_function_call(Poco_cb* pcb, Exp_frame* e, Func_frame* fff, SHORT 
 	}
 	po_trash_code_buf(pcb, &callcode);
 }
-
 
 /*****************************************************************************
  * entry point from statement parsing.	find function, then code the call.
@@ -336,11 +333,11 @@ void po_get_function(Poco_cb* pcb, Exp_frame* e)
 
 	mk_function_call(pcb, e, fuf, end_type);
 
-	clear_code_buf(pcb, &e->left);         /* if we had code in the left side, nuke  */
-	e->left_complex = FALSE;	           /* it, we've now processed it into a call.*/
+	clear_code_buf(pcb, &e->left); /* if we had code in the left side, nuke  */
+	e->left_complex = FALSE;	   /* it, we've now processed it into a call.*/
 
 	if (end_type == TYPE_POINTER)		   /* if function returns a pointer  */
 	{									   /* put a NOP into the left buffer,*/
 		po_code_op(pcb, &e->left, OP_NOP); /* to signal we do have an lval.  */
 	}									   /* if it gets deref'd the NOP gets*/
-}                                          /* replaced by the call code later*/
+} /* replaced by the call code later*/

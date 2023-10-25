@@ -175,9 +175,12 @@ static Errcode po_pev_alloc_data(Poco_run_env* pev)
 	if (pev->stack_size == 0)
 		pev->stack_size = POCO_STACKSIZE_DEFAULT;
 
-	if ((err = po_run_ops(pev, pev->fff->code_pt, NULL)) < Success)
+	err = po_run_ops(pev, pev->fff->code_pt, NULL);
+	if (err < Success) {
 		goto ERR;
-	return (Success);
+	}
+
+	return Success;
 
 ERR:
 

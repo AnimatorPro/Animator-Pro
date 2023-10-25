@@ -1107,7 +1107,7 @@ Po_FFI* po_ffi_find_binding(const Poco_run_env* env, const void* key);
 Po_FFI* po_ffi_find_binding_by_name(const Poco_run_env* env, const char* name);
 Po_FFI* po_ffi_new(const C_frame* frame);
 void po_ffi_delete(Po_FFI* binding);
-Pt_num po_ffi_call(Po_FFI* binding, const Pt_num* stack_in, const ffi_type* variadic_types);
+Pt_num po_ffi_call(const Po_FFI* binding, const Pt_num* stack_in, const ffi_type** variadic_types);
 Boolean po_ffi_is_variadic(const Po_FFI* binding);
 
 
