@@ -120,7 +120,9 @@
 #endif
 
 #define TOKEN_MAX SZTOKE
-#define LINE_MAX SZTOKE
+#ifndef LINE_MAX
+	#define LINE_MAX SZTOKE
+#endif
 #define MAX_MACRO_PARMS 32
 #define RECURSE_LIMIT 10000
 #define free_string(s) \
