@@ -28,6 +28,7 @@ static void _fpreset() {}
 #include "imgui.h"
 #include "imgui_impl_sdl2.h"
 #include "imgui_impl_metal.h"
+#include "imgui_memory_editor.h"
 #include <SDL.h>
 
 
@@ -138,6 +139,8 @@ static void ShowExampleAppMainMenuBar()
 
 // ======================================================================
 int main(int argc, char** argv) {
+	fprintf(stderr, "%s\n\n", argv[0]);
+
 	// Setup Dear ImGui context
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -165,6 +168,11 @@ int main(int argc, char** argv) {
 	//ImFont* font = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\ArialUni.ttf", 18.0f, nullptr, io.Fonts->GetGlyphRangesJapanese());
 	//IM_ASSERT(font != nullptr);
 
+	char font_name[256];
+	getcwd(font_name, 256);
+	sprintf(font_name, "%s/resource/hack.ttf", font_name);
+	ImFont* hack = io.Fonts->AddFontFromFileTTF("resource/hack.ttf", 20);
+
 	// Setup SDL
 	// (Some versions of SDL before <2.0.10 appears to have performance/stalling issues on a minority of Windows systems,
 	// depending on whether SDL_INIT_GAMECONTROLLER is enabled or disabled.. updating to latest version of SDL is recommended!)
@@ -180,7 +188,7 @@ int main(int argc, char** argv) {
 	// Enable native IME.
 	SDL_SetHint(SDL_HINT_IME_SHOW_UI, "1");
 
-	SDL_Window* window = SDL_CreateWindow("Dear ImGui SDL+Metal example", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI);
+	SDL_Window* window = SDL_CreateWindow("Poco GUI", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI);
 	if (window == nullptr)
 	{
 		printf("Error creating window: %s\n", SDL_GetError());
@@ -245,9 +253,10 @@ int main(int argc, char** argv) {
 			ImGui_ImplSDL2_NewFrame();
 			ImGui::NewFrame();
 
+			ImGui::PushFont(hack);
+
 			// 1. Do file menu
 			ShowExampleMenuFile();
-
 
 			// 2. Show a simple window that we create ourselves. We use a Begin/End pair to create a named window.
 			{
@@ -272,6 +281,12 @@ int main(int argc, char** argv) {
 				ImGui::End();
 			}
 
+			static MemoryEditor mem_edit_1;
+			static char data[0x10000];
+			size_t data_size = 0x10000;
+			mem_edit_1.DrawWindow("Stack", data, data_size);
+
+			ImGui::PopFont();
 
 			// Rendering
 			ImGui::Render();
