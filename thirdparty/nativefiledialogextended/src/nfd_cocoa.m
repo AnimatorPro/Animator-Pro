@@ -283,7 +283,7 @@ nfdresult_t NFD_SaveDialogN(nfdnchar_t** outPath,
         [dialog setExtensionHidden:NO];
         // allow other file types, to give the user an escape hatch since you can't select "*.*" on
         // Mac
-        [dialog setAllowsOtherFileTypes:TRUE];
+        [dialog setAllowsOtherFileTypes:true];
 
         // Build the filter list
         AddFilterListToDialog(dialog, filterList, filterCount);
