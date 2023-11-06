@@ -64,7 +64,7 @@ oval_loop(Poly *poly, Pixel color, int *pxrad, int *pyrad, int *ptheta);
 extern void reverse_poly(Poly *p);
 
 extern Errcode
-poly_to_vertices(Poly *poly, Boolean closed, Short_xyz **pvertices);
+poly_to_vertices(Poly *poly, bool closed, Short_xyz **pvertices);
 
 extern void poly_ave_3d(Poly *p, Short_xyz *v);
 
@@ -80,23 +80,25 @@ poly_cline_with_render_dot(SHORT x1, SHORT y1, SHORT x2, SHORT y2, void *data);
 
 extern void marqi_polydots(struct marqihdr *mh, Poly *poly);
 extern void undo_polydots(struct marqihdr *mh, Poly *poly);
-extern void marqi_poly(struct marqihdr *mh, Poly *p, Boolean closed);
-extern void undo_poly(struct marqihdr *mh, Poly *p, Boolean closed);
+extern void marqi_poly(struct marqihdr *mh, Poly *p, bool closed);
+extern void undo_poly(struct marqihdr *mh, Poly *p, bool closed);
 extern void free_polypoints(Poly *poly);
 extern LLpoint *poly_last_point(Poly *p);
-extern Errcode render_poly(Poly *wply, Boolean filled, Boolean closed);
-extern void poly_grad_dims(Poly *p, Boolean filled);
+extern Errcode render_poly(Poly *wply, bool filled, bool closed);
+extern void poly_grad_dims(Poly *p, bool filled);
 extern Errcode render_fill_poly(Poly *p);
-extern Errcode finish_polyt(Boolean filled, Boolean closed);
-extern Errcode maybe_finish_polyt(Boolean filled, Boolean closed);
+extern Errcode finish_polyt(bool filled, bool closed);
+extern Errcode maybe_finish_polyt(bool filled, bool closed);
 extern LLpoint *new_poly_point(Poly *poly);
 extern LLpoint *start_polyt(Poly *p);
 
 extern void
-make_poly_loop(Poly *poly, Boolean curved, Boolean closed,
+make_poly_loop(Poly *poly,
+						   bool curved,
+						   bool closed,
 		LLpoint *this, int color);
 
-extern Errcode make_poly(Poly *p, Boolean closed);
+extern Errcode make_poly(Poly *p, bool closed);
 
 extern int
 make_sp_wpoly(Poly *poly, int x0, int y0, int rad, int theta,
@@ -120,7 +122,7 @@ extern void linkup_poly(Poly *p);
 extern Errcode update_poly(Poly *s, Poly *d);
 
 extern void
-dotty_disp_poly(Poly *p, Boolean closed, Pixel dit_color, Pixel dot_color);
+dotty_disp_poly(Poly *p, bool closed, Pixel dit_color, Pixel dot_color);
 
 extern Errcode load_and_paste_poly(char *name);
 extern Errcode edit_poly_file(char *name, char curve);
@@ -143,7 +145,7 @@ partial_spline(Poly *poly,
 
 extern int make_sp_poly(Poly *poly, Poly *dpoly, int closed, int ir);
 extern Errcode filled_spline(Poly *poly);
-extern Errcode hollow_spline(Poly *poly, Boolean closed);
+extern Errcode hollow_spline(Poly *poly, bool closed);
 
 /* gfx/pg*.c */
 extern void find_pminmax(Poly *poly, struct rectangle *r);
@@ -167,7 +169,7 @@ fill_poly_inside(Poly *pl,
 
 extern void
 hollow_polygon(Poly *poly,
-		line_func lineout, void *ldat, Boolean closed);
+		line_func lineout, void *ldat, bool closed);
 
 extern Errcode
 filled_polygon(Poly *poly,

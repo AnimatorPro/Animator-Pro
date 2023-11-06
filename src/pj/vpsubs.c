@@ -74,7 +74,7 @@ Boolean check_any_abort()
 }
 #endif /* SLUFFED */
 
-static Boolean rclick_on_screen(void)
+static bool rclick_on_screen(void)
 {
 	return((JSTHIT(MBRIGHT)
 			&& (curson_wndo((Wndo *)vb.pencel)
@@ -82,39 +82,40 @@ static Boolean rclick_on_screen(void)
 				|| curson_wndo(&vb.screen->wndo))));
 }
 
-Boolean check_esc_abort(void)
+bool check_esc_abort(void)
 {
 	if (JSTHIT(KEYHIT) && (UBYTE)icb.inkey == ESCKEY)
 	{
 		close_group_code((Mugroup *)see_head(&vb.screen->gstack),Err_abort);
-		return(TRUE);
+		return(true);
 	}
-	return(FALSE);
+	return(false);
 }
 
-Boolean check_pen_abort(void)
+bool check_pen_abort(void)
 /* checks for click abort on pen windows only and key abort */
 {
 	if( rclick_on_screen()
 		|| (JSTHIT(KEYHIT) && is_abortkey()))
 	{
 		close_group_code((Mugroup *)see_head(&vb.screen->gstack),Err_abort);
-		return(TRUE);
+		return(true);
 	}
-	return(FALSE);
+	return(false);
 }
-Boolean check_toggle_menu(void)
+
+bool check_toggle_menu(void)
 {
 	if ((JSTHIT(KEYHIT) && (UBYTE)icb.inkey == ' ')
 		|| (rclick_on_screen()))
 	{
 		toggle_menu();
-		return(TRUE);
+		return(true);
 	}
 	else
-		return(FALSE);
+		return(false);
 }
-Boolean check_toggle_abort(void)
+bool check_toggle_abort(void)
 /* returns 0 if input unused 1 if used */
 {
 
@@ -376,14 +377,15 @@ void menu_doundo(void)
 	if(vl.undoit != NULL)
 		(*vl.undoit)();
 }
-Boolean check_undo_key(void)
+
+bool check_undo_key(void)
 {
 	if(hit_undo_key())
 	{
 		menu_doundo();
-		return(TRUE);
+		return(true);
 	}
-	return(FALSE);
+	return(false);
 }
 
 void menu_doredo(void)

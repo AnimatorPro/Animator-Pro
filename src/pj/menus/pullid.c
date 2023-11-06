@@ -29,7 +29,7 @@ errline(Err_not_found, "id_to_pull(%d)\n", id);
 return(NULL);
 }
 
-void set_pul_disable(Menuhdr *mh, SHORT id, Boolean disable)
+void set_pul_disable(Menuhdr *mh, SHORT id, bool disable)
 /* Disable/enable Pull item depending on disable */
 {
 Pull *p = id_to_pull(mh,id);
@@ -40,14 +40,14 @@ else
 	p->flags &= ~(PULL_DISABLED);
 }
 
-void set_pultab_disable(Menuhdr *mh, SHORT *ids, int id_count, Boolean disable)
+void set_pultab_disable(Menuhdr *mh, SHORT *ids, int id_count, bool disable)
 /* Disable/enable Pulls depending on disable */
 {
 while (--id_count >= 0)
 	set_pul_disable(mh, *ids++, disable);
 }
 
-void set_leaf_disable(Menuhdr *mh, SHORT leafid, Boolean disable)
+void set_leaf_disable(Menuhdr *mh, SHORT leafid, bool disable)
 /* Disable/enable entire leaf of a pulldown */
 {
 Pull *p = id_to_pull(mh, leafid)->children->children;
@@ -62,7 +62,7 @@ while (p != NULL)
 	}
 }
 
-void pul_xflag(Menuhdr *mh, SHORT id, Boolean xflag)
+void pul_xflag(Menuhdr *mh, SHORT id, bool xflag)
 /* Put an asterisk or a space in the text area of Pull depending on xflag.
  * Xflag TRUE for asterisk. */
 {
@@ -76,5 +76,5 @@ void pultab_xoff(Menuhdr *mh, SHORT *ids, int id_count)
 /* Wipe out any asterisks in the Pulls */
 {
 while (--id_count >= 0)
-	pul_xflag(mh, *ids++, FALSE);
+	pul_xflag(mh, *ids++, false);
 }

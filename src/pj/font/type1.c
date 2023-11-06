@@ -537,13 +537,13 @@ static void type1_token_init(Type1_token *tok
 }
 
 
-static Boolean continue_number(int ch)
+static bool continue_number(int ch)
 /* Return true if character is a digit */
 {
 	return isdigit(ch);
 }
 
-static Boolean continue_name(int ch)
+static bool continue_name(int ch)
 /* Return true if character can be the second or further character in 
  * a name. */
 {
@@ -580,7 +580,7 @@ static void type1_get_token(Type1_token *token)
  */
 {
 	int ch;
-	Boolean (*get_next)(int ch);
+	bool (*get_next)(int ch);
 	int tok_len = sizeof(token->string);
 	char *string = token->string;
 
@@ -1414,7 +1414,7 @@ static int rsp;                       /* Return stack pointer */
 static int curx, cury;			      /* The current point */
 static int flexing;			          /* If a Flex in progress ? */
 static int flexx, flexy;              /* Flex current position */
-static Boolean pathopen;                  /* Path open ? */
+static bool pathopen;                  /* Path open ? */
 
 static int bnum;                  	  /* Line segments per Bezier curve */
 
@@ -1430,7 +1430,7 @@ static void Opath(Type1_output *output)
 {
         if (!pathopen)
         {
-                pathopen = TRUE;
+                pathopen = true;
 				pcount = 0;
                 output->shape_open(output,curx,cury);
         }
@@ -1444,7 +1444,7 @@ static void Dpath(Type1_output *output)
 		if (pathopen)
         {
                 ClosePath(output);
-                pathopen = FALSE;
+                pathopen = false;
         }
         Opath(output);
 }
@@ -1516,11 +1516,11 @@ static void othersubr(Type1_output *output, int procno, int nargs, int argp)
 				   flexarg[7][X], flexarg[7][Y], bnum);
             osres[orp++] = stack[argp + 3];
             osres[orp++] = stack[argp + 2];
-            flexing = FALSE;          /* Terminate flex */
+            flexing = false;          /* Terminate flex */
             break;
 
         case 1:                       /* Flex start */
-            flexing = TRUE;           /* Mark flex underway */
+            flexing = true;           /* Mark flex underway */
             flexx = curx;
             flexy = cury;
             flexp = 0;
@@ -1563,8 +1563,8 @@ static Errcode type1_exchars(Type1_font *tcd, int *pwidth
 
 	bnum = bezier_points;			  /* Set how many points in bezier curve. */
 	sp = rsp = 0;                     /* Reset stack pointer */
-	pathopen = FALSE;
-	flexing = FALSE;          
+	pathopen = false;
+	flexing = false;
 
 	for (;;)
 		{
@@ -1643,7 +1643,7 @@ static Errcode type1_exchars(Type1_font *tcd, int *pwidth
 				case Closepath:       /* 9:  Close path */
 					if (pathopen)
 						ClosePath(output);
-					pathopen = FALSE;
+					pathopen = false;
 					Clear();
 					break;
 				case Hlineto:         /* 6: Horizontal line to */
@@ -2091,7 +2091,8 @@ static void type1_bits_dot(SHORT x, SHORT y, void *data)
 }
 
 static void type1_bits_outline(Poly *poly, int xoff, int yoff
-, Boolean closed, Type1_bitplane *bits)
+,
+							   bool closed, Type1_bitplane *bits)
 /* Draw a polygon outline on a bitplane. */
 {
 	int count = poly->pt_count;
@@ -2186,7 +2187,7 @@ static Errcode fill_letter_open(Type1_output *fo)
 }
 
 
-static Boolean find_shape_bounds(Type1_box *bounds, Shape_list *shapes)
+static bool find_shape_bounds(Type1_box *bounds, Shape_list *shapes)
 /*----------------------------------------------------------------------*
  * Make up a bounding box that contains every point in every shape in
  * the shape list.
@@ -2196,7 +2197,7 @@ static Boolean find_shape_bounds(Type1_box *bounds, Shape_list *shapes)
 	LLpoint *points;
 	int point_count;
 	int x,y;
-	Boolean got_shape = FALSE;
+	bool got_shape = false;
 
 	init_bounding_box(&b);
 	while (shapes != NULL)
@@ -2204,7 +2205,7 @@ static Boolean find_shape_bounds(Type1_box *bounds, Shape_list *shapes)
 		/* Ignore dotty input. */
 		if ((point_count = shapes->point_count) > 1)
 			{
-			got_shape = TRUE;
+			got_shape = true;
 			points = shapes->points;
 			while (--point_count >= 0)
 				{
@@ -2273,7 +2274,7 @@ static Errcode output_shape_list(Type1_output *fo, Shape_list *shape_list)
 			if ((poly.pt_count = shapes->point_count) > 1)
 				{
 				poly.clipped_list = shapes->points;
-				type1_bits_outline(&poly,bits.x,bits.y,TRUE,&bits);
+				type1_bits_outline(&poly,bits.x,bits.y, true,&bits);
 				}
 			}
 		}
@@ -2884,7 +2885,7 @@ static int vfont_char_width(Vfont *v, UBYTE *s)
 	return (tcd->scale.width[s[0]] + v->spacing);
 }
 
-static Boolean vfont_in_font(Vfont *v, int c)
+static bool vfont_in_font(Vfont *v, int c)
 {
 	Type1_font *tcd = v->font;
 
@@ -2900,7 +2901,7 @@ static Errcode vfont_scale_font(Vfont *v, int height)
 	return Success;
 }
 
-static Errcode vfont_change_unzag(Vfont *v, Boolean unzag)
+static Errcode vfont_change_unzag(Vfont *v, bool unzag)
 {
 Type1_font *tcd = v->font;
 tcd->scale.unzag_flag = unzag;

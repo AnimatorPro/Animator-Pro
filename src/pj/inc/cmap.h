@@ -34,7 +34,7 @@ extern void pj_cmap_free(Cmap *cmap);
 extern void pj_get_default_cmap(Cmap *cmap);
 
 extern ULONG cmap_crcsum(Cmap *cmap);
-extern Boolean cmaps_same(Cmap *s1, Cmap *s2);
+extern bool cmaps_same(Cmap *s1, Cmap *s2);
 extern Cmap *clone_cmap(Cmap *toclone);
 extern void pj_cmap_load(void *raster, Cmap *cmap);
 extern void pj_cmap_copy(Cmap *s, Cmap *d);
@@ -42,7 +42,7 @@ extern int compromise_cmap(Cmap *s1, Cmap *s2, Cmap *d);
 extern void pj_shift_cmap(const UBYTE *src, UBYTE *dst, unsigned int n);
 extern void swap_cmaps(Cmap *a, Cmap *b);
 
-extern Boolean in_ctable(Rgb3 *rgb, Rgb3 *ctab, int count);
+extern bool in_ctable(Rgb3 *rgb, Rgb3 *ctab, int count);
 extern void get_color_rgb(USHORT cnum, Cmap *cmap, Rgb3 *rgb);
 extern void set_color_rgb(Rgb3 *rgb, USHORT cnum, Cmap *cmap);
 extern void stuff_cmap(Cmap *cmap, Rgb3 *color);

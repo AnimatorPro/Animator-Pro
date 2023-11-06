@@ -167,7 +167,7 @@ static void dirdcl(Poco_cb* pcb, Poco_frame* pf, Type_info* ti, Symbol** name, S
 	{
 		dcl(pcb, pf, ti, name, osym);
 		if (pcb->t.toktype == TOK_RPAREN) /* ( dcl ) */
-			pcb->t.reuse = FALSE;		  /* for typenames: eat it if a reuse is pending. */
+			pcb->t.reuse = false;		  /* for typenames: eat it if a reuse is pending. */
 		else
 			po_unmatched_paren(pcb);
 	} else if (pcb->curtoken->is_symbol) {
@@ -405,19 +405,19 @@ static Errcode func_proto(Poco_cb* pcb, Poco_frame* pf, Type_info* ti, char* nam
 
 	if (pcb->libfunc != NULL && pf->frame_type == FTY_GLOBAL) {
 		proto->code_pt	= pcb->libfunc;
-		proto->got_code = TRUE;
+		proto->got_code = true;
 		proto->type		= CFF_C;
 		proto->magic	= FUNC_MAGIC; /* helps detect wild pointers at runtime */
 	} else {
 		proto->code_pt	= NULL;
-		proto->got_code = FALSE;
+		proto->got_code = false;
 		proto->type		= CFF_POCO;
 	}
 
 	if (pcb->t.toktype != TOK_RPAREN) {
 		po_new_frame(pcb, pf->scope + 1, name, FTY_STRUCT);
 		rf				   = pcb->rframe;
-		rf->is_proto_frame = TRUE;
+		rf->is_proto_frame = true;
 		gather_params(pcb, proto);
 		transfer_params(pcb, rf, proto);
 		if (rf->fsif != NULL)
@@ -560,7 +560,7 @@ static void one_dec(Poco_cb* pcb, Poco_frame* pf, Type_info* base_ti, Symbol** p
 	Itypi tip;
 	Type_info* ti;
 	Symbol* osym;
-	Boolean po_is_func;
+	bool po_is_func;
 
 	ti = po_typi_type(&tip);
 	dcl(pcb, pf, ti, &var, &osym);
@@ -570,7 +570,7 @@ static void one_dec(Poco_cb* pcb, Poco_frame* pf, Type_info* base_ti, Symbol** p
 	ti->flags = base_ti->flags;
 
 	ti = var->ti = rev_type_info(pcb, ti);
-	if ((po_is_func = (ti->comp[ti->comp_count - 1] == TYPE_FUNCTION)) == TRUE) {
+	if ((po_is_func = (ti->comp[ti->comp_count - 1] == TYPE_FUNCTION)) == true) {
 		if (pf->frame_type != FTY_GLOBAL) {
 			po_say_fatal(pcb, "function prototypes only allowed outside function declarations.");
 		}
@@ -638,7 +638,7 @@ static void get_body(Poco_cb* pcb, Poco_frame* pf, Symbol* fvar)
 		po_code_op(pcb, &rf->fcd, OP_LEAVE);
 		po_code_op(pcb, &rf->fcd, OP_RET);
 		po_compress_func(pcb, rf, proto);
-		proto->got_code = TRUE;
+		proto->got_code = true;
 		proto->magic	= FUNC_MAGIC; /* helps detect wild pointers at runtime */
 		po_old_frame(pcb);
 	}
@@ -707,11 +707,11 @@ static void based_decs(Poco_cb* pcb, Poco_frame* pf, Type_info* base_ti)
 	Symbol* var;
 	Exp_frame eee;
 	SHORT frame_type;
-	Boolean is_fu;
+	bool is_fu;
 
 loop : {
 	one_dec(pcb, pf, base_ti, &var);
-	if ((is_fu = po_is_func(var->ti)) == TRUE) {
+	if ((is_fu = po_is_func(var->ti)) == true) {
 		fill_in_return_type(pcb, var);
 	} else {
 		po_new_var_space(pcb, var);
@@ -774,7 +774,7 @@ void po_get_typename(Poco_cb* pcb, Type_info* ti)
 	po_need_token(pcb);
 
 #ifdef DEVELOPMENT
-	if (FALSE == po_get_base_type(pcb, pf, ti))
+	if (false == po_get_base_type(pcb, pf, ti))
 		po_say_internal(pcb, "bad return from po_get_base_type detected in po_get_typename");
 #else
 	po_get_base_type(pcb, pf, ti);

@@ -24,7 +24,7 @@ AA_config vconfg = {  /* Ram image of v.cfg containing default values
 	{ sizeof(AA_config), VCFG_MAGIC, VCFG_VERSION }, /* file size and id */
 	{ "aadisp.drv", 0,0,0 },  /* screen_mode drv_name, mode, width, height */
 
-	FALSE, 		/* noint */
+	false, 		/* noint */
 	0, 			/* dev_type */
 	0, 			/* unused */
 	0, 			/* comm_port */
@@ -44,7 +44,7 @@ AA_config vconfg = {  /* Ram image of v.cfg containing default values
 /* re opens config file for readwrite with global name. The path is assumed
  * to be full or is relative to the startup drawer */
 static Errcode
-open_config(XFILE **pxf, Boolean create)
+open_config(XFILE **pxf, bool create)
 {
 	const char *config_name = vb.config_name;
 
@@ -89,7 +89,7 @@ const char* get_default_config_name() {
    Returns Success if a new config was created, 1 if
    it was read in < Success if a fatal error occurred and a config file could
    not be read or created. This reports the fatal error via softerr(). */
-Errcode init_config(Boolean force_create)
+Errcode init_config(bool force_create)
 {
 	Errcode goodret;
 	Errcode err;
@@ -98,7 +98,7 @@ Errcode init_config(Boolean force_create)
 
 	goodret = 1; /* optimism */
 
-	err = open_config(&xf, FALSE);
+	err = open_config(&xf, false);
 	if (err < Success)
 		goto bad_open;
 
@@ -132,7 +132,7 @@ bad_config: /* we do not have a valid file. Create a new one? */
 	}
 
 create_it:
-	err = open_config(&xf, TRUE);
+	err = open_config(&xf, true);
 	if (err < Success)
 		goto fatal_error;
 
@@ -182,7 +182,7 @@ Errcode rewrite_config(void)
 	Errcode err;
 	XFILE *xf;
 
-	err = open_config(&xf, FALSE);
+	err = open_config(&xf, false);
 	if (err >= Success) {
 		err = xffwrite(xf, &vconfg, sizeof(vconfg));
 		xffclose(&xf);

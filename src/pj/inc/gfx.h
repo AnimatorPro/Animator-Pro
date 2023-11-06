@@ -142,25 +142,28 @@ draw_quad(Raster *r, Pixel col, SHORT x, SHORT y, USHORT w, USHORT h);
 extern Errcode
 rcircle(SHORT xcen, SHORT ycen, SHORT rad,
 		dotout_func dotout, void *dotdat,
-		hline_func hline, void *hldat, Boolean filled);
+		hline_func hline, void *hldat,
+					   bool filled);
 
 extern Errcode
 dcircle(SHORT xcen, SHORT ycen, SHORT diam,
 		dotout_func dotout, void *dotdat,
-		hline_func hline, void *hldat, Boolean filled);
+		hline_func hline, void *hldat,
+					   bool filled);
 
 extern Errcode
 doval(SHORT xcen, SHORT ycen, SHORT xdiam, SHORT xaspect, SHORT yaspect,
 		dotout_func dotout, void *dotdat,
-		hline_func hline, void *hldat, Boolean filled);
+		hline_func hline, void *hldat,
+					 bool filled);
 
 void sq_poly(SHORT w, SHORT h, SHORT x, SHORT y, Short_xy *points);
 void rect_to_xyz(Rectangle *r, Short_xyz *dest);
 
 void line(void *r, Pixel color, Coor x1, Coor y1, Coor x2, Coor y2);
 void circle(void *r,Pixel color,Coor centx,Coor centy,
-			Ucoor diam,Boolean filled);
-Errcode polygon(void *r,Pixel color,Short_xy *points,int count,Boolean filled);
+			Ucoor diam, bool filled);
+Errcode polygon(void *r,Pixel color,Short_xy *points,int count, bool filled);
 
 #undef OPTdata
 

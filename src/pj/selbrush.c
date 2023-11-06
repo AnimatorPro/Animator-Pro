@@ -43,7 +43,7 @@ static void gelb_update(void *data, Button *b)
 }
 
 static Qslider gel_brush_sl = 
-	QSL_INIT1( 0, 30, &vs.gel_brush_size, TRUE, gelb_update, leftright_arrs);
+	QSL_INIT1( 0, 30, &vs.gel_brush_size, true, gelb_update, leftright_arrs);
 
 static Button gel_brush_sl_sel = MB_INIT1(
 	&gel_brush_sel,
@@ -353,7 +353,8 @@ static void see_circle_button(Button *b)
 	wbg_ncorner_back(b);
 	circle(b->root,wbg_textcolor(b),
 		   b->x + (b->width>>1),b->y + (b->height>>1),
-		   mb_mscale_x(b,14),TRUE);
+		   mb_mscale_x(b,14),
+		   true);
 }
 static void see_square_button(Button *b)
 {
@@ -420,7 +421,7 @@ SHORT oht;
 	switch(vs.pen_brush_type)
 	{
 		case CIRCLE_BRUSH:
-			circle(&cb,mc_grey(b),cent.x,cent.y,size+1,TRUE);
+			circle(&cb,mc_grey(b),cent.x,cent.y,size+1, true);
 			break;
 		case SQUARE_BRUSH:
 			++size;

@@ -101,14 +101,14 @@ Fli_frame frame;
 	return(flow_i_add_ring_rec(flif,&frame));
 }
 
-static Boolean flow_spec_best_fit(Anim_info *ainfo)
+static bool flow_spec_best_fit(Anim_info *ainfo)
 {
 	if(ainfo->depth == 8
 		 && ainfo->num_frames <= MAXFRAMES
 		 && ainfo->width == 320
 		 && ainfo->height == 200)
 	{
-		return(TRUE);
+		return(true);
 	}
 
 	ainfo->depth = 8;
@@ -116,7 +116,7 @@ static Boolean flow_spec_best_fit(Anim_info *ainfo)
 		ainfo->num_frames = MAXFRAMES;
 	ainfo->width = 320;
 	ainfo->height = 200;
-	return(FALSE);
+	return(false);
 }
 
 static int files_open;
@@ -160,7 +160,7 @@ static Errcode create_flow_file(Pdr *pd, char *path, Image_file **pif,
 	if (err < Success)
 		goto error;
 
-	flif->ifile.needs_work_cel = TRUE;
+	flif->ifile.needs_work_cel = true;
 	flif->hdr.type = FLIH_MAGIC;
 	flif->hdr.width = 320;
 	flif->hdr.height = 200;

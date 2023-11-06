@@ -410,9 +410,9 @@ Errcode err;
 	if(mum_autoarg && mum_autoarg->avec != NULL)
 	{
 		hide_mp();
-		mum_autoarg->in_preview = TRUE;
+		mum_autoarg->in_preview = true;
 		err = dopreview(mum_autoarg);
-		mum_autoarg->in_preview = FALSE;
+		mum_autoarg->in_preview = false;
 		softerr(err,"cel_preview");
 		show_mp();
 	}

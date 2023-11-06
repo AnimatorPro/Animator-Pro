@@ -40,7 +40,7 @@ static Errcode push_alt_id(LONG id)
 
 	if (pushed_alt == 0) {
 		if (vl.alt_cel) {
-			if ((err = save_pic(alt_name, vl.alt_cel, id, TRUE)) < 0)
+			if ((err = save_pic(alt_name, vl.alt_cel, id, true)) < 0)
 				return (err);
 			pj_rcel_free(vl.alt_cel);
 			vl.alt_cel = NULL;
@@ -57,7 +57,7 @@ static Errcode push_screen_id(LONG timeid)
 	Errcode err;
 
 	if (pushed_screen == 0) {
-		if ((err = save_pic(screen_name, vb.pencel, timeid, TRUE)) < 0)
+		if ((err = save_pic(screen_name, vb.pencel, timeid, true)) < 0)
 			return (err);
 	}
 	pushed_screen++;
@@ -70,7 +70,7 @@ Errcode pop_screen_id(LONG check_id)
 
 	if (--pushed_screen == 0) {
 		if (pj_exists(screen_name)) {
-			err = load_pic(screen_name, vb.pencel, check_id, TRUE);
+			err = load_pic(screen_name, vb.pencel, check_id, true);
 			if (err < 0)
 				return (err);
 			pj_delete(screen_name);
@@ -145,7 +145,7 @@ static Errcode pop_alt_id(LONG check_id)
 	if (pushed_alt == 0) {
 		if (!vl.alt_cel && pj_exists(alt_name)) {
 			if (alloc_pencel(&vl.alt_cel) >= 0) {
-				err = load_pic(alt_name, vl.alt_cel, check_id, TRUE);
+				err = load_pic(alt_name, vl.alt_cel, check_id, true);
 				if (err < 0) {
 					pj_rcel_free(vl.alt_cel);
 					vl.alt_cel = NULL;
@@ -158,7 +158,7 @@ static Errcode pop_alt_id(LONG check_id)
 	return 0;
 }
 
-Boolean mask_is_present(void)
+bool mask_is_present(void)
 {
 	return (mask_rast != NULL || (pushed_mask < 0 && pj_exists(mask_name)));
 }

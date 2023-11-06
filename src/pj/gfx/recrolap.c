@@ -1,6 +1,6 @@
 #include "rectang.h"
 
-Boolean crects_overlap(register Cliprect *a,register Cliprect *b)
+bool crects_overlap(register Cliprect *a,register Cliprect *b)
 {
 	if(    (a->x >= b->MaxX)
 		|| (a->y >= b->MaxY)

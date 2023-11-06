@@ -124,8 +124,8 @@ SHORT opal_to;		/* 0 for to cluster, 1 for to all */
 	omulti = vs.multi;
 	opal_to = vs.pal_to;
 
-	vs.pal_fit =  FALSE;
-	vs.multi = TRUE;
+	vs.pal_fit = false;
+	vs.multi = true;
 	vs.pal_to =  0;
 
 	ccycle();
@@ -382,19 +382,19 @@ Pixel occolor;
 
 static Rgb3 r1, r2;
 
-static Boolean define_ramp(void)
+static bool define_ramp(void)
 {
 int c;
 
 	rgb_key = "start_rgb";
 	if ((c = get_a_end(show_rgb)) < 0)
-		return(FALSE);
+		return(false);
 	get_color_rgb(c,vb.pencel->cmap,&r1);
 	rgb_key = "stop_rgb";
 	if ((c = get_a_end(show_rgb)) < 0)
-		return(FALSE);
+		return(false);
 	get_color_rgb(c,vb.pencel->cmap,&r2);
-	return(TRUE);
+	return(true);
 }
 
 static void ramp_cluster(Button *b,int which)
@@ -897,7 +897,7 @@ Button *me;
 
 static void pp_unframe_color(Button *b, int ix)
 {
-Boolean bottom, left, right;
+	bool bottom, left, right;
 int x,y,w,h,yix, xix;
 
 	yix = ix >> 5;

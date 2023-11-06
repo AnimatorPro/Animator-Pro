@@ -36,7 +36,7 @@ void cleans(void)
 	dirty_strokes = 0;
 }
 
-Boolean need_scrub_frame(void)
+bool need_scrub_frame(void)
 {
 	return(dirty_frame);
 }
@@ -76,7 +76,7 @@ LONG size;
 	size = frame->size;
 	if(size <= sizeof(*frame))
 		size = 0;
-	return(make_flx_record(flx, ix, frame,size,TRUE));
+	return(make_flx_record(flx, ix, frame,size, true));
 }
 
 Errcode sub_cur_frame(void)
@@ -90,7 +90,7 @@ Fli_frame *cbuf;
 Fli_frame *cbuf2;
 void *alloc2;
 SHORT undoix;
-Boolean overwrite;
+bool overwrite;
 Flx ocurflx;
 
 	if (flix.xf == NULL)
@@ -130,7 +130,7 @@ Flx ocurflx;
 			goto error;
 	}
 
-	overwrite = TRUE; /* allow current record to be overwritten unless
+	overwrite = true; /* allow current record to be overwritten unless
 					   * we find we can't allocate buffers etc */
 
 	if(vs.frame_ix == 0)
@@ -168,7 +168,7 @@ Flx ocurflx;
 		else 
 		{
 			if((alloc2 = pj_malloc(ocurflx.fsize)) == NULL)
-				overwrite = FALSE;
+				overwrite = false;
 			cbuf2 = alloc2;
 		}
 		if(overwrite) /* unfli old frame via cbuf2 we may overwrite it */
@@ -392,7 +392,7 @@ struct pdr_seek_dat {
 	int send;
 	int num_frames;
 	int inc;   /* + or - 1 */
-	Boolean undo_used;
+	bool undo_used;
 	SHORT cur_frame;
 	int cur_ix;
 };
@@ -585,7 +585,7 @@ Flifile flif;
 Fli_frame *cbuf;
 Errcode err;
 char pdr_name[PATH_SIZE];
-Boolean fli_format;
+bool fli_format;
 SHORT oframe_ix;
 
 	if (!pj_assert(flix.xf != NULL)) return Err_bad_input;
@@ -676,7 +676,7 @@ done:
 	show_mp();
 	return(err);
 }
-static Boolean save_as_fli(void)
+static bool save_as_fli(void)
 {
 char pdr_name[PATH_SIZE];
 	return(is_fli_pdr_name(get_flisave_pdr(pdr_name)));

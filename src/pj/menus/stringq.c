@@ -139,11 +139,11 @@ int textx;
 		sq->cpos = sq->ccount;
 }
 
-static Boolean right_scroll(Sqwork *qw)
+static bool right_scroll(Sqwork *qw)
 {
 Stringq *sq = qw->sq;
 Button *b = qw->sqb;
-Boolean ret = FALSE;
+bool ret = false;
 
 /* Might have to do this more than once if character scrolling off left edge
  * is narrower than new character */
@@ -151,7 +151,7 @@ while (fnstring_width(qw->f, sq->string+sq->dpos,
 	sq->cpos - sq->dpos + 1) >= b->width-2*MB_IBORDER-qw->textx)
 	{
 	sq->dpos += 1;
-	ret = TRUE;
+	ret = true;
 	}
 return(ret);
 }
@@ -168,7 +168,7 @@ SHORT count;
 int ret;
 Wiostate ios;
 char lastkey, thiskey;
-char first = TRUE;
+char first = true;
 
 	save_wiostate(&ios);
 	load_wndo_iostate((Wndo *)get_button_wndo(qw->sqb));
@@ -350,7 +350,7 @@ char first = TRUE;
 			}
 		}
 NOT_FIRST:
-	first = FALSE;
+	first = false;
 	}
 
 EXIT_STRING:
@@ -444,7 +444,7 @@ static void init_numq_stq(Numq *nq, Stringq *sq)
 }
 static void set_nqbuf(Button *b, SHORT val)
 {
-	setf_stringq(b,FALSE,"%d",val);
+	setf_stringq(b, false,"%d",val);
 }
 void see_numq(Button *b)
 {
@@ -460,10 +460,11 @@ Stringq sq;
 	see_string_req(b);
 	b->datme = nq;
 }
-Boolean feel_numq(Button *b)
+
+bool feel_numq(Button *b)
 {
 Numq *nq;
-Boolean hit_enter;
+bool hit_enter;
 Stringq sq;
 char cbuf_b[32];
 char cbuf_a[32];

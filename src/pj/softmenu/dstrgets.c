@@ -40,7 +40,7 @@ for (;;)
 	if (blen >= bmax)
 		{
 		ds->blen = blen;
-		if ((err = dstring_newbuf(ds,bmax<<=1,TRUE)) < Success)
+		if ((err = dstring_newbuf(ds,bmax<<=1, true)) < Success)
 			return(err);
 		buf = ds->buf;
 		}
@@ -53,7 +53,7 @@ for (;;)
 if (blen >= bmax)
 	{
 	ds->blen = blen;
-	if ((err = dstring_newbuf(ds,bmax<<=1,TRUE)) < Success)
+	if ((err = dstring_newbuf(ds,bmax<<=1, true)) < Success)
 		return(err);
 	buf = ds->buf;
 	}

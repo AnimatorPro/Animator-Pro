@@ -5,8 +5,7 @@
 
 void
 hollow_polygon(Poly *poly,
-		line_func lineout, void *linedat,
-		Boolean closed)
+		line_func lineout, void *linedat, bool closed)
 {
 register LLpoint *this, *next;
 int i;

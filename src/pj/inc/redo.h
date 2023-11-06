@@ -46,7 +46,7 @@ typedef struct move_p
 	{
 	Rectangle orig;
 	Short_xy new;
-	Boolean clear_move_out;
+	bool clear_move_out;
 	} Move_p;
 
 typedef struct sep_p
@@ -95,12 +95,12 @@ extern Errcode start_save_redo_points(void);
 extern void end_save_redo_points(void);
 extern Errcode save_redo_point(Pos_p *p);
 extern Errcode save_spray_redo(Spray_redo *sr);
-extern Boolean get_spray_redo(Spray_redo *sr);
+extern bool get_spray_redo(Spray_redo *sr);
 extern Errcode save_redo_draw(int mode);
 extern Errcode save_redo_gel(void);
 extern Errcode save_redo_spray(void);
 extern Errcode save_redo_sep(Sep_p *sep);
-extern void do_auto_redo(Boolean edit);
+extern void do_auto_redo(bool edit);
 extern Errcode save_redo_box(Rectangle *r);
 extern Errcode save_redo_circle(Circle_p *cp);
 extern Errcode save_redo_text(void);

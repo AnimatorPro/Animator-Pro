@@ -347,8 +347,7 @@ char *text;
 	if(text != NULL) /* no text */
 	{
 		if((err = get_formatted_ftext(&tbuf,sizeof(sbuf),
-								      tbox->formats,text,tbox->args,
-									  FALSE )) < Success)
+								      tbox->formats,text,tbox->args, false)) < Success)
 		{
 			goto error;
 		}

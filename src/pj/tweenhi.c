@@ -17,7 +17,8 @@
 
 void a_wireframe_tween(Tween_state *tween,
 	int frames, int speed, 
-	Pixel dit_color, Pixel dash_color, Boolean closed,
+	Pixel dit_color, Pixel dash_color,
+					   bool closed,
 	int play_mode)
 /* Go do a wire-frame simulation of what tween move will look like
    so user can get a sense of what the timing will be before
@@ -38,7 +39,7 @@ if (frames < 0)
 
 if ((err = ts_to_tw_list(tween, closed, &tlist)) < Success)
 	goto OUTBUF;
-cinit_marqihdr(&mh,dit_color,dash_color,TRUE);
+cinit_marqihdr(&mh,dit_color,dash_color, true);
 
 hide_mouse();
 clock = pj_clock_1000();
@@ -195,7 +196,7 @@ int vcount;
 LLpoint *d;
 Errcode err;
 int ocurve;
-Boolean closed;
+bool closed;
 Tw_tlist tlist;
 int i;
 (void)ix;
@@ -243,7 +244,7 @@ SHORT omulti;
 twda.is_spline = vs.tween_spline;
 twda.ts = ts;
 omulti = vs.multi;
-vs.multi = TRUE;
+vs.multi = true;
 do_autodraw(tween1,&twda);
 vs.multi = omulti;
 }

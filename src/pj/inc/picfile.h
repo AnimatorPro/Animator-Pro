@@ -60,11 +60,11 @@ Errcode pj_read_pichead(XFILE *f, Pic_header *pic);
 extern Errcode
 pj_read_picbody(XFILE *xf, Pic_header *pic, Raster *cel, struct cmap *cmap);
 
-Errcode load_pic(char *name,Rcel *rcel,LONG check_id, Boolean load_colors);
-Errcode save_pic(char *name,Rcel *screen,LONG id, Boolean save_colors);
+Errcode load_pic(char *name,Rcel *rcel,LONG check_id, bool load_colors);
+Errcode save_pic(char *name,Rcel *screen,LONG id, bool save_colors);
 
 /* picfiles.c */
-extern Boolean is_fli_pdr_name(char *path);
+extern bool is_fli_pdr_name(char *path);
 extern char *get_flisave_pdr(char *pdr_path);
 extern Errcode get_picsave_info(char *sufbuf, char *titlebuf, int titlesize);
 extern Errcode get_flisave_info(char *sufbuf, char *titlebuf, int titlesize);
@@ -75,7 +75,8 @@ extern void go_pic_pdr_menu(void);
 extern void go_flic_pdr_menu(void);
 
 extern Errcode
-find_pdr_loader(char *ifname, Boolean multi_frame,
+find_pdr_loader(char *ifname,
+							   bool multi_frame,
 		struct anim_info *ainfo, char *pdr_name, Rcel *screen);
 
 extern Errcode load_any_picture(char *name, Rcel *screen);

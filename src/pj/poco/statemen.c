@@ -75,22 +75,22 @@ static Type_info ely = {
 /*****************************************************************************
  * if the next token is a semicolon eat it, else complain and 'insert' one.
  ****************************************************************************/
-Boolean po_eat_semi(Poco_cb* pcb)
+bool po_eat_semi(Poco_cb* pcb)
 {
 	lookup_token(pcb);
 	if (pcb->t.toktype == ';')
-		return (TRUE);
+		return (true);
 	else {
 		po_say_warning(pcb, "Missing semicolon (inserting...)");
 		pushback_token(&pcb->t);
 	}
-	return (FALSE);
+	return (false);
 }
 
 /*****************************************************************************
  * if next token is closing brace, eat it, else complain and die.
  ****************************************************************************/
-Boolean po_eat_rbrace(Poco_cb* pcb)
+bool po_eat_rbrace(Poco_cb* pcb)
 {
 	return (po_eat_token(pcb, TOK_RBRACE));
 }
@@ -98,7 +98,7 @@ Boolean po_eat_rbrace(Poco_cb* pcb)
 /*****************************************************************************
  * if next token is opening brace, eat it, else complain and die.
  ****************************************************************************/
-Boolean po_eat_lbrace(Poco_cb* pcb)
+bool po_eat_lbrace(Poco_cb* pcb)
 {
 	return (po_eat_token(pcb, TOK_LBRACE));
 }
@@ -352,7 +352,7 @@ static void get_switch(Poco_cb* pcb, Poco_frame* pf)
 
 	if ((lf = start_loop(pcb, pf)) == NULL)
 		return;
-	lf->is_switch		= TRUE;
+	lf->is_switch		= true;
 	lf->start->code_pos = po_cbuf_code_size(&pf->fcd); /* not really used... */
 
 	/* get the expression inside parens of	switch (expr) */
@@ -425,7 +425,7 @@ static void get_case_after(Poco_cb* pcb, Poco_frame* pf, Loop_frame* lf)
 		po_say_fatal(pcb, "value for case must be a constant expression");
 		goto OUT;
 	}
-	po_coerce_expression(pcb, &ef, lft, FALSE);
+	po_coerce_expression(pcb, &ef, lft, false);
 	po_eat_token(pcb, ':');
 
 	/* now generate code to test switch temp variable against constant */
@@ -490,7 +490,7 @@ static void get_default(Poco_cb* pcb, Poco_frame* pf)
 		po_say_fatal(pcb, "default outside of a switch");
 	} else {
 		po_eat_token(pcb, ':');
-		lf->got_default = TRUE;
+		lf->got_default = true;
 		offset_last_case_beq(pcb, pf, lf);
 		lf->last_case_beq = 0;
 	}
@@ -562,7 +562,7 @@ static void get_return(Poco_cb* pcb, Poco_frame* pf)
 		pushback_token(&pcb->t);
 		po_init_expframe(pcb, &ef);
 		po_get_expression(pcb, &ef);
-		po_coerce_expression(pcb, &ef, pf->return_type, FALSE);
+		po_coerce_expression(pcb, &ef, pf->return_type, false);
 		po_code_op(pcb, &ef.ecd, po_find_pop_op(pcb, &ef.ctc));
 		po_concatenate_code(pcb, &pf->fcd, &ef.ecd);
 		po_trash_expframe(pcb, &ef);
@@ -609,7 +609,7 @@ static void get_for(Poco_cb* pcb, Poco_frame* pf)
 	Loop_frame* lf;
 	long cpos;
 	long for_line;
-	Boolean got_cond = FALSE;
+	bool got_cond = false;
 
 	for_line = pcb->curtoken->line_num;
 	if ((lf = start_loop(pcb, pf)) == NULL)
@@ -632,7 +632,7 @@ static void get_for(Poco_cb* pcb, Poco_frame* pf)
 	if (!po_is_next_token(pcb, ';')) {
 		po_get_expression(pcb, efcond);
 		po_coerce_to_boolean(pcb, efcond);
-		got_cond = TRUE;
+		got_cond = true;
 	}
 	if (!po_eat_semi(pcb))
 		goto OUT;

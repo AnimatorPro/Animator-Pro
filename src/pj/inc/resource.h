@@ -25,8 +25,8 @@ extern Errcode init_resource_path(char *path);
 extern char *make_resource_path(char *dir, char *name, char *path_buf);
 extern char *make_resource_name(char *name, char *path_buf);
 
-extern Boolean resource_exists(char *name);
-extern Boolean req_resource_name(char *result, char *pat, char *hailing);
+extern bool resource_exists(char *name);
+extern bool req_resource_name(char *result, char *pat, char *hailing);
 
 /* Platform specific. */
 extern Errcode

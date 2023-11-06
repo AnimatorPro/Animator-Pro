@@ -302,7 +302,7 @@ Rbrush *rb = &thebrush;
 	++size;
 	rb->cent.x = rb->cent.y = (size>>1);
 	pj_set_rect(rb->rast,0,0,0,size,size); /* clear where it will be */
-	circle(rb->rast,1,rb->cent.x,rb->cent.y,size,TRUE); /* make circle */
+	circle(rb->rast,1,rb->cent.x,rb->cent.y,size, true); /* make circle */
 	rb->tcxl.xlat[0] = 0;
 	rb->tcxl.tcolor = 0;
 	rb->width = rb->height = size;
@@ -333,7 +333,7 @@ Rbrush *rb = &thebrush;
 	++size;
 	rb->cent.x = rb->cent.y = (size>>1);
 	pj_set_rect(rb->rast,1,0,0,size,size); /* set square to color 1 */
-	circle(rb->rast,1,rb->cent.x,rb->cent.y,size,TRUE); /* make circle */
+	circle(rb->rast,1,rb->cent.x,rb->cent.y,size, true); /* make circle */
 	rb->tcxl.xlat[0] = 0;
 	rb->tcxl.tcolor = 0;
 	rb->width = rb->height = size;

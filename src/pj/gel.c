@@ -75,7 +75,8 @@ Pos_p rp;
 			gel_thash = th[i];
 			if((err = doval(rp.x,rp.y,(pwt[i]<<1)+1,
 						    vb.pencel->aspect_dx, vb.pencel->aspect_dy,
-				    		NULL,NULL,render_hline,vb.pencel,TRUE)) < Success)
+				    		NULL,NULL,render_hline,vb.pencel,
+							 true)) < Success)
 			{
 				goto error;	
 			}
@@ -152,6 +153,7 @@ Clipbox cb;
 	{
 		doval(b->width>>1,b->height>>1,i,
 				cb.aspect_dx, cb.aspect_dy,
-				seegb_dot,&cb,NULL,NULL,FALSE);
+				seegb_dot,&cb,NULL,NULL,
+			  false);
 	}
 }

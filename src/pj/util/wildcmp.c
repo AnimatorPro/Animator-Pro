@@ -109,7 +109,7 @@ int name_is_wild(char *name)
 	while((c = *name++) != 0)
 	{
 		if(c == '?' || c == '*')
-			return TRUE;
+			return true;
 	}
-	return FALSE;
+	return false;
 }

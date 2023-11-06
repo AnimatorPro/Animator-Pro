@@ -2,7 +2,7 @@
 #include "commonst.h"
 #include "ftextf.h"
 
-Boolean varg_qreq_string(char *strbuf,int bufsize,
+bool varg_qreq_string(char *strbuf,int bufsize,
 						 char *formats,char *text,va_list args)
 {
 Errcode err;
@@ -15,8 +15,7 @@ char *tbuf = sbuf;
 	okcan[1] = cancel_str; 
 	okcan[2] = NULL;
 
-	if((err = get_formatted_ftext(&tbuf,sizeof(sbuf),formats,text,args,
-								  FALSE )) < Success)
+	if((err = get_formatted_ftext(&tbuf,sizeof(sbuf),formats,text,args, false)) < Success)
 	{
 		goto error;
 	}

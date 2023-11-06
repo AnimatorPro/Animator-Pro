@@ -288,7 +288,7 @@ char *tokenize_word(char *line,    /* (in) -> current line position */
 					 char *qstring, /* (in) -> quoted string o/p buffer */
 					 SHORT	*plen,		   /* (out) # of bytes put in word buf */
 					 SHORT	*ttype, 	   /* (out) token type				   */
-					 Boolean quote		   /* (in)	preserve quotes on string? */
+					bool quote		   /* (in)	preserve quotes on string? */
 				   )
 {
 char	*wrkptr;

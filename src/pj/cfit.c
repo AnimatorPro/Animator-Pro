@@ -39,7 +39,7 @@ void nz_fitting_ctable(Rgb3 *scm,Rgb3 *dcm,UBYTE *cnums)
 	make_cfit_table(scm,dcm,(Pixel *)cnums, -1);
 }
 
-Boolean need_render_cfit(Cmap *scmap)
+bool need_render_cfit(Cmap *scmap)
 {
 	return(vs.render_one_color
 			|| (vs.fit_colors && !cmaps_same(scmap, vb.pencel->cmap)));
@@ -53,7 +53,7 @@ void init_celcfit(Celcfit *cfit)
 	cfit->dst_cksum = (ULONG)(~0);
 	cfit->src_cksum = 0;
 }
-Boolean make_simple_cfit(Cmap *scmap, Cmap *dcmap, Celcfit *cfit,int clearc)
+bool make_simple_cfit(Cmap *scmap, Cmap *dcmap, Celcfit *cfit,int clearc)
 
 /* clearc of -1 will ignore clearc */
 {
@@ -76,7 +76,7 @@ ULONG dcmap_cksum;
 		cfit->dst_cksum = dcmap_cksum;
 		cfit->ink0 = -1;
 	}
-	return(TRUE);
+	return(true);
 }
 
 void make_one_color_ctable(Pixel *ctable, SHORT tcolor)
@@ -87,8 +87,7 @@ if(vs.render_under && vs.zero_clear)
 	ctable[tcolor] = vs.inks[0];
 }
 
-
-Boolean make_render_cfit(Cmap *scmap, Celcfit *cfit, SHORT tcolor)
+bool make_render_cfit(Cmap *scmap, Celcfit *cfit, SHORT tcolor)
 {
 ULONG cmap_cksum;
 ULONG dcmap_cksum;
@@ -151,12 +150,12 @@ ULONG dcmap_cksum;
 	else
 	{
 		cfit->flags |= CCFIT_NULL;
-		return(FALSE);
+		return(false);
 	}
 
 done:
 	cfit->flags &= ~CCFIT_NULL;
-	return(TRUE);
+	return(true);
 }
 
 void get_cmap_blend(int bscale, Cmap *cmapa, Cmap *cmapb, Cmap *dcmap)

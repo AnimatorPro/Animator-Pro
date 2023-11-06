@@ -372,7 +372,7 @@ static void pcis_roundit(Formatarg *fa)
 
 	fa->darg += 0.5/pcismult[fa->precis];
 }
-static char *add_dubldigits(Formatarg *fa,Boolean gmode)
+static char *add_dubldigits(Formatarg *fa, bool gmode)
 {
 double frac;
 double ival;
@@ -437,7 +437,7 @@ static char do_fdouble(Formatarg *fa)
 	add_dubldigits(fa,0);
 	return(finish_num_string(fa));
 }
-static char do_edouble(Formatarg *fa, Boolean gmode)
+static char do_edouble(Formatarg *fa, bool gmode)
 {
 double darg;
 double odarg;

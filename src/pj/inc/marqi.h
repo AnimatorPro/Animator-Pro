@@ -47,9 +47,9 @@ extern Errcode marqi_cut_xy(void);
 
 /* vmarqi.c */
 extern void
-cinit_marqihdr(Marqihdr *mh, Pixel oncolor, Pixel offcolor, Boolean bothwins);
+cinit_marqihdr(Marqihdr *mh, Pixel oncolor, Pixel offcolor, bool bothwins);
 
-extern void vinit_marqihdr(Marqihdr *mh, int marqi_it, Boolean bothwins);
+extern void vinit_marqihdr(Marqihdr *mh, int marqi_it, bool bothwins);
 
 extern void undo_marqidot(SHORT x, SHORT y, void *marqihdr);
 extern void savedraw_marqidot(SHORT x, SHORT y, void *marqihdr);

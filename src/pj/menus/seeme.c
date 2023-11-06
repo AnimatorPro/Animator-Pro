@@ -68,21 +68,21 @@ void mb_make_iclip(Button *b,Clipbox *cb)
 	pj_clipbox_make(cb, (Raster *)(b->root), b->x+MB_IBORDER, b->y+MB_IBORDER, 
 				 b->width-2*MB_IBORDER, b->height-2*MB_IBORDER);
 }
-static Boolean is_hilit(Button *b)
+static bool is_hilit(Button *b)
 {
 	switch(b->flags & (MB_HILITE_TYPES | MB_HILIT))
 	{
 		case MB_NOHILITE:
-			return(FALSE);
+			return(false);
 		case MB_GHILITE:
 			return(b->group && (*((SHORT *)(b->group)) == b->identity));
 		case MB_B_GHILITE:
 			return(b->group && (*((BYTE *)(b->group)) == (BYTE)(b->identity)));
 		default:
-			return(TRUE);
+			return(true);
 	}
 }
-void mb_set_hilite(Button *b,Boolean hilite)
+void mb_set_hilite(Button *b, bool hilite)
 {
 	if(hilite)
 		b->flags |= MB_HILIT;
@@ -566,7 +566,7 @@ struct hchiledat {
 	SHORT dx, dy;
 	Menuwndo *root;
 	USHORT orflags;
-	Boolean load_group;
+	bool load_group;
 	void *group;	
 	Rscale menu_scale;
 };

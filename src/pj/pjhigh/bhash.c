@@ -190,7 +190,7 @@ Errcode make_bhash(void)
 	return(Success);
 }
 
-Boolean is_bhash(void)	/* used by GEL tool to see if bhash already in place */
+bool is_bhash(void)	/* used by GEL tool to see if bhash already in place */
 /*****************************************************************************
  *
  ****************************************************************************/

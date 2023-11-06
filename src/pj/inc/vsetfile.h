@@ -117,13 +117,14 @@ extern void reres_settings(void);
 /* vsetfnam.c */
 extern char *
 vset_get_filename(char *prompt, char *suffi, char *button,
-		int path_type, char *outpath, Boolean force_suffix);
+		int path_type, char *outpath,
+							   bool force_suffix);
 
 /* vsetting.c */
 extern void rethink_settings(void);
 extern Errcode load_default_settings(Vset_flidef *fdef);
 extern Errcode reload_tsettings(struct vsettings *pvs, Vset_flidef *fdef);
-extern Errcode flush_tsettings(Boolean full_flush);
+extern Errcode flush_tsettings(bool full_flush);
 extern Errcode vset_get_pathinfo(int ptype, Vset_path *cpath);
 extern Errcode vset_get_path(int ptype, char *path);
 extern Errcode vset_set_pathinfo(int ptype, Vset_path *cpath);

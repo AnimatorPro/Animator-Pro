@@ -114,7 +114,8 @@ void cleanup_qchoice(Menuhdr *mh)
 }
 
 Errcode build_qchoice(Wscreen *s, Menuhdr **pmh, char *header, char **choices, 
-				  	 int ccount, VFUNC *feelers, Boolean hide_on_hit,
+				  	 int ccount, VFUNC *feelers,
+					  bool hide_on_hit,
 					 USHORT *flags)
 
 /*** this allocates and builds a multi choice menu and its buttons and does 

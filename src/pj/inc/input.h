@@ -85,7 +85,7 @@ typedef struct mouset
 	#include "ptrmacro.h"
 #endif
 
-Boolean _poll_input(Boolean do_cursor);
+bool _poll_input(bool do_cursor);
 
 #define WANTDRAWCURS (icb.mcurs_up++ == 0 && icb.mset.on)
 #define DRAWCURSOR() {(*(icb.curs->showit))(icb.curs);}
@@ -197,7 +197,7 @@ typedef struct global_icb {
 	 * will set do_hot_key() and the macro system will install the macro 
 	 * function pointers */
 
-	Boolean (*do_hot_key)(struct global_icb *gicb);
+	bool (*do_hot_key)(struct global_icb *gicb);
 
 #endif /* INPUT_INTERNALS */
 
@@ -335,9 +335,9 @@ Errcode reset_input(void);
 
 void reuse_input(void);
 
-Boolean is_pressure(void);
+bool is_pressure(void);
 
-Boolean check_input(ULONG checkflags);
+bool check_input(ULONG checkflags);
 void wait_input(ULONG waitflags);
 void mac_wait_input(ULONG waitflags,ULONG recflags);
 Errcode vsync_wait_input(ULONG waitflags, SHORT fields);
@@ -354,7 +354,7 @@ void wait_mbup(ULONG flags);
 extern void repeat_on_pdn(void (*v)(void *data), void *data);
 
 /* sets preemptive function for processing keys */
-FUNC set_hotkey_func(Boolean (*do_hot_key)(Global_icb *gicb));
+FUNC set_hotkey_func(bool (*do_hot_key)(Global_icb *gicb));
 
 /***** icb state saving and restoring ****/
 
@@ -378,8 +378,8 @@ void load_mouset(Mouset *mset);
 void set_procmouse(VFUNC procmouse);
 void set_mouse_oset(SHORT mosetx, SHORT mosety);
 void reset_icb(void);
-Boolean hide_mouse(void);
-Boolean show_mouse(void);
+bool hide_mouse(void);
+bool show_mouse(void);
 void get_menucursorxy(void);
 void set_cursor(Cursorhdr *cd);
 void display_cursor(void);
@@ -398,7 +398,7 @@ typedef struct abnest {
 
 typedef UBYTE Abortbuf[sizeof(Abortnest)];
 
-extern void set_abort_verify(Boolean (*verify)(void *data), void *data);
+extern void set_abort_verify(bool (*verify)(void *data), void *data);
 extern void pstart_abort_atom(Abortbuf *ab);
 extern void start_abort_atom(void);
 extern Errcode end_abort_atom(void);
@@ -435,11 +435,11 @@ extern int pj_key_in(void);
 extern int dos_key_shift(void);
 
 /* hotkey.c */
-extern Boolean do_pj_hotkey(Global_icb *gicb);
+extern bool do_pj_hotkey(Global_icb *gicb);
 
 /* macro.c */
 extern void close_macro(void);
-extern Errcode put_macro(Boolean ishit);
+extern Errcode put_macro(bool ishit);
 extern Errcode get_macro_input(void);
 extern void qsave_macro(void);
 extern void qload_macro(void);
@@ -453,9 +453,9 @@ extern void qrepeat_macro(void);
 extern void qmacro(void);
 
 /* vpaint.c */
-extern Boolean common_header_keys(void);
+extern bool common_header_keys(void);
 extern Errcode load_home_keys(void);
-extern Boolean hit_undo_key(void);
-extern Boolean home_dokeys(void);
+extern bool hit_undo_key(void);
+extern bool home_dokeys(void);
 
 #endif

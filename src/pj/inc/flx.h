@@ -130,7 +130,7 @@ Errcode add_flx_olayrec(Short_xy *cpos, SHORT cframe,
 
 extern void flx_clear_olays(void);
 extern void flx_draw_olays(void);
-extern Boolean flx_olays_hidden(void);
+extern bool flx_olays_hidden(void);
 extern void qload_overlay(void);
 
 /* findfree.c */
@@ -139,7 +139,7 @@ extern LONG ff_tflx(LONG size, int xcount, Flx *xpt);
 
 extern Errcode
 make_flx_record(Flxfile *flx, ULONG recnum, void *newdata, LONG size,
-		Boolean overwrite);
+							   bool overwrite);
 
 /* main.c */
 extern Errcode empty_newflx(void);
@@ -151,12 +151,12 @@ extern void close_tflx(void);
 extern Errcode ring_tflx(Fli_frame *cbuf);
 extern Errcode empty_tempflx(int iframes);
 extern Errcode otempflx(void);
-extern Errcode open_tempflx(Boolean reload_settings);
+extern Errcode open_tempflx(bool reload_settings);
 
 extern Errcode
 make_pdr_tempflx(char *pdr_name, char *flicname, struct anim_info *ainfo);
 
-extern Errcode make_tempflx(char *name, Boolean allow_abort);
+extern Errcode make_tempflx(char *name, bool allow_abort);
 extern void qset_first_frame(void *data);
 extern void empty_cleared_flx(Pixel color);
 

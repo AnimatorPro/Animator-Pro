@@ -16,7 +16,7 @@
 /*****************************************************************************
  * do sanity check on instruction table.
  ****************************************************************************/
-Boolean po_check_instr_table(Poco_cb* pcb)
+bool po_check_instr_table(Poco_cb* pcb)
 {
 #ifdef DEVELOPMENT
 	int i;
@@ -31,7 +31,7 @@ Boolean po_check_instr_table(Poco_cb* pcb)
 		}
 	}
 #endif
-	return (TRUE);
+	return (true);
 }
 
 /*****************************************************************************

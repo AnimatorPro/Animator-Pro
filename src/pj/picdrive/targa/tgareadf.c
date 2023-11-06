@@ -80,34 +80,34 @@ Errcode read_targa_header(Targa_file *tf)
 	switch (th->imgtype)
 		{
 		case MAPPED_IMAGE:
-			tf->is_rgb = FALSE;
-			tf->is_compressed = FALSE;
-			tf->is_grey = FALSE;
+			tf->is_rgb = false;
+			tf->is_compressed = false;
+			tf->is_grey = false;
 			break;
 		case RL_MAPPED_IMAGE:
-			tf->is_rgb = FALSE;
-			tf->is_compressed = TRUE;
-			tf->is_grey = FALSE;
+			tf->is_rgb = false;
+			tf->is_compressed = true;
+			tf->is_grey = false;
 			break;
 		case RGB_IMAGE:
-			tf->is_rgb = TRUE;
-			tf->is_compressed = FALSE;
-			tf->is_grey = FALSE;
+			tf->is_rgb = true;
+			tf->is_compressed = false;
+			tf->is_grey = false;
 			break;
 		case RL_RGB_IMAGE:
-			tf->is_rgb = TRUE;
-			tf->is_compressed = TRUE;
-			tf->is_grey = FALSE;
+			tf->is_rgb = true;
+			tf->is_compressed = true;
+			tf->is_grey = false;
 			break;
 		case BW_IMAGE:
-			tf->is_rgb = FALSE;
-			tf->is_compressed = FALSE;
-			tf->is_grey = TRUE;
+			tf->is_rgb = false;
+			tf->is_compressed = false;
+			tf->is_grey = true;
 			break;
 		case RL_BW_IMAGE:
-			tf->is_rgb = FALSE;
-			tf->is_compressed = TRUE;
-			tf->is_grey = TRUE;
+			tf->is_rgb = false;
+			tf->is_compressed = true;
+			tf->is_grey = true;
 			break;
 		case RDH_IMAGE:
 		case RDHBLK_IMAGE:

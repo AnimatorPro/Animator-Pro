@@ -27,11 +27,8 @@
 
 /* values stored in tok_type will be an ascii char, or one of these... */
 
-#ifdef __APPLE__
-#undef token_t
-#endif
-
-typedef enum token_t {
+typedef enum poco_token_t
+{
 	TOK_LBRACE	= '{',
 	TOK_RBRACE	= '}',
 	TOK_LPAREN	= '(',
@@ -83,6 +80,7 @@ extern long htol(const char *s);
 extern char *po_chop_csym(char *line, char *word, int maxlen, char **wordnext);
 
 extern char *tokenize_word(char *line, char *oword, char *qstring,
-						SHORT *plen, SHORT *ttype, Boolean quote);
+						SHORT *plen, SHORT *ttype,
+						   bool quote);
 
 #endif /* TOKEN_H */

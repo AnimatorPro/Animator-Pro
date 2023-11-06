@@ -96,7 +96,7 @@ struct pdr {
 
 	/********************/
 
-	Boolean (*spec_best_fit)(struct anim_info *spec);
+	bool (*spec_best_fit)(struct anim_info *spec);
 	/**************************************************************************
 	 * this is called before trying to write an image file to verify whether
 	 * or not the images can be saved exactly as specified.
@@ -305,7 +305,8 @@ extern	Local_pdr *local_pdrs;
 
 extern Errcode
 go_pdr_menu(char *header, char *name_buf, char *suffi_buf,
-		struct names *local_names, int rwmode, Boolean multiframe_only);
+		struct names *local_names, int rwmode,
+						   bool multiframe_only);
 
 void	add_local_pdr(Local_pdr *lpd); /* make a locally linked in pdr available */
 
@@ -320,7 +321,7 @@ void	pdr_free_info(char *info);
 
 void    get_screen_ainfo(Rcel *screen, struct anim_info *spec);
 
-Boolean pdr_best_fit(Pdr *pd, struct anim_info *spec);
+bool pdr_best_fit(Pdr *pd, struct anim_info *spec);
 Errcode pdr_create_ifile(Pdr *pd, char *path, Image_file **pifile,
 		struct anim_info *spec);
 Errcode pdr_open_ifile(Pdr *pd, char *path, Image_file **pifile,

@@ -477,7 +477,7 @@ while (--i >= 0)
 return(widest);
 }
 
-static Boolean st_in_font(Vfont *v, int c)
+static bool st_in_font(Vfont *v, int c)
 /*
  * Returns TRUE if a letter is in font.
  */

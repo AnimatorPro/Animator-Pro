@@ -105,7 +105,7 @@ void redraw_wndo(Wndo *w)
 		(*(w->redraw))(w);
 	w->mc_csetid = w->W_screen->mc_csetid;
 }
-Boolean reposit_wndo(Wndo *w,Rectangle *newpos,Short_xy *newoset)
+bool reposit_wndo(Wndo *w,Rectangle *newpos,Short_xy *newoset)
 
 /* repositions and/or re-sizes and/or scrools, rebuilds clips and
  * redraws a window, must have either a newpos a newoset or both */
@@ -383,7 +383,7 @@ void load_wndo_iostate(Wndo *w)
 	else
 		set_cursor(icb.input_screen->cursor);
 }
-Boolean marqmove_wndo(Wndo *w, Rectangle *bclip)
+bool marqmove_wndo(Wndo *w, Rectangle *bclip)
 
 /* does a marqi rectangle on screen and moves window to result
  * returns 0 if window was not moved 1 if moved window must be open
@@ -392,7 +392,7 @@ Boolean marqmove_wndo(Wndo *w, Rectangle *bclip)
 Rectangle newpos;
 Marqihdr md;
 Wscreen *ws= w->W_screen;
-Boolean ret;
+bool ret;
 Wiostate ios;
 
 	save_wiostate(&ios);
@@ -427,7 +427,7 @@ void _close_wndo(Wndo *w)
 {
 Wscreen *ws;
 int screen_wndo;
-Boolean was_mouse;
+bool was_mouse;
 
 	if(w == NULL)
 		return;
@@ -543,7 +543,7 @@ Errcode open_wndo(Wndo **pw, WndoInit *wi)
 Errcode err;
 Wndo *w = NULL;
 Wscreen *ws;
-Boolean was_mouse;
+bool was_mouse;
 
 LONG allocsize;
 LONG ydotsize;
@@ -760,7 +760,7 @@ done:
 		show_mouse();
 	return(err);
 }
-Boolean ptin_wndo(Wndo *w,SHORT x,SHORT y)
+bool ptin_wndo(Wndo *w,SHORT x,SHORT y)
 
 /* returns if point is in window port or not */
 {
@@ -773,19 +773,19 @@ Boolean ptin_wndo(Wndo *w,SHORT x,SHORT y)
 	}
 	return(1);
 }
-Boolean curson_wndo(Wndo *w)
+bool curson_wndo(Wndo *w)
 /* returns 1 if processed mouse screen position is over a visible part
  * of the window */
 {
 	return(wndo_dot_visible(w,icb.cx - w->behind.x,icb.cy - w->behind.y));
 }
-Boolean mouseon_wndo(Wndo *w)
+bool mouseon_wndo(Wndo *w)
 /* returns 1 if unprocessed mouse screen position is over a visible part
  * of the window */
 {
 	return(wndo_dot_visible(w,icb.sx - w->behind.x,icb.sy - w->behind.y));
 }
-Boolean wndo_dot_visible(Wndo *w,Coor x,Coor y)
+bool wndo_dot_visible(Wndo *w,Coor x,Coor y)
 
 /* returns 1 if point is unobscured and drawn on screen 0 if point is
  * in a backup area behind a window of off the screen */

@@ -39,7 +39,7 @@ typedef struct tween_state
 typedef struct tween1_data
 	{
 	Tween_state *ts;
-	Boolean is_spline;
+	bool is_spline;
 	} Tween1_data;
 
 /******** structures internal to tween system **********/
@@ -69,9 +69,9 @@ typedef struct tw_thread
 extern struct menuhdr twe_menu;
 
 /* tween.c */
-extern Boolean got_tween(void);
+extern bool got_tween(void);
 extern void twe_go_tool(struct button *b);
-extern void tween_menu(Boolean renderable);
+extern void tween_menu(bool renderable);
 
 /* tweendat.c */
 extern Errcode load_tween_panel_strings(void **ss);
@@ -79,7 +79,8 @@ extern Errcode load_tween_panel_strings(void **ss);
 /* tweenhi.c */
 extern void
 a_wireframe_tween(Tween_state *tween, int frames, int speed,
-		Pixel dit_color, Pixel dash_color, Boolean closed, int play_mode);
+		Pixel dit_color, Pixel dash_color,
+							  bool closed, int play_mode);
 
 extern Errcode save_tween(char *name, Tween_state *ts);
 extern Errcode load_tween(char *name, Tween_state *ts);
@@ -90,22 +91,24 @@ extern Errcode tween_trail_frame(Tween_state *ts, int steps);
 /* tweenlo.c */
 extern void init_tween_state(Tween_state *ts);
 extern void trash_tween_state(Tween_state *ts);
-extern Boolean tween_has_data(Tween_state *ts);
+extern bool tween_has_data(Tween_state *ts);
 extern void tween_state_swap_ends(Tween_state *ts);
 extern int tween_cmp_link(Tween_link *a, Tween_link *b);
 
 extern Errcode
-tween_add_a_link(Tween_state *ts, int startix, int endix, Boolean closed,
+tween_add_a_link(Tween_state *ts, int startix, int endix,
+								bool closed,
 		Tween_link **pnewl);
 
 extern Errcode
-calc_path_pos(Poly *poly, Short_xyz *delta_array, int scale, Boolean closed);
+calc_path_pos(Poly *poly, Short_xyz *delta_array, int scale, bool closed);
 
 extern void trash_tw_list(Tw_tlist *twl);
-extern Errcode ts_to_tw_list(Tween_state *vin, Boolean closed, Tw_tlist *tout);
+extern Errcode ts_to_tw_list(Tween_state *vin, bool closed, Tw_tlist *tout);
 
 extern void
-calc_tween_points(Tw_tlist *tl, Boolean closed, int scale,
+calc_tween_points(Tw_tlist *tl,
+							  bool closed, int scale,
 		Short_xyz **ppts, int *pcount);
 
 #endif

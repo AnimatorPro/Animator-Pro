@@ -314,13 +314,13 @@ static int pcx_files_open = 0;					/* lock data structures
 											     * to prevent open without
 											     * close */
 
-static Boolean suffix_in(char *string, char *suff)
+static bool suffix_in(char *string, char *suff)
 {
 string += strlen(string) - strlen(suff);
 return( txtcmp(string, suff) == 0);
 }
 
-static Errcode decode_version(Pcx_header *hdr, Boolean *with_cmap)
+static Errcode decode_version(Pcx_header *hdr, bool*with_cmap)
 /* Figure out whether a this version has a color map or not.  Also figure
  * out number number of planes in this version.  If version is unknown
  * return Errcode, else success. */
@@ -329,16 +329,16 @@ switch (hdr->version)
 	{
 	case 0:
 		hdr->nplanes = 1;
-		*with_cmap = FALSE;
+		*with_cmap = false;
 		break;
 	case 2:
-		*with_cmap = TRUE;
+		*with_cmap = true;
 		break;
 	case 3:
-		*with_cmap = FALSE;
+		*with_cmap = false;
 		break;
 	case 5:
-		*with_cmap = TRUE;
+		*with_cmap = true;
 		break;
 	default:
 		return(Err_version);
@@ -348,7 +348,8 @@ return(Success);
 
 static Errcode read_pcx_start(Pcx_file *gf,
 							  struct pcx_header *hdr,
-							  Anim_info *ainfo, Boolean *got_cmap)
+							  Anim_info *ainfo,
+							  bool*got_cmap)
 /* Read in PCX - header,  and verify it is a good header.  
  *  Move appropriate fields from hdr to ainfo */
 {
@@ -395,12 +396,12 @@ error:
 return(err);
 }
 
-static Boolean pcx_spec_best_fit(Anim_info *ainfo)
+static bool pcx_spec_best_fit(Anim_info *ainfo)
 /* Tell host that we can only write 8 bit-a-pixel images,  and only one
  * frame.  No need to check width and height, since PCX format handles
  * any width/height. */
 {
-Boolean nofit;
+bool nofit;
 
 nofit = (ainfo->depth == 8
 		 && ainfo->num_frames == 1);
@@ -421,7 +422,7 @@ if(gf->file)
 	xffclose(&gf->file);
 pj_free(gf);
 *pcxile = NULL;
-pcx_files_open = FALSE;
+pcx_files_open = false;
 }
 
 /* Function: pcx_open_ifsub
@@ -446,7 +447,7 @@ if((gf = pj_zalloc(sizeof(Pcx_file))) == NULL)
 	return(Err_no_memory);
 
 err = xffopen(path, &gf->file, mode);
-pcx_files_open = TRUE;
+pcx_files_open = true;
 *pcxile = gf;
 return(err);
 }
@@ -459,7 +460,7 @@ static Errcode open_pcx_file(Pdr *pd, char *path, Image_file **pif,
 Errcode err;
 Pcx_file **ppcx;
 struct pcx_header hdr;
-Boolean got_cmap;
+bool got_cmap;
 (void)pd;
 
 ppcx = (Pcx_file **)pif;
@@ -533,7 +534,7 @@ Pcx_file *gf;
 XFILE *pcx_load_file;
 Anim_info info;
 Pcx_header hdr;
-Boolean got_cmap;
+bool got_cmap;
 Cmap  *cmap = screen->cmap;
 Rgb3  *ctab  = cmap->ctab;
 

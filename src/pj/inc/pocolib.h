@@ -224,7 +224,7 @@ typedef struct polib_optics
 
 typedef struct polib_swap
 {
-	Boolean (*plSwapExists)(void);
+	bool (*plSwapExists)(void);
 	char* protostr1;
 	void (*plSwapClip)(void);
 	char* protostr2;
@@ -312,7 +312,7 @@ typedef struct polib_screen
 
 typedef struct polib_cel
 {
-	Boolean (*plCelExists)(void);
+	bool (*plCelExists)(void);
 	char* protostr1;
 	void (*plCelPaste)(void);
 	char* protostr2;
@@ -356,7 +356,7 @@ typedef struct polib_dos
 	char* protostr1;
 	Errcode (*plfnmerge)(Popot path, Popot device, Popot dir, Popot file, Popot suf);
 	char* protostr2;
-	Boolean (*plDosExists)(Popot filename);
+	bool (*plDosExists)(Popot filename);
 	char* protostr3;
 	Errcode (*plDosCopy)(Popot source, Popot dest);
 	char* protostr4;
@@ -368,7 +368,7 @@ typedef struct polib_dos
 	char* protostr7;
 	Errcode (*plGetDir)(Popot dir);
 	char* protostr8;
-	int (*plDirList)(Popot list, Popot wild, Boolean get_dirs);
+	int (*plDirList)(Popot list, Popot wild, bool get_dirs);
 	char* protostr9;
 	void (*plFreeDirList)(Popot list);
 	char* protostr10;
@@ -451,7 +451,7 @@ typedef struct polib_draw
 	char* protostr32;
 	Errcode (*plSqueezeColors)(Popot source_map, int source_count, int* dest_map, int dest_count);
 	char* protostr33;
-	ErrCode (*plFitScreenToColorMap)(Popot s, Popot new_colors, Boolean keep_key);
+	ErrCode (*plFitScreenToColorMap)(Popot s, Popot new_colors, bool keep_key);
 	char* protostr34;
 } PolibDraw;
 
@@ -529,9 +529,9 @@ typedef struct polib_misc
 	char* protostr10;
 	long (*plclock)(void);
 	char* protostr11;
-	Boolean (*plIsBatchRun)(void);
+	bool (*plIsBatchRun)(void);
 	char* protostr12;
-	Boolean (*plPocoChainTo)(Popot program_path);
+	bool (*plPocoChainTo)(Popot program_path);
 	char* protostr13;
 	Errcode (*plsystem)(Popot command_line); /* new with v1.5 */
 	char* protostr14;
@@ -551,33 +551,33 @@ typedef struct polib_mode
 	char* protostr3;
 	int (*plGetInkStrength)(void);
 	char* protostr4;
-	void (*plSetInkDither)(Boolean dither);
+	void (*plSetInkDither)(bool dither);
 	char* protostr5;
-	Boolean (*plGetInkDither)(void);
+	bool (*plGetInkDither)(void);
 	char* protostr6;
-	void (*plSetFilled)(Boolean fill);
+	void (*plSetFilled)(bool fill);
 	char* protostr7;
-	Boolean (*plGetFilled)(void);
+	bool (*plGetFilled)(void);
 	char* protostr8;
 	void (*plSetBrushSize)(int size);
 	char* protostr9;
 	int (*plGetBrushSize)(void);
 	char* protostr10;
-	void (*plSetKeyMode)(Boolean clear);
+	void (*plSetKeyMode)(bool clear);
 	char* protostr11;
-	Boolean (*plGetKeyMode)(void);
+	bool (*plGetKeyMode)(void);
 	char* protostr12;
 	void (*plSetKeyColor)(int color);
 	char* protostr13;
 	int (*plGetKeyColor)(void);
 	char* protostr14;
-	void (*plSetMaskUse)(Boolean use_it);
+	void (*plSetMaskUse)(bool use_it);
 	char* protostr15;
-	Boolean (*plGetMaskUse)(void);
+	bool (*plGetMaskUse)(void);
 	char* protostr16;
-	void (*plSetMaskCreate)(Boolean make_it);
+	void (*plSetMaskCreate)(bool make_it);
 	char* protostr17;
-	Boolean (*plGetMaskCreate)(void);
+	bool (*plGetMaskCreate)(void);
 	char* protostr18;
 	void (*plSetStarPoints)(int points);
 	char* protostr19;
@@ -591,25 +591,25 @@ typedef struct polib_mode
 	char* protostr23;
 	void (*plGetSplineTCB)(Popot t, Popot c, Popot b);
 	char* protostr24;
-	void (*plSetTwoColorOn)(Boolean setit);
+	void (*plSetTwoColorOn)(bool setit);
 	char* protostr25;
-	Boolean (*plGetTwoColorOn)(void);
+	bool (*plGetTwoColorOn)(void);
 	char* protostr26;
 	void (*plSetTwoColor)(int color);
 	char* protostr27;
 	int (*plGetTwoColor)(void);
 	char* protostr28;
-	void (*plSetClosed)(Boolean closed);
+	void (*plSetClosed)(bool closed);
 	char* protostr29;
-	Boolean (*plGetClosed)(void);
+	bool (*plGetClosed)(void);
 	char* protostr30;
-	void (*plSetCycleDraw)(Boolean cycle);
+	void (*plSetCycleDraw)(bool cycle);
 	char* protostr31;
-	Boolean (*plGetCycleDraw)(void);
+	bool (*plGetCycleDraw)(void);
 	char* protostr32;
-	Boolean (*plGetMultiFrame)(void);
+	bool (*plGetMultiFrame)(void);
 	char* protostr33;
-	void (*plSetMultiFrame)(Boolean multi);
+	void (*plSetMultiFrame)(bool multi);
 	char* protostr34;
 } PolibMode;
 
@@ -642,7 +642,7 @@ typedef struct polib_text
 	void (*plQfont)(void);
 	char* protostr11;
 	/* From here on down new with Ani 1.5 */
-	Boolean (*plCanScaleFont)(void);
+	bool (*plCanScaleFont)(void);
 	char* protostr12;
 	Errcode (*plScaleFont)(int height);
 	char* protostr13;
@@ -696,9 +696,9 @@ typedef struct polib_time
 	char* protostr15;
 	void* plOverSegment; /* not accessible to poe modules */
 	char* protostr16;
-	void (*plSetTimeSelect)(Boolean is_multi);
+	void (*plSetTimeSelect)(bool is_multi);
 	char* protstr17;
-	Boolean (*plGetTimeSelect)(void);
+	bool (*plGetTimeSelect)(void);
 	char* protstr18;
 	void (*plSetFSA)(int fsa);
 	char* protstr19;
@@ -712,29 +712,29 @@ typedef struct polib_time
 	char* protstr23;
 	int (*plGetSegEnd)(void);
 	char* protstr24;
-	void (*plSetStill)(Boolean still);
+	void (*plSetStill)(bool still);
 	char* protstr25;
-	Boolean (*plGetStill)(void);
+	bool (*plGetStill)(void);
 	char* protstr26;
-	void (*plSetInSlow)(Boolean InSlow);
+	void (*plSetInSlow)(bool InSlow);
 	char* protstr27;
-	Boolean (*plGetInSlow)(void);
+	bool (*plGetInSlow)(void);
 	char* protstr28;
-	void (*plSetOutSlow)(Boolean OutSlow);
+	void (*plSetOutSlow)(bool OutSlow);
 	char* protstr29;
-	Boolean (*plGetOutSlow)(void);
+	bool (*plGetOutSlow)(void);
 	char* protstr30;
-	void (*plSetPingPong)(Boolean PingPong);
+	void (*plSetPingPong)(bool PingPong);
 	char* protstr31;
-	Boolean (*plGetPingPong)(void);
+	bool (*plGetPingPong)(void);
 	char* protstr32;
-	void (*plSetReverse)(Boolean reverse);
+	void (*plSetReverse)(bool reverse);
 	char* protstr33;
-	Boolean (*plGetReverse)(void);
+	bool (*plGetReverse)(void);
 	char* protstr34;
-	void (*plSetComplete)(Boolean complete);
+	void (*plSetComplete)(bool complete);
 	char* protstr35;
-	Boolean (*plGetComplete)(void);
+	bool (*plGetComplete)(void);
 	char* protstr36;
 } PolibTime;
 
@@ -756,7 +756,7 @@ typedef struct polib_turtle
 	char* protostr5;
 	void (*plPenDown)(void);
 	char* protostr6;
-	Boolean (*plIsDown)(void);
+	bool (*plIsDown)(void);
 	char* protostr7;
 	void (*plMoveTo)(double x, double y, double angle);
 	char* protostr8;
@@ -782,35 +782,35 @@ typedef struct polib_user
 	char* protostr4;
 	int (*plQmenu)(Popot choices, int ccount, Popot header);
 	char* protostr5;
-	Boolean (*plQquestion)(long vcount, long vsize, Popot question, ...);
+	bool (*plQquestion)(long vcount, long vsize, Popot question, ...);
 	char* protostr6;
-	Boolean (*plQnumber)(Popot num, int min, int max, Popot header);
+	bool (*plQnumber)(Popot num, int min, int max, Popot header);
 	char* protostr7;
-	Boolean (*plQstring)(Popot string, int size, Popot header);
+	bool (*plQstring)(Popot string, int size, Popot header);
 	char* protostr8;
-	Boolean (*plQfile)(Popot suffix,
+	bool (*plQfile)(Popot suffix,
 					   Popot button,
 					   Popot inpath,
 					   Popot outpath,
-					   Boolean force_suffix,
+					   bool force_suffix,
 					   Popot header);
 	char* protostr9;
-	Boolean (
+	bool (
 	  *plQlist)(Popot choicestr, Popot choice, Popot items, int icount, Popot ipos, Popot header);
 	char* protostr10;
 	int (*plQcolor)(void);
 	char* protostr11;
 	Errcode (*plQerror)(long vcount, long vsize, Errcode err, Popot format, ...);
 	char* protostr12;
-	Boolean (*plRubBox)(Popot x, Popot y, Popot w, Popot h);
+	bool (*plRubBox)(Popot x, Popot y, Popot w, Popot h);
 	char* protostr13;
-	Boolean (*plRubCircle)(Popot x, Popot y, Popot rad);
+	bool (*plRubCircle)(Popot x, Popot y, Popot rad);
 	char* protostr14;
-	Boolean (*plRubLine)(int x1, int y1, Popot x2, Popot y2);
+	bool (*plRubLine)(int x1, int y1, Popot x2, Popot y2);
 	char* protostr15;
 	int (*plRubPoly)(Popot x, Popot y);
 	char* protostr16;
-	Boolean (*plDragBox)(Popot x, Popot y, Popot w, Popot h);
+	bool (*plDragBox)(Popot x, Popot y, Popot w, Popot h);
 	char* protostr16a;
 	void (*plWaitClick)(Popot x, Popot y, Popot left, Popot right, Popot key);
 	char* protostr17;
@@ -818,20 +818,20 @@ typedef struct polib_user
 	char* protostr18;
 	void (*plWaitInput)(Popot x, Popot y, Popot left, Popot right, Popot key);
 	char* protostr19;
-	Boolean (*plGetAbort)(void);
+	bool (*plGetAbort)(void);
 	char* protostr20;
-	Boolean (*plSetAbort)(Boolean abort);
+	bool (*plSetAbort)(bool abort);
 	char* protostr21;
 	void* plSetAbortHandler; /* Not accessible to poe modules */
 	char* protostr22;
-	Boolean (*plHideCursor)(void);
+	bool (*plHideCursor)(void);
 	char* protostr23;
-	Boolean (*plShowCursor)(void);
+	bool (*plShowCursor)(void);
 	char* protostr24;
-	Boolean (
+	bool (
 	  *plQscroll)(Popot choice, Popot items, int icount, Popot ipos, Popot button_texts, Popot hdr);
 	char* protostr25;
-	Boolean (*plUdQnumber)(long vcount,
+	bool (*plUdQnumber)(long vcount,
 						   long vsize,
 						   Popot inum,
 						   int min,
@@ -851,8 +851,8 @@ typedef struct polib_user
 	char* protostr30;
 	void (*plPhysicalWaitInput)(Popot x, Popot y, Popot left, Popot right, Popot key);
 	char* protostr31;
-	Boolean (
-	  *plPhysicalRubMoveBox)(Popot x, Popot y, Popot width, Popot height, Boolean clip_to_screen);
+	bool (
+	  *plPhysicalRubMoveBox)(Popot x, Popot y, Popot width, Popot height, bool clip_to_screen);
 	char* protostr32;
 	int (*plQmenuWithFlags)(Popot pchoices, int ccount, Popot pflags, Popot header);
 	char* protostr33;
@@ -897,7 +897,7 @@ typedef struct polib_title
 	char* protostr8;
 	char (*plTitleGetText)(void);
 	char* protostr9;
-	Boolean (*plTitleHasText)(void);
+	bool (*plTitleHasText)(void);
 	char* protostr10;
 	void (*plTitleSetPosition)(int x, int y, int w, int h);
 	char* protostr11;
@@ -918,7 +918,7 @@ typedef struct polib_tween
 	char* protostr1;
 	Errcode (*plTweenSave)(Popot pop_file_name);
 	char* protostr2;
-	Boolean (*plTweenExists)(void);
+	bool (*plTweenExists)(void);
 	char* protostr3;
 	void (*plTweenClear)(void);
 	char* protostr4;
@@ -942,9 +942,9 @@ typedef struct polib_tween
 	char* protostr13;
 	void (*plTweenClearLinks)(void);
 	char* protostr14;
-	void (*plTweenSetSplined)(Boolean is_splined);
+	void (*plTweenSetSplined)(bool is_splined);
 	char* protostr15;
-	Boolean (*plTweenGetSplined)(void);
+	bool (*plTweenGetSplined)(void);
 	char* protostr16;
 	Errcode (*plTweenTrails)(int steps);
 	char* protostr17;

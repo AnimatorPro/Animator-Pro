@@ -63,7 +63,7 @@ Errcode
 init_pj_startup(Argparse_list *more_args, Do_aparse do_others,
 		int argc, char **argv, char *help_key, char *menufile_name)
 {
-	Boolean force_config;
+	bool force_config;
 	Errcode err;
 	(void)more_args;
 	(void)do_others;
@@ -115,11 +115,11 @@ init_pj_startup(Argparse_list *more_args, Do_aparse do_others,
 	}
 
 	if (vb.config_name == NULL) {
-		force_config = TRUE;
+		force_config = true;
 		vb.config_name = get_default_config_name();
 	}
 	else {
-		force_config = FALSE;
+		force_config = false;
 	}
 
 	err = init_config(force_config);

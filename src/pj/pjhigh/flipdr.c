@@ -17,7 +17,7 @@ static Errcode fliif_read_first(Image_file *imf, Rcel *screen)
 {
 Fliif *flif = (Fliif *)imf;
 
-	return(pj_fli_read_first(NULL,&flif->ff,screen,TRUE));  
+	return(pj_fli_read_first(NULL,&flif->ff,screen, true));
 }
 
 
@@ -51,16 +51,16 @@ error:
 	return(err);
 }
 
-static Boolean fliif_spec_best_fit(Anim_info *ainfo)
+static bool fliif_spec_best_fit(Anim_info *ainfo)
 {
 	if(ainfo->depth == 8
 		 && ainfo->num_frames == 1)
 	{
-		return(TRUE);
+		return(true);
 	}
 	ainfo->depth = 8;
 	ainfo->num_frames = 1;
-	return(FALSE);
+	return(false);
 }
 static Errcode create_fliif(Pdr *pd, char *path, Image_file **pif, 
 						    Anim_info *ainfo )

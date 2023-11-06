@@ -418,7 +418,8 @@ int textx;
 }
 static void
 hilite_1_browse(Button *b, Raster *rast, int x, int y,
-		Names *entry, Boolean hilit)
+		Names *entry,
+							bool hilit)
 {
 Rectangle brect;
 Pixel color = hilit?sred:swhite;
@@ -507,8 +508,7 @@ static int new_bdrawer(void *drawer)
 }
 
 static Errcode view_anim(char *name,
-						 Rcel *screen,
-					     Boolean loop) 
+						 Rcel *screen, bool loop)
 /* View an animation or cel */
 /* loop is 0 or 1.  1 if want to repeat animation until key hit */
 {
@@ -522,7 +522,7 @@ int i;
 	err = pj_fli_open(name, &flif, XREADONLY);
 	if (err < Success) {
 		pj_clear_rast(screen);
-		if((err = load_pic(name,screen,0,TRUE)) >= Success)
+		if((err = load_pic(name,screen,0, true)) >= Success)
 		{
 			if(loop)
 				wait_click();
@@ -658,7 +658,7 @@ init_bscroller(const char *drawer, int top_name)
 char *wilds;
 char wild[WILD_SIZE];
 Names *wlist;
-Boolean get_dirs = TRUE;
+bool get_dirs = true;
 
 	free_wild_list(&bro_wild_list);
 
@@ -667,7 +667,7 @@ Boolean get_dirs = TRUE;
 	{
 		if ((build_wild_list(&wlist, drawer, wild, get_dirs)) < Success)
 			continue;
-		get_dirs = FALSE;
+		get_dirs = false;
 		bro_wild_list = merge_wild_lists(wlist,bro_wild_list);
 	}
 
@@ -684,11 +684,11 @@ Boolean get_dirs = TRUE;
 	bscroller.font = vb.screen->mufont;
 	bscroller.cels_per_row = bro_xcount;
 	bscroller.cels_per_col = bro_ycount;
-	bscroller.no_key_mode = TRUE;
+	bscroller.no_key_mode = true;
 	init_scroller(&bscroller,vb.screen);
 }
 
-static void save_view_anim(Boolean loop)
+static void save_view_anim(bool loop)
 /* save current screen and view fli */
 {
 Errcode err;
@@ -729,10 +729,10 @@ Short_xy spos;
 			mb_close_ok(m);
 			return;
 		case BA_VIEW:	/* view */
-			save_view_anim(FALSE);
+			save_view_anim(false);
 			return;
 		case BA_PLAY:	/* play */
-			save_view_anim(TRUE);
+			save_view_anim(true);
 			return;
 	}
 

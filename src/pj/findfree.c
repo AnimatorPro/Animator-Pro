@@ -105,7 +105,7 @@ LONG find_free_tflx(LONG size)
 #endif
 
 Errcode make_flx_record(Flxfile *flx, ULONG recnum, void *newdata, LONG size,
-						Boolean overwrite)
+						bool overwrite)
 
 /* loads new offset and size of new record in index of flx if successful
  * leaves values unchanged if not, it will attempt to write out the new

@@ -25,7 +25,7 @@
 Poly working_poly;
 char curveflag;
 
-static Errcode csd_render_poly(Poly *poly, Boolean filled, Boolean closed);
+static Errcode csd_render_poly(Poly *poly, bool filled, bool closed);
 static int is_closedp(void);
 
 /************* polygon and spline marqi and dotout drawing routines ***********/
@@ -58,7 +58,7 @@ void undo_polydots(Marqihdr *mh,Poly *poly)
 	dot_poly(poly,undo_marqidot,mh);
 }
 
-static void cpoly(Poly *poly, dotout_func dotout, void *data, Boolean closeit)
+static void cpoly(Poly *poly, dotout_func dotout, void *data, bool closeit)
 {
 register LLpoint *this, *next;
 int i;
@@ -81,18 +81,18 @@ static void marqi_open_poly(Marqihdr *mh, Poly *poly)
 	cpoly(poly,mh->pdot,mh,0);
 }
 
-static void mwpoly(Marqihdr *mh, dotout_func dotout, Poly *p, Boolean closed)
+static void mwpoly(Marqihdr *mh, dotout_func dotout, Poly *p, bool closed)
 {
 	if (curveflag)
 		some_spline(p, dotout, mh, pj_cline, closed, 16);
 	else
 		cpoly(p,dotout,mh,closed);
 }
-void marqi_poly(Marqihdr *mh, Poly *p, Boolean closed)
+void marqi_poly(Marqihdr *mh, Poly *p, bool closed)
 {
 	mwpoly(mh,mh->pdot, p, closed);
 }
-void undo_poly(Marqihdr *mh, Poly *p,  Boolean closed)
+void undo_poly(Marqihdr *mh, Poly *p, bool closed)
 {
 	mwpoly(mh,undo_marqidot, p, closed);
 }
@@ -232,7 +232,7 @@ this->z = 0;
 return(this);
 }
 
-Errcode render_poly(Poly *wply, Boolean filled, Boolean closed)
+Errcode render_poly(Poly *wply, bool filled, bool closed)
 {
 Errcode err;
 
@@ -248,7 +248,7 @@ Errcode err;
 	enable_lsp_ink();
 	return(err);
 }
-void poly_grad_dims(Poly *p, Boolean filled)
+void poly_grad_dims(Poly *p, bool filled)
 {
 Rectangle r;
 int halfsize;
@@ -274,7 +274,9 @@ Errcode render_fill_poly(Poly *p)
 
 static Errcode
 render_a_poly_or_spline(Poly *poly,
-		Boolean filled, Boolean closed, Boolean curved)
+									   bool filled,
+									   bool closed,
+									   bool curved)
 {
 Errcode err;
 int oc;
@@ -309,9 +311,9 @@ int oc;
 		free_render_cashes();
 		make_render_cashes();
 		if(curved)
-			err = hollow_spline(poly,TRUE);
+			err = hollow_spline(poly, true);
 		else
-			err = render_opoly(poly,TRUE);
+			err = render_opoly(poly, true);
 		vs.ccolor = oc;
 	}
 
@@ -319,13 +321,13 @@ error:
 	return(err);
 }
 
-static Errcode csd_render_poly(Poly *poly, Boolean filled, Boolean closed)
+static Errcode csd_render_poly(Poly *poly, bool filled, bool closed)
 {
 	return render_a_poly_or_spline(poly, filled, closed, curveflag);
 }
 
 
-Errcode finish_polyt(Boolean filled, Boolean closed)
+Errcode finish_polyt(bool filled, bool closed)
 {
 Errcode err;
 
@@ -338,7 +340,7 @@ Errcode err;
 	return(err);
 }
 
-Errcode maybe_finish_polyt(Boolean filled, Boolean closed)
+Errcode maybe_finish_polyt(bool filled, bool closed)
 {
 	if (JSTHIT(MBPEN))
 		return(finish_polyt(filled,closed));
@@ -404,7 +406,9 @@ void mmake_path(void)
 #endif /* SLUFFED */
 
 void
-make_poly_loop(Poly *poly, Boolean curved, Boolean closed, LLpoint *this,
+make_poly_loop(Poly *poly,
+					bool curved,
+					bool closed, LLpoint *this,
 			   int color)
 {
 LLpoint *prev;
@@ -412,7 +416,7 @@ LLpoint *next;
 Marqihdr mh;
 int cur_point_ix = 0;
 
-	cinit_marqihdr(&mh,color,color,TRUE);
+	cinit_marqihdr(&mh,color,color, true);
 	for (;;)
 	{
 		this->x = icb.mx;
@@ -472,7 +476,7 @@ int cur_point_ix = 0;
 	}
 }
 
-Errcode make_poly(Poly *p, Boolean closed)
+Errcode make_poly(Poly *p, bool closed)
 {
 LLpoint *this;
 
@@ -625,7 +629,7 @@ int theta, rad;
 Marqihdr mh;
 Errcode err = Success;
 
-cinit_marqihdr(&mh,dot_color,dash_color,TRUE);
+cinit_marqihdr(&mh,dot_color,dash_color, true);
 for (;;)
 	{
 	rad = calc_distance(icb.mx,icb.my,x0,y0);
@@ -633,9 +637,9 @@ for (;;)
 	if (!make_sp_wpoly(poly,
 		x0,y0,rad,theta,vs.star_points,star,vs.star_ratio))
 		break;
-	marqi_poly(&mh, poly, TRUE);
+	marqi_poly(&mh, poly, true);
 	wait_any_input();
-	undo_poly(&mh, poly, TRUE);
+	undo_poly(&mh, poly, true);
 	if (JSTHIT(MBRIGHT|KEYHIT))
 		{
 		err = Err_abort;
@@ -658,7 +662,7 @@ int theta, rad;
 	save_undo();
 	polystar_loop(&working_poly, star, vs.ccolor, vs.ccolor, icb.mx, icb.my,
 		&theta, &rad);
-	return(maybe_finish_polyt(vs.fillp,TRUE));
+	return(maybe_finish_polyt(vs.fillp, true));
 }
 
 Errcode rpolyf_tool(Pentool *pt, Wndo *w)
@@ -937,11 +941,11 @@ free_polypoints(d);
 return(clone_ppoints(s,d));
 }
 
-void dotty_disp_poly(Poly *p, Boolean closed,  Pixel dit_color, Pixel dot_color)
+void dotty_disp_poly(Poly *p, bool closed,  Pixel dit_color, Pixel dot_color)
 {
 Marqihdr mh;
 
-cinit_marqihdr(&mh,dit_color,dot_color,TRUE);
+cinit_marqihdr(&mh,dit_color,dot_color, true);
 marqi_poly(&mh, p, closed);
 }
 

@@ -1,7 +1,7 @@
 #include <string.h>
 #include "filepath.h"
 
-Boolean pj_valid_suffix(char *suff)
+bool pj_valid_suffix(char *suff)
 /* if it is a valid file suffix containing valid characters may or may not
  * have a leading '.' */
 {

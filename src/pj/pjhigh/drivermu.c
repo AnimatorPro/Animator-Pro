@@ -142,7 +142,7 @@ static Smu_button_list drv_smblist[] = {
 
 
 static void *info_pick_dat;
-static Boolean (*info_func)(Names *entry,void *dat);
+static bool (*info_func)(Names *entry,void *dat);
 static Errcode (*pick_func)(Names *entry,void *dat);
 
 static void see_info_button(Button *b)
@@ -194,7 +194,7 @@ Errcode go_driver_scroller(char *title,
 						   Names *list,
 						   Names *initial_entry,
 						   Errcode (*pick_entry)(Names *entry,void *dat),
-						   Boolean (*show_info)(Names *entry,void *dat),
+						   bool (*show_info)(Names *entry,void *dat),
 						   void *dat,
 						   char **button_texts	)
 

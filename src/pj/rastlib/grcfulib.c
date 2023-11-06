@@ -483,7 +483,7 @@ int incx, incy;
 int dx, dy;
 int dots;
 int xerr, yerr;
-Boolean didx;
+bool didx;
 Pixel spixel;
 
 	if((dx = x1 - x0) < 0)
@@ -511,14 +511,14 @@ Pixel spixel;
 	dy -= 1;
 
 	spixel = pj__get_dot(src,x0,y0);
-	didx = FALSE;
+	didx = false;
 
 	while (--dots >= 0)
 	{
 		*dseg++ = spixel; 	/* output one pixel */
 		if((xerr += dx) <= 0)
 		{
-			didx = TRUE;
+			didx = true;
 NEXTX:      
 			x0 += incx;
 			if ((xerr += dsize) <= 0)
@@ -537,7 +537,7 @@ NEXTY:
 				goto NEXTY;
 		}
 		spixel = pj__get_dot(src,x0,y0);
-		didx = FALSE;
+		didx = false;
 	}
 }
 #endif /* FLILIB_CODE */

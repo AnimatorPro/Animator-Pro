@@ -55,7 +55,7 @@ Errcode pj_rcel_bytemap_alloc(Rasthdr *spec,Rcel **pcel,LONG num_colors);
 /* do not use close_rcel() or free_rcel() on results of make_virtual_rcel() 
  * no cleanup necessary */
 
-Boolean pj_rcel_make_virtual(Rcel *rc, Rcel *root, Rectangle *toclip);
+bool pj_rcel_make_virtual(Rcel *rc, Rcel *root, Rectangle *toclip);
 
 #ifndef REXLIB_CODE /* host side only */ 
 
@@ -88,7 +88,7 @@ Errcode alloc_vd_rcel(Vdevice *vd, Rasthdr *spec, Rcel **pcel,
 #endif
 
 Errcode valloc_bytemap(Raster **r, SHORT w, SHORT h);
-Boolean need_fit_cel(Rcel *c);
+bool need_fit_cel(Rcel *c);
 void cfit_rcel(Rcel *c, struct cmap *dcmap);
 void refit_rcel(Rcel *c, struct cmap *ncmap, struct cmap *ocmap);
 Rcel *clone_rcel(Rcel *s);
@@ -98,7 +98,7 @@ Errcode valloc_ramcel(Rcel **pcel,SHORT w,USHORT h);
 Errcode valloc_anycel(Rcel **pcel,SHORT w,USHORT h);
 void set_one_val(Rcel *rc, UBYTE clearc, UBYTE destc);
 void show_cel_a_sec(Rcel *cel);
-Errcode move_rcel(Rcel *rc, Boolean fit_cel, Boolean one_color);
+Errcode move_rcel(Rcel *rc, bool fit_cel, bool one_color);
 void zoom_cel(Rcel *c);
 Errcode clip_celrect(Rcel *src, Rectangle *rect, Rcel **clip);
 
@@ -107,11 +107,11 @@ typedef void (*Celblit)
 	 SHORT w, SHORT h, Tcolxldat *txd);
 
 /* returns blit for current settings */
-extern Celblit get_celblit(Boolean cfit); 
+extern Celblit get_celblit(bool cfit);
 /* returns "move" blit for settings */
-extern Celblit get_celmove(Boolean cfit); 
+extern Celblit get_celmove(bool cfit);
 /* returns line processor */
-extern Procline get_celprocline(Boolean cfit);
+extern Procline get_celprocline(bool cfit);
 
 /* structure and functions for temporarily saving an rcel */
 typedef struct rcel_save 

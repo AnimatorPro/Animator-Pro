@@ -46,7 +46,7 @@ Rcel *clone_any_rcel(Rcel *s)
 Rcel *d;
 
 	if((alloc_vd_rcel(vb.vd, (Rasthdr *)s, &d,
-					  s->cmap->num_colors, FALSE)) < Success)
+					  s->cmap->num_colors, false)) < Success)
 	{
 		if((pj_rcel_bytemap_alloc((Rasthdr *)s,&d,s->cmap->num_colors))<Success)
 			return(NULL);
@@ -68,7 +68,7 @@ Rasthdr spec;
 	spec.height = h;
 
 	if((err = alloc_vd_rcel(vb.vd, &spec, pcel,
-				    vb.cel_a->cmap->num_colors,FALSE)) < Success)
+				    vb.cel_a->cmap->num_colors, false)) < Success)
 	{
 		if((err = valloc_ramcel(pcel,w,h)) < 0)
 			return(err);

@@ -12,7 +12,7 @@ static Dlheader _color_reflist = DLHEADER_INIT(_color_reflist);
 static USHORT _rmodewhy;
 static Dlheader _rmode_reflist = DLHEADER_INIT(_rmode_reflist);
 
-static Boolean do_brotask(Waitask *bt)
+static bool do_brotask(Waitask *bt)
 {
 	(void)bt;
 

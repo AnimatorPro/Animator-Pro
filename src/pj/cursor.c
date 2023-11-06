@@ -201,7 +201,8 @@ static void show_either_rcursor(Cursorhdr *hdr)
 	}
 }
 static void save_under_brushcurs(void *screen, Rastcursor *rc,
-							Rbrush *rb, Short_xy *cpos, Boolean zoom)
+							Rbrush *rb, Short_xy *cpos,
+								 bool zoom)
 {
 Cursorcel *r = rc->cel;
 Short_xy mins;
@@ -279,7 +280,7 @@ Cursorcel *r = rc->cel;
 Short_xy cpos, bpos;
 
 	get_zoomcurs_flixy(&cpos);
-	save_under_brushcurs(vb.pencel,rc,vl.brush,&cpos,TRUE);
+	save_under_brushcurs(vb.pencel,rc,vl.brush,&cpos, true);
 
 	bpos = cpos;
 	cpos.x -= r->x;
@@ -322,7 +323,7 @@ Short_xy bpos, cpos;
 	bpos.x = cpos.x = icb.cx;
 	bpos.y = cpos.y = icb.cy;
 
-	save_under_brushcurs(vb.screen->viscel,rc,vl.brush,&cpos,FALSE);
+	save_under_brushcurs(vb.screen->viscel,rc,vl.brush,&cpos, false);
 
 	cpos.x -= r->x;
 	cpos.y -= r->y;
@@ -626,7 +627,7 @@ void cleanup_cursors(void)
 Curslist *clist;
 Rastcursor *default_curs;
 
-	is_init = FALSE;
+	is_init = false;
 	set_cursor(NULL);
 	default_curs = get_default_cursor();
 	if(vb.screen)
@@ -655,7 +656,7 @@ Errcode err;
 	oy = rc->y;
 	rc->x = hot->x;
 	rc->y = hot->y;
-	err = save_pic(name,rc,0,FALSE);
+	err = save_pic(name,rc,0, false);
 	rc->x = ox;
 	rc->y = oy;
 	return(softerr(err,"!%s", "cant_save", name ));

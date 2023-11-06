@@ -17,7 +17,7 @@ extern char *rub_rect_str;
 extern struct button sh1_brush_sel;
 
 /* mainpul.c */
-extern Boolean do_mainpull(struct menuhdr *mh);
+extern bool do_mainpull(struct menuhdr *mh);
 extern Errcode init_poco_pull(struct menuhdr *mh, SHORT prev_id, SHORT root_id);
 
 /* messages.c */
@@ -25,8 +25,8 @@ extern void top_textf(char *fmt, ...);
 extern void soft_top_textf(char *key, ...);
 extern Errcode cant_create(Errcode err, char *name);
 extern void truncated(char *filename);
-extern Boolean overwrite_old(char *name);
-extern Boolean really_delete(char *name);
+extern bool overwrite_old(char *name);
+extern bool really_delete(char *name);
 
 /* multimen.c */
 extern Errcode multimenu(struct autoarg *aa);
@@ -48,7 +48,7 @@ extern Errcode go_format_menu(struct rectangle *outsize);
 
 /* vpaint.c */
 extern void qload(void);
-extern Boolean confirm_dirty_load(void);
+extern bool confirm_dirty_load(void);
 extern void main_selit(struct menuhdr *mh, SHORT hitid);
 
 /* vpsubs.c */

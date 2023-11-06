@@ -19,7 +19,7 @@
 		char *buf;
 		int bmax;
 		int blen;
-		Boolean is_dynamic;
+		bool is_dynamic;
 		char sbuf[DST_SMALL];
 		} Dstring;
 /* Methods are */
@@ -38,7 +38,7 @@
 		Dstring *ss);	/* Dstring to add at end */
 	Errcode dstring_newbuf(Dstring *ds,   /* get buffer for dstring */
 		unsigned int newsize, 		/* size of buffer */
-		Boolean copy_old);			/* copy old contents? */
+						   bool copy_old);			/* copy old contents? */
 
 	/* get clone at expense of dstring buffer */
 	Errcode dstring_get_clone(Dstring *ds,char **ptext);

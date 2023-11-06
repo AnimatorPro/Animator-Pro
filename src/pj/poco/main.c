@@ -222,11 +222,11 @@ Errcode boxf(char* fmt, ...)
 /****************************************************************************
  *
  ***************************************************************************/
-int check_abort(void* nobody)
+bool check_abort(void* nobody)
 {
 	// currently a no-op; was checking for a keypress
 	(void)nobody;
-	return FALSE;
+	return false;
 }
 
 
@@ -456,7 +456,7 @@ Errcode builtin_err; /* Error status for libraries. */
 /* variables for runops tracing */
 extern C_frame* po_run_protos;
 extern FILE* po_trace_file;
-extern Boolean po_trace_flag;
+extern bool po_trace_flag;
 #endif /* DEVELOPMENT */
 
 
@@ -566,12 +566,12 @@ int main(int argc, char* argv[])
 	char* efname	= NULL; /* Errors file name.	*/
 	char* sfname	= NULL; /* Source file name.	*/
 	char* dfname	= NULL; /* Dump file name.		*/
-	Boolean runflag = TRUE;
+	bool runflag = true;
 	char* argp;
 	int counter;
 	Poco_lib* builtin_libs;
-	int do_debug_dump = FALSE;
-	int gui_mode = FALSE;
+	int do_debug_dump = false;
+	int gui_mode = false;
 
 	builtin_libs = get_poco_libs();
 
@@ -585,18 +585,18 @@ int main(int argc, char* argv[])
 			switch (toupper(*++argp)) {
 				case 'c': /* Compile-only switch...   */
 				case 'C': /* Compile-only switch...   */
-					runflag = FALSE;
+					runflag = false;
 					break;
 #ifdef DEVELOPMENT
 				case 't': /* Trace... */
 				case 'T': /* Trace... */
-					po_trace_flag = TRUE;
+					po_trace_flag = true;
 					po_trace_file = stdout;
 					break;
 #endif					  /* DEVELOPMENT */
 				case 'd': /* Dump file name...        */
 				case 'D': /* Dump file name...        */
-					do_debug_dump = TRUE;
+					do_debug_dump = true;
 					break;
 				case 'o': /* Redirection file name... */
 				case 'O': /* Redirection file name... */
@@ -615,7 +615,7 @@ int main(int argc, char* argv[])
 					break;
 				case 'g':
 				case 'G':
-					gui_mode = TRUE;
+					gui_mode = true;
 					fprintf(stdout, "Launching Poco GUI...\n");
 				default: /* Fat-finger case...		*/
 					break;

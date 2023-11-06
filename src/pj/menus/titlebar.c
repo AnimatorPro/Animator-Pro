@@ -51,7 +51,7 @@ void see_titlebar(Button *b)
 SHORT obx;
 int txtwid;
 Titbar_group *tbg = (void *)(b->group);
-Boolean closeit;
+bool closeit;
 
 	if(b->y)
 	{
@@ -63,7 +63,7 @@ Boolean closeit;
 		mc_block(b,MC_GREY);
 
 	obx = b->x;
-	if((closeit = (tbg && tbg->closeit)) != FALSE)
+	if((closeit = (tbg && tbg->closeit)) != false)
 		b->x += (b->height>>1);
 
 	txtwid = mb_centext(b,mc_white(b),b->datme);

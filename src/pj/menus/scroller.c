@@ -157,12 +157,12 @@ int why;
 				&& (time - last_time) < DHIT_MICROS)?SCR_MDHIT:SCR_MHIT;
 
 	if(scroll->high_1_cel)
-		(*scroll->high_1_cel)(b, (Raster *)&cbox, x, y, name, TRUE);
+		(*scroll->high_1_cel)(b, (Raster *)&cbox, x, y, name, true);
 
 	wait_penup();
 
 	if(scroll->high_1_cel)
-		(*scroll->high_1_cel)(b, (Raster *)&cbox, x, y, name, FALSE);
+		(*scroll->high_1_cel)(b, (Raster *)&cbox, x, y, name, false);
 
 	if(name != NULL && feel_1_cel)
 		(*feel_1_cel)(b, (Raster *)&cbox, x, y, name, why);
@@ -482,7 +482,7 @@ Name_scroller *scroller = b->group;
 				   scroller->knob_height);
 	}
 }
-void feel_scrollbar(Button *b,Boolean realtime)
+void feel_scrollbar(Button *b, bool realtime)
 /* scrolls list window in response to user mouse on scrollbar sel if realtime
  * is TRUE.  If realtime is false will wait till mouse button is up before
  * redraw */
@@ -549,11 +549,11 @@ SHORT new_top;
 }
 void rt_feel_scrollbar(Button *b)
 {
-	feel_scrollbar(b,TRUE);
+	feel_scrollbar(b, true);
 }
 void slow_feel_scrollbar(Button *b)
 {
-	feel_scrollbar(b,FALSE);
+	feel_scrollbar(b, false);
 }
 
 void redraw_scroller(Name_scroller *scr)
@@ -565,7 +565,7 @@ void redraw_scroller(Name_scroller *scr)
 /******* stuff for name scroller where entries are strings ******/
 
 static void
-xor_1_name(Button *b, Raster *rast, int x, int y, Names *name, Boolean hilite)
+xor_1_name(Button *b, Raster *rast, int x, int y, Names *name, bool hilite)
 {
 Name_scroller *scroll = (Name_scroller *)(b->group);
 (void)name;

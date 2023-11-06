@@ -2,7 +2,7 @@
 #include "commonst.h"
 #include "scroller.h"
 
-Boolean qscroller(
+bool qscroller(
 	char *result,			/* Put string user selects here */
 	char *hailing,  		/* Character string for move/title area */
 	Names *items, 		/* List of things to put in scroller */
@@ -23,8 +23,8 @@ Menuhdr *qc;
 	if (err < Success)
 	{
 		softerr(err,NULL);
-		return(FALSE);
+		return(false);
 	}
 else
-	return(TRUE);
+	return(true);
 }

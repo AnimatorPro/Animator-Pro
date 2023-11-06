@@ -1,16 +1,16 @@
 #include "reqlib.h"
 #include "softmenu.h"
 
-Boolean soft_qreq_string(char *strbuf,int bufsize,char *key,...)
+bool soft_qreq_string(char *strbuf,int bufsize,char *key,...)
 {
-Boolean ret;
+	bool ret;
 va_list args;
 char *text;
 char *formats;
 
 	va_start(args,key);
  	if(soft_load_ftext_type(key,&args,&formats,&text) < Success)
-		ret = FALSE;
+		ret = false;
 	else
 		ret = varg_qreq_string(strbuf,bufsize,formats,text,args);
 

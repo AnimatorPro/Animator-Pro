@@ -27,10 +27,10 @@ static void center_cel(void);
 static void unstretch_cel(void);
 static void filfli_with_cel(void);
 static void filbox_with_cel(void);
-static void flip_cel(Boolean vertical);
+static void flip_cel(bool vertical);
 static void qmirror_cel(void);
 
-Boolean do_celpull(Menuhdr *mh)
+bool do_celpull(Menuhdr *mh)
 /* set disable flag in items that need cel to exist. */
 {
 SHORT cel_pulltab[] = {
@@ -194,9 +194,9 @@ char buf[50];
 		goto done;
 	}
 
-	vs.dcoor = TRUE;
+	vs.dcoor = true;
 	soft_top_textf("top_curs");
-	vs.dcoor = FALSE;
+	vs.dcoor = false;
 
 	if(marqi_cut_xy() < 0)
 		goto done;
@@ -236,7 +236,7 @@ Errcode err;
 
 	/* reload tool set do not draw cel */
 
-	if((err = reset_celmenu(vs.cur_cel_tool,FALSE)) < Success)
+	if((err = reset_celmenu(vs.cur_cel_tool, false)) < Success)
 		mh_gclose_code(&cmcb->tpull, err); /* AAAck reset failed, close it */
 
 	flx_draw_olays(); /* draw new cel using overlay stack pop */
@@ -323,7 +323,7 @@ Fcelpos pos;
 	pos.cent.y = vb.pencel->height >> 1;
 	repos_cel(&pos);
 }
-static void mirror_stretch(Rcel *rc, Boolean along_y_axis, Fcelpos *pos)
+static void mirror_stretch(Rcel *rc, bool along_y_axis, Fcelpos *pos)
 {
 	if(along_y_axis)
 		pos->stretch.y = -(pos->stretch.y + 2*rc->height);
@@ -333,7 +333,7 @@ static void mirror_stretch(Rcel *rc, Boolean along_y_axis, Fcelpos *pos)
 static void unstretch_cel(void)
 {
 Rcel *rc;
-Boolean xflip, yflip;
+bool xflip, yflip;
 Fcelpos pos;
 
 	rc = thecel->rc;
@@ -381,7 +381,7 @@ static void mirrored_cel_to_box(Flicel *fcel, Fcelpos *newpos, Rectangle *rect)
 
 /* will preserve mirroring of cel in newpos */
 {
-Boolean xflip, yflip;
+	bool xflip, yflip;
 Rcel *rc;
 
 	rc = fcel->rc;
@@ -481,10 +481,10 @@ double cost;   /* cos theta */
 	mirpos->rotang.z = float_toitheta(celzang - theta,FCEL_TWOPI);
 
 	/* flip in y */
-	mirror_stretch(cel->rc,TRUE,mirpos);
+	mirror_stretch(cel->rc, true,mirpos);
 	return;
 }
-static void flip_cel(Boolean vertical)
+static void flip_cel(bool vertical)
 {
 Fcelpos pos;
 

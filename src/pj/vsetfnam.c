@@ -9,7 +9,7 @@ char* vset_get_filename(char* prompt,
 						char* button,
 						int path_type,
 						char* outpath,
-						Boolean force_suffix)
+						bool force_suffix)
 {
 	char* retp;
 	static Vset_path cpath;

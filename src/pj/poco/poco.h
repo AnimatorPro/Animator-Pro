@@ -722,7 +722,7 @@ extern "C"
 		long stack_size;
 		char* data;
 		long data_size;
-		Boolean (*check_abort)(void* d);
+		bool (*check_abort)(void* d);
 		void* check_abort_data;
 		Func_frame* fff;
 		Names* literals; /* string constants */
@@ -785,10 +785,10 @@ extern "C"
 #define any_code(pcb, c) ((c)->code_pt != (c)->code_buf)
 #define clear_code_buf(pcb, c) ((c)->code_pt = (c)->code_buf)
 
-#define pushback_token(t) (t)->reuse = TRUE
+#define pushback_token(t) (t)->reuse = true
 #define lookup_token(pcb)       \
 	if ((pcb)->t.reuse)         \
-		(pcb)->t.reuse = FALSE; \
+		(pcb)->t.reuse = false; \
 	else                        \
 		po_lookup_freshtoken((pcb));
 
@@ -815,7 +815,7 @@ extern "C"
 	void poco_copy_bytes(void* s, void* d, int count);
 	void poco_zero_bytes(void* d, int count);
 	void poco_stuff_bytes(void* d, int value, int count);
-	Boolean po_eqstrcmp(char* s1, char* s2);
+	bool po_eqstrcmp(char* s1, char* s2);
 
 #ifdef __WATCOMC__
 #pragma aux poco_zero_bytes "__*__" parm[edi][ecx];
@@ -842,12 +842,12 @@ extern "C"
 
 	void po_init_code_buf(Poco_cb* pcb, Code_buf* c);
 	void po_trash_code_buf(Poco_cb* pcb, Code_buf* c);
-	Boolean po_add_op(Poco_cb* pcb, Code_buf* cbuf, int op, void* data, SHORT data_size);
+	bool po_add_op(Poco_cb* pcb, Code_buf* cbuf, int op, void* data, SHORT data_size);
 	void po_no_code(Poco_cb* pcb, Code_buf* cb);
 	void po_backup_code(Poco_cb* pcb, Code_buf* cb, int op_size);
 	long po_cbuf_code_size(Code_buf* c);
-	Boolean po_concatenate_code(Poco_cb* pcb, Code_buf* dest, Code_buf* end);
-	Boolean po_copy_code(Poco_cb* pcb, Code_buf* source, Code_buf* dest);
+	bool po_concatenate_code(Poco_cb* pcb, Code_buf* dest, Code_buf* end);
+	bool po_copy_code(Poco_cb* pcb, Code_buf* source, Code_buf* dest);
 	void po_code_op(Poco_cb* pcb, Code_buf* cbuf, int op);
 	void po_add_code_fixup(Poco_cb* pcb, Code_buf* cbuf, int fixup);
 	void po_code_pop(Poco_cb* pcb, Code_buf* cbuf, int op, int pushop);
@@ -858,7 +858,7 @@ extern "C"
 	long po_code_int(Poco_cb* pcb, Code_buf* cbuf, int op, int val);
 	void po_code_popot(Poco_cb* pcb, Code_buf* cbuf, int op, void* min, void* max, void* pt);
 	void po_int_fixup(Code_buf* cbuf, long fixup_pos, int val);
-	Boolean po_compress_func(Poco_cb* pcb, Poco_frame* pf, Func_frame* new_frame);
+	bool po_compress_func(Poco_cb* pcb, Poco_frame* pf, Func_frame* new_frame);
 
 	/* in declare.c */
 
@@ -877,7 +877,7 @@ extern "C"
 
 	void po_fold_const(Poco_cb* pcb, Exp_frame* exp);
 	int po_eval_const_expression(Poco_cb* pcb, Exp_frame* exp);
-	Boolean po_is_static_init_const(Poco_cb* pcb, Code_buf* cb);
+	bool po_is_static_init_const(Poco_cb* pcb, Code_buf* cb);
 
 	/* in funccall.c */
 
@@ -893,7 +893,7 @@ extern "C"
 	void pj_free(void* v);
 	void pj_gentle_free(void* p);
 	void pj_freez(void* p);
-	Boolean check_abort(void* nobody);
+	bool check_abort(void* nobody);
 	int pj_delete(char* name);
 	int pj_ioerr(void);
 	void upc(char* s);
@@ -918,7 +918,7 @@ extern "C"
 	void po_say_internal(Poco_cb* pcb, char* fmt, ...);
 	void po_expecting_got(Poco_cb* pcb, char* expecting);
 	void po_expecting_got_str(Poco_cb* pcb, char* expecting, char* got);
-	Boolean po_need_token(Poco_cb* pcb);
+	bool po_need_token(Poco_cb* pcb);
 	void po_redefined(Poco_cb* pcb, char* s);
 	void po_undefined(Poco_cb* pcb, char* s);
 	void po_unmatched_paren(Poco_cb* pcb);
@@ -934,12 +934,12 @@ extern "C"
 	int po_link_len(Symbol* l);
 	void* po_reverse_links(Symbol* el);
 	void po_lookup_freshtoken(Poco_cb* pcb);
-	Boolean po_is_next_token(Poco_cb* pcb, SHORT ttype);
-	Boolean po_eat_token(Poco_cb* pcb, SHORT ttype);
-	Boolean po_eat_rbracket(Poco_cb* pcb);
-	Boolean po_eat_lparen(Poco_cb* pcb);
-	Boolean po_eat_rparen(Poco_cb* pcb);
-	Boolean po_check_rparen(Poco_cb* pcb);
+	bool po_is_next_token(Poco_cb* pcb, SHORT ttype);
+	bool po_eat_token(Poco_cb* pcb, SHORT ttype);
+	bool po_eat_rbracket(Poco_cb* pcb);
+	bool po_eat_lparen(Poco_cb* pcb);
+	bool po_eat_rparen(Poco_cb* pcb);
+	bool po_check_rparen(Poco_cb* pcb);
 	SHORT po_find_local_assign(Poco_cb* pcb, Type_info* ti);
 	SHORT po_find_assign_op(Poco_cb* pcb, Symbol* var, Type_info* ti);
 	void po_var_too_complex(Poco_cb* pcb);
@@ -958,23 +958,23 @@ extern "C"
 	void po_coerce_to_boolean(Poco_cb* pcb, Exp_frame* e);
 	void po_coerce_to_string(Poco_cb* pcb, Exp_frame* e);
 	void po_coerce_numeric_exp(Poco_cb* pcb, Exp_frame* e, SHORT ido_type);
-	void po_coerce_expression(Poco_cb* pcb, Exp_frame* e, Type_info* ti, Boolean recast);
+	void po_coerce_expression(Poco_cb* pcb, Exp_frame* e, Type_info* ti, bool recast);
 	void po_get_prim(Poco_cb* pcb, Exp_frame* e);
 	void po_get_unop_expression(Poco_cb* pcb, Exp_frame* e);
-	Boolean po_assign_after_equals(Poco_cb* pcb,
+	bool po_assign_after_equals(Poco_cb* pcb,
 								   Exp_frame* e,
 								   Symbol* var,
-								   Boolean must_be_static_init);
+										 bool must_be_static_init);
 	void po_get_expression(Poco_cb* pcb, Exp_frame* e);
-	Boolean po_new_frame(Poco_cb* pcb, int scope, char* name, int type);
+	bool po_new_frame(Poco_cb* pcb, int scope, char* name, int type);
 	void po_old_frame(Poco_cb* pcb);
-	Boolean po_check_undefined_funcs(Poco_cb* pcb, Symbol* sl);
-	Boolean po_compile_file(Poco_cb* pcb, char* name);
+	bool po_check_undefined_funcs(Poco_cb* pcb, Symbol* sl);
+	bool po_compile_file(Poco_cb* pcb, char* name);
 	void po_free_run_env(Poco_run_env* pev);
 
 	/* in pocodis.c */
 
-	Boolean po_check_instr_table(Poco_cb* pcb);
+	bool po_check_instr_table(Poco_cb* pcb);
 	char* find_c_name(C_frame* list, void* fpt);
 	void* po_disasm(FILE* f, void* code, C_frame* cframes);
 	void dump_code(Poco_cb* pcb, FILE* file, void* code, long csize);
@@ -1001,7 +1001,7 @@ extern "C"
 						 Names* include_dirs);
 	Errcode run_poco(void** ppexe,
 					 char* trace_file,
-					 Boolean (*check_abort)(void*),
+					 bool (*check_abort)(void*),
 					 void* check_abort_data,
 					 long* err_line);
 	void free_poco(void** ppexe);
@@ -1016,27 +1016,27 @@ extern "C"
 
 	/* in pocotype.c */
 
-	Boolean po_check_type_names(Poco_cb* pcb);
+	bool po_check_type_names(Poco_cb* pcb);
 	Type_info* po_new_type_info(Poco_cb* pcb, Type_info* old, int extras);
-	Boolean po_is_num_ido(SHORT ido);
-	Boolean po_is_int_ido(SHORT ido);
-	Boolean po_is_pointer(Type_info* ti);
-	Boolean po_is_array(Type_info* ti);
-	Boolean po_is_struct(Type_info* ti);
-	Boolean po_is_func(Type_info* ti);
+	bool po_is_num_ido(SHORT ido);
+	bool po_is_int_ido(SHORT ido);
+	bool po_is_pointer(Type_info* ti);
+	bool po_is_array(Type_info* ti);
+	bool po_is_struct(Type_info* ti);
+	bool po_is_func(Type_info* ti);
 	void po_set_ido_type(Type_info* ti);
-	Boolean po_append_type(Poco_cb* pcb, Type_info* ti, TypeComp tc, long dim, void* sif);
-	Boolean po_set_base_type(Poco_cb* pcb, Type_info* ti, TypeComp tc, long dim, Struct_info* sif);
-	Boolean po_copy_type(Poco_cb* pcb, Type_info* s, Type_info* d);
-	Boolean po_cat_type(Poco_cb* pcb, Type_info* d, Type_info* s);
-	Boolean po_is_void_ptr(Type_info* ti);
-	Boolean po_ptypes_same(Type_info* st, Type_info* dt);
-	Boolean po_fuf_types_same(Func_frame* sf, Func_frame* df);
-	Boolean po_types_same(Type_info* s, Type_info* d, int start);
+	bool po_append_type(Poco_cb* pcb, Type_info* ti, TypeComp tc, long dim, void* sif);
+	bool po_set_base_type(Poco_cb* pcb, Type_info* ti, TypeComp tc, long dim, Struct_info* sif);
+	bool po_copy_type(Poco_cb* pcb, Type_info* s, Type_info* d);
+	bool po_cat_type(Poco_cb* pcb, Type_info* d, Type_info* s);
+	bool po_is_void_ptr(Type_info* ti);
+	bool po_ptypes_same(Type_info* st, Type_info* dt);
+	bool po_fuf_types_same(Func_frame* sf, Func_frame* df);
+	bool po_types_same(Type_info* s, Type_info* d, int start);
 	void po_print_type(Poco_cb* pcb, FILE* f, Type_info* ti);
 	long po_get_type_size(Type_info* ti);
 	long po_get_subtype_size(Poco_cb* pcb, Type_info* ti);
-	Boolean po_get_base_type(Poco_cb* pcb, Poco_frame* pf, Type_info* ti);
+	bool po_get_base_type(Poco_cb* pcb, Poco_frame* pf, Type_info* ti);
 	Symbol* po_need_local_symbol(Poco_cb* pcb);
 	Type_info* po_typi_type(Itypi* tip);
 
@@ -1044,7 +1044,7 @@ extern "C"
 
 	void pp_fatal(char* s);
 	void po_free_pp(Poco_cb* pcb);
-	Boolean po_init_pp(Poco_cb* pcb, char* filename);
+	bool po_init_pp(Poco_cb* pcb, char* filename);
 	char* po_pp_next_line(Poco_cb* pcb);
 
 	/* in ppeval.c */
@@ -1062,9 +1062,9 @@ extern "C"
 
 	/* in statemen.c */
 
-	Boolean po_eat_semi(Poco_cb* pcb);
-	Boolean po_eat_rbrace(Poco_cb* pcb);
-	Boolean po_eat_lbrace(Poco_cb* pcb);
+	bool po_eat_semi(Poco_cb* pcb);
+	bool po_eat_rbrace(Poco_cb* pcb);
+	bool po_eat_lbrace(Poco_cb* pcb);
 	void po_get_statements(Poco_cb* pcb, Poco_frame* d);
 	void po_get_block(Poco_cb* pcb, Poco_frame* d);
 	int po_need_comma_or_brace(Poco_cb* pcb);
@@ -1083,9 +1083,9 @@ extern "C"
 	/* in trace.c */
 
 	Line_data* po_new_line_data(Poco_cb* pcb);
-	Boolean po_compress_line_data(Poco_cb* pcb, Line_data* ld);
+	bool po_compress_line_data(Poco_cb* pcb, Line_data* ld);
 	void po_free_line_data(Line_data* ld);
-	Boolean po_add_line_data(Poco_cb* pcb, Line_data* ld, long offset, long line);
+	bool po_add_line_data(Poco_cb* pcb, Line_data* ld, long offset, long line);
 	void po_print_trace(Poco_run_env* pe,
 						FILE* tfile,
 						Pt_num* stack,
@@ -1109,7 +1109,7 @@ extern "C"
 	Pt_num po_ffi_call(const Po_FFI* binding,
 					   const Pt_num* stack_in,
 					   const ffi_type** variadic_types);
-	Boolean po_ffi_is_variadic(const Po_FFI* binding);
+	bool po_ffi_is_variadic(const Po_FFI* binding);
 
 #ifdef STRING_EXPERIMENT
 	/* in postring.c */

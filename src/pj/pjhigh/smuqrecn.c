@@ -20,12 +20,12 @@ static Errcode clip_udat(void *dat, SHORT val)
 	ud->update(ud->uddat,val);
 	return Success;
 }
-Boolean clip_soft_qreq_number(short *inum,short min,short max, 
+bool clip_soft_qreq_number(short *inum,short min,short max,
 		Errcode (*update)(void *data, SHORT val), void *vfuncdat,
 		char *key, ...)
 /* Force number returned by number requestor to be between min and max */
 {
-Boolean ret;
+	bool ret;
 Udd ud;
 va_list args;
 
@@ -40,7 +40,7 @@ va_list args;
 	va_start(args,key);
 	for(;;)
 	{
-		if((ret = vsoft_qreq_number(inum,min,max,key,args,update,&ud))!=FALSE)
+		if((ret = vsoft_qreq_number(inum,min,max,key,args,update,&ud))!= false)
 		{
 			if (*inum < min)
 				*inum = min;

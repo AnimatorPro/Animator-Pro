@@ -3,7 +3,7 @@
 #include "reqlib.h"
 #include "softmenu.h"
 
-Boolean soft_multi_box(char **keys,char *symbol,...)
+bool soft_multi_box(char **keys,char *symbol,...)
 
 /* keys is an array of char pointers the first one is the formatted 
  * hailing text key.  The subsequent ones are the button text keys. The last one

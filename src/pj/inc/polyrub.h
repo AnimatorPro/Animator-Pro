@@ -23,10 +23,11 @@ typedef struct mpl_2p {
 } Mpl_2p;
 
 extern void
-rub_poly_points(Poly *p, Boolean closed,
+rub_poly_points(Poly *p,
+							bool closed,
 		Pixel dit_color, Pixel dot_color, Pixel pt_color, Pixel pt1_color);
 
-extern void move_poly_points(struct poly *poly, Boolean closed);
+extern void move_poly_points(struct poly *poly, bool closed);
 extern Errcode move_polys_loop(Mpl_data *data, int *pdx, int *pdy);
 extern Errcode rub_move_poly(Poly *poly, Pixel color, int *pdx, int *pdy);
 extern Errcode rub_size_polys(Mpl_data *mpl, int *pp, int *pq);

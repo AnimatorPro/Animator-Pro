@@ -4,7 +4,7 @@
 #include "picfile.h"
 #include "vmagics.h"
 
-Errcode save_pic(char *name,Rcel *screen,LONG id, Boolean save_colors)
+Errcode save_pic(char *name,Rcel *screen,LONG id, bool save_colors)
 /* if save_colors is FALSE it may save a raster without a cmap */
 {
 Errcode err;

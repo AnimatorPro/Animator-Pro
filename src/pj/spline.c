@@ -204,13 +204,13 @@ Errcode err;
 	if((err = make_sp_poly(poly, &sp_poly, 1, 16)) < 0)
 		return(err);
 
-	poly_grad_dims(&sp_poly, TRUE);
+	poly_grad_dims(&sp_poly, true);
 	err = render_fill_poly(&sp_poly);
 	pj_free(sp_poly.clipped_list);
 	return(err);
 }
 
-Errcode hollow_spline(Poly *poly, Boolean closed)
+Errcode hollow_spline(Poly *poly, bool closed)
 {
 Errcode err;
 Poly sp_poly;
@@ -218,7 +218,7 @@ Poly sp_poly;
 	if((err = make_sp_poly(poly, &sp_poly, closed, 16)) < Success)
 		return(err);
 
-	poly_grad_dims(&sp_poly, FALSE);
+	poly_grad_dims(&sp_poly, false);
 	err = render_opoly(&sp_poly, closed);
 	pj_free(sp_poly.clipped_list);
 	return(err);
@@ -326,7 +326,7 @@ for(ix=0; ix<knots; ++ix)
 seg_count = knots+type-1;
 /* set up table of segments to calculate/draw */
 if (moving_point_ix < 0)
-	pj_stuff_bytes(TRUE, do_segment, seg_count);
+	pj_stuff_bytes(true, do_segment, seg_count);
 else
 	{
 	int do_seg;

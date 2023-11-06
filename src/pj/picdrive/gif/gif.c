@@ -189,9 +189,9 @@ error:
 	return(err);
 }
 
-static Boolean gif_spec_best_fit(Anim_info *ainfo)
+static bool gif_spec_best_fit(Anim_info *ainfo)
 {
-Boolean nofit;
+	bool nofit;
 
 	nofit = (ainfo->depth == 8
 			 && ainfo->num_frames == 1);
@@ -211,7 +211,7 @@ Gif_file *gf;
 		xffclose(&gf->file);
 	pj_free(gf);
 	*gifile = NULL;
-	gif_files_open = FALSE;
+	gif_files_open = false;
 }
 static Errcode
 gif_open_ifsub(Gif_file **gifile, char *path, enum XReadWriteMode mode)
@@ -230,7 +230,7 @@ Gif_file *gf;
 	/* gf->hdr.needs_work_cel = FALSE */
 
 	err = xffopen(path, &gf->file, mode);
-	gif_files_open = TRUE;
+	gif_files_open = true;
 	*gifile = gf;
 	return(err);
 }

@@ -30,7 +30,7 @@ Errcode compile_poco(void **ppev,	/* returns executable pexe on Success */
 
 Errcode run_poco(void **ppev,  /* value from compile_poco */
 	char *trace_name,
-	Boolean (*check_abort)(void *),
+				 bool (*check_abort)(void *),
 	void *check_abort_data,
 	long *err_line);
 /* run_poco:  execute *ppev starting at main() */

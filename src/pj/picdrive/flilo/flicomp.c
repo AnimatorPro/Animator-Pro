@@ -39,8 +39,8 @@ UBYTE *last, *this;
 
 static LONG flow_comp_rect(void *comp_buf,
 					Rcel *last_screen,
-					Rcel *this_screen, Rectangle *rect, 
-					Boolean do_colors, SHORT type)
+					Rcel *this_screen, Rectangle *rect,
+						   bool do_colors, SHORT type)
 
 /* given two screens, or one in the case of the types FLI_BRUN and FLI_COLOR_0
  * compresses the delta between them or the data in the one and puts
@@ -143,5 +143,5 @@ Rectangle rect;
 	rect.width = this_screen->width;
 	rect.height = this_screen->height;
 
-	return(flow_comp_rect(comp_buf,last_screen,this_screen,&rect,TRUE,type));
+	return(flow_comp_rect(comp_buf,last_screen,this_screen,&rect, true,type));
 }

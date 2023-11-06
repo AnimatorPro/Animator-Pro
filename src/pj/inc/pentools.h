@@ -97,8 +97,8 @@ extern void cleanup_ptools(void);
 extern void attatch_tools(void);
 
 /* pentools.c */
-extern Boolean tti_input(void);
-extern Boolean pti_input(void);
+extern bool tti_input(void);
+extern bool pti_input(void);
 extern int do_pen_tool(void *w);
 extern void do_pentool_once(Pentool *ptool);
 extern void end_line_undo(void);
@@ -116,7 +116,7 @@ dtool_loop(
 extern Errcode
 spray_loop(
 		Errcode (*get_posp)(struct pos_p *, void *, SHORT), void *idata,
-		Boolean redoing);
+						  bool redoing);
 
 /* flood.c */
 extern Errcode fill(USHORT x, USHORT y);

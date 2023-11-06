@@ -1,7 +1,7 @@
 
 cmake_minimum_required(VERSION 3.26 FATAL_ERROR)
 
-project(poco LANGUAGES CXX)
+project(poco_gui)
 
 set (CMAKE_C_STANDARD 99)
 set (CMAKE_CXX_STANDARD 17)
@@ -23,7 +23,19 @@ list(TRANSFORM
 
 add_executable(poco_gui ${POCO_GUI_SOURCE_FILES})
 target_include_directories(libpoco PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/../../inc")
-target_link_libraries(poco_gui libpoco trdfile ffi_static hashmap)
+target_link_libraries(
+    poco_gui
+        libpoco
+        trdfile
+        ffi_static
+        hashmap
+        imgui
+        "-framework Metal"
+        SDL2-static
+        SDL2main
+        nfd
+        m
+)
 
 INSTALL(TARGETS poco_gui DESTINATION ./)
 

@@ -82,10 +82,6 @@ typedef int Errcode;	/* >= 0 if ok, < 0 otherwise see errcodes.h */
 typedef Errcode ErrCode; /* Just a synonym for above. */
 #define Success (0)
 #define Failure -1
-#define TRUE 1
-#define FALSE 0
-
-typedef int Boolean;
 
 #include <stdbool.h>
 

@@ -539,7 +539,7 @@ int ending;
 		ls = s;
 		wwnext_line(uvfont, &s, vs.twin.width, line_buf, 0);
 		if(s == NULL)
-			ending = TRUE;
+			ending = true;
 		else
 			ending = (s >= stops);
 
@@ -608,7 +608,7 @@ static Errcode fresh_load_tf(Text_file *gf)
 	return(load_text_file(gf, text_name));
 }
 
-static Errcode do_titles(Boolean with_menu) /* aka do text */
+static Errcode do_titles(bool with_menu) /* aka do text */
 {
 int omulti, oh;
 Text_file lgtf;
@@ -666,7 +666,7 @@ Errcode err;
 
 static void title_button(void)	/* aka do text */
 {
-	do_titles(TRUE);
+	do_titles(true);
 }
 
 static int calc_suggest_frames(void)

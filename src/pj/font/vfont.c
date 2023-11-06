@@ -92,7 +92,7 @@ int widest_char(Vfont *v)
 	return(Max(v->widest_image,v->widest_end));
 }
 
-int in_font(Vfont *v, int c)
+bool in_font(Vfont *v, int c)
 {
 	return(v->in_font(v,c));
 }
@@ -105,7 +105,7 @@ Errcode fset_height(Vfont *v, SHORT height)
 		return Err_null_ref;
 }
 
-Errcode fset_unzag(Vfont *v, Boolean unzag)
+Errcode fset_unzag(Vfont *v, bool unzag)
 {
 	if (v->change_unzag)
 		return v->change_unzag(v, unzag);

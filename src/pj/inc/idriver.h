@@ -85,6 +85,6 @@ extern Errcode init_key_idriver(Idriver *idr);
 extern Errcode init_mouse_idriver(Idriver *idr);
 
 extern Errcode
-config_idriver(char *name, UBYTE *modes, Boolean use_modes, SHORT port);
+config_idriver(char *name, UBYTE *modes, bool use_modes, SHORT port);
 
 #endif /* IDRIVER_H */

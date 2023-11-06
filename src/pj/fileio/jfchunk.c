@@ -82,16 +82,15 @@ init_chunkparse(Chunkparse_data *pd, XFILE *xf,
  *  Fat_chunk in the file copy_next_chunk() read_parsed_chunk() will
  *  only copy or read the head data.
  */
-Boolean
-get_next_chunk(Chunkparse_data *pd)
+bool get_next_chunk(Chunkparse_data *pd)
 {
 	if (pd->chunk_left == 0 || pd->error < Success)
-		return FALSE; /* done or error */
+		return false; /* done or error */
 
 	pd->error
 		= xffreadoset(pd->xf, &pd->fchunk, pd->nextoset, sizeof(Fat_chunk));
 	if (pd->error < Success)
-		return FALSE;
+		return false;
 
 	/* First time through if reading root chunk */
 	if (pd->chunk_left < 0) {
@@ -101,12 +100,12 @@ get_next_chunk(Chunkparse_data *pd)
 
 		if (pd->type == (USHORT)DONT_READ_ROOT) {
 			pd->error = Err_corrupted;
-			return FALSE;
+			return false;
 		}
 
 		if(pd->fchunk.type != pd->type) {
 			pd->error = Err_no_chunk;
-			return FALSE;
+			return false;
 		}
 		pd->chunk_left = pd->fchunk.size;
 
@@ -123,7 +122,7 @@ get_next_chunk(Chunkparse_data *pd)
 	pd->chunk_left -= pd->data_size;
 	if (pd->chunk_left < 0) {
 		pd->error = Err_corrupted;
-		return FALSE;
+		return false;
 	}
 
 	pd->chunk_offset = pd->nextoset; /* current chunk offset */
@@ -133,7 +132,7 @@ get_next_chunk(Chunkparse_data *pd)
 	/* Set pd->data_size to actual data size (may be negative)
 	 * if a Chunk_id only.
 	 */
-	return TRUE;
+	return true;
 }
 
 /* Function: read_parsed_chunk

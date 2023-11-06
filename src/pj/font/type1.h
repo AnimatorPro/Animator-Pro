@@ -38,7 +38,7 @@ typedef struct type1_scale_info
 	int widest;
 	Type1_box max_bounds;
 	int right_overlap;
-	Boolean unzag_flag;				/* Do alpha channel stuff? */
+	bool unzag_flag;				/* Do alpha channel stuff? */
 	int unzag_shrink;				/* Amount to shrink to get alpha. */
 	Block_allocator ba;
 	} Type1_scale_info;

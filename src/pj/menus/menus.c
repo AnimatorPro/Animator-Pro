@@ -181,7 +181,7 @@ Menuwndo *mw;
 	if((mw = mh->mw) == NULL)
 		return;
 	if(mh->on_showhide)
-		(*(mh->on_showhide))(mh,FALSE);
+		(*(mh->on_showhide))(mh, false);
 	copy_rectfields(&(mw->w),mh);
 	close_wndo((Wndo *)(mw));
 	mh->mw = NULL;
@@ -241,7 +241,7 @@ Errcode err;
 	}
 
 	if(mh->on_showhide)
-		(*(mh->on_showhide))(mh,TRUE);
+		(*(mh->on_showhide))(mh, true);
 	return(0);
 error:
 	close_menuwndo(mh);
@@ -282,8 +282,7 @@ static void scale_menu_size(Menuhdr *mh,Rscale *scale)
 	mh->height = rscale_y(scale,(mh->orig_rect.height - 1)) + 1;
 }
 
-static Boolean
-is_rect_and_menu_rect_same(const Rectangle *r, const Menuhdr *m)
+static bool is_rect_and_menu_rect_same(const Rectangle *r, const Menuhdr *m)
 {
 	/* TODO: Menuhdr.RECT_FIELDS should be a Rectangle.  Don't assume
 	 * the spacing between x/y/w/h will be the same due to padding.
@@ -557,12 +556,12 @@ error:
 	return(err);
 }
 
-Boolean cgroup_hidden(Wscreen *ws)
+bool cgroup_hidden(Wscreen *ws)
 {
 Mugroup *mg;
 
 	if(NULL == (mg = (Mugroup *)see_head(&ws->gstack)))
-		return(TRUE);
+		return(true);
 	return(mg->hmpcnt > 0);
 }
 void stack_hide_cgroup(Wscreen *ws)
@@ -579,7 +578,7 @@ Mugroup *mg;
 		hide_group(mg);
 	}
 }
-Boolean stack_show_cgroup(Wscreen *ws)
+bool stack_show_cgroup(Wscreen *ws)
 
 /* this will only show things when stack is <= 1 */
 {
@@ -610,7 +609,7 @@ b->x += x;
 b->y += y;
 }
 
-static Boolean marqmove_menu(Menuhdr *m, int clipit)
+static bool marqmove_menu(Menuhdr *m, int clipit)
 {
 Menuwndo *mw;
 Rectangle *clip;
@@ -629,7 +628,7 @@ Rectangle *clip;
 	copy_rectfields(&(mw->w),m);
 	return(1);
 }
-static Boolean menu_to_bottom(Menuhdr *m)
+static bool menu_to_bottom(Menuhdr *m)
 {
 Rectangle *clip;
 Menuwndo *mw;
@@ -745,7 +744,7 @@ Menuhdr *mh;
 /*************************************************************************/
 /************ functions to process input to menus and buttons ************/
 
-Boolean cursin_menu(Menuhdr *m)
+bool cursin_menu(Menuhdr *m)
 /* returns 1 if screen crursor is in the menu's window 0 if window is not open
  * (menu hidden or closed) or cursor is not in the window */
 {
@@ -760,7 +759,7 @@ typedef struct bhitdat {
 	SHORT y;
 } Bhitdat;
 
-static Boolean check_hit(Button *b, Bhitdat *bhd)
+static bool check_hit(Button *b, Bhitdat *bhd)
 
 /* recursive sub for hit_button we've got the stack for it */
 {
@@ -929,7 +928,8 @@ do_hit:
 	}
 	return(ret);
 }
-Boolean is_abortkey(void)
+
+bool is_abortkey(void)
 {
 	return(((UBYTE)icb.inkey) == ' ' || ((UBYTE)icb.inkey) == ESCKEY);
 }
@@ -997,7 +997,7 @@ void menu_to_reqpos(Wscreen *s,Menuhdr *mh)
 
 /* enable and disable manipulators */
 
-Boolean set_button_disable(Button *b, Boolean disable)
+bool set_button_disable(Button *b, bool disable)
 {
 	if(disable)
 		b->flags |= MB_DISABLED;
@@ -1005,7 +1005,7 @@ Boolean set_button_disable(Button *b, Boolean disable)
 		b->flags &= ~(MB_DISABLED);
 	return(disable);
 }
-void draw_button_disable(Button *b, Boolean disable)
+void draw_button_disable(Button *b, bool disable)
 /* combo set disable and redraw */
 {
 	if(disable)
@@ -1028,7 +1028,7 @@ void disable_button(Button *b)
 	b->flags |= MB_DISABLED;
 	draw_buttontop(b);
 }
-void set_mbtab_disables(Button **bt,Boolean disable)
+void set_mbtab_disables(Button **bt, bool disable)
 {
 Button *b;
 

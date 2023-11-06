@@ -202,7 +202,7 @@ static Menuhdr zwinmenu = {
 	0, 0, 0, 0		/* scaled width, height, x, y */
 };
 
-Boolean check_zoom_drag(void)
+bool check_zoom_drag(void)
 /* this is a real total kludge to enable the text editor to drag and close
  * the zoom window title bar drags etc should be part of input system */
 {
@@ -211,7 +211,7 @@ Boolean check_zoom_drag(void)
 		|| icb.iowndo != &(zwinmenu.mw->w)
 		|| !cursin_menu(&zwinmenu))
 	{
-		return(FALSE);
+		return(false);
 	}
 	return(button_keyhit(&zwinmenu,&zoom_dragbar,NULL));
 }
@@ -284,7 +284,7 @@ static void move_zwinmenu(Button *b, void *data)
 	save_zwinpos();
 }
 
-Boolean curs_in_zoombox(void)
+bool curs_in_zoombox(void)
 {
 	return(ptin_rect((Rectangle *)&(zoom_box.RECTSTART),
 					  icb.sx - vl.zoomwndo->behind.x,
@@ -601,7 +601,7 @@ static void hmp_zwin_repos(void)
 	show_mp();
 }
 
-static Boolean is_fullsize(void)
+static bool is_fullsize(void)
 {
 	return(vl.zoomwndo != NULL 
 			&& (zoom_box.width == vb.screen->wndo.width 
@@ -695,15 +695,15 @@ Rectangle zbox;
 			 vs.zoomscale,vs.zoomscale);
 };
 
-Boolean y_needs_zoom(Coor y)
+bool y_needs_zoom(Coor y)
 {
 if (!vs.zoom_open)
-	return(FALSE);
+	return(false);
 if ((y -= vl.zrect.y) < 0)
-	return(FALSE);
+	return(false);
 if (y * vs.zoomscale >= zoom_box.height)
-	return(FALSE);
-return(TRUE);
+	return(false);
+return(true);
 }
 
 void upd_zoom_dot(Pixel c, Coor x, Coor y)
@@ -1076,7 +1076,8 @@ static void set_zoom(void)
 }
 
 static SHORT lzoom_mode, zstack;
-Boolean zoom_disabled(void)
+
+bool zoom_disabled(void)
 {
 	return(zstack > 0);
 }
@@ -1099,7 +1100,8 @@ void ktoggle_zoom(void)
 	else
 		set_zoom();
 }
-Boolean zoom_hidden(void)
+
+bool zoom_hidden(void)
 {
 	return(zstack < 0 && lzoom_mode);
 }

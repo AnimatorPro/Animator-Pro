@@ -170,7 +170,7 @@ static UBYTE eoflags[2] = {(MACRO_REC|MR_EOF),(MACRO_REC|MR_EOF)};
 	icb.macro_clocked = 0;
 	icb.macro_mode = 0;
 }
-static Errcode create_macro(char *path, Boolean realtime)
+static Errcode create_macro(char *path, bool realtime)
 {
 	Errcode err;
 
@@ -212,7 +212,7 @@ static Errcode macro_read_error(Errcode err)
 	close_macro();
 	return(softerr(err,"macro_read"));
 }
-Errcode put_macro(Boolean ishit)
+Errcode put_macro(bool ishit)
 {
 Errcode err;
 char buf[36];
@@ -645,11 +645,11 @@ void qload_macro(void)
 
 void qstart_macro(void)
 {
-	create_macro(macro_name,FALSE);
+	create_macro(macro_name, false);
 }
 void qrealtime_macro(void)
 {
-	create_macro(macro_name,TRUE);
+	create_macro(macro_name, true);
 }
 void qclose_macro(void)
 /* returns TRUE if macro is actually closed FALSE if macro is currently
@@ -678,17 +678,17 @@ SHORT reps;
 }
 
 /********************* nested abort polling stuff ********************/
-static Boolean (*_verify_abort)(void *dat);
+static bool (*_verify_abort)(void *dat);
 static void *_verify_dat;
-void set_abort_verify(Boolean (*verify)(void *dat), void *dat)
+void set_abort_verify(bool (*verify)(void *dat), void *dat)
 {
 	_verify_abort = verify;
 	_verify_dat = dat;
 }
-static Boolean verify_abort(void)
+static bool verify_abort(void)
 {
 	if(_verify_abort == NULL)
-		return(TRUE);
+		return(true);
 	return((*_verify_abort)(_verify_dat));
 }
 static Errcode write_abort_rec(void)
@@ -947,7 +947,7 @@ Abortnest *an;
 			Mcb.ar.flags |= AR_ABORTLEVEL; 
 			if(write_abort_rec() < Success)
 				goto error;
-			if(put_macro(TRUE) < Success) /* write input that caused abort */
+			if(put_macro(true) < Success) /* write input that caused abort */
 				goto error;
 			if(verify_abort())
 				goto aborted;
@@ -973,7 +973,7 @@ Abortnest *an;
 		 * an abort atom NOTE: put_macro with FALSE will never return 
 		 * error */
 
-		put_macro(FALSE);
+		put_macro(false);
 	}
 	goto done;
 

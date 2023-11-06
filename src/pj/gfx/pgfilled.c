@@ -9,7 +9,7 @@ Errcode filled_polygon(Poly *poly,
 {
 Errcode err;
 	if((err = fill_poly_inside(poly,hline,hldat)) >= Success)
-		hollow_polygon(poly,line,ldat,TRUE);
+		hollow_polygon(poly,line,ldat, true);
 	return(err);
 }
 

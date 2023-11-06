@@ -94,15 +94,15 @@ static Smu_button_list apa_smblist[] =  {
 	{ "kill",   { &apa_kill_sel } },
 };
 
-static Boolean do_pastemenu_keys(void)
+static bool do_pastemenu_keys(void)
 {
  	if(check_toggle_menu()
 		|| common_header_keys()
 		|| check_undo_key())
 	{
-		return(TRUE);
+		return(true);
 	}
-	return(FALSE);
+	return(false);
 }
 
 static Errcode go_paste_menu(void)
@@ -145,9 +145,9 @@ Errcode err;
 
 	cmcb->olaymem = 0;
 	cmcb->num_overlays = 0;
-	cmcb->outta_mem = FALSE;
+	cmcb->outta_mem = false;
 	if((err = alloc_flx_olaytab(&flix, flix.hdr.frames_in_table)) < Success)
-		cmcb->outta_mem = TRUE;
+		cmcb->outta_mem = true;
 	return(err);
 }
 static void kill_overlay(Button *b)
@@ -288,7 +288,7 @@ Errcode err;
 void *cbuf;
 Rcel *rc;
 Autoarg aa;
-Boolean ovpushed = 0;
+bool ovpushed = 0;
 Fcelpos opos;
 SHORT ounder;
 SHORT ozclear;
@@ -651,7 +651,7 @@ Fli_frame *cbuf;
 
 	if(NULL == (cbuf = pj_malloc(cmcb->finish_buf_size)))
 	{
-		cmcb->outta_mem = TRUE;
+		cmcb->outta_mem = true;
 		return(Err_no_memory);
 	}
 
@@ -691,10 +691,10 @@ Fli_frame *cbuf;
 
 	/* restore undo behind cel */
 	save_fcel_undo(thecel);
-	cmcb->undo_corrupted = TRUE;
+	cmcb->undo_corrupted = true;
 	return(err);
 }
-static Errcode paste_cel_overlay(Boolean delta)
+static Errcode paste_cel_overlay(bool delta)
 
 /* build overlay record to add to current frame and increment fli 
  * leave next frame without cel present assumes undof has current or previous
@@ -708,7 +708,7 @@ Raster *rast1;
 Raster *rast2;
 SHORT width, height;
 int frame_ix;
-Boolean blue_last;
+bool blue_last;
 Fli_frame *cbuf = NULL;
 
 	copy_rectfields(&thecel->xf.mmax,&changerect); /* get current position */
@@ -803,7 +803,7 @@ Fli_frame *cbuf = NULL;
 	}
 
 	/* certainly is */
-	cmcb->undo_corrupted = TRUE;
+	cmcb->undo_corrupted = true;
 	return(Success);
 
 restore_error:
@@ -817,7 +817,7 @@ restore_error:
 
 	/* get out of here */
 	if(err == Err_no_memory)
-		cmcb->outta_mem = TRUE;
+		cmcb->outta_mem = true;
 	return(err);
 }
 
@@ -918,7 +918,7 @@ void exit_paint_ctool(Pentool *pt)
 {
 	free_flx_overlays(&flix);
 	free_paint_buffers();
-	cmcb->outta_mem = FALSE;
+	cmcb->outta_mem = false;
 
 	if(cmcb->undo_corrupted) /* shouldn't happen */
 	{
@@ -974,7 +974,7 @@ Errcode cel_paint_ptfunc(Pentool *pt,Wndo *w)
 {
 Errcode err;
 SHORT dx,dy,omx,omy;
-Boolean do_delta = FALSE;
+bool do_delta = false;
 LONG clock;
 (void)pt;
 (void)w;
@@ -1016,7 +1016,7 @@ LONG clock;
 		{
 			if(vs.cm_streamdraw)
 			{
-				cmcb->undo_corrupted = FALSE;
+				cmcb->undo_corrupted = false;
 				unsee_flicel(thecel);
 				save_undo();
 				translate_flicel(thecel,dx,dy);
@@ -1045,7 +1045,7 @@ LONG clock;
 				err = softerr(err,"seq_term");
 				break;
 			}
-			do_delta = TRUE;
+			do_delta = true;
 			if(vs.paste_inc_cel)
 				seek_fcel_frame(thecel, thecel->cd.cur_frame + 1);
 			translate_flicel(thecel,dx,dy);
@@ -1082,7 +1082,7 @@ LONG clock;
 
 	unsee_flicel(thecel);
 	save_undo();
-	cmcb->undo_corrupted = FALSE;
+	cmcb->undo_corrupted = false;
 	put_fcelpos(thecel,&cmcb->lastpos);
 	draw_flicel(thecel,DRAW_FIRST,NEW_CFIT);
 	cmu_marqi_cel();
@@ -1256,7 +1256,7 @@ SHORT dx,dy,omx,omy;
 error:
 	unsee_flicel(thecel);
 	save_undo();
-	cmcb->undo_corrupted = FALSE;
+	cmcb->undo_corrupted = false;
 	put_fcelpos(thecel,&lastpos);
 	draw_flicel(thecel,DRAW_FIRST,NEW_CFIT);
 	if(vs.cycle_draw && vs.render_one_color)

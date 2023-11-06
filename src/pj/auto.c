@@ -41,7 +41,7 @@
 
 static Errcode dall(Autoarg *aa);
 
-Boolean auto_abort_verify(void *autoarg)
+bool auto_abort_verify(void *autoarg)
 /* verify they'd like to call rendering off... */
 {
 	Autoarg *aa = autoarg;
@@ -597,7 +597,7 @@ UBYTE rgb[3];
 			rgb[1] = (g+dy2)/dy;
 			rgb[2] = (b+dy2)/dy;
 			pj_set_rect(vb.pencel, bclosest_col((Rgb3 *)rgb, 
-					 COLORS, FALSE), ix, iy, dx, dy );
+					 COLORS, false), ix, iy, dx, dy );
 			ix += dx;
 			if (ix >= vb.pencel->width)
 				break;
@@ -811,7 +811,7 @@ USHORT ocolor8;
 
 	if(aa->flags & AUTO_READONLY)
 	{
-		aa->in_preview = FALSE;
+		aa->in_preview = false;
 		err = dopreview(aa);
 		cleans();
 		goto done;
@@ -919,12 +919,12 @@ long ssize;
 long acc;
 long cbufsz;
 Rcel *xf;
-Boolean do_compress;
+bool do_compress;
 Abortbuf abuf;
-Boolean abort_atom_nested;
+bool abort_atom_nested;
 
 	pstart_abort_atom(&abuf);
-	abort_atom_nested = TRUE;
+	abort_atom_nested = true;
 	auto_setup(aa);
 	scrub_cur_frame();
 	set_abort_verify(auto_abort_verify,aa);
@@ -971,7 +971,7 @@ Boolean abort_atom_nested;
 	if (err < Success)
 		goto newflx_error;
 
-	do_compress = TRUE; /* for non overlay case */
+	do_compress = true; /* for non overlay case */
 
 	acc = flix.hdr.index_oset + tsize;
 	aa->frames_in_seq = flix.hdr.frame_count;
@@ -995,18 +995,18 @@ Boolean abort_atom_nested;
 				if((err = flx_ringseek(undof, vs.frame_ix, 0)) >= Success)
 				{
 					zoom_unundo();
-					do_compress = TRUE; /* brun pretty fast anyway */
+					do_compress = true; /* brun pretty fast anyway */
 				}
 			}
 			else
 			{
 				if(flix.overlays[i] != NULL)
 				{
-					do_compress = TRUE;
+					do_compress = true;
 					save_undo();
 				}
 				else
-					do_compress = FALSE;
+					do_compress = false;
 
 				err = unfli(vb.pencel, i, 1);
 			}
@@ -1097,7 +1097,7 @@ Boolean abort_atom_nested;
 			pj_rcel_copy(vb.pencel,xf);
 	}
 
-	abort_atom_nested = FALSE;
+	abort_atom_nested = false;
 	if((err = end_abort_atom()) < Success) /* may be aborted in macro */
 		goto errout;
 
@@ -1147,7 +1147,7 @@ Boolean abort_atom_nested;
 	useek_cframe();
 	auto_restores(aa,Success);
  	dirty_strokes += flix.hdr.frame_count;
-	dirty_file = TRUE;
+	dirty_file = true;
 	return(Success);
 
 newflx_error:
@@ -1379,7 +1379,7 @@ Rcel *tf;
 Rcel *orender;
 Rcel_save opic;
 Errcode err;
-Boolean csame;
+bool csame;
 
 
 	auto_setup(aa);

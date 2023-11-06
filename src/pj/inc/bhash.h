@@ -12,7 +12,7 @@ struct rgb3;
 
 Errcode make_bhash(void);
 void free_bhash(void);
-Boolean is_bhash(void);
+bool is_bhash(void);
 int bclosest_col(const struct rgb3 *rgb, int count, SHORT dither);
 
 #endif

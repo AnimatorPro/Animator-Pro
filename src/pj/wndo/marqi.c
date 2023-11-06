@@ -88,7 +88,7 @@ typedef struct rectdata {
 	SHORT saved;
 } Rectdata;
 
-static void saverest_frame(Marqihdr *mh, Boolean save)
+static void saverest_frame(Marqihdr *mh, bool save)
 
 /* saves a frame (clips for safety) and has inverse restore */
 {

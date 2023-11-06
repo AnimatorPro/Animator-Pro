@@ -20,7 +20,7 @@
 #include "vdevcall.h"
 #include "zoom.h"
 
-static Errcode resize_pencel(Boolean err_on_abort,Boolean reset);
+static Errcode resize_pencel(bool err_on_abort, bool reset);
 
 USHORT program_id = 0;
 USHORT program_version = 0;
@@ -61,14 +61,14 @@ static Errcode force_temp_files(void)
 Errcode err;
 Rectangle flxsize;
 
-	if((err = open_tempflx(TRUE)) >= Success)
+	if((err = open_tempflx(true)) >= Success)
 	{
 		flxsize.width = flix.hdr.width;
 		flxsize.height = flix.hdr.height;
 		close_tflx();
 		if((err = set_flisize(&flxsize)) < Success)
-			return(resize_pencel(TRUE,TRUE)); /* user will abort and exit */
-		return(open_tempflx(TRUE));
+			return(resize_pencel(true, true)); /* user will abort and exit */
+		return(open_tempflx(true));
 	}
 
 	if((err = set_penwndo_size(vb.screen->wndo.width,
@@ -79,7 +79,7 @@ Rectangle flxsize;
 	return(open_default_flx());
 }
 
-static Errcode clear_vtemps(Boolean reset)
+static Errcode clear_vtemps(bool reset)
 {
 	if (reset)
 		{
@@ -110,7 +110,7 @@ Vset_flidef fdef;
 	rethink_settings();
 	return(empty_tempflx(fdef.frame_count));
 }
-static Errcode reopen_tempflx(Boolean reset)
+static Errcode reopen_tempflx(bool reset)
 {
 Errcode err;
 
@@ -118,7 +118,7 @@ Errcode err;
 	 * if that fails put up a new flx */
 
 	if( (!pj_exists(tflxname))
-		|| open_tempflx(TRUE) < Success)
+		|| open_tempflx(true) < Success)
 	{
 		if(reset)
 			err = open_default_flx();
@@ -176,7 +176,7 @@ Cmap ocolors;
 			if((err = set_flisize(&oldsize)) < Success)
 				continue; /* try again */
 
-			if((err = open_tempflx(TRUE)) < Success)
+			if((err = open_tempflx(true)) < Success)
 			{
 				softerr(err,"tflx_screen");
 				close_init_after(NULL);
@@ -185,7 +185,7 @@ Cmap ocolors;
 					< Success)
 					return(err); /* fatal */
 				/* if next reopen fails waste file but leave settings */
-				return(reopen_tempflx(FALSE));
+				return(reopen_tempflx(false));
 			}
 		}
 		return(RESTART_VPAINT);
@@ -339,7 +339,7 @@ static void delete_file_list(char **list)
 		pj_delete(name);
 }
 
-static void cleanup(Boolean save_state)
+static void cleanup(bool save_state)
 {
 	/* delete back buffer screen */
 	pj_delete(bscreen_name);
@@ -347,7 +347,7 @@ static void cleanup(Boolean save_state)
 	if (save_state) {
 		soft_put_wait_box("wait_quit");
 		flush_tempflx(); /* update tempflx header and stuff */
-		flush_tsettings(TRUE); /* update temp settings file */
+		flush_tsettings(true); /* update temp settings file */
 	}
 	close_tflx();
 	/* push a copy of current screen and alt,cel etc for when program
@@ -365,7 +365,7 @@ static void cleanup(Boolean save_state)
 	cleanup_all(Success);
 }
 
-static void outofhere(Boolean save_state)
+static void outofhere(bool save_state)
 {
 	cleanup(save_state);
 	exit(0);
@@ -450,11 +450,11 @@ int main(int argc, char** argv)
 			case KILL_NEW_SIZE:
 				scrub_cur_frame();	/* clean up act in case user aborts */
 				flush_tflx();
-				err = resize_pencel(FALSE,err == RESET_NEW_SIZE);
+				err = resize_pencel(false,err == RESET_NEW_SIZE);
 				break;
 			case RESET_DEFAULT_FLX:
 				push_close_toscreen();
-				if((err = clear_vtemps(TRUE)) < 0) {
+				if((err = clear_vtemps(true)) < 0) {
 					goto error;
 				}
 				if((err = open_default_flx()) < 0) {
@@ -464,9 +464,9 @@ int main(int argc, char** argv)
 				err = go_vpaint();
 				break;
 			case EXIT_SYSTEM:
-				outofhere(TRUE); /* we've exited, don't need to break... */
+				outofhere(true); /* we've exited, don't need to break... */
 			case QUIT_SYSTEM:
-				outofhere(FALSE);
+				outofhere(false);
 			default: /* not a good return */
 				goto error;
 		}
@@ -477,12 +477,12 @@ error:
 	return err;
 }
 
-static Errcode resize_pencel(Boolean err_on_abort,Boolean reset)
+static Errcode resize_pencel(bool err_on_abort, bool reset)
 {
 Errcode err;
 Rectangle newsize;
 Rectangle flisize;
-Boolean was_zoom;
+bool was_zoom;
 
 	if(!reset)
 		was_zoom = vs.zoom_open;

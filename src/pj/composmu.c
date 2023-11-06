@@ -933,7 +933,7 @@ Short_xy *poly;
 	switch(b->identity)
 	{
 		case COMP_CIRCLE:
-			circle(&cb,icolor,cent.x,cent.y,scale_xys.circ_diam,TRUE);
+			circle(&cb,icolor,cent.x,cent.y,scale_xys.circ_diam, true);
 			break;
 		case COMP_VERTW:
 			rect.x = scale_xys.vhwipe_oset.x;
@@ -1001,7 +1001,7 @@ Short_xy *poly;
 			poly = scale_xys.poly_diamond;
 			inc = 4;
 		do_poly:
-			polygon(&cb,icolor,poly,inc,TRUE);
+			polygon(&cb,icolor,poly,inc, true);
 			break;
 		default:
 			break;
@@ -1010,7 +1010,7 @@ Short_xy *poly;
 static void change_trans_mode(Button *b)
 /* change transition mode */
 {
-Boolean is_cut;
+	bool is_cut;
 
 	change_mode(b);
 	is_cut = (vs.co_type == COMP_CUT);
@@ -1090,7 +1090,7 @@ static void tog_ends(Button *b)
 }
 static void qrender_composite(Button *b)
 {
-Boolean preview;
+	bool preview;
 
 	preview = b->identity != 0;
 	hide_mp();
@@ -1228,7 +1228,7 @@ static void feel_abslid_sel(Button *b)
 Abslidat abs;
 Short_xy cent;
 SHORT omx, dmx;
-Boolean top;
+bool top;
 int olapsize;
 int oolap, lastolap;
 
@@ -1268,7 +1268,7 @@ int oolap, lastolap;
 }
 struct boxil_zdata {
 	Rcel *zdots;
-	Boolean size_is_height;
+	bool size_is_height;
 };
 static Errcode zoom_boxils(void *boxil_zdata, SHORT size)
 {
@@ -1322,7 +1322,7 @@ char *key;
 
 	key = "boxil_ht";
 	size = &vs.co_boxil_height;
-	bd.size_is_height = TRUE;
+	bd.size_is_height = true;
 	maxsize = vb.pencel->height/3;
 
 	for(;;)
@@ -1350,7 +1350,7 @@ char *key;
 		key = "boxil_wid";
 		size = &vs.co_boxil_width;
 		maxsize = vb.pencel->width/3;
-		bd.size_is_height = FALSE;
+		bd.size_is_height = false;
 	}
 
 	err = Success;
@@ -1366,7 +1366,7 @@ static void set_blindmask_size(Button *b)
 SHORT osize;
 SHORT *size;
 SHORT maxsize;
-Boolean vertical;
+bool vertical;
 
 	vertical = (b->identity == COMP_LOUVER);
 

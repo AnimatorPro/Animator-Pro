@@ -76,7 +76,7 @@ void free_flipath(Flipath** fp)
 	pj_freez(fp);
 }
 
-Boolean flipaths_same(Flipath* pa, Flipath* pb)
+bool flipaths_same(Flipath* pa, Flipath* pb)
 {
 	return (0 == memcmp(&pa->fid, &pb->fid, sizeof(pa->fid)) && 0 == txtcmp(pa->path, pb->path));
 }

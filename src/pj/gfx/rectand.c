@@ -1,6 +1,6 @@
 #include "rectang.h"
 
-Boolean and_rects(register Rectangle *a,register Rectangle *b,Rectangle *out)
+bool and_rects(register Rectangle *a,register Rectangle *b,Rectangle *out)
 
 /* returns 1 if rectangles intersect and out is loaded with union.
  * If no intersection occurrs returns 0. out may be a or b */

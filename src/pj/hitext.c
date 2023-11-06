@@ -38,7 +38,7 @@ static void attatch_vs_to_gf(Vsettings *vset, Text_file *gf)
 gf->text_name = text_name;
 gf->justify_mode = vset->tit_just;
 gf->font = uvfont;
-gf->is_movable = TRUE;
+gf->is_movable = true;
 gf->twin = vset->twin;
 gf->tcursor_p = vset->tcursor_p;
 gf->text_yoff = vset->text_yoff;

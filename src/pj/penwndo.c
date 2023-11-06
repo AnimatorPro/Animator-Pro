@@ -114,7 +114,7 @@ Errcode set_penwndo_size(SHORT width, SHORT height)
 Errcode err;
 Rectangle osize;
 void *cbuf;
-static Boolean restore_size; /* for restore if error */
+static bool restore_size; /* for restore if error */
 
 
 	if(undof 
@@ -190,7 +190,7 @@ void set_penwndo_position(void)
 /* called as part of rethink settings */
 {
 Rectangle pos;
-Boolean bord_was_on;
+bool bord_was_on;
 
 	if(PENWNDO == NULL || PENWNDO == &vb.screen->wndo)
 		return;

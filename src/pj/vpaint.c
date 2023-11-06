@@ -302,7 +302,7 @@ static Keyequiv header_keys[] = {
 #endif
 };
 
-Boolean common_header_keys(void)
+bool common_header_keys(void)
 {
 	return (do_keyequiv(icb.inkey, header_keys, Array_els(header_keys)));
 }
@@ -419,19 +419,19 @@ Errcode load_home_keys(void)
 	return (load_key_equivs("home_keys", home_keys, Array_els(home_keys)));
 }
 
-Boolean hit_undo_key(void)
+bool hit_undo_key(void)
 {
 	return (hit_keyequiv(UNDO_KE, icb.inkey));
 }
 
-Boolean home_dokeys(void)
+bool home_dokeys(void)
 /* returns 0 if input unused 1 if used */
 {
 	if (!JSTHIT(KEYHIT))
 		return (check_toggle_menu());
 
 	if (common_header_keys())
-		return (TRUE);
+		return (true);
 
 	return (do_keyequiv(icb.inkey, home_keys, Array_els(home_keys)));
 }
@@ -511,14 +511,14 @@ static char* unsaved_string(char* buf)
 	return (buf);
 }
 
-Boolean confirm_dirty_load(void)
+bool confirm_dirty_load(void)
 {
 	char buf[UNSAVE_BUFSIZ];
 
 	if (dirty_file)
 		if (!soft_yes_no_box("!%s", "load_new", unsaved_string(buf)))
-			return (FALSE);
-	return (TRUE);
+			return (false);
+	return (true);
 }
 
 static void qquit(void)
@@ -574,7 +574,7 @@ void main_selit(Menuhdr* mh, SHORT hitid)
 				do_title_menu();
 				break;
 			case ANI_TWE_PUL:
-				tween_menu(TRUE);
+				tween_menu(true);
 				break;
 			case ANI_DOS_PUL:
 				/* shell_out_to_dos(); */

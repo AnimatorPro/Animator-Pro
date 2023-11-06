@@ -25,7 +25,7 @@ static void save_cut(Cutdata *cd)
 			cd->lastx, 0, cd->mh.port.height);
 	cd->doneonce = 1;
 }
-static void rest_cut(Cutdata *cd,Boolean zoomed)
+static void rest_cut(Cutdata *cd, bool zoomed)
 {
 	if(!cd->doneonce)
 		return;

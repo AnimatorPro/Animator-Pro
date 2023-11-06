@@ -371,14 +371,14 @@ void po_expecting_got_str(Poco_cb* pcb, char* expecting, char* got)
 /*****************************************************************************
  * get a token, and if it is TOK_EOF, complain and die.
  ****************************************************************************/
-Boolean po_need_token(Poco_cb* pcb)
+bool po_need_token(Poco_cb* pcb)
 {
 	lookup_token(pcb);
 	if (pcb->t.toktype == TOK_EOF) {
 		po_say_fatal(pcb, "unexpected end of file");
-		return (FALSE);
+		return (false);
 	}
-	return (TRUE);
+	return (true);
 }
 
 /*****************************************************************************
@@ -754,11 +754,11 @@ NEED_MORE:
 	line_count = pcb->t.file_stack->line_count;
 
 	for (;;) {
-		ts->is_symbol = FALSE;
+		ts->is_symbol = false;
 		ts->line_num  = line_count;
 
 		line_pos = (char*)tokenize_word(
-		  (UBYTE*)line_pos, (UBYTE*)ts->ctoke, (UBYTE*)strwrk, &ctoke_size, &ts->type, FALSE);
+		  (UBYTE*)line_pos, (UBYTE*)ts->ctoke, (UBYTE*)strwrk, &ctoke_size, &ts->type, false);
 		if (line_pos == NULL)
 			goto ENDLINE;
 
@@ -899,13 +899,13 @@ void po_lookup_freshtoken(Poco_cb* pcb)
 			} else {
 				ts->val.symbol = s;
 				if (ts->type == PTOK_VAR || ts->type == PTOK_LABEL || ts->type == PTOK_UNDEF)
-					ts->is_symbol = TRUE;
+					ts->is_symbol = true;
 			}
 		} else {
 			s			   = po_new_symbol(pcb, ts->ctoke);
 			ts->type	   = PTOK_UNDEF;
 			ts->val.symbol = s;
-			ts->is_symbol  = TRUE;
+			ts->is_symbol  = true;
 		}
 	}
 	pcb->t.toktype = ts->type;
@@ -917,13 +917,13 @@ void po_lookup_freshtoken(Poco_cb* pcb)
 /*****************************************************************************
  * indicate whether the next token is the indicated type (ie, look ahead).
  ****************************************************************************/
-Boolean po_is_next_token(Poco_cb* pcb, SHORT ttype)
+bool po_is_next_token(Poco_cb* pcb, SHORT ttype)
 {
-	Boolean ret = FALSE;
+	bool ret = false;
 
 	lookup_token(pcb);
 	if (pcb->t.toktype == ttype || pcb->t.toktype == TOK_EOF)
-		ret = TRUE;
+		ret = true;
 	pushback_token(&pcb->t);
 	return (ret);
 }
@@ -931,26 +931,26 @@ Boolean po_is_next_token(Poco_cb* pcb, SHORT ttype)
 /*****************************************************************************
  * if the next token is the right type, eat it, else complain and die.
  ****************************************************************************/
-Boolean po_eat_token(Poco_cb* pcb, SHORT ttype)
+bool po_eat_token(Poco_cb* pcb, SHORT ttype)
 {
 	char buf[2];
 
 	if (po_need_token(pcb)) {
 		if (pcb->t.toktype == ttype)
-			return (TRUE);
+			return (true);
 		else {
 			buf[0] = ttype;
 			buf[1] = 0;
 			po_expecting_got(pcb, buf);
 		}
 	}
-	return (FALSE);
+	return (false);
 }
 
 /*****************************************************************************
  * eat a closing bracket, if wrong token appears next, complain and die.
  ****************************************************************************/
-Boolean po_eat_rbracket(Poco_cb* pcb)
+bool po_eat_rbracket(Poco_cb* pcb)
 {
 	return (po_eat_token(pcb, ']'));
 }
@@ -958,7 +958,7 @@ Boolean po_eat_rbracket(Poco_cb* pcb)
 /*****************************************************************************
  * eat an opening paren, if wrong token appears next, complain and die.
  ****************************************************************************/
-Boolean po_eat_lparen(Poco_cb* pcb)
+bool po_eat_lparen(Poco_cb* pcb)
 {
 	return (po_eat_token(pcb, TOK_LPAREN));
 }
@@ -966,7 +966,7 @@ Boolean po_eat_lparen(Poco_cb* pcb)
 /*****************************************************************************
  * eat a closing paren, if wrong token appears next, complain and die.
  ****************************************************************************/
-Boolean po_eat_rparen(Poco_cb* pcb)
+bool po_eat_rparen(Poco_cb* pcb)
 {
 	return (po_eat_token(pcb, TOK_RPAREN));
 }
@@ -1151,38 +1151,38 @@ Ido_table po_ido_table[] =
   {
 	  /**  is_num can_add ido_type	**/
 	  {
-		TRUE,
-		TRUE,
+		true,
+		true,
 		IDO_INT,
 	  },
 	  {
-		TRUE,
-		TRUE,
+		true,
+		true,
 		IDO_LONG,
 	  },
 	  {
-		TRUE,
-		TRUE,
+		true,
+		true,
 		IDO_DOUBLE,
 	  },
 	  {
-		FALSE,
-		TRUE,
+		false,
+		true,
 		IDO_POINTER,
 	  },
 	  {
-		FALSE,
-		TRUE,
+		false,
+		true,
 		IDO_CPT,
 	  },
 	  {
-		FALSE,
-		FALSE,
+		false,
+		false,
 		IDO_VOID,
 	  },
 	  {
-		FALSE,
-		FALSE,
+		false,
+		false,
 		IDO_VPT,
 	  },
 #ifdef STRING_EXPERIMENT
@@ -1198,7 +1198,7 @@ Ido_table po_ido_table[] =
  * Run a sanity check on table to correlate IDO-types with instructions
  * to pop result of expression stack.
  ****************************************************************************/
-static Boolean po_check_ido_table(Poco_cb* pcb)
+static bool po_check_ido_table(Poco_cb* pcb)
 {
 #ifdef DEVELOPMENT
 	size_t i;
@@ -1207,11 +1207,11 @@ static Boolean po_check_ido_table(Poco_cb* pcb)
 		if (i != (size_t)po_ido_table[i].ido_type) {
 			fprintf(pcb->t.err_file, "%d != %d\n", i, po_ido_table[i].ido_type);
 			po_say_internal(pcb, "po_ido_table doesn't check");
-			return (FALSE);
+			return (false);
 		}
 	}
 #endif
-	return (TRUE);
+	return (true);
 }
 
 /*****************************************************************************
@@ -1480,7 +1480,7 @@ static void get_array(Poco_cb* pcb, Exp_frame* e)
 	if ((op = ref_op(pcb, ti)) < 0)
 		goto TRASHIT;
 	po_code_op(pcb, &e->ecd, op);
-	e->left_complex = TRUE;
+	e->left_complex = true;
 TRASHIT:
 	po_trash_expframe(pcb, &iex);
 }
@@ -1492,7 +1492,7 @@ void po_make_deref(Poco_cb* pcb, Exp_frame* e)
 {
 	SHORT op;
 
-	e->left_complex = TRUE;
+	e->left_complex = true;
 	if (e->ctc.ido_type != IDO_VPT) {
 		po_copy_code(pcb, &e->ecd, &e->left);
 		if ((op = ref_op(pcb, &e->ctc)) < 0) {
@@ -1565,7 +1565,7 @@ static void get_pmember(Poco_cb* pcb, Exp_frame* e)
 		po_code_op(pcb, &e->ecd, OP_ADD_IOFFSET);
 	}
 	po_make_deref(pcb, e);
-	e->left_complex = TRUE;
+	e->left_complex = true;
 OUT:
 
 	return;
@@ -1725,7 +1725,7 @@ int po_get_temp_space(Poco_cb* pcb, int space)
 void po_init_expframe(Poco_cb* pcb, Exp_frame* e)
 {
 	poco_zero_bytes(e, sizeof(*e));
-	e->pure_const = TRUE;
+	e->pure_const = true;
 	po_init_code_buf(pcb, &e->ecd);	 /* The right value of expression */
 	po_init_code_buf(pcb, &e->left); /* The left value of expression */
 	e->ctc.comp		  = e->ctc_comp; /* e->ctc - the expression type */
@@ -1933,7 +1933,7 @@ static void cant_convert_to_String(Poco_cb* pcb)
 /*****************************************************************************
  * make a cast of an expression to a given type.
  ****************************************************************************/
-void po_coerce_expression(Poco_cb* pcb, Exp_frame* e, Type_info* ti, Boolean recast)
+void po_coerce_expression(Poco_cb* pcb, Exp_frame* e, Type_info* ti, bool recast)
 {
 	TypeComp *pstart_type, start_type;
 	TypeComp end_type, *pend_type;
@@ -2136,7 +2136,7 @@ void po_get_prim(Poco_cb* pcb, Exp_frame* e)
 		}
 		case PTOK_VAR: {
 			use_var(pcb, e, e->var = pcb->curtoken->val.symbol);
-			e->pure_const = FALSE;
+			e->pure_const = false;
 			break;
 		}
 		case PTOK_UNDEF: {
@@ -2245,7 +2245,7 @@ static void get_cast(Poco_cb* pcb, Exp_frame* e)
 	ti = po_typi_type(&tip);
 	po_get_typename(pcb, ti);
 	po_get_unop_expression(pcb, e);
-	po_coerce_expression(pcb, e, ti, TRUE);
+	po_coerce_expression(pcb, e, ti, true);
 	return;
 }
 
@@ -2360,7 +2360,7 @@ void po_get_unop_expression(Poco_cb* pcb, Exp_frame* e)
 {
 	TypeComp t1;
 	Op_type* op_group;
-	int fok = FALSE; /* float ok? */
+	int fok = false; /* float ok? */
 	int temp;
 	register SHORT ttype;
 	SHORT ntype;
@@ -2374,7 +2374,7 @@ void po_get_unop_expression(Poco_cb* pcb, Exp_frame* e)
 	if (ttype == '-') {
 		po_get_unop_expression(pcb, e);
 		op_group = po_neg_ops;
-		fok		 = TRUE;
+		fok		 = true;
 	} else if (ttype == '!') {
 		po_get_unop_expression(pcb, e);
 		op_group = po_not_ops;
@@ -2448,7 +2448,7 @@ static void make_assign(Poco_cb* pcb, Exp_frame* e, Exp_frame* val_exp, Symbol* 
 {
 	TypeComp obase = e->ctc.comp[0];
 
-	po_coerce_expression(pcb, val_exp, &e->ctc, FALSE);
+	po_coerce_expression(pcb, val_exp, &e->ctc, false);
 	po_concatenate_code(pcb, &e->ecd, &val_exp->ecd);
 	e->ctc.comp[0] = obase;
 	assign_after_value(pcb, e, var);
@@ -2472,10 +2472,10 @@ static void make_assign(Poco_cb* pcb, Exp_frame* e, Exp_frame* val_exp, Symbol* 
  *	routine (in fold.c) for checking a !pure_const expression to see if it
  *	qualifies as constant for an init expression.
  ****************************************************************************/
-Boolean po_assign_after_equals(Poco_cb* pcb,
+bool po_assign_after_equals(Poco_cb* pcb,
 							   Exp_frame* e,
 							   Symbol* var,
-							   Boolean must_be_init_constant)
+									 bool must_be_init_constant)
 {
 	Exp_frame val_eee;
 
@@ -2492,7 +2492,7 @@ Boolean po_assign_after_equals(Poco_cb* pcb,
 
 	make_assign(pcb, e, &val_eee, var);
 	po_trash_expframe(pcb, &val_eee);
-	return TRUE;
+	return true;
 }
 
 /*****************************************************************************
@@ -2575,7 +2575,7 @@ void po_get_expression(Poco_cb* pcb, Exp_frame* e)
 			case '=':
 				/* oops, didn't mean to code that... */
 				clear_code_buf(pcb, &e->ecd);
-				po_assign_after_equals(pcb, e, var, FALSE);
+				po_assign_after_equals(pcb, e, var, false);
 				break;
 			default:
 				pushback_token(&pcb->t);
@@ -2599,7 +2599,7 @@ void po_get_expression(Poco_cb* pcb, Exp_frame* e)
  * since these don't mean anything in the context of parsing a prototype
  * or structure definition (this also lightens up on malloc() a bit).
  ****************************************************************************/
-Boolean po_new_frame(Poco_cb* pcb, int scope, char* name, int type)
+bool po_new_frame(Poco_cb* pcb, int scope, char* name, int type)
 {
 	Poco_frame* pf;
 
@@ -2620,7 +2620,7 @@ Boolean po_new_frame(Poco_cb* pcb, int scope, char* name, int type)
 	pf->scope	   = scope;
 	pf->frame_type = type;
 
-	return TRUE;
+	return true;
 }
 
 /*****************************************************************************
@@ -2649,7 +2649,7 @@ void po_old_frame(Poco_cb* pcb)
 /*****************************************************************************
  * Make up symbolic tokens for reserved words, add symbols to root poco_frame.
  ****************************************************************************/
-static Boolean init_reserved_words(Poco_cb* pcb)
+static bool init_reserved_words(Poco_cb* pcb)
 {
 	int i;
 	Symbol* n;
@@ -2769,11 +2769,11 @@ static void free_cframes(Poco_cb* pcb, C_frame** cframes)
 /*****************************************************************************
  * walk symbol list of root frame, look for referenced functions with no code.
  ****************************************************************************/
-Boolean po_check_undefined_funcs(Poco_cb* pcb, Symbol* sl)
+bool po_check_undefined_funcs(Poco_cb* pcb, Symbol* sl)
 {
 	Type_info* ti;
 	Func_frame* fuf;
-	Boolean ok = TRUE;
+	bool ok = true;
 
 	while (sl != NULL) {
 		if (sl->flags & SFL_USED) {
@@ -2794,7 +2794,7 @@ Boolean po_check_undefined_funcs(Poco_cb* pcb, Symbol* sl)
 /*****************************************************************************
  * compile pcb->file into pcb->run.fff.
  ****************************************************************************/
-Boolean po_compile_file(Poco_cb* pcb, char* name)
+bool po_compile_file(Poco_cb* pcb, char* name)
 {
 	Tstack dummy_token;
 	Func_frame* fuf = NULL;

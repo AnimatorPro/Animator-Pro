@@ -24,7 +24,7 @@ while (--pcount >= 0)
 p->clipped_list->next = newlist;	/* put in the ring link */
 }
 
-Errcode poly_to_vertices(Poly *poly, Boolean closed, 
+Errcode poly_to_vertices(Poly *poly, bool closed,
 	Short_xyz **pvertices)
 /* Convert a Polygon in circular linked list form to one that's an
  * array of x/y/z values.   If poly is closed, duplicate the first point

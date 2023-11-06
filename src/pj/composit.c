@@ -20,13 +20,13 @@ typedef struct process_frame_data {
 	Pixel *dline;
 	Rcel *dest;
 	Rcel *history;
-	Boolean invert; /* use mask inverted 0 = b 1 = a */
+	bool invert; /* use mask inverted 0 = b 1 = a */
 	int docfit;   /* 0 = none, 1 = a, 2 = b, 3 = both */
 	Pixel *acfit;
 	Pixel *bcfit;
 	int frame;
 	int frame_count;
-	Boolean reverse_wipe;
+	bool reverse_wipe;
 	Bitmap *boxil_mask;
 	ULONG boxils_done;
 } Pframedat;
@@ -135,7 +135,8 @@ Errcode err;
 	return err;
 }
 static Errcode write_celframes(Flicel *src, SHORT start, SHORT num_frames,
-							   Boolean keep_cel, Boolean ringit,
+							   bool keep_cel,
+							   bool ringit,
 							   Celcfit *cfit)
 /* Writes frames into tempflx from source cel starting starting with tflx
  * and writing frames of source from start to end. */
@@ -145,9 +146,9 @@ Fli_frame *cbuf;
 Rcel *rc;
 LONG size;
 LONG cbufsize;
-Boolean must_compress;
+bool must_compress;
 SHORT max;
-Boolean force_read;
+bool force_read;
 
 	max = start + num_frames;
 
@@ -205,11 +206,11 @@ Boolean force_read;
 		cbufsize = size;
 	if(src->flags & FCEL_RAMONLY)
 	{
-		must_compress = TRUE;
+		must_compress = true;
 	}
 	else if(!must_compress)
 	{
-		force_read = TRUE;
+		force_read = true;
 	}
 	if(NULL == (cbuf = pj_malloc(cbufsize)))
 		goto nomem_error;
@@ -250,7 +251,7 @@ Boolean force_read;
 			if((err = poll_abort()) < Success)
 				goto error;
 
-			if((err = gb_seek_fcel_frame(src, start, cbuf, TRUE)) < Success)
+			if((err = gb_seek_fcel_frame(src, start, cbuf, true)) < Success)
 				goto error;
 			if(pj_i_is_empty_rec(cbuf)) /* just write an empty frame !! */
 			{
@@ -286,7 +287,7 @@ Boolean force_read;
 		{
 			if((err = poll_abort()) < Success)
 				goto error;
-			if((err = gb_seek_fcel_frame(src, start, cbuf, TRUE)) < Success)
+			if((err = gb_seek_fcel_frame(src, start, cbuf, true)) < Success)
 				goto error;
 			if((err = write_next_flxchunk(NULL, &flix, cbuf)) < Success)
 				goto error;
@@ -579,12 +580,12 @@ Celcfit blend_cfit;
 			goto error;
 
 		if((err = gb_seek_fcel_frame(ccb.start_cel, frame_a,
-									 pfd.cbuf, FALSE)) < Success)
+									 pfd.cbuf, false)) < Success)
 		{
 			goto error;
 		}
 		if((err = gb_seek_fcel_frame(ccb.end_cel, frame_b,
-									 pfd.cbuf, FALSE)) < Success)
+									 pfd.cbuf, false)) < Success)
 		{
 			goto error;
 		}
@@ -702,7 +703,7 @@ Celcfit *cfit;
 	if(!ccb.preview_mode)
 	{
 		if((err = write_celframes(ccb.start_cel, ccb.cela_start,
-								  ccb.cela_frames, TRUE,FALSE,cfit)) < Success)
+								  ccb.cela_frames, true, false,cfit)) < Success)
 		{
 			goto error;
 		}
@@ -740,7 +741,7 @@ Celcfit *cfit;
 		free_fcel_raster(ccb.start_cel); /* done with this */
 
 		err = write_celframes(ccb.end_cel, ccb.celb_tailstart,
-							  ccb.celb_frames, FALSE,TRUE,cfit);
+							  ccb.celb_frames, false, true,cfit);
 	}
 	else
 		ccb.preview_frame += ccb.celb_frames;
@@ -775,7 +776,7 @@ int ceny;
 	ceny = dest->height/2;
 	radius = (tscale1 * (5+calc_distance(0,0,cenx,ceny)))/SCALE_ONE;
 	pj_set_rast(dest,pfd->invert);
-	circle(dest,!pfd->invert, cenx, ceny, radius<<1, TRUE);
+	circle(dest,!pfd->invert, cenx, ceny, radius<<1, true);
 	return(Success);
 }
 static Errcode make_box_mask(int tscale0,int tscale1,Pframedat *pfd)
@@ -816,7 +817,7 @@ Short_xy dpg[4];
 	dpg[1].x = dpg[0].x + width;
 
 	pj_set_rast(dest,pfd->invert);
-	return(polygon(dest,!pfd->invert,dpg,4,TRUE));
+	return(polygon(dest,!pfd->invert,dpg,4, true));
 }
 static Errcode make_dissolve_mask(int tscale0,int tscale1,Pframedat *pfd)
 {
@@ -895,7 +896,7 @@ int x,y,width,height;
 	pj_set_rect(dest,!pfd->invert, x, y, width, height);
 	return(Success);
 }
-static Errcode make_vmask(int tscale,Pframedat *pfd, Boolean centered)
+static Errcode make_vmask(int tscale,Pframedat *pfd, bool centered)
 {
 Rcel *dest = pfd->dest;
 int width, x;
@@ -918,7 +919,7 @@ static Errcode make_vwedge_mask(int tscale0,int tscale1,Pframedat *pfd)
 	(void)tscale0;
 	return(make_vmask(tscale1,pfd,1));
 }
-static Errcode make_hmask(int tscale,Pframedat *pfd, Boolean centered)
+static Errcode make_hmask(int tscale,Pframedat *pfd, bool centered)
 {
 Rcel *dest = pfd->dest;
 Coor y,height;
@@ -969,7 +970,7 @@ Pixel invert;
 		pg[2].y = dest->height-1;
 	}
 	pj_set_rast(dest,invert);
-	return(polygon(dest,!invert,pg,3,TRUE));
+	return(polygon(dest,!invert,pg,3, true));
 }
 static Errcode make_bdiag_mask(int tscale0,int tscale1, Pframedat *pfd)
 {
@@ -1000,10 +1001,10 @@ Pixel invert;
 		pg[2].y = 0;
 	}
 	pj_set_rast(dest,invert);
-	return(polygon(dest,!invert,pg,3,TRUE));
+	return(polygon(dest,!invert,pg,3, true));
 }
 static Errcode make_blind_mask(int tscale, Pframedat *pfd,
-							   Boolean vertical, Pixel offcol, Pixel oncol,
+							   bool vertical, Pixel offcol, Pixel oncol,
 							   USHORT slatspace )
 {
 Rcel *dest = pfd->dest;
@@ -1062,7 +1063,7 @@ static Errcode make_louver_mask(int tscale0, int tscale1, Pframedat *pfd)
 }
 Errcode draw_slatmask(void *data, SHORT size)
 {
-	Boolean *pvertical = data;
+	bool*pvertical = data;
 	Pframedat pfd;
 	assert(size >= 0);
 
@@ -1079,7 +1080,7 @@ Errcode err;
 Rasthdr spec;
 
 	pj_srandom(1);
-	pfd->reverse_wipe = FALSE; /* this doesn't make sense here it's random */
+	pfd->reverse_wipe = false; /* this doesn't make sense here it's random */
 	init_masked_pframe(pfd);
 
 	/* verify vs data */
@@ -1220,7 +1221,7 @@ Celcfit *cfit;
 	else
 		frame = ((tscale0*(frame-1))+SCALE_ONE/2)/SCALE_ONE;
 
-	if((err = gb_seek_fcel_frame(ccb.mask_cel, frame, pfd->cbuf, FALSE)) < 0)
+	if((err = gb_seek_fcel_frame(ccb.mask_cel, frame, pfd->cbuf, false)) < 0)
 		goto error;
 	cfit = ccb.mask_cel->cfit;
 	pj_stuff_bytes(!pfd->invert,cfit->ctable,sizeof(cfit->ctable));
@@ -1237,19 +1238,17 @@ static Errcode do_cut(void)
 {
 Errcode err;
 
-	if((err = write_celframes(ccb.start_cel, ccb.cela_start, ccb.cela_frames,
-							  FALSE,FALSE,NULL)) < Success)
+	if((err = write_celframes(ccb.start_cel, ccb.cela_start, ccb.cela_frames, false, false,NULL)) < Success)
 	{
 		goto error;
 	}
-	err = write_celframes(ccb.end_cel, ccb.celb_start, ccb.celb_frames,
-						  TRUE,TRUE,NULL);
+	err = write_celframes(ccb.end_cel, ccb.celb_start, ccb.celb_frames, true, true,NULL);
 error:
 	return(err);
 }
 /***** main composit function *****/
 
-static Boolean comp_abort_verify(void *data)
+static bool comp_abort_verify(void *data)
 {
 	(void)data;
 
@@ -1266,7 +1265,7 @@ static Boolean comp_abort_verify(void *data)
 							flix.hdr.frame_count+1,
 							ccb.total_frames ));
 }
-Errcode render_composite(Boolean do_preview)
+Errcode render_composite(bool do_preview)
 /*****************************************************************************
  * Main entry point to this module.   Fill in the initial fields of ccb
  * (see comment on struct compo_cb in composit.h) before calling this.

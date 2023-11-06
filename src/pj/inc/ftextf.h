@@ -61,8 +61,8 @@ char *ftext_format_type(char **pfmt,va_list *pargs);
 Errcode init_eitherfarg(Ftextfarg *fa, char *formats, char *text);
 
 Errcode get_formatted_ftext(char **pbuf, int max_to_alloc,
-					        char *formats, char *text, va_list args, 
-							Boolean force_copy);
+					        char *formats, char *text, va_list args,
+							bool force_copy);
 
 int snftextf(char *buf, int maxlen, char *fmt,...);
 int vnsftextf(char *buf, int maxlen, char *formats, char *text, va_list args);

@@ -83,7 +83,7 @@ error:
 	softerr(err,"!%s","cant_save",path);
 	--level;
 }
-Boolean do_pj_hotkey(Global_icb *gicb)
+bool do_pj_hotkey(Global_icb *gicb)
 
 /********* routines called from within input loop for "HOT key" functions ***/
 {
@@ -112,7 +112,7 @@ Boolean do_pj_hotkey(Global_icb *gicb)
 			break;
 #endif /* TESTING */
 		default:
-			return(FALSE);
+			return(false);
 	}
-	return(TRUE);
+	return(true);
 }

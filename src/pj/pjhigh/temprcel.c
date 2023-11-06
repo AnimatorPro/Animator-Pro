@@ -10,7 +10,7 @@ Errcode err;
 
 	/* Try to put it on the video card */
 	if ((err = alloc_vd_rcel(vb.vd, (Rasthdr *)cel, &sc->saved_cel,
-					  cel->cmap->num_colors,FALSE)) >= Success)
+					  cel->cmap->num_colors, false)) >= Success)
 	{
 		pj_rcel_copy(cel, sc->saved_cel);
 		sc->where = SSC_CEL;
@@ -18,7 +18,7 @@ Errcode err;
 	}
 	/* make up file name and swap it to a temp-file */
 	sprintf(sc->saved_fname, "=:rcel%d.pic", rnum++);
-	if ((err = save_pic(sc->saved_fname, cel, 0L, TRUE)) >= Success)
+	if ((err = save_pic(sc->saved_fname, cel, 0L, true)) >= Success)
 	{
 		sc->where = SSC_FILE;
 		return(Success);
@@ -47,7 +47,7 @@ Errcode err;
 			err = Success;
 			break;
 		case SSC_FILE:
-			err = load_pic(sc->saved_fname, cel, 0, TRUE);
+			err = load_pic(sc->saved_fname, cel, 0, true);
 			pj_delete(sc->saved_fname);
 			break;
 		default:

@@ -1435,7 +1435,7 @@ static Redraw_node omu_redraw_node = {
 	NULL,
 	NEW_CCOLOR };
 
-static void omu_on_showhide(Menuhdr *mh,Boolean showing)
+static void omu_on_showhide(Menuhdr *mh, bool showing)
 {
 	(void)mh;
 
@@ -1444,10 +1444,10 @@ static void omu_on_showhide(Menuhdr *mh,Boolean showing)
 	else
 		rem_color_redraw(&omu_redraw_node);
 }
-static Boolean do_options_keys(void)
+static bool do_options_keys(void)
 {
  	if(check_pen_abort())
-		return(TRUE);
+		return(true);
 	return(common_header_keys());
 }
 static Errcode opt_menu(char *title,Button *m,Button *bgroup,
@@ -1492,7 +1492,7 @@ static Button omu_inkpen_sel = MB_INIT1(
 #define INKTYPE		1
 #define DTOOLTYPE 	2
 
-static Errcode go_pen_or_ink(Button *b,int optype,Boolean noswap)
+static Errcode go_pen_or_ink(Button *b,int optype, bool noswap)
 {
 Errcode err = optype;
 

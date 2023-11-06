@@ -207,7 +207,7 @@ Errcode err;
 
 	if((err=pj_fli_alloc_cbuf((void *)&cbuf,16,16,screen->cmap->num_colors))<0)
 		goto error;
-	pj_fli_comp_rect(cbuf,NULL,screen,NULL,TRUE,COMP_BLACK_FIRST,flxf->comp_type);
+	pj_fli_comp_rect(cbuf,NULL,screen,NULL, true,COMP_BLACK_FIRST,flxf->comp_type);
 	err = write_first_flxchunk(name,flxf,cbuf);
 error:
 	pj_gentle_free(cbuf);

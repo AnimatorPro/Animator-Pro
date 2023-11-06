@@ -252,7 +252,7 @@ static void dec_qsl(void *qw)
 	delta_qsl((Qslwork *)qw, -1);
 }
 
-Boolean in_left_arrow(Button *slb)
+bool in_left_arrow(Button *slb)
 {
 SHORT arrwidth;
 
@@ -261,7 +261,7 @@ SHORT arrwidth;
 	return(icb.mx - slb->x < mb_mscale_x(slb,arrwidth));
 }
 
-Boolean in_right_arrow(Button *slb)
+bool in_right_arrow(Button *slb)
 {
 SHORT arrwidth;
 

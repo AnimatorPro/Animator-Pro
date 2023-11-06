@@ -13,7 +13,8 @@
 
 
 static int makedo_qchoice(char *header, char **choices, 
-						  int ccount, VFUNC *feelers, Boolean hide_on_hit,
+						  int ccount, VFUNC *feelers,
+						  bool hide_on_hit,
 						  USHORT *qc_flags)
 
 /* Pass this one a string for the title bar of menu, and an array of strings
@@ -60,7 +61,7 @@ char *choices[11];
 char *tbuf;
 
 	tbuf = NULL;
-	if((err = get_formatted_ftext(&tbuf,0,formats,text,args,TRUE)) <= 0)
+	if((err = get_formatted_ftext(&tbuf,0,formats,text,args, true)) <= 0)
 	{
 		if(err == 0)
 			err = Err_bad_input; /* no text! */
@@ -78,7 +79,7 @@ char *tbuf;
 			break;
 	}
 	if(count)
-		err = makedo_qchoice(choices[0],&choices[1],count,NULL,TRUE,qc_flags);
+		err = makedo_qchoice(choices[0],&choices[1],count,NULL, true,qc_flags);
 
 done:
 	pj_freez(&tbuf);

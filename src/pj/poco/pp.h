@@ -20,7 +20,7 @@ struct text_symbol
 {
 struct text_symbol *next;
 char *name;
-Boolean is_macro;
+bool is_macro;
 char *value;
 struct name_list *parameters;
 };
@@ -39,7 +39,7 @@ typedef struct file_place File_place;
 struct conditional
 {
 struct conditional *next;
-Boolean state;/*true or false*/
+bool state;/*true or false*/
 };
 typedef struct conditional Conditional;
 
@@ -50,8 +50,8 @@ extern void outta_memory();
 extern void unexpected_eof();
 extern void po_expecting_got();
 extern void zero_divide();
-extern Boolean po_eat_token();
-extern Boolean skip_through();
+extern bool po_eat_token();
+extern bool skip_through();
 extern char *po_skip_space();
 extern char *po_chop_to();
 extern char *chop_cword();
@@ -65,8 +65,8 @@ extern Text_symbol *in_hash_list();
 extern void add_to_hash();
 
 /***** global data from tokeni.c *******/
-extern Boolean pp_fatal;
-extern Boolean pp_eof;
+extern bool pp_fatal;
+extern bool pp_eof;
 extern struct file_place *file_stack;
 extern struct text_symbol *define_list[];
 extern struct conditional *ifdef_stack;

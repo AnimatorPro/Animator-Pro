@@ -4,13 +4,13 @@
 
 Vfont *get_sys_font(void)
 {
-static char init = FALSE;
+static char init = false;
 static Vfont sysfont;
 
 	if(!init)
 	{
 		init_sixhi_vfont(&sysfont);
-		init = TRUE;
+		init = true;
 	}
 	return(&sysfont);
 }

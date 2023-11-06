@@ -56,17 +56,17 @@ enum {
  * code...
  *--------------------------------------------------------------------------*/
 
-static Boolean spec_best_fit(Anim_info *ainfo)
+static bool spec_best_fit(Anim_info *ainfo)
 /*****************************************************************************
  * as long as it's one frame of 8 bits-per-pixel, we can do it.
  ****************************************************************************/
 {
 	if (ainfo->depth == 8 && ainfo->num_frames == 1)
-		return TRUE;
+		return true;
 
 	ainfo->depth = 8;
 	ainfo->num_frames = 1;
-	return FALSE;
+	return false;
 }
 
 static void close_file(Image_file **ptf)
@@ -232,7 +232,7 @@ static Errcode save_frames(Image_file	*ifile,
 	(void)seek_data;
 	(void)work_screen;
 
-	if (save_options.options_valid == FALSE)
+	if (save_options.options_valid == false)
 		{
 		save_options.option1 = OUTPUT_FORMAT_DEFAULT;
 		save_options.option2 = OUTPUT_COMPRESS_DEFAULT;
@@ -241,11 +241,11 @@ static Errcode save_frames(Image_file	*ifile,
 	switch (save_options.option1)
 		{
 		case OUTPUT_FORMAT_CMAPPED:
-			tf->is_rgb = FALSE;
+			tf->is_rgb = false;
 			tf->pdepth = 8;
 			break;
 		case OUTPUT_FORMAT_RGB:
-			tf->is_rgb = TRUE;
+			tf->is_rgb = true;
 			tf->pdepth = 24;
 			break;
 		default:
@@ -255,10 +255,10 @@ static Errcode save_frames(Image_file	*ifile,
 	switch (save_options.option2)
 		{
 		case OUTPUT_COMPRESS_NONE:
-			tf->is_compressed = FALSE;
+			tf->is_compressed = false;
 			break;
 		case OUTPUT_COMPRESS_RLE:
-			tf->is_compressed = TRUE;
+			tf->is_compressed = true;
 			break;
 		default:
 			return Err_driver_protocol;

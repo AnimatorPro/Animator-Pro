@@ -45,7 +45,7 @@ Mode_entry **pmode_entry;
 Mode_entry *mentry;
 Vmode_info mode_info;
 Vdevice *drv = NULL;
-Boolean is_current = FALSE;
+bool is_current = false;
 USHORT mode;
 char wstr[32];
 char hstr[32];
@@ -146,19 +146,19 @@ Screen_mode *sm = (Screen_mode*)dat;
 	sm->height = mentry->hrange.actual;
 	return(Success);
 }
-static Boolean show_driver_info(Names *entry,void *dat)
+static bool show_driver_info(Names *entry,void *dat)
 {
 Errcode err;
 Vmode_info mi;
 Mode_entry *mentry;
 Vdevice *drv = NULL;
-Boolean is_current;
+bool is_current;
 char *more_info;
 char *soft_info = NULL;
 (void)dat;
 
 	if (NULL == (mentry = (Mode_entry *)entry)) /* it's possible for us to */
-		return FALSE;						/* get called with a NULL ptr! */
+		return false;						/* get called with a NULL ptr! */
 
 
 	hide_mp();
@@ -203,7 +203,7 @@ error:
 	softerr(err,"!%s%d", "driver_info", 
 		    mentry->drv_file, mentry->mode);
 	show_mp();
-	return FALSE;  /* indicate we don't want exit from menu */
+	return false;  /* indicate we don't want exit from menu */
 }
 static Errcode go_screen_menu(Screen_mode *sm)
 {

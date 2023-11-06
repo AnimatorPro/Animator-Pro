@@ -38,7 +38,7 @@ char *name;
 		name = hrmenu_font_name;
 
 	make_resource_name(name, path);
-	if(load_font(path, &menufont,0,FALSE) >= Success)
+	if(load_font(path, &menufont,0, false) >= Success)
 		s->mufont = &menufont;
 	else
 		s->mufont = get_sys_font();
@@ -62,13 +62,13 @@ void set_menu_scale(Wscreen *s)
 			s->menu_scale.yscalep = 150;
 			s->bbevel = 3;
 		}
-		s->is_hires = TRUE;
+		s->is_hires = true;
 	}
 	else
 	{
 		s->menu_scale.xscalep = 100;
 		s->menu_scale.yscalep = 100;
-		s->is_hires = FALSE;
+		s->is_hires = false;
 		s->bbevel = 2;
 	}
 	s->menu_scale.xscaleq = 100;

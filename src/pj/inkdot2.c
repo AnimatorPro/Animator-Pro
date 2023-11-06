@@ -20,7 +20,7 @@ static Pixel rclosest_color(Thash *th, const Rgb3 *oldc,
 	if (!th->valid)
 	{
 		th->closest = closestc(oldc+underc,vb.pencel->cmap->ctab,COLORS);
-		th->valid = TRUE;
+		th->valid = true;
 	}
 	return(th->closest);
 }
@@ -72,7 +72,7 @@ if (vl.alt_cel)
 		{
 		while (--w >= 0)
 			{
-			*spt = bclosest_col(ctab+*spt,COLORS,TRUE);
+			*spt = bclosest_col(ctab+*spt,COLORS, true);
 			spt++;
 			}
 		}
@@ -86,7 +86,7 @@ if (vl.alt_cel)
 			if (!t->valid)
 				{
 				t->closest =  closestc(ctab+*spt,dctab,COLORS);
-				t->valid = TRUE;
+				t->valid = true;
 				}
 			*spt++ = t->closest;
 			}

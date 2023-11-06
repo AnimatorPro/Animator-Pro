@@ -3,8 +3,8 @@
 #include "ftextf.h"
 
 Errcode get_formatted_ftext(char **pbuf, int max_to_alloc,
-					        char *formats, char *text,va_list args, 
-							Boolean force_copy)
+					        char *formats, char *text,va_list args,
+							bool force_copy)
 
 /* checks size if text is smaller or = to max_to_alloc or *pbuf == NULL it 
  * will put text in *pbuf, if bigger it will attempt allocate of a buffer

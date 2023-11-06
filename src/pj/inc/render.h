@@ -57,10 +57,10 @@ render_mask_alpha_blit(UBYTE *alpha, int abpr, int x, int y, int w, int h,
 
 extern Errcode render_disk(Raster *r, SHORT cenx, SHORT ceny, SHORT diam); // 518
 extern Errcode render_box(SHORT x, SHORT y, SHORT xx, SHORT yy); // 554
-extern Errcode render_beveled_box(Rectangle *r, int bevel, Boolean filled); // 572
+extern Errcode render_beveled_box(Rectangle *r, int bevel, bool filled); // 572
 extern void render_outline(struct short_xy *pt, int count); // 645
 extern void render_brush(SHORT x, SHORT y); // 658
-extern Errcode render_opoly(struct poly *p, Boolean closed); // 711
+extern Errcode render_opoly(struct poly *p, bool closed); // 711
 extern Errcode render_circle(Raster *r, SHORT cenx, SHORT ceny, SHORT diam); // 728
 extern Errcode render_separate(PLANEPTR ctable, int ccount, Rectangle *rect); // 749
 

@@ -92,7 +92,7 @@ short *mag_table;
 
 ix = icb.mx;
 iy = icb.my;
-cinit_marqihdr(&mh,color,color,TRUE);
+cinit_marqihdr(&mh,color,color, true);
 clear_struct(&opoly);
 update_poly(poly, &opoly);
 if ((err = init_mag_table(&mag_table, &opoly, ix, iy, min_dist, mag_mode)) 

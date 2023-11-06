@@ -435,7 +435,7 @@ static Redraw_node quick_rn = {
 	NULL,
 	NEW_CCOLOR };
 
-static void qmu_on_showhide(Menuhdr *mh,Boolean showing)
+static void qmu_on_showhide(Menuhdr *mh, bool showing)
 {
 	(void)mh;
 

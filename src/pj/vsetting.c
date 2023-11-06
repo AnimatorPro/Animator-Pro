@@ -20,7 +20,7 @@
 static Errcode default_tsettings(Vset_flidef *fdef);
 
 static Errcode
-load_file_settings(char *path, Vset_flidef *fdef, Boolean default_reset);
+load_file_settings(char *path, Vset_flidef *fdef, bool default_reset);
 
 void rethink_settings(void)
 {
@@ -30,7 +30,7 @@ void rethink_settings(void)
 	fset_spacing(uvfont, vs.font_spacing, vs.font_leading);
 
 	if(!mask_is_present())
-		vs.make_mask = vs.use_mask = FALSE;
+		vs.make_mask = vs.use_mask = false;
 
 	set_brush_type(vs.pen_brush_type);
 	set_penwndo_position();
@@ -43,7 +43,7 @@ char path[PATH_SIZE];
 
 	close_zwinmenu();
 	make_file_path(vb.init_drawer,default_name,path);
-	err = load_file_settings(path,fdef,TRUE);
+	err = load_file_settings(path,fdef, true);
 	if(err < Success)
 	{
 		if(err != Err_no_file)
@@ -153,7 +153,7 @@ static void load_flidef(Vset_flidef *fdef,Fli_head *fh)
 		fdef->frame_count = 1;
 	}
 }
-static void load_vslow(Slow_vsettings *svs, Boolean defaults)
+static void load_vslow(Slow_vsettings *svs, bool defaults)
 {
 	svs->id.size = sizeof(*svs);
 	svs->id.type = VSET_SLOWVS_ID;
@@ -172,7 +172,7 @@ static void load_init_tsettings(Tsettings_file *buf)
 	buf->id.version = VSETCHUNK_VERSION;
 
 	load_default_paths(&buf->vsp);
-	load_vslow(&buf->vslow, TRUE);
+	load_vslow(&buf->vslow, true);
 	load_flidef(&buf->fdef,NULL);
 	load_vschunk(&buf->vs);
 }
@@ -240,7 +240,7 @@ error:
 	return(err);
 }
 
-static Errcode tset_flush(Vsetfile *vsf, Boolean full_flush)
+static Errcode tset_flush(Vsetfile *vsf, bool full_flush)
 /* full flush will flush all the slow stuff too, inkstrengths and menu
  * colors */
 {
@@ -254,7 +254,7 @@ static Errcode tset_flush(Vsetfile *vsf, Boolean full_flush)
 			SLOW_FLUSHOFFSET - FAST_FLUSHOFFSET);
 
 	if (full_flush && err >= Success) {
-		load_vslow(&buf.vslow, FALSE);
+		load_vslow(&buf.vslow, false);
 
 		err = xffwriteoset(vsf->xf, &buf.vslow, SLOW_FLUSHOFFSET,
 				sizeof(Tsettings_file) - SLOW_FLUSHOFFSET);
@@ -263,7 +263,7 @@ static Errcode tset_flush(Vsetfile *vsf, Boolean full_flush)
 	return err;
 }
 
-Errcode flush_tsettings(Boolean full_flush)
+Errcode flush_tsettings(bool full_flush)
 /* full flush will flush all the "slow" stuff too */
 {
 Errcode err;
@@ -379,7 +379,8 @@ Vset_path vsp;
  */
 static Errcode
 write_settings_chunk(XFILE *newxf, SHORT id_type, LONG offset,
-		Cmap *cmap, Boolean for_fli_prefix)
+		Cmap *cmap,
+									bool for_fli_prefix)
 {
 Errcode err;
 Vsetfile vsf;
@@ -388,7 +389,7 @@ Chunkparse_data pd;
 	if((err = reopen_tsettings(&vsf)) < Success)
 		return(err);
 
-	if((err = tset_flush(&vsf,TRUE)) < Success)
+	if((err = tset_flush(&vsf, true)) < Success)
 		goto error;
 
 	init_chunkparse(&pd, vsf.xf, VSETFILE_MAGIC, 0, sizeof(Fat_chunk), 0);
@@ -428,7 +429,7 @@ error:
 	return(err);
 }
 
-static Errcode save_settings_file(char *path, Boolean full_defaults)
+static Errcode save_settings_file(char *path, bool full_defaults)
 {
 	Errcode err;
 	XFILE *newxf;
@@ -438,7 +439,7 @@ static Errcode save_settings_file(char *path, Boolean full_defaults)
 		return err;
 
 	err = write_settings_chunk(newxf, VSETFILE_MAGIC, 0,
-			full_defaults ? vb.pencel->cmap : NULL, FALSE);
+			full_defaults ? vb.pencel->cmap : NULL, false);
 	xffclose(&newxf);
 	if (err < Success)
 		pj_delete(path);
@@ -451,7 +452,7 @@ void save_default_settings(void)
 {
 char path[PATH_SIZE];
 	make_file_path(vb.init_drawer,default_name,path);
-	softerr(save_settings_file(path,TRUE),"!%s", "cant_save", path );
+	softerr(save_settings_file(path, true),"!%s", "cant_save", path );
 }
 
 Errcode write_fli_settings(XFILE *xf, SHORT chunk_id)
@@ -464,7 +465,7 @@ Errcode write_fli_settings(XFILE *xf, SHORT chunk_id)
 	if (offset < 0)
 		return (Errcode)offset;
 
-	err = write_settings_chunk(xf, chunk_id, offset, NULL, TRUE);
+	err = write_settings_chunk(xf, chunk_id, offset, NULL, true);
 	if (err < Success)
 		return err;
 
@@ -531,14 +532,15 @@ Vset_path *vp;
 static Errcode
 load_settings_chunk(XFILE *xf, Fat_chunk *id, LONG offset,
 		Vset_flidef *fdef, Cmap *cmap,
-		Boolean load_mucolors, Boolean as_defaults)
+								   bool load_mucolors,
+								   bool as_defaults)
 {
 Errcode err;
 Chunkparse_data pd;
 Tsettings_file *tset;
 Fat_chunk *buf;
 LONG recsize;
-Boolean load_inkstrengths;
+bool load_inkstrengths;
 
 	if(id->version != VSETCHUNK_VERSION)
 		return(Err_version);
@@ -650,7 +652,7 @@ static Errcode load_fli_settings(char *path,Cmap *cmap)
 				continue;
 
 			err = load_settings_chunk(flif.xf, &pd.fchunk,
-					pd.chunk_offset, NULL, NULL, TRUE, FALSE);
+					pd.chunk_offset, NULL, NULL, true, false);
 			break;
 		}
 
@@ -664,8 +666,7 @@ static Errcode load_fli_settings(char *path,Cmap *cmap)
 	return err;
 }
 
-static Errcode load_file_settings(char *path,Vset_flidef *fdef,
-								  Boolean default_reset)
+static Errcode load_file_settings(char *path,Vset_flidef *fdef, bool default_reset)
 /* note this will not corrupt data in *vset unless read and version verify
  * is successful does not re-load settings */
 {
@@ -683,8 +684,7 @@ static Errcode load_file_settings(char *path,Vset_flidef *fdef,
 
 	if (id.type == VSETFILE_MAGIC) {
 		err = load_settings_chunk(xf, &id, 0, fdef,
-				default_reset ? vb.pencel->cmap : NULL,
-				TRUE, default_reset);
+				default_reset ? vb.pencel->cmap : NULL, true, default_reset);
 	}
 	else if (default_reset) {
 		err = Err_bad_magic;
@@ -729,7 +729,7 @@ UBYTE ozoom_open;
 	obframe_ix = vs.bframe_ix; /* and back frame cashe */
 	ozoom_open = vs.zoom_open;
 
-	if((err = load_file_settings(path, NULL, FALSE)) < Success)
+	if((err = load_file_settings(path, NULL, false)) < Success)
 		goto error;
 
 	vs.frame_ix = oframe_ix;
@@ -755,7 +755,7 @@ char sbuf[50];
 						".SET", save_str, SETTINGS_PATH, NULL, 1)) != NULL)
 	{
 		if(overwrite_old(title))
-			softerr(save_settings_file(title,FALSE),"!%s","cant_save",title);
+			softerr(save_settings_file(title, false),"!%s","cant_save",title);
 	}
 }
 

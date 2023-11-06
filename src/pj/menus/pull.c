@@ -177,7 +177,7 @@ cleanup:
 	return(ret);
 }
 
-static Boolean in_pblock(SHORT x,SHORT y,register Pull*p)
+static bool in_pblock(SHORT x,SHORT y,register Pull*p)
 {
 	if (   (icb.sx < x) 
 		|| (icb.sy < y)

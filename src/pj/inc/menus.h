@@ -141,7 +141,7 @@ typedef struct menuhdr {
 	Mugroup *group; /* group node attached to */
 	Dlnode node;	/* node for attachment to group menuhdr list */
 	procmouse_func procmouse; /* mouse processor function */
-	void (*on_showhide)(struct menuhdr *m, Boolean showing); 
+	void (*on_showhide)(struct menuhdr *m, bool showing);
 						/* function to call when menu being shown or hidden */
 	void (*cleanup)(struct menuhdr *mh); /* called on close_menu() */
 	RECT_FIELDS;	/* scaled width, height, x, y in that order */
@@ -188,7 +188,7 @@ typedef struct menuwndo {
 extern SHORT menu_abortkeys[2];
 
 extern int button_keyhit(Menuhdr *mh, Button *mbs, VFUNC prehit);
-extern Boolean is_abortkey(void); /* checks icb.inkey against abortkeys */
+extern bool is_abortkey(void); /* checks icb.inkey against abortkeys */
 extern int check_reqabort(Menuhdr *hdr);
 
 extern Button *hit_button(Button *b, SHORT x, SHORT y);
@@ -197,7 +197,7 @@ extern Button *hit_button(Button *b, SHORT x, SHORT y);
 
 typedef struct qslfmt {
 	void (*format)(void *val,char *buff,void *data);
-	void (*decinc)(void *val,Boolean going_up,void *data);
+	void (*decinc)(void *val, bool going_up,void *data);
 	void (*scale_val)(void *val,USHORT scale,void *data);
 	USHORT (*get_scale)(void *val,void *data);
 } Qslfmt;
@@ -244,8 +244,8 @@ extern Qslfmt qsfmt_short, qsfmt_shortp1; /* p1 adds one to displayed number */
 
 void see_qslider(Button *b);
 void feel_qslider(Button *b);
-Boolean in_left_arrow(Button *slb);
-Boolean in_right_arrow(Button *slb);
+bool in_left_arrow(Button *slb);
+bool in_right_arrow(Button *slb);
 
 
 /* struct for string request field button data This is put in the "data" field
@@ -280,7 +280,7 @@ typedef struct numq {
 #define NUMQ_INIT(val) { val }
 
 void see_numq(Button *b);
-Boolean feel_numq(Button *b);
+bool feel_numq(Button *b);
 
 /* routines to wait on input while re-loading cursor and iostate info as cursor
  * passes over windows or menus work same way as routines in input.c */
@@ -336,9 +336,9 @@ void mh_gclose_code(Menuhdr *mh, LONG code);
 
 void hide_group(Mugroup *mg);
 Errcode show_group(Mugroup *mg);
-Boolean cgroup_hidden(Wscreen *ws);
+bool cgroup_hidden(Wscreen *ws);
 void stack_hide_cgroup(Wscreen *ws);
-Boolean stack_show_cgroup(Wscreen *ws);
+bool stack_show_cgroup(Wscreen *ws);
 
 /* do menu io loops with initial menu and initial button and pull */
 LONG do_menuloop(Wscreen *screen,Menuhdr *menu,Button *initb,
@@ -349,7 +349,7 @@ LONG do_reqloop(Wscreen *screen,Menuhdr *menu,Button *initb,
 /* these are for determining hits in buttons for menu relative x and y **/
 #define ptin_button(b,x,y) ptin_rect((Rectangle*)&((b)->RECTSTART),(x),(y))
 
-Boolean cursin_menu(Menuhdr *m); /* is screen cursor in visible menu? */
+bool cursin_menu(Menuhdr *m); /* is screen cursor in visible menu? */
 
 /* functions for seebg in menus */
 void seebg_none(Menuwndo *m);
@@ -372,9 +372,9 @@ int menu_dopull(Menuhdr *mh); /* this is default if domenu is NULL */
 
 /* flags manipulators */
 
-Boolean set_button_disable(Button *b, Boolean disable);
-void set_mbtab_disables(Button **bt,Boolean disable);
-void draw_button_disable(Button *b,Boolean disable);
+bool set_button_disable(Button *b, bool disable);
+void set_mbtab_disables(Button **bt, bool disable);
+void draw_button_disable(Button *b, bool disable);
 void enable_button(Button *b);
 void disable_button(Button *b);
 #ifdef SLUFFED
@@ -448,7 +448,7 @@ void ccorner_image(Button *b);
 
 extern void change_mode(Button *b);
 extern void hilight(Button *m);
-extern void mb_set_hilite(Button *b, Boolean hilite);
+extern void mb_set_hilite(Button *b, bool hilite);
 extern void mb_hang_chiles_oset(Button *m,SHORT xoset, SHORT yoset);
 extern void hang_children(Button *b);
 extern void bg_hang_children(Button *b);
@@ -509,7 +509,8 @@ extern void mh_draw_group(Menuhdr *mh, void *group);
 /*** stock menu builders ***/
 
 Errcode build_qchoice(Wscreen *s, Menuhdr **pmh, char *header, char **choices, 
-				  	 int ccount, VFUNC *feelers, Boolean hide_on_hit ,
+				  	 int ccount, VFUNC *feelers,
+					  bool hide_on_hit ,
 					 USHORT *flags);
 /* bits for flags parameter to build_qchoice */
 #define QCF_DISABLED (1<<0)
@@ -584,11 +585,11 @@ pullfmt(Menuhdr *mp, int subspace, int charw, int charh,
 
 /* flags manipulators */
 Pull *id_to_pull(Menuhdr *mh, SHORT id);
-void set_pul_disable(Menuhdr *mh, SHORT id, Boolean disable);
+void set_pul_disable(Menuhdr *mh, SHORT id, bool disable);
 void set_pultab_disable(Menuhdr *mh, 
-	SHORT *ids, int id_count, Boolean disable);
-void set_leaf_disable(Menuhdr *mh, SHORT leafid, Boolean disable);
-void pul_xflag(Menuhdr *mh, SHORT id, Boolean xflag);
+	SHORT *ids, int id_count, bool disable);
+void set_leaf_disable(Menuhdr *mh, SHORT leafid, bool disable);
+void pul_xflag(Menuhdr *mh, SHORT id, bool xflag);
 void pultab_xoff(Menuhdr *mh, SHORT *ids, int id_count);
 
 void scale_pull(Menuhdr *mh, int subspace);

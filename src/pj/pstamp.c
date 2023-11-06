@@ -16,12 +16,13 @@ typedef struct GCC_PACKED frame_rec {
 } Frame_rec;
 STATIC_ASSERT(pstamp, sizeof(Frame_rec) == 34);
 
-Boolean pj_frame_has_pstamp(Fli_frame *frame)
+bool pj_frame_has_pstamp(Fli_frame *frame)
 {
 	return(frame[1].type == FLI_PSTAMP);
 }
 static int shrink_uncompfli(Rcel *f,Chunk_id *chunk,int count,int sw,int sh,
-							int dw, int dh, Boolean do_colors)
+							int dw, int dh,
+							bool do_colors)
 
 /* returns compression type of frame found and decompressed. does not do
  * anything for a FLI_COLOR_0 record */
@@ -83,7 +84,7 @@ Errcode err;
 UBYTE tctab[256];
 UBYTE *xlat;
 LONG size;
-Boolean not_a_pstamp;
+bool not_a_pstamp;
 int ctype;
 
 /* first chunck struct for fli frame record */
@@ -169,7 +170,8 @@ Frame_rec *psframe;
 	{
 		if((err = shrink_uncompfli(pscel,(Chunk_id *)&(psframe->ps.data),
 								   1, frec.ps.width, frec.ps.height,
-								   stampw, stamph, FALSE)) < Success)
+								   stampw, stamph,
+									false)) < Success)
 		{
 			goto error;
 		}
@@ -225,18 +227,19 @@ union picfile {
 	Flifile flif;
 	Pic_header pic;
 } pf;
-Boolean isafli;
+
+bool isafli;
 SHORT stampw, stamph;
 Rcel *ramcel = NULL;
 
 	err = pj_fli_open(name, &pf.flif, XREADONLY);
 	if (err >= Success) {
-		isafli = TRUE;
+		isafli = true;
 		stampw = pf.flif.hdr.width;
 		stamph = pf.flif.hdr.height;
 	}
 	else {
-		isafli = FALSE;
+		isafli = false;
 
 		err = xffopen(name, &xf, XREADONLY);
 		if (err < Success)

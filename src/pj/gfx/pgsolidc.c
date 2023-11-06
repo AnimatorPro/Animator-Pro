@@ -2,7 +2,7 @@
 #include "memory.h"
 #include "gfx.ih"
 
-Errcode polygon(void *r,Pixel color,Short_xy *points,int count,Boolean filled)
+Errcode polygon(void *r,Pixel color,Short_xy *points,int count, bool filled)
 {
 Errcode err;
 Poly *pg;
@@ -38,7 +38,7 @@ Sdat sd;
 		err = fill_poly_inside(pg,shline,&sd);
 	else
 		err = Success;
-	hollow_polygon(pg,scline,&sd,TRUE); 
+	hollow_polygon(pg,scline,&sd, true);
 	pj_free(pg);
 	return(err);
 }

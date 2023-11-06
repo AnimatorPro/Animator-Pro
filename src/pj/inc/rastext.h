@@ -98,7 +98,7 @@ Errcode load_font(char *title, Vfont *font, SHORT height, SHORT unzag_flag);
 Errcode fset_spacing(Vfont *f, SHORT spacing, SHORT leading);
 Errcode fget_spacing(Vfont *f, SHORT *spacing, SHORT *leading);
 Errcode fset_height(Vfont *f, SHORT height);
-Errcode fset_unzag(Vfont *f, Boolean unzag);
+Errcode fset_unzag(Vfont *f, bool unzag);
 
 extern void scan_init_vfont(Vfont *f);
 
@@ -129,7 +129,7 @@ int font_cel_height(Vfont *f);
 long fline_width(Vfont *f, char *s);
 int font_ycent_oset(Vfont *f,SHORT height);
 int font_xcent_oset(Vfont *f,char *s,SHORT width);
-Boolean in_font(Vfont *f, int c);
+bool in_font(Vfont *f, int c);
 
 extern void
 blit_for_mode(int tmode,

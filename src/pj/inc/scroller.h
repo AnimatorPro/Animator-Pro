@@ -32,7 +32,8 @@ typedef struct name_scroller {
 	 * rast is a Clipbox of the list_sel button */
 
 	void (*high_1_cel)(Button *list_sel, struct raster *rast,
-			int x, int y, Names *entry, Boolean highlite);
+			int x, int y, Names *entry,
+					   bool highlite);
 
 	/* This feelme will be called by feel_scroll_cels() when a right click
 	 * occurrs over the cel. The is_dhit argument will indicate a second
@@ -78,8 +79,7 @@ typedef struct name_scroller {
 #define SCR_MDHIT	0x02 /* mouse pen double hit */
 #define SCR_ENTER	0x04 /* enter key hit during key mode */
 
-extern Boolean
-qscroller(char *result, char *hailing, Names *items, SHORT lines, SHORT *ipos);
+extern bool qscroller(char *result, char *hailing, Names *items, SHORT lines, SHORT *ipos);
 
 extern Errcode
 build_qscroller(char *result, Wscreen *s, Menuhdr **pmh, char *hailing,
@@ -91,7 +91,7 @@ void draw_scroll_cels(Button *b);
 void scroll_incdown(Button *b);
 void scroll_incup(Button *b);
 void see_scrollbar(Button *b);
-void feel_scrollbar(Button *b, Boolean realtime);
+void feel_scrollbar(Button *b, bool realtime);
 void rt_feel_scrollbar(Button *b);  /* realtime == TRUE */
 void slow_feel_scrollbar(Button *b); /* realtime == FALSE */
 void redraw_scroller(Name_scroller *scr);
@@ -118,7 +118,7 @@ int scroll_names_ysize(Vfont *f, int lines);
 extern Errcode
 go_driver_scroller(char *title, Names *list, Names *initial_entry,
 		Errcode (*pick_entry)(Names *entry, void *dat),
-		Boolean (*show_info)(Names *entry, void *dat), void *dat,
+								  bool (*show_info)(Names *entry, void *dat), void *dat,
 		char **button_texts);
 
 #endif /* SCROLLER_H */

@@ -70,7 +70,7 @@ void opq_hline(const Ink *inky, SHORT x0, SHORT y, SHORT width)
 SET_HLINE(vb.pencel,vs.ccolor,x0,y,width);
 }
 /*********** Start of gradient oriented ink stuff **********************/
-static Pixel dfrom_range(long p,long q,long x,long y, Boolean dither)
+static Pixel dfrom_range(long p,long q,long x,long y, bool dither)
 {
 SHORT color;
 
@@ -403,7 +403,7 @@ if (inky->dither)
 	{
 	true_blend(vb.pencel->cmap->ctab+underc, 
 		&tcolor_src, inky->strength, &rgb);
-	return(bclosest_col(&rgb,COLORS, TRUE));
+	return(bclosest_col(&rgb,COLORS, true));
 	}
 t += underc;
 if (!t->valid)
@@ -411,7 +411,7 @@ if (!t->valid)
 	true_blend(vb.pencel->cmap->ctab+underc, 
 		&tcolor_src, inky->strength, &rgb);
 	t->closest = closestc(&rgb,vb.pencel->cmap->ctab,COLORS);
-	t->valid = TRUE;
+	t->valid = true;
 	}
 return(t->closest);
 }
@@ -443,7 +443,7 @@ if (inky->dither)
 		{
 		true_blend(ctab + *spt++, 
 			&tcolor_src, inky->strength, &rgb);
-		*dpt++ = bclosest_col(&rgb, COLORS,TRUE);
+		*dpt++ = bclosest_col(&rgb, COLORS, true);
 		}
 	}
 else
@@ -457,7 +457,7 @@ else
 			true_blend(ctab + *spt, 
 				&tcolor_src, inky->strength, &rgb);
 			t->closest = closestc(&rgb,ctab,COLORS);
-			t->valid = TRUE;
+			t->valid = true;
 			}
 		spt++;
 		*dpt++ = t->closest;

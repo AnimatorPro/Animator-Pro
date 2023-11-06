@@ -27,7 +27,7 @@ typedef struct tween_cb
 	{
 	Tween_state cur,old;
 	short last_made;
-	Boolean renderable;
+	bool renderable;
 	Minitime_data oflxdata;
 	Pentool *optool;
 	Pixel s_color;
@@ -41,7 +41,7 @@ typedef void (*tti_func)(void);
 static void twe_disable_refresh(void);
 static void twe_enable_refresh(void);
 
-static Boolean tween_got_both(void)
+static bool tween_got_both(void)
 /* Make sure both end polygons of the tween are present */
 {
 return tween_has_data(&twcb->cur);
@@ -53,22 +53,22 @@ static Pixel get_pcolor(Poly *p)
 return(p == &twcb->cur.p0 ? twcb->s_color : twcb->e_color );
 }
 
-static Boolean get_p1_p2(Poly **pp1, Poly **pp2)
+static bool get_p1_p2(Poly **pp1, Poly **pp2)
 /* get the polygons for either end of the tween.  If one is not defined
    then use the same poly for both ends.  If neither defined return
    FALSE */
 {
 if (!tween_got_both())
-	return(FALSE);
+	return(false);
 else
 	{
 	*pp1 = &twcb->cur.p0;
 	*pp2 = &twcb->cur.p1;
-	return(TRUE);
+	return(true);
 	}
 }
 
-static Boolean closest_in_tween(Poly **pp, 
+static bool closest_in_tween(Poly **pp,
 	LLpoint **pl, long *pdist, int x, int y, int end_mode)
 /* Return closest point in selectable polygon */
 {
@@ -77,7 +77,7 @@ LLpoint *lp1, *lp2;
 long d1, d2;
 
 if (!get_p1_p2(&p1,&p2))
-	return(FALSE);
+	return(false);
 lp1 = (end_mode != TWEEN_END ? closest_point(p1, x, y, &d1) : NULL);
 lp2 = (end_mode != TWEEN_START ? closest_point(p2, x, y, &d2) : NULL);
 if (lp1 == NULL)
@@ -102,7 +102,7 @@ GOT_D2:
 	*pdist = d2;
 	goto OUT;
 OUT:
-	return(TRUE);
+	return(true);
 }
 
 static void see_links(Dlheader *llist, Poly *p0, Poly *p1)
@@ -115,7 +115,7 @@ Marqihdr mh;
 int color;
 
 color = PTCOL;
-cinit_marqihdr(&mh,color,color,TRUE);
+cinit_marqihdr(&mh,color,color, true);
 cl0 = p0->clipped_list;
 cl1 = p1->clipped_list;
 for (link = (Tween_link *)(llist->tails_prev);
@@ -278,10 +278,10 @@ switch (vs.tween_end)
 		twcb->last_made = !twcb->last_made;
 		break;
 	case TWEEN_START:
-		twcb->last_made = FALSE;
+		twcb->last_made = false;
 		break;
 	case TWEEN_END:
-		twcb->last_made = TRUE;
+		twcb->last_made = true;
 		break;
 	}
 }
@@ -348,11 +348,11 @@ static void tween_clear(void)
 if (tween_save_undo()<Success)
 	return;
 trash_tween_state(&twcb->cur);
-twcb->last_made = TRUE;
+twcb->last_made = true;
 redraw_both_ends();
 }
 
-static int rev_ix(int ix, int pcount, Boolean closed)
+static int rev_ix(int ix, int pcount, bool closed)
 /* return index if poly were reversed */
 {
 if (closed)
@@ -422,7 +422,7 @@ if (p != NULL)
 	}
 }
 
-static Poly *query_end(Boolean saveit)
+static Poly *query_end(bool saveit)
 /* Ask user which end of the tween he's referring to. */
 {
 static char *keys[] = { NULL, "st", "end", "esc", NULL };
@@ -452,10 +452,10 @@ char *path;
 Poly *p;
 char sbuf[50];
 
-	if ((p = query_end(TRUE)) == NULL)
+	if ((p = query_end(true)) == NULL)
 		return;
 	if ((path = vset_get_filename(stack_string("save_shape", sbuf),
-						".PLY",save_str,POLY_PATH,NULL,TRUE)) != NULL)
+						".PLY",save_str,POLY_PATH,NULL, true)) != NULL)
 	{
 		if(overwrite_old(path))
 			save_poly(path, p);
@@ -469,10 +469,10 @@ char *path;
 Poly *p;
 char sbuf[50];
 
-if ((p = query_end(FALSE)) == NULL)
+if ((p = query_end(false)) == NULL)
 	return;
 if ((path = vset_get_filename(stack_string("load_shape", sbuf),
-					".PLY",load_str,POLY_PATH,NULL,FALSE)) != NULL)
+					".PLY",load_str,POLY_PATH,NULL, false)) != NULL)
 	{
 	if (tween_save_undo()>=Success)
 		{
@@ -596,19 +596,19 @@ rub_move_poly(poly, get_pcolor(poly),&dx,&dy);
 redraw_both_ends();
 }
 
-static Boolean init_2p_mpl(Mpl_2p *mp)
+static bool init_2p_mpl(Mpl_2p *mp)
 /* make up data structure to feed polygon rub-mover/sizer out of
    our tween polys... */
 {
 if (!get_p1_p2(&mp->polys[0], &mp->polys[1]))
-	return(FALSE);
+	return(false);
 mp->mpl.polys = mp->polys;
 mp->mpl.dit_colors = mp->dit_colors;
 mp->mpl.dot_colors = mp->dot_colors;
 mp->mpl.pcount = 2;
 mp->dit_colors[0] = mp->dot_colors[0] = twcb->s_color;
 mp->dit_colors[1] = mp->dot_colors[1] = twcb->e_color;
-return(TRUE);
+return(true);
 }
 
 static void tti_mtween(void)
@@ -790,13 +790,13 @@ static tti_func tti_vectors[] =
 	tti_link,	/* link */
 	};
 
-Boolean got_tween(void)
+bool got_tween(void)
 /* return whether tween files are saved. */
 {
 return(pj_exists(tween_name));
 }
 
-static Boolean tween_renderable(void)
+static bool tween_renderable(void)
 /* returns whether should grey out 'render' option */
 {
 return(twcb->renderable);
@@ -1050,7 +1050,7 @@ static SHORT notween_pulltab[] =
 	SHA_SAV_PUL,
 	SHA_REV_PUL,
 	};
-Boolean notween = !tween_got_both();
+bool notween = !tween_got_both();
 
 set_pul_disable(mh, TWE_REN_PUL, !tween_renderable() || notween);
 set_pul_disable(mh, SHA_USE_PUL, !pj_exists(poly_name));
@@ -1092,7 +1092,7 @@ pul_xflag(mh, OPT_COM_PUL, vs.ado_complete);
 pultab_xoff(mh, twtool_pulltab, Array_els(twtool_pulltab));
 if (!tween_got_both() && vs.tween_tool >= TTI_MPOINT)
 	vs.tween_tool = TTI_POLY;
-pul_xflag(mh, twtool_pulltab[vs.tween_tool], TRUE);
+pul_xflag(mh, twtool_pulltab[vs.tween_tool], true);
 }
 
 
@@ -1151,22 +1151,21 @@ static void twe_enable_refresh(void)
 	flxtime_data.draw_overlays = tween_redraw_with_data;
 	add_color_redraw(&twe_color_rn);
 }
-static Boolean tween_menu_keys(void)
+static bool tween_menu_keys(void)
 {
  	if(check_toggle_abort())
-		return(TRUE);
+		return(true);
 	if (common_header_keys())
-		return(TRUE);
+		return(true);
 	if(hit_undo_key())
 	{
 		tween_swap_undo();
-		return(TRUE);
+		return(true);
 	}
-	return(FALSE);
+	return(false);
 }
 
-void tween_menu(
-	Boolean renderable	/* grey out render button? */
+void tween_menu(bool renderable	/* grey out render button? */
 	)	
 /* entry point to tween menu */
 {
@@ -1200,7 +1199,7 @@ void *oredo;
 	set_curptool(&tween_pen_tool);
 	load_tween_state();
 	init_tween_state(&twcb->old);
-	twcb->last_made = TRUE;
+	twcb->last_made = true;
 	twcb->renderable = renderable;
 	if (tween_save_undo()<Success)
 		goto OUT;

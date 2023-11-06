@@ -432,7 +432,7 @@ static Errcode multi_fli_clip(char* tempname,
 							  char* fliname,
 							  Flicel** pfcel,
 							  Rectangle* r,
-							  Boolean render_only)
+							  bool render_only)
 {
 	Errcode err;
 	Clipceldat cd;
@@ -653,7 +653,7 @@ Errcode clip_cel(void)
 		}
 
 		if (err >= Success) {
-			err = multi_fli_clip(cel_name, cel_fli_name, &thecel, &bounds, TRUE);
+			err = multi_fli_clip(cel_name, cel_fli_name, &thecel, &bounds, true);
 			if (oframe_ix == vs.frame_ix)
 				goto error;
 		}
@@ -687,7 +687,7 @@ void clip_cel1(void)
 	clip_cel();
 }
 
-static Errcode cel_from_rect(Rectangle* rect, Boolean render_only)
+static Errcode cel_from_rect(Rectangle* rect, bool render_only)
 {
 	Errcode err;
 
@@ -709,7 +709,7 @@ Errcode cut_out_cel(void)
 
 	err = cut_out_rect(&rect);
 	if (err >= Success) {
-		err = cel_from_rect(&rect, FALSE);
+		err = cel_from_rect(&rect, false);
 	}
 
 	return err;
@@ -818,7 +818,7 @@ Errcode lasso_cel(void)
 	Rcel* rc = NULL;
 	Rcel clipcel;
 	Lasso_dat ldat;
-	Boolean oclear;
+	bool oclear;
 	LONG lbufsize;
 
 	flx_clear_olays(); /* undraw cels cursors etc */
@@ -916,10 +916,10 @@ out:
  * does not apply rotation to the dimensions.  If width or height is
  * inverted (negative) this means the cel is reversed on this axis.
  * Note that an Srect is signed for width and height */
-Boolean fcel_stretchsize(Flicel* cel, Srect* cr)
+bool fcel_stretchsize(Flicel* cel, Srect* cr)
 {
 	Rcel* ccel;
-	Boolean ret;
+	bool ret;
 
 	ccel	   = cel->rc;
 	cr->width  = ccel->width;
@@ -930,14 +930,14 @@ Boolean fcel_stretchsize(Flicel* cel, Srect* cr)
 	if (cel->cd.stretch.x) {
 		cr->width += cel->cd.stretch.x;
 		cr->x = cel->cd.cent.x - (cr->width >> 1);
-		ret	  = TRUE;
+		ret	  = true;
 	} else
-		ret = FALSE;
+		ret = false;
 
 	if (cel->cd.stretch.y) {
 		cr->height += cel->cd.stretch.y;
 		cr->y = cel->cd.cent.y - (cr->height >> 1);
-		ret	  = TRUE;
+		ret	  = true;
 	}
 	return (ret);
 }
@@ -946,9 +946,9 @@ Boolean fcel_stretchsize(Flicel* cel, Srect* cr)
  * data in the flicel->cd has been altered builds polygon and sets
  * position dependent variables returns TRUE if cel is transformed
  * FALSE if not */
-Boolean maybe_ref_flicel_pos(Flicel* cel)
+bool maybe_ref_flicel_pos(Flicel* cel)
 {
-	Boolean ret;
+	bool ret;
 	ULONG cksum;
 	Srect cr;
 
@@ -994,7 +994,7 @@ Boolean maybe_ref_flicel_pos(Flicel* cel)
 	return (ret);
 }
 
-Boolean refresh_flicel_pos(Flicel* cel)
+bool refresh_flicel_pos(Flicel* cel)
 {
 	cel->pos_cksum = -1;
 	return (maybe_ref_flicel_pos(cel));

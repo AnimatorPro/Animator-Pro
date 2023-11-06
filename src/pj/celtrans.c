@@ -12,7 +12,7 @@
 #include "pentools.h"
 #include "rastrans.h"
 
-Boolean isin_fcel(Flicel *fcel,SHORT x,SHORT y)
+bool isin_fcel(Flicel *fcel,SHORT x,SHORT y)
 {
 	return(isin_bpoly(&fcel->xf,fcel->rc,x,y));
 }
@@ -189,7 +189,7 @@ Errcode err;
 Short_xy cent;
 Short_xy cent1;
 Short_xyz theta1;
-Boolean do_move;
+bool do_move;
 SHORT ltheta;
 SHORT otheta;
 SHORT ttheta;

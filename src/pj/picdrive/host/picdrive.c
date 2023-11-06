@@ -94,7 +94,7 @@ int pdr_get_suffi(Pdr *pd, char *buf)
 	return sprintf(buf, "%.*s",
 			(int)sizeof(pd->default_suffi)-1, pd->default_suffi);
 }
-Boolean pdr_best_fit(Pdr *pd, Anim_info *spec)
+bool pdr_best_fit(Pdr *pd, Anim_info *spec)
 /*****************************************************************************
  *
  ****************************************************************************/
@@ -121,7 +121,7 @@ Errcode err;
 	if((err = (*(pd->create_image_file))(pd,path,pifile,spec)) >= Success)
 	{
 		(*pifile)->pd = pd;
-		(*pifile)->write_mode = TRUE;
+		(*pifile)->write_mode = true;
 	}
 	return(err);
 }
@@ -140,7 +140,7 @@ Errcode err;
 	if((err = (*(pd->open_image_file))(pd,path,pifile,ainfo)) >= Success)
 	{
 		(*pifile)->pd = pd;
-		(*pifile)->write_mode = FALSE;
+		(*pifile)->write_mode = false;
 
 		if(ainfo != NULL && (ainfo->width == 0 || ainfo->height == 0))
 		{

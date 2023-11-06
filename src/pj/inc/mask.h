@@ -11,7 +11,7 @@ struct button;
 extern struct bitmap *mask_rast;
 
 /* freem.c */
-extern Boolean mask_is_present(void);
+extern bool mask_is_present(void);
 
 /* mask.c. */
 extern void free_mask(struct bitmap *mask);

@@ -1,7 +1,7 @@
 #include "commonst.h"
 #include "reqlib.h"
 
-Boolean varg_yes_no_box(char *formats,char *text,va_list args)
+bool varg_yes_no_box(char *formats,char *text,va_list args)
 {
 char *yesno[3];
 int ret;

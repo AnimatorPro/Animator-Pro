@@ -4,8 +4,7 @@
 
 Errcode pj_fli_read_next(char *fname,
 						Flifile *flif,
-						struct rcel *fscreen,
-						Boolean colors)
+						struct rcel *fscreen, bool colors)
 /*************************************************************************
  * Read in next frame from a fli onto a Rcel (which may be displayable or
  * not).  This is the main function to use if you with to step through a

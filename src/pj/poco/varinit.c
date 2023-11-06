@@ -342,7 +342,7 @@ void po_var_init(Poco_cb *pcb, Exp_frame *e, Symbol *var, SHORT frame_type)
 {
 	InitControl ctl;
 	Type_info	*ti = var->ti;
-	Boolean 	fixup_needed = FALSE;
+	bool fixup_needed = false;
 	int 		fixup_offset = 0;
 	int 		*fixword;
 	Exp_frame	*exp, *next;
@@ -360,7 +360,7 @@ void po_var_init(Poco_cb *pcb, Exp_frame *e, Symbol *var, SHORT frame_type)
 	 *----------------------------------------------------------------------*/
 
 	if (po_is_array(ti) && ti->sdims[ti->comp_count-1].l == 0) {
-		fixup_needed = TRUE;
+		fixup_needed = true;
 	}
 
 	/*------------------------------------------------------------------------

@@ -2,7 +2,7 @@
 #include "commonst.h"
 #include "ftextf.h"
 
-Boolean varg_qreq_number(SHORT *val,SHORT min, SHORT max,
+bool varg_qreq_number(SHORT *val,SHORT min, SHORT max,
 					     Errcode (*update)(void *data, SHORT val),
 					     void *ud_dat,char *formats,char *text,
 					     va_list args)
@@ -17,8 +17,7 @@ char *tbuf = sbuf;
 	okcan[1] = cancel_str;
 	okcan[2] = NULL;
 
-	if((err = get_formatted_ftext(&tbuf,sizeof(sbuf),formats,text,args,
-								  FALSE )) < Success)
+	if((err = get_formatted_ftext(&tbuf,sizeof(sbuf),formats,text,args, false)) < Success)
 	{
 		goto error;
 	}

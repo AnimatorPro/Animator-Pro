@@ -45,18 +45,18 @@ Errcode pj_open_temprast(Bytemap *rr,SHORT width,SHORT height,
 Errcode err;
 Rasthdr spec;
 long bpr;
-Boolean is_bitmap;
+bool is_bitmap;
 
 	if(pdepth == 1)
 	{
 		bpr = Bitmap_bpr(width);
-		is_bitmap = TRUE;
+		is_bitmap = true;
 	}
 	else
 	{
 		pdepth = 8;
 		bpr = Bytemap_bpr(width);
-		is_bitmap = FALSE;
+		is_bitmap = false;
 	}
 
 	spec.pdepth = pdepth;

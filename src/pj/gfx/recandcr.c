@@ -1,6 +1,6 @@
 #include "rectang.h"
 
-Boolean and_cliprects(register Cliprect *a,register Cliprect *b,Cliprect *out)
+bool and_cliprects(register Cliprect *a,register Cliprect *b,Cliprect *out)
 
 /* returns 1 if rectangles intersect and out is loaded with union.
  * If no intersection occurrs returns 0. */

@@ -31,7 +31,7 @@
 /*****************************************************************************
  * is_all_white - Decide whether string is all whitespace.
  ****************************************************************************/
-static Boolean po_is_all_white(register char* buf)
+static bool po_is_all_white(register char* buf)
 {
 	while (isspace(*buf))
 		++buf;
@@ -43,8 +43,8 @@ static Boolean po_is_all_white(register char* buf)
  ****************************************************************************/
 char* po_get_csource_line(Poco_cb* pcb)
 {
-	Boolean splice	   = FALSE;			/* Are we splicing lines?		*/
-	Boolean mlcomment  = FALSE;			/* Are we doing ml comment? 	*/
+	bool splice	   = false;			/* Are we splicing lines?		*/
+	bool mlcomment  = false;			/* Are we doing ml comment? 	*/
 	int buflen		   = SZTOKE - 1;	/* Max logical line size.		*/
 	int icount		   = 0;				/* Significant character counter*/
 	Token* t		   = &pcb->t;		/* -> Token struct in pcb		*/
@@ -124,15 +124,15 @@ char* po_get_csource_line(Poco_cb* pcb)
 						icount = 0; /* no significant chars on line */
 						continue;	/* No delim, read next physline */
 					} else
-						mlcomment = FALSE; /* Found delim, end of ml state */
+						mlcomment = false; /* Found delim, end of ml state */
 				}
 
 				if ('\\' == buf[icount - 1]) /* If the last char on the line */
 				{							 /* is a backslash, splice the	*/
 					--icount;				 /* next physical line onto this */
-					splice = TRUE;			 /* line, overlaying the \ char. */
+					splice = true;			 /* line, overlaying the \ char. */
 				} else
-					splice = FALSE;
+					splice = false;
 			}
 
 		} while (splice || mlcomment || icount == 0);
@@ -154,15 +154,15 @@ char* po_get_csource_line(Poco_cb* pcb)
 			c = *subbuf;
 
 			if (c == '"' || c == '\'') {
-				Boolean found_end = FALSE;
+				bool found_end = false;
 
-				while (found_end == FALSE) {
+				while (found_end == false) {
 					++subbuf;
 					if (NULL == (subbuf = strchr(subbuf, c)))
 						po_say_fatal(pcb, "strings cannot span lines without continuation (\\)");
 					if (!('\\' == subbuf[-1] && '\\' != subbuf[-2])) {
 						++subbuf;
-						found_end = TRUE;
+						found_end = true;
 					}
 				} /* END while (found_end == FALSE) */
 
@@ -198,7 +198,7 @@ char* po_get_csource_line(Poco_cb* pcb)
 							*subbuf = '\0';		   /* We have a multi-line     */
 							buflen -= strlen(buf); /* comment, set up to splice*/
 							buf		  = subbuf;	   /* more physical lines onto */
-							mlcomment = TRUE;	   /* current logical line.	*/
+							mlcomment = true;	   /* current logical line.	*/
 							goto ENDLOOP;
 						} else {
 							subbuf -= 2;
@@ -218,7 +218,7 @@ char* po_get_csource_line(Poco_cb* pcb)
 
 		} /* END while slash or quote found in buffer */
 	ENDLOOP:;
-	} while (TRUE == mlcomment || NULL == po_skip_space(buf = lbuf));
+	} while (true == mlcomment || NULL == po_skip_space(buf = lbuf));
 
 #ifdef DEBUG_JGETS
 	printf("po_get_csource_line: '%s'\n", lbuf);

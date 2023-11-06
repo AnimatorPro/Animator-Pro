@@ -28,13 +28,13 @@ typedef struct xformspec {
 void init_xformspec(Xformspec *xf);
 void load_rect_minmax(Rectangle *rect,Xformspec *xf);
 void load_poly_minmax(Xformspec *xf);
-Boolean isin_bpoly(Xformspec *xf,Rcel *src_cel,SHORT x,SHORT y);
+bool isin_bpoly(Xformspec *xf,Rcel *src_cel,SHORT x,SHORT y);
 
 Errcode raster_transform(Rcel *src_cel,Rcel *dscreen,Xformspec *xf,
 						 Errcode (*putline)(void *plinedat, Pixel *line,
 						 					Coor x, Coor y, Ucoor width), 
 						 void *plinedat,
-						 Boolean erase_last,
+  bool erase_last,
 #ifdef RASTRANS_C /*******************************************/
 						 /* these are only needed if erase_last is true */
 

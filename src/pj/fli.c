@@ -154,7 +154,7 @@ char pdr_name[PATH_SIZE];
 
 	hide_mp();
 
-	if((err = find_pdr_loader(flicname, TRUE, &ainfo, 
+	if((err = find_pdr_loader(flicname, true, &ainfo,
 							  pdr_name,vb.pencel)) < Success)
 	{
 		goto reshow_out; 
@@ -586,7 +586,7 @@ if ((bix = vs.bframe_ix) != 0)
 			{
 			if (pj_exists(bscreen_name) )
 				{
-				if(load_pic(bscreen_name, screen, bix,TRUE) >= 0) 
+				if(load_pic(bscreen_name, screen, bix, true) >= 0)
 					{
 					return(bix);
 					}
@@ -607,7 +607,7 @@ static void advance_bscreen(Rcel *screen, int ix, int destix)
 {
 	if (ix >= vs.bframe_ix+4 && ix > destix-4)
 	{
-		if(save_pic(bscreen_name, screen,ix,TRUE) < 0 )
+		if(save_pic(bscreen_name, screen,ix, true) < 0 )
 			vs.bframe_ix = 0;
 		else
 			vs.bframe_ix = ix;

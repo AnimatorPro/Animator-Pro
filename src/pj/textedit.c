@@ -215,7 +215,7 @@ Marqihdr mh;
 		}
 }
 
-static void dtextcel(Text_file *gf, Boolean doborder)
+static void dtextcel(Text_file *gf, bool doborder)
 {
 	if (gf->text_buf != NULL)
 	{
@@ -480,7 +480,7 @@ error:
 #endif
 }
 
-static Boolean past_window(Text_file *gf)
+static bool past_window(Text_file *gf)
 /* return 1 if cursor is now below text window */
 {
 char *p, *curp;
@@ -526,7 +526,7 @@ if (gf->wstart == NULL || gf->tcursor_p < gf->wstart - gf->text_buf)
 	}
 }
 
-static Boolean xseek(Text_file *gf, char *p, SHORT x)
+static bool xseek(Text_file *gf, char *p, SHORT x)
 /* move cursor to closest x position possible in line p */
 /* Returns FALSE if at EOF */
 {
@@ -542,14 +542,14 @@ if ((pp = nextline(gf, p)) != NULL)
 		{
 		gf->tcursor_p = pp - gf->text_buf - 1;
 		}
-	return(TRUE);
+	return(true);
 	}
 else	/* if on last line position at end of file and let clip_cursorp clean
            up any overshoot. */
 	{
 	gf->tcursor_p = p - gf->text_buf + x;
 	clip_cursorp(gf);
-	return(FALSE);
+	return(false);
 	}
 }
 
@@ -717,7 +717,7 @@ static void insert_at_cp(Text_file *gf, char *buf,  long count)
 	{
 		if (!gf->read_only)
 			{
-			gf->is_changed = TRUE;
+			gf->is_changed = true;
 			gf->nlstart = nextline(gf, gf->lstart);
 			back_copy_mem(gf->text_buf+gf->tcursor_p, 
 						  gf->text_buf+gf->tcursor_p+count,
@@ -767,7 +767,7 @@ if (gf->read_only || gf->text_size <= 0 || dcount <= 0)
 count = gf->text_size - gf->tcursor_p;
 if (count > 0)
 	{
-	gf->is_changed = TRUE;
+	gf->is_changed = true;
 	gf->nlstart = nextline(gf, gf->lstart);
 	pj_copy_bytes(gf->text_buf+gf->tcursor_p+dcount, gf->text_buf+gf->tcursor_p,
 		count);
@@ -1303,7 +1303,7 @@ int inside;
   	} 
 }
 
-Boolean edit_text_file(Text_file *gf)
+bool edit_text_file(Text_file *gf)
 {
 
 	for (;;)
@@ -1319,7 +1319,7 @@ Boolean edit_text_file(Text_file *gf)
 	return(1);
 }
 
-static Boolean undraw_twin(Text_file *gf, Boolean got_border)
+static bool undraw_twin(Text_file *gf, bool got_border)
 
 /* returns 1 if there was text in the window 0 if not */
 {
@@ -1364,7 +1364,7 @@ SHORT istext;
 	return(istext);
 }
 
-Errcode get_rub_twin(Text_file *gf, Boolean cutout)
+Errcode get_rub_twin(Text_file *gf, bool cutout)
 {
 Errcode err;
 Marqihdr mh;
@@ -1410,11 +1410,11 @@ static void move_twin(Text_file *gf)
 {
 SHORT ix, iy;
 SHORT lx, ly;
-Boolean notext;
+bool notext;
 
 	ix = gf->twin.x;
 	iy = gf->twin.y;
-	notext = !undraw_twin(gf, TRUE);
+	notext = !undraw_twin(gf, true);
 	for (;;)
 	{
 		lx = icb.mx;

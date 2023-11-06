@@ -63,7 +63,7 @@ extern Errcode init_marqi_ctool(struct pentool *pt);
 extern void exit_marqi_ctool(struct pentool *pt);
 extern void cm_erase_toolcel(void);
 extern void cm_restore_toolcel(void);
-extern Errcode reset_celmenu(int toolid, Boolean startup);
+extern Errcode reset_celmenu(int toolid, bool startup);
 extern void enable_toolcel_redraw(void);
 extern void disable_toolcel_redraw(void);
 extern void go_cel_menu(void);
@@ -80,13 +80,13 @@ extern Errcode init_paste_ctool(struct pentool *pt);
 extern Errcode cel_paste_ptfunc(struct pentool *pt, Wndo *w);
 
 /* celpull.c */
-extern Boolean do_celpull(Menuhdr *mh);
+extern bool do_celpull(Menuhdr *mh);
 extern void cm_selit(Menuhdr *mh, SHORT hitid);
 extern void save_celpos_undo(void);
 extern void cel_cancel_undo(void);
 
 /* celtrans.c */
-extern Boolean isin_fcel(struct flicel *fcel, SHORT x, SHORT y);
+extern bool isin_fcel(struct flicel *fcel, SHORT x, SHORT y);
 extern void vstretch_cel(int toolmode);
 extern void vrotate_cel(int toolmode);
 extern Errcode inc_thecel(void);

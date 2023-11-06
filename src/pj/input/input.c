@@ -54,7 +54,7 @@ void wait_a_jiffy(int j)
 	wait_millis(pj_uscale_by(j,1000,70));
 }
 
-Boolean is_pressure(void)
+bool is_pressure(void)
 {
 	return(icb.reads_pressure);
 }
@@ -148,7 +148,7 @@ Raster *screen = (Raster *)(icb.input_screen);
 /***** function to set "hot" key function returns pointer to old hot key
  	   function *****/
 
-FUNC set_hotkey_func(Boolean (*do_hot_key)(Global_icb *gicb))
+FUNC set_hotkey_func(bool (*do_hot_key)(Global_icb *gicb))
 {
 FUNC ohot;
 
@@ -214,17 +214,18 @@ void undisplay_cursor(void)
 	HIDECURSOR();
 }
 
-Boolean hide_mouse(void)
+bool hide_mouse(void)
 {
-Boolean was_on = icb.mset.on;
+	bool was_on = icb.mset.on;
 	icb.mset.on = 0;
 	if(icb.mcurs_up > 0 && was_on)
 		UNDRAWCURSOR();
 	return(was_on);
 }
-Boolean show_mouse(void)
+
+bool show_mouse(void)
 {
-Boolean was_on = icb.mset.on;
+	bool was_on = icb.mset.on;
 	icb.mset.on = 1;
 	if(icb.mcurs_up > 0 && !was_on)
 		DRAWCURSOR();
@@ -341,9 +342,10 @@ void _pop_icb(Icb_savebuf *pushed)
 	restore_icb_state(pushed);
     icb.push = pushed;
 }
-Boolean _poll_input(Boolean do_cursor)
+
+bool _poll_input(bool do_cursor)
 {
-Boolean ret;
+	bool ret;
 Icb_savebuf recurs;
 
 	icb.push = &recurs; /* set to current stack frame */
@@ -488,10 +490,10 @@ mouse_moved:
 
 done_false:
 	check_waitasks();
-	ret = FALSE;
+	ret = false;
 	goto done;
 done_true:
-	ret = TRUE;
+	ret = true;
 done:
 
 	if(icb.input_eaten) /* remove it from global data */
@@ -513,9 +515,9 @@ done:
 	return(ret);
 }
 
-Boolean check_input(ULONG flags)
+bool check_input(ULONG flags)
 {
-Boolean ret;
+	bool ret;
 
 	/* will return TRUE if anything in flags is tested to have happend since
 	 * last check or wait input */
@@ -538,7 +540,7 @@ Boolean ret;
 
 void wait_input(ULONG waitflags)
 {
-Boolean do_cursor;
+	bool do_cursor;
 
 	if(WANTDRAWCURS)
 	{
@@ -578,7 +580,7 @@ Errcode mac_vsync_wait_input(ULONG waitflags, ULONG recflags, SHORT fields)
  * will wait at least one vsync */
 {
 Errcode err;
-Boolean do_cursor;
+bool do_cursor;
 SHORT omposx;
 SHORT omposy;
 
@@ -639,7 +641,7 @@ static Errcode _wait_timeout(ULONG timeout_1000)
 {
 Errcode ret;
 ULONG lt, t;
-Boolean do_cursor;
+bool do_cursor;
 
 #ifdef INPUT_MACROS
 	BYTE macro_mode;
@@ -661,7 +663,7 @@ Boolean do_cursor;
 	if((macro_mode = icb.macro_mode) == MAKE_MACRO)
 		icb.macro_mode &= ~MACRO_OK;
 
-	used_one_macro = FALSE;
+	used_one_macro = false;
 #endif /* INPUT_MACROS */
 
 	for (;;)
@@ -771,7 +773,7 @@ int anim_wait_input(ULONG waitflags, ULONG forceflags,
 int ret;
 int fcount;
 int cursor_was_up;
-Boolean do_cursor;
+bool do_cursor;
 
 	icb.waithit = waitflags;
 

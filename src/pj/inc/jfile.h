@@ -15,7 +15,7 @@
 
 /** basic low level dos file calls found in the syslib **/
 
-Boolean pj_exists(const char *path);
+bool pj_exists(const char *path);
 Errcode pj_ioerr(void);
 
 void remove_path_name(char *path);
@@ -35,7 +35,7 @@ Errcode change_dir(const char *name);
 long pj_file_size(const char *path);
 Errcode pj_is_fixed(const char *device);
 Errcode pj_pathdev_is_fixed(char *path);
-Boolean is_directory(const char *path);
+bool is_directory(const char *path);
 
 Errcode pj_write_zeros(XFILE *xf, LONG oset, ULONG bytes);
 Errcode copy_in_file(XFILE *xf,LONG bytes,LONG soff,LONG doff);
@@ -61,8 +61,8 @@ struct fndata;
 
 /* set the 'DTA' area for directory search */
 extern void pj_dset_dta(struct fndata *fn);
-extern Boolean pj_dfirst(char *pattern, int attributes);
-extern Boolean pj_dnext(void);
+extern bool pj_dfirst(char *pattern, int attributes);
+extern bool pj_dnext(void);
 
 /* PRIVATE_CODE */ #endif
 

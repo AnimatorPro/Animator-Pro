@@ -15,12 +15,12 @@ extern struct button zpan_cycle_group;
 extern void zpan_ccycle_redraw(struct button *hanger);
 
 /* zoom.c */
-extern Boolean check_zoom_drag(void);
-extern Boolean curs_in_zoombox(void);
+extern bool check_zoom_drag(void);
+extern bool curs_in_zoombox(void);
 extern void get_zoomcurs_flixy(struct short_xy *xy);
 extern void close_zwinmenu(void);
 extern Errcode zoom_handtool(void);
-extern Boolean y_needs_zoom(Coor y);
+extern bool y_needs_zoom(Coor y);
 extern void upd_zoom_dot(Pixel c, Coor x, Coor y);
 
 extern void zoom_put_dot(struct raster *r, Pixel c, Coor x, Coor y);
@@ -43,10 +43,10 @@ zoom_blitrect(struct raster *src, Coor sx, Coor sy,
 extern void rect_zoom_it(Coor x, Coor y, Coor w, Coor h);
 extern void go_zoom_settings(void);
 extern void zoom_it(void);
-extern Boolean zoom_disabled(void);
+extern bool zoom_disabled(void);
 extern void toggle_zoom(struct button *m);
 extern void ktoggle_zoom(void);
-extern Boolean zoom_hidden(void);
+extern bool zoom_hidden(void);
 extern void unzoom(void);
 extern void rezoom(void);
 extern void init_zoom(void);

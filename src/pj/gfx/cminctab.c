@@ -1,6 +1,6 @@
 #include "cmap.h"
 
-Boolean in_ctable(Rgb3 *rgb, Rgb3 *ctab, int count)
+bool in_ctable(Rgb3 *rgb, Rgb3 *ctab, int count)
 {
 	while (--count >= 0)
 	{

@@ -78,7 +78,7 @@ else
 	return(fcb->head.h2.tf_xsize + v->spacing);
 }
 
-static Boolean ami_in_font(Vfont *v, int c)
+static bool ami_in_font(Vfont *v, int c)
 {
 Afcb *fcb = v->font;
 
@@ -199,7 +199,7 @@ if (err < Success)
 intel_swap(fcb->loc, (int)rsz>>1);
 if (fcb->head.h2.tf_charspace != 0)	/* got spacing data */
 	{
-	fcb->is_prop = TRUE;
+	fcb->is_prop = true;
 	xfseek(xf, fcb->head.h2.tf_charspace+AMIF_SEEK_OFF, XSEEK_SET);
 	rsz = (long)char_count * sizeof(SHORT);
 	if ((fcb->spacing = pj_malloc(rsz)) == NULL)
@@ -218,7 +218,7 @@ if (fcb->head.h2.tf_charspace != 0)	/* got spacing data */
 	}
 if (fcb->head.h2.tf_charkern != 0)
 	{
-	fcb->is_kerned = TRUE;
+	fcb->is_kerned = true;
 	xfseek(xf, fcb->head.h2.tf_charkern+AMIF_SEEK_OFF, XSEEK_SET);
 	rsz = (long)char_count * sizeof(SHORT);
 	if ((fcb->kerning = pj_malloc(rsz)) == NULL)

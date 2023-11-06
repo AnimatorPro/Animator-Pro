@@ -185,7 +185,7 @@ done:
 error:
 	return(err);
 }
-Errcode load_pic(char *name,Rcel *rcel,LONG check_id, Boolean do_colors)
+Errcode load_pic(char *name,Rcel *rcel,LONG check_id, bool do_colors)
 
 /* if do_colors is FALSE it may load a raster without a cmap */
 {

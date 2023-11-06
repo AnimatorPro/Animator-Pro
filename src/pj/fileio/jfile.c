@@ -93,7 +93,7 @@ pj_rename(const char *old, const char *new)
 }
 #endif
 
-Boolean pj_exists(const char *title)
+bool pj_exists(const char *title)
 /* Does file exist? Boolean does not handle errors now */
 {
 	Errcode err;
@@ -101,10 +101,10 @@ Boolean pj_exists(const char *title)
 
 	err = xffopen(title, &xf, XREADONLY);
 	if (err < Success)
-		return FALSE;
+		return false;
 
 	xffclose(&xf);
-	return TRUE;
+	return true;
 }
 
 long pj_file_size(const char *title)
@@ -136,7 +136,7 @@ char dc;
 	return(1);
 }
 
-Boolean is_directory(const char *path)
+bool is_directory(const char *path)
 {
 #if defined(__WATCOMC__)
 	unsigned attributes;
@@ -151,6 +151,6 @@ Boolean is_directory(const char *path)
 	if (stat(path, &s) == 0)
 		return S_ISDIR(s.st_mode);
 	else
-		return FALSE;
+		return false;
 #endif
 }

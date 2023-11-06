@@ -316,7 +316,7 @@ Errcode err;
 	return(err);
 }
 
-static Boolean is_transp_ink(void)
+static bool is_transp_ink(void)
 {
 return(vl.ink->ot.id == tlc_INKID || vl.ink->ot.id == tsp_INKID);
 }
@@ -521,7 +521,7 @@ Errcode err;
 	set_centrad_gradrect(r,cenx,ceny,(diam+1)>>1);
 	start_abort_atom();
 	err = doval(cenx,ceny,diam,r->aspect_dx, r->aspect_dy,
-			    NULL, NULL, poll_render_hline, r, TRUE);
+			    NULL, NULL, poll_render_hline, r, true);
 	free_render_cashes();
 	return(errend_abort_atom(err));
 }
@@ -566,7 +566,7 @@ int render_rect(Rectangle *rect)
 		   rect->x+rect->width-1,rect->y+rect->height-1));
 }
 #endif /* SLUFFED */
-Errcode render_beveled_box(Rectangle *r, int bevel, Boolean filled)
+Errcode render_beveled_box(Rectangle *r, int bevel, bool filled)
 {
 Poly poly;
 LLpoint pts[8];
@@ -605,7 +605,7 @@ int i;
 	poly.pt_count = 8;
 	poly.clipped_list = pts;
 	poly.polymagic = POLYMAGIC;
-	render_poly(&poly, filled, TRUE);
+	render_poly(&poly, filled, true);
 
 	return Success;
 }
@@ -711,7 +711,7 @@ render_line_with_data(SHORT x1, SHORT y1, SHORT x2, SHORT y2, void *data)
 	render_line(x1, y1, x2, y2);
 }
 
-Errcode render_opoly(Poly *p, Boolean closed)
+Errcode render_opoly(Poly *p, bool closed)
 {
 LLpoint *this;
 
@@ -734,7 +734,8 @@ SHORT gradrad;
 		return(err);
 	doval(cenx,ceny,diam, r->aspect_dx, r->aspect_dy,
 			vs.use_brush ? render_brush_with_data : render_dot, vb.pencel,
-			NULL, NULL, FALSE);
+			NULL, NULL,
+		  false);
 	free_render_cashes();
 	return(Success);
 }
@@ -775,7 +776,7 @@ UBYTE *pixpt;
 	{
 		pj__get_hseg(vb.pencel,pixbuf,rect->x,y,rect->width);
 		pixpt = pixbuf;
-		in = FALSE;
+		in = false;
 		for (x=rect->x; x<maxx; ++x)
 		{
 			if (in)
@@ -787,7 +788,7 @@ UBYTE *pixpt;
 					{
 						goto end_abort_error;
 					}
-					in = FALSE;
+					in = false;
 				}
 			}
 			else
@@ -795,7 +796,7 @@ UBYTE *pixpt;
 				if (maptable[*pixpt++])
 				{
 					xstart = x;
-					in = TRUE;
+					in = true;
 				}
 			}
 		}
@@ -854,7 +855,7 @@ Rldat rld;
 		return(err);
 	start_abort_atom();
 	set_xy_gradrect(xf->mmax.x,xf->mmax.y,xf->mmax.MaxX,xf->mmax.MaxY);
-	err = raster_transform(cel,vb.pencel,xf,rblit_line,&rld,FALSE);
+	err = raster_transform(cel,vb.pencel,xf,rblit_line,&rld, false);
 	free_brender_cashes();
 	return(errend_abort_atom(err));
 }

@@ -126,7 +126,7 @@ static Redraw_node twemenu_rn = {
 	NULL,
 	NEW_CCOLOR };
 
-static void twemenu_on_showhide(Menuhdr *mh,Boolean showing)
+static void twemenu_on_showhide(Menuhdr *mh, bool showing)
 /* also used in paste menu which uses same common buttons */
 {
 	(void)mh;

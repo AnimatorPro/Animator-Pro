@@ -90,7 +90,7 @@ Errcode clip_celrect(Rcel* src, Rectangle* rect, Rcel** clip)
 }
 
 /* Move an rcel while minimizing horrible screen flashing.  */
-static void delta_move_rcel(Rcel* c, SHORT dx, SHORT dy, Tcolxldat* txl, Boolean fit_cel)
+static void delta_move_rcel(Rcel* c, SHORT dx, SHORT dy, Tcolxldat* txl, bool fit_cel)
 {
 	Celblit blit = get_celmove(fit_cel);
 	SHORT ox, oy;
@@ -110,13 +110,13 @@ static void delta_move_rcel(Rcel* c, SHORT dx, SHORT dy, Tcolxldat* txl, Boolean
 
 /* moves and rcel over the vb.pencel using the undo buffer to refresh,
  * undo must be saved before this is called */
-Errcode move_rcel(Rcel* rc, Boolean fit_cel, Boolean one_color)
+Errcode move_rcel(Rcel* rc, bool fit_cel, bool one_color)
 {
 	Errcode err;
 	SHORT lx, ly, firstx, firsty;
 	Tcolxldat xld;
 	Pixel fitab[256];
-	Boolean need_remap = fit_cel || one_color;
+	bool need_remap = fit_cel || one_color;
 	Celblit blit	   = get_celblit(need_remap);
 
 	xld.tcolor = vs.inks[0];
@@ -312,7 +312,7 @@ static void celabuxlblit(Rcel* src,
 	  (Raster*)src, sx, sy, (Raster*)dest, dx, dy, w, h, src_b, dx, dy, ubli_xlatline, xld);
 }
 
-Celblit get_celmove(Boolean cfit)
+Celblit get_celmove(bool cfit)
 {
 	if (vs.render_under) {
 		if (cfit)
@@ -329,7 +329,7 @@ Celblit get_celmove(Boolean cfit)
 	return celblit;
 }
 
-Celblit get_celblit(Boolean cfit)
+Celblit get_celblit(bool cfit)
 {
 	if (vs.render_under) {
 		if (cfit)
@@ -346,7 +346,7 @@ Celblit get_celblit(Boolean cfit)
 	return celblit;
 }
 
-Procline get_celprocline(Boolean cfit)
+Procline get_celprocline(bool cfit)
 {
 	if (vs.render_under) {
 		if (cfit)

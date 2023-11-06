@@ -565,14 +565,14 @@ static int loaded = 0;
 	return(&safe_cbox_lib);
 }
 
-Boolean pj_clipbox_make(Clipbox *cb, Raster *r,
+bool pj_clipbox_make(Clipbox *cb, Raster *r,
 					 Coor x,Coor y,Coor width,Coor height)
 
 /* makes a clip box usable, returns 0 if clipped out 0 if some part of it
  * is on the raster puts a null lib in cbox if clipped out may be called
  * repeatedly for moving the box */
 {
-Boolean outside = FALSE;
+	bool outside = false;
 
 	*((Rasthdr *)cb) = *((Rasthdr *)r);
 
@@ -581,7 +581,7 @@ Boolean outside = FALSE;
 	{
 		if(width <= -x)
 			goto clipout;
-		outside = TRUE;
+		outside = true;
 	}
 	else if( x > r->width)
 		goto clipout;
@@ -590,7 +590,7 @@ Boolean outside = FALSE;
 	{
 		if(height <= -y)
 			goto clipout;
-		outside = TRUE;
+		outside = true;
 	}
 	else if( y > r->height)
 		goto clipout;

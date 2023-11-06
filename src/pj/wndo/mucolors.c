@@ -7,7 +7,7 @@
 /* min difference color threshold */
 #define SEE_T (24*24)
 
-Boolean visible_mucolors(Cmap *cmap, Pixel *mucolors)
+bool visible_mucolors(Cmap *cmap, Pixel *mucolors)
 /* Are colors distinct enough from each other? */
 {
 int i, j;
@@ -37,8 +37,9 @@ Rgb3 mycolors[NUM_MUCOLORS];
 	}
 	return(1);
 }
-static void f_colors(Wscreen *s, Cmap *cmap, Pixel *mucolors, 
-				     Boolean set_lasts, Boolean force_unique)
+static void f_colors(Wscreen *s, Cmap *cmap, Pixel *mucolors,
+					 bool set_lasts,
+					 bool force_unique)
 {
 int i;
 Pixel ignores[NUM_MUCOLORS];
@@ -61,18 +62,18 @@ Pixel ignores[NUM_MUCOLORS];
 		++mucolors;
 	}
 }
-Boolean has_menu_colors(Cmap *cmap, Wscreen *s)
+bool has_menu_colors(Cmap *cmap, Wscreen *s)
 /* returns true if the colormap has a set of visible menu colors for the 
  * screen ideal settings */
 {
 Pixel mc_colors[NUM_MUCOLORS];
 
-	f_colors(s, cmap, mc_colors, FALSE, FALSE);
+	f_colors(s, cmap, mc_colors, false, false);
 	return(visible_mucolors(cmap, mc_colors));
 }
-static void f_mucolors(Wscreen *s,Boolean force_unique)
+static void f_mucolors(Wscreen *s, bool force_unique)
 {
-	f_colors(s, s->viscel->cmap, s->mc_colors, TRUE, force_unique);
+	f_colors(s, s->viscel->cmap, s->mc_colors, true, force_unique);
 }
 static void check_mucmap(Wscreen *s)
 {
@@ -103,13 +104,14 @@ Rgb3 *colors;
 	{
 		colors = &(s->viscel->cmap->ctab[FIRST_MUCOLOR]);
 		pj_set_colors(s->viscel, FIRST_MUCOLOR, NUM_MUCOLORS, (UBYTE *)colors);
-		f_mucolors(s,TRUE);
+		f_mucolors(s, true);
 		++s->mc_csetid; /* assume it has changed */
 	}
 	s->mc_alt = s->mc_lastalt = 0;
 	s->flags &= ~(WS_MUCOLORS_UP);
 }
-Boolean lastmuc_changed(Wscreen *s)
+
+bool lastmuc_changed(Wscreen *s)
 {
 Rgb3 *this;
 Rgb3 *last;
@@ -135,7 +137,7 @@ int i;
 	}
 	return(0);
 }
-Boolean find_mucolors(Wscreen *ws)
+bool find_mucolors(Wscreen *ws)
 
 /* returns true and installs window refresh task if color set was changed */
 {
@@ -144,7 +146,7 @@ UBYTE oalt;
 
 	oalt = ws->mc_alt;
 	copy_mem(ws->mc_colors,ocolors,sizeof(ocolors));
-	f_mucolors(ws,FALSE);
+	f_mucolors(ws, false);
 	check_mucmap(ws);
 	if(memcmp(&ocolors,&ws->mc_colors,sizeof(ocolors))
 		|| oalt != ws->mc_alt )
@@ -162,7 +164,7 @@ void try_mucolors(Wscreen *s)
 		find_mucolors(s);
 	else
 	{
-		f_mucolors(s,TRUE);
+		f_mucolors(s, true);
 		++s->mc_csetid; /* Just to make sure */
 	}
 }
@@ -186,7 +188,7 @@ SHORT was_up;
 
 static int rtask_func(Waitask *wt)
 {
-Boolean need_colors;
+	bool need_colors;
 register Wndo *w;
 Wscreen *ws;
 Dlnode *next;
@@ -195,7 +197,7 @@ Dlnode *next;
 
 	/* get new color set */
 
-	need_colors = TRUE;
+	need_colors = true;
 
 	/* redraw all windows that need it */
 
@@ -211,7 +213,7 @@ Dlnode *next;
 		if(need_colors) /* don't do if done already */
 		{
 			find_mucolors(ws); 
-			need_colors = FALSE;
+			need_colors = false;
 		}
 
 		if(w->mc_csetid != ws->mc_csetid)

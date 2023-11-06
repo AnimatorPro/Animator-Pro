@@ -60,13 +60,13 @@ x[1] = swap;
 #undef x
 }
 
-static Boolean spec_best_fit(Anim_info *ainfo)
+static bool spec_best_fit(Anim_info *ainfo)
 /*****************************************************************************
  * Tell host that we can only write 8 bit-a-pixel images,
  * fixed width/height.
  ****************************************************************************/
 {
-Boolean nofit;
+bool nofit;
 
 nofit = (ainfo->depth == 8);
 ainfo->depth = 8;

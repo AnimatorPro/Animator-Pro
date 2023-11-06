@@ -17,7 +17,7 @@
 
 Rastlib *pj_get_grc_lib(void)
 {
-static Boolean loaded = FALSE;
+static bool loaded = false;
 static Rastlib grc_lib;
 
 	if(!loaded)

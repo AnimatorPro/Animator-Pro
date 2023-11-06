@@ -28,7 +28,7 @@
 static void pal_feel_qslider(Button *m);
 static void sliders_from_ccolor_with_menuwndo(Menuwndo *m);
 static void see_color_sliders(void);
-static Boolean visible_cmap(void);
+static bool visible_cmap(void);
 static void ccolor_from_sliders(void *data, Button *b);
 static void change_hls_mode(Button *m);
 static void pal_menu_back(Button *m);
@@ -335,7 +335,7 @@ static Redraw_node palette_rn = {
 	NULL,
 	NEW_CCOLOR|NEW_CMAP };
 
-static void pmu_on_showhide(Menuhdr *mh,Boolean showing)
+static void pmu_on_showhide(Menuhdr *mh, bool showing)
 {
 	(void)mh;
 
@@ -660,7 +660,7 @@ Rgb3 omc[NUM_MUCOLORS];
 Rgb3 pure_white = {255,255,255};
 Rgb3 pure_black = {0,0,0};
 
-static Boolean visible_cmap(void)
+static bool visible_cmap(void)
 /* Are colors distinct enough from each other? */
 {
 	return(visible_mucolors(vb.screen->wndo.cmap,vb.screen->mc_colors));
@@ -840,7 +840,7 @@ int obun;
 		}
 	}
 }
-static void set_ccycle(Boolean newcyc)
+static void set_ccycle(bool newcyc)
 {
 	if((vs.cycle_draw = newcyc) != 0)
 	{
@@ -873,9 +873,9 @@ static void scale_palette_menu(Rscale *scale)
 	scale_powell_palette(scale);
 }
 
-static Boolean pal_dopull(Menuhdr *mh)
+static bool pal_dopull(Menuhdr *mh)
 {
-Boolean cclip_isnt;
+	bool cclip_isnt;
 
 	cclip_isnt= !pj_exists(cclip_name);
 

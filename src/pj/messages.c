@@ -70,7 +70,7 @@ void truncated(char *filename)
 
 	soft_continu_box("!%s","truncated",filename);
 }
-Boolean overwrite_old(char *name)
+bool overwrite_old(char *name)
 /* Make sure use knows they're overwriting an old file and give 'em a
    chance to abort it. */
 {
@@ -78,7 +78,8 @@ Boolean overwrite_old(char *name)
 		return(1);
 	return(soft_yes_no_box("!%s", "over_old", name ));
 }
-Boolean really_delete(char *name)
+
+bool really_delete(char *name)
 {
 	return(soft_yes_no_box("!%s","really_del", name));
 }

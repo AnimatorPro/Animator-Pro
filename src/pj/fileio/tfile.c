@@ -9,10 +9,10 @@
  *  Returns true if device is one of those
  *  non-alphabetic temporary or ram devices.
  */
-Boolean is_tdrive(const char* device)
+bool is_tdrive(const char* device)
 {
 	if (!pj_assert(device != NULL))
-		return FALSE;
+		return false;
 
 	switch (device[0]) {
 		case TDEV_MED:
@@ -21,7 +21,7 @@ Boolean is_tdrive(const char* device)
 			return (device[1] == DEV_DELIM);
 
 		default:
-			return FALSE;
+			return false;
 	}
 }
 

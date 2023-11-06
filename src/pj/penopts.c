@@ -309,7 +309,7 @@ Option_tool *tool;
 	}
 
 	if((err = load_option_names((Option_tool *)ptool_list, "tool_texts",
-						         &tool_ss, TRUE)) < Success)
+						         &tool_ss, true)) < Success)
 	{
 		goto error;	
 	}

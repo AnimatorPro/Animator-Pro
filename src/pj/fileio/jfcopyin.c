@@ -9,7 +9,7 @@ copy_in_file(XFILE *xf, LONG bytes, LONG soff, LONG doff)
 char sbuf[1024];	/* stack buffer */
 char *buf;
 LONG blocksize;
-Boolean backwards;
+bool backwards;
 Errcode err;
 LONG fsize;
 LONG expand;

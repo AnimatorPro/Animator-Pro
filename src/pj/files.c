@@ -393,7 +393,7 @@ char *path;
 char buf[50];
 
 if ((path = vset_get_filename(stack_string("save_path",buf),
-						   ".PLY",save_str,OPTPATH_PATH,NULL,TRUE)) != NULL)
+						   ".PLY",save_str,OPTPATH_PATH,NULL, true)) != NULL)
 	{
 	if (overwrite_old(path))
 		{
@@ -421,7 +421,7 @@ char *path;
 char buf[50];
 
 if ((path = vset_get_filename(stack_string("save_poly",buf),
-							".PLY",save_str,POLY_PATH,NULL,TRUE)) != NULL)
+							".PLY",save_str,POLY_PATH,NULL, true)) != NULL)
 	{
 	if (overwrite_old(path))
 		{
@@ -463,7 +463,7 @@ char *path;
 char buf[50];
 
 if ((path = vset_get_filename(stack_string("save_tween",buf), 
-							".TWE",save_str,TWEEN_PATH,NULL,TRUE)) != NULL)
+							".TWE",save_str,TWEEN_PATH,NULL, true)) != NULL)
 	{
 	if (overwrite_old(path))
 		po_save_tween(path);
@@ -593,7 +593,7 @@ char buf1[50], buf2[16];
 
 static void enable_saves(void)
 {
-Boolean disable_save = FALSE;
+	bool disable_save = false;
 
 	switch (vs.file_type)
 	{
@@ -612,7 +612,7 @@ Boolean disable_save = FALSE;
 			disable_save = !pj_exists(text_name);
 			break;
 		case FTP_FONT: /* font */
-			disable_save = TRUE;
+			disable_save = true;
 			break;
 		case FTP_POLY: /* polygon */
 			disable_save = !pj_exists(poly_name);

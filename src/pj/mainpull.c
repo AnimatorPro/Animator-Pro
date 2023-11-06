@@ -16,7 +16,7 @@
 #include "resource.h"
 #include "wildlist.h"
 
-Boolean do_mainpull(Menuhdr *mh)
+bool do_mainpull(Menuhdr *mh)
 /* set disable flags and goes to do the pull */
 {
 static SHORT cel_pulltab[] = {
@@ -118,7 +118,7 @@ int count;
 Names *pocs = NULL;
 Pull *prev = id_to_pull(mh, prev_id);
 
-build_wild_list(&pocs, resource_dir, "*.POC", FALSE);
+build_wild_list(&pocs, resource_dir, "*.POC", false);
 prep_poc_list(pocs);
 if ((count = new_pull_list(&prev->next,
 		pocs, 10, prev_id)) < Success)

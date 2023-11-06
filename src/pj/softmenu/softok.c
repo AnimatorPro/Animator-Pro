@@ -81,7 +81,7 @@ do	{
 			}
 		}
 	swork->line_pos = tokenize_word(swork->line_pos, pt, NULL, &slen,
-		&smt->ttype, FALSE);
+		&smt->ttype, false);
 	} while (swork->line_pos == NULL);
 smt->tline = swork->fline;
 switch (smt->ttype)

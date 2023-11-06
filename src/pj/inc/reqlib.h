@@ -47,12 +47,12 @@ extern Errcode soft_continu_box(char *key, ...);
 extern Errcode
 varg_continu_box(char *formats, char *text, va_list args, char *etext);
 
-Boolean yes_no_box(char *fmt,...);
-Boolean soft_yes_no_box(char *key,...);
-Boolean varg_yes_no_box(char *formats, char *text, va_list args);
+bool yes_no_box(char *fmt,...);
+bool soft_yes_no_box(char *key,...);
+bool varg_yes_no_box(char *formats, char *text, va_list args);
 
 Errcode multi_box(char **choices, char *fmt,...);
-Boolean soft_multi_box(char **keys, char *symbol, ...);
+bool soft_multi_box(char **keys, char *symbol, ...);
 
 /* plase wait window that self removes next time input is waited on
  * unless cleanup is called explicitly */
@@ -63,39 +63,39 @@ extern Errcode varg_put_wait_box(char *formats, char *text, va_list args);
 
 /*** canned special purpose requestor menus ******/
 
-Boolean qreq_number(short *inum,short min,short max,char *hailing,...);
-Boolean soft_qreq_number(short *inum,short min,short max,char *key,...);
+bool qreq_number(short *inum,short min,short max,char *hailing,...);
+bool soft_qreq_number(short *inum,short min,short max,char *key,...);
 
-extern Boolean
-vsoft_qreq_number(short *inum, short min, short max, char *key, va_list args,
+extern bool vsoft_qreq_number(short *inum, short min, short max, char *key, va_list args,
 		Errcode (*update)(void *data, SHORT val), void *uddat);
 
 /* if update returns < success the requestor is canceled */
 
-Boolean ud_qreq_number(short *inum,short min,short max,
+bool ud_qreq_number(short *inum,short min,short max,
 		Errcode (*update)(void *data, SHORT val), void *vfuncdat,
 		char *hailing,...);
-Boolean soft_ud_qreq_number(short *inum,short min,short max,
+bool soft_ud_qreq_number(short *inum,short min,short max,
 		Errcode (*update)(void *data, SHORT val), void *vfuncdat,
 		char *key,...);
-Boolean clip_soft_qreq_number(short *inum,short min,short max,
+bool clip_soft_qreq_number(short *inum,short min,short max,
 		Errcode (*update)(void *data, SHORT val), void *vfuncdat,
 		char *key,...);
-Boolean varg_qreq_number(SHORT *val,SHORT min, SHORT max,
+bool varg_qreq_number(SHORT *val,SHORT min, SHORT max,
 					     Errcode (*update)(void *data, SHORT val),
 					     void *ud_dat, char *formats, char *text,
 					     va_list args);
 
-Boolean qreq_string(char *strbuf,int bufsize,char *hailing,...);
-Boolean soft_qreq_string(char *strbuf,int bufsize,char *key,...);
-Boolean varg_qreq_string(char *strbuf, int bufsize,
+bool qreq_string(char *strbuf,int bufsize,char *hailing,...);
+bool soft_qreq_string(char *strbuf,int bufsize,char *key,...);
+bool varg_qreq_string(char *strbuf, int bufsize,
 						 char *formats, char *text, va_list args);
 
 int qchoicef(USHORT *qc_flags, char *fmt,...);
 int soft_qchoice(USHORT *qc_flags, char *key,...);
 
 char *pj_get_filename(char *prompt, char *suffi, char *button,
-					  char *inpath, char *outpath, Boolean force_suffix,
+					  char *inpath, char *outpath,
+					  bool force_suffix,
 					  SHORT *scroll_top_name, char *wildcard);
 
 /**** device button allocator *****/

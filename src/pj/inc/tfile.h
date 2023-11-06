@@ -10,7 +10,7 @@
 #define TRD_CHAR '#'
 #define TDEV_ID 27		/* one past MS-DOS */
 
-extern Boolean is_tdrive(const char *dev);
+extern bool is_tdrive(const char *dev);
 extern Errcode set_temp_path(const char *new_path);
 
 #endif

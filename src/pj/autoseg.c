@@ -131,7 +131,7 @@ GETOUT:
 	if (err >= Success)
 	{
 		dirty_strokes += tr_frames;
-		dirty_file = TRUE;
+		dirty_file = true;
 	}
 	return(err); /* note: always successful unles rvec or flic expand fails */
 }

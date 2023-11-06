@@ -53,7 +53,7 @@ Errcode spiral_tool(Pentool *pt, Wndo *w)
 		free_polypoints(&working_poly);
 	else
 	{
-		err = finish_polyt(FALSE,FALSE);
+		err = finish_polyt(false, false);
 		save_redo_spiral();
 	}
 	return(err);

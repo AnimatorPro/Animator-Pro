@@ -62,8 +62,7 @@ return(new);
 }
 
 
-static
-Boolean resize_line_data(Poco_cb *pcb, Line_data *ld, int nalloc)
+static bool resize_line_data(Poco_cb *pcb, Line_data *ld, int nalloc)
 /*****************************************************************************
  * resize line data offsets & line numbers areas to hold given # of elements.
  ****************************************************************************/
@@ -79,10 +78,10 @@ po_freemem(ld->offsets);
 ld->offsets = no;
 ld->lines = nl;
 ld->alloc = nalloc;
-return(TRUE);
+return(true);
 }
 
-Boolean po_compress_line_data(Poco_cb *pcb,Line_data *ld)
+bool po_compress_line_data(Poco_cb *pcb,Line_data *ld)
 /*****************************************************************************
  * shrink the line data offsets/lines area to the right size.
  ****************************************************************************/
@@ -99,7 +98,7 @@ if (ld->count == 0)
 	{
 	poc_gentle_freemem(ld->offsets);
 	ld->offsets = NULL;
-	return TRUE;
+	return true;
 	}
 else
 	return(resize_line_data(pcb, ld, ld->count));
@@ -117,7 +116,7 @@ if (ld != NULL)
 	}
 }
 
-Boolean po_add_line_data(Poco_cb *pcb, Line_data *ld, long offset, long line)
+bool po_add_line_data(Poco_cb *pcb, Line_data *ld, long offset, long line)
 /*****************************************************************************
  * add a new line number/code offset pair to a line_data struct.
  * if we are out of room, we resize the data area to twice its current size.
@@ -129,19 +128,19 @@ int count;
 if (ld == NULL) /* added to watch out for trouble with the new concept of */
 	{			/* not tying line_data structs to FTY_STRUCT poco_frames. */
 	po_say_internal(pcb, "trying to add using NULL ptr in po_add_line_data");
-	return FALSE;
+	return false;
 	}
 #endif
 
 if (ld->alloc <= (count = ld->count))
 	{
 	if (!resize_line_data(pcb, ld, ld->alloc<<1))
-		return(FALSE);
+		return(false);
 	}
 ld->offsets[count] = offset;
 ld->lines[count] = line;
 ld->count+=1;
-return(TRUE);
+return(true);
 }
 
 long find_line(Line_data *ld, long offset)
@@ -194,7 +193,7 @@ while (fuf != NULL)
 return(fuf);
 }
 
-static Boolean is_char_string_type(Type_info *ti)
+static bool is_char_string_type(Type_info *ti)
 /*****************************************************************************
  * indicate whether symbol is an array of or pointer to char (ie, a string).
  ****************************************************************************/
@@ -216,11 +215,11 @@ for (count = 0; count < 50; count++)
 	if (c == 0)
 		break;
 	if (c < 7)
-		return(FALSE);
+		return(false);
 	}
 if (count == 50)
-	return(FALSE);
-return(TRUE);
+	return(false);
+return(true);
 }
 
 static void print_param(FILE *f, void *param, int offset, Type_info *ti)

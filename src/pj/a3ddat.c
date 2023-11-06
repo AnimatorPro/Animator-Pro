@@ -1469,7 +1469,7 @@ void see_size_ratio(Button *m)
 {
 char buf[12];
 int over, under;
-Boolean sign = FALSE;
+bool sign = false;
 
 	switch (vs.ado_size)
 	{
@@ -1489,7 +1489,7 @@ Boolean sign = FALSE;
 	}
 	if (over < 0)	
 		{
-		sign = TRUE;
+		sign = true;
 		over = -over;
 		}
 	if (under < 0)

@@ -199,8 +199,8 @@ Errcode load_fli_fcel(char* flipath, char* tempname, char* celfli_name, Flicel**
 	Flicel* fc;
 	LONG chunksize;
 	Chunkparse_data pd;
-	Boolean make_flicopy;
-	Boolean found_celdata;
+	bool make_flicopy;
+	bool found_celdata;
 	char device[DEV_NAME_LEN];
 
 	if ((err = alloc_fcel(pfc)) < Success)
@@ -240,14 +240,14 @@ Errcode load_fli_fcel(char* flipath, char* tempname, char* celfli_name, Flicel**
 		}
 	}
 
-	found_celdata = FALSE;
+	found_celdata = false;
 	init_chunkparse(&pd, flif.xf, FCID_PREFIX, sizeof(Fli_head), 0, 0);
 	while (get_next_chunk(&pd)) {
 		if (pd.type == FP_CELDATA) {
 			if (pd.fchunk.size == sizeof(Celdata)) {
 				/* try to read it */
 				pd.error	  = read_parsed_chunk(&pd, &fc->cd, -1);
-				found_celdata = TRUE;
+				found_celdata = true;
 			}
 			break;
 		}
@@ -373,14 +373,14 @@ error:
 }
 
 /* if cbuf is null it will allocate one! */
-Errcode gb_seek_fcel_frame(Flicel* fc, SHORT frame, Fli_frame* cbuf, Boolean force_read)
+Errcode gb_seek_fcel_frame(Flicel* fc, SHORT frame, Fli_frame* cbuf, bool force_read)
 {
 	int i;
 	Errcode err;
 	LONG frame_oset;
 	Rcel* rc;
-	Boolean was_closed;
-	Boolean allocd = FALSE;
+	bool was_closed;
+	bool allocd = false;
 
 	if (fc->flags & FCEL_RAMONLY) /* no seeking on ram cel frames */
 		return (Success);
@@ -426,7 +426,7 @@ Errcode gb_seek_fcel_frame(Flicel* fc, SHORT frame, Fli_frame* cbuf, Boolean for
 	if (cbuf == NULL) {
 		if ((err = pj_fli_cel_alloc_cbuf(&cbuf, fc->rc)) < Success)
 			goto error;
-		allocd = TRUE;
+		allocd = true;
 	}
 
 	frame_oset = xffseek_tell(fc->flif.xf, frame_oset, XSEEK_SET);
@@ -436,7 +436,7 @@ Errcode gb_seek_fcel_frame(Flicel* fc, SHORT frame, Fli_frame* cbuf, Boolean for
 	}
 
 	while (i++ != frame) {
-		if ((err = pj_fli_read_uncomp(NULL, &fc->flif, rc, cbuf, TRUE)) < Success)
+		if ((err = pj_fli_read_uncomp(NULL, &fc->flif, rc, cbuf, true)) < Success)
 			goto error;
 
 		if (i >= fc->flif.hdr.frame_count) {
@@ -472,18 +472,18 @@ LONG fcel_cbuf_size(Flicel* fc)
 	return (pj_fli_cbuf_size(fc->rc->width, fc->rc->height, fc->rc->cmap->num_colors));
 }
 
-Boolean fcel_needs_seekbuf(Flicel* fc)
+bool fcel_needs_seekbuf(Flicel* fc)
 {
 	if ((fc->flags & FCEL_RAMONLY) ||
 		(fc->frame_loaded == fc->cd.cur_frame && fc->flif.hdr.frame_count <= 1)) {
-		return (FALSE);
+		return (false);
 	}
-	return (TRUE);
+	return (true);
 }
 
 Errcode seek_fcel_frame(Flicel* fc, SHORT frame)
 {
-	return (gb_seek_fcel_frame(fc, frame, NULL, FALSE));
+	return (gb_seek_fcel_frame(fc, frame, NULL, false));
 }
 
 /* increment flicel frame */
@@ -638,7 +638,7 @@ Errcode pdr_load_any_flicel(char* path, char* tempname, char* fliname, Flicel** 
 	Anim_info ainfo;
 	char pdr_name[PATH_SIZE];
 
-	if ((err = find_pdr_loader(path, TRUE, &ainfo, pdr_name, vb.pencel)) < Success)
+	if ((err = find_pdr_loader(path, true, &ainfo, pdr_name, vb.pencel)) < Success)
 		goto error;
 
 	if (is_fli_pdr_name(pdr_name)) {

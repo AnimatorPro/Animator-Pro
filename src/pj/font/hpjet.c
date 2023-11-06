@@ -367,7 +367,7 @@ else
 	}
 }
 
-static Boolean hpjet_in_font(Vfont *v, int c)
+static bool hpjet_in_font(Vfont *v, int c)
 {
 Hfcb *fcb = v->font;
 

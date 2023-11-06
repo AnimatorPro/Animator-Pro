@@ -91,7 +91,7 @@ WndoInit wi;
 	return(err);
 }
 
-static void do_fliborder(Wndo *w,Boolean drawit)
+static void do_fliborder(Wndo *w, bool drawit)
 /* Do the actual drawing of the rectangle surrounding the active
  * area of the screen (the pencel.)
  */

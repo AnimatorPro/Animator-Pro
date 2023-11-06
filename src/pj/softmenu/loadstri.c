@@ -8,7 +8,7 @@
 #include "softmenu.h"
 #include "util.h"
 
-static int text_to_dstring(Swork *swork, Dstring *ds, Boolean is_text)
+static int text_to_dstring(Swork *swork, Dstring *ds, bool is_text)
 /* Read in a quoted string from file into Dstring.   If is_text parameter
  * is TRUE, then all quoted string will be concatenated into one string.
  * if FALSE then the strings are concatenated with 0 chars between them. 
@@ -69,7 +69,7 @@ int slen;
 int i;
 
 dstring_init(&ds);
-if ((err = count = text_to_dstring(swork, &ds, FALSE)) < Success)
+if ((err = count = text_to_dstring(swork, &ds, false)) < Success)
 	goto OUT;
 ptlen = (count+1)*sizeof(char *);
 if ((sbuf = pj_malloc(ds.blen + ptlen)) == NULL)
@@ -145,7 +145,7 @@ Smu_symbol *sym;
 		}
 	dstring_init(&ds);
 	swork_init(&rswork, sm->xf, sym->foff, sym->fline);
-	if ((err = text_to_dstring(&rswork, &ds, TRUE)) >= Success)
+	if ((err = text_to_dstring(&rswork, &ds, true)) >= Success)
 		{
 		if (ds.blen > len)		/* Too big for buffer, copy most of it
 								 * in, but return error. */
@@ -183,7 +183,7 @@ Smu_symbol *sym;
 		return(err);
 	dstring_init(&ds);
 	swork_init(&rswork, sm->xf, sym->foff, sym->fline);
-	if ((err = text_to_dstring(&rswork, &ds, TRUE)) < Success)
+	if ((err = text_to_dstring(&rswork, &ds, true)) < Success)
 		goto error;
 	err = dstring_get_clone(&ds,ptext);
 error:
@@ -218,7 +218,7 @@ Smu_symbol *sym;
 		return(err);
 	dstring_init(&ds);
 	swork_init(&rswork, sm->xf, sym->foff, sym->fline);
-	if ((err = text_to_dstring(&rswork, &ds, FALSE)) < Success)
+	if ((err = text_to_dstring(&rswork, &ds, false)) < Success)
 		goto error;
 
 	if(err <= 0)

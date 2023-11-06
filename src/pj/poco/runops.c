@@ -115,7 +115,7 @@ static Poco_run_env* pe;
 /* variables for runops tracing */
 C_frame* po_run_protos;
 FILE* po_trace_file;
-Boolean po_trace_flag = FALSE;
+bool po_trace_flag = false;
 #endif /* DEVELOPMENT */
 
 /* libffi helpers */
@@ -137,7 +137,7 @@ Boolean po_trace_flag = FALSE;
 static int nofunc(void* d)
 {
 	(void)d;
-	return FALSE;
+	return false;
 }
 
 /*****************************************************************************
@@ -201,7 +201,7 @@ Errcode poco_cont_ops(void* code_pt, Pt_num* pret, int arglength, ...)
 		{
 			extern C_frame* po_run_protos;
 			extern FILE* po_trace_file;
-			extern Boolean po_trace_flag;
+			extern bool po_trace_flag;
 			if (po_trace_flag) {
 				po_disasm(po_trace_file, ip, po_run_protos);
 			}

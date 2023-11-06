@@ -155,7 +155,7 @@ static Errcode write_buf(XFILE *f, void *buf, int size)
 
 /*--------------------------STRING SECTION---------------------------------*/
 
-static Boolean suffix_in(char *string, char *suff)
+static bool suffix_in(char *string, char *suff)
 /* Return TRUE if string ends with suff. */
 {
 	string += strlen(string) - strlen(suff);
@@ -487,7 +487,8 @@ static Errcode read_rle(XFILE *f, BITMAPINFOHEADER *info, Rcel *screen)
 	{ 
 		unsigned char first,second; 
 	} pair; 	/* Read file pair at a time. */
-	Boolean is_nibbled = (info->biCompression == BI_RLE4);
+
+	bool is_nibbled = (info->biCompression == BI_RLE4);
 	int32_t height = info->biHeight;
 	int32_t width = info->biWidth;
 	int32_t even_width = NEXT_EVEN(width); /* Width rounded up to next even #. */
@@ -781,17 +782,17 @@ typedef struct bmp_image_file
 	enum Info_type info_type;
 } Bmp_image_file;
 
-static Boolean is_open = 0;						/* lock data structures
+static bool is_open = 0;						/* lock data structures
 											     * to prevent double open.
 												 * etc. */
 
 
-static Boolean spec_best_fit(Anim_info *ainfo)
+static bool spec_best_fit(Anim_info *ainfo)
 /* Tell host that we can only write 8 bit-a-pixel images,  and only one
  * frame.  No need to check width and height, since BMP format handles
  * any width/height. */
 {
-	Boolean nofit;
+	bool nofit;
 
 	nofit = (ainfo->depth == 8
 			 && ainfo->num_frames == 1);
@@ -812,7 +813,7 @@ static void close_file(Image_file **pif)
 		xffclose(&f->file);
 	pj_free(f);
 	*pf = NULL;
-	is_open = FALSE;
+	is_open = false;
 }
 
 /* Function: open_helper
@@ -839,7 +840,7 @@ open_helper(Bmp_image_file **pf, char *path, enum XReadWriteMode mode)
 		return(Err_no_memory);
 
 	err = xffopen(path, &f->file, mode);
-	is_open = TRUE;
+	is_open = true;
 	*pf = f;
 	return(err);
 }

@@ -4,8 +4,7 @@
 #include "timesels.h"
 
 static SHORT frame_ix;
-static Qslider frame_sl = QTSL_INIT1(0, 0, &frame_ix, 1, NULL, leftright_arrs,
-									 TRUE );
+static Qslider frame_sl = QTSL_INIT1(0, 0, &frame_ix, 1, NULL, leftright_arrs, true);
 
 static void see_time_slider(Button *b)
 {

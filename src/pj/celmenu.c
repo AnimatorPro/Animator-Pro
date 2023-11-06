@@ -586,7 +586,7 @@ static void exit_refresh_cel(Pentool *pt)
 	cmu_unmarqi_cel();
 	draw_flicel(thecel,DRAW_DELTA,FORCE_CFIT);
 }
-static Boolean delta_marqi_cel(void)
+static bool delta_marqi_cel(void)
 {
 ULONG time;
 
@@ -832,7 +832,7 @@ Fli_frame *cbuf;
 		if(cel->flif.hdr.frame_count > 1)
 		{
 			if((err = gb_seek_fcel_frame(cel, cel->cd.cur_frame + 1,
-										 cbuf,FALSE)) < Success)
+										 cbuf, false)) < Success)
 			{
 				goto error;
 			}
@@ -1034,7 +1034,7 @@ static void cleanup_cel_menu(void)
 	pj_freez(&cmcb->marqi_save_buf); /* free old marqi buffer */
 }
 
-Errcode reset_celmenu(int toolid,Boolean startup)
+Errcode reset_celmenu(int toolid, bool startup)
 
 /* called if cel changes with pen tool id to be loaded assumes cel is absent
  * from screen and current pen tool is not a cel tool */
@@ -1132,18 +1132,18 @@ void disable_toolcel_redraw(void)
 	rem_rmode_redraw(&tcel_rmode_rn);
 }
 
-static Boolean do_celmenu_keys(void)
+static bool do_celmenu_keys(void)
 {
  	if(check_toggle_abort()
 		|| common_header_keys()
 		|| check_undo_key())
 	{
-		return(TRUE);
+		return(true);
 	}
-	return FALSE;
+	return false;
 }
 
-static void do_cel_menu(Boolean no_draw_tools)
+static void do_cel_menu(bool no_draw_tools)
 {
 Errcode err;
 Celmu_cb celcb;
@@ -1204,7 +1204,7 @@ static char panel_key[] = "cel_panel";
 		goto error;
 	}
 
-	if((err = reset_celmenu(vs.cur_cel_tool,TRUE)) < Success)
+	if((err = reset_celmenu(vs.cur_cel_tool, true)) < Success)
 		goto error;
 
 	enable_toolcel_redraw(); /* enable redraw functions for render state 

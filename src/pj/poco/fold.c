@@ -28,7 +28,7 @@
 #include "poco.h"
 
 static char 		fold_stack[16*sizeof(double)];
-static Poco_run_env foldenv = {fold_stack, sizeof(fold_stack), FALSE};
+static Poco_run_env foldenv = {fold_stack, sizeof(fold_stack), false };
 
 void po_fold_const(Poco_cb *pcb, Exp_frame *exp)
 /*****************************************************************************
@@ -87,7 +87,7 @@ return *(fold_stack + sizeof(fold_stack) - sizeof(int) - sizeof(void *));
 
 }
 
-Boolean po_is_static_init_const(Poco_cb *pcb, Code_buf *cb)
+bool po_is_static_init_const(Poco_cb *pcb, Code_buf *cb)
 /*****************************************************************************
  * return TRUE if code in buffer qualifies as purely constant by the rules
  * of static initializer expressions.
@@ -96,7 +96,7 @@ Boolean po_is_static_init_const(Poco_cb *pcb, Code_buf *cb)
 	int 			op;
 	Poco_op_table	*pta  = po_ins_table;
 	void			*code;
-	Boolean 		rv = TRUE;
+	bool rv = true;
 
 	(void)pcb;
 
@@ -106,7 +106,7 @@ Boolean po_is_static_init_const(Poco_cb *pcb, Code_buf *cb)
 	for (code = cb->code_buf; code < (void*)cb->code_pt; /* nothing */) {
 		op = *(int *)code;
 		if (pta[op].op_flags & OFL_NOTCON) {
-			rv = FALSE;
+			rv = false;
 			break;
 		}
 		code = OPTR(code, pta[op].op_size+sizeof(op));

@@ -25,22 +25,22 @@ Vsettings default_vs =  {
 	0,	/* frame_ix - frame index */
 	250,	/* ccolor - pen color */
 	2, /* zoomscale */
-	FALSE, 	/* zoom_open */
-	FALSE, 	/* use_brush */
-	TRUE,   /* dcoor */
+	false, 	/* zoom_open */
+	false, 	/* use_brush */
+	true,   /* dcoor */
 
-	TRUE,  	/* fillp  - fill polygons? */
-	FALSE, 	/* color2 - 2 color polygons? */
-	TRUE,  	/* closed_curve */
-	FALSE, 	/* multi */
-	TRUE,	/* clear_moveout - (move tool clears old area) */
-	TRUE,	/* zero_clear - color zero transparent in cel */
-	FALSE,  /* render_under */
-	FALSE, 	/* render_one_color */
-	TRUE,   /* fit_colors */
-	FALSE,	/* make_mask */
-	FALSE,  /* use_mask */
-	TRUE,	/* pal_fit */
+	true,  	/* fillp  - fill polygons? */
+	false, 	/* color2 - 2 color polygons? */
+	true,  	/* closed_curve */
+	false, 	/* multi */
+	true,	/* clear_moveout - (move tool clears old area) */
+	true,	/* zero_clear - color zero transparent in cel */
+	false,  /* render_under */
+	false, 	/* render_one_color */
+	true,   /* fit_colors */
+	false,	/* make_mask */
+	false,  /* use_mask */
+	true,	/* pal_fit */
 	FTP_FLIC,  /* file_type */
 	{0,138,192,131,248,249,250,247}, /* inks wells */
 
@@ -67,7 +67,7 @@ Vsettings default_vs =  {
 	0,0,	/* top_tool, top_ink - initial scroller_tops */
 	6, 33,		/* star points , star ratio */
 	0,0,VS_MAXCOOR/(320/8),VS_MAXCOOR/(200/8), /* grid x y w h */
-	FALSE,	/* use_grid */
+	false,	/* use_grid */
 	50, /* dither threshold */
 	60, 32,	/* air_speed, air_spread */
 	4,4,	/* quantization x and y */
@@ -77,16 +77,16 @@ Vsettings default_vs =  {
 	16, /* transition frames */
 	0,9,	/* start and stop of time segment */
 	0,  	/* browse_action (0 = load) */
-	FALSE,  /* sep_rgb - by rgb if 1, by color ix if 0 */
+	false,  /* sep_rgb - by rgb if 1, by color ix if 0 */
 	10,		/* sep_threshold */
-	TRUE,	/* ado tween */
-	FALSE,	/* ado ease */
-	FALSE,  /* ease out */
-	FALSE,	/* ado pong */
-	FALSE,  /* ado reverse */
-	TRUE,   /* ado complete */
+	true,	/* ado tween */
+	false,	/* ado ease */
+	false,  /* ease out */
+	false,	/* ado pong */
+	false,  /* ado reverse */
+	true,   /* ado complete */
 	0,      /* ado source */
-	FALSE, 	/* ado outline */
+	false, 	/* ado outline */
 
 	0,  /* ado_mode == spin */
 	2,  /* ado_spin == turns */
@@ -122,7 +122,7 @@ Vsettings default_vs =  {
 	{9, 19, 29, 39},	/* stop of ranges */
 	0, 		/* bframe_ix */
 	0,		/* pal to - what portion of palette effected by remap */
-	FALSE,		/* hls or rgb mode */
+	false,		/* hls or rgb mode */
 	1,		/* use_bun */
 	{
 		{
@@ -139,7 +139,7 @@ Vsettings default_vs =  {
 	20,		/* cclose - closeness threshold */
 	50,		/* ctint - strength of tinting in palette */
 	0,		/* cdraw_ix */
-	FALSE,	/* cycle_draw */
+	false,	/* cycle_draw */
 	0,		/* tit_just */
 	0,		/* tit_scroll */
 	0,		/* tit_move */
@@ -156,15 +156,15 @@ Vsettings default_vs =  {
 	0,		/* ped_cursor_p - poco editor window y start */
 
 	CELPT_MOVE,	/* cur_cel_tool */
-	TRUE,		/* paste_inc_cel */
-	FALSE,		/* cm_blue_last */
-	FALSE,		/* cm_move_to_cursor */
-	FALSE,		/* cm_streamdraw */
+	true,		/* paste_inc_cel */
+	false,		/* cm_blue_last */
+	false,		/* cm_move_to_cursor */
+	false,		/* cm_streamdraw */
 	0,			/* rot_grid */
 	0,			/* tween_end */
 	0,			/* tween_tool */
 	50,			/* tween_magnet */
-	FALSE,		/* tween_spline */
+	false,		/* tween_spline */
 
 	CIRCLE_BRUSH, /* pen_brush_type */
 	4,          /* circle_brush_size */
@@ -175,11 +175,11 @@ Vsettings default_vs =  {
 	1, 			/* randseed */
 
 	COMP_CUT, /* co_type */
-	FALSE, /* co_still */
+	false, /* co_still */
 	FIT_TOA, /*  co_cfit */
-	FALSE, /* co_reverse */
-	TRUE,	/* co_matchsize */
-	FALSE,	/* co_b_first */
+	false, /* co_reverse */
+	true,	/* co_matchsize */
+	false,	/* co_b_first */
 	0,	  /* co_olap_frames */
 	20,	  /* co_venetian_height */
 	20,	  /* co_louver_width */
@@ -256,7 +256,8 @@ void flx_draw_olays(void)
 {
 	mini_draw_overlays(&flxtime_data);
 }
-Boolean flx_olays_hidden(void)
+
+bool flx_olays_hidden(void)
 {
 	return(flxtime_data.olay_stack != 0);
 }

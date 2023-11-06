@@ -62,7 +62,7 @@ typedef struct compo_cb {
 	SHORT flx_ix;
 	SHORT cfit_type; /* adjusted for start-end order selected */
 	int clearc;		 /* clear color for cfitting -1 or 0 */
-	Boolean preview_mode; /* true if in preview mode */
+	bool preview_mode; /* true if in preview mode */
 	int preview_frame; /* frame index for abort verify */
 	char *tempfli_name;
 
@@ -77,7 +77,7 @@ extern void
 zoom_boxil_mask(struct raster *boxil_mask, struct raster *dest,
 		Coor hsize, Coor vsize);
 
-extern Errcode render_composite(Boolean preview);
+extern Errcode render_composite(bool preview);
 
 /* composmu.c */
 extern Errcode reload_mask_cel(void);

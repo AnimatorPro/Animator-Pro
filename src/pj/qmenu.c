@@ -96,7 +96,7 @@ static int ab_get_color(Wndo* w)
 	if (JSTHIT(MBPEN))
 		cgr_result = pj_get_dot(vb.screen->viscel, icb.sx, icb.sy);
 	close_menu(&cgr_menu);
-	return (TRUE);
+	return (true);
 }
 
 static int qcolor(void)

@@ -315,11 +315,11 @@ Errcode open_wscreen(Wscreen **ps, WscrInit *si);
 void close_wscreen(Wscreen *s);
 void set_ext_cel(Wscreen *s,Rcel **ext_cel);
 
-extern Boolean visible_mucolors(Cmap *cmap, Pixel *mucolors);
-extern Boolean has_menu_colors(Cmap *cmap, Wscreen *s);
+extern bool visible_mucolors(Cmap *cmap, Pixel *mucolors);
+extern bool has_menu_colors(Cmap *cmap, Wscreen *s);
 extern void uncheck_mucmap(Wscreen *s);
-extern Boolean lastmuc_changed(Wscreen *s);
-extern Boolean find_mucolors(Wscreen *ws);
+extern bool lastmuc_changed(Wscreen *s);
+extern bool find_mucolors(Wscreen *ws);
 extern void try_mucolors(Wscreen *s);
 extern void set_new_mucolors(Rgb3 *new_ideals, Wscreen *s);
 
@@ -352,12 +352,12 @@ void cleanup_wait_wndo(Wscreen *s);
 Errcode open_wndo(Wndo **pw, WndoInit *wi);
 void _close_wndo(Wndo *w);
 void close_wndo(Wndo *w);
-Boolean reposit_wndo(Wndo *w,Rectangle *newpos,Short_xy *oset);
+bool reposit_wndo(Wndo *w,Rectangle *newpos,Short_xy *oset);
 Errcode move_rear_wndo(Wndo *w, void (*clipit)(Rectangle *r));
-Boolean ptin_wndo(Wndo *w,SHORT x,SHORT y);
-Boolean wndo_dot_visible(Wndo *w,Coor x,Coor y);
-Boolean curson_wndo(Wndo *w);
-Boolean mouseon_wndo(Wndo *w);
+bool ptin_wndo(Wndo *w,SHORT x,SHORT y);
+bool wndo_dot_visible(Wndo *w,Coor x,Coor y);
+bool curson_wndo(Wndo *w);
+bool mouseon_wndo(Wndo *w);
 void redraw_wndo(Wndo *w);
 void init_wrefresh(Wscreen *s); 
 
@@ -366,7 +366,7 @@ void init_wrefresh(Wscreen *s);
 extern void set_wndo_cursor(Wndo *w, Cursorhdr *ch);
 extern void load_wndo_mouset(Wndo *w);
 extern void load_wndo_iostate(Wndo *w);
-extern Boolean marqmove_wndo(Wndo *w, Rectangle *bclip);
+extern bool marqmove_wndo(Wndo *w, Rectangle *bclip);
 
 typedef struct Wiostate {
 	Mouset mset;

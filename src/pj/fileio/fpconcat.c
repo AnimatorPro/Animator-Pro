@@ -1,7 +1,7 @@
 #include <string.h>
 #include "filepath.h"
 
-static Boolean has_dir_chars(char *path)
+static bool has_dir_chars(char *path)
 /* Returns TRUE if there is a directory in the path name. */
 {
 	char c;
@@ -9,9 +9,9 @@ static Boolean has_dir_chars(char *path)
 	while ((c = *path++) != 0)
 		{
 		if (c == ':' || c == '\\' ||  c == '/')
-			return TRUE;
+			return true;
 		}
-	return FALSE;
+	return false;
 }
 
 Errcode full_path_name(char *drawer,char *subpath,char *fullpath)

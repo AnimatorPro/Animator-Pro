@@ -255,7 +255,7 @@ SHORT wxoset;		/* window x offset relative to root */
 	pj_stuff_pointers(wydots,&wdbufs[wx],w->behind.width - wx,6);
 	return;
 }
-static Boolean isvchange(SHORT x,SHORT y,UBYTE **ydots,SHORT width)
+static bool isvchange(SHORT x,SHORT y,UBYTE **ydots,SHORT width)
 
 /* scans to see if there really is a vertical change at the window y given
  * by scanning ydots array */

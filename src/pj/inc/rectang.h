@@ -67,13 +67,13 @@ typedef struct fullrect {  /* really just a Cliprect merged with a Rectangle */
 
 /* rectangle and point clip things */
 
-Boolean ptin_rect(Rectangle *r,SHORT x,SHORT y);
-Boolean ptin_crect(Cliprect *r, SHORT x,SHORT y);
-Boolean ptinside_rect(Rectangle *b, SHORT x, SHORT y, SHORT inside);
+bool ptin_rect(Rectangle *r,SHORT x,SHORT y);
+bool ptin_crect(Cliprect *r, SHORT x,SHORT y);
+bool ptinside_rect(Rectangle *b, SHORT x, SHORT y, SHORT inside);
 
-Boolean crects_overlap(Cliprect *a,Cliprect *b);
-Boolean and_cliprects(Cliprect *a,Cliprect *b,Cliprect *out);
-Boolean and_rects(Rectangle *a,Rectangle *b,Rectangle *out);
+bool crects_overlap(Cliprect *a,Cliprect *b);
+bool and_cliprects(Cliprect *a,Cliprect *b,Cliprect *out);
+bool and_rects(Rectangle *a,Rectangle *b,Rectangle *out);
 void swap_clip(Cliprect *clip);
 
 void sclip_rect(Rectangle *r, Rectangle *b);

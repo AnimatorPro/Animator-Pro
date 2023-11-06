@@ -29,7 +29,7 @@ enum {
 	DPMIFLAG_VMM	 = 0x0004
 };
 
-extern Boolean pj_dpmi_present(void);
+extern bool pj_dpmi_present(void);
 extern unsigned long pj_dpmi_inquire_version(void);
 extern int			 pj_dpmi_inquire_memory(DPMIMemoryInfo *pinfo);
 

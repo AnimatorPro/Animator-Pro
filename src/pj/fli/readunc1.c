@@ -5,7 +5,7 @@ Errcode pj_i_read_uncomp1(char *fname, /* name of file for error report
 					   Flifile *flif,
 					   struct rcel *fscreen, /* optional screen to update */
 					   Fli_frame *ff,  /* frame buffer */
-					   Boolean colors) /* wait for vblank and update 
+						  bool colors) /* wait for vblank and update
 					   			        * hardware palette? */
 
 /* seeks to and reads first frame into *ff using fii_read_uncomp()

@@ -59,7 +59,7 @@ extern void
 init_chunkparse(Chunkparse_data *pd, XFILE *xf,
 		LONG root_type, LONG root_oset, ULONG head_size, LONG root_size);
 
-extern Boolean get_next_chunk(Chunkparse_data *pd);
+extern bool get_next_chunk(Chunkparse_data *pd);
 extern Errcode read_parsed_chunk(Chunkparse_data *pd, void *buf, LONG maxsize);
 extern Errcode copy_parsed_chunk(Chunkparse_data *pd, XFILE *dest);
 extern Errcode update_parsed_chunk(Chunkparse_data *pd, void *buf);

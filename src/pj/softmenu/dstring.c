@@ -6,7 +6,7 @@
 
 void dstring_init(Dstring *ds)
 {
-ds->is_dynamic = FALSE;
+ds->is_dynamic = false;
 ds->buf = ds->sbuf;
 ds->sbuf[0] = 0;
 ds->bmax = sizeof(ds->sbuf);
@@ -19,14 +19,14 @@ if (ds->is_dynamic)
 	pj_freez(&ds->buf);
 }
 
-Errcode dstring_newbuf(Dstring *ds, unsigned int newsize, Boolean copy_old)
+Errcode dstring_newbuf(Dstring *ds, unsigned int newsize, bool copy_old)
 /* Allocate dynamic string buffer for Stok. Re-allocs even if size 
  * desired is equal to current buffer size */
 {
 char *newbuf;
 int isd;
 
-if ((isd = (newsize > sizeof(ds->sbuf))) != FALSE)
+if ((isd = (newsize > sizeof(ds->sbuf))) != false)
 	{
 	if ((newbuf = pj_malloc(newsize)) == NULL)
 		return(Err_no_memory);
@@ -83,7 +83,7 @@ Errcode dstring_memcpy(Dstring *ds, char *s, int len)
 if (ds->bmax < len)
 	{
 	Errcode err;
-	if ((err = dstring_newbuf(ds,len,FALSE)) < Success)
+	if ((err = dstring_newbuf(ds,len, false)) < Success)
 		return(err);
 	}
 memcpy(ds->buf,s,len);
@@ -106,7 +106,7 @@ int len = ds->blen + ss->blen;
 if (ds->bmax < len)
 	{
 	Errcode err;
-	if ((err = dstring_newbuf(ds,len,TRUE)) < Success)
+	if ((err = dstring_newbuf(ds,len, true)) < Success)
 		return(err);
 	}
 memcpy(ds->buf+ds->blen,ss->buf,ss->blen);

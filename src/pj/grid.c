@@ -13,7 +13,7 @@
 #include "softmenu.h"
 #include "zoom.h"
 
-static void go_gridreq(Boolean keep_undo);
+static void go_gridreq(bool keep_undo);
 
 USHORT constrain_angle(SHORT angle)
 /* note this accepts angles in FCEL_TWOPI units */
@@ -61,7 +61,7 @@ error:
 }
 void qgrid_keep_undo(void)
 {
-	go_gridreq(TRUE);
+	go_gridreq(true);
 }
 void qgrid(void)
 {
@@ -119,7 +119,7 @@ static void make_grid(void)
 	load_wndo_iostate(NULL); /* screen settings */
 	see_grid();
 }
-static void do_qfunc(VFUNC gfunc, Boolean keep_undo)
+static void do_qfunc(VFUNC gfunc, bool keep_undo)
 {
 Rcel_save undosave;
 
@@ -134,7 +134,7 @@ Rcel_save undosave;
 		report_temp_restore_rcel(&undosave,undof);
 	}
 }
-static void go_gridreq(Boolean keep_undo)
+static void go_gridreq(bool keep_undo)
 /* put  up  numbered choice menu for grid certain items are disabled or altered
  * for overlayed environs that need the undo buffer in sync with the screen */
 {

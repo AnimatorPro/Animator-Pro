@@ -132,11 +132,10 @@ struct celinfo_file {
 #define CELDATA_OFFSET (sizeof(Fli_head) + sizeof(Chunk_id))
 
 extern void init_celcfit(Celcfit *cfit);
-extern Boolean need_render_cfit(Cmap *scmap);
-extern Boolean make_render_cfit(Cmap *scmap, Celcfit *cfit, SHORT tcolor);
+extern bool need_render_cfit(Cmap *scmap);
+extern bool make_render_cfit(Cmap *scmap, Celcfit *cfit, SHORT tcolor);
 
-extern Boolean
-make_simple_cfit(Cmap *scmap, Cmap *dcmap, Celcfit *cfit, int clearc);
+extern bool make_simple_cfit(Cmap *scmap, Cmap *dcmap, Celcfit *cfit, int clearc);
 
 /* draw flicel options */
 #define DRAW_DELTA	0
@@ -175,10 +174,10 @@ extern Errcode cut_out_cel(void);
 extern void cut_out_cel1(void);
 extern void qget_changes(void);
 extern Errcode lasso_cel(void);
-extern Boolean fcel_stretchsize(Flicel *cel, Srect *cr);
-extern Boolean maybe_ref_flicel_pos(Flicel *cel);
+extern bool fcel_stretchsize(Flicel *cel, Srect *cr);
+extern bool maybe_ref_flicel_pos(Flicel *cel);
 extern Errcode draw_flicel(Flicel *fc, int drawmode, int cfitmode);
-extern Boolean refresh_flicel_pos(Flicel *cel);
+extern bool refresh_flicel_pos(Flicel *cel);
 
 /* flicelio.c */
 extern Errcode save_fcel_temp(Flicel *fc);
@@ -196,11 +195,10 @@ extern void close_fcelio(Flicel *fc);
 extern Errcode reopen_fcelio(Flicel *fc, enum XReadWriteMode mode);
 
 extern Errcode
-gb_seek_fcel_frame(Flicel *fc, SHORT frame, Fli_frame *cbuf,
-		Boolean force_read);
+gb_seek_fcel_frame(Flicel *fc, SHORT frame, Fli_frame *cbuf, bool force_read);
 
 extern LONG fcel_cbuf_size(Flicel *fc);
-extern Boolean fcel_needs_seekbuf(Flicel *fc);
+extern bool fcel_needs_seekbuf(Flicel *fc);
 extern Errcode seek_fcel_frame(Flicel *fc, SHORT frame);
 extern Errcode inc_fcel_frame(Flicel *fc);
 extern Errcode load_temp_fcel(char *tempname, Flicel **pfc);

@@ -178,7 +178,7 @@ static size_t po_ffi_ido_type_size(IdoType ido_type) {
 
 
 // ===============================================================
-Boolean po_ffi_is_variadic(const Po_FFI* binding) {
+bool po_ffi_is_variadic(const Po_FFI* binding) {
 	return binding->flags & PO_FFI_VARIADIC;
 }
 

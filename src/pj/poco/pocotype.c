@@ -52,7 +52,7 @@ struct type_table
 	char* name;
 	SHORT val;
 	long size;
-	Boolean is_int;
+	bool is_int;
 };
 
 static struct type_table base_type_names[] = {
@@ -62,103 +62,103 @@ static struct type_table base_type_names[] = {
 	  "TYPE_END",
 	  TYPE_END,
 	  0,
-	  FALSE,
+	  false,
 	},
 	{
 	  "TYPE_CHAR",
 	  TYPE_CHAR,
 	  sizeof(char),
-	  TRUE,
+	  true,
 	},
 	{
 	  "TYPE_UCHAR",
 	  TYPE_UCHAR,
 	  sizeof(char),
-	  TRUE,
+	  true,
 	},
 	{
 	  "TYPE_SHORT",
 	  TYPE_SHORT,
 	  sizeof(short),
-	  TRUE,
+	  true,
 	},
 	{
 	  "TYPE_USHORT",
 	  TYPE_USHORT,
 	  sizeof(short),
-	  TRUE,
+	  true,
 	},
 	{
 	  "TYPE_INT",
 	  TYPE_INT,
 	  sizeof(int),
-	  TRUE,
+	  true,
 	},
 	{
 	  "TYPE_UINT",
 	  TYPE_UINT,
 	  sizeof(int),
-	  TRUE,
+	  true,
 	},
 	{
 	  "TYPE_LONG",
 	  TYPE_LONG,
 	  sizeof(long),
-	  TRUE,
+	  true,
 	},
 	{
 	  "TYPE_ULONG",
 	  TYPE_ULONG,
 	  sizeof(long),
-	  TRUE,
+	  true,
 	},
 	{
 	  "TYPE_FLOAT",
 	  TYPE_FLOAT,
 	  sizeof(float),
-	  FALSE,
+	  false,
 	},
 	{
 	  "TYPE_DOUBLE",
 	  TYPE_DOUBLE,
 	  sizeof(double),
-	  FALSE,
+	  false,
 	},
 	{
 	  "TYPE_POINTER",
 	  TYPE_POINTER,
 	  sizeof(Popot),
-	  FALSE,
+	  false,
 	},
 	{
 	  "TYPE_FUNCTION",
 	  TYPE_FUNCTION,
 	  0,
-	  FALSE,
+	  false,
 	},
 	{
 	  "TYPE_VOID",
 	  TYPE_VOID,
 	  0,
-	  FALSE,
+	  false,
 	},
 	{
 	  "TYPE_ARRAY",
 	  TYPE_ARRAY,
 	  0,
-	  FALSE,
+	  false,
 	},
 	{
 	  "TYPE_ELLIPSIS",
 	  TYPE_ELLIPSIS,
 	  0,
-	  FALSE,
+	  false,
 	},
 	{
 	  "TYPE_SCREEN",
 	  TYPE_SCREEN,
 	  sizeof(Popot),
-	  FALSE,
+	  false,
 	},
 #ifdef STRING_EXPERIMENT
 	{
@@ -172,38 +172,38 @@ static struct type_table base_type_names[] = {
 	  "TYPE_FILE",
 	  TYPE_FILE,
 	  0,
-	  FALSE,
+	  false,
 	},
 	{
 	  "TYPE_UNUSED0",
 	  TYPE_UNUSED0,
 	  0,
-	  FALSE,
+	  false,
 	},
 	{
 	  "TYPE_CPT",
 	  TYPE_CPT,
 	  sizeof(void*),
-	  FALSE,
+	  false,
 	},
 	{
 	  "TYPE_UNUSED1",
 	  TYPE_UNUSED1,
 	  0,
-	  FALSE,
+	  false,
 	},
 	{
 	  "TYPE_STRUCT",
 	  TYPE_STRUCT,
 	  0,
-	  FALSE,
+	  false,
 	},
 };
 
 /*****************************************************************************
  * Run a sanity check on base_type_names array.
  ****************************************************************************/
-Boolean po_check_type_names(Poco_cb* pcb)
+bool po_check_type_names(Poco_cb* pcb)
 {
 #ifdef DEVELOPMENT
 	int i;
@@ -216,11 +216,11 @@ Boolean po_check_type_names(Poco_cb* pcb)
 					base_type_names[i].val,
 					base_type_names[i].name);
 			po_say_internal(pcb, "base_type_names doesn't check");
-			return (FALSE);
+			return (false);
 		}
 	}
 #endif
-	return (TRUE);
+	return (true);
 }
 
 /*****************************************************************************
@@ -254,14 +254,14 @@ Type_info* po_new_type_info(Poco_cb* pcb, Type_info* old, int extras)
 /*****************************************************************************
  * indicate whether IDO type is int.
  ****************************************************************************/
-Boolean po_is_int_ido(SHORT ido)
+bool po_is_int_ido(SHORT ido)
 {
 	switch (ido) {
 		case IDO_INT:
 		case IDO_LONG:
-			return (TRUE);
+			return (true);
 	}
-	return (FALSE);
+	return (false);
 }
 
 #ifdef STRING_EXPERIMENT
@@ -277,27 +277,27 @@ Boolean po_is_string(Type_info* ti)
 /*****************************************************************************
  * indicate whether type is pointer.
  ****************************************************************************/
-Boolean po_is_pointer(Type_info* ti)
+bool po_is_pointer(Type_info* ti)
 {
 	if (ti->comp_count < 2)
-		return (FALSE);
+		return (false);
 	return (ti->comp[ti->comp_count - 1] == TYPE_POINTER);
 }
 
 /*****************************************************************************
  * indicate whether type is array or not.
  ****************************************************************************/
-Boolean po_is_array(Type_info* ti)
+bool po_is_array(Type_info* ti)
 {
 	if (ti->comp_count < 2)
-		return (FALSE);
+		return (false);
 	return (ti->comp[ti->comp_count - 1] == TYPE_ARRAY);
 }
 
 /*****************************************************************************
  * indicate whether type is a structure or not.
  ****************************************************************************/
-Boolean po_is_struct(Type_info* ti)
+bool po_is_struct(Type_info* ti)
 {
 	return (ti->comp_count == 1 && ti->comp[0] == TYPE_STRUCT);
 }
@@ -305,10 +305,10 @@ Boolean po_is_struct(Type_info* ti)
 /*****************************************************************************
  * indicate whether type is a function or not.
  ****************************************************************************/
-Boolean po_is_func(Type_info* ti)
+bool po_is_func(Type_info* ti)
 {
 	if (ti->comp_count < 2)
-		return (FALSE);
+		return (false);
 	return (ti->comp[ti->comp_count - 1] == TYPE_FUNCTION);
 }
 
@@ -364,11 +364,11 @@ void po_set_ido_type(Type_info* ti)
 /*****************************************************************************
  * append new type onto type_info, complain & die if variable is too complex.
  ****************************************************************************/
-Boolean po_append_type(Poco_cb* pcb, Type_info* ti, TypeComp tc, long dim, void* sif)
+bool po_append_type(Poco_cb* pcb, Type_info* ti, TypeComp tc, long dim, void* sif)
 {
 	if (ti->comp_count >= ti->comp_alloc) {
 		po_say_fatal(pcb, "variable type too complex");
-		return (FALSE);
+		return (false);
 	}
 	ti->comp[ti->comp_count] = tc;
 	if (tc == TYPE_STRUCT || tc == TYPE_FUNCTION)
@@ -377,13 +377,13 @@ Boolean po_append_type(Poco_cb* pcb, Type_info* ti, TypeComp tc, long dim, void*
 		ti->sdims[ti->comp_count].l = dim;
 	ti->comp_count++;
 	po_set_ido_type(ti);
-	return (TRUE);
+	return (true);
 }
 
 /*****************************************************************************
  * blast any existing type info and set the base type into the type_info.
  ****************************************************************************/
-Boolean po_set_base_type(Poco_cb* pcb, Type_info* ti, TypeComp tc, long dim, Struct_info* sif)
+bool po_set_base_type(Poco_cb* pcb, Type_info* ti, TypeComp tc, long dim, Struct_info* sif)
 {
 	ti->comp_count = 0;
 	return (po_append_type(pcb, ti, tc, dim, sif));
@@ -392,12 +392,12 @@ Boolean po_set_base_type(Poco_cb* pcb, Type_info* ti, TypeComp tc, long dim, Str
 /*****************************************************************************
  * copy type info data to another type_info structure.
  ****************************************************************************/
-Boolean po_copy_type(Poco_cb* pcb, Type_info* s, Type_info* d)
+bool po_copy_type(Poco_cb* pcb, Type_info* s, Type_info* d)
 {
 #ifdef DEVELOPMENT
 	if (s->comp_count > d->comp_alloc) {
 		po_say_internal(pcb, "variable type too complex in po_copy_type"); /* should never happen */
-		return (FALSE);
+		return (false);
 	}
 #endif
 
@@ -405,28 +405,28 @@ Boolean po_copy_type(Poco_cb* pcb, Type_info* s, Type_info* d)
 	poco_copy_bytes(s->sdims, d->sdims, s->comp_count * sizeof(*(d->sdims)));
 	d->ido_type	  = s->ido_type;
 	d->comp_count = s->comp_count;
-	return (TRUE);
+	return (true);
 }
 
 /*****************************************************************************
  * concatenate type info data onto another type_info structure.
  ****************************************************************************/
-Boolean po_cat_type(Poco_cb* pcb, Type_info* d, Type_info* s)
+bool po_cat_type(Poco_cb* pcb, Type_info* d, Type_info* s)
 {
 	if (d->comp_count + s->comp_count > d->comp_alloc) {
 		po_say_fatal(pcb, "variable type too complex");
-		return (FALSE);
+		return (false);
 	}
 	poco_copy_bytes(s->comp, d->comp + d->comp_count, s->comp_count * sizeof(*(s->comp)));
 	poco_copy_bytes(s->sdims, d->sdims + d->comp_count, s->comp_count * sizeof(*(s->sdims)));
 	d->comp_count += s->comp_count;
-	return (TRUE);
+	return (true);
 }
 
 /*****************************************************************************
  * indicate whether type is a void pointer or not.
  ****************************************************************************/
-Boolean po_is_void_ptr(Type_info* ti)
+bool po_is_void_ptr(Type_info* ti)
 {
 	return (ti->comp_count == 2 && ti->comp[0] == TYPE_VOID &&
 			(ti->comp[1] == TYPE_CPT || ti->comp[1] == TYPE_POINTER));
@@ -436,7 +436,7 @@ Boolean po_is_void_ptr(Type_info* ti)
  * check parameter types are compatible (identical except for mixing
  * pointers and void pointers, or ellipsis)
  ****************************************************************************/
-Boolean po_fuf_types_same(Func_frame* sf, Func_frame* df)
+bool po_fuf_types_same(Func_frame* sf, Func_frame* df)
 {
 	Symbol *ss, *ds;
 	Type_info *st, *dt;
@@ -449,9 +449,9 @@ Boolean po_fuf_types_same(Func_frame* sf, Func_frame* df)
 			sc = st->comp[0];
 			dc = dt->comp[0];
 			if (sc == TYPE_ELLIPSIS || dc == TYPE_ELLIPSIS)
-				return (TRUE); /* ... will match anything */
+				return (true); /* ... will match anything */
 			if (!(po_is_void_ptr(st) || po_is_void_ptr(dt)))
-				return (FALSE);
+				return (false);
 		}
 		ss = ss->link;
 		ds = ds->link;
@@ -459,15 +459,15 @@ Boolean po_fuf_types_same(Func_frame* sf, Func_frame* df)
 	/* if have come to end of both parameter lists at same time then
 	   the comparison is simply true */
 	if (ss == NULL && ds == NULL)
-		return (TRUE);
+		return (true);
 	/* check if the remaining paremeter is an ellipsis. If so return TRUE */
 	if (ss == NULL)
 		dc = ds->ti->comp[0];
 	else
 		dc = ss->ti->comp[0];
 	if (dc == TYPE_ELLIPSIS)
-		return (TRUE);
-	return (FALSE);
+		return (true);
+	return (false);
 }
 
 /*****************************************************************************
@@ -487,7 +487,7 @@ Boolean po_fuf_types_same(Func_frame* sf, Func_frame* df)
  *	 TYPE_POINTER for both elements, we still have to look back a level
  *	 to see that they are pointers to different things.
  ****************************************************************************/
-Boolean po_types_same(Type_info* s, Type_info* d, int start)
+bool po_types_same(Type_info* s, Type_info* d, int start)
 {
 	int i;
 	int count;
@@ -496,25 +496,25 @@ Boolean po_types_same(Type_info* s, Type_info* d, int start)
 
 	count = s->comp_count;
 	if (count != d->comp_count)
-		return (FALSE);
+		return (false);
 	for (i = start; i < count; i++) {
 		if ((stc = s->comp[i]) != (dtc = d->comp[i])) {
 			if (!((stc == TYPE_POINTER && dtc == TYPE_ARRAY) ||
 				  (stc == TYPE_ARRAY && dtc == TYPE_POINTER)))
-				return FALSE; /* not array/ptr intermixing, just a plain mismatch */
+				return false; /* not array/ptr intermixing, just a plain mismatch */
 		}
 
 		if (stc == TYPE_POINTER || dtc == TYPE_POINTER)
 			if (i > start) /* should never be <=, but hate to hit -1 element */
 				if (s->comp[i - 1] != d->comp[i - 1])
-					return FALSE;
+					return false;
 
 		if (stc == TYPE_FUNCTION) {
 			if (!po_fuf_types_same(s->sdims[i].pt, d->sdims[i].pt))
-				return (FALSE);
+				return (false);
 		}
 	}
-	return (TRUE);
+	return (true);
 }
 
 /*****************************************************************************
@@ -599,7 +599,7 @@ long po_get_subtype_size(Poco_cb* pcb, Type_info* ti)
 /*****************************************************************************
  * get the base type of a declaration.
  ****************************************************************************/
-Boolean po_get_base_type(Poco_cb* pcb, Poco_frame* pf, Type_info* ti)
+bool po_get_base_type(Poco_cb* pcb, Poco_frame* pf, Type_info* ti)
 {
 	static char signed_and_unsigned[] = "cannot specify both signed and unsigned.";
 	static char long_and_short[]	  = "cannot specify both long and short";
@@ -743,9 +743,9 @@ Boolean po_get_base_type(Poco_cb* pcb, Poco_frame* pf, Type_info* ti)
 
 	if (comp != TYPE_BAD) {
 		po_set_ido_type(ti);
-		return TRUE;
+		return true;
 	} else {
-		return FALSE;
+		return false;
 	}
 }
 

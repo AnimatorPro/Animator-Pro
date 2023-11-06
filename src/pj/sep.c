@@ -130,7 +130,7 @@ SHORT ogrid;
 	}
 
 	ogrid = vs.use_grid;
-	vs.use_grid = FALSE;
+	vs.use_grid = false;
 
 	for (;;)	/* gather up a table while pen down of colors under cursor */
 	{
@@ -247,9 +247,9 @@ Errcode sep_tool(Pentool *pt, Wndo *w)
 }
 void separate(void)
 {
-	from_menu = TRUE;
+	from_menu = true;
 	do_pentool_once(&sep_ptool_opt);
-	from_menu = FALSE;
+	from_menu = false;
 }
 
 static Errcode csd_edge1(Pixel ecolor)

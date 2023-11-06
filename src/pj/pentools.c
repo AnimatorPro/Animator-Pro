@@ -54,7 +54,7 @@ Wndo *ckwndo;
 	}
 	return(0);
 }
-Boolean tti_input(void)
+bool tti_input(void)
 /* pen tool initial input  -  basically checks if you've clicked over
    another window or over current drawing window */
 {
@@ -68,20 +68,20 @@ int ret;
 		if(ret)
 		{
 			reuse_input();
-			return(FALSE);
+			return(false);
 		}
-		return(TRUE);
+		return(true);
 	}
 	return(!pticheck(NULL));
 }
-Boolean pti_input(void)
+bool pti_input(void)
 /* pen tool initial input  -  basically checks if you've clicked over
    another window or over current drawing window and sets dirties flag if
    you did */
 {
 int ret;
 
-if ((ret = tti_input()) != FALSE)
+if ((ret = tti_input()) != false)
 	dirties();
 return(ret);
 }
@@ -267,7 +267,7 @@ SHORT bsize;
 SHORT obsize, pen_width;
 SHORT drx,dry;
 Pos_p rp, op;
-Boolean first = TRUE;
+bool first = true;
 Errcode err;
 
 	obsize = get_brush_size();
@@ -299,7 +299,7 @@ Errcode err;
 			drx = rp.x;
 			dry = rp.y;
 			op = rp;
-			first = FALSE;
+			first = false;
 		}
 		switch (mode)
 		{
@@ -417,7 +417,7 @@ void save_line_undo(Coor y)
 		{
 			pj_blitrect(vb.pencel,0,y,
 				 	 undof, 0, y, undof->width, 1);
-			ychanged[y] = TRUE;
+			ychanged[y] = true;
 		}
 	}
 }
@@ -445,7 +445,8 @@ save_lines_undo(y1-brushsize, height+(brushsize<<1)+1 );
 
 /************** End of line-at-a-time undo saver */
 Errcode spray_loop( Errcode (*get_posp)(Pos_p *pp, void *idata, SHORT mode),
-					void *idata, Boolean redoing)
+					void *idata,
+				   bool redoing)
 {
 Errcode err;
 LONG time_max;
@@ -454,8 +455,8 @@ int i;
 Pos_p rp;
 short xy[2];
 short spread;
-Boolean check_time;
-Boolean pressure_sensitive = is_pressure();
+bool check_time;
+bool pressure_sensitive = is_pressure();
 Spray_redo sr;
 
 	pj_srandom(1); /* make it repeatable... */
@@ -546,7 +547,7 @@ Errcode spray_tool(Pentool *pt, Wndo *w)
 		reuse_input();
 		if((err = start_save_redo_points()) >= Success)
 		{
-			err = spray_loop(dtool_input, NULL, FALSE);
+			err = spray_loop(dtool_input, NULL, false);
 			end_save_redo_points();
 		}
 		save_redo_spray();
@@ -592,7 +593,7 @@ Errcode line_tool(Pentool *pt, Wndo *w)
 error:
 	return(err);
 }
-static Errcode move_or_copy_tool(Boolean clear_move_out)
+static Errcode move_or_copy_tool(bool clear_move_out)
 /* The move tool.  User clips a cel of und area after saving it
    and plops cel down in new position. and clears the old position */
 
@@ -612,7 +613,7 @@ if((err = clip_celrect(vb.pencel, &mop.orig, &clipcel)) < 0)
 	goto error;
 
 save_undo();
-if(move_rcel(clipcel,FALSE,vs.render_one_color) >= 0)
+if(move_rcel(clipcel, false,vs.render_one_color) >= 0)
 	{
 	mop.new.x = clipcel->x;
 	mop.new.y = clipcel->y;
@@ -630,7 +631,7 @@ Errcode move_tool(Pentool *pt, Wndo *w)
 	(void)pt;
 	(void)w;
 
-	return move_or_copy_tool(TRUE);
+	return move_or_copy_tool(true);
 }
 
 Errcode copy_tool(Pentool *pt, Wndo *w)
@@ -638,5 +639,5 @@ Errcode copy_tool(Pentool *pt, Wndo *w)
 	(void)pt;
 	(void)w;
 
-	return move_or_copy_tool(FALSE);
+	return move_or_copy_tool(false);
 }

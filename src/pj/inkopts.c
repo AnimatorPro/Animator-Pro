@@ -46,7 +46,7 @@ static Ink xor_ink_opt = INKINIT(
 	xor_dot,
 	gink_hline,
 	NOSTRENGTH,
-	FALSE,
+								 false,
 	NO_MC,
 	NO_FC,
 	INK_NEEDS_COLOR
@@ -61,7 +61,7 @@ static Ink vsp_ink_opt = INKINIT(
 	vsp_dot,
 	vsp_hline,
 	NOSTRENGTH,
-	TRUE,
+								  true,
 	clear_random_cashe,
 	NO_FC,
 	0
@@ -76,7 +76,7 @@ static Ink anti_ink_opt = INKINIT(
 	anti_dot,
 	gink_hline,
 	NOSTRENGTH,
-	FALSE,
+								  false,
 	make_ink_bhash,
 	free_ink_bhash,
 	INK_NEEDS_UNDO
@@ -92,7 +92,7 @@ static Ink celt_ink_opt = INKINIT(
 	celt_dot,
 	celt_hline, 
 	NOSTRENGTH,
-	FALSE,
+								  false,
 	init_celt_ink,
 	cleanup_celt_ink,
 	INK_NEEDS_CEL
@@ -107,7 +107,7 @@ static Ink swe_ink_opt = INKINIT(
 	swe_dot,
 	gink_hline,
 	NOSTRENGTH,
-	FALSE,
+								  false,
 	NO_MC,
 	NO_FC,
 	INK_NEEDS_UNDO
@@ -122,7 +122,7 @@ static Ink shat_ink_opt = INKINIT(
 	shat_dot,
 	gink_hline,
 	1,
-	FALSE,
+								  false,
 	NO_MC,
 	NO_FC,
 	INK_NEEDS_UNDO
@@ -137,7 +137,7 @@ static Ink cry_ink_opt = INKINIT(
 	cry_dot,
 	cry_hline,
 	NOSTRENGTH,
-	FALSE,
+								  false,
 	NO_MC,
 	NO_FC,
 	INK_NEEDS_UNDO
@@ -152,7 +152,7 @@ static Ink soft_ink_opt = INKINIT(
 	soft_dot,
 	soft_hline,
 	NOSTRENGTH,
-	FALSE,
+								  false,
 	make_ink_bhash,
 	free_ink_bhash,
 	INK_NEEDS_UNDO
@@ -167,7 +167,7 @@ static Ink smea_ink_opt = INKINIT(
 	smea_dot,
 	gink_hline,
 	NOSTRENGTH,
-	FALSE,
+								  false,
 	NO_MC,
 	NO_FC,
 	INK_NEEDS_UNDO
@@ -182,7 +182,7 @@ static Ink rvl_ink_opt = INKINIT(
 	rvl_dot,
 	rvl_hline,
 	NOSTRENGTH,
-	FALSE,
+								 false,
 	make_ink_thash,
 	free_ink_thash,
 	INK_NEEDS_ALT
@@ -197,7 +197,7 @@ static Ink rad_ink_opt = INKINIT(
 	rad_dot,
 	gink_hline,
 	NOSTRENGTH,
-	TRUE,
+								  true,
 	clear_random_cashe,
 	NO_FC,
 	0
@@ -212,7 +212,7 @@ static Ink pull_ink_opt = INKINIT(
 	pull_dot,
 	gink_hline,
 	NOSTRENGTH,
-	FALSE,
+								  false,
 	NO_MC,
 	NO_FC,
 	0
@@ -227,7 +227,7 @@ static Ink opq_ink_opt = INKINIT(
 	opq_dot,
 	opq_hline,
 	NOSTRENGTH,
-	FALSE,
+								 false,
 	NO_MC,
 	NO_FC,
 	INK_NEEDS_COLOR
@@ -242,7 +242,7 @@ static Ink lsp_ink_opt = INKINIT(
 	hsp_dot,
 	hsp_hline,
 	NOSTRENGTH,
-	TRUE,
+								 true,
 	clear_random_cashe,
 	NO_FC,
 	0
@@ -257,7 +257,7 @@ static Ink jmb_ink_opt = INKINIT(
 	jmb_dot,
 	gink_hline,
 	3,
-	FALSE,
+								 false,
 	NO_MC,
 	NO_FC,
 	INK_NEEDS_UNDO
@@ -272,7 +272,7 @@ static Ink out_ink_opt = INKINIT(
 	out_dot,
 	gink_hline,
 	NOSTRENGTH,
-	FALSE,
+								 false,
 	NO_MC,
 	NO_FC,
 	INK_NEEDS_UNDO
@@ -287,7 +287,7 @@ static Ink hsp_ink_opt = INKINIT(
 	hsp_dot,
 	hsp_hline,
 	NOSTRENGTH,
-	TRUE,
+								 true,
 	clear_random_cashe,
 	NO_FC,
 	0
@@ -302,7 +302,7 @@ static Ink des_ink_opt = INKINIT(
 	des_dot,
 	gink_hline,
 	50,
-	FALSE,
+								 false,
 	make_ink_bhash,
 	free_ink_bhash,
 	INK_NEEDS_UNDO
@@ -317,7 +317,7 @@ static Ink glr_ink_opt = INKINIT(
 	glr_dot,
 	gink_hline,
 	NOSTRENGTH,
-	FALSE,
+								 false,
 	make_glow_cashe,
 	free_glow_cashe,
 	INK_NEEDS_UNDO
@@ -332,7 +332,7 @@ static Ink tlc_ink_opt = INKINIT(
 	tlc_dot,
 	gink_hline,
 	50,
-	FALSE,
+								 false,
 	make_tsp_cashe,
 	free_ink_thash,
 	INK_NEEDS_COLOR
@@ -347,7 +347,7 @@ static Ink tsp_ink_opt = INKINIT(
 	tsp_dot,
 	tsp_hline,
 	50,
-	FALSE,
+								 false,
 	make_tsp_cashe,
 	free_ink_thash,
 	INK_NEEDS_UNDO|INK_NEEDS_COLOR
@@ -362,7 +362,7 @@ static Ink emb_ink_opt = INKINIT(
 	emb_dot,
 	gink_hline,
 	50,
-	FALSE,
+								 false,
 	make_ink_bhash,
 	free_ink_bhash,
 	INK_NEEDS_UNDO
@@ -377,7 +377,7 @@ static Ink dar_ink_opt = INKINIT(
 	tsp_dot,
 	tsp_hline,
 	50,
-	FALSE,
+								 false,
 	make_dar_cashe,
 	free_ink_thash,
 	INK_NEEDS_UNDO
@@ -392,7 +392,7 @@ static Ink clh_ink_opt = INKINIT(
 	clh_dot,
 	gink_hline,
 	NOSTRENGTH,
-	FALSE,
+								 false,
 	NO_MC,
 	NO_FC,
 	INK_NEEDS_UNDO
@@ -407,7 +407,7 @@ static Ink bri_ink_opt = INKINIT(
 	bri_dot,
 	gink_hline,
 	50,
-	FALSE,
+								 false,
 	make_ink_bhash,
 	free_ink_bhash,
 	INK_NEEDS_UNDO
@@ -422,7 +422,7 @@ static Ink add_ink_opt = INKINIT(
 	add_dot,
 	gink_hline,
 	NOSTRENGTH,
-	FALSE,
+								 false,
 	NO_MC,
 	NO_FC,
 	INK_NEEDS_UNDO|INK_NEEDS_COLOR
@@ -543,7 +543,7 @@ Ink *ink;
 	}
 
 	err = load_option_names((Option_tool *)ink_list, "ink_texts",
-			&ink_ss, FALSE);
+			&ink_ss, false);
 	if (err < Success)
 		return err;
 
@@ -574,9 +574,9 @@ l = (Ink *)ink_list;
 while (l != NULL)
 	{
 	code = inktab[l->ot.id];
-	l->dither = FALSE;
+	l->dither = false;
 	if (code&0x80)
-		l->dither = TRUE;
+		l->dither = true;
 	l->strength = (code & 0x7f);
 	l = l->ot.next;
 	}

@@ -23,9 +23,9 @@
  *			hence amounts to nothing at all).
  *
  *************************************************************************/
-Boolean pj_rcel_make_virtual(Rcel* subcel, Rcel* root, Rectangle* toclip)
+bool pj_rcel_make_virtual(Rcel* subcel, Rcel* root, Rectangle* toclip)
 {
-	Boolean ret;
+	bool ret;
 
 	ret = pj_clipbox_make(
 	  (Clipbox*)subcel, (Raster*)root, toclip->x, toclip->y, toclip->width, toclip->height);

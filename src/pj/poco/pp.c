@@ -771,7 +771,7 @@ static UBYTE* prep_line(Poco_cb* pcb, UBYTE* line_buf, UBYTE* word_buf, int bsiz
 		} else if (!iscsymf(c)) {
 			--bufrspace;
 		} else {
-			nxtchr = tokenize_word(--in, word_buf, NULL, NULL, &ttype, TRUE);
+			nxtchr = tokenize_word(--in, word_buf, NULL, NULL, &ttype, true);
 			if (NULL != (ts = pp_in_hash_list(word_buf, pcb->t.define_list))) {
 
 #ifdef DEBUG_PP
@@ -797,7 +797,7 @@ static void pp_ifdef(Poco_cb* pcb, char* line, char* word_buf, SHORT positive)
 	register Conditional* con;
 	SHORT ttype;
 
-	if (NULL == (line = tokenize_word(line, word_buf, NULL, NULL, &ttype, TRUE)) ||
+	if (NULL == (line = tokenize_word(line, word_buf, NULL, NULL, &ttype, true)) ||
 		ttype != TOK_UNDEF) {
 		po_expecting_got_str(pcb, macro_name, word_buf);
 	}
@@ -816,7 +816,7 @@ static void pp_ifdef(Poco_cb* pcb, char* line, char* word_buf, SHORT positive)
 /*****************************************************************************
  * process #if line - returns TRUE/FALSE, depending on expression evaluation.
  ****************************************************************************/
-static Boolean pp_if(Poco_cb* pcb, char* line, char* word_buf)
+static bool pp_if(Poco_cb* pcb, char* line, char* word_buf)
 {
 	register SHORT c;
 	SHORT len;
@@ -848,16 +848,16 @@ static Boolean pp_if(Poco_cb* pcb, char* line, char* word_buf)
 		} else if (!iscsymf(c)) {
 			--bufrspace;
 		} else {
-			nxtchr = tokenize_word(--in, word_buf, NULL, NULL, &ttype, TRUE);
+			nxtchr = tokenize_word(--in, word_buf, NULL, NULL, &ttype, true);
 			len	   = strlen(word_buf);
 			if (NULL == (ts = pp_in_hash_list(word_buf, pcb->t.define_list))) {
 				if (0 == po_eqstrcmp(word_buf, "defined")) {
 					if (NULL ==
-						(nxtchr = tokenize_word(nxtchr, word_buf, NULL, NULL, &ttype, TRUE)))
+						(nxtchr = tokenize_word(nxtchr, word_buf, NULL, NULL, &ttype, true)))
 						pp_say_fatal(if_defined_syntax);
 					if (ttype == '(') {
 						if (NULL ==
-							(nxtchr = tokenize_word(nxtchr, word_buf, NULL, NULL, &ttype, TRUE)))
+							(nxtchr = tokenize_word(nxtchr, word_buf, NULL, NULL, &ttype, true)))
 							pp_say_fatal(if_defined_syntax);
 						if (NULL == (nxtchr = po_skip_space(nxtchr)) || *nxtchr != ')')
 							pp_say_fatal(if_defined_syntax);
@@ -901,7 +901,7 @@ static void pp_define(Poco_cb* pcb, char* line, char* wrkbuf)
 	/*
 	 * isolate the name of the macro and validate it...
 	 */
-	line = tokenize_word(line, wrkbuf, NULL, NULL, &ttype, TRUE);
+	line = tokenize_word(line, wrkbuf, NULL, NULL, &ttype, true);
 	if (line == NULL || ttype != TOK_UNDEF)
 		po_expecting_got_str(pcb, macro_name, wrkbuf);
 	name = wrkbuf;
@@ -915,7 +915,7 @@ static void pp_define(Poco_cb* pcb, char* line, char* wrkbuf)
 	 */
 	if (*line && *line++ == '(') {
 		flags |= TSFL_HASPARMS;
-		line = tokenize_word(line, wrkbuf, NULL, NULL, &ttype, TRUE);
+		line = tokenize_word(line, wrkbuf, NULL, NULL, &ttype, true);
 		while (ttype != TOK_RPAREN) {
 			if (ttype != TOK_UNDEF)
 				po_expecting_got_str(pcb, macro_parmname, wrkbuf);
@@ -923,11 +923,11 @@ static void pp_define(Poco_cb* pcb, char* line, char* wrkbuf)
 				pp_say_fatal(macro_parmexceed);
 			parms[pcount] = wrkbuf;
 			wrkbuf += 1 + strlen(wrkbuf);
-			line = tokenize_word(line, wrkbuf, NULL, NULL, &ttype, TRUE);
+			line = tokenize_word(line, wrkbuf, NULL, NULL, &ttype, true);
 			if (ttype != ',' && ttype != TOK_RPAREN)
 				po_expecting_got_str(pcb, comma_or_rparen, wrkbuf);
 			else if (ttype != TOK_RPAREN)
-				line = tokenize_word(line, wrkbuf, NULL, NULL, &ttype, TRUE);
+				line = tokenize_word(line, wrkbuf, NULL, NULL, &ttype, true);
 		}
 	}
 
@@ -951,7 +951,7 @@ static void pp_define(Poco_cb* pcb, char* line, char* wrkbuf)
 		}
 		if (iscsymf(*line) && ttype == TOK_UNDEF) /* Last tok & this tok	*/
 			*wrkbuf++ = ' ';					  /* both UNDEF, add space*/
-		line = tokenize_word(line, wrkbuf, NULL, NULL, &ttype, TRUE);
+		line = tokenize_word(line, wrkbuf, NULL, NULL, &ttype, true);
 		if (ttype == '#') {
 			if (*line == '#') {
 				++line;						 /* double sharp - go backwards	*/
@@ -1012,7 +1012,7 @@ static void pp_undef(Poco_cb* pcb, char* line, char* word_buf)
 	SHORT ttype;
 	Text_symbol* ts;
 
-	if (NULL == (line = tokenize_word(line, word_buf, NULL, NULL, &ttype, TRUE)))
+	if (NULL == (line = tokenize_word(line, word_buf, NULL, NULL, &ttype, true)))
 		pp_say_fatal(macro_expect_name);
 
 	if (NULL != (ts = pp_in_hash_list(word_buf, pcb->t.define_list))) {
@@ -1025,10 +1025,10 @@ static void pp_undef(Poco_cb* pcb, char* line, char* word_buf)
 /*****************************************************************************
  *
  ****************************************************************************/
-static char* pp_chop_string(Poco_cb* pcb, char* line, char* word_buf, Boolean include_name)
+static char* pp_chop_string(Poco_cb* pcb, char* line, char* word_buf, bool include_name)
 {
 	char c;
-	Boolean already_tried_expansion = FALSE;
+	bool already_tried_expansion = false;
 
 	for (;;) {
 		if (NULL == (line = po_skip_space(line)))
@@ -1048,7 +1048,7 @@ static char* pp_chop_string(Poco_cb* pcb, char* line, char* word_buf, Boolean in
 			goto unexpected;
 
 		prep_line(pcb, line, word_buf, LINE_MAX);
-		already_tried_expansion = TRUE;
+		already_tried_expansion = true;
 	}
 
 	if (*(line = po_chop_to(++line, word_buf, c)) == 0)
@@ -1071,8 +1071,8 @@ static void pp_pragma(Poco_cb* pcb, char* line, char* word_buf)
 {
 	SHORT ttype;
 	int state			= 0;	/* state switch */
-	Boolean keep_quotes = TRUE; /* keep quotes on strings */
-	Boolean end_ok		= TRUE;
+	bool keep_quotes = true; /* keep quotes on strings */
+	bool end_ok		= true;
 	char* fatal;			/* fatal error text */
 	int want_pp_string = 0; /* 0 == non string token,
 							 * 1 == allow "<>" include delimiter as well as "",
@@ -1111,7 +1111,7 @@ static void pp_pragma(Poco_cb* pcb, char* line, char* word_buf)
 			case 1: {
 				if (0 == strcmp("library", word_buf)) {
 					want_pp_string = 1; /* want an include name */
-					end_ok		   = FALSE;
+					end_ok		   = false;
 					state		   = 3;
 				} else if (0 == strcmp("eof", word_buf)) {
 					prev_file_stack_entry(pcb); // pretend we hit EOF
@@ -1125,7 +1125,7 @@ static void pp_pragma(Poco_cb* pcb, char* line, char* word_buf)
 				} else if (0 == strcmp("stacksize", word_buf)) {
 					state = 2;
 				} else if (0 == strcmp("echo", word_buf)) {
-					keep_quotes = FALSE;
+					keep_quotes = false;
 					state		= 5;
 				} else {
 					fatal = pragma_unknown;
@@ -1160,7 +1160,7 @@ static void pp_pragma(Poco_cb* pcb, char* line, char* word_buf)
 					}
 				}
 				want_pp_string = 2;	   /* quotes only */
-				end_ok		   = TRUE; /* we can finish here */
+				end_ok		   = true; /* we can finish here */
 				strcpy(tbuf, path);
 				state = 4;
 				break;
@@ -1216,7 +1216,7 @@ static void pp_include(Poco_cb* pcb, char* line, char* word_buf)
 	FILE* fp;
 	char* path;
 
-	if (NULL == pp_chop_string(pcb, line, word_buf, TRUE))
+	if (NULL == pp_chop_string(pcb, line, word_buf, true))
 		pp_say_fatal(incl_name_missing);
 
 	if (NULL == (path = pp_findfile(pcb->t.include_dirs, word_buf)))
@@ -1241,7 +1241,7 @@ static void feed_preproc(Poco_cb* pcb, char* line, char* word_buf)
 
 	if (line != NULL) {
 
-		line = tokenize_word(line, word_buf, NULL, NULL, &ttype, TRUE);
+		line = tokenize_word(line, word_buf, NULL, NULL, &ttype, true);
 
 		/* define */
 
@@ -1286,13 +1286,13 @@ static void feed_preproc(Poco_cb* pcb, char* line, char* word_buf)
 		/* ifdef */
 
 		else if (po_eqstrcmp(word_buf, "ifdef") == 0) {
-			pp_ifdef(pcb, line, word_buf, TRUE);
+			pp_ifdef(pcb, line, word_buf, true);
 		}
 
 		/* ifndef */
 
 		else if (po_eqstrcmp(word_buf, "ifndef") == 0) {
-			pp_ifdef(pcb, line, word_buf, FALSE);
+			pp_ifdef(pcb, line, word_buf, false);
 		}
 
 		/* if */
@@ -1301,7 +1301,7 @@ static void feed_preproc(Poco_cb* pcb, char* line, char* word_buf)
 			register Conditional* con;
 
 			con				   = po_memalloc(pcb, sizeof(Conditional));
-			con->else_state	   = FALSE;
+			con->else_state	   = false;
 			con->next		   = pcb->t.ifdef_stack;
 			pcb->t.ifdef_stack = con;
 
@@ -1319,7 +1319,7 @@ static void feed_preproc(Poco_cb* pcb, char* line, char* word_buf)
 
 			if (con->else_state == PP_NO_ELSE_SEEN) {
 				if (con->state) {
-					con->state		= FALSE;
+					con->state		= false;
 					con->else_state = PP_DONE_ELIF;
 					++pcb->t.out_of_it;
 				} else {
@@ -1393,7 +1393,7 @@ void po_free_pp(Poco_cb* pcb)
 /*****************************************************************************
  * fire up the preprocessor, do pre-defined symbols & #include for main file.
  ****************************************************************************/
-Boolean po_init_pp(Poco_cb* pcb, char* filename)
+bool po_init_pp(Poco_cb* pcb, char* filename)
 {
 	char wrkstr[256];
 	register Names* cldefs;
@@ -1450,7 +1450,7 @@ Boolean po_init_pp(Poco_cb* pcb, char* filename)
 	if (pcb->builtin_lib != NULL)
 		feed_preproc(pcb, "#pragma poco library <poco$builtin>", pcb->t.line_b2);
 
-	return TRUE;
+	return true;
 }
 
 /*****************************************************************************

@@ -120,11 +120,11 @@ extern Button std_head1_sel;
 extern Button minipal_sel;
 
 /* for use in default input */
-extern Boolean check_pen_abort(void); /* checks for abort outside menus */
-extern Boolean check_esc_abort(void); /* abort menu on ESC */
-extern Boolean check_toggle_menu(void); /* toggles menu on right click */
-extern Boolean check_toggle_abort(void); /* toggles menu on right click, abort on ESC */
-extern Boolean check_undo_key(void);
+extern bool check_pen_abort(void); /* checks for abort outside menus */
+extern bool check_esc_abort(void); /* abort menu on ESC */
+extern bool check_toggle_menu(void); /* toggles menu on right click */
+extern bool check_toggle_abort(void); /* toggles menu on right click, abort on ESC */
+extern bool check_undo_key(void);
 
 /* text stuff */
 

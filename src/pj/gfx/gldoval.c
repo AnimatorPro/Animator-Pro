@@ -7,7 +7,7 @@ Errcode
 doval(SHORT xcen, SHORT ycen, SHORT xdiam, SHORT xaspect, SHORT yaspect,
 		dotout_func dotout, void *dotdat,
 		hline_func hlineout, void *hlinedat,
-		Boolean filled)
+			  bool filled)
 /* Draw an oval.   Diameter is in terms of x.  The y diameter is
  * 		ydiam = xdiam*yaspect/xaspect.
  * Note this function doesn't draw the same dot or same horizontal line

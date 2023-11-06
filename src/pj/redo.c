@@ -49,7 +49,8 @@ if (xfwrite(sr, 1, sizeof(*sr), rbf) < sizeof(*sr))
 	return softerr(xerrno(), "redo_points");
 return(Success);
 }
-Boolean get_spray_redo(Spray_redo *sr)
+
+bool get_spray_redo(Spray_redo *sr)
 {
 	return (xfread(sr, 1, sizeof(*sr), rbf) == sizeof(*sr));
 }
@@ -125,7 +126,7 @@ static Errcode redo_spray(Redo_rec *r)
 	if (err < Success)
 		return Err_abort;
 
-	err = spray_loop(redo_draw_get_pos, rbf, TRUE);
+	err = spray_loop(redo_draw_get_pos, rbf, true);
 	xffclose(&rbf);
 	return err;
 }
@@ -317,7 +318,7 @@ static Errcode redo_edit_text(Redo_rec *r)
 {
 	(void)r;
 
-	qpwtitles(FALSE);
+	qpwtitles(false);
 	return(Success);
 }
 static Errcode redo_edit_poly(Redo_rec *r)
@@ -435,7 +436,7 @@ auto_redo_draw(void *r, int ix, int intween, int scale, Autoarg *aa)
 	return _redo_draw(r);
 }
 
-static Boolean redo_exists(void)
+static bool redo_exists(void)
 {
 	return(vs.redo.type != REDO_NONE);
 }
@@ -450,7 +451,7 @@ Errcode err;
 	return(err);
 }
 
-void do_auto_redo(Boolean edit)
+void do_auto_redo(bool edit)
 
 /* this is what's called from the menu or keyboard redo button */
 {

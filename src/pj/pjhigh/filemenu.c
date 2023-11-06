@@ -408,7 +408,7 @@ SHORT tname;
 	clear_struct(&fscroller);
 	fscroller.top_name = tname; /* replace top name */
 
-	build_wild_list(&wild_lst, fq_drawer, wild_stringq.string, TRUE);
+	build_wild_list(&wild_lst, fq_drawer, wild_stringq.string, true);
 	fscroller.names = wild_lst;
 	fscroller.scroll_sel = &fscroll_sel;
 	fscroller.list_sel = &flist_sel;
@@ -477,7 +477,7 @@ static void fq_redraw_new_wild(void)
 
 static void fq_set_wild(Button *b)
 {
-	setf_stringq(&fwild_sel,FALSE,"%s",b->datme);
+	setf_stringq(&fwild_sel, false,"%s",b->datme);
 	fq_redraw_new_wild();
 }
 
@@ -521,10 +521,10 @@ for (;;)
 	split_copy_path(string, path_side, file_side);
 	if (name_is_wild(file_side))
 		{
-		setf_stringq(&fwild_sel, FALSE, "%s", file_side);
+		setf_stringq(&fwild_sel, false, "%s", file_side);
 		if (path_side[0] != 0)
 			{
-			setf_stringq(&fdrawer_sel,TRUE,"%s",path_side);
+			setf_stringq(&fdrawer_sel, true,"%s",path_side);
 			fq_new_drawer();
 			draw_buttontop(&fwild_sel);
 			draw_button(&fmu_sdots_sel); /* re hilite wild buttons */
@@ -538,14 +538,14 @@ for (;;)
 		{
 		if (file_side[0] == 0)	/* Directory only. */
 			{
-			setf_stringq(&fdrawer_sel,TRUE,"%s",path_side);
+			setf_stringq(&fdrawer_sel, true,"%s",path_side);
 			fq_new_drawer();
 			}
 		else
 			{
 			if (is_directory(string))
 				{
-				setf_stringq(&fdrawer_sel,TRUE,"%s",string);
+				setf_stringq(&fdrawer_sel, true,"%s",string);
 				fq_new_drawer();
 				}
 			else
@@ -659,8 +659,8 @@ error:
 
 
 char *pj_get_filename(char *prompt, char *suffi, char *button, 
-		   			  char *inpath, char *outpath, 
-					  Boolean force_suffix, SHORT *scroll_top_name,
+		   			  char *inpath, char *outpath,
+					  bool force_suffix, SHORT *scroll_top_name,
 					  char *wildcard)
 
 /* put up a file requestor.  If inpath or outpath are NULL then
@@ -713,7 +713,7 @@ SHORT top_name = 0;
 	}
 
 	if(!num_wilds || !pj_valid_suffix(&wildbufs[1]))
-		force_suffix = FALSE;
+		force_suffix = false;
 
 	split_copy_path(inpath,drawer_buf,fname_buf);
 	if(fname_buf[0] == 0)

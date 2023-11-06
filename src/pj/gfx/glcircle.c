@@ -1,7 +1,7 @@
 #include "gfx.ih"
 
 void circle(void *r,Pixel color, Coor centx, 
-			Coor centy, Ucoor diameter, Boolean filled)
+			Coor centy, Ucoor diameter, bool filled)
 
 /* for simple one color circles */
 {

@@ -38,26 +38,27 @@ int i;
 	}
 }
 
-void rub_poly_points(Poly *p, Boolean closed,
+void rub_poly_points(Poly *p,
+					 bool closed,
 	Pixel dit_color, Pixel dot_color, Pixel pt_color, Pixel pt1_color)
 {
 Marqihdr mh;
 
-cinit_marqihdr(&mh,dit_color,dot_color,TRUE);
+cinit_marqihdr(&mh,dit_color,dot_color, true);
 marqi_poly(&mh, p, closed);
 rub_wpoints(p,pt_color,pt1_color);
 }
 
-static void unrub_poly_points(Poly *p, Boolean closed)
+static void unrub_poly_points(Poly *p, bool closed)
 {
 Marqihdr mh;
 
-cinit_marqihdr(&mh,0,0,TRUE);
+cinit_marqihdr(&mh,0,0, true);
 undo_poly(&mh, p, closed);
 undraw_wpoints(p);
 }
 
-void move_poly_points(Poly *poly, Boolean closed)
+void move_poly_points(Poly *poly, bool closed)
 {
 LLpoint restore;
 LLpoint *lp;
@@ -108,7 +109,7 @@ Poly *poly;
 for (i=0; i<data->pcount; i++)
 	{
 	poly = data->polys[i];
-	cinit_marqihdr(mh,data->dit_colors[i],data->dot_colors[i],TRUE);
+	cinit_marqihdr(mh,data->dit_colors[i],data->dot_colors[i], true);
 	marqi_poly(mh,poly,vs.closed_curve);
 	}
 }
@@ -232,7 +233,8 @@ if ((err = init_circdat(&cd,cco)) < Success)
 	return(err);
 doval(cent.x,cent.y,q,
 	vb.pencel->aspect_dx, vb.pencel->aspect_dy,
-	cd.mh.pdot,&cd.mh,NULL,NULL,FALSE);
+	cd.mh.pdot,&cd.mh,NULL,NULL,
+	  false);
 save_undo();
 dests = mpl->polys;
 for (;;)
@@ -360,7 +362,7 @@ static Errcode shape_loop(Poly *poly
 Marqihdr mh;
 LLpoint *last;
 
-	cinit_marqihdr(&mh,oncolor,offcolor,TRUE);
+	cinit_marqihdr(&mh,oncolor,offcolor, true);
 	for (;;)
 	{
 		wait_input(MMOVE|MBPUP);

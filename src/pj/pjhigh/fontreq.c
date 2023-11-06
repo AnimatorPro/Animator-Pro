@@ -502,8 +502,8 @@ char *fpath;
 	if((fpath = pj_get_filename(stack_string("sel_any_font",sbuf),
 					 		".FNT;.PFB",
 							stack_string("sel_str",selb),
-				   			qfcb->fpath, lpath, 
-							FALSE, qfcb->ptop_name,
+				   			qfcb->fpath, lpath,
+								 false, qfcb->ptop_name,
 							qfcb->wildcard)) != NULL)
 	{
 		maybe_load_qcb_font(fpath);
@@ -548,7 +548,7 @@ char *name;
 	name = pj_get_path_name(qfcb->fpath);
 	saved_c = *name;
 	*name = 0;
-	build_wild_list(&font_scroller.names, qfcb->fpath, "*.*", FALSE);
+	build_wild_list(&font_scroller.names, qfcb->fpath, "*.*", false);
 	*name = saved_c;
 	font_scroller.scroll_sel = &fmu_scr_sel;
 	font_scroller.list_sel = &fmu_lis_sel;

@@ -45,10 +45,10 @@ Errcode current_device(char* dstr)
 	return Success;
 }
 
-Boolean pj_dmake_dir(const char* path)
+bool pj_dmake_dir(const char* path)
 {
 	(void)path;
-	return FALSE;
+	return false;
 }
 
 Errcode pj_dget_dir(int drive, char* dir)
@@ -98,7 +98,7 @@ Errcode make_good_dir(char* path)
 /* Wild list.                                                   */
 /*--------------------------------------------------------------*/
 
-static Errcode add_wild(Names** pwild_list, const char* path, Boolean is_directory)
+static Errcode add_wild(Names** pwild_list, const char* path, bool is_directory)
 {
 	const char* prefix = is_directory ? DIR_DELIM_STR : "";
 	const char* name;
@@ -132,7 +132,7 @@ static Errcode add_wild(Names** pwild_list, const char* path, Boolean is_directo
 static Errcode alloc_wild_list(Names** pwild_list,
 							   const char* drawer,
 							   const char* wild,
-							   Boolean get_dirs)
+							   bool get_dirs)
 {
 	Errcode err;
 
@@ -151,8 +151,8 @@ static Errcode alloc_wild_list(Names** pwild_list,
 		glob_t g;
 		size_t i;
 		size_t dir_len;
-		Boolean is_reg;
-		Boolean is_dir;
+		bool is_reg;
+		bool is_dir;
 
 		dir_len = strlen(drawer);
 		if (dir_len <= 0) {
@@ -199,7 +199,8 @@ error:
 	return err;
 }
 
-Errcode build_wild_list(Names** pwild_list, const char* drawer, const char* pat, Boolean get_dirs)
+Errcode build_wild_list(Names** pwild_list, const char* drawer, const char* pat,
+						bool get_dirs)
 {
 	Errcode err;
 

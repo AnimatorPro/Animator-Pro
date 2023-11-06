@@ -109,7 +109,7 @@ void flush_tflx(void)
 	if (flix.xf == NULL)
 		return;
 
-	flush_tsettings(FALSE);
+	flush_tsettings(false);
 	flush_flx_hidx(&flix);
 }
 
@@ -233,7 +233,7 @@ Errcode otempflx(void)
 	return err;
 }
 
-Errcode open_tempflx(Boolean reload_settings)
+Errcode open_tempflx(bool reload_settings)
 {
 	Errcode err;
 	(void)reload_settings;
@@ -384,7 +384,7 @@ static Errcode ring_loaded_anim(char* name, Errcode reason, int frame_count)
 	return (err);
 }
 
-static Errcode fli_to_tempflx(char* name, int extra_frames, Boolean allow_abort)
+static Errcode fli_to_tempflx(char* name, int extra_frames, bool allow_abort)
 /* closes old tflx and creates a new tempflx from a fli (file name)
  * this reports errors will attempt to allow a partial tempflx if
  * only part is read in */
@@ -528,7 +528,7 @@ done:
 	flush_tflx();
 	return (err);
 }
-Errcode make_tempflx(char* name, Boolean allow_abort)
+Errcode make_tempflx(char* name, bool allow_abort)
 {
 	Errcode err;
 

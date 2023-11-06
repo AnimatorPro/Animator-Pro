@@ -9,10 +9,10 @@ register int count;
 register UBYTE *p;
 UBYTE *lbuf;
 
-memset(c, FALSE, max_colors);
+memset(c, false, max_colors);
 if ((lbuf = pj_malloc(w = r->width)) == NULL)
 	{
-	memset(c, TRUE, max_colors);	/* on error set all colors as used */
+	memset(c, true, max_colors);	/* on error set all colors as used */
 	return(Err_no_memory);
 	}
 for(y = 0; y < r->height;++y)
@@ -21,7 +21,7 @@ for(y = 0; y < r->height;++y)
 	count = w;
 	p = lbuf;
 	while (--count >= 0)
-		c[*p++] = TRUE;
+		c[*p++] = true;
 	}
 pj_free(lbuf);
 return(Success);

@@ -10,7 +10,7 @@
 #include "rexlib.h"
 #include "softmenu.h"
 
-Errcode config_idriver(char *name, UBYTE *modes, Boolean use_modes, SHORT port)
+Errcode config_idriver(char *name, UBYTE *modes, bool use_modes, SHORT port)
 
 /* if use_modes is true then the modes in the input modes are used to set the 
  * asterisks in the choice menu. otherwise the asterisks are the defualts

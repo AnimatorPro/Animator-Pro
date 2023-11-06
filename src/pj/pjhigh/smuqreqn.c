@@ -1,8 +1,8 @@
 #include "reqlib.h"
 
-Boolean soft_qreq_number(short *inum,short min,short max,char *key,...)
+bool soft_qreq_number(short *inum,short min,short max,char *key,...)
 {
-Boolean ret;
+	bool ret;
 va_list args;
 
 	va_start(args,key);

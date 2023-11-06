@@ -68,7 +68,7 @@ int save_the_mask(char *name)
 	 * save_colors is FALSE */
 
 	if(mask_rast != NULL)
-		return(save_pic(name,(Rcel *)mask_rast,0,FALSE));
+		return(save_pic(name,(Rcel *)mask_rast,0, false));
 	return(Err_nogood);
 }
 
@@ -81,7 +81,7 @@ Errcode err;
 
 	if((err = newmask()) < 0)
 		return(err);
-	return(load_pic(name,(Rcel *)mask_rast,0,FALSE));
+	return(load_pic(name,(Rcel *)mask_rast,0, false));
 }
 
 static void qcreate_mask(void)
@@ -97,7 +97,7 @@ static void qcreate_mask(void)
 	}
 }
 
-static Boolean tog_mask(void)
+static bool tog_mask(void)
 {
 	vs.use_mask = !vs.use_mask;
 	if (vs.use_mask)
@@ -184,7 +184,7 @@ Rgb3 *white;
 	/* on pen clicks toggle cmaps to reveal of hide the picture around the 
 	 * mask right click or key breaks loop */
 
-	twocolor = TRUE;
+	twocolor = true;
 	for(;;)
 	{
 		if(twocolor)
@@ -252,7 +252,7 @@ error:
 	free_the_mask();
 }
 
-static void do_qfunc(void (*gfunc)(void), Boolean keep_undo)
+static void do_qfunc(void (*gfunc)(void), bool keep_undo)
 {
 Rcel_save undosave;
 
@@ -274,7 +274,7 @@ static void qinvert_mask(void)
 	qshow_mask();
 }
 
-static void do_qmask(Boolean keep_undo)
+static void do_qmask(bool keep_undo)
 {
 int choice;
 USHORT mdis[9];
@@ -346,5 +346,5 @@ void qmask(void)
 }
 void qmask_keep_undo(void)
 {
-	do_qmask(TRUE);
+	do_qmask(true);
 }

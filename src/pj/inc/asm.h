@@ -80,12 +80,12 @@ struct fndata;
 
 #endif /*  __WATCOMC__ */
 
-Boolean pj_clock_init(void);
+bool pj_clock_init(void);
 short	pj_set_gs(void);	/* sets GS reg to (and returns) PHAR_REAL_SEG */
 short	pj_get_gs(void);	/* returns contents of GS segreg */
 short	pj_get_ds(void);	/* returns contents of DS segreg */
 
-Boolean jgot_mouse(void);
+bool jgot_mouse(void);
 void jmousey(struct wabcd_regs *mouse_regs);
 void jcomm(union abcd_regs *comm_regs);
 
@@ -93,16 +93,16 @@ int pj_key_is(void);
 int pj_key_in(void);
 int dos_key_shift(void);
 void pj_dset_dta(struct fndata *dta);
-Boolean pj_dfirst(char *pattern, int attributes);
-Boolean pj_dnext(void);
+bool pj_dfirst(char *pattern, int attributes);
+bool pj_dnext(void);
 int pj_dset_drive(int drive); /* 0 = A: 1 = B: ... returns # of drives installed*/
 int pj_dget_drive(void);	/* returns current drive.  0 = A: 1 = B: ... */
 int pj_dcount_floppies(void);
-Boolean pj_dis_drive(int drive);	/* drive 0 = A:  1 = B: True if drive present*/
+bool pj_dis_drive(int drive);	/* drive 0 = A:  1 = B: True if drive present*/
 long pj_ddfree(int drive);	/* 0 = current.  1 = A:  2 = B: etc. */
-Boolean pj_dmake_dir(const char *path);
-Boolean _lodos_set_dir(char *path);
-Boolean pj_dget_dir(int drive, char *dir);	/* 0 = current, 1 = A: for drive */
+bool pj_dmake_dir(const char *path);
+bool _lodos_set_dir(char *path);
+Errcode pj_dget_dir(int drive, char *dir);	/* 0 = current, 1 = A: for drive */
 long dos_mem_free(void);
 
 int get_vmode(void);

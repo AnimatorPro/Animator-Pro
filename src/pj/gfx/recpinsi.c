@@ -1,6 +1,6 @@
 #include "rectang.h"
 
-Boolean ptinside_rect(Rectangle *b, SHORT x, SHORT y, SHORT inside)
+bool ptinside_rect(Rectangle *b, SHORT x, SHORT y, SHORT inside)
 {
 	if( ((x -= b->x) < inside)  
 		|| (x >= b->width-inside)

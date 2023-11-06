@@ -43,7 +43,7 @@ static int get_dowins(int bothwins)
 	return(DOFLI);
 }
 
-void cinit_marqihdr(Marqihdr *mh,Pixel oncolor,Pixel offcolor,Boolean bothwins)
+void cinit_marqihdr(Marqihdr *mh,Pixel oncolor,Pixel offcolor, bool bothwins)
 {
 	init_marqihdr(mh, (Wndo *)vb.pencel, NULL, oncolor, offcolor);
 	switch(get_dowins(bothwins))
@@ -59,7 +59,7 @@ void cinit_marqihdr(Marqihdr *mh,Pixel oncolor,Pixel offcolor,Boolean bothwins)
 	}
 }
 
-void vinit_marqihdr(Marqihdr *mh,int marqi_it,Boolean bothwins)
+void vinit_marqihdr(Marqihdr *mh,int marqi_it, bool bothwins)
 {
 Pixel oncolor,offcolor;
 
@@ -197,7 +197,7 @@ Vecdat vd;
 Short_xy pts[3]; 
 UBYTE *saves[3];
 
-	cinit_marqihdr(&mh,color,color,TRUE);
+	cinit_marqihdr(&mh,color,color, true);
 	if(p0->x == p2->x && p0->y == p2->y)  /* if same only one */
 		vd.count = 1;
 	else
@@ -314,7 +314,7 @@ Errcode get_rub_axis(Short_xy *ends,Pixel oncol,Pixel offcol)
 Rlinedat rd;
 
 	clear_struct(&rd);
-	cinit_marqihdr(&rd.mh,oncol,offcol,TRUE);
+	cinit_marqihdr(&rd.mh,oncol,offcol, true);
 	if((rd.save = pj_malloc(vb.pencel->width + vb.pencel->height)) == NULL)
 		return(Err_no_memory);
 
@@ -807,7 +807,8 @@ void savedraw_circle(Marqi_circdat *cd, Short_xy *cent,SHORT d)
 	cd->mh.dotbuf = cd->save; 
 	doval(cent->x,cent->y,d,
 		  vb.pencel->aspect_dx, vb.pencel->aspect_dy,
-		  savedraw_marqidot,&cd->mh,NULL,NULL,FALSE);
+		  savedraw_marqidot,&cd->mh,NULL,NULL,
+		  false);
 	cd->saved = 1;
 }
 void restore_circle(Marqi_circdat *cd, Short_xy *cent, SHORT d)
@@ -818,7 +819,8 @@ void restore_circle(Marqi_circdat *cd, Short_xy *cent, SHORT d)
 	cd->mh.dotbuf = cd->save; 
 	doval(cent->x,cent->y,d,
 		  vb.pencel->aspect_dx, vb.pencel->aspect_dy,
-	      restore_marqidot,&cd->mh,NULL,NULL,FALSE);
+	      restore_marqidot,&cd->mh,NULL,NULL,
+		  false);
 }
 
 static int anim_rubcirc(Marqi_circdat *cd)
@@ -855,7 +857,8 @@ Short_xy cent;
 	}
 	doval(cd->cent.x,cd->cent.y,cd->d,
 		  vb.pencel->aspect_dx, vb.pencel->aspect_dy,
-	      cd->mh.pdot,&(cd->mh),NULL,NULL,FALSE);
+	      cd->mh.pdot,&(cd->mh),NULL,NULL,
+		  false);
 
 out:
 	cd->mh.dmod = cd->mh.smod++;
@@ -864,7 +867,7 @@ out:
 
 Errcode init_circdat(Marqi_circdat *cd, Pixel color)
 {
-cinit_marqihdr(&cd->mh,color,color,TRUE);
+cinit_marqihdr(&cd->mh,color,color, true);
 
 if(NULL == (cd->save = pj_malloc((vb.pencel->width + vb.pencel->height)*3)))
 	return(Err_no_memory);

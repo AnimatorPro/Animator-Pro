@@ -73,8 +73,8 @@ typedef struct text_file
 
 /* textedit.c */
 extern void free_text_file(Text_file *gf);
-extern Boolean edit_text_file(Text_file *gf);
-extern Errcode get_rub_twin(Text_file *gf, Boolean cutout);
+extern bool edit_text_file(Text_file *gf);
+extern Errcode get_rub_twin(Text_file *gf, bool cutout);
 
 /* textfile.c */
 extern Errcode load_text_file(Text_file *gf, char *name);

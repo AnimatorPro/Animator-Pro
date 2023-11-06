@@ -16,23 +16,23 @@ extern void 	pp_say_fatal(char *fmt, ...);
 
 static char 	*lbuf;
 static char 	*tok;
-static Boolean	reuse;
+static bool reuse;
 static SHORT	ttype;
 
 static char 	missing_rparen[] = "missing )";
 
-static Boolean pp_token(void)
+static bool pp_token(void)
 /*****************************************************************************
  *
  ****************************************************************************/
 {
 if (reuse)
-	return FALSE == (reuse = FALSE);	/* ie, return TRUE */
+	return false == (reuse = false);	/* ie, return TRUE */
 else
 	{
 	if (lbuf == NULL)
-		return(FALSE);
-	return (NULL != (lbuf = tokenize_word(lbuf, tok, NULL, NULL, &ttype, TRUE)));
+		return(false);
+	return (NULL != (lbuf = tokenize_word(lbuf, tok, NULL, NULL, &ttype, true)));
 	}
 }
 
@@ -116,7 +116,7 @@ for (;;)
 			ret *= pp_not();
 		else
 			{
-			reuse = TRUE;
+			reuse = true;
 			return ret;
 			}
 		}
@@ -382,7 +382,7 @@ long po_pp_eval(char *line, char *buf)
  ****************************************************************************/
 {
 /* null expression evaluates to zero  */
-if (NULL == tokenize_word(line, buf, NULL, NULL, &ttype, TRUE))
+if (NULL == tokenize_word(line, buf, NULL, NULL, &ttype, true))
 	return 0;
 
 reuse = 0;

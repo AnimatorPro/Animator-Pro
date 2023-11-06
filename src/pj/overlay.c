@@ -48,7 +48,8 @@ Vset_path cpath;
 	vset_get_pathinfo(FLI_PATH,&cpath);
 	if((title = pj_get_filename(stack_string(overl_msgs[how],sbuf),
 								".FLC;.CEL;.FLI", ok_str,
-								cpath.path,NULL,FALSE, 
+								cpath.path,NULL,
+								 false,
 								&cpath.scroller_top,cpath.wildcard))!=NULL)
 	{
 		ounder = vs.render_under;
@@ -86,7 +87,7 @@ typedef struct abtdat {
 	USHORT *totframes;
 } Vabortdat;
 
-static Boolean olay_abort_verify(void *vabortdat)
+static bool olay_abort_verify(void *vabortdat)
 {
 	Vabortdat *vd = vabortdat;
 	return(soft_yes_no_box("!%d%d", "olay_abort", *vd->frame+1, 
@@ -105,7 +106,7 @@ int i = 0;
 int fit_option;
 int fcount;
 Vabortdat vd;
-Boolean overlay_fit;
+bool overlay_fit;
 
 	clear_struct(&flif);
 
@@ -113,7 +114,7 @@ Boolean overlay_fit;
 	vd.frame = &i;
 	set_abort_verify(olay_abort_verify,&vd);
 
-	if((err = save_pic(screen_name, vb.pencel,0,TRUE)) < 0)
+	if((err = save_pic(screen_name, vb.pencel,0, true)) < 0)
 		goto error;
 
 	err = pj_fli_open(title, &flif, XREADONLY);
@@ -178,18 +179,18 @@ Boolean overlay_fit;
 				case 0:	/* both are same.  yea! */
 				case 3: /*use overlay cmap */
 				case 4:	/* No Fit */
-					overlay_fit = FALSE;
+					overlay_fit = false;
 					break;
 				case 1: /* compromise cmap */
 				case 2:	/* keep current */
-					overlay_fit = TRUE;
+					overlay_fit = true;
 					break;
 				}
-			move_rcel(loadcel,overlay_fit,FALSE);
+			move_rcel(loadcel,overlay_fit, false);
 
 			if(!soft_yes_no_box("olay_start"))
 			{
-				load_pic(screen_name, vb.pencel, 0, TRUE);
+				load_pic(screen_name, vb.pencel, 0, true);
 				goto aborted;
 			}
 			/* we're committed now */
@@ -208,7 +209,8 @@ Boolean overlay_fit;
 				if ((fcount = flif.hdr.frame_count-1) == 0)
 					fcount = 1;
 				pj_rcel_copy(vb.pencel, undof);
-				if((err = transpblit(loadcel, 0, FALSE, 
+				if((err = transpblit(loadcel, 0,
+									  false,
 					(i*(long)100+flif.hdr.frame_count/2)/fcount)) < Success)
 				{
 					goto error;

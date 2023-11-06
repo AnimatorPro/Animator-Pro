@@ -23,7 +23,7 @@ free_dl_list(&state->links);
 init_tween_state(state);
 }
 
-Boolean tween_has_data(Tween_state *ts)
+bool tween_has_data(Tween_state *ts)
 {
 	return((ts->p0.polymagic==POLYMAGIC) && (ts->p1.polymagic==POLYMAGIC));
 }
@@ -87,7 +87,8 @@ return(Success);
 
 
 Errcode tween_add_a_link(Tween_state *ts, int startix, int endix
-, Boolean closed, Tween_link **pnewl)
+,
+						 bool closed, Tween_link **pnewl)
 /* This will if necessary rotate the vertices of a closed polygon so
  * that the first points correspond to the first links.  
  * Then it adds the link.
@@ -184,7 +185,7 @@ else
 
 Errcode calc_path_pos( Poly *poly,
 						   Short_xyz *delta_array,
-						   int scale, Boolean closed)
+						   int scale, bool closed)
 /* Put position along poly corresponding to scale into delta_array */
 {
 Short_xyz *vtx;
@@ -305,7 +306,7 @@ while (--count >= 0)
 }
 
 
-Errcode ts_to_tw_list(Tween_state *vin, Boolean closed, Tw_tlist *tout)
+Errcode ts_to_tw_list(Tween_state *vin, bool closed, Tw_tlist *tout)
 /* Given a Tween_state - that is the beginning and end polygons and
  * a list of which points in the beginning poly are connected to which
  * points in the end,  generate a tween-list, which is an intermediate
@@ -459,7 +460,7 @@ stopper->y = TMUL_SHIFT(lp0->y, lp1->y, scale);
 stopper->z = TMUL_SHIFT(lp0->z, lp1->z, scale);
 }
 
-static void calc_tw_list(Tw_tlist *tls, Boolean closed, int scale)
+static void calc_tw_list(Tw_tlist *tls, bool closed, int scale)
 {
 Tw_thread *link, *next;
 
@@ -480,7 +481,7 @@ if (!closed)
 }
 
 
-void calc_tween_points(Tw_tlist *tl, Boolean closed, int scale, 
+void calc_tween_points(Tw_tlist *tl, bool closed, int scale,
 	Short_xyz **ppts, int *pcount)
 /* This returns an array of short_xyz points *pcount long in *ppts
  * which contains the inbetween polygon for the integer scaling

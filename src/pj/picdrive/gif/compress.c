@@ -105,7 +105,7 @@ static void init_table(int min_code_size)
 	memset(hash_table,0,TABLE_SIZE*sizeof(*hash_table));
 }
 
-static Boolean flush(unsigned int n)
+static bool flush(unsigned int n)
 /*****************************************************************************
  * 0 if ok 1 if error in static global err_status
  *****************************************************************************/
@@ -120,7 +120,7 @@ static Boolean flush(unsigned int n)
 	return(0);
 }
 
-static Boolean write_code(int code)
+static bool write_code(int code)
 /*****************************************************************************
  * returns 0 if ok 1 if error and error code is set in
  * static local variable err_status

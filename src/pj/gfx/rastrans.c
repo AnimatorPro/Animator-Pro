@@ -23,7 +23,7 @@ typedef struct thread {
 
 typedef struct rxfdata {
 	Short_xy source_poly[4];
-	Boolean moved;
+	bool moved;
 	Rot_seg *rs1, *rs2;
 	Rcel *src_cel;
 	Thread thread1;
@@ -84,9 +84,9 @@ static void find_thread(register Thread *thread,
 {
 register SHORT ix, oix;
 register SHORT count;
-Boolean first;
+bool first;
 
-	first = TRUE;
+	first = true;
 	oix = ix = xf->mmax.ymin_ix;
 	count = 0;
 	do
@@ -100,7 +100,7 @@ Boolean first;
 			{
 				thread->dpoints[0] = xf->bpoly[oix];
 				thread->spoints[0] = rxd->source_poly[oix];
-				first = FALSE;
+				first = false;
 			}
 		}
 		count++;
@@ -242,7 +242,7 @@ Errcode raster_transform(Rcel *src_cel,Rcel *dscreen,Xformspec *xf,
 						 Errcode (*putline)(void *plinedat, Pixel *line,
 						 					Coor x, Coor y, Ucoor width), 
 						 void *plinedat,
-						 Boolean erase_last,
+  bool erase_last,
 
 						 /* these are only needed if erase_last is true */
 
@@ -357,23 +357,23 @@ error:
 	return(err);
 }
 
-Boolean isin_bpoly(Xformspec *xf,Rcel *src_cel,SHORT x,SHORT y)
+bool isin_bpoly(Xformspec *xf,Rcel *src_cel,SHORT x,SHORT y)
 {
-Boolean ret;
+	bool ret;
 Rxfdata rxd;
 SHORT myy;
 SHORT x1, x2;
 
 	rxd.src_cel = src_cel;
 	if(build_threads(xf, &rxd) < Success)
-		return(TRUE);
+		return(true);
 
 	if (x >= xf->mmax.x && x < xf->mmax.MaxX && 
 		y >= xf->mmax.y && y < xf->mmax.MaxY)
 	{
 		if (xf->mmax.height <= 1)	/* yuck special case */
 		{
-			ret = TRUE;
+			ret = true;
 		}
 		else
 		{
@@ -387,7 +387,7 @@ SHORT x1, x2;
 		}
 	}
 	else 
-		ret = FALSE;
+		ret = false;
 	free_threads(&rxd);
 	return(ret);
 }

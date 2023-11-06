@@ -29,7 +29,8 @@ void free_wild_list(Names **pwild_list);
 
 extern Errcode
 build_wild_list(Names **pwild_list,
-		const char *drawer, const char *pat, Boolean get_dirs);
+		const char *drawer, const char *pat,
+							   bool get_dirs);
 
 Names *merge_wild_lists(Names *l1, Names *l2); /* merges two sorted lists */
 

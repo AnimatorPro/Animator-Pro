@@ -19,6 +19,6 @@ extern void clear_flipath(Flipath *fp);
 extern void copy_flipath(Flipath *a, Flipath *b);
 extern Errcode alloc_flipath(char *fliname, Flifile *flif, Flipath **pfpath);
 extern void free_flipath(Flipath **fp);
-extern Boolean flipaths_same(Flipath *pa, Flipath *pb);
+extern bool flipaths_same(Flipath *pa, Flipath *pb);
 
 #endif

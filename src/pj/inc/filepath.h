@@ -145,15 +145,15 @@ int get_drawer_len(char *path);
 int path_prefix_len(char *path);
 
 void remove_suffix(char *path);
-Boolean suffix_in(char *path, char *suff);
+bool suffix_in(char *path, char *suff);
 int parse_to_semi(char **in, char *out,int maxlen);
 
-Boolean pj_valid_suffix(char *suff);
-Boolean has_a_suffix(char *path);
+bool pj_valid_suffix(char *suff);
+bool has_a_suffix(char *path);
 char *fix_suffix(char *path);
 
 void pj_set_path_name(char *path, char *name); /* changes, adds name to path */
-Boolean pj_name_in_path(char *path, char *name); /* true if path has name */
+bool pj_name_in_path(char *path, char *name); /* true if path has name */
 
 Errcode get_path_device(char *path,char *device);
 Errcode get_full_path(const char *path, char *fullpath);

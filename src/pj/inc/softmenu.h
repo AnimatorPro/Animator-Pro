@@ -236,7 +236,7 @@ typedef struct keyequiv {
 #define KE_LOADED 0x0002
 
 Errcode load_key_equivs(char *symname, Keyequiv *kfin, unsigned int count);
-Boolean do_keyequiv(SHORT key, Keyequiv *kf, unsigned int count);
-Boolean hit_keyequiv(Keyequiv *ke, SHORT key);
+bool do_keyequiv(SHORT key, Keyequiv *kf, unsigned int count);
+bool hit_keyequiv(Keyequiv *ke, SHORT key);
 
 #endif /* SOFTMENU_H */

@@ -20,7 +20,7 @@ void cleanup_wait_wndo(Wscreen *s)
 		s->wait_box = NULL;
 	}
 }
-static Boolean autorem_wait_wndo(Waitask *wt)
+static bool autorem_wait_wndo(Waitask *wt)
 {
 	cleanup_wait_wndo((Wscreen *)(wt->data));
 	return(1);
@@ -64,7 +64,7 @@ Vfont *f;
 
 	tbuf = sbuf;
 	if((err = get_formatted_ftext(&tbuf,sizeof(sbuf),
-								  formats,text,args,FALSE)) < Success)
+								  formats,text,args, false)) < Success)
 	{
 		return(err);
 	}

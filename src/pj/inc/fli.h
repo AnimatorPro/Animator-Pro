@@ -234,7 +234,7 @@ Errcode pj_fli_add_ring(char *name, Flifile *flif, void *cbuf,
 
 /* empty record handleing */
 
-Boolean pj_i_is_empty_rec(Fli_frame *frame);
+bool pj_i_is_empty_rec(Fli_frame *frame);
 void pj_i_get_empty_rec(Fli_frame *frame);
 Errcode pj_i_add_empty(char *name,Flifile *flif);
 Errcode pj_i_add_empty_ring(char *name,Flifile *flif);
@@ -251,7 +251,8 @@ Errcode pj_i_add_empty_ring(char *name,Flifile *flif);
 extern LONG
 pj_fli_comp_rect(void *comp_buf,
 		struct rcel *last_screen, struct rcel *this_screen,
-		struct rectangle *rect, Boolean do_colors, SHORT frame_type,
+		struct rectangle *rect,
+							 bool do_colors, SHORT frame_type,
 		Flicomp comp_type);
 
 extern LONG
@@ -286,7 +287,8 @@ extern Errcode fli_read_colors(Flifile *flif, struct cmap *cmap);
 
 extern Errcode
 pj_i_read_uncomp1(char *fname, Flifile *flif, struct rcel *fscreen,
-		Fli_frame *ff, Boolean colors);
+		Fli_frame *ff,
+								 bool colors);
 
 extern Errcode
 pj_fli_read_uncomp(char *name, Flifile *flif, struct rcel *fscreen,
@@ -294,11 +296,11 @@ pj_fli_read_uncomp(char *name, Flifile *flif, struct rcel *fscreen,
 
 extern Errcode
 pj_fli_read_first(char *name, Flifile *flif, struct rcel *fscreen,
-		Boolean colors);
+								 bool colors);
 
 extern Errcode
 pj_fli_read_next(char *name, Flifile *flif, struct rcel *fscreen,
-		Boolean colors);
+								bool colors);
 
 extern int fli_wrap_frame(Flifile *flif, int frame);
 
@@ -364,7 +366,7 @@ extern void flx_seek_frame_with_data(SHORT frame, void *data);
 /* savefli.c */
 extern void dirties(void);
 extern void cleans(void);
-extern Boolean need_scrub_frame(void);
+extern bool need_scrub_frame(void);
 extern Errcode scrub_frame_save_undo(void);
 extern Errcode scrub_cur_frame(void);
 extern Errcode sub_cur_frame(void);

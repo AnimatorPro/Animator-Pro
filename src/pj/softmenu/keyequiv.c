@@ -45,12 +45,13 @@ void *ss;
 	smu_free_scatters(&ss);
 	return(Success);
 }
-Boolean do_keyequiv(SHORT key, Keyequiv *kf, unsigned int count)
+
+bool do_keyequiv(SHORT key, Keyequiv *kf, unsigned int count)
 {
 Keyequiv *max;
 
 	if(!JSTHIT(KEYHIT))
-		return(FALSE);
+		return(false);
 
 	if((UBYTE)key)
 		key = tolower((UBYTE)key);
@@ -65,16 +66,17 @@ Keyequiv *max;
 			kf->doit();
 			if(kf->flags & KE_HIDE)
 				show_mp();
-			return(TRUE);
+			return(true);
 		}
 		++kf;
 	}
-	return(FALSE);
+	return(false);
 }
-Boolean hit_keyequiv(Keyequiv *ke, SHORT key)
+
+bool hit_keyequiv(Keyequiv *ke, SHORT key)
 {
 	if(!JSTHIT(KEYHIT))
-		return(FALSE);
+		return(false);
 
 	if((UBYTE)key)
 		return(tolower((UBYTE)key) == ke->key);

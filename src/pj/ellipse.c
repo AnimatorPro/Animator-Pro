@@ -35,7 +35,7 @@ int xrad,yrad;
 	if((err = rub_circle_diagonal(&cent,&diam,color)) < 0 )
 		goto OUT;
 
-	cinit_marqihdr(&mh,color,color,TRUE);
+	cinit_marqihdr(&mh,color,color, true);
 	xrad = yrad = (diam+1)>>1;
 	theta_offset = 0;
 	bk = 0;
@@ -48,9 +48,9 @@ int xrad,yrad;
 					  WP_ELLIPSE, yrad);
 		if(bk)
 			break;
-		marqi_poly(&mh,poly,TRUE);
+		marqi_poly(&mh,poly, true);
 		wait_input(MBPEN|MBRIGHT|MMOVE);
-		undo_poly(&mh,poly,TRUE);
+		undo_poly(&mh,poly, true);
 		if(JSTHIT(MBPEN|MBRIGHT|KEYHIT))
 		{
 			if (JSTHIT(MBRIGHT|KEYHIT))
@@ -77,7 +77,7 @@ Errcode ovalf_tool(Pentool *pt, Wndo *w)
 		return(Success);
 	save_undo();
 	if((err = oval_loop(&working_poly, vs.ccolor,&x,&y,&rad)) >= Success)
-		err = maybe_finish_polyt(vs.fillp,TRUE);
+		err = maybe_finish_polyt(vs.fillp, true);
 	return(err);
 }
 

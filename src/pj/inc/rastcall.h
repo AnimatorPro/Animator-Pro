@@ -38,7 +38,7 @@ Ucoor pj_lclip2rects(Coor *aval, Coor *bval, Ucoor length, Ucoor amax, Ucoor bma
  * the root, returns FALSE if the new boundarys do not intersect with the
  * root */
 
-Boolean pj_clipbox_make(Clipbox *cb, RASType *r,
+bool pj_clipbox_make(Clipbox *cb, RASType *r,
 					  Coor x,Coor y,Coor width,Coor height);
 
 /* direct calls to build bytemap rasters */

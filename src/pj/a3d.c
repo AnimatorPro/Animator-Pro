@@ -190,13 +190,13 @@ static Tween_state ado_tween_el;
 static Tw_tlist ado_tlist;
 static Poly ado_path_poly;	/* a place for the path in RAM */
 
-static Boolean is_poly_el(void)
+static bool is_poly_el(void)
 {
 	return(vs.ado_source == OPS_SPLINE || vs.ado_source == OPS_POLY);
 }
 
 /* is it a vector element or a raster element? */
-static Boolean is_vector(void)
+static bool is_vector(void)
 {
 	return(vs.ado_source == OPS_TWEEN || is_poly_el());
 }
@@ -285,7 +285,7 @@ move_vpoly(
 			int scale,	/* How far into this tranformation?  0 to SCALE_ONE */
 			Poly *path_poly,
 			int path_type,
-			Boolean path_closed
+					  bool path_closed
 			)	/* We got a path to cope with too? */
 /* Do one full optics transformation to a list of points */
 {
@@ -424,7 +424,7 @@ Rectangle rect;
 int i;
 Poly3 vpoly;
 Errcode err;
-Boolean tclosed;
+bool tclosed;
 int tcount;
 Short_xyz *tpoints;
 
@@ -726,7 +726,7 @@ static void undo_ado_poly(Marqihdr *mh,Poly2 *apoly,int scale)
 }
 
 
-static Errcode ado_preview(Boolean doloop)
+static Errcode ado_preview(bool doloop)
 /* Go do a wire-frame simulation of what ado move will look like
    so user can get a sense of what the timing will be before
    he goes to the pixel perfect (and slow) preview or even
@@ -739,7 +739,7 @@ long clock;
 int scale; 
 int lscale = 0; /* init to get rid of warning */
 Marqihdr mh;
-Boolean first = TRUE;
+bool first = true;
 Poly2 dpoly, ldpoly;
 
 	clear_struct(&dpoly);
@@ -800,7 +800,7 @@ OUT:
 void mado_loop(void)
 {
 	hide_mp();
-	ado_preview(TRUE);
+	ado_preview(true);
 	show_mp();
 }
 
@@ -810,7 +810,7 @@ void mado_view(void)
    routine */
 {
 	hide_mp();
-	ado_preview(FALSE);
+	ado_preview(false);
 	show_mp();
 }
 
@@ -1422,7 +1422,7 @@ static void ado_selit(Menuhdr *mh, SHORT hitid)
 			break;
 		case ELE_STW_PUL:		/* Set Tween */
 		{
-			tween_menu(FALSE);
+			tween_menu(false);
 			vs.ado_source = OPS_TWEEN;
 			break;
 		}
@@ -1753,11 +1753,11 @@ vs.move3.next = as;
 return(Success);
 }
 
-static void a3d_check_el(Boolean *no_poly, Boolean *no_tween)
+static void a3d_check_el(bool*no_poly, bool*no_tween)
 /* make sure that the optics element exists.  If it doesn't set it to
  * the Flic */
 {
-Boolean np, nt;
+bool np, nt;
 
 	if (thecel == NULL)
 		{
@@ -1779,10 +1779,10 @@ Boolean np, nt;
 }
 
 
-static Boolean do_a3dpull(Menuhdr *mh)
+static bool do_a3dpull(Menuhdr *mh)
 /* set disable flags and asterisks in items. */
 {
-Boolean no_poly, no_tween;
+		bool no_poly, no_tween;
 
 	a3d_check_el(&no_poly, &no_tween);
 	set_pul_disable(mh, ELE_CEL_PUL, thecel==NULL);
@@ -1803,10 +1803,10 @@ Boolean no_poly, no_tween;
 	pul_xflag(mh,ELE_OUT_PUL, vs.ado_outline);
 	return(menu_dopull(mh));
 }
-static Boolean do_a3d_keys(void)
+static bool do_a3d_keys(void)
 {
  	if(check_esc_abort())
-		return(TRUE);
+		return(true);
 	return(common_header_keys());
 }
 void go_ado(void)
@@ -1816,7 +1816,7 @@ Menuhdr tpull;
 char optics_str[16];		/* The word optics in local language */
 void *ss;
 Pentool *optool;
-Boolean no_poly, no_tween;
+bool no_poly, no_tween;
 
 
 	stack_string("optics_str",optics_str);

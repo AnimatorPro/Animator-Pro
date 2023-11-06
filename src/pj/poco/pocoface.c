@@ -575,7 +575,7 @@ OUT:
  ****************************************************************************/
 Errcode run_poco(void** ppexe,
 				 char* trace_file,
-				 Boolean (*check_abort)(void*),
+				 bool (*check_abort)(void*),
 				 void* check_abort_data,
 				 long* err_line)
 {
@@ -583,7 +583,7 @@ Errcode run_poco(void** ppexe,
 	if ((porunenv = *ppexe) == NULL)
 		return (Err_not_found);
 
-	porunenv->enable_debug_trace  = TRUE;
+	porunenv->enable_debug_trace  = true;
 	porunenv->check_abort		  = check_abort;
 	porunenv->check_abort_data	  = check_abort_data;
 	porunenv->trace_file		  = trace_file;

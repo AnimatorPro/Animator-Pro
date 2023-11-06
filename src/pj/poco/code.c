@@ -88,7 +88,7 @@ void po_trash_code_buf(Poco_cb* pcb, Code_buf* c)
 /*****************************************************************************
  * add code to buffer, expand buffer if needed.
  ****************************************************************************/
-static Boolean add_code(Poco_cb* pcb, Code_buf* cbuf, void* ops, SHORT op_size)
+static bool add_code(Poco_cb* pcb, Code_buf* cbuf, void* ops, SHORT op_size)
 {
 	Code* next_op;
 	register unsigned int ropsize = op_size;
@@ -99,7 +99,7 @@ static Boolean add_code(Poco_cb* pcb, Code_buf* cbuf, void* ops, SHORT op_size)
 	}
 	if (cbuf->cryptic != CCRYPTIC) {
 		po_say_internal(pcb, "add_code using uninitialized code_buf");
-		return (FALSE);
+		return (false);
 	}
 #endif
 
@@ -142,13 +142,13 @@ static Boolean add_code(Poco_cb* pcb, Code_buf* cbuf, void* ops, SHORT op_size)
 	}
 
 	cbuf->code_pt = next_op;
-	return (TRUE);
+	return (true);
 }
 
 /*****************************************************************************
  * Add a new opcode, and optional data for the op.
  ****************************************************************************/
-Boolean po_add_op(Poco_cb* pcb, Code_buf* cbuf, int op, void* data, SHORT data_size)
+bool po_add_op(Poco_cb* pcb, Code_buf* cbuf, int op, void* data, SHORT data_size)
 {
 #ifdef DEVELOPMENT
 	if (op <= OP_BAD || op >= OP_PAST_LAST) {
@@ -156,13 +156,13 @@ Boolean po_add_op(Poco_cb* pcb, Code_buf* cbuf, int op, void* data, SHORT data_s
 	}
 #endif /* DEVELOPMENT */
 	if (!add_code(pcb, cbuf, &op, sizeof(op))) {
-		return FALSE;
+		return false;
 	}
 	if (data_size > 0) {
 		return add_code(pcb, cbuf, data, data_size);
 	}
 
-	return TRUE;
+	return true;
 }
 
 /*****************************************************************************
@@ -190,25 +190,25 @@ long po_cbuf_code_size(Code_buf* c)
 /*****************************************************************************
  * concatenate two chunks of code...
  ****************************************************************************/
-Boolean po_concatenate_code(Poco_cb* pcb, Code_buf* dest, Code_buf* end)
+bool po_concatenate_code(Poco_cb* pcb, Code_buf* dest, Code_buf* end)
 {
 	SHORT size;
 
 	if (0 == (size = end->code_pt - end->code_buf))
-		return TRUE;
+		return true;
 	return (add_code(pcb, dest, end->code_buf, size));
 }
 
 /*****************************************************************************
  * make dest a copy of source
  ****************************************************************************/
-Boolean po_copy_code(Poco_cb* pcb, Code_buf* source, Code_buf* dest)
+bool po_copy_code(Poco_cb* pcb, Code_buf* source, Code_buf* dest)
 {
 	SHORT size;
 
 	dest->code_pt = dest->code_buf; /* reset dest code pt. back to start */
 	if (0 == (size = source->code_pt - source->code_buf))
-		return TRUE;
+		return true;
 	return (add_code(pcb, dest, source->code_buf, size));
 }
 
@@ -320,20 +320,20 @@ void po_int_fixup(Code_buf* cbuf, long fixup_pos, int val)
 /*****************************************************************************
  * Scan through label references and add offset where label declared.
  ****************************************************************************/
-static Boolean resolve_labels(Poco_cb* pcb, Poco_frame* pf)
+static bool resolve_labels(Poco_cb* pcb, Poco_frame* pf)
 {
 	Code_label *cl, *cnext;
 	Use_label *ul, *unext;
 	long offset;
 	Code* cbuf;
-	Boolean retval = TRUE;
+	bool retval = true;
 
 	cbuf  = pf->fcd.code_buf;
 	cnext = pf->labels;
 	while ((cl = cnext) != NULL) {
 		if (cl->lvar != NULL && cl->code_pos == 0) {
 			po_undefined(pcb, cl->lvar->name);
-			retval = FALSE;
+			retval = false;
 		}
 		unext = cl->uses;
 		while ((ul = unext) != NULL) {
@@ -354,12 +354,12 @@ static Boolean resolve_labels(Poco_cb* pcb, Poco_frame* pf)
  *	and convert local-symbol-list to parameter-only-list.
  *	Resolve labels. Then append func_frame to pcb->run.fff.
  ****************************************************************************/
-Boolean po_compress_func(Poco_cb* pcb, Poco_frame* pf, Func_frame* new_frame)
+bool po_compress_func(Poco_cb* pcb, Poco_frame* pf, Func_frame* new_frame)
 {
 	long csize;
 
 	if (!resolve_labels(pcb, pf))
-		return (FALSE);
+		return (false);
 
 #ifdef STRING_EXPERIMENT
 	po_free_local_string_list(pcb, pf);
@@ -377,9 +377,9 @@ Boolean po_compress_func(Poco_cb* pcb, Poco_frame* pf, Func_frame* new_frame)
 	new_frame->code_size = csize;
 	new_frame->ld		   = pf->ld;
 	if (!po_compress_line_data(pcb, new_frame->ld))
-		return (FALSE);
+		return (false);
 	new_frame->next	 = pcb->run.fff;
 	pcb->run.fff = new_frame;
 	pf->ld		 = NULL;
-	return TRUE;
+	return true;
 }

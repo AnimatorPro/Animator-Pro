@@ -44,7 +44,7 @@ static Config_pdr pdrconf[2] = {
 		&vconfg.picsave_pdr[0],
 		&gif_pdr_name[0],
 		"",
-		FALSE,
+	  false,
 		pic_anim_info,
 		"",
 		PICTYPE,
@@ -55,7 +55,7 @@ static Config_pdr pdrconf[2] = {
 		&vconfg.flisave_pdr[0],
 		&fli_pdr_name[0],
 		"",
-		FALSE,
+	  false,
 		pj_fli_info,
 		"",
 		FLICTYPE,
@@ -63,15 +63,16 @@ static Config_pdr pdrconf[2] = {
 };
 
 
-static Boolean is_local_pdr(char *path,int type)
+static bool is_local_pdr(char *path,int type)
 {
 	return(!txtcmp(pj_get_path_name(path),pdrconf[type].local_name));
 }
-static Boolean is_pic_pdr_name(char *path)
+static bool is_pic_pdr_name(char *path)
 {
 	return(is_local_pdr(path,PICTYPE));
 }
-Boolean is_fli_pdr_name(char *path)
+
+bool is_fli_pdr_name(char *path)
 {
 	return(is_local_pdr(path,FLICTYPE));
 }
@@ -99,8 +100,8 @@ static char *get_picsave_pdr(char *pdr_path)
 {
 	return(get_save_pdr(pdr_path,PICTYPE));
 }
-static Errcode cur_pdrtype_info(char *sufbuf, char *titlebuf, int titlesize, 
-							    Boolean flitype, 
+static Errcode cur_pdrtype_info(char *sufbuf, char *titlebuf, int titlesize,
+								bool flitype,
 								int rwmode) /* 0 = dontcare 
 											   1 = must_write 
 											   2 = must_read */
@@ -142,7 +143,7 @@ Pdr *pd;
 	}
 
 	strcpy(cpdr->save_suffi, sufbuf);
-	cpdr->suffi_loaded = TRUE;
+	cpdr->suffi_loaded = true;
 error:
 	free_pdr(&pd);
 	return(err);
@@ -278,7 +279,8 @@ Image_file *ifile;
 	free_pdr(&pd);
 	return(err);
 }
-Errcode find_pdr_loader(char *ifname, Boolean multi_frame, 
+Errcode find_pdr_loader(char *ifname,
+						bool multi_frame,
 					  	Anim_info *ainfo, char *pdr_name, Rcel *screen) 
 
 /* attempts to get info and open image file for any module currently in the
@@ -362,7 +364,7 @@ Errcode err;
 Anim_info ainfo;
 char pdr_name[PATH_SIZE];
 
-	if((err = find_pdr_loader(name,FALSE,&ainfo,pdr_name,screen)) < Success)
+	if((err = find_pdr_loader(name, false,&ainfo,pdr_name,screen)) < Success)
 		goto error;
 
 	if(ainfo.num_frames > 1
@@ -395,7 +397,7 @@ static char *get_fload_suffi(char *sufbuf, int for_cel )
 char *buf,*pdrsuf;
 char suffi[PDR_SUFFI_SIZE];
 int num_todo;
-Boolean picdone = FALSE;
+bool picdone = false;
 static char *suffs[] = { ".FL?;", ".CEL;" };
 
 	if(!for_cel)
@@ -431,7 +433,7 @@ static char *suffs[] = { ".FL?;", ".CEL;" };
 		if(--num_todo <= 0)
 			break;
 		pdrsuf = get_pictype_suffi();
-		picdone = TRUE;
+		picdone = true;
 	}
 done:
 	return(sufbuf);
@@ -467,7 +469,7 @@ Anim_info spec;
 Rcel virt;
 
 	if(is_pic_pdr_name(pdr_path))
-		return(save_pic(picname, screen,0,TRUE));
+		return(save_pic(picname, screen,0, true));
 	if((err = load_pdr(pdr_path, &pd)) < Success)
 		return(cant_use_module(err,pdr_path));
 

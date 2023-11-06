@@ -83,7 +83,7 @@ static Errcode found_string_to_dstring(Swork *swork, void *data)
 struct dsload *dsl = data;
 Errcode err;
 Stok *t;
-Boolean match;
+bool match;
 
 	t = swork_top(swork);
 	match = strcmp(t->d.buf, dsl->name) == 0;
@@ -133,7 +133,7 @@ static Errcode found_string_to_buf(Swork *swork, void *data)
 {
 struct bufload *bl = data;
 Stok *t;
-Boolean match;
+bool match;
 int len_copy;
 
 	t = swork_top(swork);

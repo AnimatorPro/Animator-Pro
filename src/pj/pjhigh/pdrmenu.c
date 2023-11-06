@@ -35,7 +35,7 @@ static Errcode build_pdr_list(Names *wildlist, Pdr_entry **pdrlist,
 										   * 2 = must write
 										   * 3 = must both */
 
-							  Boolean multiframe_only)
+							  bool multiframe_only)
 
 /* while in resource directory builds list of pdr info name strings for use
  * in the driver menu */
@@ -122,7 +122,7 @@ done:
 	free_pdr(&pd);
 	return(err);
 }
-static Boolean pdr_info_box(Names *entry,void *dat)
+static bool pdr_info_box(Names *entry,void *dat)
 {
 Errcode err;
 Pdr_entry *pdentry = (Pdr_entry *)entry;
@@ -154,7 +154,7 @@ static Smu_name_scats scts[] = {
 (void)dat;
 
 	if(!pdentry)
-		return FALSE;
+		return false;
 
 	hide_mp();
 
@@ -204,7 +204,7 @@ error:
 
 	smu_free_scatters(&sctbuf);
 	show_mp();
-	return FALSE;
+	return false;
 
 #undef write_yes
 #undef write_no
@@ -247,7 +247,7 @@ Errcode go_pdr_menu( char *header,	   /* header text for menu */
 								  * 2 = list only those that can write
 								  * 3 = list only those that can both */
 
-					 Boolean multiframe_only /* if true must read or write > 1
+					 bool multiframe_only /* if true must read or write > 1
 											  * frame */ )
 {
 struct pick_dat pdat;

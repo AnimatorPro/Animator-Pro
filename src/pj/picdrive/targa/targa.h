@@ -87,10 +87,10 @@ typedef struct targa_file { 	/* the main juju; gets passed to everyone...*/
 
 	Tgaheader	tgahdr; 		/* TARGA file header data */
 
-	Boolean 	is_rgb; 		/* is it RGB (as opposed to colormapped)? */
-	Boolean		is_grey;		/* is it greyscale image */
-	Boolean 	is_compressed;	/* is it RLE compressed? */
-	Boolean 	is_flipped; 	/* is it upside down in the file? */
+	bool is_rgb; 		/* is it RGB (as opposed to colormapped)? */
+	bool is_grey;		/* is it greyscale image */
+	bool is_compressed;	/* is it RLE compressed? */
+	bool is_flipped; 	/* is it upside down in the file? */
 	int 		width;			/* image width */
 	int 		height; 		/* image height */
 	int 		pdepth; 		/* pixel depth */

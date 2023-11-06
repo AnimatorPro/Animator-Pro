@@ -46,16 +46,14 @@ static struct vdevice_lib sdl_device_library = {
 		8, /* bits */                    \
 		1, /* planes */                  \
 		{WIDTH,WIDTH,WIDTH,1},           \
-		{HEIGHT,HEIGHT,HEIGHT,1},        \
-		TRUE, /* readable */             \
-		TRUE, /* writeable */            \
-		TRUE, /* displayable */          \
+		{HEIGHT,HEIGHT,HEIGHT,1}, true, /* readable */    \
+		  true, /* writeable */   \
+		  true, /* displayable */          \
 		0, /* fields_per_frame */        \
 		1, /* display_pages */           \
 		1, /* store_pages */             \
 		WIDTH*HEIGHT,                    \
-		WIDTH*HEIGHT,                    \
-		TRUE, /* palette_vblank_only */  \
+		WIDTH*HEIGHT, true, /* palette_vblank_only */  \
 		0, /* screen_swap_vblank_only */ \
 		70, /* field_rate */             \
 		0 /* vblank_period */            \
@@ -264,7 +262,7 @@ static void sdl_wait_vsync(Raster* r)
 static Rastlib* get_sdl_lib(void)
 {
 	static Rastlib sdl_lib;
-	static Boolean loaded = FALSE;
+	static bool loaded = false;
 
 	if (!loaded) {
 		pj_copy_bytes(pj_get_bytemap_lib(), &sdl_lib, sizeof(sdl_lib));
@@ -279,7 +277,7 @@ static Rastlib* get_sdl_lib(void)
 
 		pj_set_grc_calls(&sdl_lib);
 
-		loaded = TRUE;
+		loaded = true;
 	}
 
 	return &sdl_lib;

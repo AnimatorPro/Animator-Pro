@@ -282,7 +282,7 @@ Errcode init_sdl_idriver(Idriver* idr)
 	idr->hdr.cleanup = sdl_idr_close;
 	idr->lib		 = &sdl_idr_library;
 	idr->options	 = NULL;
-	idr->does_keys	 = TRUE;
+	idr->does_keys	 = true;
 	return Success;
 }
 

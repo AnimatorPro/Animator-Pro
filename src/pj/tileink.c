@@ -350,7 +350,7 @@ Celcfit *cfit;
 	}
 
 	if(inky->dither)
-		return(bclosest_col(&(thecel->rc->cmap->ctab[color]),COLORS,TRUE));
+		return(bclosest_col(&(thecel->rc->cmap->ctab[color]),COLORS, true));
 
 	if( NULL != (cfit = thecel->cfit)
 		&& !(cfit->flags & CCFIT_NULL))
@@ -481,13 +481,13 @@ Short_xy cxy;
 				}
 				else if(vs.zero_clear && *spt == tcxl.tcolor)
 					continue;
-				*dpt = bclosest_col(ctab+*spt,COLORS,TRUE);
+				*dpt = bclosest_col(ctab+*spt,COLORS, true);
 			}
 		}
 		else
 		{
 			while (--w >= 0)
-				*dpt++ = bclosest_col(ctab+*spt++,COLORS,TRUE);
+				*dpt++ = bclosest_col(ctab+*spt++,COLORS, true);
 		}
 	}
 	else

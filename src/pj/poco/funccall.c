@@ -102,7 +102,7 @@ static void mk_function_call(Poco_cb* pcb, Exp_frame* e, Func_frame* fff, SHORT 
 	SHORT varg_param_count = 0;
 	int varg_param_size	   = 0;
 	int this_param_size;
-	Boolean is_cvarg_call = FALSE;
+	bool is_cvarg_call = false;
 	Exp_frame* param_exps = NULL;
 	Exp_frame* exp;
 	Code_buf callcode;
@@ -154,7 +154,7 @@ static void mk_function_call(Poco_cb* pcb, Exp_frame* e, Func_frame* fff, SHORT 
 			}
 		} else {
 			// regular parameter
-			po_coerce_expression(pcb, exp, param->ti, FALSE);
+			po_coerce_expression(pcb, exp, param->ti, false);
 			this_param_size					 = po_get_param_size(pcb, exp->ctc.ido_type);
 			parameter_types[parameter_index] = po_ffi_type_from_ido_type(exp->ctc.ido_type);
 			parameter_index += 1;
@@ -195,7 +195,7 @@ static void mk_function_call(Poco_cb* pcb, Exp_frame* e, Func_frame* fff, SHORT 
 	if (param != NULL && (param->flags & SFL_ELLIP)) {
 		--expected_count;
 		if (fff->type == CFF_C) {
-			is_cvarg_call = TRUE;
+			is_cvarg_call = true;
 		}
 	}
 
@@ -285,7 +285,7 @@ static void mk_function_call(Poco_cb* pcb, Exp_frame* e, Func_frame* fff, SHORT 
 		po_code_op(pcb, &e->ecd, po_find_push_op(pcb, &e->ctc));
 	}
 
-	e->includes_function = TRUE;
+	e->includes_function = true;
 	while (param_exps != NULL) {
 		exp = param_exps->next;
 		po_dispose_expframe(pcb, param_exps);
@@ -334,7 +334,7 @@ void po_get_function(Poco_cb* pcb, Exp_frame* e)
 	mk_function_call(pcb, e, fuf, end_type);
 
 	clear_code_buf(pcb, &e->left); /* if we had code in the left side, nuke  */
-	e->left_complex = FALSE;	   /* it, we've now processed it into a call.*/
+	e->left_complex = false;	   /* it, we've now processed it into a call.*/
 
 	if (end_type == TYPE_POINTER)		   /* if function returns a pointer  */
 	{									   /* put a NOP into the left buffer,*/
