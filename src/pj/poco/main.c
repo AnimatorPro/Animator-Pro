@@ -571,6 +571,7 @@ int main(int argc, char* argv[])
 	int counter;
 	Poco_lib* builtin_libs;
 	int do_debug_dump = FALSE;
+	int gui_mode = FALSE;
 
 	builtin_libs = get_poco_libs();
 
@@ -612,6 +613,10 @@ int main(int argc, char* argv[])
 				case 'V':
 					fprintf(stdout, "poco version %d\n", VRSN_NUM);
 					break;
+				case 'g':
+				case 'G':
+					gui_mode = TRUE;
+					fprintf(stdout, "Launching Poco GUI...\n");
 				default: /* Fat-finger case...		*/
 					break;
 			}
@@ -637,6 +642,10 @@ int main(int argc, char* argv[])
 			exit(-1);
 		}
 	}
+
+//	if (gui_mode) {
+//		poco_gui();
+//	}
 
 	compile_status = compile_poco(
 	  &pexe, sfname, NULL, dfname, builtin_libs, err_file, &err_line, &err_char, incdirs);

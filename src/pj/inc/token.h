@@ -27,6 +27,10 @@
 
 /* values stored in tok_type will be an ascii char, or one of these... */
 
+#ifdef __APPLE__
+#undef token_t
+#endif
+
 typedef enum token_t {
 	TOK_LBRACE	= '{',
 	TOK_RBRACE	= '}',

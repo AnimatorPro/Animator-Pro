@@ -501,11 +501,11 @@ static void get_default(Poco_cb* pcb, Poco_frame* pf)
  ****************************************************************************/
 static void get_if(Poco_cb* pcb, Poco_frame* pf)
 {
-	Code_label * false, *end;
+	Code_label * false_label, *end;
 	Exp_frame* ef;
 	long cpos;
 
-	if ((false = new_label(pcb, pf)) == NULL)
+	if ((false_label = new_label(pcb, pf)) == NULL)
 		return;
 	ef = po_new_expframe(pcb);
 	if (!po_eat_lparen(pcb))
@@ -517,7 +517,7 @@ static void get_if(Poco_cb* pcb, Poco_frame* pf)
 	if (!po_concatenate_code(pcb, &pf->fcd, &ef->ecd))
 		goto OUT;
 	cpos = po_cbuf_code_size(&pf->fcd) + OPY_SIZE;
-	if (new_use(pcb, false, cpos) == NULL)
+	if (new_use(pcb, false_label, cpos) == NULL)
 		goto OUT;
 	po_code_int(pcb, &pf->fcd, OP_BEQ, 0);
 	statement(pcb, pf);
@@ -531,12 +531,12 @@ static void get_if(Poco_cb* pcb, Poco_frame* pf)
 		if (new_use(pcb, end, cpos) == NULL)
 			goto OUT;
 		po_code_int(pcb, &pf->fcd, OP_BRA, 0);
-		false->code_pos = po_cbuf_code_size(&pf->fcd);
+		false_label->code_pos = po_cbuf_code_size(&pf->fcd);
 		statement(pcb, pf);
 		end->code_pos = po_cbuf_code_size(&pf->fcd);
 	} else {
 		pushback_token(&pcb->t);
-		false->code_pos = po_cbuf_code_size(&pf->fcd);
+		false_label->code_pos = po_cbuf_code_size(&pf->fcd);
 	}
 OUT:
 	po_dispose_expframe(pcb, ef);

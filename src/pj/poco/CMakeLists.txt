@@ -72,3 +72,5 @@ add_executable(poco ${POCO_MAIN_SRC_FILES})
 target_link_libraries(poco libpoco trdfile ffi_static hashmap)
 INSTALL(TARGETS poco DESTINATION ./)
 
+add_subdirectory(poco_gui)
+

@@ -354,7 +354,7 @@ static Boolean resolve_labels(Poco_cb* pcb, Poco_frame* pf)
  *	and convert local-symbol-list to parameter-only-list.
  *	Resolve labels. Then append func_frame to pcb->run.fff.
  ****************************************************************************/
-Boolean po_compress_func(Poco_cb* pcb, Poco_frame* pf, Func_frame* new)
+Boolean po_compress_func(Poco_cb* pcb, Poco_frame* pf, Func_frame* new_frame)
 {
 	long csize;
 
@@ -368,18 +368,18 @@ Boolean po_compress_func(Poco_cb* pcb, Poco_frame* pf, Func_frame* new)
 
 	csize = ((UBYTE*)(pf->fcd.code_pt)) - ((UBYTE*)(pf->fcd.code_buf));
 	if (csize == 0)
-		new->code_pt = NULL;
+		new_frame->code_pt = NULL;
 	else {
-		new->code_pt = po_memalloc(pcb, csize);
-		poco_copy_bytes(pf->fcd.code_buf, new->code_pt, csize);
+		new_frame->code_pt = po_memalloc(pcb, csize);
+		poco_copy_bytes(pf->fcd.code_buf, new_frame->code_pt, csize);
 	}
-	new->type	   = pf->type;
-	new->code_size = csize;
-	new->ld		   = pf->ld;
-	if (!po_compress_line_data(pcb, new->ld))
+	new_frame->type	   = pf->type;
+	new_frame->code_size = csize;
+	new_frame->ld		   = pf->ld;
+	if (!po_compress_line_data(pcb, new_frame->ld))
 		return (FALSE);
-	new->next	 = pcb->run.fff;
-	pcb->run.fff = new;
+	new_frame->next	 = pcb->run.fff;
+	pcb->run.fff = new_frame;
 	pf->ld		 = NULL;
-	return (TRUE);
+	return TRUE;
 }

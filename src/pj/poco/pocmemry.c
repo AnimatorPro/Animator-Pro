@@ -232,7 +232,7 @@ void po_freemem(void* pt)
  * there is already memory available in the current mblk, or new_mblk() will
  * never return because of the longjmp in po_say_fatal.
  ****************************************************************************/
-void* po_memalloc(Poco_cb* pcb, register long size)
+void* po_memalloc(Poco_cb* pcb, register unsigned long size)
 {
 	USHORT* pt;
 
