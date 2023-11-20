@@ -1,10 +1,9 @@
 
 int main() {
-	// char* name = "bunny";
-	// int value = 15;
 	printf("Hello poco\n");
-	// this prints incorrectly-- it's like it skips the string value
-	// int length = printf("Testing! %s %d\n", name, value);
-	// return length;
-	return 0;
+
+	char* name = "bunny";
+	int value = 15;
+	int length = printf("Testing! %s %d\n", name, value);
+	return length;
 }

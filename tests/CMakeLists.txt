@@ -36,7 +36,7 @@ add_custom_command(
 ## ffi test
 if (WITH_POCO)
 	set(FFI_TEST_SOURCES
-		ffi_test.c
+            ffi_test.cc
     )
 
 	add_executable(ffi_test "${FFI_TEST_SOURCES}")

@@ -544,14 +544,13 @@ extern "C"
 		unsigned int arg_count;					 // number of fixed arguments
 		void* args[FFI_MAX_ARGS + 1];			 // array of pointers into data for argument passing
 		ffi_type* arg_types[FFI_MAX_ARGS + 1];	 // array of pointers to libffi argument types
-		size_t arg_sizes[FFI_MAX_ARGS + 1];		 // array of pointers to libffi argument types
 		IdoType arg_ido_types[FFI_MAX_ARGS + 1]; // copies of original types
 		ffi_arg result;							 // storage for returns for non-void functions
 		ffi_type* result_type;
 		IdoType result_ido_type;
 		char* name;
-		void* function;								 // pointer to the actual function to call
-		unsigned char* data[(FFI_MAX_ARGS + 1) * 8]; // block of memory for parameter passing
+		void* function;							 // pointer to the actual function to call
+		Po_FFI_Data data[FFI_MAX_ARGS];          // block of memory for parameter passing
 		uint64_t flags;
 	} Po_FFI;
 

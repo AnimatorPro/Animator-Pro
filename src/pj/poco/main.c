@@ -376,7 +376,7 @@ void po_qtext(long vargcount, long vargsize, Popot format, ...)
 static Lib_proto proto_lines[] = {
 	/*	{tryme, 	"int ptryme(int (*v)(long a, long b, long c));"}, */
 	{ po_puts,   "int puts(char *s);" },
-	{ po_printf, "int printf(char *format, ...);" },
+	{ printf, "int printf(char *format, ...);" },
 	{ po_qtext,  "int Qtext(char *format, ...);" },
 };
 
@@ -535,7 +535,7 @@ static void usage() {
 /****************************************************************************
  *
  ***************************************************************************/
-void replace_file_extension(char *dest, const char* buffer, 
+static void replace_file_extension(char *dest, const char* buffer, 
 						   size_t max_len, const char* new_ext)
 {
 	const char* dot = strrchr(buffer, '.');

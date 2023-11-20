@@ -231,7 +231,7 @@ Errcode poco_cont_ops(void* code_pt, Pt_num* pret, int arglength, ...)
 				stack->l  = acc.ret.l;
 				break;
 			case OP_LONG_TO_INT:
-				acc.ret.inty = stack->l;
+				acc.ret.inty = (int)stack->l;
 				stack		 = OPTR(stack, sizeof(long) - INT_SIZE);
 				stack->inty	 = acc.ret.inty;
 				break;
