@@ -10,11 +10,14 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "imgui.h"
+#include "imgui_internal.h"
+#include "imgui_impl_metal.h"
+#include "imgui_impl_sdl2.h"
+#include "imgui_memory_editor.h"
+#include <SDL.h>
+
 #include "../poco.h"
-#include "aaconfig.h"
-#include "pocoface.h"
-#include "ptrmacro.h"
-#include "xfile.h"
 
 #ifdef _MSC_VER
 #include <float.h>
@@ -24,13 +27,6 @@
 /* Empty implementation for now-- seems to be a Windows-only thing? */
 static void _fpreset() {}
 #endif
-
-#include "imgui.h"
-#include "imgui_impl_sdl2.h"
-#include "imgui_impl_metal.h"
-#include "imgui_memory_editor.h"
-#include <SDL.h>
-
 
 // ======================================================================
 static void ShowExampleMenuFile()
@@ -147,6 +143,11 @@ int main(int argc, char** argv) {
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;  // Enable Keyboard Controls
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;   // Enable Gamepad Controls
+	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
+	// diable ini file and logging
+	io.IniFilename = NULL;
+	io.LogFilename = NULL;
+//	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
 
 	// Setup style
 	ImGui::StyleColorsDark();
@@ -215,7 +216,10 @@ int main(int argc, char** argv) {
 	float clear_color[4] = {0.45f, 0.55f, 0.60f, 1.00f};
 
 	// Main loop
+
 	bool done = false;
+    bool show_about_window = false;
+
 	while (!done)
 	{
 		@autoreleasepool
@@ -231,7 +235,8 @@ int main(int argc, char** argv) {
 				ImGui_ImplSDL2_ProcessEvent(&event);
 				if (event.type == SDL_QUIT)
 					done = true;
-				if (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_CLOSE && event.window.windowID == SDL_GetWindowID(window))
+				if (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_CLOSE
+                        && event.window.windowID == SDL_GetWindowID(window))
 					done = true;
 			}
 
@@ -255,36 +260,68 @@ int main(int argc, char** argv) {
 
 			ImGui::PushFont(hack);
 
+			if (ImGui::BeginMainMenuBar()) {
+                if (ImGui::BeginMenu("File")) {
+                    ImGui::MenuItem("About...", NULL, &show_about_window);
+                    if (ImGui::MenuItem("Quit", "CMD+Q", false, true)) {
+                        done = true;
+                    }
+                    ImGui::EndMenu();
+                }
+                if (ImGui::BeginMenu("Edit")) {
+                    ImGui::EndMenu();
+                }
+                ImGui::EndMainMenuBar();
+            }
+
 			// 1. Do file menu
-			ShowExampleMenuFile();
-
-			// 2. Show a simple window that we create ourselves. We use a Begin/End pair to create a named window.
-			{
-				static float f = 0.0f;
-				static int counter = 0;
-
-				ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
-
-				ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
-//				ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
-//				ImGui::Checkbox("Another Window", &show_another_window);
-
-				ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-				ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
-
-				if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
-					counter++;
-				ImGui::SameLine();
-				ImGui::Text("counter = %d", counter);
-
-				ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
-				ImGui::End();
+			if (show_about_window) {
+				ImGui::ShowAboutWindow(&show_about_window);
 			}
 
-			static MemoryEditor mem_edit_1;
+			// 2. Show a simple window that we create ourselves. We use a Begin/End pair to create a named window.
+//			{
+//				static float f = 0.0f;
+//				static int counter = 0;
+//
+//				ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
+//
+//				ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
+////				ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
+////				ImGui::Checkbox("Another Window", &show_another_window);
+//
+//				ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
+//				ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
+//
+//				if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
+//					counter++;
+//				ImGui::SameLine();
+//				ImGui::Text("counter = %d", counter);
+//
+//				ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
+//				ImGui::End();
+//			}
+
+			// 0. Docking stuff
+			static ImGuiDockNodeFlags dock_space_flags = ImGuiDockNodeFlags_PassthruCentralNode;
+			ImGuiID dock_id = ImGui::DockSpaceOverViewport(nullptr, dock_space_flags);
+
+			ImGuiID dock_right_id = ImGui::DockBuilderSplitNode(dock_id, ImGuiDir_Right, 0.2f, nullptr, &dock_id);
+			ImGui::DockBuilderFinish(dock_id);
+
+			ImGuiID dock_down_id  = -1;
+
+			// 0. Stack view
+			ImGuiWindowClass window_class;
+			window_class.DockNodeFlagsOverrideSet = 1 << 12; // no tab bar
+			ImGui::SetNextWindowClass(&window_class);
+
+			static MemoryEditor memory_editor;
 			static char data[0x10000];
 			size_t data_size = 0x10000;
-			mem_edit_1.DrawWindow("Stack", data, data_size);
+			memory_editor.DrawWindow("Stack", data, data_size);
+
+			ImGui::DockBuilderDockWindow("Stack", dock_right_id);
 
 			ImGui::PopFont();
 
