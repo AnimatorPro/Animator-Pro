@@ -192,7 +192,7 @@ struct MemoryEditor
         ImGui::SetNextWindowSizeConstraints(ImVec2(0.0f, 0.0f), ImVec2(s.WindowWidth, FLT_MAX));
 
         Open = true;
-        if (ImGui::Begin(title, &Open, ImGuiWindowFlags_NoScrollbar))
+        if (ImGui::Begin(title, &Open, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoCollapse))
         {
             if (ImGui::IsWindowHovered(ImGuiHoveredFlags_RootAndChildWindows) && ImGui::IsMouseReleased(ImGuiMouseButton_Right))
                 ImGui::OpenPopup("context");
