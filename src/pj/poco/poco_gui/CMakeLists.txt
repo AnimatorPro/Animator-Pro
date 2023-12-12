@@ -12,7 +12,7 @@ endif()
 
 
 set(POCO_GUI_SOURCE_FILES
-        poco_gui.mm
+    poco_gui.mm
 )
 
 list(TRANSFORM
@@ -29,6 +29,7 @@ target_link_libraries(
         trdfile
         ffi_static
         hashmap
+        imgui_text_editor
         imgui
         "-framework Metal"
         SDL2-static

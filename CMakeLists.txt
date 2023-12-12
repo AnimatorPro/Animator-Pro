@@ -54,9 +54,11 @@ if (WITH_POCO)
 	add_subdirectory(thirdparty/libffi)
 	add_subdirectory(thirdparty/hashmap)
 	add_subdirectory(thirdparty/imgui/imgui)
+	add_subdirectory(thirdparty/imgui/ImGuiColorTextEdit)
 	include_directories(thirdparty/imgui/imgui)
 	include_directories(thirdparty/imgui/imgui/backends)
 	include_directories(thirdparty/imgui/imgui_club/imgui_memory_editor)
+	add_subdirectory(thirdparty/imgui/ImGuiColorTextEdit)
 endif()
 
 

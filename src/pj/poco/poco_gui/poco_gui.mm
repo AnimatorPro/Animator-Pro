@@ -1,5 +1,8 @@
 #define GENERATE_CTYPE_TABLE
 
+#import <Foundation/Foundation.h>
+#import <Foundation/NSFileManager.h>
+#import <Foundation/NSString.h>
 #import <Metal/Metal.h>
 #import <QuartzCore/QuartzCore.h>
 
@@ -18,6 +21,9 @@
 #include <SDL.h>
 
 #include "../poco.h"
+#include "../../pj_sdl/pj_sdl.h"
+#include <TextEditor.h>
+
 
 #ifdef _MSC_VER
 #include <float.h>
@@ -134,8 +140,80 @@ static void ShowExampleAppMainMenuBar()
 
 
 // ======================================================================
+typedef struct {
+	ImGuiID root = 0;
+	ImGuiID memedit = 0;
+	ImGuiID text = 0;
+	ImGuiID console = 0;
+} DockIDs;
+
+DockIDs dockIds;
+
+ImGuiID setup_docking() {
+	if (ImGui::DockBuilderGetNode(dockIds.root) == 0) {
+		dockIds.root = ImGui::GetID("Root_Dockspace");
+
+		ImGui::DockBuilderRemoveNode(dockIds.root); // Clear out existing layout
+		ImGui::DockBuilderAddNode(dockIds.root,
+								  ImGuiDockNodeFlags_DockSpace); // Add empty node
+		dockIds.memedit =
+		  ImGui::DockBuilderSplitNode(dockIds.root, ImGuiDir_Right, 0.5f, NULL, &dockIds.root);
+		dockIds.text =
+		  ImGui::DockBuilderSplitNode(dockIds.root, ImGuiDir_Left, 0.2f, NULL, &dockIds.root);
+		dockIds.console =
+		  ImGui::DockBuilderSplitNode(dockIds.root, ImGuiDir_Down, 0.3f, NULL, &dockIds.root);
+
+		ImGui::DockBuilderDockWindow("Poco", dockIds.root);
+		ImGui::DockBuilderDockWindow("Text Editor", dockIds.root);
+		ImGui::DockBuilderDockWindow("Stack", dockIds.memedit);
+		ImGui::DockBuilderDockWindow("Console", dockIds.console);
+
+		ImGui::DockBuilderFinish(dockIds.root);
+	}
+
+	return dockIds.root;
+}
+
+
+// ======================================================================
+const char* mac_preferences_path() {
+	static NSString* preferences_path = nil;
+
+	if (!preferences_path) {
+		NSFileManager* file_manager = [NSFileManager defaultManager];
+		NSURL* result_url			= [file_manager URLForDirectory:NSApplicationSupportDirectory
+												   inDomain:NSUserDomainMask
+												   appropriateForURL:nil
+													create:NO
+													error:nil];
+
+		result_url = [result_url URLByAppendingPathComponent:@"com.vpaint.animator-pro"];
+
+		if (![file_manager createDirectoryAtURL:result_url withIntermediateDirectories:YES attributes:nil error:nil])
+		{
+			NSLog(@"Unable to create directory: %s.", [[result_url path] UTF8String]);
+		}
+		else {
+			preferences_path = [result_url path];
+		}
+	}
+
+	if (preferences_path) {
+		return [preferences_path UTF8String];
+	}
+
+	return ".";
+}
+
+
+// ======================================================================
 int main(int argc, char** argv) {
 	fprintf(stderr, "%s\n\n", argv[0]);
+
+	// global variables
+	char active_file[1024];
+	sprintf(active_file, "untitled.poc");
+	char* active_file_contents = NULL;
 
 	// Setup Dear ImGui context
 	IMGUI_CHECKVERSION();
@@ -144,9 +222,13 @@ int main(int argc, char** argv) {
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;  // Enable Keyboard Controls
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;   // Enable Gamepad Controls
 	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
-	// diable ini file and logging
-	io.IniFilename = NULL;
-	io.LogFilename = NULL;
+	// disable ini file and logging
+//	io.IniFilename = NULL;
+//	io.LogFilename = NULL;
+	char ini_filename[1024];
+	sprintf(ini_filename, "%s/%s", mac_preferences_path(), "imgui.ini");
+	io.IniFilename = ini_filename;
+	fprintf(stderr, "Imgui INI: %s\n", ini_filename);
 //	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
 
 	// Setup style
@@ -219,6 +301,7 @@ int main(int argc, char** argv) {
 
 	bool done = false;
     bool show_about_window = false;
+	static ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
 
 	while (!done)
 	{
@@ -256,21 +339,60 @@ int main(int argc, char** argv) {
 			// Start the Dear ImGui frame
 			ImGui_ImplMetal_NewFrame(renderPassDescriptor);
 			ImGui_ImplSDL2_NewFrame();
+
 			ImGui::NewFrame();
 
 			ImGui::PushFont(hack);
 
+			// 0. Main Window
+			//    This is _required_ for the dockspace!
+			ImGuiWindowFlags window_flags =
+			  ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
+
+			ImGuiViewport *viewport = ImGui::GetMainViewport();
+
+			ImGui::SetNextWindowPos(viewport->WorkPos);
+			ImGui::SetNextWindowSize(viewport->WorkSize);
+			ImGui::SetNextWindowViewport(viewport->ID);
+			ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+			ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+
+			window_flags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse |
+							ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
+			window_flags |=
+			  ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
+
+			if (dockspace_flags & ImGuiDockNodeFlags_PassthruCentralNode)
+				window_flags |= ImGuiWindowFlags_NoBackground;
+
+			ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
+
+			ImGui::DockSpaceOverViewport(viewport);
+
+//			ImGui::Begin("Poco", (bool *)0, window_flags);
+
+			ImGui::PopStyleVar();
+			ImGui::PopStyleVar(2);
+
+
+			// 0. Do file menu
 			if (ImGui::BeginMainMenuBar()) {
+
                 if (ImGui::BeginMenu("File")) {
                     ImGui::MenuItem("About...", NULL, &show_about_window);
+					if (ImGui::MenuItem("Open File...", "CMD+O", false, true)) {
+						open_file();
+					}
                     if (ImGui::MenuItem("Quit", "CMD+Q", false, true)) {
                         done = true;
                     }
                     ImGui::EndMenu();
                 }
+
                 if (ImGui::BeginMenu("Edit")) {
                     ImGui::EndMenu();
                 }
+
                 ImGui::EndMainMenuBar();
             }
 
@@ -279,50 +401,35 @@ int main(int argc, char** argv) {
 				ImGui::ShowAboutWindow(&show_about_window);
 			}
 
-			// 2. Show a simple window that we create ourselves. We use a Begin/End pair to create a named window.
-//			{
-//				static float f = 0.0f;
-//				static int counter = 0;
-//
-//				ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
-//
-//				ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
-////				ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
-////				ImGui::Checkbox("Another Window", &show_another_window);
-//
-//				ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-//				ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
-//
-//				if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
-//					counter++;
-//				ImGui::SameLine();
-//				ImGui::Text("counter = %d", counter);
-//
-//				ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
-//				ImGui::End();
-//			}
+			// 2. Docking stuff
+//			ImGuiID root_id = setup_docking();
+//			ImGui::DockSpace(root_id, ImVec2(0.0f, 0.0f), dockspace_flags);
 
-			// 0. Docking stuff
-			static ImGuiDockNodeFlags dock_space_flags = ImGuiDockNodeFlags_PassthruCentralNode;
-			ImGuiID dock_id = ImGui::DockSpaceOverViewport(nullptr, dock_space_flags);
-
-			ImGuiID dock_right_id = ImGui::DockBuilderSplitNode(dock_id, ImGuiDir_Right, 0.2f, nullptr, &dock_id);
-			ImGui::DockBuilderFinish(dock_id);
-
-			ImGuiID dock_down_id  = -1;
 
 			// 0. Stack view
-			ImGuiWindowClass window_class;
-			window_class.DockNodeFlagsOverrideSet = 1 << 12; // no tab bar
-			ImGui::SetNextWindowClass(&window_class);
+//			ImGuiWindowClass window_class;
+//			window_class.DockNodeFlagsOverrideSet = 1 << 12; // no tab bar
+//			ImGui::SetNextWindowClass(&window_class);
+
+			ImGui::SetNextWindowDockID(dockIds.memedit, ImGuiCond_Appearing);
 
 			static MemoryEditor memory_editor;
 			static char data[0x10000];
 			size_t data_size = 0x10000;
 			memory_editor.DrawWindow("Stack", data, data_size);
 
-			ImGui::DockBuilderDockWindow("Stack", dock_right_id);
+			ImGui::SetNextWindowDockID(dockIds.root, ImGuiCond_Appearing);
+			ImGui::Begin(active_file, (bool *)0);
+			ImGui::Text("Text goes here");
+			ImGui::End();
 
+			ImGui::SetNextWindowDockID(dockIds.console, ImGuiCond_Appearing);
+			ImGui::Begin("Console", (bool *)0);
+			ImGui::Text("Console log goes here.");
+			ImGui::End();
+
+
+//			ImGui::End();
 			ImGui::PopFont();
 
 			// Rendering

@@ -2,6 +2,10 @@ cmake_minimum_required(VERSION 3.16 FATAL_ERROR)
 
 project(ani C)
 
+if(APPLE)
+	enable_language(OBJC)
+endif()
+
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_CXX_STANDARD 17)
 
@@ -28,7 +32,7 @@ if (WITH_POCO)
 	add_subdirectory(poco)
 endif()
 	
-	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-sign-compare")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-sign-compare")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-pointer-sign")
 
 set(PJMAIN_SRC_FILES
