@@ -7,6 +7,9 @@
    Originator:	<andreast@gcc.gnu.org> 20030828	 */
 
 
+
+
+/* { dg-do run { xfail wasm32*-*-* } } */
 #include "ffitest.h"
 
 static void
@@ -80,9 +83,9 @@ int main (void)
   CHECK(ffi_prep_closure_loc(pcl, &cif, closure_loc_test_fn0,
 			 (void *) 3 /* userdata */, codeloc) == FFI_OK);
 
-#if !defined(FFI_EXEC_STATIC_TRAMP) && !defined(__EMSCRIPTEN__)
+#ifndef FFI_EXEC_STATIC_TRAMP
   /* With static trampolines, the codeloc does not point to closure */
-  CHECK(memcmp(pcl, FFI_CL(codeloc), sizeof(*pcl)) == 0);
+  CHECK(memcmp(pcl, codeloc, sizeof(*pcl)) == 0);
 #endif
 
   res = (*((closure_loc_test_type0)codeloc))
