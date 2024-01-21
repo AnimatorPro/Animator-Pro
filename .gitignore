@@ -9,4 +9,5 @@ ios
 xcode
 .DS_Store
 .vscode
-
+build_debug
+*~

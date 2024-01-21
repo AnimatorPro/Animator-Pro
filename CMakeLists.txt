@@ -58,7 +58,7 @@ if (WITH_POCO)
 	include_directories(thirdparty/imgui/imgui)
 	include_directories(thirdparty/imgui/imgui/backends)
 	include_directories(thirdparty/imgui/imgui_club/imgui_memory_editor)
-	add_subdirectory(thirdparty/imgui/ImGuiColorTextEdit)
+	include_directories(thirdparty/imgui/ImGuiColorTextEdit)
 endif()
 
 

@@ -1,7 +1,7 @@
 
 cmake_minimum_required(VERSION 3.26 FATAL_ERROR)
 
-project(poco_gui)
+project(poco_gui OBJC)
 
 set (CMAKE_C_STANDARD 99)
 set (CMAKE_CXX_STANDARD 17)

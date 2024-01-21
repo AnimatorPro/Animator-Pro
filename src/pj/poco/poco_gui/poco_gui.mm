@@ -24,6 +24,7 @@
 #include "../../pj_sdl/pj_sdl.h"
 #include <TextEditor.h>
 
+#include <nfd.h>
 
 #ifdef _MSC_VER
 #include <float.h>
@@ -140,7 +141,7 @@ static void ShowExampleAppMainMenuBar()
 
 
 // ======================================================================
-typedef struct {
+typedef struct _dockIds {
 	ImGuiID root = 0;
 	ImGuiID memedit = 0;
 	ImGuiID text = 0;
@@ -207,6 +208,27 @@ const char* mac_preferences_path() {
 
 
 // ======================================================================
+void open_file() {
+	nfdchar_t *outPath;
+	nfdfilteritem_t filterItem[2] = { { "Source code", "c,cpp,cc" }, { "Headers", "h,hpp" } };
+	nfdresult_t result = NFD_OpenDialog(&outPath, filterItem, 2, "/Users/kiki/dev");
+	if (result == NFD_OKAY)
+	{
+		puts("Success!");
+		puts(outPath);
+		NFD_FreePath(outPath);
+	}
+	else if (result == NFD_CANCEL)
+	{
+		puts("User pressed cancel.");
+	}
+	else
+	{
+		printf("Error: %s\n", NFD_GetError());
+	}
+}
+
+// ======================================================================
 int main(int argc, char** argv) {
 	fprintf(stderr, "%s\n\n", argv[0]);
 
@@ -214,6 +236,8 @@ int main(int argc, char** argv) {
 	char active_file[1024];
 	sprintf(active_file, "untitled.poc");
 	char* active_file_contents = NULL;
+
+	NFD_Init();
 
 	// Setup Dear ImGui context
 	IMGUI_CHECKVERSION();
@@ -452,6 +476,8 @@ int main(int argc, char** argv) {
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 	SDL_Quit();
+
+	NFD_Quit();
 
 	return 0;
 }

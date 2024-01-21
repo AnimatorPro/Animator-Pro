@@ -474,7 +474,6 @@ int main(int argc, char** argv)
 error:
 	cleanup_all(err);
 	exit(err);
-	return err;
 }
 
 static Errcode resize_pencel(bool err_on_abort, bool reset)

@@ -1,3 +1,22 @@
+kiki's notes on this branch
+===========================
+
+The build is set up with CMake, but a makefile wraps the build.  Typing `make` should build the ani executable.
+
+This currently only builds for MacOS.  You'll need the following installed:
+- CMake 3.26+
+- autoconf
+- automake
+
+I recommend installing all through brew:
+
+```
+brew install cmake autoconf automake
+```
+
+Without the autotools stuff, libffi will fail to build.
+
+
 Animator Pro A.K.A.
 ===================
 

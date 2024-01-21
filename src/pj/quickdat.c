@@ -3,6 +3,8 @@
    and seeme's.
    */
 
+#include <stdio.h>
+
 #include "jimk.h"
 #include "broadcas.h"
 #include "filemenu.h"
@@ -494,7 +496,11 @@ void *ss;
 	{
 		goto error;
 	}
-	init_poco_pull(&tpull, POC_DOT_PUL, POC_PUL);
+	err = init_poco_pull(&tpull, POC_DOT_PUL, POC_PUL);
+    if (err < Success) {
+        fprintf(stderr, "init_poco_pull failed\n");
+    }
+    
 	scale_pull(&tpull, 0);		/* scale poco stuff too... */
 	err = do_menuloop(vb.screen,&quick_menu,NULL,
 				      &tpull,home_dokeys);
