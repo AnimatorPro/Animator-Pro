@@ -1,9 +1,0 @@
-#ifndef PROCBLIT_IH
-#define PROCBLIT_IH
-
-#ifndef STDTYPES_H
-	#include "stdtypes.h"
-#endif
-
-
-#endif /* PROCBLIT_IH */

@@ -1,7 +1,0 @@
-/* Test for inappropriate ' characters */
-#pragma poco echo "expect>expecting type in function parameter list got 'c'"
-
-main('c')
-{
-puts("this shouldn't compile");
-}

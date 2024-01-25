@@ -1,0 +1,10 @@
+
+main()
+{
+if (1)
+	Qtext("foo");
+else
+//	Qquestion(Dither is off for this ink; turn it on?");
+}
+
+

@@ -1,7 +1,0 @@
-svgavdev.obj
-svgaintf.obj
--l ..\drvcomn\drvcomn.lib
--l ..\lib\aasyslib.lib
--DOSORDER
--MAP svga.map
-

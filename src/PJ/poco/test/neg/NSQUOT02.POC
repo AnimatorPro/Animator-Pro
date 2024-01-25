@@ -1,9 +1,0 @@
-/* Tests for proper type on char constants */
-#pragma poco echo "expect>expecting pointer expression got ';'"
-
-main()
-{
-char *c = 'x';
-
-printf("This shouldn't compile");
-}

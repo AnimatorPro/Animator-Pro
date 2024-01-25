@@ -1,9 +1,0 @@
-/* Test an unterminated string */
-#pragma poco echo "expect>strings cannot span lines without continuation"
-
-main()
-{
-char *pt = "This is a verry weird
-
-puts("This shouldn't compile");
-}

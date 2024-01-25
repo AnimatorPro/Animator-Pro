@@ -1,0 +1,16 @@
+String mongo(String ok, String cancel)
+{
+if (strcmp(ok,cancel) > 0)
+	return(ok);
+else
+	return(cancel);
+}
+
+
+main()
+{
+String a;
+
+a = mongo("Ok", "Cancel");
+puts(a);
+}

@@ -1,2 +1,0 @@
-386asmp -80386 -TWOCASE -ERRORLIST %1.err %1 %2 %3 %4 %5
-

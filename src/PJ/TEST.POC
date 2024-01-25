@@ -1,7 +1,0 @@
-main()
-{
-	if (CelExists()) {
-		SaveCel("test.cel");
-		LoadCel("test.cel");
-	}
-}

@@ -1,1 +1,0 @@
-	wlinkp @v.lnk 

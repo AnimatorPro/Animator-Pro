@@ -1,0 +1,6 @@
+short i;
+
+main()
+{
+printf("sizeof i = %d\n", sizeof(i));
+}

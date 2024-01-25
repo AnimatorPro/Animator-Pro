@@ -1,5 +1,0 @@
--lib \paa\rexlib\aasyslib.lib
--lib \paa\rexlib\stdiolib.lib
--lib \paa\rexlib\gfxlib.lib
--DOSORDER
-

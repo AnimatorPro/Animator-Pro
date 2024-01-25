@@ -1,9 +1,0 @@
-!include ..\inc\make.inc
-
-EXE  = rif.pdr							# driver name
-OBJ  = rif.obj convbits.obj unrif.obj	# space-delimited object list
-LOBJ = rif.obj,convbits.obj,unrif.obj	# comma-delimited object list
-
-$(EXE): $(OBJ)
-	wlink @pdr.lnk FILE $(LOBJ) NAME $(EXE)
-

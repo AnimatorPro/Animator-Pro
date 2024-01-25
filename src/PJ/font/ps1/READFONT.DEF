@@ -1,4 +1,0 @@
-extern int rtype1(struct __iobuf *);
-extern int main(int ,char **);
-extern void *alloc(unsigned int );
-extern char *strsave(char *);

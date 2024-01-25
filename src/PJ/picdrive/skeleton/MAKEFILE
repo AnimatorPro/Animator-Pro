@@ -1,8 +1,0 @@
-!include ..\inc\make.inc
-
-EXE  = skeleton.pdr 				# driver name
-OBJ  = skeleton.obj stristr.obj 	# space-delimited object list
-LOBJ = skeleton.obj,stristr.obj 	# comma-delimited object list
-
-$(EXE): $(OBJ)
-	wlink @pdr.lnk FILE $(LOBJ) NAME $(EXE)

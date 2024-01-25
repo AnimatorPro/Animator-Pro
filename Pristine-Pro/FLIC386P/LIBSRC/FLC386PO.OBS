@@ -1,8 +1,0 @@
-+gluecode\gluecode.lib
-+fli\fli.lib
-+rastlib\rastlib.lib
-+util\util.lib
--fastclk.obj
--playntil.obj
-+glue_poe\gluepoe.lib
-

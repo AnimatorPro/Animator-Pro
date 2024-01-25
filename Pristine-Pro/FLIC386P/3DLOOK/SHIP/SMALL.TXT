@@ -1,7 +1,0 @@
-small1.fli
-small2.fli
-small3.fli
-small4.fli
-small5.fli
-small6.fli
-small7.fli

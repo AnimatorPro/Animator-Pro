@@ -1,7 +1,0 @@
--LIB ..\lib\aasyslib.lib
--LIB ..\lib\gfxlib.lib
--LIB ..\lib\stdiolib.lib
--TWOCASE
--NOMAP
--DOSORDER
-

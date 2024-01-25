@@ -1,8 +1,0 @@
-Integrated Oct 23, 1990
-Put in #elif defined(JIM) stuff for Jim to have include file directories
-    for his environment in main.c.  Added NULL check in ppeval.c next_token()
-Close error file and put "rb" instead of "r" in fopen in pp.c
-	Aug 31, 1990 about 11:00 pm (poco116u.zip)
-Changes to get it into Watcom environment Aug 31, 1990 about 9:45pm
-Changes to get it into Watcom environment Aug 23, 1990 about 11:15pm
-Ian's changes integrated into PJ Poco Aug 22, 1990 about 1:15 am

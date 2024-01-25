@@ -1,8 +1,0 @@
-main()
-{
-#if 1
-puts("I'm number 1");
-#else
-puts("I'm not number 1");
-#endif
-}

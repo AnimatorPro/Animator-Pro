@@ -1,8 +1,0 @@
-FORMAT PHARLAP REX
-OPTION
-	CASEEXACT,
-	DOSSEG
-LIBRARY
-	\paa\rexlib\aasyslib.lib
-FILE
-	\paa\rexlib\rexentry.obj

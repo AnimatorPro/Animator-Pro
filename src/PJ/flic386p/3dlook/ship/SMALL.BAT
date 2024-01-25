@@ -1,1 +1,0 @@
-3dlook @small.txt

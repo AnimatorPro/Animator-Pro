@@ -1,0 +1,17 @@
+
+show(String *s)
+{
+String b;
+
+puts(*s);
+*s = "Hiya!";
+b = *s;
+puts(b);
+}
+
+main()
+{
+String a = "Meanie Moonie";
+
+show(&a);
+}

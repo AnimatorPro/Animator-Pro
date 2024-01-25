@@ -1,0 +1,11 @@
+
+typedef struct jfl
+	{
+	short jfl_magic;
+	short rwmode;
+	struct tdev *dev;
+	Tjr handle;   /* must remain as last field */
+	} Jfl;
+
+#define JFL_MAGIC 21060
+

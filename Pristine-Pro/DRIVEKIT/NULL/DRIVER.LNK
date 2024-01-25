@@ -1,5 +1,0 @@
-device.obj
-raster.obj
--l ..\lib\aasyslib.lib
--l ..\lib\stdiolib.lib
--DOSORDER

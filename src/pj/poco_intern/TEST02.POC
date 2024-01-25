@@ -1,0 +1,7 @@
+main()
+{
+char buf[80];
+
+sprintf(buf, "We are all %s", "fools");
+Qtext(buf);
+}
