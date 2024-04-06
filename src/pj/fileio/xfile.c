@@ -48,25 +48,25 @@ extern void init_lstdfiles(void);
 
 typedef FILE REAL_FILE;
 
-#define real_stdout stdout
-#define real_stderr stderr
+#define real_stdout   stdout
+#define real_stderr   stderr
 
-#define real_fopen fopen
-#define real_fclose fclose
-#define real_fgetc fgetc
-#define real_fputc fputc
-#define real_ungetc ungetc
-#define real_fflush fflush
-#define real_fread fread
-#define real_fwrite fwrite
-#define real_fseek fseek
-#define real_rewind rewind
-#define real_ftell ftell
+#define real_fopen    fopen
+#define real_fclose   fclose
+#define real_fgetc    fgetc
+#define real_fputc    fputc
+#define real_ungetc   ungetc
+#define real_fflush   fflush
+#define real_fread    fread
+#define real_fwrite   fwrite
+#define real_fseek    fseek
+#define real_rewind   rewind
+#define real_ftell    ftell
 #define real_vfprintf vfprintf
-#define real_fgets fgets
-#define real_fputs fputs
-#define real_ferror ferror
-#define real_errno errno
+#define real_fgets    fgets
+#define real_fputs    fputs
+#define real_ferror   ferror
+#define real_errno    errno
 #endif /* USE_LFILE */
 
 

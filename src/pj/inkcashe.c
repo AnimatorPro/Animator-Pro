@@ -130,6 +130,6 @@ static Errcode make_ink_cashes(Ink *inky)
 
 Errcode make_render_cashes(void)
 {
-	return(make_ink_cashes(vl.ink));
+	return make_ink_cashes(vl.ink);
 }
 

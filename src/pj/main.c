@@ -14,11 +14,18 @@
 #include "palmenu.h"
 #include "pentools.h"
 #include "picdrive.h"
+#include "pjmain.h"
 #include "progids.h"
 #include "rastcurs.h"
 #include "resource.h"
 #include "vdevcall.h"
 #include "zoom.h"
+
+#ifdef WITH_POCO
+#include "poco/poco.h"
+#include "qpoco.h"
+#endif // WITH_POCO
+
 
 static Errcode resize_pencel(bool err_on_abort, bool reset);
 
@@ -27,6 +34,7 @@ USHORT program_version = 0;
 extern Errcode builtin_err;
 
 static Errcode set_flisize(Rectangle *newsize);
+
 
 /* initializes and allocs every thing that has to be done after the screen
  * and before the dynamic stuff (tempflx) and push/pop stuff is opened */
@@ -58,37 +66,46 @@ static void close_init_after(void *data)
    size and abandoning tflx, If this doesn't work give up and return error. */
 static Errcode force_temp_files(void)
 {
-Errcode err;
-Rectangle flxsize;
+	Errcode err;
+	Rectangle flxsize;
 
-	if((err = open_tempflx(true)) >= Success)
+	err = open_tempflx(true);
+	if(err >= Success)
 	{
 		flxsize.width = flix.hdr.width;
 		flxsize.height = flix.hdr.height;
 		close_tflx();
-		if((err = set_flisize(&flxsize)) < Success)
-			return(resize_pencel(true, true)); /* user will abort and exit */
-		return(open_tempflx(true));
+
+		err = set_flisize(&flxsize);
+		if(err < Success) {
+			return (resize_pencel(true, true)); /* user will abort and exit */
+		}
+
+		return open_tempflx(true);
 	}
 
-	if((err = set_penwndo_size(vb.screen->wndo.width,
-							   vb.screen->wndo.height)) < 0)
+	err = set_penwndo_size(vb.screen->wndo.width,
+						   vb.screen->wndo.height);
+	if(err < 0)
 	{
-		return(err);
+		return err;
 	}
-	return(open_default_flx());
+
+	return open_default_flx();
 }
+
 
 static Errcode clear_vtemps(bool reset)
 {
 	if (reset)
-		{
+	{
 		pj_delete(optics_name); /* get rid of optics moves */
-		pj_delete(ppoly_name);	/* and optics path */
-		}
-	pj_delete(tflxname);	  /* and old tempflx */
-	return(Success);
+		pj_delete(ppoly_name);  /* and optics path */
+	}
+	pj_delete(tflxname);        /* and old tempflx */
+	return Success;
 }
+
 
 static void push_close_toscreen(void)
 {
@@ -96,6 +113,8 @@ static void push_close_toscreen(void)
 	pj_clear_rast(vb.screen->viscel);  /* clear anything left in there */
 	close_downto_screen();	/* close all but screen */
 }
+
+
 Errcode empty_newflx(void)
 /* Open a new empty flx, but with old settings */
 {
@@ -110,9 +129,11 @@ Vset_flidef fdef;
 	rethink_settings();
 	return(empty_tempflx(fdef.frame_count));
 }
+
+
 static Errcode reopen_tempflx(bool reset)
 {
-Errcode err;
+	Errcode err;
 
 	/* if tflx is there re open it, otherwise open a new default flx
 	 * if that fails put up a new flx */
@@ -126,17 +147,21 @@ Errcode err;
 		{
 			err = empty_newflx();
 		}
-		if(err < Success)
-			return(err);
+
+		if(err < Success) {
+			return err;
+		}
 	}
-	return(RESTART_VPAINT); /* return to quick menu */
+	return RESTART_VPAINT; /* return to quick menu */
 }
+
+
 static Errcode resize_screen(void)
 {
-Errcode err;
-Rectangle oldsize;
-Screen_mode oldmode;
-Cmap ocolors;
+	Errcode err;
+	Rectangle oldsize;
+	Screen_mode oldmode;
+	Cmap ocolors;
 
 	oldmode = vconfg.smode;
 	copy_rectfields(vb.pencel,&oldsize);
@@ -152,56 +177,71 @@ Cmap ocolors;
 	for(;;)
 	{
 		free_undof(); /* re alloc'd by set penwndo size */
-		if((err = go_resize_screen(init_after_screen,
-									close_init_after)) < Success
-			&& err != Err_abort)
+		err = go_resize_screen(init_after_screen,
+							   close_init_after);
+		if((err < Success) && (err != Err_abort))
 		{
-			return(err); /* screen init failed, fatal */
+			return err; /* screen init failed, fatal */
 		}
 
-		if (err >= Success
-			&& soft_yes_no_box("full_flic"))
+		if ((err >= Success) && (soft_yes_no_box("full_flic")))
 		{
-			if(set_flisize((Rectangle *)&(vb.screen->wndo.RECTSTART))< Success)
+			if(set_flisize((Rectangle *)&(vb.screen->wndo.RECTSTART)) < Success) {
 				continue; /* try again */
+			}
 
 			/* put back old cmap since it was trashed when screen was freed */
 			pj_cmap_copy(&ocolors,vb.pencel->cmap);
 			see_cmap();
-			if ((err = empty_newflx()) < Success)
-				return(err);
+
+			err = empty_newflx();
+			if (err < Success) {
+				return err;
+			}
 		}
 		else
 		{
-			if((err = set_flisize(&oldsize)) < Success)
+			err = set_flisize(&oldsize);
+			if(err < Success) {
 				continue; /* try again */
+			}
 
-			if((err = open_tempflx(true)) < Success)
+			err = open_tempflx(true);
+			if(err < Success)
 			{
-				softerr(err,"tflx_screen");
+				softerr(err, "tflx_screen");
 				close_init_after(NULL);
 				cleanup_screen();
-				if((err = init_screen(&oldmode,NULL,init_after_screen))
-					< Success)
-					return(err); /* fatal */
+				if((err = init_screen(&oldmode,NULL,init_after_screen))	< Success) {
+					return err; /* fatal */
+				}
 				/* if next reopen fails waste file but leave settings */
-				return(reopen_tempflx(false));
+				return reopen_tempflx(false);
 			}
 		}
-		return(RESTART_VPAINT);
+
+		return RESTART_VPAINT;
 	}
 }
+
+
 static Errcode set_flisize(Rectangle *newsize)
 {
-Errcode err;
+	Errcode err;
 
-	if((err = set_penwndo_size(newsize->width,newsize->height)) < Success)
-		flisize_error(err,newsize->width,newsize->height);
-	return(err);
+	err = set_penwndo_size(newsize->width,newsize->height);
+	if(err < Success) {
+		flisize_error(err, newsize->width, newsize->height);
+	}
+
+	return err;
 }
+
+
 char *cl_poco_name;  /* loaded from arguments */
 char *cl_flic_name;  /* Flic loaded from arguments. */
 static char po_suffix[] = ".POC";
+
 
 static Errcode go_vpaint(void)
 {
@@ -216,8 +256,9 @@ static Errcode go_vpaint(void)
 		fli_abs_tseek(undof, vs.frame_ix);
 		zoom_unundo();
 	}
-	else
+	else {
 		save_undo();
+	}
 
 	init_zoom();
 	find_colors();
@@ -232,44 +273,54 @@ static Errcode go_vpaint(void)
 		Errcode err = do_cl_poco(cl_poco_name);
 		if (err < Success && err != Err_abort)
 		{
-			cleanup(TRUE);
-			if (err == Err_in_err_file)
+			cleanup(true);
+			if (err == Err_in_err_file) {
 				po_file_to_stdout(poco_err_name);
+			}
 			exit(err);
 		}
 		cl_poco_name = NULL; /* don't keep re-executing */
 	}
 #endif /* WITH_POCO */
 
-	return(go_quick_menu());
+	return go_quick_menu();
 }
+
 
 static Errcode get_poco_arg(Argparse_list *ap,int argc,
 							 char **argv,int position)
 {
-(void)ap;
-(void)position;
+	(void)ap;
+	(void)position;
 
-if (argc < 2 )
-	return Err_bad_input;
-cl_poco_name = argv[1];
-if (cl_poco_name[0] == '-')
-	return Err_bad_input;
-return Success;
+	if (argc < 2 ) {
+		return Err_bad_input;
+	}
+
+	cl_poco_name = argv[1];
+	if (cl_poco_name[0] == '-') {
+		return Err_bad_input;
+	}
+
+	return Success;
 }
 
 static Errcode get_flic_arg(Argparse_list *ap,int argc,
 							 char **argv,int position)
 {
-(void)ap;
-(void)position;
+	(void)ap;
+	(void)position;
 
-if (argc < 2 )
-	return Err_bad_input;
-cl_flic_name = argv[1];
-if (cl_flic_name[0] == '-')
-	return Err_bad_input;
-return Success;
+	if (argc < 2 ) {
+		return Err_bad_input;
+	}
+
+	cl_flic_name = argv[1];
+	if (cl_flic_name[0] == '-') {
+		return Err_bad_input;
+	}
+
+	return Success;
 }
 
 
@@ -282,34 +333,19 @@ static Errcode get_rest_of_command_line(Argparse_list *ap,int argc,
 	(void)position;
 
 	for (i=0; i<argc; ++i)
-		{
+	{
 		arg = argv[i];
-		if (suffix_in(arg, po_suffix))
+		if (suffix_in(arg, po_suffix)) {
 			cl_poco_name = arg;
-		else
+		}
+		else {
 			cl_flic_name = arg;
 		}
+	}
+
 	return argc;
 }
 
-#ifdef TEST_LO_MEM
-int eat_memory()
-/* Just for testing eat all but 10K. */
-{
-	char *pt;
-	char *lastpt = NULL;
-	int count = 0;
-
-	while ((pt = malloc(10000)) != NULL)
-		{
-		lastpt = pt;
-		++count;
-		}
-	if (lastpt != NULL)
-		free(lastpt);
-	return count;
-}
-#endif /* TEST_LO_MEM */
 
 static void add_local_pdrs(void)
 {
@@ -335,11 +371,13 @@ static void delete_file_list(char **list)
 {
 	const char *name;
 
-	while ((name = *list++) != NULL)
+	while ((name = *list++) != NULL) {
 		pj_delete(name);
+	}
 }
 
-static void cleanup(bool save_state)
+
+void cleanup(bool save_state)
 {
 	/* delete back buffer screen */
 	pj_delete(bscreen_name);
@@ -349,6 +387,7 @@ static void cleanup(bool save_state)
 		flush_tempflx(); /* update tempflx header and stuff */
 		flush_tsettings(true); /* update temp settings file */
 	}
+
 	close_tflx();
 	/* push a copy of current screen and alt,cel etc for when program
 	 * started again with id of last tflx flush...
@@ -362,6 +401,7 @@ static void cleanup(bool save_state)
 	else {
 		delete_file_list(state_temp_files);
 	}
+
 	cleanup_all(Success);
 }
 
@@ -392,21 +432,30 @@ int main(int argc, char** argv)
 	set_hotkey_func(do_pj_hotkey); /* set input hot key function */
 
 	/* initialize pj resource files */
-	if((err = init_pj_resources()) < Success)
+	err = init_pj_resources();
+	if(err < Success) {
 		goto error;
+	}
 
-	if((err = init_ptools()) < Success) /* initialize tools */
+	/* initialize tools */
+	err = init_ptools();
+	if(err < Success) {
 		goto error;
-	if((err = init_inks()) < Success) /* load any loadable inks */
+	}
+
+	/* load any loadable inks */
+	err = init_inks();
+	if(err < Success) {
 		goto error;
+	}
 
 #ifdef WITH_POCO
-	if(cl_poco_name != NULL)
-	{
-		if ((err = compile_cl_poco(cl_poco_name)) < Success)
-		{
-			if (err == Err_in_err_file)
+	if (cl_poco_name != NULL) {
+		err = compile_cl_poco(cl_poco_name);
+		if (err < Success) {
+			if (err == Err_in_err_file) {
 				po_file_to_stdout(poco_err_name);
+			}
 			err = Err_reported;
 			goto error;
 		}
@@ -543,5 +592,5 @@ bool was_zoom;
 	if(!reset)
 		vs.zoom_open = was_zoom;
 error:
-	return(err);
+	return err;
 }

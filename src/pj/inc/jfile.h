@@ -13,6 +13,30 @@
 #include "xfile.h"
 #endif
 
+#ifndef FILEMODE_H
+
+/* I'm copying this over from rexlib/inc/filemode.h for now;
+ * I don't know how much of the pocorex stuff I'll be supporting
+ * in the long run. */
+
+typedef void *Jfile;
+/* JFILE_INTERNALS */
+
+#define JNONE NULL  /* if open fails this is it */
+
+/* seek parameters */
+#define JSEEK_START	0 /* defines for mode parameter to jseek */
+#define JSEEK_REL	1
+#define JSEEK_END	2
+
+/* Normal MS-DOS open flags for mode parameter to jcreate() and jopen() */
+#define JUNDEFINED -1
+#define JREADONLY 0
+#define JWRITEONLY 1
+#define JREADWRITE 2
+
+#endif
+
 /** basic low level dos file calls found in the syslib **/
 
 bool pj_exists(const char *path);

@@ -1,4 +1,5 @@
-/* vpaint.c - handle high level user button pushes.  Main pull-down
+/* vpaint.c - handle high level user button pushes.
+ * pull-down
    interpreter switch and main keyboard interpreter switch.  Implementations
    of many of routines called by above.  The first layer under main(). */
 
@@ -29,6 +30,7 @@
 #include "picdrive.h"
 #include "picfile.h"
 #include "progids.h"
+#include "qpoco.h"
 #include "scroller.h"
 #include "softmenu.h"
 #include "textedit.h"
@@ -43,6 +45,10 @@
 
 static char* unsaved_string(char* buf);
 static void qquit(void);
+
+// from mainpull.c
+Errcode run_pull_poco(Menuhdr *mh, SHORT id);
+
 
 static void get_color(void)
 {
@@ -544,10 +550,11 @@ void main_selit(Menuhdr* mh, SHORT hitid)
 	hide_mp();
 	if (hitid > POC_DOT_PUL && hitid <= POC_DOT_PUL + 10) /* poco call */
 	{
-#ifdef WITH_POCO
+		#ifdef WITH_POCO
 		run_pull_poco(mh, hitid);
-#endif /* WITH_POCO */
-	} else {
+		#endif /* WITH_POCO */
+	}
+	else {
 		switch (hitid) {
 			case ANI_ABO_PUL:
 				about();

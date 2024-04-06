@@ -13,66 +13,57 @@
 #include "ptrmacro.h"
 #include "softmenu.h"
 #include "timemenu.h"
+#include "vpsubs.h"
 #include "zoom.h"
 
-#ifdef SLUFFED
-long fli_screen_size()
-{
-return((long)vb.pencel->width * (long)vb.pencel->height);
-}
-#endif /* SLUFFED */
 
 #ifdef WITH_POCO
-int fli_screen_width()
+int fli_screen_width(void)
 {
-return(vb.pencel->width);
+	return(vb.pencel->width);
+}
+
+
+int fli_screen_height(void)
+{
+	return(vb.pencel->height);
 }
 #endif /* WITH_POCO */
 
-#ifdef WITH_POCO
-int fli_screen_height()
-{
-return(vb.pencel->height);
-}
-#endif /* WITH_POCO */
 
 void ccolor_dot(SHORT x, SHORT y, void *data)
 {
 	(void)data;
 	pj_put_dot(vb.pencel,vs.ccolor,x,y);
 }
+
+
 void undo_dot(SHORT x, SHORT y, void *data)
 {
 	(void)data;
 	pj_put_dot(vb.pencel,pj_get_dot(undof,x,y),x,y);
 }
+
+
 void undo_rect(Coor x,Coor y,Coor w,Coor h)
 {
 	pj_blitrect(undof,x,y,vb.pencel,x,y,w,h);
 }
+
+
 void save_undo_rect(Coor x,Coor y,Coor w,Coor h)
 {
 	pj_blitrect(vb.pencel,x,y,undof,x,y,w,h);
 }
+
+
 void zoom_undo_rect(Coor x,Coor y,Coor w,Coor h)
 {
 	pj_blitrect(undof,x,y,vb.pencel,x,y,w,h);
 	if(vs.zoom_open)
 		zoom_blitrect((Raster *)undof, x, y, x, y, w, h);
 }
-#ifdef SLUFFED
-Boolean check_any_abort()
 
-/* check abort no matter what window you're in */
-{
-	if(JSTHIT(MBRIGHT) || (JSTHIT(KEYHIT) && is_abortkey()))
-	{
-		close_group_code((Mugroup *)see_head(&vb.screen->gstack),Err_abort);
-		return(1);
-	}
-	return(0);
-}
-#endif /* SLUFFED */
 
 static bool rclick_on_screen(void)
 {
@@ -81,6 +72,7 @@ static bool rclick_on_screen(void)
 				|| (vs.zoom_open && curson_wndo(vl.zoomwndo))
 				|| curson_wndo(&vb.screen->wndo))));
 }
+
 
 bool check_esc_abort(void)
 {
@@ -91,6 +83,7 @@ bool check_esc_abort(void)
 	}
 	return(false);
 }
+
 
 bool check_pen_abort(void)
 /* checks for click abort on pen windows only and key abort */
@@ -104,6 +97,7 @@ bool check_pen_abort(void)
 	return(false);
 }
 
+
 bool check_toggle_menu(void)
 {
 	if ((JSTHIT(KEYHIT) && (UBYTE)icb.inkey == ' ')
@@ -115,6 +109,8 @@ bool check_toggle_menu(void)
 	else
 		return(false);
 }
+
+
 bool check_toggle_abort(void)
 /* returns 0 if input unused 1 if used */
 {
@@ -134,10 +130,12 @@ int cluster_count(void)
 	return(vs.buns[vs.use_bun].bun_count);
 }
 
+
 UBYTE *cluster_bundle(void)
 {
 	return(vs.buns[vs.use_bun].bundle);
 }
+
 
 void see_cmap(void)
 {
@@ -149,21 +147,23 @@ void see_cmap(void)
 /* functions to scale and unscale resolution independent variables 
  * in the Vsettings */
 
-SHORT uscale_vscoor(Vscoor vcoor, SHORT relto)
 /* scales a Vscoor to get the reltoscaled coordinates for a value */
+SHORT uscale_vscoor(Vscoor vcoor, SHORT relto)
 {
-double tcoor;
+	double tcoor;
 
 	tcoor = ((double)vcoor);
 	tcoor /= ((double)VS_MAXCOOR);
 	tcoor *= ((double)(relto));
 	return((SHORT)ceil(tcoor - .5));
 }
-Vscoor scale_vscoor(SHORT coor, SHORT relto)
+
+
 /* scales a coordinate to give a vs.coor varying between -VS_MAXCOOR
  * to VS_MAXCOOR coor may vary from -relto*2 to relto*2 */
+Vscoor scale_vscoor(SHORT coor, SHORT relto)
 {
-double tcoor;
+	double tcoor;
 
 	tcoor = ((double)VS_MAXCOOR);
 	tcoor /= ((double)(relto));
@@ -185,8 +185,7 @@ double tcoor;
 OFFSET(Vsettings,vsfld),OFFSET(Vlcb,vlfld),sizeof(MEMBER(Vlcb,vlfld))
 
 /* penwndo width relative fields */
-
-static SHORT fliwin_width_rel[] = 
+static SHORT fliwin_width_rel[] =
 {
 	INITOSENT(flicentx,flicent.x), 
 	INITOSENT(gridx,grid.x),
@@ -231,9 +230,9 @@ static SHORT flidiag_rel[] =
 
 static void vs_uscaleum(SHORT *tab,SHORT relto)
 {
-void *vlroot = &vl;
-void *vsroot = &vs;
-SHORT usval;
+	void *vlroot = &vl;
+	void *vsroot = &vs;
+	SHORT usval;
 
 	while(*tab >= 0)
 	{
@@ -247,34 +246,11 @@ SHORT usval;
 		tab += 3;
 	}
 }
-#ifdef SLUFFED
-static void vs_scaleum(SHORT *tab,SHORT relto)
 
-/* scale items in vl to the vs vscoor values */
-{
-void *vlroot = &vl;
-void *vsroot = &vs;
-SHORT usval;
 
-	while(*tab >= 0)
-	{
-		if(tab[2] == sizeof(BYTE))
-			usval = *((BYTE *)OPTR(vlroot,tab[1]));
-		else if(tab[2] == sizeof(SHORT))
-			usval = *((SHORT *)OPTR(vlroot,tab[1]));
-		else if(tab[2] == sizeof(LONG))
-			usval = *((LONG *)OPTR(vlroot,tab[1]));
-
-		*(Vscoor *)OPTR(vsroot,tab[0]) = scale_vscoor(usval,relto); 
-		tab += 3;
-	}
-}
-#endif /* SLUFFED */
-
-void reres_settings(void)
-
-/* this must be called any time the resolution of the fli-window or the 
+/* this must be called any time the resolution of the fli-window or the
  * screen is changed */
+void reres_settings(void)
 {
 	vl.flidiag_scale = (vb.pencel->width + vb.pencel->height) * 2;
 	vs_uscaleum(screen_width_rel,vb.screen->wndo.width); 
@@ -286,17 +262,19 @@ void reres_settings(void)
 
 
 typedef struct qkmove
-	{
+{
 	SHORT ox, oy;
 	Menuhdr *mh;
-	} Qkmove;
+} Qkmove;
+
 
 static void init_qkmove(Qkmove *qk, Button *b)
 {
-qk->mh = get_button_hdr(b);
-qk->ox = qk->mh->x;
-qk->oy = qk->mh->y;
+	qk->mh = get_button_hdr(b);
+	qk->ox = qk->mh->x;
+	qk->oy = qk->mh->y;
 }
+
 
 static void finish_qkmove(Qkmove *qk)
 {
@@ -314,40 +292,41 @@ static void finish_qkmove(Qkmove *qk)
 	vs.quickcenty = scale_vscoor(vl.quickcent.y, vb.screen->wndo.height);
 }
 
+
 void mb_quickmenu_to_bottom(Button *b)
 {
-Qkmove sqk;
+	Qkmove sqk;
 
 	init_qkmove(&sqk, b);
 	mb_menu_to_bottom(b);
 	finish_qkmove(&sqk);
 }
 
+
 void mb_move_quickmenu(Button *b)
 {
-Qkmove sqk;
+	Qkmove sqk;
 
 	init_qkmove(&sqk, b);
 	mb_clipmove_menu(b, NULL);
 	finish_qkmove(&sqk);
 }
+
+
 void menu_to_quickcent(Menuhdr *mh)
 {
 	menu_to_point(vb.screen,mh,vl.quickcent.x,vl.quickcent.y);
 }
-#ifdef SLUFFED
-void pal_save_undo(void)
-/* saves palette only  */
-{
-	pj_cmap_copy(vb.pencel->cmap,undof->cmap);
-}
-#endif /* SLUFFED */
+
+
 void save_undo(void)
 {
 	pj_blitrect(vb.pencel,0,0,
 		 	 undof, 0, 0, undof->width, undof->height);
 	pj_cmap_copy(vb.pencel->cmap,undof->cmap);
 }
+
+
 void zoom_unundo(void)
 {
 	pj_blitrect(undof,0,0,
@@ -359,6 +338,8 @@ void zoom_unundo(void)
 		see_cmap();
 	}
 }
+
+
 void swap_undo(void)
 {
 	swap_pencels(undof, (Rcel *)(vb.pencel));
@@ -370,6 +351,8 @@ void swap_undo(void)
 	zoom_it();
 	dirties();
 }
+
+
 void menu_doundo(void)
 
 /* undo called from menus */
@@ -377,6 +360,7 @@ void menu_doundo(void)
 	if(vl.undoit != NULL)
 		(*vl.undoit)();
 }
+
 
 bool check_undo_key(void)
 {
@@ -387,6 +371,7 @@ bool check_undo_key(void)
 	}
 	return(false);
 }
+
 
 void menu_doredo(void)
 /* redo called from menus */
@@ -406,12 +391,14 @@ void restore(void)
 	dirty_frame = 0;
 }
 
+
 void init_seq(void)
 {
 	vs.frame_ix = 0;
 	pj_clear_rast(vb.pencel);
 	see_cmap();
 }
+
 
 void kill_seq(void)
 {
@@ -423,45 +410,39 @@ void kill_seq(void)
 	flx_draw_olays();
 }
 
+
 void flush_tempflx(void)
 {
 	scrub_cur_frame();
 	flush_tflx();
 }
 
+
 void hide_mp(void)
 {
 	fliborder_off();
 	stack_hide_cgroup(vb.screen);
 }
+
+
 void show_mp(void)
 {
-	if(stack_show_cgroup(vb.screen))
+	if(stack_show_cgroup(vb.screen)) {
 		fliborder_on();
-	else
+	}
+	else {
 		fliborder_off();
+	}
 }
 
-#ifdef SLUFFED
-void defrag(void)
-{
-	hide_mp();
-	unzoom();
-	flush_tflx();
-	push_pics();
-	close_tflx();
-	open_tempflx(TRUE);
-	pop_pics();
-	rezoom();
-	show_mp();
-}
-#endif /* SLUFFED */
 
 int interp_range(int c1,int c2,int i,int divi)
 {
-	if (divi == 1)
-		return(c1);
-	else
-		divi-=1;
-	return( (c2*i + c1*(divi-i) + divi/2)/divi);
+	if (divi == 1) {
+		return c1;
+	}
+	else {
+		divi -= 1;
+	}
+	return (c2*i + c1*(divi-i) + divi/2)/divi;
 }

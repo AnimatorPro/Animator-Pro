@@ -2,7 +2,9 @@
 /* Also some "Dotout" family functions that take x/y parameters and act
    on vb.pencel.  Dotout's are used by line drawers, circle drawers etc. */
 
+#define INPUT_INTERNALS
 #define RASTCALL_INTERNALS
+#define GFX_INTERNALS
 #include "jimk.h"
 #include "errcodes.h"
 #include "gfx.h"

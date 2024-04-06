@@ -30,6 +30,12 @@ add_subdirectory(wndo)
 
 if (WITH_POCO)
 	add_subdirectory(poco)
+	set(PJ_POCO_FILES
+		pocodraw.c
+		pocotur.c
+		qpoco.c
+		qpocoed.c
+	)
 endif()
 	
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-sign-compare")
@@ -101,8 +107,6 @@ set(PJMAIN_SRC_FILES
 	polyrub.c
 	polytool.c
 	pstamp.c
-#	qpoco.c
-#	qpocoed.c
 	qmacro.c
 	qmenu.c
 	quickdat.c
@@ -147,10 +151,10 @@ set(PJMAIN_SRC_FILES
 	)
 
 if (WITH_ANI)
-	
 	add_executable(
 		${PROJECT_NAME}
 			${PJMAIN_SRC_FILES}
+			${PJ_POCO_FILES}
 	)
 	
 	target_link_libraries(

@@ -1,7 +1,10 @@
+#define GFX_INTERNALS
 #define RASTGFX_INTERNALS
 #include "ptrmacro.h"
 #include "memory.h"
 #include "gfx.h"
+
+#include <string.h>
 
 
 typedef struct sblit_dat {
@@ -20,14 +23,13 @@ typedef struct sblit_dat {
 
 #define SBD_TCXL 1
 
-static void line_inc(int sy, int dy, void *data)
+static void line_inc(int sy, int dy, Sblit_dat *sbd)
 {
-Sblit_dat *sbd = data;
-Pixel *spix;
-Pixel *dpix;
-Pixel *maxpix;
-SHORT *xtable;
-Pixel p;
+    Pixel *spix;
+    Pixel *dpix;
+    Pixel *maxpix;
+    SHORT *xtable;
+    Pixel p;
 
 	spix = sbd->sbuf;
 	dpix = sbd->dbuf;
@@ -60,21 +62,57 @@ Pixel p;
 	pj_put_hseg(sbd->dst,sbd->dbuf,sbd->dx,dy,sbd->dw);
 }
 
-void pj_scale_blit(Raster *src,Coor sx, Coor sy, Ucoor sw, Ucoor sh,
-           		   Raster *dst,Coor dx, Coor dy, Ucoor dw, Ucoor dh,
+
+/* This was pulled from linscale.c.
+ *
+ * Weird thing: before, it was passing void* around and casting to Sblit_dat
+ * inside the different functions. line_inc() was passed as a function pointer.
+ * Somewhere in all that, on Apple Silicon it corrupts the ->src pointer of the
+ * Sblit_dat by setting it to 0x80004, every time.  Making a custom function here
+ * for this particular use case and calling line_inc directly without void
+ * pointers seems to fix the issue.
+ * */
+static void pj_do_linscale_sbd(int sx, int sw, int dx, int dw, Sblit_dat* sbd)
+{
+	int xerr;
+	int dmax;
+
+	xerr = dw - (sw>>1);
+	dmax = dx + dw;
+
+	for(;dx < dmax;++dx)
+	{
+		line_inc(sx,dx,sbd);
+		if((xerr -= sw) <= 0)
+		{
+			for(;;)
+			{
+				++sx;
+				if((xerr += dw) > 0)
+					break;
+			}
+		}
+	}
+}
+
+
+void pj_scale_blit(Raster *src, Coor sx, Coor sy, Ucoor sw, Ucoor sh,
+           		   Raster *dst, Coor dx, Coor dy, Ucoor dw, Ucoor dh,
 				   Tcolxldat *tcxl)
 {
-Sblit_dat sbd;
-Pixel sbuf[SBUF_SIZE];
-unsigned int bsize;
-
+	Sblit_dat sbd;
+	memset(&sbd, 0, sizeof(Sblit_dat));
+	Pixel sbuf[SBUF_SIZE];
+	unsigned int bsize;
 
 	bsize = (sw+dw)*sizeof(Pixel)+dw*sizeof(SHORT);
 
-	if(bsize <= sizeof(sbuf))
+	if(bsize <= sizeof(sbuf)) {
 		sbd.sbuf = sbuf;
-	else if ((sbd.sbuf = (Pixel *)pj_malloc(bsize)) == NULL)
+	}
+	else if ((sbd.sbuf = (Pixel *)pj_malloc(bsize)) == NULL) {
 		return;
+	}
 	sbd.dbuf = sbd.sbuf + sw;
 	sbd.xtable = (SHORT *)(sbd.dbuf + dw);
 
@@ -95,7 +133,7 @@ unsigned int bsize;
 	}
 	pj_make_scale_table(sw,dw,sbd.xtable);
 
-	pj_do_linscale(sy,sh,dy,dh,line_inc,&sbd);
+	pj_do_linscale_sbd(sy,sh,dy,dh,&sbd);
 
 	if(sbd.sbuf != sbuf)
 		pj_free(sbd.sbuf);

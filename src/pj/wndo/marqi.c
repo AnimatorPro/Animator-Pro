@@ -2,6 +2,7 @@
 /* Also some "Dotout" family functions that take x/y parameters and act
    on render_form.  Dotout's are used by line drawers, circle drawers etc. */
 
+#define INPUT_INTERNALS
 #define RASTCALL_INTERNALS
 #define MARQI_C
 #include "errcodes.h"

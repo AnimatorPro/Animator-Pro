@@ -76,11 +76,15 @@ char *make_resource_name(char *name, char *path_buf)
 	make_file_path(resource_dir, name, path_buf);
 	return(path_buf);
 }
+
+
 void cleanup_menu_resource(void)
 {
 	cleanup_common_str();
 	smu_cleanup(&smu_sm);
 }
+
+
 Errcode init_menu_resource(char *menu_file)
 
 /* opens menu resource file and installs it in the global file handle 

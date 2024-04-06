@@ -4,11 +4,11 @@
 #include "softmenu.h"
 
 static Errcode soft_errline(Errcode err,char *errsym,char *key,va_list *pargs)
-/* note, will not report if Successful or Err_aborted or Err_reported */
 {
-char etext[ERRTEXT_SIZE];
-char *formats;
-char text[256];		/* buffer for specific text, only used if key != NULL */
+	/* note, will not report if Successful or Err_aborted or Err_reported */
+	char etext[ERRTEXT_SIZE];
+	char *formats;
+	char text[256];		/* buffer for specific text, only used if key != NULL */
 
 	if(!get_errtext(err,etext))
 		return(err);
@@ -28,14 +28,15 @@ char text[256];		/* buffer for specific text, only used if key != NULL */
 }
 
 
-Errcode softerr(Errcode err,char *key,...)
+Errcode softerr(Errcode err, char *key, ...)
 {
-va_list args;
+	va_list args;
 
-va_start(args,key);
-err = soft_errline(err,"errlines",key,&args);
-va_end(args);
-return(err);
+	va_start(args,key);
+	err = soft_errline(err, "errlines", key, &args);
+	va_end(args);
+
+	return err;
 }
 
 

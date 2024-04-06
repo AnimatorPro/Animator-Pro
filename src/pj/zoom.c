@@ -1105,9 +1105,11 @@ bool zoom_hidden(void)
 {
 	return(zstack < 0 && lzoom_mode);
 }
+
+
 void unzoom(void)
-/* temporarily get out of zoom (used by system not user) */
 {
+	/* temporarily get out of zoom (used by system not user) */
 	if(zstack <= 0)
 	{
 		if(vs.zoom_open)
@@ -1119,10 +1121,11 @@ void unzoom(void)
 	}
 	++zstack;
 }
+
 void rezoom(void)
-/* go back to zoom from temporary suspension note this is also used for 
- * "rezooming" on startup */
 {
+	/* go back to zoom from temporary suspension note this is also used for
+	 * "rezooming" on startup */
 	if (--zstack <= 0)
 	{
 		if(lzoom_mode)

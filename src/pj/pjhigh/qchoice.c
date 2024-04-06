@@ -44,7 +44,7 @@ int qchoice(USHORT *qc_flags, char *header, char **choices, int ccount)
 /* Does not format and takes an array of strings returns 0 to 8 for choices
  * Err_abort if canceled other error code if error */
 {
-	return(makedo_qchoice(header,choices,ccount,NULL,TRUE,qc_flags));
+	return(makedo_qchoice(header,choices,ccount,NULL,true,qc_flags));
 }
 #endif /* WITH_POCO */
 

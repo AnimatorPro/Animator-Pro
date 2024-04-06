@@ -6,25 +6,41 @@
 #include "textedit.h"
 #include "menus.h"
 #include "pocoface.h"
+#include "wordwrap.h"
+
 
 Vfont *get_poco_font();
 
+// from zoom.c
+void unzoom(void);
+void rezoom(void);
+
+
 void etext_undraw_rect(Raster *r, void *data, int x, int y,
 	int width, int height);
+
 void etext_undraw_dot(int x, int y, Raster *r);
+
+// from resource.c
+char *make_resource_name(char *name, char *path_buf);
+
+// from qpoco.c
+Errcode run_poco_stripped_environment(char *source_name);
+
 
 static void poco_lookup_function(Text_file *gf)
 {
-char lookup_path[PATH_SIZE];
+	(void)gf;
+	char lookup_path[PATH_SIZE];
 
-make_resource_name("lookup.po", lookup_path);
-run_poco_stripped_environment(lookup_path);
+	make_resource_name("lookup.po", lookup_path);
+	run_poco_stripped_environment(lookup_path);
 }
 
 static Errcode open_text_screen_win(Wndo **win)
 {
-Errcode err;
-WndoInit wi;
+	Errcode err;
+	WndoInit wi;
 
 	clear_mem(&wi,sizeof(wi));
 	wi.width = vb.screen->wndo.width;
@@ -33,13 +49,13 @@ WndoInit wi;
 	wi.over = NULL;
 	wi.flags = (WNDO_BACKDROP);
 
-	if((err = open_wndo(win,&wi)) < 0)
-		goto error;
+	err = open_wndo(win, &wi);
+	if(err < 0) {
+		return softerr(err, "poco_edit");
+	}
 
 	(*win)->ioflags = (KEYHIT|ANY_CLICK);
-	return(Success);
-error:
-	return(softerr(err,"poco_edit"));
+	return Success;
 }
 
 
@@ -103,7 +119,7 @@ void full_screen_edit(Text_file *gf)
 	rezoom();
 }
 
-Boolean qedit_poco(long line, int cpos)
+bool qedit_poco(long line, int cpos)
 /*
  * Edit poco program full screen.  Return TRUE if user makes any changes.
  */
@@ -116,13 +132,15 @@ Boolean qedit_poco(long line, int cpos)
 	gf->text_yoff = vs.ped_yoff;
 	gf->text_name = poco_source_name;
 	if (pj_exists(poco_source_name))
-		{
+	{
 		if (load_text_file(gf, poco_source_name) >= Success)
-			{
-			if (line >= 0)
+		{
+			if (line >= 0) {
 				gf->tcursor_p = seek_char(gf->text_buf, line, cpos);
 			}
 		}
+	}
+
 	gf->help_function = poco_lookup_function;
 	full_screen_edit(gf);
 	vs.ped_cursor_p = gf->tcursor_p;

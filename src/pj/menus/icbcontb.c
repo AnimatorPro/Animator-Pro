@@ -1,11 +1,11 @@
 #include "reqlib.h"
 #include "ftextf.h"
 
-Errcode continu_box(char *fmt,...)
+Errcode continu_box(char *fmt, ...)
 {
-Errcode err;
-va_list args;
-char *formats;
+	Errcode err;
+	va_list args;
+	char *formats;
 
 	va_start(args, fmt);
 	formats = ftext_format_type(&fmt,&args);

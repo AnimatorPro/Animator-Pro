@@ -113,8 +113,9 @@ cleanup:
 			err = cerr;
 	}
 
-	if (err < Success)
+	if (err < Success) {
 		pj_delete(name);
+	}
 	return err;
 }
 

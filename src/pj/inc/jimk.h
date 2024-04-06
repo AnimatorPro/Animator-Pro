@@ -141,10 +141,6 @@ extern Errcode wait_til(ULONG clock_1000);
 extern LONG comp_size;
 
 
-
-
-
-
 /* Macro related globals */
 extern char usemacro,defmacro;	/* Executing macro?  Defining macro? */
 extern char inwaittil;	/* Flag to get macros to work during playback... */
@@ -154,9 +150,9 @@ extern char realtimemac; /* Save time with rest of input... */
 
 
 struct range
-	{
+{
 	SHORT min, max, v1, v2;
-	};
+};
 
 extern struct range trange;
 
@@ -167,7 +163,7 @@ extern char loaded_screen;	/* another flag kludge */
 
 /* An optics move (well except for the path) */
 struct ado_setting
-	{
+{
 	struct ado_setting *next;
 	Short_xyz spin_center;
 	Short_xyz spin_axis;
@@ -176,7 +172,7 @@ struct ado_setting
 	Short_xyz size_center;
 	SHORT  xp, xq, yp, yq, bp, bq;
 	Short_xyz move;
-	};
+};
 
 
 Errcode default_temp_path(char *buf);
@@ -243,7 +239,7 @@ SHORT uscale_vscoor(Vscoor vcoor, SHORT relto);
 Vscoor scale_vscoor(SHORT coor, SHORT relto);
 
 struct vsettings
-	{
+{
 	Fat_chunk id;	/* fli file chunk header id */
 	SHORT frame_ix; 	/* Current frame */
 	SHORT ccolor;		/* Current drawing color */

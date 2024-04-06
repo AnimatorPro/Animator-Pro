@@ -15,7 +15,17 @@ typedef union tjr  {
 	int j;
 } Tjr;
 
-#include "jflstruc.ih"
+
+typedef struct jfl
+{
+	short jfl_magic;
+	short rwmode;
+	struct tdev *dev;
+	Tjr handle;   /* must remain as last field */
+} Jfl;
+
+#define JFL_MAGIC 21060
+
 
 extern Errcode pj__io_e_r_r;
 #define jerr pj__io_e_r_r

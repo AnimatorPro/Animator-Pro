@@ -5,6 +5,9 @@
 #include "tween.h"
 #include "auto.h"
 
+#define POCO_TWEEN_INTERNALS
+#include "poco_tween.h"
+
 /* pocotwee.c - Poco library functions for the tweening system.
  */
 
@@ -14,23 +17,21 @@ extern ErrCode po_arrays_to_ll_poly(Poly *poly
 ,  int ptcount, Popot *px, Popot *py);
 extern Errcode po_2_arrays_check(int ptcount, Popot *px, Popot *py);
 
-void po_tween_clear_links(void);
-Boolean po_tween_exists(void);
-
 static Tween_state poco_tween_state;
 
-void init_poco_tween()
 /*----------------------------------------------------------------------------
  * Load in tween state from temp file.
  *--------------------------------------------------------------------------*/
+void init_poco_tween(void)
 {
 	load_tween(tween_name, &poco_tween_state);
 }
 
-void cleanup_poco_tween()
+
 /*----------------------------------------------------------------------------
  * Save out tween that Poco maybe altered,  and free it up.
  *--------------------------------------------------------------------------*/
+void cleanup_poco_tween(void)
 {
 	if (tween_has_data(&poco_tween_state))
 		save_tween(tween_name, &poco_tween_state);
@@ -38,10 +39,10 @@ void cleanup_poco_tween()
 }
 
 
-static ErrCode po_tween_load(Popot pop_file_name)
 /*****************************************************************************
  * ErrCode TweenLoad(char *file_name);
  ****************************************************************************/
+static ErrCode po_tween_load(Popot pop_file_name)
 {
 	Errcode err;
 	char *file_name;
@@ -54,10 +55,10 @@ static ErrCode po_tween_load(Popot pop_file_name)
 	return Success;
 }
 
-static ErrCode po_tween_save(Popot pop_file_name)
 /*****************************************************************************
  * ErrCode TweenSave(char *file_name);
  ****************************************************************************/
+static ErrCode po_tween_save(Popot pop_file_name)
 {
 	char *file_name;
 
@@ -68,28 +69,27 @@ static ErrCode po_tween_save(Popot pop_file_name)
 	return save_tween(file_name, &poco_tween_state);
 }
 
-static Boolean po_tween_exists(void)
 /*****************************************************************************
- * Boolean TweenExists(void);
+ * bool TweenExists(void);
  ****************************************************************************/
+static bool po_tween_exists(void)
 {
 	return tween_has_data(&poco_tween_state);
 }
 
-static void po_tween_clear(void)
 /*****************************************************************************
  * void	TweenClear(void);
  ****************************************************************************/
+static void po_tween_clear(void)
 {
 	trash_tween_state(&poco_tween_state);
 }
 
-static ErrCode po_tween_set_poly(int ptcount, Popot *px, Popot *py, Poly *poly,
-	Poly *other_poly)
 /*----------------------------------------------------------------------------
  * Set one of the tween polygons to a pocy 2 array style poly.
  * If the other poly is empty, set it too.
  *--------------------------------------------------------------------------*/
+static ErrCode po_tween_set_poly(int ptcount, Popot *px, Popot *py, Poly *poly, Poly *other_poly)
 {
 	Errcode err;
 
@@ -105,11 +105,10 @@ static ErrCode po_tween_set_poly(int ptcount, Popot *px, Popot *py, Poly *poly,
 	return err;
 }
 
-static ErrCode po_tween_get_poly(Poly *poly
-, Popot *pptcount, Popot *ppx, Popot *ppy)
 /*----------------------------------------------------------------------------
  Get Set one of the tween polygons into a pocy 2 array style poly.
  *--------------------------------------------------------------------------*/
+static ErrCode po_tween_get_poly(Poly *poly, Popot *pptcount, Popot *ppx, Popot *ppy)
 {
 	int *ptcount;
 	Popot *px, *py;
@@ -128,63 +127,63 @@ static ErrCode po_tween_get_poly(Poly *poly
 	return Success;
 }
 
-static ErrCode po_tween_set_start(int ptcount, Popot pop_x, Popot pop_y)
 /*****************************************************************************
  * ErrCode TweenSetStart(int ptcount, int *x, int *y);
  ****************************************************************************/
+static ErrCode po_tween_set_start(int ptcount, Popot pop_x, Popot pop_y)
 {
 	return po_tween_set_poly(ptcount, &pop_x, &pop_y
 	, &poco_tween_state.p0, &poco_tween_state.p1);
 }
 
-static ErrCode po_tween_get_start(Popot pop_ptcount, Popot pop_x, Popot pop_y)
 /*****************************************************************************
  * ErrCode TweenGetStart(int *ptcount, int **x, int **y);
  ****************************************************************************/
+static ErrCode po_tween_get_start(Popot pop_ptcount, Popot pop_x, Popot pop_y)
 {
 	return po_tween_get_poly(&poco_tween_state.p0, &pop_ptcount
 	,	&pop_x, &pop_y);
 }
 
-static ErrCode po_tween_set_end(int ptcount, Popot pop_x, Popot pop_y)
 /*****************************************************************************
  * ErrCode TweenSetEnd(int ptcount, int *x, int *y);
  ****************************************************************************/
+static ErrCode po_tween_set_end(int ptcount, Popot pop_x, Popot pop_y)
 {
 	return po_tween_set_poly(ptcount, &pop_x, &pop_y
 	, &poco_tween_state.p1, &poco_tween_state.p0);
 }
 
-static ErrCode po_tween_get_end(Popot pop_ptcount, Popot pop_x, Popot pop_y)
 /*****************************************************************************
  * ErrCode TweenGetEnd(int *ptcount, int **x, int **y);
  ****************************************************************************/
+static ErrCode po_tween_get_end(Popot pop_ptcount, Popot pop_x, Popot pop_y)
 {
 	return po_tween_get_poly(&poco_tween_state.p1, &pop_ptcount
 	,	&pop_x, &pop_y);
 }
 
-static void po_tween_swap_ends(void)
 /*****************************************************************************
  * void	TweenSwapEnds(void);
  ****************************************************************************/
+static void po_tween_swap_ends(void)
 {
 	if (po_tween_exists())
 		tween_state_swap_ends(&poco_tween_state);
 }
 
-static ErrCode po_tween_end_to_start(void)
 /*****************************************************************************
  * ErrCode TweenEndToStart(void);
  ****************************************************************************/
+static ErrCode po_tween_end_to_start(void)
 {
 	return update_poly(&poco_tween_state.p1,&poco_tween_state.p0);
 }
 
-static ErrCode po_tween_one_link(int start_point, int end_point)
 /*****************************************************************************
  * ErrCode TweenOneLink(int start_point, int end_point);
  ****************************************************************************/
+static ErrCode po_tween_one_link(int start_point, int end_point)
 {
 	Tween_link *nlink;
 
@@ -193,11 +192,10 @@ static ErrCode po_tween_one_link(int start_point, int end_point)
 	, vs.closed_curve, &nlink);
 }
 
-static ErrCode po_tween_set_links(int link_count
-, Popot pop_starts, Popot pop_ends)
 /*****************************************************************************
  * Errcode TweenSetLinks(int link_count, int *starts, int *ends);
  ****************************************************************************/
+static ErrCode po_tween_set_links(int link_count, Popot pop_starts, Popot pop_ends)
 {
 	Errcode err;
 	Tween_link *nlink;
@@ -253,10 +251,10 @@ static ErrCode po_tween_set_links(int link_count
 	return Success;
 }
 
-static Errcode po_lmalloc_2(Popot *x, Popot *y, int size)
 /*----------------------------------------------------------------------------
  * Allocate Poco memory for 2 arrays that are the same size.
  *--------------------------------------------------------------------------*/
+static Errcode po_lmalloc_2(Popot *x, Popot *y, int size)
 {
 	*x = poco_lmalloc(size);
 	if ((x->pt) == NULL)
@@ -271,11 +269,10 @@ static Errcode po_lmalloc_2(Popot *x, Popot *y, int size)
 	return Success;
 }
 
-static ErrCode po_tween_get_links(Popot pop_link_count
-, Popot pop_starts, Popot pop_ends)
 /*****************************************************************************
  * Errcode TweenGetLinks(int *link_count, int **starts, int **ends);
  ****************************************************************************/
+static ErrCode po_tween_get_links(Popot pop_link_count, Popot pop_starts, Popot pop_ends)
 {
 	int *plink_count;
 	Popot *pstarts, *pends;
@@ -321,34 +318,34 @@ CLEANUP:
 	return err;
 }
 
-static void po_tween_clear_links(void)
 /*****************************************************************************
  * void TweenClearLinks(void);
  ****************************************************************************/
+static void po_tween_clear_links(void)
 {
 	free_dl_list(&poco_tween_state.links);
 }
 
-static void po_tween_set_splined(Boolean is_splined)
 /*****************************************************************************
- * void	TweenSetSplined(Boolean is_splined);
+ * void	TweenSetSplined(bool is_splined);
  ****************************************************************************/
+static void po_tween_set_splined(bool is_splined)
 {
 	vs.tween_spline = is_splined;
 }
 
-static Boolean po_tween_get_splined(void)
 /*****************************************************************************
- * Boolean	TweenGetSplined(void);
+ * bool	TweenGetSplined(void);
  ****************************************************************************/
+static bool po_tween_get_splined(void)
 {
 	return vs.tween_spline;
 }
 
-static ErrCode po_tween_trails(int steps)
 /*****************************************************************************
  * ErrCode	TweenTrails(int steps);
  ****************************************************************************/
+static ErrCode po_tween_trails(int steps)
 {
 	ErrCode err;
 
@@ -359,11 +356,10 @@ static ErrCode po_tween_trails(int steps)
 	make_render_cashes();
 }
 
-static void short_xyz_to_arrays(int point_count, Short_xyz *point_list
-, int *x, int *y)
 /*----------------------------------------------------------------------------
  * Convert from Short_xzy to 2 arrays format (tossing out the z coordinate).
  *--------------------------------------------------------------------------*/
+static void short_xyz_to_arrays(int point_count, Short_xyz *point_list, int *x, int *y)
 {
 	while (--point_count >= 0)
 		{
@@ -373,12 +369,11 @@ static void short_xyz_to_arrays(int point_count, Short_xyz *point_list
 		}
 }
 
-static ErrCode po_short_xyz_to_arrays(int point_count, Short_xyz *point_list
-, Popot *ret_x, Popot *ret_y)
 /*----------------------------------------------------------------------------
  * Allocate Poco memory for arrays and then convert point_list into
  * 2 arrays format.
  *--------------------------------------------------------------------------*/
+static ErrCode po_short_xyz_to_arrays(int point_count, Short_xyz *point_list, Popot *ret_x, Popot *ret_y)
 {
 	Popot x, y;
 	Errcode err;
@@ -394,12 +389,11 @@ static ErrCode po_short_xyz_to_arrays(int point_count, Short_xyz *point_list
 	return Success;
 }
 
-static ErrCode po_tween_make_poly(double time
-, Popot pop_ptcount, Popot pop_x, Popot pop_y)
 /*****************************************************************************
  * ErrCode TweenMakePoly(double time, int *ptcount, int **x, int **y);
  * Convert a tween-state and a time to a some coordinate lists for Poco.
  ****************************************************************************/
+static ErrCode po_tween_make_poly(double time, Popot pop_ptcount, Popot pop_x, Popot pop_y)
 {
 	Popot *px, *py;
 	int *ppoint_count;
@@ -446,10 +440,10 @@ CLEANUP:
 	return err;
 }
 
-static ErrCode po_tween_render(void)
 /*****************************************************************************
  * ErrCode	TweenRender(void);
  ****************************************************************************/
+static ErrCode po_tween_render(void)
 {
 	Tween1_data twda;
 	Autoarg aa;
@@ -471,7 +465,7 @@ static ErrCode po_tween_render(void)
 #ifdef NEVER
 ErrCode TweenLoad(char *file_name);
 ErrCode TweenSave(char *file_name);
-Boolean TweenExists(void);
+bool TweenExists(void);
 void	TweenClear(void);
 ErrCode TweenSetStart(int ptcount, int *x, int *y);
 ErrCode TweenGetStart(int *ptcount, int **x, int **y);
@@ -483,8 +477,8 @@ ErrCode TweenAddLink(int start_point, int end_point);
 Errcode TweenSetLinks(int link_count, int *starts, int *ends);
 Errcode TweenGetLinks(int *link_count, int **starts, int **ends);
 void	TweenClearLinks(void);
-void	TweenSetSplined(Boolean is_splined);
-Boolean	TweenGetSplined(void);
+void	TweenSetSplined(bool is_splined);
+bool	TweenGetSplined(void);
 ErrCode	TweenTrails(int steps);
 ErrCode TweenMakePoly(double time, int *ptcount, int **x, int **y);
 ErrCode	TweenRender(void);
@@ -492,7 +486,7 @@ ErrCode	TweenRender(void);
 
 ErrCode po_tween_load(Popot pop_file_name)
 ErrCode po_tween_save(Popot pop_file_name)
-Boolean po_tween_exists(void)
+bool po_tween_exists(void)
 void po_tween_clear(void)
 ErrCode po_tween_set_start(int ptcount, Popot pop_x, Popot pop_y)
 ErrCode po_tween_get_start(Popot pop_ptcount, Popot pop_x, Popot pop_y)
@@ -504,8 +498,8 @@ ErrCode po_tween_one_link(int start_point, int end_point)
 ErrCode po_tween_set_links(int link_count, Popot pop_starts, Popot pop_ends)
 ErrCode po_tween_get_links(Popot pop_link_count, Popot pop_starts, Popot pop_ends)
 void po_tween_clear_links(void)
-void po_tween_set_splined(Boolean is_splined)
-Boolean po_tween_get_splined(void)
+void po_tween_set_splined(bool is_splined)
+bool po_tween_get_splined(void)
 ErrCode po_tween_trails(void)
 ErrCode po_tween_make_poly(double time, Popot pop_ptcount, Popot pop_x, Popot pop_y)
 ErrCode po_tween_render(void)
@@ -577,5 +571,5 @@ po_tween_render,
 
 Poco_lib po_tween_lib = {
 	NULL, "Tween",
-	(Lib_proto *)&po_libtween,POLIB_TWEEN_SIZE,
-	};
+	(Lib_proto *)&po_libtween, POLIB_TWEEN_SIZE,
+};

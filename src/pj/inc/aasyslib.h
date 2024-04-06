@@ -9,6 +9,11 @@
 	#include "rexlib.h" 
 #endif
 
+#ifndef JFILE_H
+	#include "jfile.h"
+#endif
+
+
 typedef struct syslib
 	{
 	Libhead hdr;
@@ -43,7 +48,7 @@ typedef struct syslib
 	long (*pj_tell)(Jfile f);
 	Errcode (*pj_delete)(char *filename);
 	Errcode (*pj_rename)(char *oldname, char *newname);
-	Boolean (*pj_exists)(char *filename);
+	bool (*pj_exists)(char *filename);
 
 	long (*pj_clock_1000)(); /* millisecond clock 0 at program startup */
 

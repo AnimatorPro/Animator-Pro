@@ -893,11 +893,12 @@ extern "C"
 	void pj_gentle_free(void* p);
 	void pj_freez(void* p);
 	bool check_abort(void* nobody);
-	int pj_delete(char* name);
 	int pj_ioerr(void);
 	void upc(char* s);
-	void errline(int err, char* fmt, ...);
 	size_t get_errtext(Errcode err, char* buf);
+
+	/* in errline.c */
+	Errcode errline(Errcode err, char *fmt, ...);
 
 	/* in pocmemry.c */
 

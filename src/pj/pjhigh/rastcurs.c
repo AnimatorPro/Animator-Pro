@@ -1,3 +1,5 @@
+#define RASTGFX_INTERNALS
+
 #include "errcodes.h"
 #include "memory.h"
 #include "pjbasics.h"

@@ -69,6 +69,7 @@
  *				this existed in the tokenizer, but it wasn't being used.
  ****************************************************************************/
 
+#include "jfile.h"
 #include "pocoface.h"
 #include "errcodes.h"
 #include "poco.h"
@@ -515,10 +516,10 @@ OUT:
 		}
 		po_free_compile_memory();
 	} 
-	/* Post-error cleanup goes goes here... */
+	/* Post-error cleanup goes here... */
 	else {
 		/*
-		 * let caller know where the err was
+		 * let caller know where the error was
 		 *	 if no files are open (eg, error was unexpected EOF) we say that.
 		 *	 otherwise the error line number comes from the global error line
 		 *	 number that is set by the error reporter in the parser or preprocessor.
@@ -635,10 +636,13 @@ Errcode po_file_to_stdout(char* name)
 	FILE* f;
 	int c;
 
-	if ((f = fopen(name, "r")) == NULL)
-		return (Err_create);
-	while ((c = fgetc(f)) != EOF)
+	f = fopen(name, "r");
+	if (f == NULL) {
+		return Err_create;
+	}
+	while ((c = fgetc(f)) != EOF) {
 		fputc(c, stdout);
+	}
 	fputc('\n', stdout);
 	fclose(f);
 	return Success;

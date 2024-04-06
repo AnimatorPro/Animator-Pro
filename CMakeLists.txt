@@ -51,6 +51,7 @@ include_directories(thirdparty/nativefiledialogextended/src/include)
 
 
 if (WITH_POCO)
+	add_compile_definitions(-DWITH_POCO=1)
 	add_subdirectory(thirdparty/libffi)
 	add_subdirectory(thirdparty/hashmap)
 	add_subdirectory(thirdparty/imgui/imgui)
@@ -67,3 +68,4 @@ add_subdirectory(src/PJ)
 
 ## tests
 add_subdirectory(tests)
+
