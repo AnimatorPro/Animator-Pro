@@ -360,7 +360,7 @@ c "Cancel"
 
 NameString exit_pj
 {
-ask "Exit Autodesk Animator Pro?\n![1]",
+ask "Exit Animator Pro?\n![1]",
 y "Yes",
 x "Abandon",
 n "No",
@@ -452,7 +452,7 @@ box_text "Image file module: ![1]\n"
 
 
 Text max_frames { "The animation \"![1]\" contains ![2] frames.\n"
-				   "Autodesk Animator Pro can only load ![3] frames.\n\n"
+				   "Animator Pro can only load ![3] frames.\n\n"
 				   "Truncate file to ![3] frames and continue?" }
 Text load_first {  "\"![1]\" is a ![2] frame animation\n"
 				   "Load first frame as a picture?" }
@@ -509,13 +509,10 @@ Text browse_cel_info
 
 Text about
 {
-"Autodesk Animator Pro\n"
+"Animator Pro\n"
 "v. ![1]a    ![2]\n"
 "Copyright 1992,1993 by Jim Kent.\n"
 "![3] ![4], ![5]. ![6]\n"
-"Produced exclusively for\n"
-"Autodesk, Inc.\n"
-"by Yost Group, Inc.\n"
 " \n"
 ".PFB PostScript font files\n"
 "Copyright 1993 by ANIM8, Inc.",
@@ -646,7 +643,7 @@ Qchoice record
 
 Text info
 {
-"Autodesk Animator Pro Info:\n\n"
+"Animator Pro Info:\n\n"
 "![1] bytes free ![2] largest\n"
 "this frame update ![3]\n"
 "next frame update ![4]\n"
@@ -1527,7 +1524,7 @@ Text load_flic2 {"Load flic 2 to merge with ![1]"}
 Text pick_entry {"Please select entry or \"![1]\"."}
 Text no_err_file { "Can't find Poco error file, oops..." }
 Text cant_find {
-	"Sorry Autodesk Animator Pro can't find:\n"
+	"Sorry Animator Pro can't find:\n"
 	"![1]\n",
 }
 Text all_colused {"No unused colors."}
@@ -1851,7 +1848,7 @@ NumString errors
 27,"Internal: routine detected bad parameter value"
 50,"Error in stdio routine"
 75,"Driver isn't REX relocatable executable.  Not a driver"
-76,"Driver is REX but not a Autodesk Animator Pro library driver"
+76,"Driver is REX but not a Animator Pro library driver"
 77,"Driver is wrong library type"
 78,"Missing host provided library"
 79,"Wrong host provided library type or version"
@@ -2030,18 +2027,16 @@ Pull conv_pull
 
 Text conv_about
 {
-"   Autodesk Animator Pro\n"
+"        Animator Pro\n"
 "   File Format Converter\n"
 "         v. ![1]\n"//    ![2]\n"
 "Copyright 1992,1993 by Jim Kent.\n"
 "    ![3] ![4], ![5]. ![6]\n"
-" Produced exclusively for\n"
-"       Autodesk Inc.\n"
-"            By\n"
-"      Yost Group Inc."
+" "
 }
 
-Text conv_status
+Text conv_status
+
 {
 "![1] bytes free of ![2] bytes total.\n"
 "Largest block ![3].\n"
@@ -2209,29 +2204,23 @@ Pull play_pull
 
 Text play_about
 {
-"Autodesk Animator Pro Player(TM) ![1]\n"
+"    Animator Pro Player(TM) ![1]\n"
 "This program may be freely distributed.\n"
 // ![2] is serializer string
 "Copyright 1992,1993 Jim Kent.\n"
 "    ![3] ![4], ![5]. ![6]\n"
-" Produced exclusively for\n"
-"       Autodesk, Inc.\n"
-"            By\n"
-"      Yost Group Inc."
+" "
 }
 
 Text aniplay_free
 {
-"Autodesk Animator Pro Player(TM) 1.3\n"
+"Animator Pro Player(TM) 1.3\n"
 "\n"
 "This program may be freely\n"
 "distributed.\n"
 "\n"
 "Copyright 1992,1993 Jim Kent.\n"
-"Produced exclusively for\n"
-"       Autodesk, Inc.\n"
-"            By\n"
-"       Yost Group Inc."
+" "
 }
 
 Text play_mem
