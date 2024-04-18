@@ -582,7 +582,7 @@ Errcode load_temp_fcel(char* tempname, Flicel** pfc)
 	return Success;
 
 error:
-	softerr(err, "!%s", "fcel_temp", tempname);
+//	softerr(err, "!%s", "fcel_temp", tempname);
 	free_fcel(pfc);
 	return err;
 }

@@ -421,8 +421,9 @@ int main(int argc, char** argv)
 		ARGP(apl, APLAST, "-poc", get_poco_arg),
 	};
 
-	if((err = init_pj_startup(apl,get_rest_of_command_line,argc,argv,
-							  "pj_help","aa.mu")) < Success)
+	err = init_pj_startup(apl, get_rest_of_command_line, argc, argv,
+						  "pj_help","aa.mu");
+	if(err < Success)
 	{
 		goto error;
 	}

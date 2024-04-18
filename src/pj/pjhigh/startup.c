@@ -5,6 +5,7 @@
 #include <errno.h>
 #include <math.h>
 #include <signal.h>
+#include <string.h>
 #define SCRNINIT_CODE
 #include "aaconfig.h"
 #include "argparse.h"
@@ -235,10 +236,11 @@ char *psuf;
 		sprintf(psuf,"%.*s", outsize, suff);
 	}
 }
-Errcode open_pj_startup_screen(Errcode (*init_with_screen)(void *iwdat),
-							   void *iwdat )
+
 
 /**** assumes init_pj_startup() has been successfully called *****/
+Errcode open_pj_startup_screen(Errcode (*init_with_screen)(void *iwdat),
+							   void *iwdat )
 {
 Screen_mode smode;
 Screen_mode *open_mode;
@@ -256,9 +258,4 @@ Screen_mode *alt_mode;
 		alt_mode = &smode; /* no alternate, just fail if we can't get it */
 	}
 	return(init_screen(open_mode, alt_mode, init_with_screen, iwdat));
-}
-void get_startup_dir(char *buf)
-/* little global function */
-{
-	strcpy(buf, vb.init_drawer);
 }
