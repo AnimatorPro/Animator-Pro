@@ -36,6 +36,12 @@ if (WITH_POCO)
 		qpoco.c
 		qpocoed.c
 	)
+else()
+	## files still needed for softmenu parsing
+	set(PJ_POCO_FILES
+		poco/token.c
+		poco/bcutil.c
+	)
 endif()
 	
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-sign-compare")
