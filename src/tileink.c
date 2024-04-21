@@ -1,5 +1,4 @@
 #include <string.h>
-#define RASTCALL_INTERNALS
 #include "jimk.h"
 #include "bhash.h"
 #include "errcodes.h"
@@ -8,7 +7,6 @@
 #include "inkdot.h"
 #include "inks.h"
 #include "memory.h"
-#include "options.h"
 #include "rastlib.h"
 #include "render.h"
 

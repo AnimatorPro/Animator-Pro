@@ -3,7 +3,6 @@
  * 
  */
    
-#define WORDWRAP_INTERNALS
 #include "wordwrap.h"
 #include <ctype.h>
 

@@ -17,14 +17,17 @@
 	#include "gfx.h"
 #endif
 
+typedef struct button Button;
+typedef void (*BFUNC)(Button* b);    /* pointer to button callback function */
+
 typedef struct button 
-	{
+{
 	struct button *next;		/* pointer to sibling buttons */
 	struct button *children;  	/* sub buttons */
 	Rectangle orig_rect;		/* Resolution independent coors */
 	void *datme;				/* data for seeme and feelmes */
-	VFUNC seeme;                /* function to draw button */
-	VFUNC feelme;               /* left mouse click func (pen down) */
+	BFUNC seeme;                /* function to draw button */
+	BFUNC feelme;               /* left mouse click func (pen down) */
 	void *optme;                /* sometimes right click func sometimes data */
 	void *group;				/* a group of radio buttons share this */
 	SHORT identity;				/* which one of radio button this is */

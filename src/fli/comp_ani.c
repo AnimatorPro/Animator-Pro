@@ -1,4 +1,3 @@
-#define RASTCOMP_INTERNALS
 #include "cmap.h"
 #include "fli.h"
 #include "flicomp.h"

@@ -1,5 +1,4 @@
 #define CUTCURS_C
-#define RASTCALL_INTERNALS
 #include "errcodes.h"
 #include "jimk.h"
 #include "marqi.h"

@@ -1,12 +1,12 @@
 /* Filemenu.c - code for the famous PJ file requestor with scrolling list */
 
-#include <ctype.h>
 #include <stdio.h>
 #include <string.h>
-#include "jimk.h"
+
 #include "commonst.h"
 #include "errcodes.h"
 #include "filepath.h"
+#include "jimk.h"
 #include "memory.h"
 #include "menus.h"
 #include "ptrmacro.h"
@@ -38,6 +38,7 @@ static Button fcancel_sel = MB_INIT1(
 	' ',
 	0
 	);
+
 static Button fok_sel = MB_INIT1(
 	&fcancel_sel,
 	NOCHILD,
@@ -50,6 +51,7 @@ static Button fok_sel = MB_INIT1(
 	'\r',
 	0
 	);
+
 static Button fplus_sel = MB_INIT1(
 	&fok_sel,
 	NOCHILD,
@@ -64,8 +66,6 @@ static Button fplus_sel = MB_INIT1(
 	);
 
 /************** device buttons hanger ***********/
-
-
 static Button fmu_dev_hanger = MB_INIT1(
 	&fplus_sel,
 	NOCHILD,
@@ -466,8 +466,8 @@ int ret;
 		}
 }
 
-static void fq_redraw_new_wild(void)
 /* Redraw parts of menu that need it whenever the wildcard changes. */
+static void fq_redraw_new_wild(void)
 {
 	draw_buttontop(&fwild_sel);
 	init_fscroller();
@@ -621,7 +621,7 @@ void *ss = NULL;
 
 	/* if more than 12 buttons hang up higher -2 for '\' and '..' */
 
-	if(pj_get_devices(NULL) > (12 - 2)) 
+	if(pj_get_devices(NULL) > (12 - 2))
 		dhanger = &fmu_topdev_hanger;
 	else
 		dhanger = &fmu_dev_hanger;
@@ -645,7 +645,7 @@ void *ss = NULL;
 	init_fscroller();
 
 	menu_to_cursor(icb.input_screen,&fileq_menu);
-	err = do_reqloop(icb.input_screen, &fileq_menu, 
+	err = do_reqloop(icb.input_screen, &fileq_menu,
 						  &ffile_sel,NULL,NULL);
 	full_path_name(drawer_stringq.string,file_stringq.string,path_out);
 	*fscroller_top_name = fscroller.top_name;
@@ -658,79 +658,79 @@ error:
 }
 
 
-char *pj_get_filename(char *prompt, char *suffi, char *button, 
-		   			  char *inpath, char *outpath,
-					  bool force_suffix, SHORT *scroll_top_name,
-					  char *wildcard)
-
 /* put up a file requestor.  If inpath or outpath are NULL then
  * use static buffer.  Else start with inpath and update outpath
  * to directory user selects on exit.  Returns NULL if user
  * cancels, otherwise a pointer to outpath with the full path name selected.
- * Wildcard is the initial contents of the wildcard field and is altered to 
+ * Wildcard is the initial contents of the wildcard field and is altered to
  * reflect it's new contents, If wildcard is NULL it will use the stack buffer
  * and if wildcard is empty or NULL it will default to the first suffix as in
  * *.XXX */
+char *pj_get_filename(char *prompt, char *suffi, char *button, char *inpath, char *outpath,
+					  bool force_suffix, SHORT *scroll_top_name, char *wildcard)
 {
-Errcode err;
-static char	path_buf[PATH_SIZE];
-char drawer_buf[PATH_SIZE];
-char fname_buf[PATH_SIZE];
-char wild_buf[WILD_SIZE];
-char wildbufs[6*4];
-char *wbuf;
-char *wilds[4];
-size_t num_wilds;
-int len;
-SHORT top_name = 0;
+	Errcode err;
+	static char path_buf[PATH_SIZE];
+	char drawer_buf[PATH_SIZE];
+	char fname_buf[PATH_SIZE];
+	char wild_buf[WILD_SIZE];
+	char wildbufs[6 * 4];
+	char *wbuf;
+	char *wilds[4];
+	size_t num_wilds;
+	int len;
+	SHORT top_name = 0;
 
-	if(NULL == (fscroller_top_name = scroll_top_name))
+	if (NULL == (fscroller_top_name = scroll_top_name)) {
 		fscroller_top_name = &top_name;
+	}
 
-	if(!inpath)
+	if (!inpath) {
 		inpath = path_buf;
-	if(!outpath)
+	}
+
+	if (!outpath) {
 		outpath = path_buf;
-	if(!wildcard)
-	{
+	}
+
+	if (!wildcard) {
 		wildcard = wild_buf;
 		wild_buf[0] = 0;
 	}
 
 	num_wilds = 0;
-	if(suffi)
-	{
+	if (suffi) {
 		wbuf = wildbufs;
-		for(;num_wilds < Array_els(wilds);++num_wilds)
-		{
+		for (; num_wilds < Array_els(wilds); ++num_wilds) {
 			wilds[num_wilds] = wbuf;
 			*wbuf++ = '*';
-			if((len = parse_to_semi(&suffi,wbuf,5)) == 0)
+			if ((len = parse_to_semi(&suffi, wbuf, 5)) == 0) {
 				break;
+			}
 			wbuf += len;
 			*wbuf++ = 0;
 		}
 	}
 
-	if(!num_wilds || !pj_valid_suffix(&wildbufs[1]))
+	if (!num_wilds || !pj_valid_suffix(&wildbufs[1])) {
 		force_suffix = false;
-
-	split_copy_path(inpath,drawer_buf,fname_buf);
-	if(fname_buf[0] == 0)
-		strcpy(fname_buf,unnamed_str);
-	else if(force_suffix)
-		sprintf(pj_get_path_suffix(fname_buf),"%.4s", &wildbufs[1]);
-
-	if((err = qfile(outpath, drawer_buf, fname_buf, 
-					prompt, button, num_wilds, wilds, wildcard)) < Success)
-	{
-		outpath = NULL;
-		goto error;
 	}
 
-	if( *fix_suffix(outpath) == '\0' && force_suffix)
-		strcat(outpath, &wildbufs[1]);
+	split_copy_path(inpath, drawer_buf, fname_buf);
+	if (fname_buf[0] == 0) {
+		strcpy(fname_buf, unnamed_str);
+	} else if (force_suffix) {
+		sprintf(pj_get_path_suffix(fname_buf), "%.4s", &wildbufs[1]);
+	}
 
-error:
-	return(outpath);
+	if ((err = qfile(outpath, drawer_buf, fname_buf, prompt, button, num_wilds, wilds, wildcard)) <
+		Success) {
+		return NULL;
+	}
+
+	if (*fix_suffix(outpath) == '\0' && force_suffix) {
+		strcat(outpath, &wildbufs[1]);
+	}
+
+	return outpath;
 }

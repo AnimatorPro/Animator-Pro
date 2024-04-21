@@ -2,7 +2,6 @@
    comp.asm and skip.asm to make up compressed pixel packets suitable
    for incorporation into a FLI file.  See also writefli.c */
 
-#define RASTCOMP_INTERNALS
 #include "flilo.h"
 #include "memory.h"
 #include "ptrmacro.h"

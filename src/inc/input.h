@@ -362,16 +362,8 @@ void save_icb_state(Icb_savebuf *save_area);
 void restore_icb_state(Icb_savebuf *saved);
 Icb_savebuf *check_push_icb(void);
 
-#ifdef INPUT_INTERNALS
-	#define FDAT void *funcdata
-#else
-	#define FDAT ...
-#endif
-
 int anim_wait_input(ULONG waitflags, ULONG funcflags, 
-					int maxfields, FUNC func, FDAT);
-
-#undef FDAT
+					int maxfields, FUNC func, void *funcdata);
 
 void get_mouset(Mouset *mset);
 void load_mouset(Mouset *mset);

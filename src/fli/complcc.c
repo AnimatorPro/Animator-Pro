@@ -3,7 +3,6 @@
    for incorporation into an animator 1.0  FLI file. will only compress
    a 320 X 200 screen results are unpredictable with other sizes */
 
-#define RASTCOMP_INTERNALS
 #include "memory.h"
 #include "ptrmacro.h"
 #include "rastcomp.h"

@@ -1,6 +1,5 @@
 /* compbrun.c */
 
-#define RASTCOMP_INTERNALS
 #include "ptrmacro.h"
 #include "rastcomp.h"
 

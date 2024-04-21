@@ -1,4 +1,3 @@
-#define RASTCOMP_INTERNALS
 #include "fli.h"
 #include "gfx.h"
 #include "memory.h"

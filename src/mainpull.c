@@ -4,10 +4,8 @@
    with yet. */
 
 #include <ctype.h>
-#include <string.h>
 
 #include "errcodes.h"
-#include "filepath.h"
 #include "flicel.h"
 #include "flx.h"
 #include "homepul.h"

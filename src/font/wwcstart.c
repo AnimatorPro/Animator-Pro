@@ -1,4 +1,3 @@
-#define WORDWRAP_INTERNALS
 #include "wordwrap.h"
 
 int just_charstart(Vfont *font,int x, int lwidth,

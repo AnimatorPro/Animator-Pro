@@ -1,4 +1,3 @@
-#define WORDWRAP_INTERNALS
 #include "wordwrap.h"
 
 void wwtext(Raster *screen,

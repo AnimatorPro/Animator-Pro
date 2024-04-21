@@ -12,32 +12,23 @@
 #define JUST_CENTER	2
 #define JUST_FILL	3
 
-#ifdef WORDWRAP_INTERNALS
-	#define RASType Raster
-#else
-	#define RASType void
-#endif
-
 extern int
 just_charstart(Vfont *font, int x, int lwidth,
 		char *linebuf, int charpos, int just);
 
-int justify_line(RASType *r, Vfont *font, char *linebuf, int x,int y,int w,
+int justify_line(Raster *r, Vfont *font, char *linebuf, int x,int y,int w,
 				 Pixel color, Text_mode tmode, Pixel color2,int just, SHORT *cposx,
 				 int cpos_idx);
 
-void wwtext(RASType *screen, Vfont *f, char *s,
+void wwtext(Raster *screen, Vfont *f, char *s,
 			int x,int y,int w,int h,
 			int skiplines, int justify,
 			Pixel color,Text_mode tmode,Pixel color2);
-
-#undef RASType
 
 int wwnext_line(Vfont *f, char **ps, const int w, char *buf, int sub_cr);
 
 int wwcount_lines(Vfont *f,char *s,int w, SHORT *maxwid);
 
-#ifdef WORDWRAP_INTERNALS
 
 enum ww_why {
 	WW_FILLED = 1,  /* Line completely filled, goto next */
@@ -70,7 +61,5 @@ typedef struct wwdata {
 	int ww;			/* Width of imbedded word */
 	int endw; 		/* Width to last pixel of word (word on end of line) */
 } Wwdata;
-
-#endif
 
 #endif /* WORDWRAP_H */

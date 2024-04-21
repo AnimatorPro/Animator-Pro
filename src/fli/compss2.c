@@ -4,7 +4,6 @@
    for incorporation into a FLI file.  See also writefli.c */
 
 
-#define RASTCOMP_INTERNALS
 #include "stdtypes.h"
 #include "asm.h"
 #include "fli.h"

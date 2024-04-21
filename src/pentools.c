@@ -63,7 +63,7 @@ int ret;
 	if(!JSTHIT(MBPEN))
 	{
 		display_cursor();
-		ret = anim_wait_input(MBPEN,ANY_INPUT,-1,pticheck);
+		ret = anim_wait_input(MBPEN,ANY_INPUT,-1,pticheck, NULL);
 		undisplay_cursor();
 		if(ret)
 		{

@@ -1,6 +1,5 @@
 /* brunline.c */
 
-#define RASTCOMP_INTERNALS
 #include "memory.h"
 #include "ptrmacro.h"
 #include "rastcomp.h"

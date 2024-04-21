@@ -1,4 +1,3 @@
-#define WORDWRAP_INTERNALS
 #include "wordwrap.h"
 
 int wwcount_lines(Vfont *f,char *s,int w, SHORT *maxwid)
