@@ -1,4 +1,0 @@
-#define readrif_101 "Not a RIFF file."
-#define readrif_102 "File not 320x200."
-#define readrif_104 "Expecting a VRUN here..."
-#define readrif_105 "RIF file already open"

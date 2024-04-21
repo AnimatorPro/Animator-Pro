@@ -1,6 +1,0 @@
-play340 - Oct 3, 1991
-	Somehow Dancing Flame maintaining this too.  I'm giving it the same
-	version numbers as aa - up to v340 now.  This rev just updated copyright
-	notice to go with main program.  (Previous revision was to fix
-	ax that should've been al in clock routine so will run under
-	Windows.)

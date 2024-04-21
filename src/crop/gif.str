@@ -1,3 +1,0 @@
-#define gif_100 "Not a good GIF file"
-#define gif_101 "Unknown GIF revision, sorry"
-#define gif_102 "Already opened GIF"

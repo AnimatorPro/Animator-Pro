@@ -1,5 +1,0 @@
-#define memory_100 "Out of Memory"
-#define memory_101 "%x bad START_COOKIE %lx\n"
-#define memory_102 "%x bad END_COOKIE %lx\n"
-#define memory_103 "Zero memory request!"
-#define memory_104 "Not enough memory for Converter, sorry"

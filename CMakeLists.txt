@@ -64,7 +64,7 @@ endif()
 
 
 ## main
-add_subdirectory(src/PJ)
+add_subdirectory(src)
 
 ## tests
 add_subdirectory(tests)

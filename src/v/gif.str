@@ -1,4 +1,0 @@
-#define gif_101 "File isn't 320x200."
-#define gif_102 "Use Autodesk Animator converter."
-#define gif_103 "Not a good GIF file"
-#define gif_104 "Unknown GIF revision, sorry"
