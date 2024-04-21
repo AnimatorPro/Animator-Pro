@@ -987,12 +987,20 @@ Coor zx, zy, flix, fliy;
 			 zx + zoom_box.x, zy + zoom_box.y, width, height,
 			 vs.zoomscale,vs.zoomscale);
 }
-void rect_zoom_it(Coor x,Coor y, Coor width, Coor height)
 
 /* like zoom_it() but does small rects */
+void rect_zoom_it(Coor x,Coor y, Coor width, Coor height)
 {
 	zoom_blitrect(((Raster *)vb.pencel),x,y,x,y,width,height);
 }
+
+void rect_zoom_it_lbh(Coor x,Coor y, Coor width, Coor height, void* data)
+{
+	(void)data;
+	zoom_blitrect(((Raster *)vb.pencel),x,y,x,y,width,height);
+}
+
+
 /**** tcolor translate zoom raster *****/
 
 static Errcode hand_ptfunc(Pentool *pt, Wndo *w)

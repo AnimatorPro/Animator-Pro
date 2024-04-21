@@ -51,11 +51,24 @@ void undo_rect(Coor x,Coor y,Coor w,Coor h)
 }
 
 
+void undo_rect_lbh(Coor x,Coor y,Coor w,Coor h, void* data)
+{
+	(void)data;
+	pj_blitrect(undof,x,y,vb.pencel,x,y,w,h);
+}
+
+
 void save_undo_rect(Coor x,Coor y,Coor w,Coor h)
 {
 	pj_blitrect(vb.pencel,x,y,undof,x,y,w,h);
 }
 
+/* This exists to correctly satisfy the do_leftbehind_func callback. */
+void save_undo_rect_lbh(Coor x,Coor y,Coor w,Coor h, void* data)
+{
+	(void)data;
+	pj_blitrect(vb.pencel,x,y,undof,x,y,w,h);
+}
 
 void zoom_undo_rect(Coor x,Coor y,Coor w,Coor h)
 {

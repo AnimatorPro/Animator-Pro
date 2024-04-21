@@ -1431,7 +1431,7 @@ bool notext;
 		/* zoom part erased and left behind by move */
 		do_leftbehind(gf->twin.x,gf->twin.y,
 					  lx,ly,gf->twin.width,
-					  gf->twin.height, (do_leftbehind_func)rect_zoom_it );
+					  gf->twin.height, (do_leftbehind_func)rect_zoom_it_lbh, NULL);
 
 		gf->twin.x = lx; /* new pos to twin */
 		gf->twin.y = ly;

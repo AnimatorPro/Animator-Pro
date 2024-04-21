@@ -120,6 +120,7 @@ extern void see_redo(struct button *b);
 /* vpsubs.c */
 extern void undo_dot(SHORT x, SHORT y, void *data);
 extern void undo_rect(Coor x, Coor y, Coor w, Coor h);
+extern void undo_rect_lbh(Coor x, Coor y, Coor w, Coor h, void* data);
 extern void save_undo_rect(Coor x, Coor y, Coor w, Coor h);
 extern void zoom_undo_rect(Coor x, Coor y, Coor w, Coor h);
 extern void save_undo(void);
@@ -127,5 +128,8 @@ extern void zoom_unundo(void);
 extern void swap_undo(void);
 extern void menu_doundo(void);
 extern void menu_doredo(void);
+
+/* Pointer fixes for Apple Silicon */
+extern void save_undo_rect_lbh(Coor x, Coor y, Coor w, Coor h, void* data);
 
 #endif

@@ -27,6 +27,10 @@
 #include "vertices.h"
 #endif
 
+#ifndef RASTER_H
+#include "raster.h"
+#endif
+
 #ifndef FLILIB_CODE
   #ifndef POLY_H
 	  #include "poly.h"
@@ -62,64 +66,46 @@ extern Image *zoutin_arrs[2];
 #define ITYPE_BITPLANES 0
 #define IMAGE_INIT1(t,d,i,w,h) {t,d,i,w,h}
 
-/******* raster graphics calls ******/
-
-#ifdef RASTGFX_INTERNALS
-	#define RASType Raster
-	#define OPTdata void *
-#else
-	#define RASType void
-	#define OPTdata ...
-#endif /* RASTGFX_INTERNALS */
-
 /******* image - raster graphics calls ******/
 
-Errcode image_to_rast(Image *i, RASType *rast, Raster *tomatch);
+Errcode image_to_rast(Image *i, Raster *rast, Raster *tomatch);
 void image_scale_tblit(Image *i,Pixel *colors,
-						RASType *dst,Coor dx, Coor dy, Ucoor dw, Ucoor dh);
+						Raster *dst,Coor dx, Coor dy, Ucoor dw, Ucoor dh);
 
-void blit_image(Image *i,Pixel *colors, RASType *rast, Coor x,Coor y);
-void tblit_image(Image *i,Pixel *colors, RASType *rast, Coor x,Coor y);
+void blit_image(Image *i,Pixel *colors, Raster *rast, Coor x,Coor y);
+void tblit_image(Image *i,Pixel *colors, Raster *rast, Coor x,Coor y);
 
 /******* pure raster graphics calls ******/
 
-void pj_scale_blit(RASType *src,Coor sx, Coor sy, Ucoor sw, Ucoor sh,
-				   RASType *dst,Coor dx, Coor dy, Ucoor dw, Ucoor dh,
+void pj_scale_blit(Raster *src,Coor sx, Coor sy, Ucoor sw, Ucoor sh,
+				   Raster *dst,Coor dx, Coor dy, Ucoor dw, Ucoor dh,
 				   Tcolxldat *tcxl);
 
 				   /* note: if TCXL is NULL blit is solid and untranslated */
 
-void xlat_rast(RASType *r, UBYTE *ttable, LONG pixsize);
+void xlat_rast(Raster *r, UBYTE *ttable, LONG pixsize);
 
-Errcode make_cused(RASType *r, UBYTE *c, int max_colors);
+Errcode make_cused(Raster *r, UBYTE *c, int max_colors);
 
-void ublitrect(const RASType *s, Coor sx, Coor sy,
-		  const RASType *d, Coor dx, Coor dy, Ucoor width, Ucoor height,
+void ublitrect(const Raster *s, Coor sx, Coor sy,
+		  const Raster *d, Coor dx, Coor dy, Ucoor width, Ucoor height,
 		  const Pixel tcolor );
 
 
-void blitmove_rect(RASType *s,Coor sx, Coor sy, RASType *d,
+void blitmove_rect(Raster *s,Coor sx, Coor sy, Raster *d,
 				   Coor dx, Coor dy, Ucoor width, Ucoor height);
 
 extern Errcode find_clip(void *rast, Rectangle *rect, Pixel tcolor);
 
-typedef void (*do_leftbehind_func)(Coor x,Coor y,Coor w,Coor h,OPTdata);
+typedef void (*do_leftbehind_func)(Coor x,Coor y,Coor w,Coor h,void *);
 void do_leftbehind(Coor sx,Coor sy,
 				   Coor dx,Coor dy,Coor width,Coor height,
 				   do_leftbehind_func func,
-				   OPTdata);
+				   void *);
 
-void set_leftbehind(RASType *s,Pixel color,Coor sx,Coor sy,
+void set_leftbehind(Raster *s,Pixel color,Coor sx,Coor sy,
 					Coor dx,Coor dy,Coor width,Coor height);
 
-#undef RASType
-#undef OPTdata
-
-#ifdef GFX_INTERNALS
-	#define OPTdata void *dat
-#else
-	#define OPTdata ...
-#endif /* GFX_INTERNALS */
 
 void max_line(Raster *r, Short_xy *ends, dotout_func dotout, void *dotdat);
 
@@ -127,14 +113,14 @@ void pj_cline(SHORT x1, SHORT y1, SHORT x2, SHORT y2,
 		dotout_func dotout, void *dotdat);
 
 void pj_do_linscale(int sx, int sw, int dx, int dw,
-					void (*doinc)(int sx, int dx, void *dat), OPTdata );
+					void (*doinc)(int sx, int dx, void *dat), void *dat );
 
 void pj_make_scale_table(int ssize,int dsize,SHORT *stable);
 
-void cvect(Short_xy *ends, dotout_func dotout, OPTdata /* void *dotdat */ );
+void cvect(Short_xy *ends, dotout_func dotout, void *dotdat /* void *dotdat */ );
 
 void cline_frame(SHORT x0,SHORT y0,SHORT x1,SHORT y1,
-		dotout_func dotout, OPTdata /* void *dotdat */ );
+		dotout_func dotout, void *dotdat);
 
 extern void
 draw_quad(Raster *r, Pixel col, SHORT x, SHORT y, USHORT w, USHORT h);
@@ -165,7 +151,6 @@ void circle(void *r,Pixel color,Coor centx,Coor centy,
 			Ucoor diam, bool filled);
 Errcode polygon(void *r,Pixel color,Short_xy *points,int count, bool filled);
 
-#undef OPTdata
 
 /* REXLIB_CODE */ #endif
 

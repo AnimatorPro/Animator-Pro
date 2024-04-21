@@ -41,6 +41,7 @@ zoom_blitrect(struct raster *src, Coor sx, Coor sy,
 		Coor x, Coor y, Coor width, Coor height);
 
 extern void rect_zoom_it(Coor x, Coor y, Coor w, Coor h);
+extern void rect_zoom_it_lbh(Coor x, Coor y, Coor w, Coor h, void* data);
 extern void go_zoom_settings(void);
 extern void zoom_it(void);
 extern bool zoom_disabled(void);

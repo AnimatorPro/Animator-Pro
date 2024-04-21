@@ -480,7 +480,7 @@ static void do_delta_celcurs(SHORT dx,SHORT dy)
 	do_leftbehind(thecel->xf.mmax.x,thecel->xf.mmax.y,
 				  thecel->xf.ommax.x,thecel->xf.ommax.y,
 				  thecel->xf.ommax.width,thecel->xf.ommax.height,
-				  (do_leftbehind_func)save_undo_rect );
+				  (do_leftbehind_func)save_undo_rect_lbh, NULL);
 
 	if(vs.cycle_draw && vs.render_one_color)
 		draw_flicel(thecel,DRAW_DELTA,NEW_CFIT);

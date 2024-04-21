@@ -153,7 +153,7 @@ Coor w, h;
 	pj_blitrect(vb.pencel,cpos.x,cpos.y,rc->save,0,0,w,h); 
 
 	/* erase "leftover" area */
-	do_leftbehind(ox,oy,cpos.x,cpos.y,w,h,(do_leftbehind_func)rect_zoom_it);
+	do_leftbehind(ox,oy,cpos.x,cpos.y,w,h,(do_leftbehind_func)rect_zoom_it_lbh, NULL);
 
 	/* "composit" new area (unclipped) */
 	procblit(r,0,0,save,0,0,w,h,tbli_xlatline,get_cursor_xlat());

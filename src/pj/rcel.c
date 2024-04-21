@@ -99,11 +99,11 @@ static void delta_move_rcel(Rcel* c, SHORT dx, SHORT dy, Tcolxldat* txl, bool fi
 	oy	 = c->y;
 	c->x = ox + dx;
 	c->y = oy + dy;
-	do_leftbehind(ox, oy, c->x, c->y, c->width, c->height, (do_leftbehind_func)undo_rect);
+	do_leftbehind(ox, oy, c->x, c->y, c->width, c->height, (do_leftbehind_func)undo_rect_lbh, NULL);
 	(*blit)(c, 0, 0, vb.pencel, c->x, c->y, c->width, c->height, txl);
 	if (vs.zoom_open) /* a few nanoseconds here ... */
 	{
-		do_leftbehind(ox, oy, c->x, c->y, c->width, c->height, (do_leftbehind_func)rect_zoom_it);
+		do_leftbehind(ox, oy, c->x, c->y, c->width, c->height, (do_leftbehind_func)rect_zoom_it_lbh, NULL);
 		zoom_cel(c);
 	}
 }

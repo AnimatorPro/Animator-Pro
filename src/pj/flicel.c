@@ -1115,7 +1115,8 @@ Errcode draw_flicel(Flicel* fc, int drawmode, int cfitmode)
 						  fc->xf.mmax.y,
 						  fc->xf.ommax.width,
 						  fc->xf.ommax.height,
-						  (do_leftbehind_func)undo_rect);
+						  (do_leftbehind_func)undo_rect_lbh,
+						  NULL);
 			blit = get_celmove(pld.tcxl.xlat != NULL);
 			goto blitit;
 		case DRAW_FIRST:
@@ -1130,7 +1131,8 @@ Errcode draw_flicel(Flicel* fc, int drawmode, int cfitmode)
 								  fc->xf.mmax.y,
 								  fc->xf.mmax.width,
 								  fc->xf.mmax.height,
-								  (do_leftbehind_func)rect_zoom_it);
+								  (do_leftbehind_func)rect_zoom_it_lbh,
+								  NULL);
 				}
 				zoom_cel(rc);
 			}

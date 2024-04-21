@@ -308,7 +308,7 @@ Pixel ctable[COLORS];
 	{
 		do_leftbehind(m->orig.x,m->orig.y,
 					  clipcel->x,clipcel->y, m->orig.width,m->orig.height,
-					  (do_leftbehind_func)rect_zoom_it);
+					  (do_leftbehind_func)rect_zoom_it_lbh, NULL);
 	}
 	pj_rcel_free(clipcel);
 	return(Success);
