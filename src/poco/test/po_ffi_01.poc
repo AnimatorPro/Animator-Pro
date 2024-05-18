@@ -1,0 +1,9 @@
+
+int main() {
+	printf("Hello poco\n");
+
+	char* name = "bunny";
+	int value = 15;
+	int length = printf("Testing! %s %d\n", name, value);
+	return length;
+}

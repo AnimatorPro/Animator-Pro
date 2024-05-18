@@ -1,6 +1,0 @@
-#define grid_100 " use"
-#define grid_101 " create"
-#define grid_102 " paste"
-#define grid_103 " view"
-#define grid_104 " Exit Menu"
-#define grid_105 "Grid Snap Control"

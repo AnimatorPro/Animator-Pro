@@ -1,5 +1,0 @@
-#define jfile_100 "Sorry Converter can't create:"
-#define jfile_101 "Sorry Converter can't find:"
-#define jfile_103 "File truncated!"
-#define jfile_104 "Overwrite old"
-#define jfile_106 "File mangled:"

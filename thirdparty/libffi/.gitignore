@@ -1,0 +1,9 @@
+tmp/
+build/
+share/
+artifacts/
+main/bootstrap.sh
+main/Makefile
+main/aarch64-*
+main/auto*.cache
+
