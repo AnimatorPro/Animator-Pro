@@ -245,17 +245,19 @@ Errcode open_tempflx(bool reload_settings)
 	return (Success);
 }
 
-static Errcode create_tflx_start(Flifile* flif, char* fliname, long extra_frames)
 
 /* makes header, prefix chunks, and index for a tflx from another fli
  * file and an index size. It will leave the file position at the start of the
  * first frame chunk (yet to be written) */
+static Errcode create_tflx_start(Flifile* flif, char* fliname, long extra_frames)
 {
 	Errcode err;
 	Chunkparse_data pd;
 
-	if ((err = create_flxfile(tflxname, &flix)) < Success)
+	err = create_flxfile(tflxname, &flix);
+	if (err < Success) {
 		goto error;
+	}
 
 	/* move in common fields defining fli and it's creator id */
 
@@ -265,8 +267,10 @@ static Errcode create_tflx_start(Flifile* flif, char* fliname, long extra_frames
 
 	flix.hdr.frames_in_table = (flif->hdr.frame_count + extra_frames + 256) & 0xFFFFFF00;
 
-	if ((err = alloc_flx_index(&flix.idx, flix.hdr.frames_in_table)) < Success)
+	err = alloc_flx_index(&flix.idx, flix.hdr.frames_in_table);
+	if (err < Success) {
 		goto error;
+	}
 
 	/** copy any relevant prefix chunks from the fli (most of them) */
 
@@ -275,13 +279,15 @@ static Errcode create_tflx_start(Flifile* flif, char* fliname, long extra_frames
 		switch (pd.type) {
 			case (USHORT)ROOT_CHUNK_TYPE: {
 				err = copy_parsed_chunk(&pd, flix.xf);
-				if (err < Success)
+				if (err < Success) {
 					goto error;
+				}
 
 				flix.hdr.path_oset = xfftell(flix.xf);
 				err				   = update_flx_path(&flix, &flif->hdr.id, fliname);
-				if (err < Success)
+				if (err < Success) {
 					goto error;
+				}
 				break;
 			}
 			case FP_VSETTINGS: /* ignore anything else */

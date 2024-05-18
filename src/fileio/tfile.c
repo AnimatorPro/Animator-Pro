@@ -11,8 +11,9 @@
  */
 bool is_tdrive(const char* device)
 {
-	if (!pj_assert(device != NULL))
+	if (!pj_assert(device != NULL)) {
 		return false;
+	}
 
 	switch (device[0]) {
 		case TDEV_MED:

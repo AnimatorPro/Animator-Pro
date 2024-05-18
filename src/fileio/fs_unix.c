@@ -8,7 +8,9 @@
 #include "textutil.h"
 #include "tfile.h"
 #include "wildlist.h"
+
 #include <assert.h>
+#include <errno.h>
 #include <glob.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -61,7 +63,7 @@ Errcode pj_dget_dir(int drive, char* dir)
 /*--------------------------------------------------------------*/
 Errcode get_full_path(const char* path, char* fullpath)
 {
-	char resolved_path[PATH_MAX];
+	char resolved_path[PATH_SIZE];
 
 	if (path == NULL || path[0] == '\0') {
 		path = ".";
@@ -70,17 +72,22 @@ Errcode get_full_path(const char* path, char* fullpath)
 	// Handle TFILEs-- a lot of basic functionality requires writing to disk
 	if (is_tdrive(path)) {
 		path += 2;
-		sprintf(resolved_path, "%s%s%s", vconfg.temp_path, SEP, path);
+		snprintf(resolved_path, PATH_SIZE, "%s%s%s", vconfg.temp_path, SEP, path);
 	}
 	else {
-		strcpy(resolved_path, path);
+		strlcpy(resolved_path, path, PATH_SIZE);
 	}
 
-	if (realpath(resolved_path, resolved_path) == NULL) {
-		return Err_no_path;
-	}
+	//!TODO: fix this with a proper abspath function
+//	if (realpath(resolved_path, resolved_path) == NULL) {
+//		char* errStr = strerror(errno);
+//		printf("%s >> %s\n", fullpath, resolved_path);
+//		printf("error string: %s\n", errStr);
+//		return Err_no_path;
+//	}
 
-	return text_ncopy(fullpath, resolved_path, PATH_SIZE);
+	size_t result = strlcpy(fullpath, resolved_path, PATH_SIZE);
+	return result == strnlen(resolved_path, PATH_SIZE) ? Success : Err_corrupted;
 }
 
 Errcode make_good_dir(char* path)
