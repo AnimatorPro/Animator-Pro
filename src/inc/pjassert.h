@@ -11,37 +11,37 @@
 
 /* Verbose logger. */
 #ifndef NDEBUG
-#if defined(__GNUC__) || defined(__clang__)
+	#if defined(__GNUC__) || defined(__clang__)
 
-#if defined(_MSC_VER)
-	#define __ASSERT_FUNCTION __FUNCTION__
-#else
-	#define __ASSERT_FUNCTION __func__
-#endif
+	#if defined(_MSC_VER)
+		#define __ASSERT_FUNCTION __FUNCTION__
+	#else
+		#define __ASSERT_FUNCTION __func__
+	#endif
 
 
-#define pj_assert(expr)             \
-	pj_assert_fail((expr) ? 1 : 0,  \
-			__FILE__, __LINE__, __ASSERT_FUNCTION, __STRING(expr))
+	#define pj_assert(expr)             \
+		pj_assert_fail((expr) ? 1 : 0,  \
+				__FILE__, __LINE__, __ASSERT_FUNCTION, __STRING(expr))
 
-extern int
-pj_assert_fail(int success, const char *file, unsigned int line,
-		const char *func, const char *str)
-	WARN_UNUSED_RESULT;
+	extern int
+	pj_assert_fail(int success, const char *file, unsigned int line,
+			const char *func, const char *str)
+		WARN_UNUSED_RESULT;
 
-#endif
+	#endif
 #endif /* NDEBUG */
 
 /* Simple logger. */
 #ifndef pj_assert
 
-#define pj_assert(expr)             \
-	pj_assert_fail((expr) ? 1 : 0,  \
-			__FILE__, __LINE__)
+	#define pj_assert(expr)             \
+		pj_assert_fail((expr) ? 1 : 0,  \
+				__FILE__, __LINE__)
 
-extern int
-pj_assert_fail(int success, const char *file, unsigned int line)
-	WARN_UNUSED_RESULT;
+	extern int
+	pj_assert_fail(int success, const char *file, unsigned int line)
+		WARN_UNUSED_RESULT;
 
 #endif
 

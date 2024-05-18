@@ -108,19 +108,21 @@ static void prep_poc_list(Names *list)
 
 Errcode init_poco_pull(Menuhdr *mh, SHORT prev_id, SHORT root_id)
 {
-	Errcode err;
+	Errcode err = Success;
 	int count;
 	Names *pocs = NULL;
 	Pull *prev = id_to_pull(mh, prev_id);
 
 	build_wild_list(&pocs, resource_dir, "*.POC", false);
 	prep_poc_list(pocs);
-	if ((count = new_pull_list(&prev->next, pocs, 10, prev_id)) < Success) {
+	count = new_pull_list(&prev->next, pocs, 10, prev_id);
+	if (count < Success) {
 		err = count;
-		goto OUT;
 	}
-	id_to_pull(mh, root_id)->children->height += prev->height * count;
-OUT:
+	else {
+		id_to_pull(mh, root_id)->children->height += prev->height * count;
+	}
+
 	free_wild_list(&pocs);
 	return softerr(err, "poco_leaf");
 }
