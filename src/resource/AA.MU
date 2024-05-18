@@ -260,8 +260,8 @@ wacom_opt0 "Select device type\n"
 	"Cancel",
 }
 
-// Definition of the main pull-downs
-Pull home
+// Definition of the main pull-downs, with poco
+Pull home_with_poco
 {
 "Ani",100
 	{
@@ -338,6 +338,91 @@ Pull home
 	"Program",701
 	"Use",702,'U','U'
 	"----",703
+	}
+"Extra",800
+	{
+	"Mask...",801
+	"Grid...",802
+	"Record...",803
+	"Settings...",804
+	"Configure...",805
+	"Screen Size",807,'z'
+	}
+}
+
+
+// Definition of the main pull-downs-- poco disabled
+Pull home
+{
+"Ani",100
+	{
+	"About Ani",101
+	"----",102
+	"Browse",103
+	"Frames",104
+	"Optics",105,'o','O'        //two key equiv followed by one key equiv
+	"Palette   ",106,'p','@'
+	"Tools",107
+	"Inks",108
+	"Titling",109,'l'
+	"Tween",110,'w'
+	"----",111
+	"Quit",112,'q','Q'
+	}
+"Flic",200
+	{
+	"New",201,'n','N'
+	"Reset",202
+	"Total Frames",203
+	"Composite...",204
+	"Join...",205
+	"Effects...",206
+	"Backwards...",207
+	"Save Segment",208
+	"Files...",209
+	}
+"Pic",300
+	{
+	"Clear",301,'c','X'
+	"Restore",302
+	"Apply Ink",303
+	"Separate",304
+	"View",305
+	"Files...",306
+	}
+"Cel",400
+	{
+	"Anim Cel...",408
+	"Clip",401,'C',0x9
+	"Get",402,'G','G'
+	"Lasso",403
+	"Move",404,'M','M'
+	"Paste",405,'P','`'
+	"Stretch",406
+	"Turn",407
+	"Release",410
+	"Files...",411,
+	}
+"Trace",500
+	{
+	"Blue Frame",501
+	"Unblue Frame",502
+	"Next Blue",503
+	"Insert Tween",504
+	"Erase Guides",505
+	"Clip Changes",506
+	"Repeat Changes",507
+	"Loop Segment",508
+	"Segment Flip     ",509,'S',0xa
+	"Flip Five",510,'F','5'
+	}
+"Swap",600
+	{
+	"Clip",601
+	"Trade",602
+	"Paste",603
+	"View",604
+	"Release",605
 	}
 "Extra",800
 	{
