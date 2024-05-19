@@ -1,16 +1,14 @@
 
-project(PJ_SDL LANGUAGES OBJC C)
+project(PJ_SDL)
 
 set(PJ_SDL_SOURCES
 		./pj_sdl.c
-		./sdl_mac.m
-
 		./pj_sdl.h
 )
 
 if (WIN32)
 	set(PJ_SDL_PLATFORM_SOURCES
-			./sdl_win.cc
+			./sdl_win.c
 	)
 endif(WIN32)
 

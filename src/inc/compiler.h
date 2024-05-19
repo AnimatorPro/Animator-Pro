@@ -146,6 +146,8 @@ extern char *_STACKLOW; 					/* not sure what these are for, */
 #undef GCC_PACKED
 #define GCC_PACKED  __attribute__((packed))
 
+#elif defined(_MSC_VER)
+// nothing to report for now; just catching main Windows compiler
 
 /*****************************************************************************
  * Unknown compiler, whine and die.

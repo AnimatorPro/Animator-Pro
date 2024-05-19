@@ -2,7 +2,22 @@
 #define PJBASICS_H
 
 
-/*** this include file contains basic stuff that is common to all pj 
+#ifdef _MSC_VER
+	#include <../include/limits.h>
+	#if _MSC_VER >= 1900
+		#include <../ucrt/stdlib.h>
+	#else
+		#include <../include/stdlib.h>
+	#endif
+	#ifndef PATH_MAX
+		#define PATH_MAX _MAX_PATH
+	#endif
+#else
+	#include_next <limits.h>
+#endif
+
+
+/*** this include file contains basic stuff that is common to all pj
  * 	 applications that use graphics menus the fileing system and menus */
 
 #ifndef PJASSERT_H

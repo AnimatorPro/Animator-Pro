@@ -1,4 +1,6 @@
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-missing-field-initializers")
+if (UNIX)
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-missing-field-initializers")
+endif()
 
 set(PJHIGH_SRC_FILES
 	bhash.c

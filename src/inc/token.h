@@ -72,10 +72,12 @@ typedef enum poco_token_t
 
 /* prototypes... */
 
-extern int atoi(const char *s);
-extern long atol(const char *s);
-extern double atof(const char *s);
-extern long htol(const char *s);
+#ifndef _MSC_VER
+	extern int atoi(const char *s);
+	extern long atol(const char *s);
+	extern double atof(const char *s);
+	extern long htol(const char *s);
+#endif
 
 extern char *po_chop_csym(char *line, char *word, int maxlen, char **wordnext);
 

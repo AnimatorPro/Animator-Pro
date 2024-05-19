@@ -10,8 +10,11 @@ set(CMAKE_C_STANDARD 99)
 set(CMAKE_CXX_STANDARD 17)
 
 include_directories("inc")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -W -Wall -Wextra -Wmissing-prototypes")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wold-style-definition")
+
+if (UNIX)
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -W -Wall -Wextra -Wmissing-prototypes")
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wold-style-definition")
+endif()
 
 add_subdirectory(fileio)
 add_subdirectory(fli)
@@ -43,9 +46,11 @@ else()
 		poco/bcutil.c
 	)
 endif()
-	
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-sign-compare")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-pointer-sign")
+
+if (UNIX)
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-sign-compare")
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-pointer-sign")
+endif()
 
 set(PJMAIN_SRC_FILES
 	a3d.c

@@ -20,7 +20,7 @@ endif()
 
 ## all build options
 option(WITH_ANI  "Build Animator Pro." ON)
-option(WITH_POCO "Build with the Poco scripting language." ON)
+option(WITH_POCO "Build with the Poco scripting language." OFF)
 option(USE_ASAN  "Use Clang Memory Address Sanitizer"      OFF)
 
 
@@ -34,14 +34,16 @@ if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 	set(CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}/bin" CACHE PATH "Install top-level directory" FORCE)
 endif()
 
-add_compile_options(
-	-Wno-deprecated-declarations
-	-Wno-incompatible-pointer-types
-	-Wno-address-of-packed-member
-	-Wno-sometimes-uninitialized
-	-Wno-format-security
-	-Wno-null-pointer-subtraction
-)
+if (UNIX)
+	add_compile_options(
+		-Wno-deprecated-declarations
+		-Wno-incompatible-pointer-types
+		-Wno-address-of-packed-member
+		-Wno-sometimes-uninitialized
+		-Wno-format-security
+		-Wno-null-pointer-subtraction
+	)
+endif()
 
 ## thirdparty dependencies
 add_subdirectory(thirdparty/sdl2)
@@ -66,6 +68,7 @@ endif()
 ## main
 add_subdirectory(src)
 
-## tests
-add_subdirectory(tests)
-
+if (APPLE)
+	## tests
+	add_subdirectory(tests)
+endif()
