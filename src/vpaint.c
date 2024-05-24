@@ -3,6 +3,9 @@
    interpreter switch and main keyboard interpreter switch.  Implementations
    of many of routines called by above.  The first layer under main(). */
 
+#include <stdio.h>
+#include <string.h>
+
 #include "a3d.h"
 #include "aaconfig.h"
 #include "alt.h"
@@ -38,8 +41,6 @@
 #include "title.h"
 #include "tween.h"
 #include "zoom.h"
-#include <stdio.h>
-#include <string.h>
 
 #define UNSAVE_BUFSIZ 80
 
@@ -47,8 +48,7 @@ static char* unsaved_string(char* buf);
 static void qquit(void);
 
 // from mainpull.c
-Errcode run_pull_poco(Menuhdr *mh, SHORT id);
-
+Errcode run_pull_poco(Menuhdr* mh, SHORT id);
 
 static void get_color(void)
 {
@@ -59,10 +59,10 @@ static void get_color(void)
 static void qreset_seq(void)
 {
 	char buf[UNSAVE_BUFSIZ];
-	static char* keys[] = { "ask", "y", "size", "n", NULL };
+	static char* keys[] = {"ask", "y", "size", "n", NULL};
 
-	switch (soft_multi_box(
-	  keys, "!%d%d%s", "reset_flic", vb.pencel->width, vb.pencel->height, unsaved_string(buf))) {
+	switch (soft_multi_box(keys, "!%d%d%s", "reset_flic", vb.pencel->width, vb.pencel->height,
+						   unsaved_string(buf))) {
 		case 1:
 			return_to_main(RESET_DEFAULT_FLX);
 			break;
@@ -78,10 +78,10 @@ static void qreset_seq(void)
 static void qnew_flx(void)
 {
 	char buf[UNSAVE_BUFSIZ];
-	static char* keys[] = { "ask", "y", "size", "n", NULL };
+	static char* keys[] = {"ask", "y", "size", "n", NULL};
 
-	switch (soft_multi_box(
-	  keys, "!%d%d%s", "new_flic", vb.pencel->width, vb.pencel->height, unsaved_string(buf))) {
+	switch (soft_multi_box(keys, "!%d%d%s", "new_flic", vb.pencel->width, vb.pencel->height,
+						   unsaved_string(buf))) {
 		case 1:
 			unzoom();
 			flx_clear_olays();
@@ -105,8 +105,9 @@ void qload_mask(void)
 	char* title;
 	char buf[50];
 
-	if ((title = vset_get_filename(
-		   stack_string("load_msk", buf), ".MSK", load_str, MASK_PATH, NULL, 0)) != NULL) {
+	title = vset_get_filename(stack_string("load_msk", buf), ".MSK", load_str, MASK_PATH, NULL,
+							  0);
+	if (title != NULL) {
 		unzoom();
 		cant_load(load_the_mask(title), title);
 		rezoom();
@@ -118,10 +119,13 @@ void qsave_mask(void)
 	char* title;
 	char buf[50];
 
-	if (mask_rast == NULL)
+	if (mask_rast == NULL) {
 		return;
-	if ((title = vset_get_filename(
-		   stack_string("save_msk", buf), ".MSK", save_str, MASK_PATH, NULL, 1)) != NULL) {
+	}
+
+	title = vset_get_filename(stack_string("save_msk", buf), ".MSK", save_str, MASK_PATH, NULL,
+							  1);
+	if (title != NULL) {
 		unzoom();
 		if (overwrite_old(title)) {
 			save_the_mask(title);
@@ -138,21 +142,23 @@ void qload(void)
 	char buf[UNSAVE_BUFSIZ];
 	char* path;
 
-	if (!confirm_dirty_load())
+	if (!confirm_dirty_load()) {
 		return;
+	}
 
 	get_fliload_suffi(suffi);
 
 	sprintf(hailing, "%s  %s", stack_string("load_fli", ss), unsaved_string(buf));
 
-	if ((path = vset_get_filename(hailing, suffi, load_str, FLI_PATH, NULL, 0)) != NULL) {
+	path = vset_get_filename(hailing, suffi, load_str, FLI_PATH, NULL, 0);
+	if (path != NULL) {
 		resize_load_fli(path);
 	}
 }
 
 static Errcode load_the_pic(char* title)
 {
-	return (load_any_picture(title, vb.pencel));
+	return load_any_picture(title, vb.pencel);
 }
 
 void qload_pic(void)
@@ -160,9 +166,9 @@ void qload_pic(void)
 	char* title;
 	char buf[50];
 
-	if ((title = vset_get_filename(
-		   stack_string("load_pic", buf), get_pictype_suffi(), load_str, PIC_PATH, NULL, 0)) !=
-		NULL) {
+	title = vset_get_filename(stack_string("load_pic", buf), get_pictype_suffi(), load_str,
+							  PIC_PATH, NULL, 0);
+	if (title != NULL) {
 		unzoom();
 		save_undo();
 		load_the_pic(title);
@@ -184,12 +190,14 @@ void qsave_pic(void)
 	stack_string("save_pic", sph_buf);
 	sph_size = strlen(sph_buf) + 1;
 	strcpy(title, sph_buf);
-	if ((err = get_picsave_info(suffi, (title + (sph_size - 1)), sizeof(title) - sph_size)) <
+	err = get_picsave_info(suffi, (title + (sph_size - 1)), sizeof(title) - sph_size);
+	if (err <
 		Success) {
 		return;
 	}
 
-	if ((picpath = vset_get_filename(title, suffi, save_str, PIC_PATH, NULL, 1)) != NULL) {
+	picpath = vset_get_filename(title, suffi, save_str, PIC_PATH, NULL, 1);
+	if (picpath != NULL) {
 		if (overwrite_old(picpath)) {
 			unzoom();
 			soft_put_wait_box("!%s", "wait_save", picpath);
@@ -207,21 +215,22 @@ void toggle_cel_opt(int mode)
 	switch (mode) {
 		case 0:
 			vs.zero_clear = !vs.zero_clear;
-			changes		  = RSTAT_ZCLEAR;
+			changes = RSTAT_ZCLEAR;
 			break;
 		case 1:
 			vs.fit_colors = !vs.fit_colors;
-			changes		  = RSTAT_CFIT;
+			changes = RSTAT_CFIT;
 			break;
 		case 2:
 			vs.render_under = !vs.render_under;
-			changes			= RSTAT_UNDER;
+			changes = RSTAT_UNDER;
 			break;
 		case 3:
 			vs.render_one_color = !vs.render_one_color;
-			changes				= RSTAT_ONECOL;
+			changes = RSTAT_ONECOL;
 			break;
 	}
+
 	do_rmode_redraw(changes);
 }
 
@@ -233,9 +242,9 @@ static void tram_dir()
 	Names* nl;
 	Errcode err;
 
-	if ((err = rget_dir(&nl)) < Success)
+	if ((err = rget_dir(&nl)) < Success) {
 		softerr(err, "ram_dir");
-	else {
+	} else {
 		picked[0] = 0;
 		qscroller(picked, "Ram directory", nl, 10, &ipos);
 	}
@@ -267,17 +276,20 @@ static void flix_playit(void)
 static void tog_debug()
 {
 	debug = !debug;
-	if (debug)
+	if (debug) {
 		boxf("Debug flag = TRUE");
-	else
+	} else {
 		boxf("Debug flag = FALSE");
+	}
 }
 #endif
 
 static void tog_zoom(void)
 {
-	if (zoom_disabled())
+	if (zoom_disabled()) {
 		return;
+	}
+
 	hide_mp();
 	ktoggle_zoom();
 	show_mp();
@@ -294,17 +306,17 @@ static void toggle_one_color(void)
 }
 
 static Keyequiv header_keys[] = {
-	{ "ztogl", tog_zoom, KE_NOHIDE, 'z' },
-	{ "qpal", palette, KE_HIDE, '@' },
-	{ "color", get_color, KE_NOHIDE, FKEY2 },
-	{ "prevf", flix_prev_frame, KE_NOHIDE, LARROW },
-	{ "nextf", flix_next_frame, KE_NOHIDE, RARROW },
-	{ "play", flix_playit, KE_HIDE, DARROW },
-	{ "frame1", flix_first_frame, KE_NOHIDE, UARROW },
-	{ "over_under", toggle_render_under, KE_HIDE, 'v' },
-	{ "one_color", toggle_one_color, KE_HIDE, '1' },
+	{"ztogl", tog_zoom, KE_NOHIDE, 'z'},
+	{"qpal", palette, KE_HIDE, '@'},
+	{"color", get_color, KE_NOHIDE, FKEY2},
+	{"prevf", flix_prev_frame, KE_NOHIDE, LARROW},
+	{"nextf", flix_next_frame, KE_NOHIDE, RARROW},
+	{"play", flix_playit, KE_HIDE, DARROW},
+	{"frame1", flix_first_frame, KE_NOHIDE, UARROW},
+	{"over_under", toggle_render_under, KE_HIDE, 'v'},
+	{"one_color", toggle_one_color, KE_HIDE, '1'},
 #ifdef TESTING
-	{ "debug", tog_debug, KE_NOHIDE, '!' },
+	{"debug", tog_debug, KE_NOHIDE, '!'},
 #endif
 };
 
@@ -317,15 +329,16 @@ bool common_header_keys(void)
 static void eatk()
 {
 	static SHORT kb64 = 1;
-	static void* mem  = NULL;
+	static void* mem = NULL;
 
 	pj_gentle_free(mem);
 	mem = NULL;
 	while (!mem) {
 		if (qreq_number(&kb64, 1, 100, "How much mem times 64k to eat?")) {
 			mem = begmem(((LONG)kb64) * 0x0000FFFFL);
-		} else
+		} else {
 			break;
+		}
 	}
 	return;
 }
@@ -340,6 +353,8 @@ static void minus_trd()
 	trd_compact(1024L * 1024L * 1024L);
 }
 #endif /* TESTING */
+
+
 static void tog_pen(void)
 {
 	toggle_pen(&sh1_brush_sel);
@@ -351,8 +366,10 @@ static void home_help(void)
 	Smu_strings s;
 	Names* help_strings;
 
-	if ((err = smu_get_strings(&smu_sm, "home_help", &s)) >= Success) {
-		if ((help_strings = array_to_names(s.strings, s.count)) != NULL) {
+	err = smu_get_strings(&smu_sm, "home_help", &s);
+	if (err >= Success) {
+		help_strings = array_to_names(s.strings, s.count);
+		if (help_strings != NULL) {
 			go_driver_scroller(s.strings[0], help_strings->next, NULL, NOFUNC, NOFUNC, NULL, NULL);
 			free_slist((Slnode*)help_strings);
 		}
@@ -379,67 +396,70 @@ static void toggle_two_color(void)
 static Keyequiv home_keys[] = {
 
 #define UNDO_KE &home_keys[0]
-	{ "help", home_help, KE_NOHIDE, FKEY1 },
-	{ "undo", menu_doundo, KE_NOHIDE, '\b' },
-	{ "togm", toggle_menu, KE_NOHIDE, ' ' },
-	{ "togb", tog_pen, KE_NOHIDE, 'b' },
-	{ "clrp", clear_pic, KE_NOHIDE, 'x' },
-	{ "redo", menu_doredo, KE_HIDE, 'r' },
-	{ "flp5", flip5, KE_HIDE, '5' },
-	{ "flpr", flip_range, KE_HIDE, '\r' },
-	{ "celcut", cut_out_cel1, KE_HIDE, 'g' },
-	{ "celclp", clip_cel1, KE_HIDE, '\t' },
-	{ "celpas", paste_the_cel, KE_HIDE, '`' },
-	{ "celmov", move_the_cel, KE_HIDE, 'm' },
-	{ "qload", qload, KE_HIDE, 'l' },
-	{ "qnew", qnew_flx, KE_HIDE, 'n' },
-	{ "quit", qquit, KE_HIDE, 'q' },
-	{ "quit2", qquit, KE_HIDE, ESCKEY },
+	{"help", home_help, KE_NOHIDE, FKEY1},
+	{"undo", menu_doundo, KE_NOHIDE, '\b'},
+	{"togm", toggle_menu, KE_NOHIDE, ' '},
+	{"togb", tog_pen, KE_NOHIDE, 'b'},
+	{"clrp", clear_pic, KE_NOHIDE, 'x'},
+	{"redo", menu_doredo, KE_HIDE, 'r'},
+	{"flp5", flip5, KE_HIDE, '5'},
+	{"flpr", flip_range, KE_HIDE, '\r'},
+	{"celcut", cut_out_cel1, KE_HIDE, 'g'},
+	{"celclp", clip_cel1, KE_HIDE, '\t'},
+	{"celpas", paste_the_cel, KE_HIDE, '`'},
+	{"celmov", move_the_cel, KE_HIDE, 'm'},
+	{"qload", qload, KE_HIDE, 'l'},
+	{"qnew", qnew_flx, KE_HIDE, 'n'},
+	{"quit", qquit, KE_HIDE, 'q'},
+	{"quit2", qquit, KE_HIDE, ESCKEY},
 #ifdef WITH_POCO
-	{ "pouse", quse_poco, KE_HIDE, 'u' },
+	{"pouse", quse_poco, KE_HIDE, 'u'},
 #endif /* WITH_POCO */
-	{ "optic", go_ado, KE_HIDE, 'o' },
-	{ "qinsf", insert_a_frame, KE_HIDE, INSERTKEY },
-	{ "qkillf", kill_a_frame, KE_HIDE, DELKEY },
-	{ "dither", toggle_dither, KE_HIDE, 'd' },
-	{ "key_color", toggle_key_clear, KE_HIDE, 'k' },
-	{ "two_color", toggle_two_color, KE_HIDE, '2' },
+	{"optic", go_ado, KE_HIDE, 'o'},
+	{"qinsf", insert_a_frame, KE_HIDE, INSERTKEY},
+	{"qkillf", kill_a_frame, KE_HIDE, DELKEY},
+	{"dither", toggle_dither, KE_HIDE, 'd'},
+	{"key_color", toggle_key_clear, KE_HIDE, 'k'},
+	{"two_color", toggle_two_color, KE_HIDE, '2'},
 #ifdef TESTING
-	{ "test", test, KE_HIDE, '/' },
-	{ "eatk", eatk, KE_NOHIDE, '\'' },
-	{ "trdp", plus_trd, KE_NOHIDE, '+' },
-	{ "trdm", minus_trd, KE_NOHIDE, '-' },
-	{ "rdir", tram_dir, KE_NOHIDE, '=' },
+	{"test", test, KE_HIDE, '/'},
+	{"eatk", eatk, KE_NOHIDE, '\''},
+	{"trdp", plus_trd, KE_NOHIDE, '+'},
+	{"trdm", minus_trd, KE_NOHIDE, '-'},
+	{"rdir", tram_dir, KE_NOHIDE, '='},
 #endif /* TESTING */
 };
 
-Errcode load_home_keys(void)
 /* note this also loads common header keys, since all menus are sub to home
  *menu this works */
+Errcode load_home_keys(void)
 {
 	Errcode err;
 
-	if ((err = load_key_equivs("home_keys", header_keys, Array_els(header_keys))) < Success) {
-		return (err);
+	err = load_key_equivs("home_keys", header_keys, Array_els(header_keys));
+	if (err < Success) {
+		return err;
 	}
-	return (load_key_equivs("home_keys", home_keys, Array_els(home_keys)));
+	return load_key_equivs("home_keys", home_keys, Array_els(home_keys));
 }
 
 bool hit_undo_key(void)
 {
-	return (hit_keyequiv(UNDO_KE, icb.inkey));
+	return hit_keyequiv(UNDO_KE, icb.inkey);
 }
 
-bool home_dokeys(void)
 /* returns 0 if input unused 1 if used */
+bool home_dokeys(void)
 {
-	if (!JSTHIT(KEYHIT))
-		return (check_toggle_menu());
+	if (!JSTHIT(KEYHIT)) {
+		return check_toggle_menu();
+	}
 
-	if (common_header_keys())
-		return (true);
+	if (common_header_keys()) {
+		return true;
+	}
 
-	return (do_keyequiv(icb.inkey, home_keys, Array_els(home_keys)));
+	return do_keyequiv(icb.inkey, home_keys, Array_els(home_keys));
 }
 
 static void pixel_menu(void)
@@ -508,29 +528,33 @@ static char* unsaved_string(char* buf)
 {
 	char ss[50];
 
-	if (!dirty_file)
+	if (!dirty_file) {
 		buf[0] = 0;
-	else {
+	} else {
 		stack_string("dirty_file", ss);
 		snftextf(buf, UNSAVE_BUFSIZ, "!%d", stack_string("dirty_file", ss), dirty_strokes);
 	}
-	return (buf);
+
+	return buf;
 }
 
 bool confirm_dirty_load(void)
 {
 	char buf[UNSAVE_BUFSIZ];
 
-	if (dirty_file)
-		if (!soft_yes_no_box("!%s", "load_new", unsaved_string(buf)))
-			return (false);
-	return (true);
+	if (dirty_file) {
+		if (!soft_yes_no_box("!%s", "load_new", unsaved_string(buf))) {
+			return false;
+		}
+	}
+
+	return true;
 }
 
 static void qquit(void)
 {
 	char buf[UNSAVE_BUFSIZ];
-	static char* keys[] = { "ask", "y", "x", "n", NULL };
+	static char* keys[] = {"ask", "y", "x", "n", NULL};
 
 	switch (soft_multi_box(keys, "!%s", "exit_pj", unsaved_string(buf))) {
 		case 1:
@@ -550,11 +574,10 @@ void main_selit(Menuhdr* mh, SHORT hitid)
 	hide_mp();
 	if (hitid > POC_DOT_PUL && hitid <= POC_DOT_PUL + 10) /* poco call */
 	{
-		#ifdef WITH_POCO
+#ifdef WITH_POCO
 		run_pull_poco(mh, hitid);
-		#endif /* WITH_POCO */
-	}
-	else {
+#endif /* WITH_POCO */
+	} else {
 		switch (hitid) {
 			case ANI_ABO_PUL:
 				about();
@@ -741,5 +764,6 @@ void main_selit(Menuhdr* mh, SHORT hitid)
 				break;
 		}
 	}
+
 	show_mp();
 }
