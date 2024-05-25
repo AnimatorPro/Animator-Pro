@@ -42,9 +42,11 @@ else()
 		poco/bcutil.c
 	)
 endif()
-	
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-sign-compare")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-pointer-sign")
+
+if (UNIX)
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-sign-compare")
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-pointer-sign")
+endif()
 
 set(PJMAIN_SRC_FILES
 	a3d.c
@@ -178,8 +180,7 @@ if (WITH_ANI)
 			softmenu
 			trdutil
 			wndolib
-			SDL2-static
-			SDL2main
+			SDL3-static
 			nfd
 			m
 	)

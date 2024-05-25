@@ -28,7 +28,7 @@
 #include <float.h>
 #endif
 
-#ifdef __APPLE__
+#ifdef SDL_PLATFORM_APPLE
 /* Empty implementation for now-- seems to be a Windows-only thing? */
 static void _fpreset() {}
 #endif

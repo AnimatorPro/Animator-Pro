@@ -8,8 +8,7 @@ set(SDL_TEST_SOURCES
 
 add_executable(sdl_test "${SDL_TEST_SOURCES}")
 target_link_libraries(sdl_test
-		SDL2-static
-		SDL2main
+		SDL3-static
 		m
 		nfd
 		"-framework AppKit"

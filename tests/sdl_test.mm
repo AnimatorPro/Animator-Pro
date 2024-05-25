@@ -1,4 +1,4 @@
-#include <SDL.h>
+#include <SDL3/SDL.h>
 
 #import <Foundation/NSFileManager.h>
 
@@ -56,14 +56,28 @@ int main()
 
 	SDL_Init(SDL_INIT_VIDEO);
 	SDL_Window* window =
-	  SDL_CreateWindow("SDL_Test", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, win_w, win_h, 0);
+	  SDL_CreateWindow("SDL_Test", win_w, win_h, 0);
 	SDL_Surface* screen = SDL_GetWindowSurface(window);
 
 	// don't kill my beautiful pixels
-	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
+//	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
 
-	SDL_Surface* surface = SDL_CreateRGBSurface(SDL_SWSURFACE, w, h, 8, 0, 0, 0, 0);
-	SDL_Surface* buffer	 = SDL_CreateRGBSurface(0, w, h, 32, 0, 0, 0, 0);
+	const SDL_PixelFormatEnum pixelFormat8 = SDL_GetPixelFormatEnumForMasks(8, 0, 0, 0, 0);
+	if (pixelFormat8 == SDL_PIXELFORMAT_UNKNOWN) {
+		SDL_Log("Failed to get pixel format enum: %s", SDL_GetError());
+		SDL_Quit();
+		return 1;
+	}
+
+	const SDL_PixelFormatEnum pixelFormat32 = SDL_GetPixelFormatEnumForMasks(32, 0, 0, 0, 0);
+	if (pixelFormat32 == SDL_PIXELFORMAT_UNKNOWN) {
+		SDL_Log("Failed to get pixel format enum: %s", SDL_GetError());
+		SDL_Quit();
+		return 1;
+	}
+
+	SDL_Surface* surface = SDL_CreateSurface(w, h, pixelFormat8);
+	SDL_Surface* buffer	 = SDL_CreateSurface(w, h, pixelFormat32);
 
 	SDL_Color colors[2] = { { 0, 0, 255, 255 }, { 255, 0, 0, 255 } };
 	SDL_SetPaletteColors(surface->format->palette, colors, 0, 2);
@@ -74,7 +88,7 @@ int main()
 		SDL_Event event;
 		while (SDL_PollEvent(&event) > 0) {
 			switch (event.type) {
-				case SDL_QUIT:
+				case SDL_EVENT_QUIT:
 					return EXIT_SUCCESS;
 			}
 		}
@@ -99,7 +113,7 @@ int main()
 		 * so I'm copying to a second buffer first and then
 		 * doing my stretched blit. */
 		SDL_BlitSurface(surface, NULL, buffer, NULL);
-		SDL_BlitScaled(buffer, &source_rect, screen, &target_rect);
+		SDL_BlitSurface(buffer, &source_rect, screen, &target_rect);
 
 		SDL_UpdateWindowSurface(window);
 		SDL_Delay(250);
