@@ -1,5 +1,6 @@
 /* idr_sdl.c */
-#include <SDL.h>
+#include <stdlib.h>
+#include <SDL3/SDL.h>
 #include <assert.h>
 #include <stdint.h>
 
@@ -40,7 +41,7 @@ static int16_t sdl_key_event_to_ascii(const SDL_Event* ev)
 	static const int16_t fnkey[12] = { FKEY1, FKEY2, FKEY3, FKEY4,	FKEY5,	FKEY6,
 									   FKEY7, FKEY8, FKEY9, FKEY10, FKEY11, FKEY12 };
 
-	assert(ev->type == SDL_KEYDOWN);
+	assert(ev->type == SDL_EVENT_KEY_DOWN);
 
 	if (SDLK_F1 <= ev->key.keysym.sym && ev->key.keysym.sym <= SDLK_F12)
 		return fnkey[ev->key.keysym.sym - SDLK_F1];
@@ -84,7 +85,7 @@ int16_t dos_wait_key(void)
 		if (!SDL_WaitEvent(&ev))
 			return 0;
 
-		if (ev.type == SDL_KEYDOWN)
+		if (ev.type == SDL_EVENT_KEY_DOWN)
 			return sdl_key_event_to_ascii(&ev);
 	}
 }
@@ -131,15 +132,17 @@ static Errcode sdl_idr_input(Idriver* idr)
 	SDL_PumpEvents();
 	idr->key_code = 0;
 
-	SDL_Rect rect = pj_sdl_fit_surface(s_buffer, s_window_surface);
+	int window_w, window_h;
+	pj_sdl_get_window_size(&window_w, &window_h);
+	SDL_FRect rect = pj_sdl_fit_surface(s_surface, window_w, window_h);
 	pj_sdl_get_window_scale(&winscale_x, &winscale_y);
 
 	while (SDL_PollEvent(&ev)) {
 		switch (ev.type) {
-			case SDL_KEYDOWN:
+			case SDL_EVENT_KEY_DOWN:
 				idr->key_code = sdl_key_event_to_ascii(&ev);
 
-			case SDL_MOUSEMOTION:
+			case SDL_EVENT_MOUSE_MOTION:
 				idr->pos[0] = ev.motion.x - rect.x;
 				idr->pos[1] = ev.motion.y - rect.y;
 				/*
@@ -159,15 +162,15 @@ static Errcode sdl_idr_input(Idriver* idr)
 				}
 				break;
 
-			case SDL_MOUSEBUTTONDOWN:
-			case SDL_MOUSEBUTTONUP:
+			case SDL_EVENT_MOUSE_BUTTON_DOWN:
+			case SDL_EVENT_MOUSE_BUTTON_UP:
 				mb = (ev.button.button == SDL_BUTTON_LEFT)	  ? 1
 					 : (ev.button.button == SDL_BUTTON_RIGHT) ? 2
 															  : 0;
-				if (ev.type == SDL_MOUSEBUTTONDOWN) {
+				if (ev.type == SDL_EVENT_MOUSE_BUTTON_DOWN) {
 					idr->buttons |= mb;
 				}
-				else if (ev.type == SDL_MOUSEBUTTONUP) {
+				else if (ev.type == SDL_EVENT_MOUSE_BUTTON_UP) {
 					idr->buttons &= ~mb;
 				}
 				break;
@@ -175,17 +178,11 @@ static Errcode sdl_idr_input(Idriver* idr)
 			//!TODO: figure out a better event loop for SDL where
 			//       not everything is done inside IDR?
 
-			case SDL_WINDOWEVENT:
-				switch(ev.window.event) {
-					case SDL_WINDOWEVENT_RESIZED:
-					case SDL_WINDOWEVENT_SIZE_CHANGED:
-						// Update the target surface so drawing works!
-						s_window_surface = SDL_GetWindowSurface(window);
-					break;
-
-					default:
-						break;
-				}
+			case SDL_EVENT_WINDOW_RESIZED:
+			case SDL_EVENT_WINDOW_PIXEL_SIZE_CHANGED:
+				// Update the target surface so drawing works!
+				s_window_surface = SDL_GetWindowSurface(window);
+				break;
 
 			default:
 				break;

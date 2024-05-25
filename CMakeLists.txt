@@ -20,7 +20,7 @@ endif()
 
 ## all build options
 option(WITH_ANI  "Build Animator Pro." ON)
-option(WITH_POCO "Build with the Poco scripting language." ON)
+option(WITH_POCO "Build with the Poco scripting language." OFF)
 option(USE_ASAN  "Use Clang Memory Address Sanitizer"      OFF)
 
 
@@ -44,8 +44,8 @@ add_compile_options(
 )
 
 ## thirdparty dependencies
-add_subdirectory(thirdparty/sdl2)
-include_directories(thirdparty/sdl2/include)
+add_subdirectory(thirdparty/sdl3)
+include_directories(thirdparty/sdl3/include)
 add_subdirectory(thirdparty/nativefiledialogextended)
 include_directories(thirdparty/nativefiledialogextended/src/include)
 
