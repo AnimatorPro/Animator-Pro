@@ -34,16 +34,21 @@ if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 	set(CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}/bin" CACHE PATH "Install top-level directory" FORCE)
 endif()
 
-add_compile_options(
-	-Wno-deprecated-declarations
-	-Wno-incompatible-pointer-types
-	-Wno-address-of-packed-member
-	-Wno-sometimes-uninitialized
-	-Wno-format-security
-	-Wno-null-pointer-subtraction
-)
+if (UNIX)
+	add_compile_options(
+		-Wno-deprecated-declarations
+		-Wno-incompatible-pointer-types
+		-Wno-address-of-packed-member
+		-Wno-sometimes-uninitialized
+		-Wno-format-security
+		-Wno-null-pointer-subtraction
+		-Wdeprecated-non-prototype
+	)
+endif()
 
 ## thirdparty dependencies
+option(SDL_STATIC "" ON)
+
 add_subdirectory(thirdparty/sdl3)
 include_directories(thirdparty/sdl3/include)
 add_subdirectory(thirdparty/nativefiledialogextended)

@@ -214,7 +214,7 @@ static Errcode sdl_idr_setclip(Idriver* idr, short channel, long clipmax)
 static Errcode sdl_idr_open(Idriver* idr)
 {
 	sdl_idr_inquire(idr);
-''
+
 	if (idr->channel_count > 0) {
 		int screen_width, screen_height;
 		pj_sdl_get_video_size(&screen_width, &screen_height);

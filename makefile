@@ -3,7 +3,7 @@
 all: debug run
 
 debug:
-	rm -rf build && mkdir -p build_debug && pushd build_debug && cmake -G "Ninja" -DWITH_POCO=ON .. && cmake --build . --config debug --target install && popd
+	rm -rf build && mkdir -p build_debug && pushd build_debug && cmake -G "Ninja" -DWITH_POCO=OFF .. && cmake --build . --config debug --target install && popd
 
 release:
 	rm -rf build && mkdir -p build && pushd build && cmake -G "Ninja" -DWITH_POCO=OFF .. && cmake --build . --config RelWithDebInfo --target install && popd
