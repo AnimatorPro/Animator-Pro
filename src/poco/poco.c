@@ -2187,8 +2187,6 @@ static void get_prec1(Poco_cb* pcb, Exp_frame* e)
  ****************************************************************************/
 static void use_sizeof(Poco_cb* pcb, Exp_frame* e)
 {
-	extern dcl();
-
 	Exp_frame vexp;
 	long size = 0;
 

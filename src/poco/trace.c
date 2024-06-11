@@ -41,291 +41,280 @@
  ****************************************************************************/
 
 #include <string.h>
+
 #include "poco.h"
 #include "pocoface.h"
 
 #define i86_ptr_to_long(a) (a)
 
-Line_data *po_new_line_data(Poco_cb *pcb)
 /*****************************************************************************
  * alloc and init a new line_data structure.
  ****************************************************************************/
+Line_data *po_new_line_data(Poco_cb *pcb)
 {
-#define DSIZE  SMALLBLK_CACHE_SIZE / (2 * sizeof(long))
-Line_data *new;
+#define DSIZE SMALLBLK_CACHE_SIZE / (2 * sizeof(long))
+	Line_data *new;
 
-new = po_memzalloc(pcb, sizeof(*new));
-new->offsets = po_cache_malloc(pcb, &pcb->smallblk_cache);
-new->lines = new->offsets + DSIZE;
-new->alloc = DSIZE;
-return(new);
+	new = po_memzalloc(pcb, sizeof(*new));
+	new->offsets = po_cache_malloc(pcb, &pcb->smallblk_cache);
+	new->lines = new->offsets + DSIZE;
+	new->alloc = DSIZE;
+	return (new);
 }
 
-
-static bool resize_line_data(Poco_cb *pcb, Line_data *ld, int nalloc)
 /*****************************************************************************
  * resize line data offsets & line numbers areas to hold given # of elements.
  ****************************************************************************/
+static bool resize_line_data(Poco_cb *pcb, Line_data *ld, int nalloc)
 {
-long *no, *nl;
-int count = ld->count;
+	long *no, *nl;
+	int count = ld->count;
 
-no = po_memalloc(pcb,nalloc*2*sizeof(long));
-nl = no + nalloc;
-poco_copy_bytes(ld->offsets, no, count*sizeof(long));
-poco_copy_bytes(ld->lines, nl, count*sizeof(long));
-po_freemem(ld->offsets);
-ld->offsets = no;
-ld->lines = nl;
-ld->alloc = nalloc;
-return(true);
+	no = po_memalloc(pcb, nalloc * 2 * sizeof(long));
+	nl = no + nalloc;
+	poco_copy_bytes(ld->offsets, no, count * sizeof(long));
+	poco_copy_bytes(ld->lines, nl, count * sizeof(long));
+	po_freemem(ld->offsets);
+	ld->offsets = no;
+	ld->lines = nl;
+	ld->alloc = nalloc;
+	return (true);
 }
 
-bool po_compress_line_data(Poco_cb *pcb,Line_data *ld)
 /*****************************************************************************
  * shrink the line data offsets/lines area to the right size.
  ****************************************************************************/
+bool po_compress_line_data(Poco_cb *pcb, Line_data *ld)
 {
-
 #ifdef DEVELOPMENT
-if (ld == NULL) /* added to watch out for trouble with the new concept of */
-	{			/* not tying line_data structs to FTY_STRUCT poco_frames. */
-	po_say_internal(pcb, "NULL line-data pointer in po_compress_line_data");
+	if (ld == NULL) /* added to watch out for trouble with the new concept of */
+	{               /* not tying line_data structs to FTY_STRUCT poco_frames. */
+		po_say_internal(pcb, "NULL line-data pointer in po_compress_line_data");
 	}
 #endif
 
-if (ld->count == 0)
-	{
-	poc_gentle_freemem(ld->offsets);
-	ld->offsets = NULL;
-	return true;
+	if (ld->count == 0) {
+		poc_gentle_freemem(ld->offsets);
+		ld->offsets = NULL;
+		return true;
+	} else {
+		return (resize_line_data(pcb, ld, ld->count));
 	}
-else
-	return(resize_line_data(pcb, ld, ld->count));
 }
 
-void po_free_line_data(Line_data *ld)
 /*****************************************************************************
  * free a line_data struct, and its associated offsets/line data area.
  ****************************************************************************/
+void po_free_line_data(Line_data *ld)
 {
-if (ld != NULL)
-	{
-	poc_gentle_freemem(ld->offsets);
-	po_freemem(ld);
+	if (ld != NULL) {
+		poc_gentle_freemem(ld->offsets);
+		po_freemem(ld);
 	}
 }
 
-bool po_add_line_data(Poco_cb *pcb, Line_data *ld, long offset, long line)
 /*****************************************************************************
  * add a new line number/code offset pair to a line_data struct.
  * if we are out of room, we resize the data area to twice its current size.
  ****************************************************************************/
+bool po_add_line_data(Poco_cb *pcb, Line_data *ld, long offset, long line)
 {
-int count;
+	int count;
 
 #ifdef DEVELOPMENT
-if (ld == NULL) /* added to watch out for trouble with the new concept of */
-	{			/* not tying line_data structs to FTY_STRUCT poco_frames. */
-	po_say_internal(pcb, "trying to add using NULL ptr in po_add_line_data");
-	return false;
+	if (ld == NULL) /* added to watch out for trouble with the new concept of */
+	{               /* not tying line_data structs to FTY_STRUCT poco_frames. */
+		po_say_internal(pcb, "trying to add using NULL ptr in po_add_line_data");
+		return false;
 	}
 #endif
 
-if (ld->alloc <= (count = ld->count))
-	{
-	if (!resize_line_data(pcb, ld, ld->alloc<<1))
-		return(false);
+	if (ld->alloc <= (count = ld->count)) {
+		if (!resize_line_data(pcb, ld, ld->alloc << 1)) {
+			return (false);
+		}
 	}
-ld->offsets[count] = offset;
-ld->lines[count] = line;
-ld->count+=1;
-return(true);
+	ld->offsets[count] = offset;
+	ld->lines[count] = line;
+	ld->count += 1;
+	return (true);
 }
 
-long find_line(Line_data *ld, long offset)
 /*****************************************************************************
  * find the source code line number for a given code offset.
  ****************************************************************************/
+long find_line(Line_data *ld, long offset)
 {
-int i = ld->count;
-long *offsets = ld->offsets;
-long *lines = ld->lines;
+	int i = ld->count;
+	long *offsets = ld->offsets;
+	long *lines = ld->lines;
 
-while (i--)
-	{
-	++lines;
-	if (offset < *offsets++)
-		break;
+	while (i--) {
+		++lines;
+		if (offset < *offsets++) {
+			break;
+		}
 	}
-return(*(--lines));
+	return (*(--lines));
 }
 
-static char *find_builtin_name(Poco_run_env *pe, void *val)
 /*****************************************************************************
  * find the name of a library function.
  ****************************************************************************/
+static char *find_builtin_name(Poco_run_env *pe, void *val)
 {
-Func_frame	*fuf;
+	Func_frame *fuf;
 
-	for (fuf = pe->fff; fuf != NULL; fuf = fuf->mlink)
-		if (fuf->code_pt == val)
+	for (fuf = pe->fff; fuf != NULL; fuf = fuf->mlink) {
+		if (fuf->code_pt == val) {
 			return fuf->name;
-	return("??unknown??");
+		}
+	}
+	return ("??unknown??");
 }
 
-static
-Func_frame *which_frame(Poco_run_env *pe, void *ipin)
 /*****************************************************************************
  * locate the parent fuf of a given location in the program's code buffer.
  ****************************************************************************/
+static Func_frame *which_frame(Poco_run_env *pe, void *ipin)
 {
-Code *ip = ipin;
-Func_frame *fuf = pe->fff;
+	Code *ip = ipin;
+	Func_frame *fuf = pe->fff;
 
-while (fuf != NULL)
-	{
-	if (i86_ptr_to_long(ip) >= i86_ptr_to_long(fuf->code_pt) &&
-		i86_ptr_to_long(ip) < i86_ptr_to_long(fuf->code_pt)+fuf->code_size)
-		break;
-	fuf = fuf->next;
+	while (fuf != NULL) {
+		if (i86_ptr_to_long(ip) >= i86_ptr_to_long(fuf->code_pt) &&
+			i86_ptr_to_long(ip) < i86_ptr_to_long(fuf->code_pt) + fuf->code_size) {
+			break;
+		}
+		fuf = fuf->next;
 	}
-return(fuf);
+	return (fuf);
 }
 
-static bool is_char_string_type(Type_info *ti)
 /*****************************************************************************
  * indicate whether symbol is an array of or pointer to char (ie, a string).
  ****************************************************************************/
+static bool is_char_string_type(Type_info *ti)
 {
-return(ti->comp_count == 2 && ti->comp[0] == TYPE_CHAR );
+	return (ti->comp_count == 2 && ti->comp[0] == TYPE_CHAR);
 }
 
-po_seems_ascii(char *s)
 /*****************************************************************************
  * make a guess as to whether a string is printable ascii or not.
  ****************************************************************************/
+bool po_seems_ascii(char *s)
 {
-int count = 0;
-char c;
+	int count = 0;
+	char c;
 
-for (count = 0; count < 50; count++)
-	{
-	c = *s++;
-	if (c == 0)
-		break;
-	if (c < 7)
-		return(false);
+	for (count = 0; count < 50; count++) {
+		c = *s++;
+		if (c == 0) {
+			break;
+		}
+		if (c < 7) {
+			return false;
+		}
 	}
-if (count == 50)
-	return(false);
-return(true);
+	if (count == 50) {
+		return false;
+	}
+	return true;
 }
 
-static void print_param(FILE *f, void *param, int offset, Type_info *ti)
 /*****************************************************************************
  * print values that were passed as parameters, part of stack trace output.
  ****************************************************************************/
+static void print_param(FILE *f, void *param, int offset, Type_info *ti)
 {
-char *s;
+	char *s;
 
-param = OPTR(param, offset);
-switch (ti->ido_type)
-	{
-	case IDO_INT:
-		fprintf(f, "%d", ((int *)param)[0]);
-		break;
-	case IDO_LONG:
-		fprintf(f, "%ld", ((long *)param)[0]);
-		break;
-	case IDO_POINTER:
-		s = ((Popot *)param)->pt;
-		if (s == NULL)
-			{
-			fprintf(f, "(NULL)");
+	param = OPTR(param, offset);
+	switch (ti->ido_type) {
+		case IDO_INT:
+			fprintf(f, "%d", ((int *)param)[0]);
 			break;
+		case IDO_LONG:
+			fprintf(f, "%ld", ((long *)param)[0]);
+			break;
+		case IDO_POINTER:
+			s = ((Popot *)param)->pt;
+			if (s == NULL) {
+				fprintf(f, "(NULL)");
+				break;
 			}
-		if (ti->comp[ti->comp_count-2] == TYPE_FUNCTION)
-			{
-			fprintf(f, "%s", ((Func_frame *)s)->name);
+			if (ti->comp[ti->comp_count - 2] == TYPE_FUNCTION) {
+				fprintf(f, "%s", ((Func_frame *)s)->name);
+			} else if (is_char_string_type(ti) && po_seems_ascii(s)) {
+				fprintf(f, "\"%s\"", s);
+			} else {
+				fprintf(f, "0x%p", s);
 			}
-		else if (is_char_string_type(ti) && po_seems_ascii(s))
-			{
-			fprintf(f, "\"%s\"", s);
+			break;
+		case IDO_CPT:
+			s = ((char **)param)[0];
+			if (is_char_string_type(ti) && po_seems_ascii(s)) {
+				fprintf(f, "\"%s\"", s);
+			} else {
+				fprintf(f, "0x%p", s);
 			}
-		else
-			{
-			fprintf(f, "0x%p", s);
-			}
-		break;
-	case IDO_CPT:
-		s = ((char **)param)[0];
-		if (is_char_string_type(ti) && po_seems_ascii(s))
-			fprintf(f, "\"%s\"", s);
-		else
-			fprintf(f, "0x%p", s);
-		break;
-	case IDO_DOUBLE:
-		fprintf(f, "%f", ((double *)param)[0]);
-		break;
+			break;
+		case IDO_DOUBLE:
+			fprintf(f, "%f", ((double *)param)[0]);
+			break;
 #ifdef STRING_EXPERIMENT
-	case IDO_STRING:
-		s = PoStringBuf((PoString *)param);
-		fprintf(f, "\"%s\"", s);
+		case IDO_STRING:
+			s = PoStringBuf((PoString *)param);
+			fprintf(f, "\"%s\"", s);
 #endif /* STRING_EXPERIMENT */
 	}
 }
 
-void po_print_trace(Poco_run_env *pe, FILE *tfile, Pt_num *stack, Pt_num *base,
-	Pt_num *globals, Pt_num *ip, Errcode cerr)
 /*****************************************************************************
  * format error message & stack trace for a runtime error in a poco program.
  ****************************************************************************/
+void po_print_trace(Poco_run_env *pe, FILE *tfile, Pt_num *stack, Pt_num *base, Pt_num *globals,
+					Pt_num *ip, Errcode cerr)
 {
 	Func_frame *fuf;
-	int 		i,j,pcount;
-	Symbol		*param;
-	long		line = 0;
+	int i, j, pcount;
+	Symbol *param;
+	long line = 0;
 
-	if ((fuf = which_frame(pe, ip)) != NULL)
-		{
+	if ((fuf = which_frame(pe, ip)) != NULL) {
 		line = find_line(fuf->ld, (Code *)ip - fuf->code_pt);
 		fprintf(tfile, "near line %ld of %s\n", line, pe->fff->name);
-		}
+	}
 
-	if (pe->err_line != NULL)
+	if (pe->err_line != NULL) {
 		*(pe->err_line) = line;
+	}
 
-	if (cerr)
-		{
+	if (cerr) {
 		fprintf(tfile, "The error was detected by library function: %s()\n",
-			find_builtin_name(pe, ip->func));
-		}
+				find_builtin_name(pe, ip->func));
+	}
 
 	fprintf(tfile, "Stack trace (call history):\n");
 
-	for (i = 0;i < 50; i++)
-		{
-		if ((fuf = which_frame(pe, ip)) == NULL)
+	for (i = 0; i < 50; i++) {
+		if ((fuf = which_frame(pe, ip)) == NULL) {
 			break;
+		}
 		fprintf(tfile, "\t%s(", fuf->name);
 		param = fuf->parameters;
 		pcount = fuf->pcount;
-		if (pcount > 0)
-			{
-			for (j=1; j<pcount; j++)
-				{
-				print_param(tfile, base, param->symval.doff,
-					 param->ti);
+		if (pcount > 0) {
+			for (j = 1; j < pcount; j++) {
+				print_param(tfile, base, param->symval.doff, param->ti);
 				fprintf(tfile, ", ");
 				param = param->link;
-				}
-			print_param(tfile, base, param->symval.doff,
-				 param->ti);
 			}
+			print_param(tfile, base, param->symval.doff, param->ti);
+		}
 		fprintf(tfile, ")\n");
 		ip = ((void **)base)[1];
 		base = ((void **)base)[0];
-		}
-	fprintf(tfile,"\n");
+	}
+	fprintf(tfile, "\n");
 }
