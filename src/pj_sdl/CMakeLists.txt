@@ -4,6 +4,7 @@ project(PJ_SDL LANGUAGES OBJC C)
 set(PJ_SDL_SOURCES
 		./pj_sdl.c
 		./pj_sdl.h
+		./fs_sdl.c
 )
 
 if (WIN32)
