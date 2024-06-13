@@ -5,6 +5,7 @@
 #include <stdbool.h>
 
 #include <SDL3/SDL.h>
+#include <SDL3/SDL_filesystem.h>
 #include <SDL3/SDL_surface.h>
 
 #include "stdtypes.h"
@@ -164,3 +165,32 @@ void pj_sdl_flip_window_surface()
 	SDL_RenderTexture(renderer, render_target, &source_rect, &target_rect);
 	SDL_RenderPresent(renderer);
 }
+
+/*--------------------------------------------------------------*/
+const char* pj_sdl_resources_path() {
+	static char resources_path[PATH_MAX] = {0};
+	const char* base_path = SDL_GetBasePath();
+
+	#ifdef IS_BUNDLE
+		// On macOS, resources path is very specific
+		snprintf(resources_path, PATH_MAX, pj_sdl_mac_bundle_path());
+	#else
+		// When not in a bundle, use the resources folder next to the executable
+		snprintf(resources_path, PATH_MAX, "%sresource",
+			 base_path);
+	#endif
+	return resources_path;
+}
+
+
+/*--------------------------------------------------------------*/
+const char* pj_sdl_preferences_path() {
+	static char preferences_path[PATH_MAX] = {0};
+	if (preferences_path[0] == '\0') {
+		snprintf(preferences_path, PATH_MAX, SDL_GetPrefPath("skeletonheavy", "vpaint"));
+		// eat the last separator
+		preferences_path[SDL_strlen(preferences_path)-1] = '\0';
+	}
+	return preferences_path;
+}
+

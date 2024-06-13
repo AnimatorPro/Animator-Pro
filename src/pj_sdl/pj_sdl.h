@@ -25,10 +25,11 @@ LONG pj_sdl_get_display_scale(void);
 struct SDL_FRect pj_sdl_fit_surface(const struct SDL_Surface* source, int target_w, int target_h);
 void pj_sdl_flip_window_surface(void);
 
-#ifdef SDL_PLATFORM_APPLE
-const char* mac_resources_path();
-const char* mac_preferences_path();
-#endif // SDL_PLATFORM_APPLE
+const char* pj_sdl_resources_path();
+const char* pj_sdl_preferences_path();
+
+// from sdl_mac.m
+const char* pj_sdl_mac_bundle_path();
 
 #ifndef MIN
 #define MIN(x,y) (x < y ? x : y)

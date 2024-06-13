@@ -3,20 +3,19 @@ project(PJ_SDL LANGUAGES OBJC C)
 
 set(PJ_SDL_SOURCES
 		./pj_sdl.c
-		./sdl_mac.m
-
 		./pj_sdl.h
 )
 
 if (WIN32)
 	set(PJ_SDL_PLATFORM_SOURCES
-			./sdl_win.cc
+		## not yet needed? Thank you, SDL_Filesystem
+#		./sdl_win.cc
 	)
 endif(WIN32)
 
 if (APPLE)
 	set(PJ_SDL_PLATFORM_SOURCES
-			./sdl_mac.m
+		./sdl_mac.m
 	)
 endif(APPLE)
 

@@ -79,18 +79,10 @@ Errcode init_pj_startup(Argparse_list *more_args, Do_aparse do_others, int argc,
 
 	char resource_paths[3][PATH_MAX];
 	int resource_paths_count = 2;
+	getcwd(resource_paths[1], PATH_MAX);
 
-
-#ifdef IS_BUNDLE
-	// try the bundle directory first
-	fprintf(stderr, "Checking bundle...\n");
-	snprintf(resource_paths[2], PATH_MAX, "%s", mac_resources_path());
-	resource_paths_count += 1;
-#endif
-
-	getcwd(resource_paths[0], PATH_MAX);
-	snprintf(resource_paths[0], PATH_MAX, "%s/resource/", resource_paths[0]);
-	snprintf(resource_paths[1], PATH_MAX, "%s/resource/", dirname(argv[0]));
+	snprintf(resource_paths[0], PATH_MAX, pj_sdl_resources_path());
+	snprintf(resource_paths[1], PATH_MAX, "%s/resource", resource_paths[1]);
 
 	err = Failure;
 
