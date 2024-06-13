@@ -76,6 +76,25 @@ int main(int argc, char *argv[]) {
 		return -1;
 	}
 
+	const char* path = "/Users/kiki/dev/animatorpro/src/resource/font";
+	int count = 0;
+	char** files = SDL_GlobDirectory(path, "*", SDL_GLOB_CASEINSENSITIVE, &count);
+
+	SDL_PathInfo info;
+	char full_path[1024];
+
+	for (int i = 0; i < count; i++) {
+		snprintf(full_path, 1024, "%s/%s", path, files[i]);
+		if (SDL_GetPathInfo(full_path, &info) != 0) {
+			fprintf(stderr, "-- Error on %s: %s\n", files[i], SDL_GetError());
+			continue;
+		}
+
+		const char* path_type = info.type == SDL_PATHTYPE_DIRECTORY ? "D" : "F";
+
+		fprintf(stderr, "W: %s (%s)\n", files[i], path_type);
+	}
+
 	SDL_Event event;
 	int quit = 0;
 
