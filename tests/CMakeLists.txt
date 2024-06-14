@@ -1,6 +1,6 @@
 
 cmake_minimum_required(VERSION 3.16)
-project(TestApp OBJC CXX)
+project(TestApp)
 
 set(SDL_TEST_SOURCES
 		sdl_test.cc

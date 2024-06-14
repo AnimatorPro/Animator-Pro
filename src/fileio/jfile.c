@@ -34,7 +34,9 @@
 #include <io.h>
 #else /* __WATCOMC__ */
 #include <sys/stat.h>
-#include <unistd.h>
+#ifndef _MSC_VER
+	#include <unistd.h>
+#endif
 #include <sys/types.h>
 #include <sys/stat.h>
 #endif /* __WATCOMC__ */

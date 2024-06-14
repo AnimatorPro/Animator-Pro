@@ -39,4 +39,8 @@ const char* pj_sdl_mac_bundle_path();
 #define MAX(x,y) (x > y ? x : y)
 #endif
 
+#ifdef _MSC_VER
+	#define PATH_MAX 1024
+#endif
+
 #endif // ANIMATOR_PRO_PJ_SDL_H

@@ -146,6 +146,12 @@ extern char *_STACKLOW; 					/* not sure what these are for, */
 #undef GCC_PACKED
 #define GCC_PACKED  __attribute__((packed))
 
+/* Visual Studio */
+#elif defined(_MSC_VER)
+
+#undef STATIC_ASSERT
+#define STATIC_ASSERT(module, e)
+
 
 /*****************************************************************************
  * Unknown compiler, whine and die.
