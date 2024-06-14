@@ -1,3 +1,4 @@
+
 if (UNIX)
 	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-missing-field-initializers")
 endif()

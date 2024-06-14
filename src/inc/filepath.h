@@ -20,6 +20,11 @@
 #define PATH_SIZE PATH_MAX
 #endif /* __WATCOMC__ */
 
+#ifdef _MSC_VER
+#define PATH_MAX 1024
+#define PATH_SIZE PATH_MAX
+#endif
+
 /* string big enough for a wildcard */
 #define WILD_SIZE 16
 

@@ -3,6 +3,7 @@
 #include "errcodes.h"
 #include "filepath.h"
 
+
 Errcode add_subpath(char *drawer, char *subpath, char *outpath)
 /* puts path and name together to for a concatenated path, record will be
  * truncated to PATH_SIZE outpath may be a drawer input drawer and output 

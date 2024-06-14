@@ -9,10 +9,13 @@ endif()
 set(CMAKE_CXX_STANDARD 17)
 
 include_directories("inc")
-
-if (UNIX)
+if (WIN32)
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /EHsc")
+else()
 	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -W -Wall -Wextra -Wmissing-prototypes")
 	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wold-style-definition")
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-sign-compare")
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-pointer-sign")
 endif()
 
 add_subdirectory(fileio)
@@ -44,11 +47,6 @@ else()
 		poco/token.c
 		poco/bcutil.c
 	)
-endif()
-
-if (UNIX)
-	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-sign-compare")
-	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-pointer-sign")
 endif()
 
 set(PJMAIN_SRC_FILES
@@ -185,9 +183,12 @@ if (WITH_ANI)
 			wndolib
 			SDL3-static
 			nfd
-			m
 	)
-	
+
+	if (UNIX)
+		target_link_libraries(m)
+	endif()
+
 	if (WITH_POCO)
 		target_link_libraries(${PROJECT_NAME} libpoco)
 	endif()

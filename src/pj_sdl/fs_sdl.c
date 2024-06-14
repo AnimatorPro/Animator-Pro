@@ -10,8 +10,6 @@
 #include "wildlist.h"
 
 #include <assert.h>
-#include <errno.h>
-#include <glob.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -155,7 +153,6 @@ static Errcode alloc_wild_list(Names** pwild_list,
 
 	struct stat s;
 	char pat[PATH_MAX];
-	glob_t g;
 	size_t i;
 	size_t dir_len;
 
