@@ -17,14 +17,11 @@
 #include <string.h>
 #include <sys/stat.h>
 
-#include "SDL3/SDL_filesystem.h"
+#include <SDL3/SDL_filesystem.h>
+#include "pj_sdl.h"
 
 /* TODO: do we need current_device? */
 #include "msfile.h"
-
-#ifdef __APPLE__
-#define GLOB_ONLYDIR 0
-#endif
 
 // from pj_sdl.c
 extern const char* SEP;
@@ -239,4 +236,15 @@ Errcode build_wild_list(Names** pwild_list, const char* drawer, const char* pat,
 
 	*pwild_list = sort_names(*pwild_list);
 	return Success;
+}
+
+bool pj_is_directory(const char *path)
+{
+	SDL_PathInfo info;
+
+	if (SDL_GetPathInfo(path, &info) != 0) {
+		return false;
+	}
+
+	return info.type == SDL_PATHTYPE_DIRECTORY;
 }

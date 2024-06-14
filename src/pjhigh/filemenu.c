@@ -15,6 +15,8 @@
 #include "util.h"
 #include "wildlist.h"
 
+#include "pj_sdl.h"
+
 static void fq_set_wild(Button *b);
 static void accept_file_name(Button *b);
 static void init_fscroller(void);
@@ -543,7 +545,7 @@ for (;;)
 			}
 		else
 			{
-			if (is_directory(string))
+			if (pj_is_directory(string))
 				{
 				setf_stringq(&fdrawer_sel, true,"%s",string);
 				fq_new_drawer();
