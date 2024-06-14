@@ -2,66 +2,64 @@
 
 #define SCRNINIT_CODE
 #define VDEV_INTERNALS
-#include <SDL.h>
-
+#include <SDL3/SDL.h>
 #include <assert.h>
 #include <ctype.h>
 #include <errno.h>
 #include <libgen.h>
 #include <stdio.h>
-#include <unistd.h>
 #include <sys/stat.h>
+#include <unistd.h>
 
-#include "jimk.h"
 #include "aaconfig.h"
 #include "argparse.h"
 #include "dpmiutil.h"
 #include "input.h"
+#include "jimk.h"
 #include "msfile.h"
+#include "pj_sdl.h"
 #include "progids.h"
 #include "rastcurs.h"
 #include "rastlib.h"
 #include "resource.h"
 #include "vdevcall.h"
-#include "pj_sdl.h"
 
 short pj_crit_errval = 1 - 19;
 
 char pj_mcga_name[] = "=SDL.DRV";
 
-Doserr
-pj_dget_err(void)
+Doserr pj_dget_err(void)
 {
 	return -1;
 }
 
-void
-new_config(void)
+void new_config(void)
 {
 }
 
 /*--------------------------------------------------------------*/
-static int dir_exists(const char* const path)
+static int dir_exists(const char *const path)
 {
-    struct stat info;
+	struct stat info;
 
-    int statRC = stat( path, &info );
-    if( statRC != 0 )
-    {
-        if (errno == ENOENT)  { return 0; } // something along the path does not exist
-        if (errno == ENOTDIR) { return 0; } // something in path prefix is not a dir
-        return -1;
-    }
+	int statRC = stat(path, &info);
+	if (statRC != 0) {
+		if (errno == ENOENT) {
+			return 0;
+		}  // something along the path does not exist
+		if (errno == ENOTDIR) {
+			return 0;
+		}  // something in path prefix is not a dir
+		return -1;
+	}
 
-    return ( info.st_mode & S_IFDIR ) ? 1 : 0;
+	return (info.st_mode & S_IFDIR) ? 1 : 0;
 }
-
 
 /*--------------------------------------------------------------*/
 
-Errcode
-init_pj_startup(Argparse_list *more_args, Do_aparse do_others,
-		int argc, char **argv, char *help_key, char *menufile_name)
+Errcode init_pj_startup(Argparse_list *more_args, Do_aparse do_others, int argc, char **argv,
+						char *help_key, char *menufile_name)
 {
 	bool force_config;
 	Errcode err;
@@ -81,21 +79,10 @@ init_pj_startup(Argparse_list *more_args, Do_aparse do_others,
 
 	char resource_paths[3][PATH_MAX];
 	int resource_paths_count = 2;
+	getcwd(resource_paths[1], PATH_MAX);
 
-
-	#ifdef IS_BUNDLE
-		// try the bundle directory first
-		fprintf(stderr, "Checking bundle...\n");
-		snprintf(resource_paths[2], PATH_MAX, "%s", mac_resources_path());
-		resource_paths_count += 1;
-	#endif
-
-
-	getcwd(resource_paths[0], PATH_MAX);
-	snprintf(resource_paths[0], PATH_MAX, "%s/resource/", resource_paths[0]);
-
-	snprintf(resource_paths[1], PATH_MAX, "%s/resource/", dirname(argv[0]));
-
+	snprintf(resource_paths[0], PATH_MAX, pj_sdl_resources_path());
+	snprintf(resource_paths[1], PATH_MAX, "%s/resource", resource_paths[1]);
 
 	err = Failure;
 
@@ -117,25 +104,27 @@ init_pj_startup(Argparse_list *more_args, Do_aparse do_others,
 	if (vb.config_name == NULL) {
 		force_config = true;
 		vb.config_name = get_default_config_name();
-	}
-	else {
+	} else {
 		force_config = false;
 	}
 
 	err = init_config(force_config);
-	if (err < Success)
+	if (err < Success) {
 		return err;
+	}
 
 	return Success;
 }
 
-Errcode
-open_pj_startup_screen(Errcode (*init_with_screen)(void *data), void *data)
+Errcode open_pj_startup_screen(Errcode (*init_with_screen)(void *data), void *data)
 {
 	Screen_mode *open_mode;
 	Screen_mode *alt_mode;
 
-	SDL_Init(SDL_INIT_EVERYTHING);
+	Uint32 flags = (SDL_INIT_TIMER | SDL_INIT_AUDIO | SDL_INIT_VIDEO | SDL_INIT_JOYSTICK |
+					SDL_INIT_GAMEPAD | SDL_INIT_EVENTS);
+
+	SDL_Init(flags);
 
 	open_mode = &vconfg.smode;
 	alt_mode = NULL;
@@ -143,7 +132,6 @@ open_pj_startup_screen(Errcode (*init_with_screen)(void *data), void *data)
 	return init_screen(open_mode, alt_mode, init_with_screen, data);
 }
 
-void
-cleanup_startup(void)
+void cleanup_startup(void)
 {
 }

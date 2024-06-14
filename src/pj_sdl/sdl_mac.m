@@ -1,27 +1,32 @@
 #import <Foundation/Foundation.h>
 #import <Foundation/NSFileManager.h>
 #import <Foundation/NSString.h>
+#include <SDL3/SDL_filesystem.h>
 
 
 // ======================================================================
-const char* mac_resources_path() {
-#ifdef IS_BUNDLE
+const char* pj_sdl_mac_bundle_path() {
+	static const char resource_path[PATH_MAX] = {0};
+
+	#ifdef IS_BUNDLE
 	static NSString* resource_path = nil;
 	if (!resource_path) {
 		resource_path = [[NSBundle mainBundle] resourcePath];
 	}
+	snprintf(resource_path, PATH_MAX, [resource_path UTF8String]);
+	#endif
 
-	return [resource_path UTF8String];
-#else
-	static const char* resource_path = "";
 	return resource_path;
-#endif
 }
 
 
 // ----------------------------------------------------------------------
 const char* mac_preferences_path() {
 	static NSString* preferences_path = nil;
+
+	fprintf(stderr, "SDL PATHS:\n\\t+ Base: %s\n\t+ Prefs: %s\n\n",
+			SDL_GetBasePath(),
+			SDL_GetPrefPath("skeletonheavy", "vpaint"));
 
 	if (!preferences_path) {
 		NSFileManager* file_manager = [NSFileManager defaultManager];

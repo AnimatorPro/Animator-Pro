@@ -46,7 +46,6 @@ void close_all_menus(Wscreen *s, LONG code)
 	while (NULL != (mg = (Mugroup *)get_head(&(s->gstack)))) {
 		close_group_code(mg, code);
 	}
-	return;
 }
 
 /* sets state of button root and button flags to reflect whether window is
@@ -269,13 +268,16 @@ void close_menu_code(Menuhdr *mh, LONG code)
 	if (mh == NULL) {
 		return;
 	}
+
 	close_menuwndo(mh);
 	if (mh->group) {
 		mh->group->retcode = code;
 	}
+
 	if (mh->flags & DOMENU_DEFAULT) {
 		mh->domenu = NULL;
 	}
+
 	remfrom_group(mh);
 	if (mh->cleanup) {
 		(*(mh->cleanup))(mh);
@@ -621,7 +623,8 @@ bool stack_show_cgroup(Wscreen *ws)
 			return (1);
 		}
 	}
-	return (0);
+
+	return 0;
 }
 
 /*************************************************************************/

@@ -57,13 +57,7 @@ open_config(XFILE **pxf, bool create)
 
 Errcode default_temp_path(char *buf)
 {
-	//!TODO: handle the different cases for temp paths
-#ifdef __APPLE__
-	snprintf(buf, PATH_MAX, "%s", mac_preferences_path());
-#else
-	buf[0] = '.';
-	buf[1] = '\0';
-#endif
+	snprintf(buf, PATH_MAX, pj_sdl_preferences_path());
 	return Success;
 }
 

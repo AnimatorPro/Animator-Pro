@@ -52,7 +52,7 @@ bool soft_yes_no_box(char *key,...);
 bool varg_yes_no_box(char *formats, char *text, va_list args);
 
 Errcode multi_box(char **choices, char *fmt,...);
-bool soft_multi_box(char **keys, char *symbol, ...);
+Errcode soft_multi_box(char **keys, char *symbol, ...);
 
 /* plase wait window that self removes next time input is waited on
  * unless cleanup is called explicitly */

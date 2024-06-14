@@ -3,13 +3,12 @@ cmake_minimum_required(VERSION 3.16)
 project(TestApp OBJC CXX)
 
 set(SDL_TEST_SOURCES
-		sdl_test.mm
+		sdl_test.cc
 )
 
 add_executable(sdl_test "${SDL_TEST_SOURCES}")
 target_link_libraries(sdl_test
-		SDL2-static
-		SDL2main
+		SDL3::SDL3-static
 		m
 		nfd
 		"-framework AppKit"

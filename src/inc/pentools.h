@@ -5,6 +5,10 @@
 #include "options.h"
 #endif
 
+#ifndef RASTER_H
+#include "raster.h"
+#endif
+
 struct button;
 struct cursorhdr;
 struct pos_p;

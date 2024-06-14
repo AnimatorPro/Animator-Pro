@@ -429,14 +429,13 @@ bool _poll_input(bool do_cursor)
 			icb.inkey = 0;
 		}
 	} else if ((icb.inkey = icb.idriver->key_code) != 0) {
-got_inkey:
 
+got_inkey:
 		icb.state |= KEYHIT;
 	}
 
 
 got_input:
-
 	if (icb.sx != icb.lastsx || icb.sy != icb.lastsy) {
 		icb.state |= MMOVE;
 
@@ -462,7 +461,6 @@ mouse_moved:
 	SET_BUPBITS(icb.state);
 
 	icb.xorstate = icb.state ^ icb.ostate;
-
 
 	if (icb.state & KEYHIT) {
 		if (icb.do_hot_key) {
@@ -501,10 +499,11 @@ done_false:
 	check_waitasks();
 	ret = false;
 	goto done;
+
 done_true:
 	ret = true;
-done:
 
+done:
 	if (icb.input_eaten) /* remove it from global data */
 	{
 		icb.state &= ~icb.input_eaten;
@@ -728,7 +727,7 @@ static Errcode _wait_timeout(ULONG timeout_1000)
 
 /* will wait for input until the timeout is reached, if timeout is reached
  * returns Err_timeout, otherwise input is hit and returns Success, If a macro
- * is being read input recieved will be the same even if the timeout period is
+ * is being read input received will be the same even if the timeout period is
  * eliminated */
 Errcode timed_wait_input(ULONG waitflags, ULONG timeout_1000)
 {
@@ -756,7 +755,7 @@ Errcode wait_til(ULONG clock_1000)
  * When func returns non 0 (int) the loop is terminated and the int returned.
  *
  * The input state is valid for each call to func and will remain so when
- * func returns non zero, and anim_wait_input() exits.
+ * func returns non-zero, and anim_wait_input() exits.
  *
  * If waitflags is satisfied the loop is broken.
  *

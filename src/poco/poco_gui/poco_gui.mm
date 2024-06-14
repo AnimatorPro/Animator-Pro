@@ -18,7 +18,7 @@
 #include "imgui_impl_metal.h"
 #include "imgui_impl_sdl2.h"
 #include "imgui_memory_editor.h"
-#include <SDL.h>
+#include <SDL3/SDL.h>
 
 #include "../poco.h"
 #include "../../pj_sdl/pj_sdl.h"
@@ -282,8 +282,8 @@ int main(int argc, char** argv) {
 
 	// Setup SDL
 	// (Some versions of SDL before <2.0.10 appears to have performance/stalling issues on a minority of Windows systems,
-	// depending on whether SDL_INIT_GAMECONTROLLER is enabled or disabled.. updating to latest version of SDL is recommended!)
-	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER) != 0)
+	// depending on whether SDL_INIT_GAMEPAD is enabled or disabled.. updating to latest version of SDL is recommended!)
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMEPAD) != 0)
 	{
 		printf("Error: %s\n", SDL_GetError());
 		return -1;
@@ -295,7 +295,7 @@ int main(int argc, char** argv) {
 	// Enable native IME.
 	SDL_SetHint(SDL_HINT_IME_SHOW_UI, "1");
 
-	SDL_Window* window = SDL_CreateWindow("Poco GUI", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI);
+	SDL_Window* window = SDL_CreateWindow("Poco GUI", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, SDL_WINDOW_RESIZABLE | SDL_WINDOW_HIGH_PIXEL_DENSITY);
 	if (window == nullptr)
 	{
 		printf("Error creating window: %s\n", SDL_GetError());
@@ -310,7 +310,7 @@ int main(int argc, char** argv) {
 	}
 
 	// Setup Platform/Renderer backends
-	CAMetalLayer* layer = (__bridge CAMetalLayer*)SDL_RenderGetMetalLayer(renderer);
+	CAMetalLayer* layer = (__bridge CAMetalLayer*)SDL_GetRenderMetalLayer(renderer);
 	layer.pixelFormat = MTLPixelFormatBGRA8Unorm;
 	ImGui_ImplMetal_Init(layer.device);
 	ImGui_ImplSDL2_InitForMetal(window);
@@ -340,15 +340,15 @@ int main(int argc, char** argv) {
 			while (SDL_PollEvent(&event))
 			{
 				ImGui_ImplSDL2_ProcessEvent(&event);
-				if (event.type == SDL_QUIT)
+				if (event.type == SDL_EVENT_QUIT)
 					done = true;
-				if (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_CLOSE
+				if (event.type == SDL_WINDOWEVENT && event.window.event == SDL_EVENT_WINDOW_CLOSE_REQUESTED
                         && event.window.windowID == SDL_GetWindowID(window))
 					done = true;
 			}
 
 			int width, height;
-			SDL_GetRendererOutputSize(renderer, &width, &height);
+			SDL_GetCurrentRenderOutputSize(renderer, &width, &height);
 			layer.drawableSize = CGSizeMake(width, height);
 			id<CAMetalDrawable> drawable = [layer nextDrawable];
 

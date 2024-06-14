@@ -131,6 +131,12 @@
 #define Err_driver_protocol (VDERR-9) /* driver behaving irrationally */
 #define Err_pdepth_not_avail (VDERR-10) /* pixel depth not available */
 #define Err_aspect_not_disp (VDERR-11) /* aspect ratio not displayable */
+/* ------ SDL-related errors ------ */
+#define Err_no_window (VDERR-20) /* Unable to create platform window */
+#define Err_no_renderer (VDERR-21) /* Unable to create renderer for window */
+#define Err_no_surface (VDERR-22) /* Unable to allocate the surface we draw to from PJ */
+#define Err_no_render_target (VDERR-23) /* Unable to make a matching texture for the render target */
+
 /* end VDERR */
 #endif
 

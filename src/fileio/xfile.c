@@ -164,7 +164,7 @@ XFILE* xfopen(const char* path, enum XReadWriteMode mode)
 		return NULL;
 	}
 
-	fprintf(stderr, "[XFOPEN] %s\n", real_path);
+//	fprintf(stderr, "[XFOPEN] %s\n", real_path);
 
 	return xf;
 }

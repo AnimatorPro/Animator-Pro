@@ -63,10 +63,6 @@ set(XFILE_SRC_FILES
 	xfile.c
 	)
 
-set(FS_UNIX_SRC_FILES
-	fs_unix.c
-	)
-
 ## library with temp and ram file handling file system and all utilities
 add_library(trdfile
 #	${DFILE_SRC_FILES}
@@ -75,6 +71,6 @@ add_library(trdfile
 	${JFILETR_SRC_FILES}
 	${JFUTILS_SRC_FILES}
 	${XFILE_SRC_FILES}
-	${FS_UNIX_SRC_FILES})
+)
 
 target_link_libraries(trdfile trdutil)

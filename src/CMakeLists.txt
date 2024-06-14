@@ -6,7 +6,6 @@ if(APPLE)
 	enable_language(OBJC)
 endif()
 
-set(CMAKE_C_STANDARD 99)
 set(CMAKE_CXX_STANDARD 17)
 
 include_directories("inc")
@@ -184,8 +183,7 @@ if (WITH_ANI)
 			softmenu
 			trdutil
 			wndolib
-			SDL2-static
-			SDL2main
+			SDL3-static
 			nfd
 			m
 	)

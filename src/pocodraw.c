@@ -16,9 +16,9 @@
 #include "pocolib.h"
 #include "poly.h"
 #include "inks.h"
+#include "render.h"
 
 extern Errcode builtin_err;
-Errcode render_hline(register SHORT y,register SHORT x0,SHORT x1,Raster *r);
 extern Poly working_poly;
 
 
