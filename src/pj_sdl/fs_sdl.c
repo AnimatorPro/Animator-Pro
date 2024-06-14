@@ -10,8 +10,6 @@
 #include "wildlist.h"
 
 #include <assert.h>
-#include <errno.h>
-#include <glob.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -21,10 +19,6 @@
 
 /* TODO: do we need current_device? */
 #include "msfile.h"
-
-#ifdef __APPLE__
-#define GLOB_ONLYDIR 0
-#endif
 
 // from pj_sdl.c
 extern const char* SEP;
@@ -158,7 +152,6 @@ static Errcode alloc_wild_list(Names** pwild_list,
 
 	struct stat s;
 	char pat[PATH_MAX];
-	glob_t g;
 	size_t i;
 	size_t dir_len;
 

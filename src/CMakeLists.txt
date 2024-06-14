@@ -183,9 +183,12 @@ if (WITH_ANI)
 			wndolib
 			SDL3-static
 			nfd
-			m
 	)
-	
+
+	if (UNIX)
+		target_link_libraries(m)
+	endif()
+
 	if (WITH_POCO)
 		target_link_libraries(${PROJECT_NAME} libpoco)
 	endif()
