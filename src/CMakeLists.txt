@@ -186,7 +186,7 @@ if (WITH_ANI)
 	)
 
 	if (UNIX)
-		target_link_libraries(m)
+		target_link_libraries(${PROJECT_NAME} m)
 	endif()
 
 	if (WITH_POCO)
