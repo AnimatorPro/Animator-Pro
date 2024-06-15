@@ -30,6 +30,9 @@ short pj_crit_errval = 1 - 19;
 
 char pj_mcga_name[] = "=SDL.DRV";
 
+// from xfile.c
+extern const char* SEP;
+
 Doserr pj_dget_err(void)
 {
 	return -1;
@@ -84,7 +87,7 @@ Errcode init_pj_startup(Argparse_list *more_args, Do_aparse do_others, int argc,
 	getcwd(resource_paths[1], PATH_MAX);
 
 	snprintf(resource_paths[0], PATH_MAX, pj_sdl_resources_path());
-	snprintf(resource_paths[1], PATH_MAX, "%s/resource", resource_paths[1]);
+	snprintf(resource_paths[1], PATH_MAX, "%s%sresource", resource_paths[1], SEP);
 
 	err = Failure;
 

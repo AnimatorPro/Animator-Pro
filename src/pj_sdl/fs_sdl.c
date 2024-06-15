@@ -72,7 +72,7 @@ Errcode get_full_path(const char* path, char* fullpath)
 		snprintf(resolved_path, PATH_SIZE, "%s%s%s", vconfg.temp_path, SEP, path);
 	}
 	else {
-		strlcpy(resolved_path, path, PATH_SIZE);
+		strncpy(resolved_path, path, PATH_SIZE);
 	}
 
 	//!TODO: fix this with a proper abspath function
@@ -83,7 +83,7 @@ Errcode get_full_path(const char* path, char* fullpath)
 //		return Err_no_path;
 //	}
 
-	size_t result = strlcpy(fullpath, resolved_path, PATH_SIZE);
+	size_t result = strncpy(fullpath, resolved_path, PATH_SIZE);
 	return result == strnlen(resolved_path, PATH_SIZE) ? Success : Err_corrupted;
 }
 
