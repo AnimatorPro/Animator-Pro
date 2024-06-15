@@ -32,10 +32,12 @@
 	LONG size;\
 	USHORT type
 
-typedef struct GCC_PACKED chunk_id {
+#pragma pack(push, 1)
+typedef struct chunk_id {
 	CHUNKID_FIELDS;
 } Chunk_id;
 STATIC_ASSERT(vmagics, sizeof(Chunk_id) == 6);
+#pragma pack(pop)
 
 typedef struct fat_chunk {
 	CHUNKID_FIELDS;

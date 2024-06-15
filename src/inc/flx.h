@@ -20,7 +20,8 @@
 struct anim_info;
 struct flipath;
 
-typedef struct GCC_PACKED flx_head {
+#pragma pack(push, 1)
+typedef struct flx_head {
 	FHEAD_COMMON;
 	LONG frames_in_table; /* size of index */
 	LONG index_oset;	/* offset to index */
@@ -28,6 +29,7 @@ typedef struct GCC_PACKED flx_head {
 
 	char padding[36];
 } Flx_head;
+#pragma pack(pop)
 STATIC_ASSERT(flx, sizeof(Flx_head) == sizeof(Fli_head));
 
 /* struct flx MUST be the same size or smaller than struct fli_frame

@@ -9,7 +9,7 @@ Errcode add_subpath(char *drawer, char *subpath, char *outpath)
  * truncated to PATH_SIZE outpath may be a drawer input drawer and output 
  * path may be the same buffer */
 {
-int len;
+	int len;
 
 	if(drawer == outpath)
 		len = strlen(drawer);

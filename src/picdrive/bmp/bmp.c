@@ -57,8 +57,9 @@
  ***************************************************************************/
 
 
-typedef struct GCC_PACKED
+#pragma pack(push, 1)
 /* The first thing in a bitmap file... */
+typedef struct
 {
 	uint16_t bfType;        /* Always BM_MAGIC. */
 	uint32_t bfSize;        /* File size.  Includes this header. */
@@ -66,6 +67,8 @@ typedef struct GCC_PACKED
 	uint16_t bfReserved2;   /* Always 0 at the moment. */
 	uint32_t bfOffBits;     /* Where the pixels start. (Right after color map.) */
 } BITMAPFILEHEADER;	
+#pragma pack(pop)
+
 STATIC_ASSERT(bmp, sizeof(BITMAPFILEHEADER) == 14);
 
 	/* Value in bfType field.  It's 'BM' ascii.... */

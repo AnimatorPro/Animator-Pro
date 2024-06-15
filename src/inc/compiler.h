@@ -38,7 +38,15 @@
 	struct ASSERT_CONCAT(static_assert_##module##_line_, __LINE__) \
 		{ unsigned int bf : !!(e); }
 
-#define GCC_PACKED
+// stolen from https://stackoverflow.com/questions/1537964/visual-c-equivalent-of-gccs-attribute-packed
+#ifdef __GNUC__
+#define PJ_PACK_STRUCT( __Declaration__ ) __Declaration__ __attribute__((__packed__))
+#endif
+
+#ifdef _MSC_VER
+#define PJ_PACK_STRUCT( __Declaration__ ) __pragma( pack(push, 1) ) __Declaration__ __pragma( pack(pop))
+#endif
+
 
 /*****************************************************************************
  * Watcom C/386 v8.0
@@ -142,9 +150,6 @@ extern char *_STACKLOW; 					/* not sure what these are for, */
 
 #define NOFUNC                  ((void*)0)
 #define copy_va_list(src,dest)  va_copy(dest,src)
-
-#undef GCC_PACKED
-#define GCC_PACKED  __attribute__((packed))
 
 /* Visual Studio */
 #elif defined(_MSC_VER)

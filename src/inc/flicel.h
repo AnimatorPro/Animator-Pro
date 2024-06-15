@@ -54,7 +54,8 @@ STATIC_ASSERT(flicel, sizeof(Fcelpos) == 14);
 
 #define CELDATA_VERS 0
 
-typedef struct GCC_PACKED celdata {
+#pragma pack(push, 1)
+typedef struct celdata {
 	Fat_chunk id;	  /* type = FC_CELDATA */
 	CDAT_POS_FIELDS;
 	SHORT cur_frame;	  /* current frame in cel fli */
@@ -64,6 +65,8 @@ typedef struct GCC_PACKED celdata {
 
 	char padding[36];
 } Celdata;
+#pragma pack(pop)
+
 STATIC_ASSERT(flicel, sizeof(Celdata) == 66);
 
 typedef struct celcfit {

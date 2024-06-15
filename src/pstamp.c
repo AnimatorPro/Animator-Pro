@@ -10,10 +10,12 @@
 #include "rastcomp.h"
 #include "unchunk.h"
 
-typedef struct GCC_PACKED frame_rec {
+#pragma pack(push, 1)
+typedef struct frame_rec {
 	Fli_frame ff;
 	Pstamp_chunk ps;
 } Frame_rec;
+#pragma pack(pop)
 STATIC_ASSERT(pstamp, sizeof(Frame_rec) == 34);
 
 bool pj_frame_has_pstamp(Fli_frame *frame)

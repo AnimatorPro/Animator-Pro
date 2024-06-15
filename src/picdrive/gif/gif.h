@@ -8,7 +8,8 @@
 #include "animinfo.h"
 #include "xfile.h"
 
-struct GCC_PACKED gif_header
+#pragma pack(push, 1)
+struct gif_header
 	{
 	char giftype[6];
 	uint16_t w, h;
@@ -16,6 +17,7 @@ struct GCC_PACKED gif_header
 	unsigned char bgcolor;
 	unsigned char reserved;
 	};
+#pragma pack(pop)
 STATIC_ASSERT(gif, sizeof(struct gif_header) == 13);
 
 #define COLTAB	0x80
@@ -24,12 +26,14 @@ STATIC_ASSERT(gif, sizeof(struct gif_header) == 13);
 #define PIXMASK 7
 #define COLPIXVGA13 (COLTAB | (5<<COLSHIFT) | 7)
 
-struct GCC_PACKED gif_image
+#pragma pack(push, 1)
+struct gif_image
 	{
 	 int16_t x, y;
 	uint16_t w, h;
 	unsigned char flags;
 	};
+#pragma pack(pop)
 STATIC_ASSERT(gif, sizeof(struct gif_image) == 9);
 
 #define ITLV_BIT 0x40

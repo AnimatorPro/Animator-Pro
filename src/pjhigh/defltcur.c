@@ -68,11 +68,11 @@ Rcel *screen;
 }
 Rastcursor *get_default_cursor(void)
 {
-static Rastcursor dcurs = {
- 	{ show_default_cursor, hide_default_cursor, NULL },
-	&_default_cursor,
-	NULL 
-};
+	static Rastcursor dcurs = {
+	    { show_default_cursor, hide_default_cursor, NULL },
+		&_default_cursor,
+		NULL
+	};
 
 	_default_cursor.width = DFLT_CURS_WID;
 	_default_cursor.height = DFLT_CURS_HT;
