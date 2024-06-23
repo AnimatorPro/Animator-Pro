@@ -3,7 +3,9 @@ kiki's notes on this branch
 
 The build is set up with CMake, but a makefile wraps the build.  Typing `make` should build the ani executable.
 
-This currently only builds for MacOS.  You'll need the following installed:
+This currently only builds for MacOS and Windows.
+
+For Mac, you'll need the following installed: 
 - CMake 3.26+
 - autoconf
 - automake
@@ -15,6 +17,8 @@ brew install cmake autoconf automake
 ```
 
 Without the autotools stuff, libffi will fail to build.
+
+Windows has only been tested under Windows 11-aarch64, and not all menu options under Windows work.  Only Visual Studio 2022 is supported at the moment.
 
 
 Animator Pro A.K.A.
