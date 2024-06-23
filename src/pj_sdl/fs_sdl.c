@@ -83,8 +83,8 @@ Errcode get_full_path(const char* path, char* fullpath)
 //		return Err_no_path;
 //	}
 
-	size_t result = strncpy(fullpath, resolved_path, PATH_SIZE);
-	return result == strnlen(resolved_path, PATH_SIZE) ? Success : Err_corrupted;
+	strncpy(fullpath, resolved_path, PATH_SIZE);
+	return Success;
 }
 
 Errcode make_good_dir(char* path)
@@ -151,7 +151,6 @@ static Errcode alloc_wild_list(Names** pwild_list,
 		return Err_nogood;
 	}
 
-	struct stat s;
 	char pat[PATH_MAX];
 	size_t i;
 	size_t dir_len;
