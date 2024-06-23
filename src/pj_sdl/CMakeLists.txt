@@ -1,5 +1,5 @@
 
-project(PJ_SDL LANGUAGES OBJC C)
+project(PJ_SDL)
 
 set(PJ_SDL_SOURCES
 		./pj_sdl.c

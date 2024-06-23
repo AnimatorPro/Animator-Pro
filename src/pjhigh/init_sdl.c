@@ -6,10 +6,12 @@
 #include <assert.h>
 #include <ctype.h>
 #include <errno.h>
-#include <libgen.h>
 #include <stdio.h>
 #include <sys/stat.h>
-#include <unistd.h>
+
+#ifndef _MSC_VER
+	#include <unistd.h>
+#endif
 
 #include "aaconfig.h"
 #include "argparse.h"
@@ -27,6 +29,9 @@
 short pj_crit_errval = 1 - 19;
 
 char pj_mcga_name[] = "=SDL.DRV";
+
+// from xfile.c
+extern const char* SEP;
 
 Doserr pj_dget_err(void)
 {
@@ -82,7 +87,7 @@ Errcode init_pj_startup(Argparse_list *more_args, Do_aparse do_others, int argc,
 	getcwd(resource_paths[1], PATH_MAX);
 
 	snprintf(resource_paths[0], PATH_MAX, pj_sdl_resources_path());
-	snprintf(resource_paths[1], PATH_MAX, "%s/resource", resource_paths[1]);
+	snprintf(resource_paths[1], PATH_MAX, "%s%sresource", resource_paths[1], SEP);
 
 	err = Failure;
 

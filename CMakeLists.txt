@@ -24,17 +24,17 @@ option(WITH_POCO "Build with the Poco scripting language." OFF)
 option(USE_ASAN  "Use Clang Memory Address Sanitizer"      OFF)
 
 
-if (USE_ASAN)
-	set(CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   -fsanitize=address -g")
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address -g")
-endif()
-
 if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 	# will not take effect without FORCE
 	set(CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}/bin" CACHE PATH "Install top-level directory" FORCE)
 endif()
 
 if (UNIX)
+	if (USE_ASAN)
+		set(CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   -fsanitize=address -g")
+		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address -g")
+	endif()
+
 	add_compile_options(
 		-Wno-deprecated-declarations
 		-Wno-incompatible-pointer-types
@@ -73,5 +73,6 @@ endif()
 add_subdirectory(src)
 
 ## tests
-add_subdirectory(tests)
-
+if (APPLE)
+	add_subdirectory(tests)
+endif()

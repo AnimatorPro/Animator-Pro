@@ -60,7 +60,8 @@ STATIC_ASSERT(fli, sizeof(Fli_id) == 16);
 
 #ifdef FLI_1_0
 
-typedef struct GCC_PACKED fhead_1_0 {
+#pragma pack(push, 1)
+typedef struct fhead_1_0 {
 	CHUNKID_FIELDS;
 	USHORT frame_count;
 	USHORT width;
@@ -70,6 +71,7 @@ typedef struct GCC_PACKED fhead_1_0 {
 	SHORT jiffy_speed;
 	UBYTE pad[110]; 	/* should be total of 128 bytes */
 } Fhead_1_0;
+#pragma pack(pop)
 STATIC_ASSERT(fli, sizeof(Fhead_1_0) == 128);
 
 #endif /* FLI_1_0 */
@@ -91,12 +93,14 @@ STATIC_ASSERT(fli, sizeof(Fhead_1_0) == 128);
 /* size of common fields */
 #define FLIH_COMMONSIZE (POSTOSET(Fli_head,commonpad))
 
-typedef struct GCC_PACKED fli_head {
+#pragma pack(push, 1)
+typedef struct fli_head {
 	FHEAD_COMMON;
 	LONG frame1_oset;
 	LONG frame2_oset;
 	UBYTE padfill[40];
 } Fli_head;
+#pragma pack(pop)
 STATIC_ASSERT(fli, sizeof(Fli_head) == 128);
 
 /* Fli_head flags values */
@@ -135,14 +139,15 @@ enum {
 	FLI_PSTAMP = 18, /* "postage stamp" chunk */
 };
 
-
-typedef struct GCC_PACKED pstamp_chunk {
+#pragma pack(push, 1)
+typedef struct pstamp_chunk {
 	CHUNKID_FIELDS;
 	SHORT height;
 	SHORT width;
 	SHORT xlat_type;
 	Chunk_id data; /* this is a fli chunk either copy or brun */
 } Pstamp_chunk;
+#pragma pack(pop)
 STATIC_ASSERT(fli, sizeof(Pstamp_chunk) == 18);
 
 #define PSTAMP_NOXLAT	0

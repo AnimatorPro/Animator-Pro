@@ -34,7 +34,9 @@
 #include <io.h>
 #else /* __WATCOMC__ */
 #include <sys/stat.h>
-#include <unistd.h>
+#ifndef _MSC_VER
+	#include <unistd.h>
+#endif
 #include <sys/types.h>
 #include <sys/stat.h>
 #endif /* __WATCOMC__ */
@@ -136,21 +138,3 @@ char dc;
 	return(1);
 }
 
-bool is_directory(const char *path)
-{
-#if defined(__WATCOMC__)
-	unsigned attributes;
-
-	if (_dos_getfileattr(path, &attributes) == Success)
-		return ((attributes & _A_SUBDIR) != 0);
-	else
-		return FALSE;
-#else
-	struct stat s;
-
-	if (stat(path, &s) == 0)
-		return S_ISDIR(s.st_mode);
-	else
-		return false;
-#endif
-}

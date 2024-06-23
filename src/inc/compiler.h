@@ -38,8 +38,6 @@
 	struct ASSERT_CONCAT(static_assert_##module##_line_, __LINE__) \
 		{ unsigned int bf : !!(e); }
 
-#define GCC_PACKED
-
 /*****************************************************************************
  * Watcom C/386 v8.0
  ****************************************************************************/
@@ -143,8 +141,12 @@ extern char *_STACKLOW; 					/* not sure what these are for, */
 #define NOFUNC                  ((void*)0)
 #define copy_va_list(src,dest)  va_copy(dest,src)
 
-#undef GCC_PACKED
-#define GCC_PACKED  __attribute__((packed))
+/* Visual Studio */
+#elif defined(_MSC_VER)
+
+#undef STATIC_ASSERT
+#define STATIC_ASSERT(module, e)
+#define copy_va_list(src,dest)  va_copy(dest,src)
 
 
 /*****************************************************************************

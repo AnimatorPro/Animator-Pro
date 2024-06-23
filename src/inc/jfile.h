@@ -59,7 +59,6 @@ Errcode change_dir(const char *name);
 long pj_file_size(const char *path);
 Errcode pj_is_fixed(const char *device);
 Errcode pj_pathdev_is_fixed(char *path);
-bool is_directory(const char *path);
 
 Errcode pj_write_zeros(XFILE *xf, LONG oset, ULONG bytes);
 Errcode copy_in_file(XFILE *xf,LONG bytes,LONG soff,LONG doff);

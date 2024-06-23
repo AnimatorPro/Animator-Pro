@@ -28,6 +28,8 @@ void pj_sdl_flip_window_surface(void);
 const char* pj_sdl_resources_path();
 const char* pj_sdl_preferences_path();
 
+bool pj_is_directory(const char *path);
+
 // from sdl_mac.m
 const char* pj_sdl_mac_bundle_path();
 
@@ -37,6 +39,10 @@ const char* pj_sdl_mac_bundle_path();
 
 #ifndef MAX
 #define MAX(x,y) (x > y ? x : y)
+#endif
+
+#ifdef _MSC_VER
+	#define PATH_MAX 1024
 #endif
 
 #endif // ANIMATOR_PRO_PJ_SDL_H

@@ -1,5 +1,5 @@
 
-project(imgui_text_editor LANGUAGES OBJC C)
+project(imgui_text_editor)
 
 set (CMAKE_C_STANDARD 99)
 set (CMAKE_CXX_STANDARD 17)

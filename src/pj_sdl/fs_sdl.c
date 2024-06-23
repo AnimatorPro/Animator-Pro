@@ -10,21 +10,16 @@
 #include "wildlist.h"
 
 #include <assert.h>
-#include <errno.h>
-#include <glob.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
 
-#include "SDL3/SDL_filesystem.h"
+#include <SDL3/SDL_filesystem.h>
+#include "pj_sdl.h"
 
 /* TODO: do we need current_device? */
 #include "msfile.h"
-
-#ifdef __APPLE__
-#define GLOB_ONLYDIR 0
-#endif
 
 // from pj_sdl.c
 extern const char* SEP;
@@ -77,7 +72,7 @@ Errcode get_full_path(const char* path, char* fullpath)
 		snprintf(resolved_path, PATH_SIZE, "%s%s%s", vconfg.temp_path, SEP, path);
 	}
 	else {
-		strlcpy(resolved_path, path, PATH_SIZE);
+		strncpy(resolved_path, path, PATH_SIZE);
 	}
 
 	//!TODO: fix this with a proper abspath function
@@ -88,8 +83,8 @@ Errcode get_full_path(const char* path, char* fullpath)
 //		return Err_no_path;
 //	}
 
-	size_t result = strlcpy(fullpath, resolved_path, PATH_SIZE);
-	return result == strnlen(resolved_path, PATH_SIZE) ? Success : Err_corrupted;
+	strncpy(fullpath, resolved_path, PATH_SIZE);
+	return Success;
 }
 
 Errcode make_good_dir(char* path)
@@ -156,9 +151,7 @@ static Errcode alloc_wild_list(Names** pwild_list,
 		return Err_nogood;
 	}
 
-	struct stat s;
 	char pat[PATH_MAX];
-	glob_t g;
 	size_t i;
 	size_t dir_len;
 
@@ -239,4 +232,15 @@ Errcode build_wild_list(Names** pwild_list, const char* drawer, const char* pat,
 
 	*pwild_list = sort_names(*pwild_list);
 	return Success;
+}
+
+bool pj_is_directory(const char *path)
+{
+	SDL_PathInfo info;
+
+	if (SDL_GetPathInfo(path, &info) != 0) {
+		return false;
+	}
+
+	return info.type == SDL_PATHTYPE_DIRECTORY;
 }

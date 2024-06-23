@@ -78,10 +78,12 @@ STATIC_ASSERT(flilo, sizeof(Fli_frame) == 16);
 #define FLI_BRUN 15
 #define FLI_COPY 16
 
-typedef struct GCC_PACKED fli_chunk {
+#pragma pack(push, 1)
+typedef struct fli_chunk {
 	int32_t size;
 	SHORT type;
 } Fli_chunk;
+#pragma pack(pop)
 STATIC_ASSERT(flilo, sizeof(Fli_chunk) == 6);
 
 #define EMPTY_DCOMP 8  /* sizeof of a FLI_SKIP chunk with no change */

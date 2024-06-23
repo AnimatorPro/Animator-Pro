@@ -48,12 +48,14 @@ typedef struct bgr3
 } Bgr3;
 STATIC_ASSERT(targa, sizeof(Bgr3) == 3);
 
-typedef struct GCC_PACKED tcmap
+#pragma pack(push, 1)
+typedef struct tcmap
 {
 	SHORT	 mapidx;		 /*index of first map entry in LUT*/
 	SHORT	 mapcnt;		 /*num of elements to be loaded*/
 	UBYTE	 mapbits;		 /*number of bits in each element*/
 } Tcmap;
+#pragma pack(pop)
 STATIC_ASSERT(targa, sizeof(Tcmap) == 5);
 
 typedef struct imgspec
