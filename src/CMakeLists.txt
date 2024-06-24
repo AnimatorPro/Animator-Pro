@@ -230,8 +230,12 @@ target_link_libraries(
 		)
 	else()
 		INSTALL(TARGETS ${PROJECT_NAME} DESTINATION ./)
-		INSTALL(FILES $<TARGET_PDB_FILE:${PROJECT_NAME}> DESTINATION bin OPTIONAL)
 		INSTALL(DIRECTORY resource/ DESTINATION ./resource)
+		if (MSVC)
+			## Make sure to copy over any PDB files so they can be found
+			## during debugging sessions.
+			INSTALL(FILES $<TARGET_PDB_FILE:${PROJECT_NAME}> DESTINATION bin OPTIONAL)
+		endif()
 	endif()
 	
 endif()
