@@ -164,8 +164,19 @@ if (WITH_ANI)
 			${PJMAIN_SRC_FILES}
 			${PJ_POCO_FILES}
 	)
-	
-	target_link_libraries(
+
+	## VS-specific stuff
+	set_property(DIRECTORY ${PROJECT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME})
+
+	set_target_properties(${PROJECT_NAME} PROPERTIES
+			VS_DEBUGGER_COMMAND "${CMAKE_INSTALL_PREFIX}/ani.exe"
+	)
+
+	set_target_properties(${PROJECT_NAME} PROPERTIES
+			VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_INSTALL_PREFIX}"
+	)
+
+target_link_libraries(
 		${PROJECT_NAME}
 			trdfile
 			flilib
@@ -219,6 +230,7 @@ if (WITH_ANI)
 		)
 	else()
 		INSTALL(TARGETS ${PROJECT_NAME} DESTINATION ./)
+		INSTALL(FILES $<TARGET_PDB_FILE:${PROJECT_NAME}> DESTINATION bin OPTIONAL)
 		INSTALL(DIRECTORY resource/ DESTINATION ./resource)
 	endif()
 	

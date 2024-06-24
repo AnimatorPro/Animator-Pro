@@ -1,6 +1,7 @@
 /* stringq.c - Implement a button that lets user edit a single line
    of text */
 
+#include <stdarg.h>
 #include <stdlib.h>
 #include <string.h>
 #include "formatf.h"
@@ -41,11 +42,12 @@ Stringq *sq;
 	mb_make_iclip(sqb,&sw->cb);
 }
 
-static void erase_tail(Sqwork *qw)
+
 /* erases last part or drawn part of stringq should handle proportional text */
+static void erase_tail(Sqwork *qw)
 {
-register Stringq *sq = qw->sq;
-register SHORT len;
+Stringq *sq = qw->sq;
+SHORT len;
 char *strend;
 SHORT tailwidth, textend;
 
@@ -60,13 +62,13 @@ SHORT tailwidth, textend;
 	textend = qw->textx + fnstring_width(qw->f,strend,len);
 
 	pj_set_rect(&qw->cb,qw->sblock,textend,
-			 qw->texty, tailwidth, tallest_char(qw->f)); 
+			 qw->texty, tailwidth, tallest_char(qw->f));
 }
 
 static void draw_stringq(Sqwork *qw)
 {
 char *string;
-register Stringq *sq = qw->sq;
+Stringq *sq = qw->sq;
 
 	string = sq->string+sq->dpos;
 	pj_set_rast(&qw->cb, qw->sblock);
@@ -85,6 +87,7 @@ register Stringq *sq = qw->sq;
 											 sq->cpos - sq->dpos),
 			qw->texty,tallest_char(qw->f));
 }
+
 static void see_stringq(Sqwork *qw, Pixel textcol)
 {
 	draw_stringq(qw);
@@ -93,8 +96,8 @@ static void see_stringq(Sqwork *qw, Pixel textcol)
 
 static int stringq_xor_cursor(Sqwork *qw)
 {
-register Button *m = qw->sqb;
-register Stringq *sq = qw->sq;
+Button *m = qw->sqb;
+Stringq *sq = qw->sq;
 SHORT cwidth;
 
 	if(sq->string[sq->cpos])
@@ -110,11 +113,14 @@ SHORT cwidth;
 	qw->curson = !(qw->curson);
 	return(0);
 }
+
 static void stringq_cursor_off(Sqwork *qw)
 {
-	if(qw->curson)
+	if(qw->curson) {
 		stringq_xor_cursor(qw);
+	}
 }
+
 static void cpos_to_cursor(Sqwork *qw)
 {
 Stringq *sq;
@@ -156,10 +162,9 @@ while (fnstring_width(qw->f, sq->string+sq->dpos,
 return(ret);
 }
 
-static int feel_stringq(Sqwork *qw, SHORT textcol,SHORT blockcol)
-
 /* returns 0 if unaltered and non enter key hit
  * STQ_ENTER is set if enter is exit key, STQ_ALTERED is set if altered */
+static int feel_stringq(Sqwork *qw, SHORT textcol,SHORT blockcol)
 {
 Stringq *sq;
 char *string;
@@ -362,10 +367,9 @@ EXIT_STRING:
 
 /********* external calls ******/
 
-
-int feel_string_req(Button *b)
 /* returns 0 if unaltered and non enter key hit
  * STQ_ENTER is set if enter is exit key, STQ_ALTERED is set if altered */
+int feel_string_req(Button *b)
 {
 Sqwork qw;
 Wscreen *s = b->root->w.W_screen;
@@ -415,21 +419,35 @@ Stringq *stq;
 	draw_buttontop(m);
 }
 
-void setf_stringq(Button *sqb,int drawit,char *fmt,...)
-/* Sets a stringq button buffer with value in fmt and args like sprintf 
+/* Sets a stringq button buffer with value in fmt and args like sprintf
  * puts old value in undo buffer also clips string to length in stq->bcount */
+void setf_stringq(Button *sqb,int drawit,char *fmt,...)
 {
 Formatarg fa;
-register Stringq *stq = sqb->datme;
+Stringq *stq = sqb->datme;
 
-	start_formatarg(fa,fmt);
-	if(stq->undo != NULL)
+	va_list args;
+
+	/*
+	 * kiki note:
+	 * For reasons I don't understand, the start_formatarg macro
+	 * causes MSVC builds to lose their mind and break the fa.args
+	 * pointer (which is just a typedeffed char*).  Removing the macro
+	 * usage and calling the functions directly fixes this.
+	 */
+
+	va_start(args, fmt);
+	init_formatarg(&fa, fmt);
+	fa.args = args;
+	if(stq->undo != NULL) {
 		strcpy(stq->undo, stq->string);
-	fa_sprintf(stq->string,stq->bcount+1,&fa);
+	}
+	fa_sprintf(stq->string,stq->bcount+1, &fa);
 	init_stq_string(stq);
-	if(drawit)
+	if(drawit) {
 		draw_buttontop(sqb);
-	end_formatarg(fa);
+	}
+	va_end(args);
 }
 
 /***** some stuff for a numq *****/
@@ -442,10 +460,12 @@ static void init_numq_stq(Numq *nq, Stringq *sq)
 	sq->dcount = 6;
 	sq->bcount = 30;
 }
+
 static void set_nqbuf(Button *b, SHORT val)
 {
 	setf_stringq(b, false,"%d",val);
 }
+
 void see_numq(Button *b)
 {
 Numq *nq;
