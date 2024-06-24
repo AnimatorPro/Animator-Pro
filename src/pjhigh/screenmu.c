@@ -121,8 +121,8 @@ int mode_count;
 		}
 	next_drv_entry:
 
-		if(!is_current)
-			pj_close_vdriver(&drv);
+//		if(!is_current)
+//			pj_close_vdriver(&drv);
 		drv = NULL;
 		drv_entry = drv_entry->next;
 	}
@@ -131,8 +131,8 @@ int mode_count;
 error:
 	free_mode_list(pmlist,pwildlist);
 done:
-	if(!is_current)
-		pj_close_vdriver(&drv);
+//	if(!is_current)
+//		pj_close_vdriver(&drv);
 	return(err);
 }
 static Errcode pick_screen_mode(Names *entry,void *dat)
