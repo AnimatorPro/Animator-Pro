@@ -105,10 +105,10 @@ Errcode open_pj_startup_screen(Errcode (*init_with_screen)(void *iwdat),
 					OPTdata);
 
 Errcode init_screen(struct screen_mode *smode, struct screen_mode *altmode,
-					Errcode (*init_with_screen)(void *iwdat),OPTdata );
+					Errcode (*init_with_screen)(void *iwdat), void* iwdat);
 
 Errcode go_resize_screen(Errcode (*reinit)(void *dat),
-						 void (*close_reinit)(void *dat), OPTdata );
+						 void (*close_reinit)(void *dat), void* dat);
 
 #undef OPTdata
 

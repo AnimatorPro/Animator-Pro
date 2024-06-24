@@ -178,7 +178,7 @@ static Errcode resize_screen(void)
 	{
 		free_undof(); /* re alloc'd by set penwndo size */
 		err = go_resize_screen(init_after_screen,
-							   close_init_after);
+							   close_init_after, NULL);
 		if((err < Success) && (err != Err_abort))
 		{
 			return err; /* screen init failed, fatal */
@@ -212,7 +212,8 @@ static Errcode resize_screen(void)
 				softerr(err, "tflx_screen");
 				close_init_after(NULL);
 				cleanup_screen();
-				if((err = init_screen(&oldmode,NULL,init_after_screen))	< Success) {
+				err = init_screen(&oldmode,NULL,init_after_screen, NULL);
+				if(err < Success) {
 					return err; /* fatal */
 				}
 				/* if next reopen fails waste file but leave settings */
@@ -544,13 +545,16 @@ bool was_zoom;
 		err = go_format_menu(&newsize);
 		if(err == Err_abort)
 		{
-			if(err_on_abort)
-				goto error;
+			if(err_on_abort) {
+				return err;
+			}
 
-			if(!pj_exists(tflxname))
+			if(!pj_exists(tflxname)) {
 				break;
-			if(set_flisize(&flisize) >= Success)
+			}
+			if(set_flisize(&flisize) >= Success) {
 				break;
+			}
 			flisize = newsize;
 			clear_vtemps(reset);
 			continue;
@@ -560,15 +564,18 @@ bool was_zoom;
 			for(;;)
 			{
 				free_undof(); /* re alloc'd with set penwndo size */
-				err = go_resize_screen(init_after_screen,close_init_after);
+				err = go_resize_screen(init_after_screen, close_init_after, NULL);
 
 				if(err >= Success)
 				{
-					if((err = clear_vtemps(reset)) < Success)
-						goto error;
+					err = clear_vtemps(reset);
+					if(err < Success) {
+						return err;
+					}
 				}
-				else if(err != Err_abort)
-					goto error;
+				else if(err != Err_abort) {
+					return err;
+				}
 
 				if(set_flisize((Rectangle *)&(vb.screen->wndo.RECTSTART))
 								< Success)
@@ -579,19 +586,23 @@ bool was_zoom;
 			}
 			continue; /* go do format menu again */
 		}
-		else if(err < Success)
-			goto error;
+		else if(err < Success) {
+			return err;
+		}
 
-		if((err = clear_vtemps(reset)) < Success)
-			goto error;
+		if((err = clear_vtemps(reset)) < Success) {
+			return err;
+		}
 
 		if(set_flisize(&newsize) >= Success)
 			break;
 		/* try again */
 	}
+
 	err = reopen_tempflx(reset);
-	if(!reset)
+	if(!reset) {
 		vs.zoom_open = was_zoom;
-error:
+	}
+
 	return err;
 }
