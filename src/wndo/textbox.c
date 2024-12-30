@@ -522,21 +522,20 @@ Tbox tbox;
 }
 #endif /* SLUFFED */
 
-Errcode tboxf_choice(Wscreen *s,char *formats,char *text,va_list args,
-					 char **choices, char *extratext)
 
 /* given a null terminated array of choices will return 0 if canceled
  * or error and 1 for the first choice TBOX_MAXCHOICES */
+Errcode tboxf_choice(Wscreen *s,char *formats,char *text,va_list args,
+					 char **choices, char *extratext)
 {
-Tbox tbox;
-Tbclicker clicks[TBOX_MAXCHOICES];
-Errcode err, ret;
-char *choice;
-int i;
-char in_c;
+	Tbox tbox;
+	Tbclicker clicks[TBOX_MAXCHOICES];
+	Errcode err, ret;
+	char *choice;
+	int i;
+	char in_c;
 
-
-	init_tbox(&tbox,s,formats,text,args,extratext);
+	init_tbox(&tbox, s, formats, text, args, extratext);
 
 	if(!(icb.wflags & IWF_TBOXES_OK) || s == NULL)
 	{

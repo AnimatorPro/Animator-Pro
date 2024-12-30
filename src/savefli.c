@@ -24,11 +24,13 @@ char dirty_file;
 char dirty_frame;
 long dirty_strokes;
 
+
 void dirties(void)
 {
 	dirty_file = dirty_frame = 1;
 	dirty_strokes += 1;
 }
+
 
 void cleans(void)
 {
@@ -37,7 +39,11 @@ void cleans(void)
 	dirty_strokes = 0;
 }
 
-bool need_scrub_frame(void) { return dirty_frame; }
+
+bool need_scrub_frame(void) {
+	return dirty_frame;
+}
+
 
 /* a scrub cur frame that insures undo is current index and saves it if not */
 Errcode scrub_frame_save_undo(void)
@@ -71,6 +77,7 @@ Errcode scrub_cur_frame(void)
 	}
 }
 
+
 /* will rewrite frame record into current slot or another if needed */
 Errcode write_flx_frame(Flxfile *flx, int ix, Fli_frame *frame)
 {
@@ -82,6 +89,7 @@ Errcode write_flx_frame(Flxfile *flx, int ix, Fli_frame *frame)
 	}
 	return (make_flx_record(flx, ix, frame, size, true));
 }
+
 
 /* returns frame index left in undo buffer errcode if not possible */
 Errcode sub_cur_frame(void)
@@ -243,6 +251,7 @@ error:
 	return (err);
 }
 
+
 /* copies or makes the appropriate prefix chunks from the tempflx to the output
  * flifile and sets the frame1_oset in the output filifile and leaves
  * the output file position at the start of the first frame chunk */
@@ -300,6 +309,7 @@ error:
 	return (err);
 }
 
+
 /* saves up to first frame of new fli from flx */
 static Errcode save_fli_start(char *name, Flifile *flif)
 {
@@ -322,6 +332,7 @@ static Errcode save_fli_start(char *name, Flifile *flif)
 
 	return (copy_flx_prefix(&flix, flif));
 }
+
 
 /* writes whole current tflx out to a fli file */
 Errcode sv_fli(char *name)
@@ -374,6 +385,7 @@ error:
 	return (err);
 }
 
+
 /* save whole fli without altering records */
 static Errcode save_fli(char *name)
 {
@@ -393,6 +405,7 @@ static Errcode save_fli(char *name)
 	return (err);
 }
 
+
 /******** stuff to save a segment of the flx to a fli file *********/
 struct pdr_seek_dat {
 	char *path; /* path for abort check */
@@ -404,6 +417,7 @@ struct pdr_seek_dat {
 	SHORT cur_frame;
 	int cur_ix;
 };
+
 
 static Errcode pdr_seek_seg_frame(int ix, void *data)
 {
@@ -470,16 +484,15 @@ static Errcode pdr_seek_seg_frame(int ix, void *data)
 	err = (*flx_seek)(vb.pencel, sd->cur_frame, ix);
 
 check_cmap:
-
 	if (ocksum != cmap_crcsum(vb.pencel->cmap)) {
 		pj_cmap_load(vb.pencel, vb.pencel->cmap);
 	}
 
 cmap_done:
-
 	sd->cur_frame = ix;
 	return (err);
 }
+
 
 static Errcode pdr_save_flx_segment(char *pdr_name, char *flicname, SHORT sstart, SHORT send)
 {
@@ -582,6 +595,7 @@ out:
 	free_pdr(&pd);
 	return (err);
 }
+
 
 /* returns ecode if cant do */
 static Errcode save_flx_segment(char *title, SHORT sstart, SHORT send)
@@ -688,11 +702,13 @@ done:
 	return (err);
 }
 
+
 static bool save_as_fli(void)
 {
 	char pdr_name[PATH_SIZE];
 	return (is_fli_pdr_name(get_flisave_pdr(pdr_name)));
 }
+
 
 static void ask_qsave_seg(char *title_key, char *save_word, SHORT start_frame, SHORT end_frame)
 {
