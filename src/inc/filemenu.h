@@ -19,7 +19,7 @@ enum file_types {
 	FTP_TWEEN = 12,
 };
 
-extern void go_files(int type);
+extern void go_files(int file_type);
 extern void mb_go_files(struct button *b);
 
 #endif

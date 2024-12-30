@@ -142,4 +142,6 @@ typedef UBYTE Pixel; /* type used in pixel buffers by get_hseg etc */
 #define Max(a,b) ((a)>(b)?(a):(b))
 #define Absval(x) ((x)<0?(-(x)):(x))
 
+#define PJ_PATH_MAX 4096
+
 #endif

@@ -2,6 +2,7 @@
    device.  This thing just takes out the indexing.  Doesn't actually
    have to recompress any images.  (That's done in writefli.c). */
 
+#include <stdio.h>
 #include <string.h>
 
 #include "animinfo.h"
@@ -693,52 +694,64 @@ static bool save_as_fli(void)
 	return (is_fli_pdr_name(get_flisave_pdr(pdr_name)));
 }
 
-static void ask_qsave_seg(char *title_key, char *save_word, SHORT sstart, SHORT send)
+static void ask_qsave_seg(char *title_key, char *save_word, SHORT start_frame, SHORT end_frame)
 {
 	Errcode err;
 	char suffi[PDR_SUFFI_SIZE];
-	char titbuf[80];
+	char title_buf[80];
 	char pdrinfo[40];
 	char sbuf[50];
 	char *flicname;
 	int num_frames;
 
-	if ((num_frames = send - sstart) < 0) {
+	#define ERR_PRINT softerr(err, "!%s", "fli_savef", flicname)
+
+	if ((num_frames = end_frame - start_frame) < 0) {
 		num_frames = -num_frames;
 	}
 	++num_frames;
 
 	if ((err = get_flisave_info(suffi, pdrinfo, sizeof(pdrinfo))) < Success) {
-		goto error;
+		ERR_PRINT;
 	}
 
-	snftextf(titbuf, sizeof(titbuf), "!%d%d%s", stack_string(title_key, sbuf), sstart + 1, send + 1,
+	snftextf(title_buf, sizeof(title_buf), "!%d%d%s", stack_string(title_key, sbuf), start_frame + 1, end_frame + 1,
 			 pdrinfo);
 
 	if (!save_as_fli()) {
-		/* arrrgh take of trailing period from title */
+		// This is for when it's being saved as an FLI or Amiga Zoetrope format
+		/* arrrgh take off trailing period from title */
 		flicname = &pdrinfo[strlen(pdrinfo) - 1];
 		if (*flicname == '.') {
 			*flicname = 0;
 		}
 		if (!soft_yes_no_box("!%d%s", "save_conv", num_frames, &pdrinfo)) {
+			ERR_PRINT;
 			return;
 		}
 	}
 
-	if ((flicname = vset_get_filename(titbuf, suffi, save_word, FLI_PATH, NULL, 1)) != NULL) {
+	flicname = vset_get_filename(title_buf, suffi, save_word, FLI_PATH, NULL, 1);
+	if (flicname != NULL) {
 		if (!overwrite_old(flicname)) {
 			return;
 		}
-		if ((err = save_flx_segment(flicname, sstart, send)) < Success) {
-			goto error;
+		err = save_flx_segment(flicname, start_frame, end_frame);
+		if (err < Success) {
+			ERR_PRINT;
+		}
+		else {
+			printf("+ File saved: %s\n", flicname);
 		}
 	}
-error:
-	softerr(err, "!%s", "fli_savef", flicname);
 }
 
-void qsave(void) { ask_qsave_seg("save_fli", save_str, 0, flix.hdr.frame_count - 1); }
+
+void qsave(void) {
+	ask_qsave_seg("save_fli", save_str,
+			0, flix.hdr.frame_count - 1);
+}
+
 
 /* Save out current FLIC with frames backwards. */
 void qsave_backwards(void) { ask_qsave_seg("save_fli_back", ok_str, flix.hdr.frame_count - 1, 0); }

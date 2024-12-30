@@ -50,11 +50,13 @@ static void qquit(void);
 // from mainpull.c
 Errcode run_pull_poco(Menuhdr* mh, SHORT id);
 
+
 static void get_color(void)
 {
 	check_input(MMOVE);
 	update_ccolor(pj_get_dot(vb.screen->viscel, icb.cx, icb.cy));
 }
+
 
 static void qreset_seq(void)
 {
@@ -72,8 +74,8 @@ static void qreset_seq(void)
 		default:
 			break;
 	}
-	return;
 }
+
 
 static void qnew_flx(void)
 {
@@ -100,6 +102,7 @@ static void qnew_flx(void)
 	return;
 }
 
+
 void qload_mask(void)
 {
 	char* title;
@@ -113,6 +116,7 @@ void qload_mask(void)
 		rezoom();
 	}
 }
+
 
 void qsave_mask(void)
 {
@@ -133,6 +137,7 @@ void qsave_mask(void)
 		rezoom();
 	}
 }
+
 
 void qload(void)
 {
@@ -156,10 +161,12 @@ void qload(void)
 	}
 }
 
+
 static Errcode load_the_pic(char* title)
 {
 	return load_any_picture(title, vb.pencel);
 }
+
 
 void qload_pic(void)
 {
@@ -177,6 +184,7 @@ void qload_pic(void)
 		rezoom();
 	}
 }
+
 
 void qsave_pic(void)
 {
@@ -208,6 +216,7 @@ void qsave_pic(void)
 	}
 }
 
+
 void toggle_cel_opt(int mode)
 {
 	USHORT changes;
@@ -234,6 +243,7 @@ void toggle_cel_opt(int mode)
 	do_rmode_redraw(changes);
 }
 
+
 #ifdef TESTING
 static void tram_dir()
 {
@@ -252,20 +262,24 @@ static void tram_dir()
 }
 #endif /* TESTING */
 
+
 static void flix_first_frame(void)
 {
 	mini_first_frame(&flxtime_data);
 }
+
 
 static void flix_next_frame(void)
 {
 	mini_next_frame(&flxtime_data);
 }
 
+
 static void flix_prev_frame(void)
 {
 	mini_prev_frame(&flxtime_data);
 }
+
 
 static void flix_playit(void)
 {
@@ -295,15 +309,18 @@ static void tog_zoom(void)
 	show_mp();
 }
 
+
 static void toggle_render_under(void)
 {
 	toggle_cel_opt(2);
 }
 
+
 static void toggle_one_color(void)
 {
 	toggle_cel_opt(3);
 }
+
 
 static Keyequiv header_keys[] = {
 	{"ztogl", tog_zoom, KE_NOHIDE, 'z'},
@@ -320,10 +337,12 @@ static Keyequiv header_keys[] = {
 #endif
 };
 
+
 bool common_header_keys(void)
 {
 	return (do_keyequiv(icb.inkey, header_keys, Array_els(header_keys)));
 }
+
 
 #ifdef TESTING
 static void eatk()
@@ -343,10 +362,12 @@ static void eatk()
 	return;
 }
 
+
 static void plus_trd()
 {
 	trd_compact(0L);
 }
+
 
 static void minus_trd()
 {
@@ -359,6 +380,7 @@ static void tog_pen(void)
 {
 	toggle_pen(&sh1_brush_sel);
 }
+
 
 static void home_help(void)
 {
@@ -377,10 +399,12 @@ static void home_help(void)
 	}
 }
 
+
 static void toggle_dither(void)
 {
 	vl.ink->dither = !vl.ink->dither;
 }
+
 
 static void toggle_key_clear(void)
 {
@@ -388,13 +412,14 @@ static void toggle_key_clear(void)
 	do_rmode_redraw(RSTAT_ZCLEAR);
 }
 
+
 static void toggle_two_color(void)
 {
 	vs.color2 = !vs.color2;
 }
 
-static Keyequiv home_keys[] = {
 
+static Keyequiv home_keys[] = {
 #define UNDO_KE &home_keys[0]
 	{"help", home_help, KE_NOHIDE, FKEY1},
 	{"undo", menu_doundo, KE_NOHIDE, '\b'},
@@ -430,6 +455,7 @@ static Keyequiv home_keys[] = {
 #endif /* TESTING */
 };
 
+
 /* note this also loads common header keys, since all menus are sub to home
  *menu this works */
 Errcode load_home_keys(void)
@@ -443,10 +469,12 @@ Errcode load_home_keys(void)
 	return load_key_equivs("home_keys", home_keys, Array_els(home_keys));
 }
 
+
 bool hit_undo_key(void)
 {
 	return hit_keyequiv(UNDO_KE, icb.inkey);
 }
+
 
 /* returns 0 if input unused 1 if used */
 bool home_dokeys(void)
@@ -461,6 +489,7 @@ bool home_dokeys(void)
 
 	return do_keyequiv(icb.inkey, home_keys, Array_els(home_keys));
 }
+
 
 static void pixel_menu(void)
 {
@@ -497,6 +526,7 @@ static void pixel_menu(void)
 	}
 }
 
+
 static void view_frame(void)
 {
 	hide_mp();
@@ -506,12 +536,14 @@ static void view_frame(void)
 	show_mp();
 }
 
+
 static void v12(void)
 {
 	swap_pencels(vb.pencel, vl.alt_cel);
 	see_cmap();
 	zoom_it();
 }
+
 
 static void view_alt(void)
 {
@@ -523,6 +555,7 @@ static void view_alt(void)
 		v12();
 	}
 }
+
 
 static char* unsaved_string(char* buf)
 {
@@ -538,6 +571,7 @@ static char* unsaved_string(char* buf)
 	return buf;
 }
 
+
 bool confirm_dirty_load(void)
 {
 	char buf[UNSAVE_BUFSIZ];
@@ -550,6 +584,7 @@ bool confirm_dirty_load(void)
 
 	return true;
 }
+
 
 static void qquit(void)
 {
@@ -566,6 +601,7 @@ static void qquit(void)
 			break;
 	}
 }
+
 
 void main_selit(Menuhdr* mh, SHORT hitid)
 {

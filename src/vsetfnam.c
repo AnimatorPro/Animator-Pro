@@ -3,7 +3,7 @@
 #include "vsetfile.h"
 #include <string.h>
 
-/* Put up file requestor installing path from config path type. */
+/* Put up file requester, using path from config path type. */
 char* vset_get_filename(char* prompt,
 						char* suffi,
 						char* button,
@@ -24,7 +24,8 @@ char* vset_get_filename(char* prompt,
 						   &cpath.scroller_top,
 						   cpath.wildcard);
 	vset_set_pathinfo(path_type, &cpath);
-	if (outpath != NULL)
+	if (outpath != NULL) {
 		strcpy(outpath, cpath.path);
+	}
 	return (retp);
 }
