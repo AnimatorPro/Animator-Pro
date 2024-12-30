@@ -1,5 +1,7 @@
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_pen.h>
+#include <SDL3/SDL_dialog.h>
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -27,7 +29,7 @@ int init(SDL_Window **window, SDL_Renderer **renderer) {
 	int pen_count;
 	SDL_PenID* pens = SDL_GetPens(&pen_count);
 	for (int i = 0; i < pen_count; i++) {
-		printf("Pen: %d\n", pens[i]);
+		printf("Penhewh: %d\n", pens[i]);
 	}
 
 	return 0;
@@ -57,12 +59,43 @@ bool handlePenEvent(SDL_Event *event) {
 					printf("Right Mouse\n");
 					return true;
 			}
-		case SDL_EVENT_MOUSE_MOTION:
+//		case SDL_EVENT_MOUSE_MOTION:
 //			printf("Mouse Motion: %d x %d\n", (int)event->motion.x, (int)event->motion.y);
 //			return true;
 		default:
 			return false;
 	}
+}
+
+const SDL_DialogFileFilter flic_filters[] = {
+	{ "Flic", "fli;flc" },
+	{ NULL, NULL }
+};
+
+void SDLCALL file_selected_callback(void *userdata, const char* const *filelist, int filter)
+{
+	if (filelist && filelist[0]) {
+		int index = 0;
+		while (filelist[index]) {
+			fprintf(stderr, "%s\n", filelist[index]);
+			index += 1;
+		}
+	}
+}
+
+bool handle_file_open(SDL_Window* window) {
+	SDL_ShowOpenFileDialog(
+		file_selected_callback,
+		NULL,
+		window,
+		flic_filters,
+		"/Users/kiki/",
+		false
+		);
+
+
+	fprintf(stderr, "handle file open\n");
+	return true;
 }
 
 
@@ -105,12 +138,25 @@ int main(int argc, char *argv[]) {
 		while (SDL_PollEvent(&event) != 0) {
 			if (event.type == SDL_EVENT_QUIT) {
 				quit = 1;
-			} else {
-				if (handlePenEvent(&event)) {
-					color.r = rand() % 0xFF;
-					color.g = rand() % 0xFF;
-					color.b = rand() % 0xFF;
+			}
+			else if (event.type == SDL_EVENT_KEY_DOWN && (event.key.repeat == 0)) {
+				// only allow the press if no modifiers are being held
+				if (!event.key.keysym.mod) {
+					switch(event.key.keysym.sym) {
+						case SDLK_q: {
+							handle_file_open(window);
+							break;
+						}
+						default:
+							break;
+					}
 				}
+			}
+
+			if (handlePenEvent(&event)) {
+				color.r = rand() % 0xFF;
+				color.g = rand() % 0xFF;
+				color.b = rand() % 0xFF;
 			}
 		}
 

@@ -23,8 +23,8 @@ if(APPLE)
         SOURCES
         backends/imgui_impl_metal.mm
         backends/imgui_impl_metal.h
-        backends/imgui_impl_sdl2.cpp
-        backends/imgui_impl_sdl2.h
+        backends/imgui_impl_sdl3.cpp
+        backends/imgui_impl_sdl3.h
     )
 endif()
 

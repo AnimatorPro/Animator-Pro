@@ -4,6 +4,7 @@
    with yet. */
 
 #include <ctype.h>
+#include <string.h>
 
 #include "errcodes.h"
 #include "flicel.h"

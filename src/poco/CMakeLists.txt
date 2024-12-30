@@ -11,7 +11,6 @@ endif()
 
 
 set(LIBPOCO_SRC_FILES
-		bcrcall.c
 		bcutil.c
 		bop.c
 		chopper.c

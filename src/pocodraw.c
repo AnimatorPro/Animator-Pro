@@ -11,6 +11,7 @@
 #include "ptrmacro.h"
 #include "fli.h"
 #include "jimk.h"
+#include "palmenu.h"
 #include "pocodraw.h"
 #include "pocoface.h"
 #include "pocolib.h"
@@ -20,6 +21,9 @@
 
 extern Errcode builtin_err;
 extern Poly working_poly;
+
+
+extern Errcode rend_circ(int x, int y, int radius);
 
 
 /***** ink oriented graphics function (things that draw something in
