@@ -595,9 +595,11 @@ Text browse_cel_info
 Text about
 {
 "Animator Pro\n"
-"v. ![1]a    ![2]\n"
-"Copyright 1992,1993 by Jim Kent.\n"
-"![3] ![4], ![5]. ![6]\n"
+"v. ![1]\n"
+"Copyright 1992, 1993 by Jim Kent.\n"
+"\n"
+"Original SDL Port by Peter Wang\n"
+"SDL3 Port and Fixes by Charles Wardlaw\n"
 " \n"
 ".PFB PostScript font files\n"
 "Copyright 1993 by ANIM8, Inc.",

@@ -130,7 +130,7 @@ set(PJMAIN_SRC_FILES
 	sizemenu.c
 	spiral.c
 	spline.c
-	status.c
+	about_box.c
 	tempflx.c
 	tempname.c
 	test.c

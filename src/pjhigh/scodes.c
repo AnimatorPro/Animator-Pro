@@ -5,16 +5,13 @@
 
 static char secret_code[] = " ";
 
-Errcode init_scodes(void)
-/* this should do some security verify ??? */
-{
-	return(Success);
-}
-void get_relvers(char *buf)
 /* loads buffer with string representing compound version number */
+void get_pj_version(char *buf)
 {
-	strcpy(buf,"1.3");
+	strcpy(buf,"1.4");
 }
+
+
 void get_userid_string(char *buf)
 {
 	strcpy(buf, secret_code);

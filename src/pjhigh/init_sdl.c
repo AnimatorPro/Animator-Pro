@@ -77,7 +77,6 @@ Errcode init_pj_startup(Argparse_list *more_args, Do_aparse do_others, int argc,
 	vb.ivmode = -1;
 
 	init_stdfiles();
-	init_scodes();
 	init_mem(0);
 
 	/* init_resource_path(char *path); */
