@@ -11,5 +11,8 @@ void pj_fli_close(Flifile *flif)
  *							pj_fli_create().
  *************************************************************************/
 {
-	xffclose(&flif->xf);
+	if (flif->xf) {
+		xffclose(&flif->xf);
+		flif->xf = NULL;
+	}
 }
