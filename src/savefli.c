@@ -697,21 +697,22 @@ static bool save_as_fli(void)
 static void ask_qsave_seg(char *title_key, char *save_word, SHORT start_frame, SHORT end_frame)
 {
 	Errcode err;
-	char suffi[PDR_SUFFI_SIZE];
+	char suffix[PDR_SUFFI_SIZE];
 	char title_buf[80];
 	char pdrinfo[40];
 	char sbuf[50];
 	char *flicname;
-	int num_frames;
+	int num_frames = end_frame - start_frame;
 
 	#define ERR_PRINT softerr(err, "!%s", "fli_savef", flicname)
 
-	if ((num_frames = end_frame - start_frame) < 0) {
+	if (num_frames < 0) {
 		num_frames = -num_frames;
 	}
 	++num_frames;
 
-	if ((err = get_flisave_info(suffi, pdrinfo, sizeof(pdrinfo))) < Success) {
+	err = get_flisave_info(suffix, pdrinfo, sizeof(pdrinfo));
+	if (err < Success) {
 		ERR_PRINT;
 	}
 
@@ -731,7 +732,7 @@ static void ask_qsave_seg(char *title_key, char *save_word, SHORT start_frame, S
 		}
 	}
 
-	flicname = vset_get_filename(title_buf, suffi, save_word, FLI_PATH, NULL, 1);
+	flicname = vset_get_filename(title_buf, suffix, save_word, FLI_PATH, NULL, 1);
 	if (flicname != NULL) {
 		if (!overwrite_old(flicname)) {
 			return;
