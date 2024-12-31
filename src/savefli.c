@@ -20,9 +20,23 @@
 #include "unchunk.h"
 #include "zoom.h"
 
+#include <SDL3/SDL.h>
+#include <SDL3/SDL_dialog.h>
+#include <pj_sdl.h>
+
+
 char dirty_file;
 char dirty_frame;
 long dirty_strokes;
+
+
+static const SDL_DialogFileFilter flic_filters[] = {
+	{ "Flic", "fli;flc" },
+	{ NULL, NULL }
+};
+
+// for file callbacks
+SHORT segment_start_end[2];
 
 
 void dirties(void)
@@ -709,6 +723,22 @@ static bool save_as_fli(void)
 	return (is_fli_pdr_name(get_flisave_pdr(pdr_name)));
 }
 
+/*
+ * Save the Flic in memory to disk; callback for .
+ */
+void SDLCALL qsave_callback(void *userdata, const char* const *filelist, int filter) {
+	(void)filter;
+	const SHORT* segment_frames = (SHORT*)userdata;
+
+	Errcode err = save_flx_segment(filelist[0], segment_frames[0], segment_frames[1]);
+	if (err < Success) {
+		softerr(err, "!%s", "fli_savef", filelist[0]);
+	}
+	else {
+		printf("+ File saved: %s\n", filelist[0]);
+	}
+}
+
 
 static void ask_qsave_seg(char *title_key, char *save_word, SHORT start_frame, SHORT end_frame)
 {
@@ -732,14 +762,17 @@ static void ask_qsave_seg(char *title_key, char *save_word, SHORT start_frame, S
 		ERR_PRINT;
 	}
 
-	snftextf(title_buf, sizeof(title_buf), "!%d%d%s", stack_string(title_key, sbuf), start_frame + 1, end_frame + 1,
-			 pdrinfo);
+	// Fill out the title buffer based on the pic driver in use
+	snftextf(title_buf, sizeof(title_buf), "!%d%d%s",
+			stack_string(title_key, sbuf), start_frame + 1, end_frame + 1, pdrinfo);
 
+	//#!TODO: Do we even need this any more?
+	//        The conversion isn't slow on modern machines.
 	if (!save_as_fli()) {
 		// This is for when it's being saved as an FLI or Amiga Zoetrope format
-		/* arrrgh take off trailing period from title */
 		flicname = &pdrinfo[strlen(pdrinfo) - 1];
 		if (*flicname == '.') {
+			// arrrgh take off trailing period from title
 			*flicname = 0;
 		}
 		if (!soft_yes_no_box("!%d%s", "save_conv", num_frames, &pdrinfo)) {
@@ -748,6 +781,18 @@ static void ask_qsave_seg(char *title_key, char *save_word, SHORT start_frame, S
 		}
 	}
 
+	segment_start_end[0] = start_frame;
+	segment_start_end[1] = end_frame;
+
+	SDL_ShowSaveFileDialog(
+		qsave_callback,
+		segment_start_end,
+		window,
+		flic_filters,
+		"/Users/kiki/"
+		);
+
+	/*
 	flicname = vset_get_filename(title_buf, suffix, save_word, FLI_PATH, NULL, 1);
 	if (flicname != NULL) {
 		if (!overwrite_old(flicname)) {
@@ -761,6 +806,7 @@ static void ask_qsave_seg(char *title_key, char *save_word, SHORT start_frame, S
 			printf("+ File saved: %s\n", flicname);
 		}
 	}
+	*/
 }
 
 
