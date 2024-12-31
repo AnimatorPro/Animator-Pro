@@ -49,92 +49,71 @@
 #include "memory.h"
 #include "msfile.h"
 
-Errcode pj_delete(const char *name)
+
 /*
  * Delete a file.
  */
+Errcode pj_delete(const char *name)
 {
-#if 0
-Tdev *dev;
-Errcode err;
-
-dev = dev_for_name(name);	/* Use name to find out which device it's on */
-if ((err = dev->ddelete(name)) < Success)
-	jerr = err;
-return(err);
-#else
 	int ret;
 
 	ret = unlink(name);
-	return (ret == 0) ? Success : Err_stdio;
-#endif
+	return ret == 0 ? Success : Err_stdio;
 }
 
-#if 0
+
 Errcode pj_rename(const char *old, const char *new)
-/*
- * Rename a file.  Generally will only work if both old and new name are
- * on the same device.
- */
-{
-Errcode  err;
-Tdev *dev;
-
-dev = dev_for_name(old);
-if ((err = dev->drename(old,new)) < Success)
-	jerr = err;
-return(err);
-}
-#else
-Errcode
-pj_rename(const char *old, const char *new)
 {
 	int ret = rename(old, new);
-
-	return (ret == 0) ? Success : Err_stdio;
+	return ret == 0 ? Success : Err_stdio;
 }
-#endif
 
-bool pj_exists(const char *title)
+
 /* Does file exist? Boolean does not handle errors now */
+bool pj_exists(const char *title)
 {
 	Errcode err;
 	XFILE *xf;
 
 	err = xffopen(title, &xf, XREADONLY);
-	if (err < Success)
+	if (err < Success) {
 		return false;
+	}
 
 	xffclose(&xf);
 	return true;
 }
 
-long pj_file_size(const char *title)
+
 /*
  * Return size of a (closed) file.
  */
+long pj_file_size(const char *title)
 {
 	long size;
 	Errcode err;
 	XFILE *xf;
 
 	err = xffopen(title, &xf, XREADONLY);
-	if (err < Success)
+	if (err < Success) {
 		return err;
+	}
 
 	size = xffseek_tell(xf, 0, XSEEK_END);
 	xffclose(&xf);
 	return size;
 }
 
-Errcode pj_is_fixed(const char *device)
-/* returns 1 if device is fixed 0 if not < 0 if error */
-{
-char dc;
 
-	dc = toupper(*device);
-	if(dc == 'A' || dc == 'B')
-		return(0);
-	return(1);
+/* returns 1 if device is fixed 0 if not < 0 if error */
+Errcode pj_is_fixed(const char *device)
+{
+	//#!TODO: Remove this function from usage?
+	int dc = toupper(*device);
+
+	if(dc == 'A' || dc == 'B') {
+		return 0;
+	}
+	return 1;
 }
 

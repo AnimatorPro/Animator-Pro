@@ -72,6 +72,7 @@ const SDL_DialogFileFilter flic_filters[] = {
 	{ NULL, NULL }
 };
 
+
 void SDLCALL file_selected_callback(void *userdata, const char* const *filelist, int filter)
 {
 	if (filelist && filelist[0]) {
@@ -82,6 +83,7 @@ void SDLCALL file_selected_callback(void *userdata, const char* const *filelist,
 		}
 	}
 }
+
 
 bool handle_file_open(SDL_Window* window) {
 	SDL_ShowOpenFileDialog(

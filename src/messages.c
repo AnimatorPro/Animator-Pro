@@ -1,88 +1,107 @@
-#include <stdarg.h>
 #include "jimk.h"
 #include "errcodes.h"
-#include "ptrmacro.h"
 #include "commonst.h"
-#include "softmenu.h"
 #include "ftextf.h"
 
 
-void top_textf(char *fmt,...)
 /* Print a line in a little window on top of the screen (or bottom if
  * the cursor is near the top */
+void top_textf(char *fmt,...)
 {
-va_list args;
-char *formats;
+	va_list args;
+	char *formats;
 
-	if(!vs.dcoor)
+	if(!vs.dcoor) {
 		return;
+	}
+
 	va_start(args, fmt);
-	formats = ftext_format_type(&fmt,&args);
-	ttextf(fmt,args,formats);
+	formats = ftext_format_type(&fmt, &args);
+	ttextf(fmt, args, formats);
 	va_end(args);
 }
-void soft_top_textf(char *key,...)
-{
-va_list args;
 
-	if(!vs.dcoor)
+
+void soft_top_textf(char *key, ...)
+{
+	va_list args;
+
+	if(!vs.dcoor) {
 		return;
-	va_start(args,key);
-	soft_ttextf(key,&args);
+	}
+
+	va_start(args, key);
+	soft_ttextf(key, &args);
 	va_end(args);
 }
+
+
 /******* canned messages and error reports *******/
 
-static Errcode outta_memory(void)
 /* Put up the old 'out of memory' error box */
+static Errcode outta_memory(void)
 {
-	return(softerr(Err_no_memory,NULL));
+	return softerr(Err_no_memory, NULL);
 }
-void *begmem(unsigned size)
+
+
 /* Ask for memory and squawk if it's not available (then return NULL) */
+void *begmem(unsigned size)
 {
-void *pt;
+	void *pt;
 
 	if (size == 0L)
 	{
 		softerr(Err_no_message,"alloc_zero");
-		return(NULL);
+		return NULL;
 	}
-	if((pt = pj_malloc(size)) == NULL)
+
+	pt = pj_malloc(size);
+	if(pt == NULL)
 	{
 		outta_memory();
-		return(NULL);
+		return NULL;
 	}
-	return(pt);
+
+	return pt;
 }
 
-Errcode cant_create(Errcode err,char *name)
+
+Errcode cant_create(Errcode err, char *name)
 {
-	return(softerr(err, "!%s", "cant_create", name ));
+	return softerr(err, "!%s", "cant_create", name );
 }
-void truncated(char *filename)
+
+
 /* Announce file isn't as big as it's supposed to be.  Checks for NULL
    name argument in case we forgot who we're writing somewhere along
    the line... */
+void truncated(char *filename)
 {
-	if(filename == NULL)
+	if(filename == NULL) {
 		filename = empty_str;
+	}
 
 	soft_continu_box("!%s","truncated",filename);
 }
-bool overwrite_old(char *name)
+
+
 /* Make sure use knows they're overwriting an old file and give 'em a
    chance to abort it. */
+bool overwrite_old(char *name)
 {
-	if (!pj_exists(name) )
-		return(1);
-	return(soft_yes_no_box("!%s", "over_old", name ));
+	if (!pj_exists(name)) {
+		return 1;
+	}
+	return soft_yes_no_box("!%s", "over_old", name);
 }
 
 bool really_delete(char *name)
 {
-	return(soft_yes_no_box("!%s","really_del", name));
+	return soft_yes_no_box("!%s","really_del", name);
 }
+
+
 #ifdef TESTING
 Errcode dump_box(char *msg, void *mem, int memsize)
 /* Display a (bunch of) continue boxes filled with a memory dump */
@@ -96,10 +115,10 @@ long size;
 int count;
 
 	if(memsize <= 0)
-		return(continu_box("%s\n Zero dumpsize!", msg));
+		return continu_box("%s\n Zero dumpsize!", msg);
 
 	if((textbuf = pj_malloc(18*41)) == NULL)
-		return(softerr(Err_no_memory,NULL));
+		return softerr(Err_no_memory,NULL);
 
 	count = 0;
 

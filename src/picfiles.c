@@ -163,11 +163,10 @@ error:
 
 /* to be called before user request to save images to verify pdr is writable
  * and to get header info for prompt menu */
-static Errcode get_pdrsave_info(char *sufbuf, char *titlebuf, int titlesize,
-								int type)
+static Errcode get_pdrsave_info(char *sufbuf, char *titlebuf, int titlesize, int type)
 {
 	Errcode err;
-	/* if get info fails or module is read only then query user to pick
+	/* If get info fails or module is read only then query user to pick
 	 * another module, keep doing until abort, module success, or error 
 	 * cur_pdrtype_info reports errors */
 	while((err = cur_pdrtype_info(sufbuf, titlebuf,
@@ -190,7 +189,7 @@ Errcode get_picsave_info(char *sufbuf, char *titlebuf, int titlesize)
 
 Errcode get_flisave_info(char *sufbuf, char *titlebuf, int titlesize)
 {
-	return(get_pdrsave_info(sufbuf, titlebuf, titlesize, FLICTYPE));
+	return get_pdrsave_info(sufbuf, titlebuf, titlesize, FLICTYPE);
 }
 
 
@@ -261,8 +260,8 @@ static Errcode select_save_pdr(int type)
 	opdr->next = NULL;
 
 	err = go_pdr_menu(stack_string(hdr_key,hdr),	
-					  cpdr->save_pdr,cpdr->save_suffi,
-					  (Names *)cpdr,0,type);
+					  cpdr->save_pdr, cpdr->save_suffi,
+					  (Names *)cpdr, 0, type);
 
 	if(err >= Success) {
 		reset_pdr_stuff(type);
@@ -291,11 +290,9 @@ void go_flic_pdr_menu(void)
  * image */
 static Errcode check_try_pdr(char *pdr_name,char *ifname, Anim_info *ainfo )
 {
-	Errcode err;
 	Pdr *pd;
 	Image_file *ifile;
-
-	err = load_pdr(pdr_name, &pd);
+	Errcode err = load_pdr(pdr_name, &pd);
 	if(err >= Success)
 	{
 		if(pd->max_read_frames < 1) {
