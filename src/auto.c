@@ -1139,7 +1139,7 @@ bool abort_atom_nested;
 		pj_rcel_free(xf);
 	pj_free(new_flx);
 	xffclose(&new_tflx);
-	close_tflx();
+	close_temp_flx();
 	pj_delete(tflxname);
 	pj_rename(auto_tflx_name, tflxname);
 	otempflx();

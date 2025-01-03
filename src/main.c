@@ -74,7 +74,7 @@ static Errcode force_temp_files(void)
 	{
 		flxsize.width = flix.hdr.width;
 		flxsize.height = flix.hdr.height;
-		close_tflx();
+		close_temp_flx();
 
 		err = set_flisize(&flxsize);
 		if(err < Success) {
@@ -389,7 +389,7 @@ void cleanup(bool save_state)
 		flush_tsettings(true); /* update temp settings file */
 	}
 
-	close_tflx();
+	close_temp_flx();
 	/* push a copy of current screen and alt,cel etc for when program
 	 * started again with id of last tflx flush...
 	 */

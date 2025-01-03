@@ -21,7 +21,7 @@ void close_downto_screen(void)
 	close_zwinmenu();
 	cleanup_toptext();
 	close_all_menus(vb.screen,0);
-	close_tflx();
+	close_temp_flx();
 	cleanup_wait_box();
 }
 static void cleanup_low(Errcode err)

@@ -149,7 +149,7 @@ extern Errcode empty_newflx(void);
 /* tempflx.c */
 extern Errcode flush_flx_hidx(Flxfile *flx);
 extern void flush_tflx(void);
-extern void close_tflx(void);
+extern void close_temp_flx(void);
 extern Errcode ring_tflx(Fli_frame *cbuf);
 extern Errcode empty_tempflx(int iframes);
 extern Errcode otempflx(void);

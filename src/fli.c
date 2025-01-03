@@ -140,33 +140,36 @@ Errcode flisize_error(Errcode err, SHORT width,SHORT height)
 							width, height ));
 	}
 }
-Errcode resize_load_fli(char *flicname)
-/* Make sure that a file-name refers to an existing FLI file 
+
+
+/* Make sure that a file-name refers to an existing FLI file
  * or a valid pic format.
- * attempt reset of current fli window environment to 
- * the new image size. and attempt to load the images.
+ * attempt reset of current fli window environment to
+ * the new image size, and attempt to load the images.
  * if a failure in resizing or loading you will end up with an
  * empty fli and an error reported */
+Errcode resize_load_fli(char *flicname)
 {
-Errcode err;
-Anim_info ainfo;
-char pdr_name[PATH_SIZE];
+	Errcode err;
+	Anim_info anim_info;
+	char pdr_name[PATH_SIZE];
 
 	hide_mp();
 
-	if((err = find_pdr_loader(flicname, true, &ainfo,
+	if((err = find_pdr_loader(flicname, true, &anim_info,
 							  pdr_name,vb.pencel)) < Success)
 	{
-		goto reshow_out; 
+		goto reshow_out;
 	}
 
 	unzoom();
 	push_most();
-	close_tflx();
+	close_temp_flx();
 
-	if((err = set_penwndo_size(ainfo.width,ainfo.height)) < Success)
+	err = set_penwndo_size((SHORT)anim_info.width, (SHORT)anim_info.height);
+	if(err < Success)
 	{
-		err = flisize_error(err,ainfo.width,ainfo.height);
+		err = flisize_error(err, (SHORT)anim_info.width, (SHORT)anim_info.height);
 		empty_tempflx(1);
 		goto error;
 	}
@@ -178,7 +181,7 @@ char pdr_name[PATH_SIZE];
 			goto done;
 		}
 
-		if(ainfo.num_frames == 1)
+		if(anim_info.num_frames == 1)
 		{
 			empty_tempflx(1);
 			if((err = pdr_load_picture(pdr_name,flicname,vb.pencel)) < Success)
@@ -191,14 +194,14 @@ char pdr_name[PATH_SIZE];
 		/* try to load animation file using pdr */
 
 		if(!soft_yes_no_box("!%d%s", "fliload_slow",
-						    ainfo.num_frames, flicname ))
+						    anim_info.num_frames, flicname ))
 		{
 			err = Err_abort;
 			goto error;
 		}
 
 		vs.frame_ix = 0;
-		if((err = make_pdr_tempflx(pdr_name,flicname,&ainfo)) >= Success
+		if((err = make_pdr_tempflx(pdr_name,flicname,&anim_info)) >= Success
 		     || err == Err_abort)
 		{
 			if((err = unfli(vb.pencel,0,1)) >= Success)

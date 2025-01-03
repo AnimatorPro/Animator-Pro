@@ -1295,7 +1295,7 @@ Closepframe close_pframe = NULL;
 
 	if((err = sv_fli(ram_tflx_name)) < Success)
 		goto save_error;
-	close_tflx();
+	close_temp_flx();
 
 	free_fcel(&ccb.fcela);
 	if((err = load_fli_fcel(ram_tflx_name,NULL,NULL,&ccb.fcela)) < Success)

@@ -98,8 +98,9 @@ Errcode flush_flx_hidx(Flxfile* flx)
 	update_flx_id(flx);
 
 	err = xffwriteoset(flx->xf, &flx->hdr, 0, sizeof(flx->hdr));
-	if (err < Success)
+	if (err < Success) {
 		return err;
+	}
 
 	return flush_flx_index(flx);
 }
@@ -113,7 +114,7 @@ void flush_tflx(void)
 	flush_flx_hidx(&flix);
 }
 
-void close_tflx(void)
+void close_temp_flx(void)
 {
 	vs.frame_ix = 0;
 	close_flx(&flix);
@@ -159,7 +160,7 @@ static Errcode empty_flx_start(char* path, Flxfile* flx, int iframes)
 	else if (itable < 255)
 		itable = 255;
 
-	close_tflx();
+	close_temp_flx();
 	if ((err = create_flxfile(path, flx)) < 0)
 		goto error;
 	flx->hdr.frame_count	 = iframes;
@@ -214,7 +215,7 @@ Errcode empty_tempflx(int iframes)
 	cleans();
 	return (Success);
 error:
-	close_tflx();
+	close_temp_flx();
 	return (softerr(err, "!%s", "tflx_empty", tflxname));
 }
 
@@ -222,12 +223,12 @@ Errcode otempflx(void)
 {
 	Errcode err;
 
-	close_tflx();
+	close_temp_flx();
 	err = open_flx(tflxname, &flix, XREADWRITE_OPEN);
 	if (err >= Success) {
 		err = reload_tsettings(&vs, NULL);
 		if (err < Success)
-			close_tflx();
+			close_temp_flx();
 	}
 
 	return err;
@@ -400,7 +401,7 @@ static Errcode fli_to_tempflx(char* name, int extra_frames, bool allow_abort)
 	Fli_frame* frame = NULL;
 
 	extra_frames += 100;
-	close_tflx();
+	close_temp_flx();
 	cleans();
 
 	err = squawk_open_flifile(name, &flif, XREADONLY);
@@ -450,7 +451,7 @@ static Errcode fli_to_tempflx(char* name, int extra_frames, bool allow_abort)
 		goto done;
 
 error:
-	close_tflx();
+	close_temp_flx();
 done:
 	pj_freez(&frame);
 	pj_fli_close(&flif);
@@ -464,7 +465,7 @@ Errcode make_pdr_tempflx(char* pdr_name, char* flicname, Anim_info* ainfo)
 	Fli_frame* cbuf = NULL;
 	int frame_count, frames_left;
 
-	close_tflx();
+	close_temp_flx();
 	if ((err = load_pdr(pdr_name, &pd)) < Success)
 		return (cant_use_module(err, pdr_name));
 	if ((err = pdr_open_ifile(pd, flicname, &ifile, ainfo)) < Success)
@@ -527,7 +528,7 @@ ring_error: /* call backoff and ring routine */
 	if ((err = ring_loaded_anim(flicname, err, frame_count)) >= Success)
 		goto done;
 error:
-	close_tflx();
+	close_temp_flx();
 done:
 	pdr_close_ifile(&ifile);
 	free_pdr(&pd);
