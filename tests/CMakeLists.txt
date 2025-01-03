@@ -2,13 +2,15 @@
 cmake_minimum_required(VERSION 3.16)
 project(TestApp)
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_C_STANDARD 11)
 
 set(SDL_TEST_SOURCES
-		sdl_test.cc
+		sdl_test.c
+		../src/pj_sdl/pj_sdl.c
 )
 
 add_executable(sdl_test "${SDL_TEST_SOURCES}")
+target_include_directories(sdl_test PUBLIC ../src/inc)
 target_link_libraries(sdl_test
 		SDL3::SDL3-static
 		m

@@ -2,6 +2,8 @@
    device.  This thing just takes out the indexing.  Doesn't actually
    have to recompress any images.  (That's done in writefli.c). */
 
+//#!TOOD: Unportable
+#include <libgen.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -29,11 +31,6 @@ char dirty_file;
 char dirty_frame;
 long dirty_strokes;
 
-
-static const SDL_DialogFileFilter flic_filters[] = {
-	{ "Flic", "fli;flc" },
-	{ NULL, NULL }
-};
 
 // for file callbacks
 SHORT segment_start_end[2];
@@ -723,31 +720,18 @@ static bool save_as_fli(void)
 	return (is_fli_pdr_name(get_flisave_pdr(pdr_name)));
 }
 
-/*
- * Save the Flic in memory to disk; callback for .
- */
-void SDLCALL qsave_callback(void *userdata, const char* const *filelist, int filter) {
-	(void)filter;
-	const SHORT* segment_frames = (SHORT*)userdata;
-
-	Errcode err = save_flx_segment(filelist[0], segment_frames[0], segment_frames[1]);
-	if (err < Success) {
-		softerr(err, "!%s", "fli_savef", filelist[0]);
-	}
-	else {
-		printf("+ File saved: %s\n", filelist[0]);
-	}
-}
-
 
 static void ask_qsave_seg(char *title_key, char *save_word, SHORT start_frame, SHORT end_frame)
 {
+	(void)title_key;
+	(void)save_word;
+
+	static char last_path[PATH_MAX] = "untitled.flc";
+
 	Errcode err;
 	char suffix[PDR_SUFFI_SIZE];
-	char title_buf[80];
 	char pdrinfo[40];
-	char sbuf[50];
-	char *flicname;
+	char *flicname = "";
 	int num_frames = end_frame - start_frame;
 
 	#define ERR_PRINT softerr(err, "!%s", "fli_savef", flicname)
@@ -761,10 +745,6 @@ static void ask_qsave_seg(char *title_key, char *save_word, SHORT start_frame, S
 	if (err < Success) {
 		ERR_PRINT;
 	}
-
-	// Fill out the title buffer based on the pic driver in use
-	snftextf(title_buf, sizeof(title_buf), "!%d%d%s",
-			stack_string(title_key, sbuf), start_frame + 1, end_frame + 1, pdrinfo);
 
 	//#!TODO: Do we even need this any more?
 	//        The conversion isn't slow on modern machines.
@@ -781,32 +761,29 @@ static void ask_qsave_seg(char *title_key, char *save_word, SHORT start_frame, S
 		}
 	}
 
-	segment_start_end[0] = start_frame;
-	segment_start_end[1] = end_frame;
+	char* last_folder = dirname(last_path);
+	char* last_name = basename(last_path);
 
-	SDL_ShowSaveFileDialog(
-		qsave_callback,
-		segment_start_end,
-		window,
-		flic_filters,
-		"/Users/kiki/"
-		);
+	if (strlen(last_folder) == 1 && last_folder[0] == '.') {
+		sprintf(last_folder, "/Users/kiki");
+	}
 
-	/*
-	flicname = vset_get_filename(title_buf, suffix, save_word, FLI_PATH, NULL, 1);
-	if (flicname != NULL) {
-		if (!overwrite_old(flicname)) {
-			return;
-		}
-		err = save_flx_segment(flicname, start_frame, end_frame);
+	char* file_path = pj_dialog_file_save(
+		"Flic Files",
+		"fli,flc",
+		last_folder,
+		last_name
+	);
+
+	if (file_path) {
+		Errcode err = save_flx_segment(file_path, start_frame, end_frame);
 		if (err < Success) {
-			ERR_PRINT;
+			softerr(err, "!%s", "fli_savef", file_path);
 		}
 		else {
-			printf("+ File saved: %s\n", flicname);
+			printf("+ File saved: %s\n", file_path);
 		}
 	}
-	*/
 }
 
 

@@ -5,6 +5,8 @@
 
 #include <stdio.h>
 #include <string.h>
+//#!TODO: unportable
+#include <libgen.h>
 
 #include "a3d.h"
 #include "aaconfig.h"
@@ -42,7 +44,12 @@
 #include "tween.h"
 #include "zoom.h"
 
+#include <SDL3/SDL.h>
+#include <SDL3/SDL_dialog.h>
+#include <pj_sdl.h>
+
 #define UNSAVE_BUFSIZ 80
+
 
 static char* unsaved_string(char* buf);
 static void qquit(void);
@@ -141,23 +148,29 @@ void qsave_mask(void)
 
 void qload(void)
 {
-	char suffi[PDR_SUFFI_SIZE * 2 + 10];
-	char hailing[100];
-	char ss[50];
-	char buf[UNSAVE_BUFSIZ];
-	char* path;
+	static char last_path[PATH_MAX] = "";
+	char last_folder[PATH_MAX] = "";
 
 	if (!confirm_dirty_load()) {
 		return;
 	}
 
-	get_fliload_suffi(suffi);
+	// SDL_ShowOpenFileDialog(
+	// 	qload_callback,
+	// 	NULL,
+	// 	window,
+	// 	flic_filters,
+	// 	"/Users/kiki/",
+	// 	false
+	// 	);
 
-	sprintf(hailing, "%s  %s", stack_string("load_fli", ss), unsaved_string(buf));
+	const char* file_path = pj_dialog_file_open(
+		"Flic Files", "flc,fli", last_folder);
 
-	path = vset_get_filename(hailing, suffi, load_str, FLI_PATH, NULL, 0);
-	if (path != NULL) {
-		resize_load_fli(path);
+	if (file_path) {
+		strncpy(last_path, file_path, PATH_MAX);
+		strncpy(last_folder, dirname(last_path), PATH_MAX);
+		resize_load_fli(file_path);
 	}
 }
 

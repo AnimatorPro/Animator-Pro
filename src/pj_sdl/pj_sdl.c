@@ -4,11 +4,11 @@
 
 #include <stdbool.h>
 
+#include <nfd.h>
+
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_filesystem.h>
 #include <SDL3/SDL_surface.h>
-
-#include "stdtypes.h"
 
 #include "pj_sdl.h"
 
@@ -20,6 +20,8 @@ SDL_Window* window			  = NULL;
 SDL_Surface* s_window_surface = NULL;
 SDL_Renderer* renderer		  = NULL;
 SDL_Texture* render_target    = NULL;
+
+
 
 /*--------------------------------------------------------------*/
 int pj_sdl_get_video_size(LONG* width, LONG* height)
@@ -194,3 +196,53 @@ const char* pj_sdl_preferences_path() {
 	return preferences_path;
 }
 
+
+/*--------------------------------------------------------------*/
+char* pj_dialog_file_open(const char* type_name,
+						  const char* extensions,
+						  const char* default_path) {
+	static char last_path[PATH_MAX] = "";
+	char* result = last_path;
+
+	nfdchar_t* outPath;
+	const nfdfilteritem_t filterItem = {type_name, extensions};
+
+	nfdresult_t dialog_result = NFD_OpenDialog(&outPath, &filterItem, 1, default_path);
+
+	if (dialog_result == NFD_OKAY) {
+		strcpy(last_path, outPath);
+		NFD_FreePath(outPath);
+	}
+	else {
+		result = NULL;
+	}
+
+	NFD_Quit();
+	return result;
+}
+
+
+/*--------------------------------------------------------------*/
+char* pj_dialog_file_save(const char* type_name,
+						  const char* extensions,
+						  const char* default_path,
+						  const char* default_name) {
+	static char last_path[PATH_MAX] = "";
+	char* result = last_path;
+
+	nfdchar_t* outPath;
+	const nfdfilteritem_t filterItem = {type_name, extensions};
+
+	nfdresult_t dialog_result = NFD_SaveDialog(&outPath, &filterItem, 1, default_path, default_name);
+
+	if (dialog_result == NFD_OKAY) {
+		strcpy(last_path, outPath);
+		NFD_FreePath(outPath);
+	}
+	else {
+		result = NULL;
+	}
+
+	NFD_Quit();
+	return result;
+}

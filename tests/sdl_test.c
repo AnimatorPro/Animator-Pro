@@ -1,10 +1,17 @@
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_pen.h>
-#include <SDL3/SDL_dialog.h>
+
+#include "nfd.h"
+
+//#!TODO: NON-PORTABLE
+#include <libgen.h>
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <sys/syslimits.h>
+
+#include "../src/pj_sdl/pj_sdl.h"
 
 
 // Function to initialize SDL
@@ -67,39 +74,6 @@ bool handlePenEvent(SDL_Event *event) {
 	}
 }
 
-const SDL_DialogFileFilter flic_filters[] = {
-	{ "Flic", "fli;flc" },
-	{ NULL, NULL }
-};
-
-
-void SDLCALL file_selected_callback(void *userdata, const char* const *filelist, int filter)
-{
-	if (filelist && filelist[0]) {
-		int index = 0;
-		while (filelist[index]) {
-			fprintf(stderr, "%s\n", filelist[index]);
-			index += 1;
-		}
-	}
-}
-
-
-bool handle_file_open(SDL_Window* window) {
-	SDL_ShowOpenFileDialog(
-		file_selected_callback,
-		NULL,
-		window,
-		flic_filters,
-		"/Users/kiki/",
-		false
-		);
-
-
-	fprintf(stderr, "handle file open\n");
-	return true;
-}
-
 
 int main(int argc, char *argv[]) {
 	SDL_Window *window = NULL;
@@ -136,6 +110,8 @@ int main(int argc, char *argv[]) {
 
 	SDL_Color color = { .r=0xFF, .g=0xFF, .b=0xFF, .a=0xFF };
 
+	char default_path[PATH_MAX] = "/Users/kiki";
+
 	while (!quit) {
 		while (SDL_PollEvent(&event) != 0) {
 			if (event.type == SDL_EVENT_QUIT) {
@@ -146,7 +122,14 @@ int main(int argc, char *argv[]) {
 				if (!event.key.keysym.mod) {
 					switch(event.key.keysym.sym) {
 						case SDLK_q: {
-							handle_file_open(window);
+							char* path = pj_dialog_file_save("Flic Files", "fli,flc", default_path, "test_01.flc");
+							if (path) {
+								printf("%s\n", path);
+								snprintf(default_path, PATH_MAX, "%s", dirname(path));
+							}
+							else {
+								printf("Cancelled.\n");
+							}
 							break;
 						}
 						default:
