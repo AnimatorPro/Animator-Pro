@@ -101,7 +101,6 @@ Errcode make_good_dir(char* path)
 /*--------------------------------------------------------------*/
 /* Wild list.                                                   */
 /*--------------------------------------------------------------*/
-
 static Errcode add_wild(Names** pwild_list, const char* path, bool is_directory)
 {
 	const char* prefix = is_directory ? DIR_DELIM_STR : "";
@@ -132,6 +131,7 @@ static Errcode add_wild(Names** pwild_list, const char* path, bool is_directory)
 	*pwild_list	   = &(next->hdr);
 	return Success;
 }
+
 
 static Errcode alloc_wild_list(Names** pwild_list,
 							   const char* search_folder,
@@ -198,6 +198,7 @@ static Errcode alloc_wild_list(Names** pwild_list,
 	return Success;
 }
 
+
 Errcode build_wild_list(Names** pwild_list, const char* drawer, const char* pat,
 						bool get_dirs)
 {
@@ -234,6 +235,7 @@ Errcode build_wild_list(Names** pwild_list, const char* drawer, const char* pat,
 	return Success;
 }
 
+
 bool pj_is_directory(const char *path)
 {
 	SDL_PathInfo info;
@@ -244,3 +246,4 @@ bool pj_is_directory(const char *path)
 
 	return info.type == SDL_PATHTYPE_DIRECTORY;
 }
+
