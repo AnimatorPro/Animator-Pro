@@ -21,6 +21,8 @@ SDL_Surface* s_window_surface = NULL;
 SDL_Renderer* renderer		  = NULL;
 SDL_Texture* render_target    = NULL;
 
+// for the file requestors
+static char last_path[PATH_MAX] = "";
 
 
 /*--------------------------------------------------------------*/
@@ -201,7 +203,6 @@ const char* pj_sdl_preferences_path() {
 char* pj_dialog_file_open(const char* type_name,
 						  const char* extensions,
 						  const char* default_path) {
-	static char last_path[PATH_MAX] = "";
 	char* result = last_path;
 
 	nfdchar_t* outPath;
@@ -210,7 +211,7 @@ char* pj_dialog_file_open(const char* type_name,
 	nfdresult_t dialog_result = NFD_OpenDialog(&outPath, &filterItem, 1, default_path);
 
 	if (dialog_result == NFD_OKAY) {
-		strcpy(last_path, outPath);
+		strncpy(last_path, outPath, PATH_MAX);
 		NFD_FreePath(outPath);
 	}
 	else {
@@ -227,7 +228,6 @@ char* pj_dialog_file_save(const char* type_name,
 						  const char* extensions,
 						  const char* default_path,
 						  const char* default_name) {
-	static char last_path[PATH_MAX] = "";
 	char* result = last_path;
 
 	nfdchar_t* outPath;
@@ -236,7 +236,7 @@ char* pj_dialog_file_save(const char* type_name,
 	nfdresult_t dialog_result = NFD_SaveDialog(&outPath, &filterItem, 1, default_path, default_name);
 
 	if (dialog_result == NFD_OKAY) {
-		strcpy(last_path, outPath);
+		strncpy(last_path, outPath, PATH_MAX);
 		NFD_FreePath(outPath);
 	}
 	else {
