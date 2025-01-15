@@ -200,6 +200,17 @@ const char* pj_sdl_preferences_path() {
 
 
 /*--------------------------------------------------------------*/
+void pj_dialog_set_last_path(const char* path) {
+	if (path) {
+		strncpy(last_path, path, PATH_MAX);
+	}
+	else {
+		//!TODO: Set to home folder?
+		last_path[0] = '\0';
+	}
+}
+
+/*--------------------------------------------------------------*/
 char* pj_dialog_file_open(const char* type_name,
 						  const char* extensions,
 						  const char* default_path) {

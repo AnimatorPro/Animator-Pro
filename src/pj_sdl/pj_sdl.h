@@ -34,6 +34,7 @@ const char* pj_sdl_preferences_path();
 
 bool pj_is_directory(const char *path);
 
+void pj_dialog_set_last_path(const char* path);
 char* pj_dialog_file_open(const char* type_name, const char* extensions, const char* default_path);
 char* pj_dialog_file_save(const char* type_name, const char* extensions,
 						  const char* default_path, const char* default_name);
