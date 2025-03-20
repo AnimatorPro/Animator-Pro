@@ -689,8 +689,9 @@ Errcode go_load_the_cel(void)
 
 void qload_the_cel(void)
 {
-	if (go_load_the_cel() >= 0)
+	if (go_load_the_cel() >= 0) {
 		show_thecel_a_sec();
+	}
 }
 
 static Errcode save_the_cel(char* path)

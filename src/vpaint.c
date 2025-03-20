@@ -155,15 +155,6 @@ void qload(void)
 		return;
 	}
 
-	// SDL_ShowOpenFileDialog(
-	// 	qload_callback,
-	// 	NULL,
-	// 	window,
-	// 	flic_filters,
-	// 	"/Users/kiki/",
-	// 	false
-	// 	);
-
 	const char* file_path = pj_dialog_file_open(
 		"Flic Files", "flc,fli", last_folder);
 

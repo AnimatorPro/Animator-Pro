@@ -140,6 +140,12 @@ void pj_sdl_flip_window_surface()
 	void* pixels = NULL;
 	int pitch = 0;
 
+	/* SDL_BlitScaled doesn't work from 8 bit to screen,
+	 * so I'm copying to a second buffer first and then
+	 * doing my stretched blit. */
+	SDL_BlitSurface(s_surface, NULL, s_buffer, NULL);
+
+	// Lock the texture so we have access to its pixels for writing
 	if (SDL_LockTexture(render_target, NULL, &pixels, &pitch) != 0) {
 		SDL_Log("Could not lock texture: %s", SDL_GetError());
 		SDL_DestroyTexture(render_target);
@@ -148,15 +154,10 @@ void pj_sdl_flip_window_surface()
 		SDL_Quit();
 	}
 
-	/* SDL_BlitScaled doesn't work from 8 bit to screen,
-	 * so I'm copying to a second buffer first and then
-	 * doing my stretched blit. */
-	SDL_BlitSurface(s_surface, NULL, s_buffer, NULL);
-
 	// Copy pixel data from surface to texture
 	memcpy(pixels, s_buffer->pixels, s_buffer->h * s_buffer->pitch);
 
-	// Unlock the texture
+	// Unlock the texture-- commit changes
 	SDL_UnlockTexture(render_target);
 
 	const SDL_FRect source_rect = pj_sdl_rect_convert(&s_surface->clip_rect);

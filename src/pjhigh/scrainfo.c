@@ -2,9 +2,9 @@
 #include "picdrive.h"
 #include "pjbasics.h"
 
-void get_screen_ainfo(Rcel *screen,Anim_info *spec)
 
 /* loads an anim_info to represent a screen */
+void get_screen_ainfo(Rcel *screen, Anim_info *spec)
 {
 	clear_struct(spec);
 	spec->num_frames = 1;

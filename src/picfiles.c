@@ -397,7 +397,7 @@ Errcode find_pdr_loader(char *ifname,
 
 /* attempts to load any of the current valid picture file types if pic is
  * smaller will clear screen with vs.inks[0] */
-Errcode load_any_picture(char *name,Rcel *screen)
+Errcode load_any_picture(char *name, Rcel *screen)
 {
 	Errcode err;
 	Anim_info ainfo;
@@ -420,7 +420,7 @@ Errcode load_any_picture(char *name,Rcel *screen)
 		pj_set_rast(screen, vs.inks[0]);
 	}
 
-	err = pdr_load_picture(pdr_name,name,screen);
+	err = pdr_load_picture(pdr_name,name, screen);
 	
 	/* if big failure cancel last sucessful read type it will check local
 	 * type first next time */
