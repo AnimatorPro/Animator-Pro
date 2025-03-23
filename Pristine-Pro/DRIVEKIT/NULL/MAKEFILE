@@ -1,8 +1,0 @@
-!include "..\inc\make.inc"
-
-DRIVERO= device.obj raster.obj
-
-null.drv: $(DRIVERO)
-#	fastlink ..\lib\rexentry.obj @driver.lnk -RELEXE null.drv
-	wlink @..\usual.lnk NAME $< FILE @files.lnk
-

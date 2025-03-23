@@ -1,9 +1,0 @@
-/* Checks to see that '$' character doesn't bomb error handler */
-#pragma poco echo "expect>expecting name in declaration got '$'"
-
-main()
-{
-int $ = 10;
-
-puts("This shouldn't compile.\n(Actually, I've always thought $ should be a symbol character).");
-}

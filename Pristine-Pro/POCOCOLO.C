@@ -1,2 +1,0 @@
-/* Color related poco routines. */
-

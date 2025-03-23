@@ -1,8 +1,0 @@
-!include ..\inc\make.inc
-
-EXE = otdemo.poe
-OBJ = otdemo.obj
-
-$(EXE): $(OBJ)
-	wlink @poe.lnk FILE $(OBJ) NAME $(EXE)
-

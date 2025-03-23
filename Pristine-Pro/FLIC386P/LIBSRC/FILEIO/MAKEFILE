@@ -1,9 +1,0 @@
-!include "..\inc\make.inc"
-!include "objlist.inc"
-
-fileio.lib: $(OBJ) objlist.inc
-	del  $<
-	wlib $< @&&%
-$(OBJ)
-%
-

@@ -1,9 +1,0 @@
-!include "..\inc\make.inc"
-!include "objlist.inc"
-
-rastlib.lib: $(OBJ) objlist.inc
-	del  $<
-	wlib $< @&&%
-$(OBJ)
-%
-

@@ -1,7 +1,0 @@
-big1.flc
-big2.flc
-big3.flc
-big4.flc
-big5.flc
-big6.flc
-big7.flc
