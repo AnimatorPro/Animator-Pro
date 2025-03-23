@@ -14,46 +14,6 @@ document this tiny bit of significant computer history, promote the usefulness
 of this program and hopefully improve and modify it for future and current 
 users, many of whom still find it very useful and fun.
 
-More info at [the Animator Pro project homepage][1]
-
-
-[1]: http://animatorpro.org "Animator Pro project homepage"
-
-binaries
----
-To get binaries, click the huge "DOWNLOADS" button on the github project.
-or go to [the downloads page][2]
-
-[2]: https://github.com/AnimatorPro/Animator-Pro/downloads "Downloads Page"
-
-Pristine
---------
-The original Autodesk Animator (A.K.A. Video Paint, VPaint, or simply V)
-exactly as it was sent to me by Jim Kent, preserved for historical purposes.
-
-Pristine-Pro
-------------
-The original Animator Pro (A.K.A. Autodesk Animator Pro, PJPaint or simply PJ)
-exactly as it was sent to me by Jim Kent, preserved for historical purposes.
-
-dev
----
-A work in progress version of the Animator Pro source as I work to improve it.
-
-text
-----
-The assorted text files and documentation found within the original source files.
-
-pocoscripts
------------
-Source code and documentation for scripts written in Animator Pro's built in 
-POCO scripting language; essentially an interpreted version of the 
-C programming language with some built in libraries for manipulating
-the program.
-
-files
------
-Example files that can be natively read into the Animator Pro software.
 
 License
 -------
