@@ -1,6 +1,0 @@
-#pragma poco library "pdracces.poe"     // extended picture I/O library
-
-main()
-{
-Qerror(PicLoad("bad.bmp", NULL), "Error loading bad.bmp");
-}
